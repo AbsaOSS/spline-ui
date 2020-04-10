@@ -1,0 +1,41 @@
+{
+  "rulesDirectory": [
+    "codelyzer"
+  ],
+  "extends": [
+    "tslint-angular"
+  ],
+  "rules": {
+    "one-line": [
+      true,
+      "check-open-brace",
+      "check-whitespace"
+    ],
+    "member-ordering": [
+      true,
+      {
+        "order": [
+          "public-static-field",
+          "public-instance-field",
+          "private-static-field",
+          "private-instance-field",
+          "public-constructor",
+          "private-constructor",
+          "public-instance-method",
+          "protected-instance-method",
+          "private-instance-method"
+        ]
+      }
+    ],
+    "no-namespace": false,
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "lowercase-first",
+        "named-imports-order": "lowercase-first",
+        "grouped-imports": true
+      }
+    ],
+    "no-duplicate-imports": true
+  }
+}
