@@ -66,5 +66,20 @@
     "tslint": "~6.1.0",
     "tslint-angular": "^3.0.2",
     "typescript": "~3.8.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.scss": [
+      "stylelint --syntax=scss",
+      "git add"
+    ],
+    "*.ts": [
+      "eslint --fix",
+      "git add"
+    ]
   }
 }
