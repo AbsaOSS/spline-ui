@@ -17,7 +17,21 @@
     ],
     "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "paths": {
+      "spline-api": [
+        "projects/spline-api/src/public-api"
+      ],
+      "spline-api/*": [
+        "projects/spline-api/src/public-api/*"
+      ],
+      "@env/*": [
+        "src/environments/*"
+      ],
+      "@env": [
+        "src/environments"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

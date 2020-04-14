@@ -1,7 +1,7 @@
 module.exports = {
     'preset': 'jest-preset-angular',
     'setupFilesAfterEnv': [
-        '<rootDir>/setup-jest.ts'
+        '<rootDir>setup-jest.ts'
     ],
     'transformIgnorePatterns': [
         'node_modules/(?!@ngrx)'
@@ -12,8 +12,8 @@ module.exports = {
         'cobertura'
     ],
     'moduleNameMapper': {
-        "/spline-api/": "../projects/spline-api/src/public-api",
-        "^spline-api$": "../projects/spline-api/src/public-api",
+        "/spline-api/": "<rootDir>/projects/spline-api/src/public-api",
+        "^spline-api$": "<rootDir>/projects/spline-api/src/public-api",
     },
     'resolver': null,
     'globals': {

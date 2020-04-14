@@ -135,7 +135,7 @@
           "error",
           "single"
         ],
-        "comma-dangle": "error",
+        "comma-dangle": ["error", "only-multiline"],
         "@angular-eslint/no-conflicting-lifecycle": "error",
         "@angular-eslint/no-host-metadata-property": "error",
         "@angular-eslint/no-input-rename": "error",

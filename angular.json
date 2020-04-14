@@ -138,6 +138,47 @@
           }
         }
       }
+    },
+    "spline-api": {
+      "projectType": "library",
+      "root": "projects/spline-api",
+      "sourceRoot": "projects/spline-api/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/spline-api/tsconfig.lib.json",
+            "project": "projects/spline-api/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/spline-api/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-builders/jest:run",
+          "options": {
+            "no-cache": true,
+            "bail": true,
+            "scripts": [],
+            "tsConfig": "projects/spline-api/tsconfig.spec.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/spline-api/tsconfig.lib.json",
+              "projects/spline-api/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "spline-ui"
 }

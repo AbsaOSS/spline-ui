@@ -1,3 +1,8 @@
-export const environment = {
-    production: true
+import { environmentBase } from './environment.base';
+import { Environment } from './shared';
+
+
+export const environment: Environment = {
+    ...environmentBase,
+    production: true,
 };
