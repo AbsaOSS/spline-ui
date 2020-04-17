@@ -14,4 +14,6 @@
  * limitations under the License.
  */
 
-@import 'spline-theme/index';
+@import 'theme';
+
+@include angular-material-theme($spline-theme);

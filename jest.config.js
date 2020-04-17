@@ -12,8 +12,13 @@ module.exports = {
         'cobertura'
     ],
     'moduleNameMapper': {
-        "/spline-api/": "../projects/spline-api/src/public-api",
-        "^spline-api$": "../projects/spline-api/src/public-api",
+        "@core/(.*)": "<rootDir>/src/modules/core/$1",
+        "/spline-api/": "<rootDir>/projects/spline-api/src/public-api",
+        "^spline-api$": "<rootDir>/projects/spline-api/src/public-api",
+        "/spline-common/": "<rootDir>/projects/spline-common/src/public-api",
+        "^spline-common": "<rootDir>/projects/spline-common/src/public-api",
+        "/spline-shared/": "<rootDir>/projects/spline-shared/src/public-api",
+        "^spline-shared": "<rootDir>/projects/spline-shared/src/public-api",
     },
     'resolver': null,
     'globals': {

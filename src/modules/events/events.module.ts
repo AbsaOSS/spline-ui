@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,4 +14,27 @@
  * limitations under the License.
  */
 
-@import 'spline-theme/index';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+
+import { EventsRoutingModule } from './events-routing.module';
+import * as fromPages from './pages';
+
+
+@NgModule({
+    declarations: [
+        ...fromPages.pageComponents
+    ],
+    imports: [
+        CommonModule,
+        HttpClientModule,
+        EventsRoutingModule
+    ],
+    exports: [
+        ...fromPages.pageComponents
+    ],
+    providers: []
+})
+export class EventsModule {
+}

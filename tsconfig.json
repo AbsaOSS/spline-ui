@@ -19,20 +19,32 @@
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "paths": {
-      "spline-api": [
-        "projects/spline-api/src/public-api"
-      ],
-      "spline-api/*": [
-        "projects/spline-api/src/public-api/*"
-      ],
       "@env/*": [
         "src/environments/*"
       ],
       "@env": [
         "src/environments"
+      ],
+      "@core/*": [
+        "src/modules/core/*"
+      ],
+      "@core": [
+        "src/modules/core"
+      ],
+      "spline-api": [
+        "projects/spline-api/src/public-api"
+      ],
+      "spline-common": [
+        "projects/spline-common/src/public-api"
+      ],
+      "spline-shared": [
+        "projects/spline-shared/src/public-api"
       ]
     }
   },
+  "include": [
+    "src/**/*"
+  ],
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true

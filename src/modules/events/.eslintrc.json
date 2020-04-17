@@ -1,0 +1,21 @@
+{
+  "extends": "../../../.eslintrc.json",
+  "rules" : {
+    "@angular-eslint/directive-selector": [
+      "error",
+      {
+        "type": "attribute",
+        "prefix": ["splineEvent", "splineEvents"],
+        "style": "camelCase"
+      }
+    ],
+    "@angular-eslint/component-selector": [
+      "error",
+      {
+        "type": "element",
+        "prefix": ["event", "events"],
+        "style": "kebab-case"
+      }
+    ]
+  }
+}

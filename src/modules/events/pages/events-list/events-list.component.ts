@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,4 +14,20 @@
  * limitations under the License.
  */
 
-@import 'spline-theme/index';
+import { Component, OnInit } from '@angular/core';
+
+
+@Component({
+    selector: 'events-list',
+    templateUrl: './events-list.component.html',
+    styleUrls: ['./events-list.component.scss']
+})
+export class EventsListComponent implements OnInit {
+
+    constructor() {
+    }
+
+    ngOnInit(): void {
+    }
+
+}

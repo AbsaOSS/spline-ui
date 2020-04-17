@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,4 +14,11 @@
  * limitations under the License.
  */
 
-@import 'spline-theme/index';
+import { EventsListComponent } from './events-list/events-list.component';
+
+
+export const pageComponents: any[] = [
+    EventsListComponent
+];
+
+export * from './events-list/events-list.component';

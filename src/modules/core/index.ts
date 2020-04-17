@@ -14,10 +14,5 @@
  * limitations under the License.
  */
 
-describe('test', () => {
-
-    test('test', () => {
-        expect(true).toBeTruthy();
-    });
-
-});
+export * from './models';
+export * from './core.module';
