@@ -14,9 +14,13 @@
  * limitations under the License.
  */
 
-/*
- * Public API Surface of spline-common
- */
+import { SplineLayoutCommonComponent } from './layout/spline-layout-common.component';
+import { SplineLayoutHeaderLogoComponent } from './header-logo/spline-layout-header-logo.component';
 
-export * from './lib/utils/public-api';
-export * from './lib/layout/public-api';
+
+export const layoutComponents: any[] = [
+    SplineLayoutCommonComponent,
+    SplineLayoutHeaderLogoComponent
+];
+
+export * from './public-api';

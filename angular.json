@@ -50,6 +50,11 @@
                 "glob": "**/*",
                 "input": "src/assets",
                 "output": "/assets"
+              },
+              {
+                "glob": "**/*",
+                "input": "projects/spline-common/src/assets",
+                "output": "/assets/spline-common"
               }
             ],
             "styles": [
@@ -58,7 +63,7 @@
             "stylePreprocessorOptions": {
               "includePaths": [
                 "src/styles",
-                "projects/spline-common/src/lib/styles"
+                "projects/spline-common/src/styles"
               ]
             },
             "scripts": []
@@ -133,7 +138,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": ".eslintrc.json",
+            "eslintConfig": ".eslintrc.js",
             "tsConfig": [
               "tsconfig.app.json",
               "tsconfig.spec.json"
@@ -196,7 +201,12 @@
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
             "tsConfig": "projects/spline-common/tsconfig.lib.json",
-            "project": "projects/spline-common/ng-package.json"
+            "project": "projects/spline-common/ng-package.json",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "projects/spline-common/src/styles"
+              ]
+            }
           },
           "configurations": {
             "production": {

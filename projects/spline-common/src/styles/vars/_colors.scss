@@ -1,4 +1,4 @@
-/*
+/*!
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-/*
- * Public API Surface of spline-common
- */
+$color-text-black: #444;
 
-export * from './lib/utils/public-api';
-export * from './lib/layout/public-api';
+$color-grey-light: #eaeaea;
+$color-grey-light-1: #f5f5f5;
+
+$color-bg-black: #303a40;

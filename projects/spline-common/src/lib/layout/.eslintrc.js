@@ -14,9 +14,23 @@
  * limitations under the License.
  */
 
-/*
- * Public API Surface of spline-common
- */
-
-export * from './lib/utils/public-api';
-export * from './lib/layout/public-api';
+module.exports = {
+    'rules': {
+        '@angular-eslint/directive-selector': [
+            'error',
+            {
+                'type': 'attribute',
+                'prefix': ['splineLayout', 'sl'],
+                'style': 'camelCase'
+            }
+        ],
+        '@angular-eslint/component-selector': [
+            'error',
+            {
+                'type': 'element',
+                'prefix': ['spline-layout', 'sl'],
+                'style': 'kebab-case'
+            }
+        ]
+    }
+};

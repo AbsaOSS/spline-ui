@@ -1,0 +1,32 @@
+@import 'vars';
+
+.sl-header-logo {
+
+    align-items: center;
+    display: flex;
+
+    &__img {
+        height: 52px;
+        padding-right: 1rem;
+    }
+
+    &__text {
+        align-items: center;
+        color: $color-grey-light;
+        display: flex;
+    }
+
+    &__title {
+        border-right: 1px solid $color-grey-light;
+        color: $color-grey-light;
+        font-size: 42px;
+        padding-right: 0.5rem;
+    }
+
+    &__subtitle {
+        color: $color-grey-light;
+        font-size: 14px;
+        line-height: 1.5em;
+        padding-left: 0.5rem;
+    }
+}

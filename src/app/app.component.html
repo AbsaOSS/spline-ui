@@ -1,4 +1,23 @@
 
-<h1>Title</h1>
 
-<router-outlet></router-outlet>
+<spline-layout-common>
+
+    <!-- HEADER -->
+    <ng-template splineLayoutSection="header">
+        Search bar will be here
+    </ng-template>
+    <!-- ./HEADER -->
+
+    <!-- SIDEBAR -->
+    <ng-template splineLayoutSection="sidebar">
+        Sidebar is here
+    </ng-template>
+    <!-- ./SIDEBAR -->
+
+    <!-- CONTENT -->
+    <router-outlet></router-outlet>
+    <!-- CONTENT -->
+
+</spline-layout-common>
+
+

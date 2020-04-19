@@ -14,9 +14,28 @@
  * limitations under the License.
  */
 
-/*
- * Public API Surface of spline-common
- */
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
-export * from './lib/utils/public-api';
-export * from './lib/layout/public-api';
+import * as fromComponents from './components';
+import * as fromDirectives from './directives';
+
+
+@NgModule({
+    imports: [
+        CommonModule,
+        MatSidenavModule,
+    ],
+    declarations: [
+        ...fromComponents.layoutComponents,
+        ...fromDirectives.layoutDirectives,
+    ],
+    exports: [
+        ...fromComponents.layoutComponents,
+        ...fromDirectives.layoutDirectives,
+    ]
+})
+export class SplineLayoutCommonModule {
+
+}

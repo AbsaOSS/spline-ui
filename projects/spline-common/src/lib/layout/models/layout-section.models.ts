@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-/*
- * Public API Surface of spline-common
- */
+export namespace SplineLayoutSection {
 
-export * from './lib/utils/public-api';
-export * from './lib/layout/public-api';
+    export type SectionName = 'header' | 'sidebar';
+
+    export const SectionName = {
+        header: 'header' as SectionName,
+        sidebar: 'sidebar' as SectionName,
+    };
+}

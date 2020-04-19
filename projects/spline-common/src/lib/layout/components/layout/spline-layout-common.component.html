@@ -1,0 +1,47 @@
+<!-- HEADER -->
+<div class="sl-header">
+    <div class="sl-header__container">
+
+        <spline-layout-header-logo></spline-layout-header-logo>
+
+        <div>
+            <ng-template *ngIf="sectionsTemplatesCollection[SectionName.header]"
+                         [ngTemplateOutlet]="sectionsTemplatesCollection[SectionName.header]">
+            </ng-template>
+        </div>
+    </div>
+</div>
+<!-- ./HEADER -->
+
+<mat-sidenav-container class="sl-sidenav-container">
+
+    <!-- SIDEBAR -->
+    <mat-sidenav #sidenav mode="side" class="sl-sidenav" [opened]="true">
+
+        <!-- SECTION :: SIDEBAR -->
+        <ng-template *ngIf="sectionsTemplatesCollection[SectionName.sidebar]"
+                     [ngTemplateOutlet]="sectionsTemplatesCollection[SectionName.sidebar]">
+        </ng-template>
+        <!-- ./SECTION :: SIDEBAR -->
+
+    </mat-sidenav>
+    <!-- ./SIDEBAR -->
+
+    <!-- CONTENT -->
+    <mat-sidenav-content>
+
+        <div class="sl-content__wrapper">
+            <div class="sl-content__container">
+
+                <!-- SECTION :: CONTENT -->
+                <ng-content></ng-content>
+                <!-- ./SECTION :: CONTENT -->
+
+            </div>
+
+        </div>
+
+    </mat-sidenav-content>
+    <!-- ./CONTENT -->
+
+</mat-sidenav-container>

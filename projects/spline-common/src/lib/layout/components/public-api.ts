@@ -14,9 +14,5 @@
  * limitations under the License.
  */
 
-/*
- * Public API Surface of spline-common
- */
-
-export * from './lib/utils/public-api';
-export * from './lib/layout/public-api';
+export * from './layout/spline-layout-common.component';
+export * from './header-logo/spline-layout-header-logo.component';
