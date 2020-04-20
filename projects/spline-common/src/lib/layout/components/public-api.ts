@@ -16,3 +16,4 @@
 
 export * from './layout/spline-layout-common.component';
 export * from './header-logo/spline-layout-header-logo.component';
+export * from './header-search/spline-layout-header-search.component';

@@ -14,14 +14,17 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
 
 
-@Component({
-    selector: 'spline-layout-header-logo',
-    templateUrl: './spline-layout-header-logo.component.html',
-    styleUrls: ['./spline-layout-header-logo.component.scss'],
-})
-export class SplineLayoutHeaderLogoComponent {
+export abstract class BaseComponent implements OnDestroy {
+
+    destroyed$ = new Subject<void>();
+
+    ngOnDestroy() {
+        this.destroyed$.next();
+        this.destroyed$.complete();
+    }
 
 }

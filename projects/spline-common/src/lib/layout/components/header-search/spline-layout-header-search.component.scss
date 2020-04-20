@@ -1,0 +1,73 @@
+/*!
+ * Copyright (c) 2020 ABSA Group Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+@import 'vars';
+
+// TODO: adjust colors and use it from palette.
+$input-bg: rgba(255, 255, 255, .25);
+$input-text-color: rgba(255, 255, 255, .55);
+
+$input-bg--active: $color-grey-light-1;
+$input-text-color--active: inherit;
+
+$height: 42px;
+$border-radius: 2rem;
+
+.sl-header-search {
+    background: $input-bg;
+    border-radius: $border-radius;
+    display: flex;
+    line-height: $height;
+    padding: 0 1rem;
+
+    mat-icon {
+        color: $input-text-color;
+        font-size: 22px;
+        height: $height;
+        line-height: $height;
+        margin-right: 0.75rem;
+    }
+
+    input {
+        background: none;
+        border-style: none;
+        color: $input-text-color;
+        flex: 1;
+        font-size: 14px;
+        outline: none;
+
+        &::placeholder {
+            color: $input-text-color;
+        }
+    }
+
+    &--focused {
+        background: $input-bg--active;
+
+        mat-icon {
+            color: $input-text-color--active;
+        }
+
+        input {
+            color: $input-text-color--active;
+
+            &::placeholder {
+                color: $input-text-color--active;
+            }
+        }
+    }
+}
+

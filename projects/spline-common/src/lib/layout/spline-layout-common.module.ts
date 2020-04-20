@@ -16,6 +16,8 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 import * as fromComponents from './components';
@@ -26,6 +28,8 @@ import * as fromDirectives from './directives';
     imports: [
         CommonModule,
         MatSidenavModule,
+        MatInputModule,
+        MatIconModule,
     ],
     declarations: [
         ...fromComponents.layoutComponents,

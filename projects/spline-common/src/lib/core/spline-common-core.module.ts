@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
 
-@Component({
-    selector: 'spline-layout-header-logo',
-    templateUrl: './spline-layout-header-logo.component.html',
-    styleUrls: ['./spline-layout-header-logo.component.scss'],
+@NgModule({
+    imports: [
+        CommonModule,
+    ],
+    declarations: [],
+    exports: [],
+    providers: []
 })
-export class SplineLayoutHeaderLogoComponent {
+export class SplineCommonCoreModule {
 
 }
