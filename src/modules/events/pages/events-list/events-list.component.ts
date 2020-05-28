@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
 
 import { EVENTS_DATA_SOURCE } from './events-list.models';
 
@@ -24,12 +25,15 @@ import { EVENTS_DATA_SOURCE } from './events-list.models';
     templateUrl: './events-list.component.html',
     styleUrls: ['./events-list.component.scss']
 })
-export class EventsListComponent implements OnInit {
+export class EventsListComponent implements OnInit, AfterContentInit {
+
+    @ViewChild(MatSort, {static: true}) sortControl: MatSort;
 
     data: any[] = EVENTS_DATA_SOURCE.items;
     visibleColumns = [
         'applicationName',
         'executionPlanId',
+        'dataSource',
         'dataSourceType',
         'append',
         'timestamp',
@@ -39,6 +43,14 @@ export class EventsListComponent implements OnInit {
     }
 
     ngOnInit(): void {
+    }
+
+    ngAfterContentInit(): void {
+        this.sortControl.sort({
+            id: 'timestamp',
+            start: 'desc',
+            disableClear: false
+        });
     }
 
 }

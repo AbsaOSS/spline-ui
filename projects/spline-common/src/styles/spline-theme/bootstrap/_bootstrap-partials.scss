@@ -14,20 +14,33 @@
  * limitations under the License.
  */
 
+$grid-breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1590px,
+);
+
 $container-max-widths: (
     sm: 540px,
     md: 720px,
     lg: 960px,
-    xl: 1400px
+    xl: 1140px,
+    xxl: 1560px,
 );
 
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/root';
+@import '~bootstrap/scss/reboot';
 
 @import '~bootstrap/scss/utilities/align';
 @import '~bootstrap/scss/utilities/display';
 @import '~bootstrap/scss/utilities/flex';
+@import '~bootstrap/scss/utilities/float';
 @import '~bootstrap/scss/utilities/position';
 @import '~bootstrap/scss/utilities/sizing';
 @import '~bootstrap/scss/utilities/spacing';

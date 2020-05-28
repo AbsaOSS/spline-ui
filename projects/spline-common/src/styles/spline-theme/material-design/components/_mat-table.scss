@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@import 'mixins';
+
 .mat-table {
     background: none;
 }
@@ -21,14 +23,32 @@
 mat-row.mat-row {
     background: #fafafa;
     border-bottom-style: none;
-    border-radius: 16px;
+    border-radius: 25px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.12);
     font-size: 12px;
-    margin-bottom: 5px;
-    min-height: 36px;
+    margin-bottom: 0.5rem;
+    min-height: 50px;
 }
 
-mat-header-row {
-    border-bottom: 0 solid transparent;
+mat-header-row.mat-header-row {
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd !important;
     font-size: 14px;
     font-weight: bold;
+    margin-bottom: 1rem;
+    min-height: 3rem;
+}
+
+mat-cell.mat-cell {
+    overflow: hidden;
+    padding: 0 0.25rem;
+
+    >div {
+        max-width: 100%;
+    }
+}
+
+mat-header-cell.mat-header-cell {
+    overflow: hidden;
+    padding: 0 0.25rem;
 }

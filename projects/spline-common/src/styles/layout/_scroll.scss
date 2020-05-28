@@ -1,0 +1,26 @@
+@import 'vars';
+$scrollbar-size: 17px;
+
+/* SCROLLBAR */
+*::-webkit-scrollbar,
+*::-webkit-scrollbar {
+    height: $scrollbar-size;
+    width: $scrollbar-size;
+}
+
+*::-webkit-scrollbar-thumb {
+    @include border-radius(20px);
+    background-clip: content-box;
+    background-color: $color-green-dark;
+    border: 5px solid transparent;
+}
+
+* {
+    scrollbar-3dlight-color: transparent;
+    scrollbar-arrow-color: $color-grey-dark;
+    /* SCROLLBAR IE */
+    scrollbar-base-color: $color-grey-dark;
+    scrollbar-face-color: $color-green-dark;
+    scrollbar-highlight-color: transparent;
+    scrollbar-track-color: $color-grey-dark;
+}

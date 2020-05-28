@@ -20,10 +20,11 @@ $spline-layout-settings-default: (
     header-bg-color: $color-bg-black,
     header-height: 100px,
 
-    content-bg: $color-grey-light-1,
+    content-bg: $color-grey-light-2,
     content-border-radius: 2rem 2rem 0 0,
 
-    sidebar-width: 270px
+    sidebar-width: 270px,
+    sidebar-right-border-color: $color-grey
 );
 
 @mixin spline-layout($settings: $spline-layout-settings-default) {
@@ -64,6 +65,7 @@ $spline-layout-settings-default: (
             background-color: transparent;
             border-radius: 2rem 0 0;
             border-style: none;
+            border-right: 1px solid map-get($settings, sidebar-right-border-color);
             padding-top: 2rem;
             width: map-get($settings, sidebar-width);
         }
@@ -82,6 +84,11 @@ $spline-layout-settings-default: (
         .sl-content__container {
             border-radius: map-get($settings, content-border-radius);
             position: relative;
+        }
+
+        .page-title {
+            margin-bottom: 2rem;
+            text-align: center;
         }
     }
 }

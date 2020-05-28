@@ -13,67 +13,98 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<div class="px-5">
-    <mat-table [dataSource]="data" matSort>
+<div class="container">
+    <h1 class="page-title" [matTooltip]="'Test'">
+        Execution Events
+    </h1>
 
-        <!-- executionPlanId -->
-        <ng-container [matColumnDef]="'executionPlanId'">
-            <mat-header-cell *matHeaderCellDef>
-                Execution Plan
-            </mat-header-cell>
-            <mat-cell *matCellDef="let rowData">
-                <a href="/">{{rowData.executionPlanId}}</a>
-            </mat-cell>
-        </ng-container>
-        <!-- ./executionPlanId -->
+    <div class="px-5">
+        <mat-table [dataSource]="data" matSort>
 
-        <!-- applicationName -->
-        <ng-container [matColumnDef]="'applicationName'">
-            <mat-header-cell *matHeaderCellDef>
-                Application Name
-            </mat-header-cell>
-            <mat-cell *matCellDef="let rowData">
-                <a href="/">{{rowData.applicationName}}</a>
-            </mat-cell>
-        </ng-container>
-        <!-- ./applicationName -->
+            <!-- executionPlanId -->
+            <ng-container [matColumnDef]="'executionPlanId'">
+                <mat-header-cell *matHeaderCellDef>
+                    Execution Plan
+                </mat-header-cell>
+                <mat-cell *matCellDef="let rowData">
+                    <a href="/">{{rowData.executionPlanId}}</a>
+                </mat-cell>
+            </ng-container>
+            <!-- ./executionPlanId -->
 
-        <!-- timestamp -->
-        <ng-container [matColumnDef]="'timestamp'">
-            <mat-header-cell *matHeaderCellDef>
-                Executed At
-            </mat-header-cell>
-            <mat-cell *matCellDef="let rowData">
-                {{rowData.timestamp | date : 'yyyy-MM-dd, HH:mm:ss'}}
-            </mat-cell>
-        </ng-container>
-        <!-- ./timestamp -->
+            <!-- applicationName -->
+            <ng-container [matColumnDef]="'applicationName'">
+                <mat-header-cell *matHeaderCellDef>
+                    Application Name
+                </mat-header-cell>
+                <mat-cell *matCellDef="let rowData">
+                    <div>
+                        <a href="/">{{rowData.applicationName}}</a>
+                        <div>
+                            <div class="minor-text"> {{rowData.applicationId}}</div>
+                        </div>
+                    </div>
+                </mat-cell>
+            </ng-container>
+            <!-- ./applicationName -->
 
-        <!-- dataSourceType -->
-        <ng-container [matColumnDef]="'dataSourceType'">
-            <mat-header-cell *matHeaderCellDef>
-                Data Source Type
-            </mat-header-cell>
-            <mat-cell *matCellDef="let rowData">
-                {{rowData.dataSourceType}}
-            </mat-cell>
-        </ng-container>
-        <!-- ./dataSourceType -->
+            <!-- timestamp -->
+            <ng-container [matColumnDef]="'timestamp'">
+                <mat-header-cell *matHeaderCellDef
+                                 [disabled]="true"
+                                 mat-sort-header>
+                    Executed At
+                </mat-header-cell>
+                <mat-cell *matCellDef="let rowData">
+                    {{rowData.timestamp | date : 'yyyy-MM-dd - HH:mm:ss'}}
+                </mat-cell>
+            </ng-container>
+            <!-- ./timestamp -->
 
-        <!-- append -->
-        <ng-container [matColumnDef]="'append'">
-            <mat-header-cell *matHeaderCellDef>
-                Write Mode
-            </mat-header-cell>
-            <mat-cell *matCellDef="let rowData">
-                {{rowData.append && 'Append' || 'Override'}}
-            </mat-cell>
-        </ng-container>
-        <!-- ./dataSourceType -->
+            <!-- dataSource -->
+            <ng-container [matColumnDef]="'dataSource'">
+                <mat-header-cell *matHeaderCellDef>
+                    Data Source
+                </mat-header-cell>
+                <mat-cell *matCellDef="let rowData">
+                    <div class="max-width-100" [matTooltip]="rowData.dataSourceUri">
+                        <a href="/">{{rowData.dataSourceUri.split('/').slice(-1)[0]}}</a>
+                        <div class="minor-text">
+                            {{rowData.dataSourceUri}}
+                        </div>
+                    </div>
+                </mat-cell>
+            </ng-container>
+            <!-- ./dataSource -->
 
-        <mat-header-row *matHeaderRowDef="visibleColumns"></mat-header-row>
+            <!-- dataSourceType -->
+            <ng-container [matColumnDef]="'dataSourceType'">
+                <mat-header-cell *matHeaderCellDef>
+                    Data Source Type
+                </mat-header-cell>
+                <mat-cell *matCellDef="let rowData">
+                    {{rowData.dataSourceType}}
+                </mat-cell>
+            </ng-container>
+            <!-- ./dataSourceType -->
 
-        <mat-row *matRowDef="let row; columns: visibleColumns;"></mat-row>
+            <!-- append -->
+            <ng-container [matColumnDef]="'append'">
+                <mat-header-cell *matHeaderCellDef>
+                    Write Mode
+                </mat-header-cell>
+                <mat-cell *matCellDef="let rowData">
+                    <div class="write-mode" [class.write-mode--pink]="!rowData.append">
+                        {{rowData.append && 'Append' || 'Override'}}
+                    </div>
+                </mat-cell>
+            </ng-container>
+            <!-- ./dataSourceType -->
 
-    </mat-table>
+            <mat-header-row *matHeaderRowDef="visibleColumns"></mat-header-row>
+
+            <mat-row *matRowDef="let row; columns: visibleColumns;"></mat-row>
+
+        </mat-table>
+    </div>
 </div>

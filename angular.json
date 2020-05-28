@@ -66,7 +66,9 @@
                 "projects/spline-common/src/styles"
               ]
             },
-            "scripts": []
+            "scripts": [
+              "./node_modules/hammerjs/hammer.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -121,7 +123,9 @@
           "options": {
             "no-cache": true,
             "bail": true,
-            "scripts": [],
+            "scripts": [
+              "./node_modules/hammerjs/hammer.min.js"
+            ],
             "styles": [
               "src/styles.css"
             ],
