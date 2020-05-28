@@ -1,4 +1,4 @@
-/*
+/*!
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,31 +14,21 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
+.mat-table {
+    background: none;
+}
 
-import { EVENTS_DATA_SOURCE } from './events-list.models';
+mat-row.mat-row {
+    background: #fafafa;
+    border-bottom-style: none;
+    border-radius: 16px;
+    font-size: 12px;
+    margin-bottom: 5px;
+    min-height: 36px;
+}
 
-
-@Component({
-    selector: 'events-list',
-    templateUrl: './events-list.component.html',
-    styleUrls: ['./events-list.component.scss']
-})
-export class EventsListComponent implements OnInit {
-
-    data: any[] = EVENTS_DATA_SOURCE.items;
-    visibleColumns = [
-        'applicationName',
-        'executionPlanId',
-        'dataSourceType',
-        'append',
-        'timestamp',
-    ];
-
-    constructor() {
-    }
-
-    ngOnInit(): void {
-    }
-
+mat-header-row {
+    border-bottom: 0 solid transparent;
+    font-size: 14px;
+    font-weight: bold;
 }

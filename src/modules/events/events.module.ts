@@ -17,6 +17,8 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 
 import { EventsRoutingModule } from './events-routing.module';
 import * as fromPages from './pages';
@@ -29,7 +31,9 @@ import * as fromPages from './pages';
     imports: [
         CommonModule,
         HttpClientModule,
-        EventsRoutingModule
+        EventsRoutingModule,
+        MatTableModule,
+        MatSortModule
     ],
     exports: [
         ...fromPages.pageComponents

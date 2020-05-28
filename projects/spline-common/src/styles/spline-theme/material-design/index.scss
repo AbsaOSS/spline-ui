@@ -17,3 +17,5 @@
 @import 'theme';
 
 @include angular-material-theme($spline-theme);
+
+@import 'components/index';

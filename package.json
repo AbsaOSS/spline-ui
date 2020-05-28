@@ -28,6 +28,8 @@
     "@ngrx/effects": "^9.1.0",
     "@ngrx/router-store": "^9.1.0",
     "@ngrx/store": "^9.1.0",
+    "@ngx-translate/core": "^12.1.2",
+    "@ngx-translate/http-loader": "^4.0.0",
     "bootstrap": "^4.4.1",
     "moment": "^2.24.0",
     "rxjs": "~6.5.4",

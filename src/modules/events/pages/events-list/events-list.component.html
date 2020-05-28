@@ -13,5 +13,67 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+<div class="px-5">
+    <mat-table [dataSource]="data" matSort>
 
-<p>events-list works!</p>
+        <!-- executionPlanId -->
+        <ng-container [matColumnDef]="'executionPlanId'">
+            <mat-header-cell *matHeaderCellDef>
+                Execution Plan
+            </mat-header-cell>
+            <mat-cell *matCellDef="let rowData">
+                <a href="/">{{rowData.executionPlanId}}</a>
+            </mat-cell>
+        </ng-container>
+        <!-- ./executionPlanId -->
+
+        <!-- applicationName -->
+        <ng-container [matColumnDef]="'applicationName'">
+            <mat-header-cell *matHeaderCellDef>
+                Application Name
+            </mat-header-cell>
+            <mat-cell *matCellDef="let rowData">
+                <a href="/">{{rowData.applicationName}}</a>
+            </mat-cell>
+        </ng-container>
+        <!-- ./applicationName -->
+
+        <!-- timestamp -->
+        <ng-container [matColumnDef]="'timestamp'">
+            <mat-header-cell *matHeaderCellDef>
+                Executed At
+            </mat-header-cell>
+            <mat-cell *matCellDef="let rowData">
+                {{rowData.timestamp | date : 'yyyy-MM-dd, HH:mm:ss'}}
+            </mat-cell>
+        </ng-container>
+        <!-- ./timestamp -->
+
+        <!-- dataSourceType -->
+        <ng-container [matColumnDef]="'dataSourceType'">
+            <mat-header-cell *matHeaderCellDef>
+                Data Source Type
+            </mat-header-cell>
+            <mat-cell *matCellDef="let rowData">
+                {{rowData.dataSourceType}}
+            </mat-cell>
+        </ng-container>
+        <!-- ./dataSourceType -->
+
+        <!-- append -->
+        <ng-container [matColumnDef]="'append'">
+            <mat-header-cell *matHeaderCellDef>
+                Write Mode
+            </mat-header-cell>
+            <mat-cell *matCellDef="let rowData">
+                {{rowData.append && 'Append' || 'Override'}}
+            </mat-cell>
+        </ng-container>
+        <!-- ./dataSourceType -->
+
+        <mat-header-row *matHeaderRowDef="visibleColumns"></mat-header-row>
+
+        <mat-row *matRowDef="let row; columns: visibleColumns;"></mat-row>
+
+    </mat-table>
+</div>
