@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import { deploymentPrefix, relativeUrl, Environment } from './shared';
+import { deploymentPrefix, relativeUrl, Environment } from './shared'
 
 
-const url = relativeUrl + deploymentPrefix;
+const url = relativeUrl + deploymentPrefix
 export const environmentBase: Environment = {
     production: false,
     deploymentPrefix,
     url,
     appConfigUri: `${url}/assets/config.json`
-};
+}

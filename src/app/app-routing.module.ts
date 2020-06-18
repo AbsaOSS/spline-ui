@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core'
+import { RouterModule, Routes } from '@angular/router'
 
 
 const routes: Routes = [
@@ -32,7 +32,7 @@ const routes: Routes = [
         path: '**',
         redirectTo: 'events'
     }
-];
+]
 
 @NgModule({
     // useHash supports github.io demo page, remove in your app

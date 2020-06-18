@@ -40,15 +40,17 @@ module.exports = {
             'plugins': [
                 '@typescript-eslint',
                 '@typescript-eslint/tslint',
-                '@angular-eslint'
+                '@angular-eslint',
+                'import',
             ],
             'extends': [
                 'eslint:recommended',
                 'plugin:@typescript-eslint/eslint-recommended',
                 'plugin:@typescript-eslint/recommended',
-                'plugin:@typescript-eslint/recommended-requiring-type-checking'
+                'plugin:@typescript-eslint/recommended-requiring-type-checking',
             ],
             'rules': {
+                'import/newline-after-import': ['error', {'count': 2}],
                 '@typescript-eslint/no-empty-function': 0,
                 '@typescript-eslint/no-var-requires': 0,
                 '@typescript-eslint/no-explicit-any': 0,
@@ -76,6 +78,7 @@ module.exports = {
                     'error',
                     'all'
                 ],
+                'semi': ['error', 'never'],
                 'indent': [
                     'error',
                     4,
@@ -87,6 +90,19 @@ module.exports = {
                     }
                 ],
                 '@typescript-eslint/array-type': 'off',
+                '@typescript-eslint/member-delimiter-style': [
+                    'error', {
+                        'multiline': {
+                            'delimiter': 'none',
+                        },
+                        'overrides': {
+                            'interface': {
+                                'multiline': {
+                                    'delimiter': 'none',
+                                }
+                            }
+                        }
+                    }],
                 'arrow-parens': 'off',
                 '@angular-eslint/component-class-suffix': 'error',
                 '@angular-eslint/contextual-lifecycle': 'error',
@@ -95,7 +111,7 @@ module.exports = {
                     'error',
                     {
                         'type': 'attribute',
-                        'prefix': 'app',
+                        'prefix': 'spline',
                         'style': 'camelCase'
                     }
                 ],
@@ -103,7 +119,7 @@ module.exports = {
                     'error',
                     {
                         'type': 'element',
-                        'prefix': 'app',
+                        'prefix': 'spline',
                         'style': 'kebab-case'
                     }
                 ],
@@ -161,7 +177,7 @@ module.exports = {
                 '@angular-eslint/no-output-rename': 'error',
                 '@angular-eslint/no-outputs-metadata-property': 'error',
                 '@angular-eslint/use-lifecycle-interface': 'warn',
-                '@angular-eslint/use-pipe-transform-interface': 'error'
+                '@angular-eslint/use-pipe-transform-interface': 'error',
             }
         },
         {

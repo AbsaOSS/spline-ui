@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import { AfterContentInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
+import { AfterContentInit, Component, OnInit, ViewChild } from '@angular/core'
+import { MatSort } from '@angular/material/sort'
 
-import { EVENTS_DATA_SOURCE } from './events-list.models';
+import { EVENTS_DATA_SOURCE } from './events-list.models'
 
 
 @Component({
@@ -50,7 +50,7 @@ export class EventsListComponent implements OnInit, AfterContentInit {
             id: 'timestamp',
             start: 'desc',
             disableClear: false
-        });
+        })
     }
 
 }

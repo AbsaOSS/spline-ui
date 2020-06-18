@@ -11,6 +11,10 @@
       "check-open-brace",
       "check-whitespace"
     ],
+    "member-access": [
+      true,
+      "no-public"
+    ],
     "member-ordering": [
       true,
       {
@@ -27,6 +31,7 @@
         ]
       }
     ],
+    "max-classes-per-file": false,
     "no-namespace": false,
     "ordered-imports": [
       true,
@@ -36,6 +41,13 @@
         "grouped-imports": true
       }
     ],
-    "no-duplicate-imports": true
+    "no-duplicate-imports": true,
+    "no-unbound-method": [
+      true,
+      "ignore-static"
+    ],
+    "semicolon": false,
+    "whitespace": [true, "check-module"],
+    "interface-over-type-literal": false
   }
 }

@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { environment } from '@env/environment';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { Injectable } from '@angular/core'
+import { environment } from '@env/environment'
+import { Observable } from 'rxjs'
 
-import { AppConfig } from '../models';
+import { AppConfig } from '../models'
 
 
 @Injectable()
@@ -36,6 +36,6 @@ export class AppConfigService {
                     'Cache-Control': 'no-cache, no-store, must-revalidate'
                 })
             }
-        );
+        )
     }
 }

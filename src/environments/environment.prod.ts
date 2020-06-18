@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import { environmentBase } from './environment.base';
-import { Environment } from './shared';
+import { environmentBase } from './environment.base'
+import { Environment } from './shared'
 
 
 export const environment: Environment = {
     ...environmentBase,
     production: true,
-};
+}

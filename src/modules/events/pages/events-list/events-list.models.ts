@@ -116,4 +116,4 @@ export const EVENTS_DATA_SOURCE = {
         dataSourceType: 'parquet',
         append: false
     }], totalCount: 18, pageNum: 1, pageSize: 10, totalDateRange: [1573848088476, 1586884368355]
-};
+}

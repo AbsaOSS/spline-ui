@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import { AppConfigService } from './app-config.service';
+import { AppConfigService } from './app-config.service'
 
 
 export const services: any[] = [
     AppConfigService
-];
+]
 
-export * from './app-config.service';
+export * from './app-config.service'

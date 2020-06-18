@@ -15,6 +15,6 @@
  */
 
 export interface AppConfig {
-    embeddedMode: boolean;
-    splineApiUrl: string;
+    embeddedMode: boolean
+    splineApiUrl: string
 }
