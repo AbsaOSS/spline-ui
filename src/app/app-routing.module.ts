@@ -26,12 +26,12 @@ const routes: Routes = [
     {
         path: '',
         redirectTo: 'events',
-        pathMatch: 'full'
+        pathMatch: 'full',
     },
     {
         path: '**',
-        redirectTo: 'events'
-    }
+        redirectTo: 'events',
+    },
 ]
 
 @NgModule({
@@ -39,10 +39,10 @@ const routes: Routes = [
     imports: [
         RouterModule.forRoot(routes, {
             useHash: false,
-            scrollPositionRestoration: 'top'
-        })
+            scrollPositionRestoration: 'top',
+        }),
     ],
-    exports: [RouterModule]
+    exports: [RouterModule],
 })
 export class AppRoutingModule {
 }

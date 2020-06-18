@@ -25,12 +25,12 @@ import * as fromServices from './services'
     declarations: [],
     imports: [
         CommonModule,
-        HttpClientModule
+        HttpClientModule,
     ],
     exports: [],
     providers: [
-        ...fromServices.services
-    ]
+        ...fromServices.services,
+    ],
 })
 export class CoreModule {
     constructor(@Optional() @SkipSelf() parentModule: CoreModule) {

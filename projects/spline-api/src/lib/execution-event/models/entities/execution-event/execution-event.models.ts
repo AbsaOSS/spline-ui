@@ -14,11 +14,29 @@
  * limitations under the License.
  */
 
-import { AppConfigService } from './app-config.service'
 
+export type ExecutionEventDto = {
+    append: boolean
+    applicationId: string
+    applicationName: string
+    dataSourceType: string
+    dataSourceUri: string
+    executionEventId: string
+    executionPlanId: string
+    frameworkName: string
+    timestamp: number
+}
 
-export const services: any[] = [
-    AppConfigService,
-]
+export type ExecutionEvent =
+    & ExecutionEventDto
+    &
+    {
+        executedAt: Date
+    }
 
-export * from './app-config.service'
+export function toExecutionEvent(entity: ExecutionEventDto): ExecutionEvent {
+    return {
+        ...entity,
+        executedAt: new Date(entity.timestamp * 1000),
+    }
+}

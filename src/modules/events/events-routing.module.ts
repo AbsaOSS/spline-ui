@@ -23,19 +23,19 @@ import { EventsListComponent } from './pages'
 const routes: Routes = [
     {
         path: 'list',
-        component: EventsListComponent
+        component: EventsListComponent,
     },
     {
         path: '**',
-        redirectTo: 'list'
-    }
+        redirectTo: 'list',
+    },
 ]
 
 @NgModule({
     imports: [
-        RouterModule.forChild(routes)
+        RouterModule.forChild(routes),
     ],
-    exports: [RouterModule]
+    exports: [RouterModule],
 })
 export class EventsRoutingModule {
 }

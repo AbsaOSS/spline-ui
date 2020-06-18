@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { deploymentPrefix, relativeUrl, Environment } from './shared'
+import { deploymentPrefix, Environment, relativeUrl } from './shared'
 
 
 const url = relativeUrl + deploymentPrefix
@@ -22,5 +22,5 @@ export const environmentBase: Environment = {
     production: false,
     deploymentPrefix,
     url,
-    appConfigUri: `${url}/assets/config.json`
+    appConfigUri: `${url}/assets/config.json`,
 }

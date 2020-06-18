@@ -36,8 +36,8 @@
     "ordered-imports": [
       true,
       {
-        "import-sources-order": "lowercase-first",
-        "named-imports-order": "lowercase-first",
+        "import-sources-order": "case-insensitive",
+        "named-imports-order": "case-insensitive",
         "grouped-imports": true
       }
     ],

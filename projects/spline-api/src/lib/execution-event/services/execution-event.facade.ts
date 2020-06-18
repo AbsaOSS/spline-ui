@@ -14,28 +14,26 @@
  * limitations under the License.
  */
 
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { environment } from '@env/environment'
 import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
 
-import { AppConfig } from '../models'
+import { ExecutionEventsListResponse, ExecutionEventsListResponseDto, toExecutionEventsList } from '../models'
 
 
 @Injectable()
-export class AppConfigService {
+export class ExecutionEventFacade {
 
     constructor(private readonly http: HttpClient) {
     }
 
-    fetchConfig(): Observable<AppConfig> {
-        return this.http.get<AppConfig>(
-            environment.appConfigUri,
-            {
-                headers: new HttpHeaders({
-                    'Cache-Control': 'no-cache, no-store, must-revalidate',
-                }),
-            },
-        )
+    // TODO: implement request filtering & sorting
+    fetchList(): Observable<ExecutionEventsListResponse> {
+        const url = ''
+        return this.http.get<ExecutionEventsListResponseDto>(url)
+            .pipe(
+                map(toExecutionEventsList),
+            )
     }
 }

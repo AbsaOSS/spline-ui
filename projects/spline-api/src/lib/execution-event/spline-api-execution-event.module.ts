@@ -14,33 +14,21 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common'
-import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
-import { MatSortModule } from '@angular/material/sort'
-import { MatTableModule } from '@angular/material/table'
-import { MatTooltipModule } from '@angular/material/tooltip'
 
-import { EventsRoutingModule } from './events-routing.module'
-import * as fromPages from './pages'
+import { SplineApiCoreModule } from '../core'
+
+import * as fromServices from './services'
 
 
 @NgModule({
-    declarations: [
-        ...fromPages.pageComponents,
+    providers: [
+        ...fromServices.executionEventServices,
     ],
     imports: [
-        CommonModule,
-        HttpClientModule,
-        EventsRoutingModule,
-        MatTableModule,
-        MatSortModule,
-        MatTooltipModule,
+        SplineApiCoreModule,
     ],
-    exports: [
-        ...fromPages.pageComponents,
-    ],
-    providers: [],
+    exports: [],
 })
-export class EventsModule {
+export class SplineApiExecutionEventModule {
 }

@@ -14,17 +14,19 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
+import { NgModule } from '@angular/core'
 
-import { SplineApiCoreModule } from './core';
+import { SplineApiCoreModule } from './core'
+import { SplineApiExecutionEventModule } from './execution-event'
 
 
 @NgModule({
     declarations: [],
     imports: [
-        SplineApiCoreModule
+        SplineApiCoreModule,
+        SplineApiExecutionEventModule,
     ],
-    exports: []
+    exports: [],
 })
 export class SplineApiModule {
 }

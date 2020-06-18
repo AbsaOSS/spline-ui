@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import { AppConfigService } from './app-config.service'
+import { ExecutionEventFacade } from './execution-event.facade'
 
 
-export const services: any[] = [
-    AppConfigService,
+export const executionEventServices: any[] = [
+    ExecutionEventFacade,
 ]
 
-export * from './app-config.service'
+export * from './public-api'

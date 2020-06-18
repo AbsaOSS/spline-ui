@@ -18,7 +18,7 @@ import { EventsListComponent } from './events-list/events-list.component'
 
 
 export const pageComponents: any[] = [
-    EventsListComponent
+    EventsListComponent,
 ]
 
 export * from './events-list/events-list.component'

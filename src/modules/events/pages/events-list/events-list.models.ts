@@ -24,7 +24,7 @@ export const EVENTS_DATA_SOURCE = {
         timestamp: 1586884368355,
         dataSourceUri: 'file:/home/wajda/Projects/spline-spark-agent/examples/data/output/batch/job2_stage1_results',
         dataSourceType: 'Parquet',
-        append: false
+        append: false,
     }, {
         executionEventId: '82e7c14c-dab5-485b-b111-0c2437efd788:k905ruc8',
         executionPlanId: '82e7c14c-dab5-485b-b111-0c2437efd788',
@@ -34,7 +34,7 @@ export const EVENTS_DATA_SOURCE = {
         timestamp: 1586884020056,
         dataSourceUri: 'file:/home/wajda/Projects/spline-spark-agent/examples/data/output/batch/job1_results',
         dataSourceType: 'Parquet',
-        append: false
+        append: false,
     }, {
         executionEventId: 'ae5a5fdd-53f5-4fc9-a7a5-00b876028829:k3pupac0',
         executionPlanId: 'ae5a5fdd-53f5-4fc9-a7a5-00b876028829',
@@ -44,7 +44,7 @@ export const EVENTS_DATA_SOURCE = {
         timestamp: 1575376851600,
         dataSourceUri: 'file:/home/ec2-user/spline/examples/data/output/batchWithDependencies/otherJobResults',
         dataSourceType: 'parquet',
-        append: false
+        append: false,
     }, {
         executionEventId: 'ef5112c5-c026-4270-96aa-09b0f9bbe890:k3pup0vy',
         executionPlanId: 'ef5112c5-c026-4270-96aa-09b0f9bbe890',
@@ -54,7 +54,7 @@ export const EVENTS_DATA_SOURCE = {
         timestamp: 1575376839358,
         dataSourceUri: 'file:/home/ec2-user/spline/examples/data/output/batchWithDependencies/gdpPerCapitaUSD',
         dataSourceType: 'parquet',
-        append: false
+        append: false,
     }, {
         executionEventId: '3d7b7d9d-07f1-4ec9-97cf-e37bf0e09b95:k3puopo8',
         executionPlanId: '3d7b7d9d-07f1-4ec9-97cf-e37bf0e09b95',
@@ -64,7 +64,7 @@ export const EVENTS_DATA_SOURCE = {
         timestamp: 1575376824824,
         dataSourceUri: 'file:/home/ec2-user/spline/examples/data/output/batchWithDependencies/beerConsCtl',
         dataSourceType: 'parquet',
-        append: true
+        append: true,
     }, {
         executionEventId: '7112dbdf-b930-4e08-af47-8e743ec93cc7:k3puoeio',
         executionPlanId: '7112dbdf-b930-4e08-af47-8e743ec93cc7',
@@ -74,7 +74,7 @@ export const EVENTS_DATA_SOURCE = {
         timestamp: 1575376810368,
         dataSourceUri: 'file:/home/ec2-user/spline/examples/data/output/batch/java-sample.csv',
         dataSourceType: 'csv',
-        append: false
+        append: false,
     }, {
         executionEventId: '116123f9-5a35-48da-ba8d-d74eb92067e4:k3puo3l9',
         executionPlanId: '116123f9-5a35-48da-ba8d-d74eb92067e4',
@@ -84,7 +84,7 @@ export const EVENTS_DATA_SOURCE = {
         timestamp: 1575376796205,
         dataSourceUri: 'file:/home/ec2-user/spline/examples/data/output/batch/job3_results',
         dataSourceType: 'parquet',
-        append: false
+        append: false,
     }, {
         executionEventId: 'b004c9a6-fbcf-4b11-a2cf-c54eaa89557b:k3punsr3',
         executionPlanId: 'b004c9a6-fbcf-4b11-a2cf-c54eaa89557b',
@@ -94,7 +94,7 @@ export const EVENTS_DATA_SOURCE = {
         timestamp: 1575376782159,
         dataSourceUri: 'file:/home/ec2-user/spline/examples/data/output/batch/job2_stage2_results',
         dataSourceType: 'parquet',
-        append: false
+        append: false,
     }, {
         executionEventId: '8e625759-283c-442f-906b-74295b4bae35:k3punocy',
         executionPlanId: '8e625759-283c-442f-906b-74295b4bae35',
@@ -104,7 +104,7 @@ export const EVENTS_DATA_SOURCE = {
         timestamp: 1575376776466,
         dataSourceUri: 'file:/home/ec2-user/spline/examples/data/output/batch/job2_stage1_results',
         dataSourceType: 'parquet',
-        append: false
+        append: false,
     }, {
         executionEventId: 'a748979c-c82f-4d50-8636-901329a583c3:k3puncov',
         executionPlanId: 'a748979c-c82f-4d50-8636-901329a583c3',
@@ -114,6 +114,6 @@ export const EVENTS_DATA_SOURCE = {
         timestamp: 1575376761343,
         dataSourceUri: 'file:/home/ec2-user/spline/examples/data/output/batch/job1_results',
         dataSourceType: 'parquet',
-        append: false
-    }], totalCount: 18, pageNum: 1, pageSize: 10, totalDateRange: [1573848088476, 1586884368355]
+        append: false,
+    }], totalCount: 18, pageNum: 1, pageSize: 10, totalDateRange: [1573848088476, 1586884368355],
 }

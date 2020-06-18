@@ -14,7 +14,7 @@
   ~ limitations under the License.
   -->
 <div class="container">
-    <h1 class="page-title" [matTooltip]="'Test'">
+    <h1 [matTooltip]="'Test'" class="page-title">
         Execution Events
     </h1>
 
@@ -67,7 +67,7 @@
                     Data Source
                 </mat-header-cell>
                 <mat-cell *matCellDef="let rowData">
-                    <div class="max-width-100" [matTooltip]="rowData.dataSourceUri">
+                    <div [matTooltip]="rowData.dataSourceUri" class="max-width-100">
                         <a href="/">{{rowData.dataSourceUri.split('/').slice(-1)[0]}}</a>
                         <div class="minor-text">
                             {{rowData.dataSourceUri}}
@@ -94,7 +94,7 @@
                     Write Mode
                 </mat-header-cell>
                 <mat-cell *matCellDef="let rowData">
-                    <div class="write-mode" [class.write-mode--pink]="!rowData.append">
+                    <div [class.write-mode--pink]="!rowData.append" class="write-mode">
                         {{rowData.append && 'Append' || 'Override'}}
                     </div>
                 </mat-cell>

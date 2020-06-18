@@ -23,13 +23,13 @@ import { EVENTS_DATA_SOURCE } from './events-list.models'
 @Component({
     selector: 'events-list',
     templateUrl: './events-list.component.html',
-    styleUrls: ['./events-list.component.scss']
+    styleUrls: ['./events-list.component.scss'],
 })
 export class EventsListComponent implements OnInit, AfterContentInit {
 
-    @ViewChild(MatSort, {static: true}) sortControl: MatSort;
+    @ViewChild(MatSort, { static: true }) sortControl: MatSort
 
-    data: any[] = EVENTS_DATA_SOURCE.items;
+    data: any[] = EVENTS_DATA_SOURCE.items
     visibleColumns = [
         'applicationName',
         'executionPlanId',
@@ -37,7 +37,7 @@ export class EventsListComponent implements OnInit, AfterContentInit {
         'dataSourceType',
         'append',
         'timestamp',
-    ];
+    ]
 
     constructor() {
     }
@@ -49,7 +49,7 @@ export class EventsListComponent implements OnInit, AfterContentInit {
         this.sortControl.sort({
             id: 'timestamp',
             start: 'desc',
-            disableClear: false
+            disableClear: false,
         })
     }
 

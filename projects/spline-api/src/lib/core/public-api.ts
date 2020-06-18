@@ -14,4 +14,5 @@
  * limitations under the License.
  */
 
-export * from './spline-api-core.module';
+export * from './models/public-api'
+export * from './spline-api-core.module'
