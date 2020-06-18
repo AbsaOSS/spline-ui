@@ -14,7 +14,13 @@
  * limitations under the License.
  */
 
-export * from './page-response.models'
-export * from './query-pager.models'
-export * from './query-params.models'
-export * from './query-sorter.models'
+
+import { QueryPager } from './query-pager.models'
+import { QuerySorter } from './query-sorter.models'
+
+
+export interface PageQueryParams<TFilter extends object, TSortableFiled = string> {
+    pager?: Partial<QueryPager>
+    filter?: TFilter
+    sortBy?: QuerySorter.FieldSorter<TSortableFiled>[]
+}

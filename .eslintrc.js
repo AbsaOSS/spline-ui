@@ -51,6 +51,7 @@ module.exports = {
             ],
             'rules': {
                 'import/newline-after-import': ['error', {'count': 2}],
+                '@typescript-eslint/no-use-before-define': ['error', {'functions': false}],
                 '@typescript-eslint/no-empty-function': 0,
                 '@typescript-eslint/no-var-requires': 0,
                 '@typescript-eslint/no-explicit-any': 0,

@@ -14,9 +14,14 @@
  * limitations under the License.
  */
 
-export type PageResponse<T> = {
-    items: T[]
-    pageNum: number
-    pageSize: number
-    totalCount: number
+export type QueryPager = {
+    offset: number
+    limit: number
 }
+
+export const DEFAULT_PAGE_LIMIT = 10
+
+export const DEFAULT_PAGER: QueryPager =  Object.freeze<QueryPager>({
+    offset: 0,
+    limit: DEFAULT_PAGE_LIMIT,
+})

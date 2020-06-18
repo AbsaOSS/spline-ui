@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export * from './page-response.models'
-export * from './query-pager.models'
-export * from './query-params.models'
-export * from './query-sorter.models'
+export type PageResponse<T> = {
+    items: T[]
+    totalCount: number
+}

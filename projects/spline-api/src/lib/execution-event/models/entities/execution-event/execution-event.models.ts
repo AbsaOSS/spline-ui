@@ -15,16 +15,28 @@
  */
 
 
+export enum ExecutionEventField {
+    append = 'append',
+    applicationId = 'applicationId',
+    applicationName = 'applicationName',
+    dataSourceType = 'dataSourceType',
+    dataSourceUri = 'dataSourceUri',
+    executionEventId = 'executionEventId',
+    executionPlanId = 'executionPlanId',
+    frameworkName = 'frameworkName',
+    timestamp = 'timestamp',
+}
+
 export type ExecutionEventDto = {
-    append: boolean
-    applicationId: string
-    applicationName: string
-    dataSourceType: string
-    dataSourceUri: string
-    executionEventId: string
-    executionPlanId: string
-    frameworkName: string
-    timestamp: number
+    [ExecutionEventField.append]: boolean
+    [ExecutionEventField.applicationId]: string
+    [ExecutionEventField.applicationName]: string
+    [ExecutionEventField.dataSourceType]: string
+    [ExecutionEventField.dataSourceUri]: string
+    [ExecutionEventField.executionEventId]: string
+    [ExecutionEventField.executionPlanId]: string
+    [ExecutionEventField.frameworkName]: string
+    [ExecutionEventField.timestamp]: number
 }
 
 export type ExecutionEvent =
