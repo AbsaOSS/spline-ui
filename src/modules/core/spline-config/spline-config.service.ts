@@ -17,19 +17,20 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { environment } from '@env/environment'
-import { Observable } from 'rxjs'
+import { Observable, of } from 'rxjs'
+import { catchError } from 'rxjs/operators'
 
-import { AppConfig } from '../models'
+import { DEFAULT_SPLINE_CONFIG, SplineConfig } from './spline-config.models'
 
 
 @Injectable()
-export class AppConfigService {
+export class SplineConfigService {
 
     constructor(private readonly http: HttpClient) {
     }
 
-    fetchConfig(): Observable<AppConfig> {
-        return this.http.get<AppConfig>(
+    fetchConfig(): Observable<SplineConfig> {
+        return this.http.get<SplineConfig>(
             environment.appConfigUri,
             {
                 headers: new HttpHeaders({
@@ -37,5 +38,8 @@ export class AppConfigService {
                 }),
             },
         )
+            .pipe(
+                catchError(() => of(DEFAULT_SPLINE_CONFIG)),
+            )
     }
 }

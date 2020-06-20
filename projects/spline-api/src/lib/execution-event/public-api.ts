@@ -15,4 +15,5 @@
  */
 
 export * from './models/public-api'
+export * from './services/public-api'
 export * from './spline-api-execution-event.module'

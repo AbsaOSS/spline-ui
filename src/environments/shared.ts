@@ -22,4 +22,7 @@ export interface Environment {
     deploymentPrefix: string
     url: string
     appConfigUri: string
+    splineConsumerApi: {
+        fullPath: string
+    }
 }

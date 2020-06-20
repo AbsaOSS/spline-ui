@@ -14,6 +14,4 @@
  * limitations under the License.
  */
 
-/*
- * Public API Surface of spline-shared
- */
+export * from './spline-api-config/public-api'

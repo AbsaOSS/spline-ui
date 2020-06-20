@@ -19,7 +19,7 @@
     </h1>
 
     <div class="px-5">
-        <mat-table [dataSource]="data" matSort>
+        <mat-table [dataSource]="data$ | async" matSort>
 
             <!-- executionPlanId -->
             <ng-container [matColumnDef]="'executionPlanId'">

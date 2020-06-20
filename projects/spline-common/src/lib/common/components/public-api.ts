@@ -14,5 +14,4 @@
  * limitations under the License.
  */
 
-export * from './components/public-api';
-export * from './spline-common-core.module';
+export * from './base/base-component'

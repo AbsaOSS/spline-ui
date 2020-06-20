@@ -14,40 +14,14 @@
  * limitations under the License.
  */
 
-import { DEFAULT_PAGE_LIMIT, PageQueryParams, PageResponse, QueryPager, QuerySorter } from '../../../../core'
+import { HttpParams } from '@angular/common/http'
 
-import { ExecutionEvent, ExecutionEventDto, ExecutionEventField, toExecutionEvent } from './execution-event.models'
+import { DEFAULT_PAGE_LIMIT, PageQueryParams, QueryPager, QuerySorter } from '../../../../core'
+
+import { ExecutionEventField } from './execution-event.models'
 
 
 export namespace ExecutionEventsQuery {
-
-    export type ResponseDto =
-        & PageResponse<ExecutionEventDto>
-        &
-        {
-            totalDateRange: number[]
-        }
-
-    export type Response =
-        & PageResponse<ExecutionEvent>
-        &
-        {
-            totalDateRange: {
-                from: Date
-                to: Date
-            }
-        }
-
-    export function toResponse(entity: ResponseDto): Response {
-        return {
-            ...entity,
-            items: entity.items.map(toExecutionEvent),
-            totalDateRange: {
-                from: new Date(entity.totalDateRange[0] * 1000),
-                to: new Date(entity.totalDateRange[0] * 1000),
-            },
-        }
-    }
 
     export type QueryFilter = {
         expiredAtFrom?: Date
@@ -81,6 +55,21 @@ export namespace ExecutionEventsQuery {
         }
     }
 
+    export function queryParamsDtoToHttpParams(queryParamsDto: QueryParamsDto): HttpParams {
+        let httpParams = new HttpParams()
+        Object.keys(queryParamsDto)
+            .filter(key => queryParamsDto[key] !== undefined)
+            .forEach(key => {
+                httpParams = httpParams.append(key, queryParamsDto[key])
+            })
+        return httpParams
+    }
+
+    export function queryParamsToHttpParams(queryParams: QueryParams): HttpParams {
+        const queryParamsDto = toQueryParamsDto(queryParams)
+        return queryParamsDtoToHttpParams(queryParamsDto)
+    }
+
     function toQueryFilterDto(queryFilter: QueryFilter): Partial<QueryParamsDto> {
         return {
             timestampStart: queryFilter?.expiredAtFrom ? queryFilter?.expiredAtFrom.getTime() / 1000 : undefined,
@@ -97,14 +86,14 @@ export namespace ExecutionEventsQuery {
         const offset = queryPager?.offset ?? 0
         return {
             pageSize: limit,
-            pageNum: offset/limit + 1
+            pageNum: offset / limit + 1,
         }
     }
 
     function toSortingDto(sortBy: QuerySorter.FieldSorter<ExecutionEventField>[]): Partial<QueryParamsDto> {
         return {
             sortField: sortBy[0].field,
-            sortOrder: sortBy[0].dir.toLowerCase()
+            sortOrder: sortBy[0].dir.toLowerCase(),
         }
     }
 }

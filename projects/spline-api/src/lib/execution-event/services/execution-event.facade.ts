@@ -19,21 +19,24 @@ import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
-import { ExecutionEventsListResponse, ExecutionEventsListResponseDto, toExecutionEventsList } from '../models'
+import { ExecutionEventsPageResponse, ExecutionEventsPageResponseDto, ExecutionEventsQuery, toExecutionEventsPageResponse } from '../models'
+
+import { BaseFacade } from './base.facade'
 
 
 @Injectable()
-export class ExecutionEventFacade {
+export class ExecutionEventFacade extends BaseFacade {
 
-    constructor(private readonly http: HttpClient) {
+    constructor(protected readonly http: HttpClient) {
+        super(http)
     }
 
-    // TODO: implement request filtering & sorting
-    fetchList(): Observable<ExecutionEventsListResponse> {
-        const url = ''
-        return this.http.get<ExecutionEventsListResponseDto>(url)
+    fetchList(queryParams: ExecutionEventsQuery.QueryParams): Observable<ExecutionEventsPageResponse> {
+        const params = ExecutionEventsQuery.queryParamsToHttpParams(queryParams)
+        const url = this.toUrl('execution-events')
+        return this.http.get<ExecutionEventsPageResponseDto>(url, { params: params })
             .pipe(
-                map(toExecutionEventsList),
+                map(toExecutionEventsPageResponse),
             )
     }
 }

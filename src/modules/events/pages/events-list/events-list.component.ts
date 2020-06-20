@@ -16,8 +16,9 @@
 
 import { AfterContentInit, Component, OnInit, ViewChild } from '@angular/core'
 import { MatSort } from '@angular/material/sort'
-
-import { EVENTS_DATA_SOURCE } from './events-list.models'
+import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
+import { ExecutionEvent, ExecutionEventFacade } from 'spline-api'
 
 
 @Component({
@@ -29,7 +30,7 @@ export class EventsListComponent implements OnInit, AfterContentInit {
 
     @ViewChild(MatSort, { static: true }) sortControl: MatSort
 
-    data: any[] = EVENTS_DATA_SOURCE.items
+    readonly data$: Observable<ExecutionEvent[]>
     visibleColumns = [
         'applicationName',
         'executionPlanId',
@@ -39,7 +40,11 @@ export class EventsListComponent implements OnInit, AfterContentInit {
         'timestamp',
     ]
 
-    constructor() {
+    constructor(private readonly executionEventFacade: ExecutionEventFacade) {
+        this.data$ = this.executionEventFacade.fetchList({})
+            .pipe(
+                map(response => response.items),
+            )
     }
 
     ngOnInit(): void {

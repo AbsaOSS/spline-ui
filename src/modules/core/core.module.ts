@@ -18,8 +18,6 @@ import { CommonModule } from '@angular/common'
 import { HttpClientModule } from '@angular/common/http'
 import { NgModule, Optional, SkipSelf } from '@angular/core'
 
-import * as fromServices from './services'
-
 
 @NgModule({
     declarations: [],
@@ -28,9 +26,7 @@ import * as fromServices from './services'
         HttpClientModule,
     ],
     exports: [],
-    providers: [
-        ...fromServices.services,
-    ],
+    providers: [],
 })
 export class CoreModule {
     constructor(@Optional() @SkipSelf() parentModule: CoreModule) {

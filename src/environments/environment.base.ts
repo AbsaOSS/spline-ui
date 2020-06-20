@@ -23,4 +23,7 @@ export const environmentBase: Environment = {
     deploymentPrefix,
     url,
     appConfigUri: `${url}/assets/config.json`,
+    splineConsumerApi: {
+        fullPath: '/consumer'
+    }
 }

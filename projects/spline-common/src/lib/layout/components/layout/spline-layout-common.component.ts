@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import { AfterContentInit, Component, ContentChildren, QueryList, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Component, ContentChildren, QueryList, TemplateRef } from '@angular/core'
 
-import { SplineLayoutSectionDirective } from '../../directives';
-import { SplineLayoutSection } from '../../models';
+import { SplineLayoutSectionDirective } from '../../directives'
+import { SplineLayoutSection } from '../../models'
 
 
 @Component({
@@ -27,23 +27,23 @@ import { SplineLayoutSection } from '../../models';
 })
 export class SplineLayoutCommonComponent implements AfterContentInit {
 
-    @ContentChildren(SplineLayoutSectionDirective) sectionTemplatesQueryList: QueryList<SplineLayoutSectionDirective>;
+    @ContentChildren(SplineLayoutSectionDirective) sectionTemplatesQueryList: QueryList<SplineLayoutSectionDirective>
 
-    sectionsTemplatesCollection: Partial<{ [K in SplineLayoutSection.SectionName]: TemplateRef<any> }> = {};
+    sectionsTemplatesCollection: Partial<{ [K in SplineLayoutSection.SectionName]: TemplateRef<any> }> = {}
 
-    readonly SectionName = SplineLayoutSection.SectionName;
+    readonly SectionName = SplineLayoutSection.SectionName
 
     ngAfterContentInit(): void {
         // calculate templates collection
         this.sectionsTemplatesCollection = this.sectionTemplatesQueryList
             .reduce(
                 (result, item) => {
-                    const templateName = item.sectionName;
-                    result[templateName] = item.template;
-                    return result;
+                    const templateName = item.sectionName
+                    result[templateName] = item.template
+                    return result
                 },
                 {},
-            );
+            )
     }
 
 }

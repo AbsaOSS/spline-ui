@@ -15,4 +15,5 @@
  */
 
 export * from './execution-event.models'
-export * from './execution-events-list-response.models'
+export * from './execution-events-list.models'
+export * from './execution-events-query.models'

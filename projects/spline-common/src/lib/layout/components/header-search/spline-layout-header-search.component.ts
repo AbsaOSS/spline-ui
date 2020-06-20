@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, skip, takeUntil } from 'rxjs/operators';
+import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { Subject } from 'rxjs'
+import { debounceTime, distinctUntilChanged, map, skip, takeUntil } from 'rxjs/operators'
 
-import { BaseComponent } from '../../../core';
+import { BaseComponent } from '../../../common'
 
 
 @Component({
@@ -37,9 +37,9 @@ export class SplineLayoutHeaderSearchComponent extends BaseComponent {
     protected searchValue$ = new Subject<string>();
 
     constructor() {
-        super();
+        super()
 
-        const debounceTimeInUs = 200;
+        const debounceTimeInUs = 200
         this.searchValue$
             .pipe(
                 takeUntil(this.destroyed$),
@@ -53,10 +53,10 @@ export class SplineLayoutHeaderSearchComponent extends BaseComponent {
             )
             .subscribe(
                 value => this.search$.next(value)
-            );
+            )
     }
 
     onSearchChanged(searchTerm: string): void {
-        this.searchValue$.next(searchTerm);
+        this.searchValue$.next(searchTerm)
     }
 }

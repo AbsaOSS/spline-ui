@@ -14,4 +14,17 @@
  * limitations under the License.
  */
 
-export * from './base/base-component';
+import { HttpClient } from '@angular/common/http'
+
+
+export abstract class BaseFacade {
+
+    protected readonly BASE_PATH = '@splineConsumerApi/'
+
+    constructor(protected readonly http: HttpClient) {
+    }
+
+    protected toUrl(path: string): string {
+        return this.BASE_PATH + path
+    }
+}

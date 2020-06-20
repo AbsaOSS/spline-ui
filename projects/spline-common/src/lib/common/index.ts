@@ -14,7 +14,4 @@
  * limitations under the License.
  */
 
-export interface AppConfig {
-    embeddedMode: boolean
-    splineApiUrl: string
-}
+export * from './public-api'

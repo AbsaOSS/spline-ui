@@ -20,6 +20,8 @@ import { NgModule } from '@angular/core'
 import { MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { SplineApiModule } from 'spline-api'
+import { SplineApiConfigModule } from 'spline-shared'
 
 import { EventsRoutingModule } from './events-routing.module'
 import * as fromPages from './pages'
@@ -36,6 +38,8 @@ import * as fromPages from './pages'
         MatTableModule,
         MatSortModule,
         MatTooltipModule,
+        SplineApiConfigModule,
+        SplineApiModule
     ],
     exports: [
         ...fromPages.pageComponents,

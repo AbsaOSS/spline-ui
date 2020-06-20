@@ -34,11 +34,20 @@
       "spline-api": [
         "projects/spline-api/src/public-api"
       ],
+      "spline-api/*": [
+        "projects/spline-api/src/public-api/*"
+      ],
       "spline-common": [
         "projects/spline-common/src/public-api"
       ],
+      "spline-common/*": [
+        "projects/spline-common/src/public-api/*"
+      ],
       "spline-shared": [
         "projects/spline-shared/src/public-api"
+      ],
+      "spline-shared/*": [
+        "projects/spline-shared/src/public-api/*"
       ]
     }
   },

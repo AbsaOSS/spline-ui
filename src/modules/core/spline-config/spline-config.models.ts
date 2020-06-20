@@ -14,4 +14,12 @@
  * limitations under the License.
  */
 
-export * from './public-api';
+export type SplineConfig = {
+    isEmbeddedMode: boolean
+    splineApiUrl: string
+}
+
+export const DEFAULT_SPLINE_CONFIG: Readonly<SplineConfig> = Object.freeze<SplineConfig>({
+    isEmbeddedMode: false,
+    splineApiUrl: 'http://localhost:8080/consumer'
+})

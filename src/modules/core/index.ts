@@ -14,5 +14,4 @@
  * limitations under the License.
  */
 
-export * from './models'
 export * from './core.module'
