@@ -74,7 +74,12 @@
                     Executed At
                 </mat-header-cell>
                 <mat-cell *matCellDef="let rowData">
-                    {{rowData.timestamp | date : 'yyyy-MM-dd - HH:mm:ss'}}
+                    <div class="max-width-100 text-center">
+                        {{rowData.timestamp | date : 'yyyy-MM-dd'}}
+                        <div class="minor-text">
+                            {{rowData.timestamp | date : 'HH:mm:ss'}}
+                        </div>
+                    </div>
                 </mat-cell>
             </ng-container>
             <!-- ./timestamp -->

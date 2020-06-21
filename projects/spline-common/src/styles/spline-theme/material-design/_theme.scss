@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-@import 'palettes/pallete-orange';
 @import 'palettes/pallete-green';
 
-$spline-theme: mat-light-theme($spline-palette-orange, $spline-palette-green);
+$spline-theme: mat-light-theme($spline-palette-green, $spline-palette-green);
 
 
