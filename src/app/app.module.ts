@@ -24,7 +24,7 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { storeFreeze } from 'ngrx-store-freeze'
-import { SplineLayoutCommonModule } from 'spline-common'
+import { SplineLayoutCommonModule, SplineSearchBoxModule } from 'spline-common'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -54,6 +54,7 @@ export const metaReducers: MetaReducer<any>[] =
             stateKey: 'router',
         }),
         SplineLayoutCommonModule,
+        SplineSearchBoxModule
     ],
     providers: [],
     bootstrap: [AppComponent],

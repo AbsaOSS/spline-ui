@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-import { EventsListComponent } from './events-list/events-list.component'
+import { EventOverviewPageComponent } from './event-overview/event-overview.page.component'
+import { EventsListPageComponent } from './events-list/events-list.page.component'
 
 
 export const pageComponents: any[] = [
-    EventsListComponent,
+    EventsListPageComponent,
+    EventOverviewPageComponent,
 ]
 
-export * from './events-list/events-list.component'
+export * from './event-overview/event-overview.page.component'
+export * from './events-list/events-list.page.component'

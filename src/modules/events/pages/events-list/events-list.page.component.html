@@ -18,7 +18,7 @@
         Execution Events
     </h1>
 
-    <div class="px-5">
+    <div style="min-height: 300px">
 
         <ng-container *ngIf="(loadingProcessing$ | async) as loadingProcessing">
             <!-- LOADER -->
@@ -50,7 +50,9 @@
                 </mat-header-cell>
                 <mat-cell *matCellDef="let rowData">
                     <div>
-                        <a href="/">{{rowData.applicationName}}</a>
+                        <a [routerLink]="['../overview', rowData.executionEventId]">
+                            {{rowData.applicationName}}
+                        </a>
                     </div>
                 </mat-cell>
             </ng-container>

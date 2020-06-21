@@ -18,23 +18,22 @@ import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { Subject } from 'rxjs'
 import { debounceTime, distinctUntilChanged, map, skip, takeUntil } from 'rxjs/operators'
 
-import { BaseComponent } from '../../../common'
+import { BaseComponent } from '../../common'
 
 
 @Component({
-    selector: 'spline-layout-header-search',
-    templateUrl: './spline-layout-header-search.component.html',
-    styleUrls: ['./spline-layout-header-search.component.scss'],
+    selector: 'spline-search-box',
+    templateUrl: './spline-search-box.component.html',
 })
-export class SplineLayoutHeaderSearchComponent extends BaseComponent {
+export class SplineSearchComponent extends BaseComponent {
 
-    @Input() placeholder = 'Search';
+    @Input() placeholder = 'Search'
 
-    @Output() search$ = new EventEmitter<string>();
+    @Output() search$ = new EventEmitter<string>()
 
-    isFocused = false;
+    isFocused = false
 
-    protected searchValue$ = new Subject<string>();
+    protected searchValue$ = new Subject<string>()
 
     constructor() {
         super()
@@ -52,7 +51,7 @@ export class SplineLayoutHeaderSearchComponent extends BaseComponent {
                 distinctUntilChanged(),
             )
             .subscribe(
-                value => this.search$.next(value)
+                value => this.search$.next(value),
             )
     }
 

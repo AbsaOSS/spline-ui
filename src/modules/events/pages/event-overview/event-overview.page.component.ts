@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,6 +14,23 @@
  * limitations under the License.
  */
 
-@import 'spline-theme/index';
-@import 'layout/index';
-@import 'components/index';
+import { Component, OnInit } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
+
+
+@Component({
+    selector: 'event-overview-page',
+    templateUrl: './event-overview.page.component.html',
+    styleUrls: ['./event-overview.page.component.scss'],
+})
+export class EventOverviewPageComponent implements OnInit {
+
+    eventId: string
+
+    constructor(private readonly activatedRoute: ActivatedRoute) {
+    }
+
+    ngOnInit(): void {
+        this.eventId = this.activatedRoute.snapshot.params['id']
+    }
+}

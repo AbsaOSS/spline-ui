@@ -21,6 +21,7 @@ import { MatInputModule } from '@angular/material/input'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { RouterModule } from '@angular/router'
 
 import * as fromComponents from './components'
 import * as fromDirectives from './directives'
@@ -34,6 +35,7 @@ import * as fromDirectives from './directives'
         MatIconModule,
         MatProgressSpinnerModule,
         MatTooltipModule,
+        RouterModule,
     ],
     declarations: [
         ...fromComponents.layoutComponents,

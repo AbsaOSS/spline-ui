@@ -17,13 +17,17 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 
-import { EventsListComponent } from './pages'
+import { EventOverviewPageComponent, EventsListPageComponent } from './pages'
 
 
 const routes: Routes = [
     {
         path: 'list',
-        component: EventsListComponent,
+        component: EventsListPageComponent,
+    },
+    {
+        path: 'overview/:id',
+        component: EventOverviewPageComponent,
     },
     {
         path: '**',

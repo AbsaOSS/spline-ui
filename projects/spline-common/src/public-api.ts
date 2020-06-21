@@ -20,4 +20,5 @@
 
 export * from './lib/common/public-api'
 export * from './lib/layout/public-api'
+export * from './lib/components/public-api'
 export * from './lib/utils/public-api'

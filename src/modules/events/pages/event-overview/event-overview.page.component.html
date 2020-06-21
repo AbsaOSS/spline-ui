@@ -13,13 +13,12 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+<div class="container">
 
-<div class="sl-header-search" [class.sl-header-search--focused]="isFocused">
-    <mat-icon>search</mat-icon>
-    <input type="text"
-           (keyup)="onSearchChanged(searchRef.value)"
-           [placeholder]="placeholder"
-           (focusin)="isFocused = true"
-           (focusout)="isFocused = false"
-           #searchRef>
+    <h1 class="page-title">
+        Execution Event Overview
+    </h1>
+
+    <h2 class="text-center">{{eventId}}</h2>
+
 </div>

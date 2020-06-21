@@ -255,7 +255,7 @@ implements DataSource<TDataRecord> {
             )
     }
 
-    // Returns TRUE if search params are the same.
+    // Returns TRUE if search$ params are the same.
     protected compareSearchParams(
         searchParams: SearchParams<TFilter, TSortableFields>,
         newSearchParams: SearchParams<TFilter, TSortableFields>): boolean {
@@ -266,7 +266,7 @@ implements DataSource<TDataRecord> {
     protected processOnSearchEvent(searchTerm: string, apply: boolean = true, force: boolean = false): void {
         let searchParams: Partial<SearchParams<TFilter, TSortableFields>> = { searchTerm }
 
-        // reset pagination on real search
+        // reset pagination on real search$
         if (apply) {
             searchParams = this.resetPagination(searchParams)
         }
@@ -284,7 +284,7 @@ implements DataSource<TDataRecord> {
     protected processOnFilterChangedEvent(filterValue: TFilter, apply: boolean = true, force: boolean = false): void {
         let searchParams: Partial<SearchParams<TFilter, TSortableFields>> = { filter: filterValue }
 
-        // reset pagination on real search
+        // reset pagination on real search$
         if (apply) {
             searchParams = {
                 ...searchParams,

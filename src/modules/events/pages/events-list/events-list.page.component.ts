@@ -25,9 +25,9 @@ import { ExecutionEventsDataSource } from '../../data-sources'
 
 
 @Component({
-    selector: 'events-list',
-    templateUrl: './events-list.component.html',
-    styleUrls: ['./events-list.component.scss'],
+    selector: 'events-list-page',
+    templateUrl: './events-list.page.component.html',
+    styleUrls: ['./events-list.page.component.scss'],
     providers: [
         {
             provide: ExecutionEventsDataSource,
@@ -38,7 +38,7 @@ import { ExecutionEventsDataSource } from '../../data-sources'
         },
     ],
 })
-export class EventsListComponent implements OnInit, AfterContentInit {
+export class EventsListPageComponent implements OnInit, AfterContentInit {
 
     @ViewChild(MatSort, { static: true }) sortControl: MatSort
     readonly loadingProcessing$: Observable<ProcessingStore.EventProcessingState>
