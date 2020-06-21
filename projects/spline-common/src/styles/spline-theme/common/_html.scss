@@ -38,7 +38,7 @@ summary {
 
 html,
 body {
-    color: $color-text-black;
+    color: $color-black;
     font-family: $font-family--body;
     margin: 0;
     padding: 0;
@@ -49,14 +49,14 @@ h2,
 h3,
 h4,
 h5 {
-    color: $color-text-black;
+    color: $color-black;
     font-family: $font-family--title;
     font-weight: 300;
 }
 
 a {
-    color: $color-green;
-    text-decoration: none;
+    color: $color-green-light;
+    text-decoration: underline;
 }
 
 a:hover,

@@ -20,6 +20,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatSidenavModule } from '@angular/material/sidenav'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 import * as fromComponents from './components'
 import * as fromDirectives from './directives'
@@ -32,6 +33,7 @@ import * as fromDirectives from './directives'
         MatInputModule,
         MatIconModule,
         MatProgressSpinnerModule,
+        MatTooltipModule,
     ],
     declarations: [
         ...fromComponents.layoutComponents,

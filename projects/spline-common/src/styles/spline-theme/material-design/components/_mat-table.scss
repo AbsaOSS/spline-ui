@@ -15,13 +15,14 @@
  */
 
 @import 'mixins';
+@import 'vars';
 
 .mat-table {
     background: none;
 }
 
 mat-row.mat-row {
-    background: #fafafa;
+    background: $color-white-smoked;
     border-bottom-style: none;
     border-radius: 25px;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.12);
@@ -31,10 +32,11 @@ mat-row.mat-row {
 }
 
 mat-header-row.mat-header-row {
-    border-bottom: 1px solid #ddd;
-    border-top: 1px solid #ddd !important;
+    border-bottom: 1px solid $color-grey;
+    border-top: 1px solid $color-grey !important;
+    color: $color-grey-dark;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 500;
     margin-bottom: 1rem;
     min-height: 3rem;
 }

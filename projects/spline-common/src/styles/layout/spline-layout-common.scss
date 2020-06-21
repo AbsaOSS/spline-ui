@@ -24,6 +24,7 @@ $spline-layout-settings-default: (
     content-border-radius: 2rem 2rem 0 0,
 
     sidebar-width: 270px,
+    sidebar-bg-color: $color-grey-light,
     sidebar-right-border-color: $color-grey
 );
 
@@ -62,10 +63,9 @@ $spline-layout-settings-default: (
         }
 
         .mat-drawer {
-            background-color: transparent;
+            background: map-get($settings, sidebar-bg-color);
             border-radius: 2rem 0 0;
             border-style: none;
-            border-right: 1px solid map-get($settings, sidebar-right-border-color);
             padding-top: 2rem;
             width: map-get($settings, sidebar-width);
         }
