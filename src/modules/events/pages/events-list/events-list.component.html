@@ -40,13 +40,21 @@
                 <mat-cell *matCellDef="let rowData">
                     <div>
                         <a href="/">{{rowData.applicationName}}</a>
-                        <div>
-                            <div class="minor-text"> {{rowData.applicationId}}</div>
-                        </div>
                     </div>
                 </mat-cell>
             </ng-container>
             <!-- ./applicationName -->
+
+            <!-- applicationId -->
+            <ng-container [matColumnDef]="'applicationId'">
+                <mat-header-cell *matHeaderCellDef>
+                    Application Name
+                </mat-header-cell>
+                <mat-cell *matCellDef="let rowData">
+                    {{rowData.applicationId}}
+                </mat-cell>
+            </ng-container>
+            <!-- ./applicationId -->
 
             <!-- timestamp -->
             <ng-container [matColumnDef]="'timestamp'">

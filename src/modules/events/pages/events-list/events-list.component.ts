@@ -32,8 +32,8 @@ export class EventsListComponent implements OnInit, AfterContentInit {
 
     readonly data$: Observable<ExecutionEvent[]>
     visibleColumns = [
+        'applicationId',
         'applicationName',
-        'executionPlanId',
         'dataSource',
         'dataSourceType',
         'append',
