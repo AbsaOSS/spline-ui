@@ -48,6 +48,12 @@
       ],
       "spline-shared/*": [
         "projects/spline-shared/src/public-api/*"
+      ],
+      "spline-utils": [
+        "projects/spline-utils/src/public-api"
+      ],
+      "spline-utils/*": [
+        "projects/spline-utils/src/public-api/*"
       ]
     }
   },

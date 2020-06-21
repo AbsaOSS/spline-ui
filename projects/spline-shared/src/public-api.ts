@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export * from './spline-api-config/public-api'
+export * from './lib/spline-api-config/public-api'

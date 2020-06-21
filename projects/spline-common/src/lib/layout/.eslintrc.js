@@ -28,7 +28,7 @@ module.exports = {
             'error',
             {
                 'type': 'element',
-                'prefix': ['spline-layout', 'sl'],
+                'prefix': ['spline-layout', 'sl', 'spline'],
                 'style': 'kebab-case'
             }
         ]

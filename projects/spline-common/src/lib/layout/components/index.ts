@@ -14,15 +14,19 @@
  * limitations under the License.
  */
 
-import { SplineLayoutHeaderLogoComponent } from './header-logo/spline-layout-header-logo.component';
-import { SplineLayoutHeaderSearchComponent } from './header-search/spline-layout-header-search.component';
-import { SplineLayoutCommonComponent } from './layout/spline-layout-common.component';
+import { SplineContentErrorComponent } from './content-error/spline-content-error.component'
+import { SplineContentLoaderComponent } from './content-loader/spline-content-loader.component'
+import { SplineLayoutHeaderLogoComponent } from './header-logo/spline-layout-header-logo.component'
+import { SplineLayoutHeaderSearchComponent } from './header-search/spline-layout-header-search.component'
+import { SplineLayoutCommonComponent } from './layout/spline-layout-common.component'
 
 
 export const layoutComponents: any[] = [
     SplineLayoutCommonComponent,
     SplineLayoutHeaderLogoComponent,
-    SplineLayoutHeaderSearchComponent
-];
+    SplineLayoutHeaderSearchComponent,
+    SplineContentLoaderComponent,
+    SplineContentErrorComponent
+]
 
-export * from './public-api';
+export * from './public-api'

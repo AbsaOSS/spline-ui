@@ -1,0 +1,28 @@
+/*!
+ * Copyright 2020 ABSA Group Limited
+ */
+
+@import 'vars';
+
+.error-wrapper {
+
+    color: $color-pink;
+    left: 0;
+    padding-top: 3rem;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 100;
+
+    mat-icon.mat-icon {
+        font-size: 72px;
+        height: 72px;
+        width: 72px;
+    }
+
+    .message {
+        color: $color-pink;
+    }
+}
+
+

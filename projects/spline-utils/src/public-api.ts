@@ -14,10 +14,5 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core'
-
-
-@NgModule({})
-export class SplineCommonUtilsModule {
-
-}
+export * from './lib/store/public-api'
+export * from './lib/search-query/public-api'

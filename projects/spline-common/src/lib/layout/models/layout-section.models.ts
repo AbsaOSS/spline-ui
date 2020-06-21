@@ -21,5 +21,5 @@ export namespace SplineLayoutSection {
     export const SectionName = {
         header: 'header' as SectionName,
         sidebar: 'sidebar' as SectionName,
-    };
+    }
 }

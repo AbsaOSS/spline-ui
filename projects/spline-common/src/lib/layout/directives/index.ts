@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import { SplineLayoutSectionDirective } from './spline-layout-section.directive';
+import { SplineLayoutSectionDirective } from './spline-layout-section.directive'
 
 
 export const layoutDirectives: any[] = [
     SplineLayoutSectionDirective
-];
+]
 
-export * from './public-api';
+export * from './public-api'

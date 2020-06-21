@@ -18,7 +18,7 @@
  * Public API Surface of spline-common
  */
 
-export * from './components/public-api';
-export * from './directives/public-api';
-export * from './models/public-api';
-export * from './spline-layout-common.module';
+export * from './components/public-api'
+export * from './directives/public-api'
+export * from './models/public-api'
+export * from './spline-layout-common.module'

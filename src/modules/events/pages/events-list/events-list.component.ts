@@ -18,20 +18,33 @@ import { AfterContentInit, Component, OnInit, ViewChild } from '@angular/core'
 import { MatSort } from '@angular/material/sort'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { ExecutionEvent, ExecutionEventFacade } from 'spline-api'
+import { ExecutionEvent, ExecutionEventFacade, ExecutionEventsPageResponse } from 'spline-api'
+import { ProcessingStore } from 'spline-utils'
+
+import { ExecutionEventsDataSource } from '../../data-sources'
 
 
 @Component({
     selector: 'events-list',
     templateUrl: './events-list.component.html',
     styleUrls: ['./events-list.component.scss'],
+    providers: [
+        {
+            provide: ExecutionEventsDataSource,
+            useFactory: (executionEventFacade: ExecutionEventFacade) => {
+                return new ExecutionEventsDataSource(executionEventFacade)
+            },
+            deps: [ExecutionEventFacade],
+        },
+    ],
 })
 export class EventsListComponent implements OnInit, AfterContentInit {
 
     @ViewChild(MatSort, { static: true }) sortControl: MatSort
+    readonly loadingProcessing$: Observable<ProcessingStore.EventProcessingState>
+    readonly data$: Observable<ExecutionEventsPageResponse>
 
-    readonly data$: Observable<ExecutionEvent[]>
-    visibleColumns = [
+    readonly visibleColumns = [
         'applicationId',
         'applicationName',
         'dataSource',
@@ -40,14 +53,13 @@ export class EventsListComponent implements OnInit, AfterContentInit {
         'timestamp',
     ]
 
-    constructor(private readonly executionEventFacade: ExecutionEventFacade) {
-        this.data$ = this.executionEventFacade.fetchList({})
-            .pipe(
-                map(response => response.items),
-            )
+    constructor(readonly dataSource: ExecutionEventsDataSource) {
+        this.loadingProcessing$ = this.dataSource.loadingProcessing$
+        this.data$ = this.dataSource.dataState$.pipe(map(dataState => dataState.data))
     }
 
     ngOnInit(): void {
+        this.dataSource.load()
     }
 
     ngAfterContentInit(): void {

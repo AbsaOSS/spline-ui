@@ -14,10 +14,4 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core'
-
-
-@NgModule({})
-export class SplineCommonUtilsModule {
-
-}
+export * from './execution-events-data.source'

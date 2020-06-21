@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
+import { MatIconModule } from '@angular/material/icon'
+import { MatInputModule } from '@angular/material/input'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { MatSidenavModule } from '@angular/material/sidenav'
 
-import * as fromComponents from './components';
-import * as fromDirectives from './directives';
+import * as fromComponents from './components'
+import * as fromDirectives from './directives'
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import * as fromDirectives from './directives';
         MatSidenavModule,
         MatInputModule,
         MatIconModule,
+        MatProgressSpinnerModule,
     ],
     declarations: [
         ...fromComponents.layoutComponents,

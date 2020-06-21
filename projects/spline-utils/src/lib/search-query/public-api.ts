@@ -14,10 +14,5 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core'
-
-
-@NgModule({})
-export class SplineCommonUtilsModule {
-
-}
+export * from './search-data-source.model'
+export * from './search-query.models'

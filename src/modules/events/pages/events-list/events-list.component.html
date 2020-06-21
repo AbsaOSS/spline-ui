@@ -19,7 +19,18 @@
     </h1>
 
     <div class="px-5">
-        <mat-table [dataSource]="data$ | async" matSort>
+
+        <ng-container *ngIf="(loadingProcessing$ | async) as loadingProcessing">
+            <!-- LOADER -->
+            <spline-content-loader *ngIf="loadingProcessing.processing"></spline-content-loader>
+            <!-- ./LOADER -->
+
+            <!-- ERROR -->
+            <spline-content-error *ngIf="loadingProcessing.processingError"></spline-content-error>
+            <!-- ./ERROR -->
+        </ng-container>
+
+        <mat-table [dataSource]="(data$ | async)?.items" matSort>
 
             <!-- executionPlanId -->
             <ng-container [matColumnDef]="'executionPlanId'">

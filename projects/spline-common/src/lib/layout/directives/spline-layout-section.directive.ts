@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import { Directive, Input, TemplateRef } from '@angular/core';
+import { Directive, Input, TemplateRef } from '@angular/core'
 
-import { SplineLayoutSection } from '../models';
+import { SplineLayoutSection } from '../models'
 
 
 @Directive({

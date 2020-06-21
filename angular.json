@@ -284,6 +284,51 @@
           }
         }
       }
+    },
+    "spline-utils": {
+      "projectType": "library",
+      "root": "projects/spline-utils",
+      "sourceRoot": "projects/spline-utils/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/spline-utils/tsconfig.lib.json",
+            "project": "projects/spline-utils/ng-package.json",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "projects/spline-utils/src/styles"
+              ]
+            }
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/spline-utils/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/spline-utils/src/test.ts",
+            "tsConfig": "projects/spline-utils/tsconfig.spec.json",
+            "karmaConfig": "projects/spline-utils/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/spline-utils/tsconfig.lib.json",
+              "projects/spline-utils/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "spline-ui"

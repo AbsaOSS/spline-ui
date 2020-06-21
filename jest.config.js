@@ -35,6 +35,8 @@ module.exports = {
         "^spline-common": "<rootDir>/projects/spline-common/src/public-api",
         "/spline-shared/": "<rootDir>/projects/spline-shared/src/public-api",
         "^spline-shared": "<rootDir>/projects/spline-shared/src/public-api",
+        "/spline-utils/": "<rootDir>/projects/spline-utils/src/public-api",
+        "^spline-utils": "<rootDir>/projects/spline-utils/src/public-api",
     },
     'resolver': null,
     'globals': {

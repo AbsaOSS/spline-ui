@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export * from './spline-layout-section.directive';
+export * from './spline-layout-section.directive'
