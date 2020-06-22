@@ -12,8 +12,7 @@
     "lint:styles": "stylelint src/**/*.scss",
     "lint:styles:fix": "stylelint src/**/*.scss --fix",
     "e2e": "ng e2e",
-    "ngcc": "ngcc --properties es2015 browser module main --async false",
-    "postinstall": "npm run ngcc"
+    "ngcc": "ngcc --properties es2015 browser module main --async false"
   },
   "private": true,
   "dependencies": {

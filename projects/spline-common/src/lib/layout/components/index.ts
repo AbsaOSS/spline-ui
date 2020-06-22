@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-import { SplineContentErrorComponent } from './content-error/spline-content-error.component'
-import { SplineContentLoaderComponent } from './content-loader/spline-content-loader.component'
 import { SplineLayoutHeaderLogoComponent } from './header-logo/spline-layout-header-logo.component'
 import { SplineLayoutCommonComponent } from './layout/spline-layout-common.component'
 
@@ -23,8 +21,6 @@ import { SplineLayoutCommonComponent } from './layout/spline-layout-common.compo
 export const layoutComponents: any[] = [
     SplineLayoutCommonComponent,
     SplineLayoutHeaderLogoComponent,
-    SplineContentLoaderComponent,
-    SplineContentErrorComponent
 ]
 
 export * from './public-api'

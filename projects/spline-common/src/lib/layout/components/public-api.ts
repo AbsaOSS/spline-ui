@@ -14,7 +14,5 @@
  * limitations under the License.
  */
 
-export * from './content-error/spline-content-error.component'
-export * from './content-loader/spline-content-loader.component'
 export * from './layout/spline-layout-common.component'
 export * from './header-logo/spline-layout-header-logo.component'
