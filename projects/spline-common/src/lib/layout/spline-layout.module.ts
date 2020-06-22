@@ -33,7 +33,6 @@ import * as fromDirectives from './directives'
         MatSidenavModule,
         MatInputModule,
         MatIconModule,
-        MatProgressSpinnerModule,
         MatTooltipModule,
         RouterModule,
     ],
@@ -46,6 +45,6 @@ import * as fromDirectives from './directives'
         ...fromDirectives.layoutDirectives,
     ]
 })
-export class SplineLayoutCommonModule {
+export class SplineLayoutModule {
 
 }

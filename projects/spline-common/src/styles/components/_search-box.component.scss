@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@import 'vars';
+@import '../vars';
 
 // TODO: adjust colors and use it from palette.
 $input-bg: rgba(255, 255, 255, .25);
@@ -27,19 +27,34 @@ $height: 42px;
 $border-radius: 2rem;
 
 .spline-search-box {
+    // CONTAINER
     background: $input-bg;
     border-radius: $border-radius;
     display: flex;
     line-height: $height;
     padding: 0 1rem;
+    transition: all 200ms ease-in-out;
 
-    mat-icon {
+    // ICONS
+
+    .spline-search-box__search-icon,
+    .spline-search-box__clear-icon {
         color: $input-text-color;
         font-size: 22px;
         height: $height;
         line-height: $height;
+    }
+
+    .spline-search-box__search-icon {
         margin-right: 0.75rem;
     }
+
+    .spline-search-box__clear-icon {
+        cursor: pointer;
+        margin-left: 0.75rem;
+    }
+
+    // INPUT
 
     input {
         background: none;
@@ -54,10 +69,13 @@ $border-radius: 2rem;
         }
     }
 
+    // FOCUSED STATE
+
     &--focused {
         background: $input-bg--active;
 
-        mat-icon {
+        .spline-search-box__search-icon,
+        .spline-search-box__clear-icon {
             color: $input-text-color--active;
         }
 

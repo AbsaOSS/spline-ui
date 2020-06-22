@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core'
 import { Subject } from 'rxjs'
-import { debounceTime, distinctUntilChanged, map, skip, takeUntil } from 'rxjs/operators'
+import { debounceTime, distinctUntilChanged, map, skip, takeUntil, tap } from 'rxjs/operators'
 
 import { BaseComponent } from '../../common'
 
@@ -27,35 +27,54 @@ import { BaseComponent } from '../../common'
 })
 export class SplineSearchComponent extends BaseComponent {
 
+    @ViewChild('inputRef', { read: ElementRef, static: true }) inputRef: ElementRef<HTMLElement>;
+
     @Input() placeholder = 'Search'
+
+    @Input() set searchTerm(value: string) {
+        this.inputValue = value
+    }
 
     @Output() search$ = new EventEmitter<string>()
 
     isFocused = false
+    inputValue: string
 
-    protected searchValue$ = new Subject<string>()
+    readonly emitSearchEventDebounceTimeInUs = 200
+
+    protected searchValueChanged$ = new Subject<string>()
 
     constructor() {
         super()
 
-        const debounceTimeInUs = 200
-        this.searchValue$
+        this.searchValueChanged$
             .pipe(
                 takeUntil(this.destroyed$),
                 // skip default value
-                skip(1),
+                // skip(1),
                 map(val => val.trim().toLowerCase()),
                 // wait 200 us between keyUp events
-                debounceTime(debounceTimeInUs),
+                debounceTime(this.emitSearchEventDebounceTimeInUs),
                 // emit only different value form the previous one
                 distinctUntilChanged(),
             )
             .subscribe(
-                value => this.search$.next(value),
+                value => this.search$.emit(value),
             )
     }
 
     onSearchChanged(searchTerm: string): void {
-        this.searchValue$.next(searchTerm)
+        this.inputValue = searchTerm
+        this.searchValueChanged$.next(searchTerm)
     }
+
+    onClearBtnClicked(): void {
+        this.inputValue = ''
+        this.focusSearchInput()
+    }
+
+    focusSearchInput(): void {
+        this.inputRef.nativeElement.focus()
+    }
+
 }

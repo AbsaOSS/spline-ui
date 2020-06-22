@@ -22,7 +22,7 @@
 
         <ng-container *ngIf="(loadingProcessing$ | async) as loadingProcessing">
             <!-- LOADER -->
-            <spline-content-loader *ngIf="loadingProcessing.processing"></spline-content-loader>
+            <spline-loader *ngIf="loadingProcessing.processing"></spline-loader>
             <!-- ./LOADER -->
 
             <!-- ERROR -->

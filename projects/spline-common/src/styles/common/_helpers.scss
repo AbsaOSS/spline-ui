@@ -14,5 +14,9 @@
  * limitations under the License.
  */
 
-@import 'html';
-@import 'helpers';
+@import '../mixins';
+
+.long-text-wrapper {
+    @include long-text-wrapper();
+}
+

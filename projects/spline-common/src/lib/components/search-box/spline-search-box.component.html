@@ -15,11 +15,27 @@
   -->
 
 <div [class.spline-search-box--focused]="isFocused" class="spline-search-box">
-    <mat-icon>search</mat-icon>
-    <input #searchRef
+
+    <!-- SEARCH ICON -->
+    <mat-icon class="spline-search-box__search-icon">search</mat-icon>
+    <!-- ./SEARCH ICON -->
+
+    <input #inputRef
+           class="spline-search-box__input"
            (focusin)="isFocused = true"
            (focusout)="isFocused = false"
-           (keyup)="onSearchChanged(searchRef.value)"
+           [ngModel]="inputValue"
+           (ngModelChange)="onSearchChanged($event)"
            [placeholder]="placeholder"
            type="text">
+
+    <!-- CLEAR ICON -->
+    <mat-icon class="spline-search-box__clear-icon"
+              *ngIf="inputRef.value?.length"
+              matTooltip="Clear"
+              (click)="onClearBtnClicked()">
+        close
+    </mat-icon>
+    <!-- ./CLEAR ICON -->
+
 </div>

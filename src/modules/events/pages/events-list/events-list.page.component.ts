@@ -18,7 +18,7 @@ import { AfterContentInit, Component, OnInit, ViewChild } from '@angular/core'
 import { MatSort } from '@angular/material/sort'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { ExecutionEvent, ExecutionEventFacade, ExecutionEventsPageResponse } from 'spline-api'
+import { ExecutionEventFacade, ExecutionEventsPageResponse } from 'spline-api'
 import { ProcessingStore } from 'spline-utils'
 
 import { ExecutionEventsDataSource } from '../../data-sources'
