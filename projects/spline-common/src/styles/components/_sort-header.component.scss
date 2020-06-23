@@ -1,0 +1,59 @@
+@import '../vars';
+
+.spline-sort {
+    &__wrapper {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+
+        &:not(.area-disabled) {
+
+            cursor: pointer;
+
+            &:hover *,
+            &.sorting-active * {
+                color: darken($color-grey-dark, 20);
+            }
+        }
+    }
+
+    &___icons-container {
+        align-items: center;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        padding-left: 1.25rem;
+        padding-right: 0.75rem;
+        width: 22px;
+    }
+
+    &__icon-unordered {
+        color: $color-grey-dark-75;
+        display: flex;
+        flex-direction: column;
+
+        &.mat-icon {
+            font-size: 18px;
+            height: 18px;
+            width: 18px;
+        }
+
+        &--up.mat-icon {
+            margin-bottom: -5px;
+
+        }
+
+        &--down.mat-icon {
+            margin-top: -5px;
+        }
+    }
+
+    &__icon.mat-icon {
+        color: $color-grey-dark;
+        font-size: 22px;
+        height: 22px;
+        width: 22px;
+    }
+
+
+}

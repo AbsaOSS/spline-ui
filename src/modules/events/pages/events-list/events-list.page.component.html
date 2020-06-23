@@ -32,20 +32,9 @@
 
         <mat-table [dataSource]="(data$ | async)?.items" matSort>
 
-            <!-- executionPlanId -->
-            <ng-container [matColumnDef]="'executionPlanId'">
-                <mat-header-cell *matHeaderCellDef>
-                    Execution Plan
-                </mat-header-cell>
-                <mat-cell *matCellDef="let rowData">
-                    <a href="/">{{rowData.executionPlanId}}</a>
-                </mat-cell>
-            </ng-container>
-            <!-- ./executionPlanId -->
-
             <!-- applicationName -->
-            <ng-container [matColumnDef]="'applicationName'">
-                <mat-header-cell *matHeaderCellDef>
+            <ng-container [matColumnDef]="ExecutionEventField.applicationName">
+                <mat-header-cell *matHeaderCellDef spline-sort-header>
                     Application Name
                 </mat-header-cell>
                 <mat-cell *matCellDef="let rowData">
@@ -59,9 +48,9 @@
             <!-- ./applicationName -->
 
             <!-- applicationId -->
-            <ng-container [matColumnDef]="'applicationId'">
-                <mat-header-cell *matHeaderCellDef>
-                    Application Name
+            <ng-container [matColumnDef]="ExecutionEventField.applicationId">
+                <mat-header-cell spline-sort-header *matHeaderCellDef>
+                    Application Id
                 </mat-header-cell>
                 <mat-cell *matCellDef="let rowData">
                     {{rowData.applicationId}}
@@ -70,9 +59,8 @@
             <!-- ./applicationId -->
 
             <!-- timestamp -->
-            <ng-container [matColumnDef]="'timestamp'">
-                <mat-header-cell *matHeaderCellDef
-                                 mat-sort-header>
+            <ng-container [matColumnDef]="ExecutionEventField.timestamp">
+                <mat-header-cell spline-sort-header *matHeaderCellDef>
                     Executed At
                 </mat-header-cell>
                 <mat-cell *matCellDef="let rowData">
@@ -87,9 +75,9 @@
             <!-- ./timestamp -->
 
             <!-- dataSource -->
-            <ng-container [matColumnDef]="'dataSource'">
-                <mat-header-cell *matHeaderCellDef>
-                    Data Source
+            <ng-container [matColumnDef]="ExecutionEventField.dataSourceUri">
+                <mat-header-cell spline-sort-header *matHeaderCellDef>
+                    Destination
                 </mat-header-cell>
                 <mat-cell *matCellDef="let rowData">
                     <div class="max-width-100">
@@ -103,9 +91,9 @@
             <!-- ./dataSource -->
 
             <!-- dataSourceType -->
-            <ng-container [matColumnDef]="'dataSourceType'">
-                <mat-header-cell *matHeaderCellDef>
-                    Data Source Type
+            <ng-container [matColumnDef]="ExecutionEventField.dataSourceType">
+                <mat-header-cell spline-sort-header *matHeaderCellDef>
+                    Type
                 </mat-header-cell>
                 <mat-cell *matCellDef="let rowData">
                     {{rowData.dataSourceType}}
@@ -114,8 +102,8 @@
             <!-- ./dataSourceType -->
 
             <!-- append -->
-            <ng-container [matColumnDef]="'append'">
-                <mat-header-cell *matHeaderCellDef>
+            <ng-container [matColumnDef]="ExecutionEventField.append">
+                <mat-header-cell spline-sort-header *matHeaderCellDef>
                     Write Mode
                 </mat-header-cell>
                 <mat-cell *matCellDef="let rowData">
@@ -129,6 +117,7 @@
             <mat-header-row *matHeaderRowDef="visibleColumns"></mat-header-row>
 
             <mat-row *matRowDef="let row; columns: visibleColumns;"></mat-row>
+
 
         </mat-table>
     </div>

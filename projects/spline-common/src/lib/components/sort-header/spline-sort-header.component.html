@@ -1,0 +1,15 @@
+<div class="spline-sort__wrapper" [class.sorting-active]="_isSorted()" [class.area-disabled]="_isDisabled()">
+    <span>
+        <ng-content></ng-content>
+    </span>
+    <div class="spline-sort___icons-container" *ngIf="!_isDisabled()">
+
+        <div class="spline-sort__icon-unordered" *ngIf="!_isSorted()">
+            <mat-icon class="spline-sort__icon-unordered spline-sort__icon-unordered--up">expand_less</mat-icon>
+            <mat-icon class="spline-sort__icon-unordered spline-sort__icon-unordered--down">expand_more</mat-icon>
+        </div>
+
+        <mat-icon class="spline-sort__icon" *ngIf="_isSorted() && _arrowDirection === 'desc'">expand_more</mat-icon>
+        <mat-icon class="spline-sort__icon" *ngIf="_isSorted() && _arrowDirection === 'asc'">expand_less</mat-icon>
+    </div>
+</div>
