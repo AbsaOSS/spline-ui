@@ -118,7 +118,16 @@
 
             <mat-row *matRowDef="let row; columns: visibleColumns;"></mat-row>
 
-
         </mat-table>
+
+        <mat-paginator
+                class="mat-paginator--no-bg"
+                (page)="onPaginationChanged($event)"
+                [length]="(data$ | async)?.totalCount"
+                [pageSize]="dataSource.searchParams?.pager?.limit"
+                [showFirstLastButtons]="false"
+                [hidePageSize]="true">
+
+        </mat-paginator>
     </div>
 </div>

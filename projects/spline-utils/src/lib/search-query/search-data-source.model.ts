@@ -145,12 +145,18 @@ implements DataSource<TDataRecord> {
         }, apply)
     }
 
-    prevPage(): void {
+    prevPage(apply: boolean = true): void {
         const currentPager = this.searchParams.pager
         if (currentPager.offset === 0) {
             console.error('You are already on the very first page, you cannot go back.')
             return
         }
+        this.updateSearchParams({
+            pager: {
+                ...currentPager,
+                offset: currentPager.offset - currentPager.limit,
+            },
+        }, apply)
     }
 
     updateSearchParams(

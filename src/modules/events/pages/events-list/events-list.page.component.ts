@@ -15,6 +15,7 @@
  */
 
 import { AfterContentInit, Component, OnInit, ViewChild } from '@angular/core'
+import { PageEvent } from '@angular/material/paginator'
 import { MatSort, MatSortable } from '@angular/material/sort'
 import { Observable } from 'rxjs'
 import { map, takeUntil } from 'rxjs/operators'
@@ -101,5 +102,14 @@ export class EventsListPageComponent extends BaseComponent implements OnInit, Af
 
                 this.dataSource.sort(sortBy)
             })
+    }
+
+    onPaginationChanged(pageEvent: PageEvent): void {
+        if (pageEvent.pageIndex > pageEvent.previousPageIndex) {
+            this.dataSource.nextPage()
+        }
+        else {
+            this.dataSource.prevPage()
+        }
     }
 }

@@ -33,7 +33,7 @@ mat-row.mat-row {
 
 mat-header-row.mat-header-row {
     border-bottom: 1px solid $color-grey;
-    border-top: 1px solid $color-grey !important;
+    border-top: 1px solid $color-grey;
     color: $color-grey-dark;
     font-size: 14px;
     font-weight: 500;
@@ -53,4 +53,16 @@ mat-cell.mat-cell {
 mat-header-cell.mat-header-cell {
     overflow: hidden;
     padding: 0 0.25rem;
+}
+
+
+mat-paginator.mat-paginator.mat-paginator--no-bg {
+    background-color: transparent;
+
+    .mat-paginator-container {
+        border-bottom: 1px solid $color-grey;
+        border-top: 1px solid $color-grey;
+        margin-top: 1.25rem;
+        min-height: 50px;
+    }
 }
