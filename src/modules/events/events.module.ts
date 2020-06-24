@@ -21,6 +21,7 @@ import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { RouterModule } from '@angular/router'
 import { SplineApiModule } from 'spline-api'
 import { SplineContentErrorModule, SplineLayoutModule, SplineLoaderModule, SplineSortHeaderModule } from 'spline-common'
 import { SplineApiConfigModule } from 'spline-shared'
@@ -47,6 +48,7 @@ import * as fromPages from './pages'
         SplineContentErrorModule,
         SplineSortHeaderModule,
         MatPaginatorModule,
+        RouterModule
     ],
     exports: [
         ...fromPages.pageComponents,

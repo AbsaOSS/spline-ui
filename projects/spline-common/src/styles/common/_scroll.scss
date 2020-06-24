@@ -25,10 +25,10 @@ $scrollbar-size: 17px;
 }
 
 *::-webkit-scrollbar-thumb {
-    @include border-radius(20px);
     background-clip: content-box;
     background-color: $color-green-dark;
     border: 5px solid transparent;
+    border-radius: 20px;
 }
 
 * {

@@ -15,7 +15,7 @@
  */
 
 @import 'spline-theme';
-
+@include mat-core();
 @include angular-material-theme($spline-theme);
 
 @import './components/index';

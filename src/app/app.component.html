@@ -24,7 +24,60 @@
 
     <!-- SIDEBAR -->
     <ng-template splineLayoutSection="sidebar">
-        Sidebar is here
+        <div class="spline-sidebar-menu">
+
+            <div class="spline-sidebar-menu__section">
+                <div class="spline-sidebar-menu__section-title">
+                    Summary
+                </div>
+
+                <mat-nav-list>
+                    <a mat-list-item
+                       routerLink="/dashboard"
+                       routerLinkActive="active">
+
+                        <mat-icon>dashboard</mat-icon>
+                        <span>Dashboard</span>
+
+                    </a>
+
+                    <a mat-list-item
+                       routerLink="/statistics"
+                       routerLinkActive="active">
+
+                        <mat-icon>insert_chart_outlined</mat-icon>
+                        <span>Statistics</span>
+
+                    </a>
+                </mat-nav-list>
+            </div>
+
+            <div class="spline-sidebar-menu__section">
+                <div class="spline-sidebar-menu__section-title">
+                    Data Entities
+                </div>
+
+                <mat-nav-list>
+                    <a mat-list-item
+                       routerLink="/events/list"
+                       routerLinkActive="active">
+
+                        <mat-icon>play_circle_filled</mat-icon>
+                        <span>Execution Events</span>
+
+                    </a>
+
+                    <a mat-list-item
+                       routerLink="events/overview/test"
+                       routerLinkActive="active">
+
+                        <mat-icon>description</mat-icon>
+                        <span>Data Sources</span>
+
+                    </a>
+                </mat-nav-list>
+            </div>
+        </div>
     </ng-template>
     <!-- ./SIDEBAR -->
 
