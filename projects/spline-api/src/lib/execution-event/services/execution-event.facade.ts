@@ -14,12 +14,17 @@
  * limitations under the License.
  */
 
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 import { ExecutionEventsPageResponse, ExecutionEventsPageResponseDto, ExecutionEventsQuery, toExecutionEventsPageResponse } from '../models'
+import {
+    ExecutionEventLineageOverview,
+    ExecutionEventLineageOverviewDto,
+    toExecutionEventLineageOverview,
+} from '../models/entities/execution-event-lineage'
 
 import { BaseFacade } from './base.facade'
 
@@ -29,6 +34,18 @@ export class ExecutionEventFacade extends BaseFacade {
 
     constructor(protected readonly http: HttpClient) {
         super(http)
+    }
+
+    fetchLineageOverview(executionEventId: string, maxDepth: number = 10): Observable<ExecutionEventLineageOverview> {
+        let params = new HttpParams()
+        params = params.append('eventId', executionEventId)
+        params = params.append('maxDepth', maxDepth.toString())
+
+        const url = this.toUrl('lineage-overview')
+        return this.http.get<ExecutionEventLineageOverviewDto>(url, { params: params })
+            .pipe(
+                map(toExecutionEventLineageOverview),
+            )
     }
 
     fetchList(queryParams: ExecutionEventsQuery.QueryParams): Observable<ExecutionEventsPageResponse> {

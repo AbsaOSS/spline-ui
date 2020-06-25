@@ -16,6 +16,7 @@
 
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
+import { ExecutionEventFacade } from 'spline-api'
 
 
 @Component({
@@ -27,7 +28,8 @@ export class EventOverviewPageComponent implements OnInit {
 
     eventId: string
 
-    constructor(private readonly activatedRoute: ActivatedRoute) {
+    constructor(private readonly activatedRoute: ActivatedRoute,
+                private readonly executionEventFacade: ExecutionEventFacade) {
     }
 
     ngOnInit(): void {
