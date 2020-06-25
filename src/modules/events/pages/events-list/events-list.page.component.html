@@ -35,13 +35,16 @@
             <!-- applicationName -->
             <ng-container [matColumnDef]="ExecutionEventField.applicationName">
                 <mat-header-cell *matHeaderCellDef spline-sort-header>
-                    Application Name
+                    Application
                 </mat-header-cell>
                 <mat-cell *matCellDef="let rowData">
-                    <div>
+                    <div class="max-width-100">
                         <a [routerLink]="['../event-overview', rowData.executionEventId]">
                             {{rowData.applicationName}}
                         </a>
+                        <div class="minor-text">
+                            {{rowData.applicationId}}
+                        </div>
                     </div>
                 </mat-cell>
             </ng-container>

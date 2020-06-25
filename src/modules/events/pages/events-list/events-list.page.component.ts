@@ -48,7 +48,6 @@ export class EventsListPageComponent extends BaseComponent implements OnInit, Af
     readonly data$: Observable<ExecutionEventsPageResponse>
 
     readonly visibleColumns = [
-        ExecutionEventField.applicationId,
         ExecutionEventField.applicationName,
         ExecutionEventField.executionPlanId,
         ExecutionEventField.dataSourceUri,
