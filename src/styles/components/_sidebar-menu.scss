@@ -17,11 +17,11 @@
 @import 'vars';
 
 .spline-sidebar-menu {
-    padding: 0 0.75rem;
+    padding: 0 0.75rem 0 0;
 
     .mat-nav-list .mat-list-item {
-        border-radius: 24px;
-        margin-bottom: 0.5rem;
+        border-radius: 0 24px 24px 0;
+        margin-bottom: 4px;
         overflow: hidden;
 
         &.active {
@@ -39,13 +39,13 @@
     }
 
     &__section {
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
     }
 
     &__section-title {
         color: $color-grey-dark;
         font-size: 12px;
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
         padding-left: 1rem;
         text-transform: uppercase;
     }
