@@ -14,13 +14,28 @@
  * limitations under the License.
  */
 
-import { ExecutionEventFacade } from './execution-event.facade'
-import { ExecutionPlanFacade } from './execution-plan.facade'
+import { LineageNode } from '../lineage'
+
+import { ExecutionEventLineageNodeType } from './execution-event-lineage-node-type.models'
 
 
-export const executionEventServices: any[] = [
-    ExecutionEventFacade,
-    ExecutionPlanFacade,
-]
+export type ExecutionEventLineageNode =
+    & LineageNode
+    & {
+        name: string
+        type: ExecutionEventLineageNodeType
+    }
 
-export * from './public-api'
+export type ExecutionEventLineageNodeDto = {
+    _id: string
+    name: string
+    _type: ExecutionEventLineageNodeType
+}
+
+export function toExecutionEventLineageNode(entity: ExecutionEventLineageNodeDto): ExecutionEventLineageNode {
+    return {
+        id: entity._id,
+        name: entity.name,
+        type: entity._type
+    }
+}

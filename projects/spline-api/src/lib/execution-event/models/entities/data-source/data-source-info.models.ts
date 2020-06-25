@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-import { ExecutionEventFacade } from './execution-event.facade'
-import { ExecutionPlanFacade } from './execution-plan.facade'
 
 
-export const executionEventServices: any[] = [
-    ExecutionEventFacade,
-    ExecutionPlanFacade,
-]
+export type DataSourceInfo = {
+    uri: string
+    type: string
+}
 
-export * from './public-api'

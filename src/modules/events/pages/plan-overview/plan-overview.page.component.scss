@@ -1,4 +1,4 @@
-/*
+/*!
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,14 +13,3 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import { ExecutionEventFacade } from './execution-event.facade'
-import { ExecutionPlanFacade } from './execution-plan.facade'
-
-
-export const executionEventServices: any[] = [
-    ExecutionEventFacade,
-    ExecutionPlanFacade,
-]
-
-export * from './public-api'

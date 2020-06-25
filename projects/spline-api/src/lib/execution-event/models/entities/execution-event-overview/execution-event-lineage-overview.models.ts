@@ -21,12 +21,12 @@ import { ExecutionEventLineageNode, ExecutionEventLineageNodeDto, toExecutionEve
 
 export type ExecutionEventLineageOverview = {
     lineage: ExecutionEventLineage
-    info: ExecutionEventLineageInfo
+    executionEventInfo: ExecutionEventInfo
 }
 
 export type ExecutionEventLineage = Lineage<ExecutionEventLineageNode>;
 
-export type ExecutionEventLineageInfo =
+export type ExecutionEventInfo =
     & ExecutionEventLineageInfoDto
     & {
     lineageDepth: ExecutionEventLineageOverviewDepth
@@ -55,7 +55,7 @@ export function toExecutionEventLineageOverview(entity: ExecutionEventLineageOve
             transitions: entity.graph.edges.map(toLineageNodeTransition),
             nodes: entity.graph.nodes.map(toExecutionEventLineageNode),
         },
-        info: {
+        executionEventInfo: {
             ...entity.info,
             lineageDepth: {
                 depthComputed: entity.graph.depthComputed,

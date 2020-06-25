@@ -24,7 +24,7 @@ import {
     ExecutionEventLineageOverview,
     ExecutionEventLineageOverviewDto,
     toExecutionEventLineageOverview,
-} from '../models/entities/execution-event-lineage'
+} from '../models/entities/execution-event-overview'
 
 import { BaseFacade } from './base.facade'
 

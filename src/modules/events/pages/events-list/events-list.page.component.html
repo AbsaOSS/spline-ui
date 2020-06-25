@@ -39,9 +39,26 @@
                 </mat-header-cell>
                 <mat-cell *matCellDef="let rowData">
                     <div>
-                        <a [routerLink]="['../overview', rowData.executionEventId]">
+                        <a [routerLink]="['../event-overview', rowData.executionEventId]">
                             {{rowData.applicationName}}
                         </a>
+                    </div>
+                </mat-cell>
+            </ng-container>
+            <!-- ./applicationName -->
+
+            <!-- applicationName -->
+            <ng-container [matColumnDef]="ExecutionEventField.executionPlanId">
+                <mat-header-cell *matHeaderCellDef spline-sort-header>
+                    Execution Plan
+                </mat-header-cell>
+                <mat-cell *matCellDef="let rowData">
+                    <div class="max-width-100">
+                        <div class="long-text-wrapper" [matTooltip]="rowData.executionPlanId">
+                            <a [routerLink]="['../plan-overview', rowData.executionPlanId]">
+                                {{rowData.executionPlanId}}
+                            </a>
+                        </div>
                     </div>
                 </mat-cell>
             </ng-container>
@@ -53,7 +70,11 @@
                     Application Id
                 </mat-header-cell>
                 <mat-cell *matCellDef="let rowData">
-                    {{rowData.applicationId}}
+                    <div class="max-width-100">
+                        <div class="long-text-wrapper">
+                            {{rowData.applicationId}}
+                        </div>
+                    </div>
                 </mat-cell>
             </ng-container>
             <!-- ./applicationId -->

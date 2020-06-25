@@ -14,6 +14,28 @@
  * limitations under the License.
  */
 
-export * from './execution-event-lineage.models'
-export * from './execution-event-lineage-node.models'
-export * from './execution-event-lineage-node-type.models'
+import { OperationType } from './operation-type.models'
+
+
+export type Operation = {
+    id: string
+    type: OperationType | string
+    name: string
+    properties: Record<string, any>
+}
+
+export type OperationDto = {
+    _id: string
+    _type: OperationType | string
+    name: string
+    properties: Record<string, any>
+}
+
+export function toOperation(entity: OperationDto): Operation {
+    return {
+        id: entity._id,
+        type: entity._type,
+        name: entity.name,
+        properties: entity.properties,
+    }
+}

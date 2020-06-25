@@ -15,3 +15,4 @@
  */
 
 export * from './execution-event.facade'
+export * from './execution-plan.facade'

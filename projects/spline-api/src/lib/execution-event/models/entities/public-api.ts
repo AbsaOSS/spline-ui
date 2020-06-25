@@ -15,3 +15,7 @@
  */
 
 export * from './execution-event'
+export * from './execution-event-overview'
+export * from './execution-plan'
+export * from './lineage'
+export * from './data-source'

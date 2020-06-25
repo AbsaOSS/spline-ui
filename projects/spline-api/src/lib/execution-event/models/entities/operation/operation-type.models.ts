@@ -14,28 +14,16 @@
  * limitations under the License.
  */
 
-import { LineageNode } from '../lineage'
-
-import { ExecutionEventLineageNodeType } from './execution-event-lineage-node-type.models'
-
-
-export type ExecutionEventLineageNode =
-    & LineageNode
-    & {
-        name: string
-        type: ExecutionEventLineageNodeType
-    }
-
-export type ExecutionEventLineageNodeDto = {
-    name: string
-    _id: string
-    _type: ExecutionEventLineageNodeType
-}
-
-export function toExecutionEventLineageNode(entity: ExecutionEventLineageNodeDto): ExecutionEventLineageNode {
-    return {
-        id: entity._id,
-        name: entity.name,
-        type: entity._type
-    }
+export enum OperationType {
+    Projection = 'Project',
+    LogicalRelation = 'LogicalRelation',
+    Join = 'Join',
+    Union = 'Union',
+    Generic = 'Generic',
+    Filter = 'Filter',
+    Sort = 'Sort',
+    Aggregate = 'Aggregate',
+    Write = 'Write',
+    Alias = 'SubqueryAlias',
+    Error = 'Error'
 }

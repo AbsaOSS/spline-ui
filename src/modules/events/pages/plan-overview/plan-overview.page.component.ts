@@ -16,23 +16,23 @@
 
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { ExecutionEventFacade } from 'spline-api'
+import { ExecutionPlanFacade } from 'spline-api'
 
 
 @Component({
     selector: 'event-overview-page',
-    templateUrl: './event-overview.page.component.html',
-    styleUrls: ['./event-overview.page.component.scss'],
+    templateUrl: './plan-overview.page.component.html',
+    styleUrls: ['./plan-overview.page.component.scss'],
 })
-export class EventOverviewPageComponent implements OnInit {
+export class PlanOverviewPageComponent implements OnInit {
 
-    executionEventId: string
+    executionPlanId: string
 
     constructor(private readonly activatedRoute: ActivatedRoute,
-                private readonly executionEventFacade: ExecutionEventFacade) {
+                private readonly executionPlanFacade: ExecutionPlanFacade) {
     }
 
     ngOnInit(): void {
-        this.executionEventId = this.activatedRoute.snapshot.params['id']
+        this.executionPlanId = this.activatedRoute.snapshot.params['id']
     }
 }

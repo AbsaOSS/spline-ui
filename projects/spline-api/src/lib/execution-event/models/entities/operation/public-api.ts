@@ -14,13 +14,6 @@
  * limitations under the License.
  */
 
-import { ExecutionEventFacade } from './execution-event.facade'
-import { ExecutionPlanFacade } from './execution-plan.facade'
+export * from './operation.models'
+export * from './operation-type.models'
 
-
-export const executionEventServices: any[] = [
-    ExecutionEventFacade,
-    ExecutionPlanFacade,
-]
-
-export * from './public-api'

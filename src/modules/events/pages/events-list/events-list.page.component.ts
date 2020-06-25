@@ -50,6 +50,7 @@ export class EventsListPageComponent extends BaseComponent implements OnInit, Af
     readonly visibleColumns = [
         ExecutionEventField.applicationId,
         ExecutionEventField.applicationName,
+        ExecutionEventField.executionPlanId,
         ExecutionEventField.dataSourceUri,
         ExecutionEventField.dataSourceType,
         ExecutionEventField.append,
