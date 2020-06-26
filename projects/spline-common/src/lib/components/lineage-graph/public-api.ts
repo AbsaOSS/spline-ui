@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-export * from './spline-lineage-graph.component'
-export * from './spline-lineage-graph.models'
+export * from './components/public-api'
+export * from './models/public-api'
 export * from './spline-lineage-graph.module'

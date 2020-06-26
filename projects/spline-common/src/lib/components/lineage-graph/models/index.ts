@@ -14,24 +14,4 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common'
-import { NgModule } from '@angular/core'
-
-import { SplineLineageGraphComponent, SplineLineageGraphNodeControlComponent } from './components'
-
-
-@NgModule({
-    declarations: [
-        SplineLineageGraphComponent,
-        SplineLineageGraphNodeControlComponent
-    ],
-    imports: [
-        CommonModule,
-    ],
-    exports: [
-        SplineLineageGraphComponent,
-        SplineLineageGraphNodeControlComponent
-    ],
-})
-export class SplineLineageGraphModule {
-}
+export * from './public-api'

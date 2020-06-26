@@ -14,14 +14,30 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core'
-import cytoscape, { NodeDataDefinition, SingularData } from 'cytoscape'
-import klay from 'cytoscape-klay'
+import {
+    AfterViewInit,
+    Component,
+    ComponentFactoryResolver,
+    ElementRef,
+    EventEmitter,
+    Injector,
+    Input,
+    OnChanges,
+    Output,
+    RendererFactory2,
+    SimpleChanges,
+    ViewChild,
+} from '@angular/core'
+import { Core, CytoscapeOptions, NodeDataDefinition, SingularData } from 'cytoscape'
+import { Subject } from 'rxjs'
+import { buffer, debounceTime } from 'rxjs/operators'
 
-import { SplineLineageGraph } from './spline-lineage-graph.models'
+import { SplineLineageGraph } from '../../models'
+import { SplineLineageGraphNodeControlComponent } from '../graph-node-control/spline-lineage-graph-node-control.component'
 
 
-cytoscape.use(klay)
+declare let cytoscape: any
+
 
 @Component({
     selector: 'spline-lineage-graph',
@@ -29,7 +45,7 @@ cytoscape.use(klay)
 })
 export class SplineLineageGraphComponent<TGraphNodeData extends NodeDataDefinition> implements AfterViewInit, OnChanges {
 
-    @Input() options: cytoscape.CytoscapeOptions = SplineLineageGraph.DEFAULT_OPTIONS
+    @Input() options: CytoscapeOptions = SplineLineageGraph.DEFAULT_OPTIONS
     @Input() data: SplineLineageGraph.GraphData<TGraphNodeData>
 
     @Output() substrateClick$ = new EventEmitter<void>()
@@ -38,10 +54,23 @@ export class SplineLineageGraphComponent<TGraphNodeData extends NodeDataDefiniti
 
     @ViewChild('graphContainer', { static: false, read: ElementRef }) graphContainer: ElementRef<HTMLDivElement>
 
-    cytoscapeInstance: cytoscape.Core
+    cytoscapeInstance: Core
+
+    private nodeClicksStream$ = new Subject<{ node: SplineLineageGraph.GraphNode<TGraphNodeData> }>()
+
+    constructor(private readonly componentFactoryResolver: ComponentFactoryResolver,
+                private readonly injector: Injector,
+                private readonly rendererFactory: RendererFactory2) {
+
+        this.initNodeClicksEvents()
+    }
 
     ngAfterViewInit(): void {
         this.cytoscapeInstance = this.createAndInitGraph(this.options, this.data)
+        setTimeout(() => {
+            this.initNodeControls()
+        }, 100)
+
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -61,7 +90,6 @@ export class SplineLineageGraphComponent<TGraphNodeData extends NodeDataDefiniti
         cytoscapeInstance.on('mouseout', 'node', e => (e.originalEvent.target as HTMLElement).style.cursor = '')
 
         cytoscapeInstance.on('tap', (event) => {
-            console.log('tap', event)
             const target = event.target
             const nodeId = this.extractNodeId(target)
 
@@ -71,21 +99,18 @@ export class SplineLineageGraphComponent<TGraphNodeData extends NodeDataDefiniti
             else {
                 const node = this.getNode(nodeId)
                 if (node) {
-                    this.nodeClick$.emit({ node })
+                    this.nodeClicksStream$.next({ node })
                 }
             }
         })
 
-        cytoscapeInstance.on('doubleTap', (event) => {
-            console.log('doubleTap', event)
-            const target = event.target
-            const nodeId = this.extractNodeId(target)
-            const node = this.getNode(nodeId)
-            if (node) {
-                this.nodeClick$.emit({ node })
-            }
+        cytoscapeInstance.nodeHtmlLabel([{
+            tpl: (nodeData): string => {
+                return `<div class="spline-lineage-graph__node-container" data-node-id="${nodeData.id}">ccc</div>`
+            },
+        }])
 
-        })
+        cytoscapeInstance.layout(options.layout).run()
 
         return cytoscapeInstance
     }
@@ -97,13 +122,46 @@ export class SplineLineageGraphComponent<TGraphNodeData extends NodeDataDefiniti
     }
 
     private extractNodeId(target: SingularData): string | null {
-        return target.isNode()
+        return target?.isNode && target.isNode()
             ? target.id()
             : null
     }
 
     private getNode(nodeId: string): SplineLineageGraph.GraphNode<TGraphNodeData> | undefined {
         return this.data.nodes.find(currentNode => currentNode.data.id === nodeId) as SplineLineageGraph.GraphNode<TGraphNodeData>
+    }
+
+    private initNodeClicksEvents(): void {
+        const doubleClickDelayInMs = 250
+        const buff$ = this.nodeClicksStream$.pipe(
+            debounceTime(doubleClickDelayInMs),
+        )
+
+        this.nodeClicksStream$
+            .pipe(
+                buffer(buff$),
+            )
+            .subscribe((bufferValue: Array<{ node: SplineLineageGraph.GraphNode<TGraphNodeData> }>) => {
+                if (bufferValue.length === 1) {
+                    this.nodeClick$.emit(bufferValue[0])
+                }
+                else if (bufferValue.length > 1) {
+                    this.nodeDoubleClick$.emit(bufferValue[0])
+                }
+            })
+    }
+
+    private initNodeControls(): void {
+        const modeContainersList = this.graphContainer.nativeElement.querySelectorAll('.spline-lineage-graph__node-container')
+        // TODO: move that logic somewhere else.
+        modeContainersList.forEach((nodeElm) => {
+            const factory = this.componentFactoryResolver.resolveComponentFactory(SplineLineageGraphNodeControlComponent)
+            const componentRef = factory.create(this.injector)
+            componentRef.hostView.detectChanges()
+            const { nativeElement } = componentRef.location
+            const renderer = this.rendererFactory.createRenderer(null, null)
+            renderer.appendChild(nodeElm, nativeElement)
+        })
     }
 
 }
