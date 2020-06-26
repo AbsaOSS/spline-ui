@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,27 +14,6 @@
  * limitations under the License.
  */
 
-@import 'vars';
-
-.spline-content-error {
-
-    color: $color-pink;
-    left: 0;
-    padding-top: 3rem;
-    position: absolute;
-    text-align: center;
-    width: 100%;
-    z-index: 100;
-
-    mat-icon.mat-icon {
-        font-size: 72px;
-        height: 72px;
-        width: 72px;
-    }
-
-    .message {
-        color: $color-pink;
-    }
-}
-
-
+export * from './spline-lineage-graph.component'
+export * from './spline-lineage-graph.models'
+export * from './spline-lineage-graph.module'

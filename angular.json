@@ -67,7 +67,10 @@
               ]
             },
             "scripts": [
-              "./node_modules/hammerjs/hammer.min.js"
+              "./node_modules/hammerjs/hammer.min.js",
+              "./node_modules/cytoscape/dist/cytoscape.min.js",
+              "./node_modules/klayjs/klay.js",
+              "./node_modules/cytoscape-klay/cytoscape-klay.js"
             ]
           },
           "configurations": {

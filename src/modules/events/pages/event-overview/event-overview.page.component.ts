@@ -16,7 +16,10 @@
 
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { ExecutionEventFacade } from 'spline-api'
+import { Observable } from 'rxjs'
+import { map, tap } from 'rxjs/operators'
+import { ExecutionEventFacade, ExecutionEventLineageNode } from 'spline-api'
+import { SplineLineageGraph } from 'spline-common'
 
 
 @Component({
@@ -28,11 +31,37 @@ export class EventOverviewPageComponent implements OnInit {
 
     executionEventId: string
 
+    graphData$: Observable<SplineLineageGraph.GraphData<ExecutionEventLineageNode>>
+
     constructor(private readonly activatedRoute: ActivatedRoute,
                 private readonly executionEventFacade: ExecutionEventFacade) {
+
+
     }
 
     ngOnInit(): void {
         this.executionEventId = this.activatedRoute.snapshot.params['id']
+        this.graphData$ = this.executionEventFacade.fetchLineageOverview(this.executionEventId)
+            .pipe(
+                map(lineageData => {
+                    return {
+                        nodes: lineageData.lineage.nodes
+                            .map(node => ({
+                                data: {
+                                    ...node,
+                                    name: node.name.split('/').slice(-1)[0],
+                                },
+                            })),
+                        edges: lineageData.lineage.transitions
+                            .map(transition => ({
+                                data: {
+                                    target: transition.targetNodeId,
+                                    source: transition.sourceNodeId,
+                                },
+                            })),
+                    }
+                }),
+                tap(x => console.log(x)),
+            )
     }
 }
