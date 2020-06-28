@@ -28,9 +28,10 @@ export type ExecutionEventLineage = Lineage<ExecutionEventLineageNode>;
 
 export type ExecutionEventInfo =
     & ExecutionEventLineageInfoDto
-    & {
-    lineageDepth: ExecutionEventLineageOverviewDepth
-};
+    &
+    {
+        lineageDepth: ExecutionEventLineageOverviewDepth
+    }
 
 export type ExecutionEventLineageOverviewDepth = {
     depthComputed: number
@@ -60,7 +61,7 @@ export function toExecutionEventLineageOverview(entity: ExecutionEventLineageOve
             lineageDepth: {
                 depthComputed: entity.graph.depthComputed,
                 depthRequested: entity.graph.depthRequested,
-            }
-        }
+            },
+        },
     }
 }

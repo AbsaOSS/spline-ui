@@ -14,18 +14,24 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 
 
 @Component({
     selector: 'spline-lineage-graph-node-control',
     templateUrl: './spline-lineage-graph-node-control.component.html',
 })
-export class SplineLineageGraphNodeControlComponent {
+export class SplineLineageGraphNodeControlComponent implements OnInit {
 
-    onMoreBtnClicked($event: MouseEvent) {
+    @Input() data: Node | any
+
+    onMoreBtnClicked($event: MouseEvent): void {
         $event.stopPropagation()
         console.log('click', $event)
+    }
+
+    ngOnInit(): void {
+        console.log(this.data)
     }
 
 }

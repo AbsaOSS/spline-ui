@@ -16,6 +16,7 @@
 
 
 @import 'vars';
+@import 'mixins';
 
 .graph-container {
     height: 100%;
@@ -32,7 +33,7 @@
     &__container {
         bottom: 0;
         display: flex;
-        flex-direction: column;
+        //flex-direction: column;
         left: 0;
         position: absolute;
         right: 0;
@@ -40,20 +41,54 @@
     }
 
     &__column {
-        //padding: 32px 24px;
+        padding: 32px 24px;
         position: relative;
         //width: 50%;
         //height: 50%;
     }
 
+    &__column--left {
+        overflow-wrap: break-word;
+        width: 30%;
+    }
+
     &__column--right {
         border-top-right-radius: 32px;
-        padding: 0;
         flex: 1;
+        padding: 0;
     }
 
     &__column--grey {
-        //background: $color-grey-light;
+        @include shadow-light();
+        background: $color-white;
+        border-left: 1px solid $color-grey;
     }
 
+}
+
+.entity-card {
+    @include shadow-light();
+    background: $color-white;
+    border-radius: 2rem;
+    padding: 2rem;
+
+    &__icon {
+        color: $color-green;
+
+    }
+
+    &__icon-wrapper {
+        align-items: center;
+        border: 6px solid $color-green;
+        border-radius: 50%;
+        display: flex;
+        height: 90px;
+        justify-content: center;
+        width: 90px;
+
+        .mat-icon {
+            @include icon-size(64px);
+        }
+
+    }
 }

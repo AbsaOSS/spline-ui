@@ -13,28 +13,42 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<div class="column-layout__container">
-    <div class="column-layout__column">
-        <div class="container">
-            <h1 class="page-title">
-                Execution Event Overview
-            </h1>
-
-            <h2 class="text-center">{{executionEventId}}</h2>
-
-        </div>
-        <mat-divider class="mt-3"></mat-divider>
-    </div>
-    <div class="column-layout__column column-layout__column--right column-layout__column--grey">
+<div *ngIf="data$ | async as data" class="column-layout__container">
+    <div class="column-layout__column column-layout__column--right ">
 
         <div class="graph-container">
             <div class="graph-container-inner">
-                <spline-ngx-lineage-graph *ngIf="graphData$ | async as graphData"
-                                      [data]="graphData">
+                <spline-ngx-lineage-graph
+                        [data]="data.graphData">
                 </spline-ngx-lineage-graph>
             </div>
         </div>
     </div>
+    <div class="column-layout__column column-layout__column--left column-layout__column--grey">
+        <h1 class="page-title">
+            Execution Event
+        </h1>
+        <p>
+            <strong>Timestamp:</strong>
+            {{ data.executionEventInfo?.timestamp | date: 'yyyy-MM-dd HH:mm' }}
+        </p>
+        <p>
+            <strong>Application ID:</strong>
+            {{ data.executionEventInfo?.applicationId }}
+        </p>
+        <p>
+            <strong>Output Source:</strong>
+        </p>
+        <ul>
+            <p>
+                <strong>URI:</strong> {{ data.targetURI }}
+            </p>
+        </ul>
+
+        <div class="divider"></div>
+
+    </div>
+    <mat-divider class="mt-4 pb-4"></mat-divider>
 </div>
 
 

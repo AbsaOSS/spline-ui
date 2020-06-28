@@ -36,12 +36,12 @@ export class SplineNgxLineageGraphComponent<TGraphNodeData extends NodeDataDefin
     @Output() nodeClick$ = new EventEmitter<{ node: SplineLineageGraph.GraphNode<TGraphNodeData> }>()
     @Output() nodeDoubleClick$ = new EventEmitter<{ node: SplineLineageGraph.GraphNode<TGraphNodeData> }>()
 
-    curve = shape.curveBundle
+    curve = shape.curveBundle.beta(0);
     layoutSettings = {
-        orientation: 'LR',
+        orientation: 'TB',
         marginX: 50,
         marginY: 80,
-        edgePadding: 120,
+        edgePadding: 200,
     }
 
     nodes: Node[]
@@ -54,6 +54,7 @@ export class SplineNgxLineageGraphComponent<TGraphNodeData extends NodeDataDefin
         this.nodes = this.data.nodes.map(item => ({
             id: item.data.id,
             label: item.data.name,
+            type: item.data.type,
         }))
     }
 

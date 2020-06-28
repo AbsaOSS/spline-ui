@@ -18,7 +18,7 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { Observable } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
-import { ExecutionEventFacade, ExecutionEventLineageNode } from 'spline-api'
+import { ExecutionEventFacade, ExecutionEventInfo, ExecutionEventLineageNode } from 'spline-api'
 import { SplineLineageGraph } from 'spline-common'
 
 
@@ -31,7 +31,11 @@ export class EventOverviewPageComponent implements OnInit {
 
     executionEventId: string
 
-    graphData$: Observable<SplineLineageGraph.GraphData<ExecutionEventLineageNode>>
+    data$: Observable<{
+        graphData: SplineLineageGraph.GraphData<ExecutionEventLineageNode>
+        executionEventInfo: ExecutionEventInfo
+        targetURI: string
+    }>
 
     constructor(private readonly activatedRoute: ActivatedRoute,
                 private readonly executionEventFacade: ExecutionEventFacade) {
@@ -41,24 +45,32 @@ export class EventOverviewPageComponent implements OnInit {
 
     ngOnInit(): void {
         this.executionEventId = this.activatedRoute.snapshot.params['id']
-        this.graphData$ = this.executionEventFacade.fetchLineageOverview(this.executionEventId)
+        this.data$ = this.executionEventFacade.fetchLineageOverview(this.executionEventId)
             .pipe(
                 map(lineageData => {
+
+                    const targetNode = lineageData.lineage.nodes.find(x => x.id === lineageData.executionEventInfo.targetDataSourceId)
+                    const targetURI = targetNode?.name ?? 'NaN'
+
                     return {
-                        nodes: lineageData.lineage.nodes
-                            .map(node => ({
-                                data: {
-                                    ...node,
-                                    name: node.name.split('/').slice(-1)[0],
-                                },
-                            })),
-                        edges: lineageData.lineage.transitions
-                            .map(transition => ({
-                                data: {
-                                    target: transition.targetNodeId,
-                                    source: transition.sourceNodeId,
-                                },
-                            })),
+                        graphData: {
+                            nodes: lineageData.lineage.nodes
+                                .map(node => ({
+                                    data: {
+                                        ...node,
+                                        name: node.name.split('/').slice(-1)[0],
+                                    },
+                                })),
+                            edges: lineageData.lineage.transitions
+                                .map(transition => ({
+                                    data: {
+                                        target: transition.targetNodeId,
+                                        source: transition.sourceNodeId,
+                                    },
+                                })),
+                        },
+                        executionEventInfo: lineageData.executionEventInfo,
+                        targetURI,
                     }
                 }),
                 tap(x => console.log(x)),

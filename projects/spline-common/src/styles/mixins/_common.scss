@@ -19,3 +19,10 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+
+@mixin icon-size($size: 24px) {
+    font-size: $size;
+    height: $size;
+    width: $size;
+}

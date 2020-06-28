@@ -17,7 +17,9 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { MatButtonModule } from '@angular/material/button'
+import { MatDividerModule } from '@angular/material/divider'
 import { MatIconModule } from '@angular/material/icon'
+import { MatTooltipModule } from '@angular/material/tooltip'
 import { NgxGraphModule } from '@swimlane/ngx-graph'
 
 import { SplineLineageGraphComponent, SplineLineageGraphNodeControlComponent, SplineNgxLineageGraphComponent } from './components'
@@ -34,11 +36,13 @@ import { SplineLineageGraphComponent, SplineLineageGraphNodeControlComponent, Sp
         MatIconModule,
         MatButtonModule,
         NgxGraphModule,
+        MatDividerModule,
+        MatTooltipModule,
     ],
     exports: [
         SplineLineageGraphComponent,
         SplineLineageGraphNodeControlComponent,
-        SplineNgxLineageGraphComponent
+        SplineNgxLineageGraphComponent,
     ],
 })
 export class SplineLineageGraphModule {
