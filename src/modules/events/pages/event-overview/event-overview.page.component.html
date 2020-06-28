@@ -23,14 +23,15 @@
             <h2 class="text-center">{{executionEventId}}</h2>
 
         </div>
+        <mat-divider class="mt-3"></mat-divider>
     </div>
     <div class="column-layout__column column-layout__column--right column-layout__column--grey">
 
         <div class="graph-container">
             <div class="graph-container-inner">
-                <spline-lineage-graph *ngIf="graphData$ | async as graphData"
+                <spline-ngx-lineage-graph *ngIf="graphData$ | async as graphData"
                                       [data]="graphData">
-                </spline-lineage-graph>
+                </spline-ngx-lineage-graph>
             </div>
         </div>
     </div>

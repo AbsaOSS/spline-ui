@@ -32,6 +32,7 @@
     &__container {
         bottom: 0;
         display: flex;
+        flex-direction: column;
         left: 0;
         position: absolute;
         right: 0;
@@ -39,17 +40,20 @@
     }
 
     &__column {
-        padding: 32px 24px;
+        //padding: 32px 24px;
         position: relative;
-        width: 50%;
+        //width: 50%;
+        //height: 50%;
     }
 
     &__column--right {
         border-top-right-radius: 32px;
+        padding: 0;
+        flex: 1;
     }
 
     &__column--grey {
-        background: $color-grey-light;
+        //background: $color-grey-light;
     }
 
 }

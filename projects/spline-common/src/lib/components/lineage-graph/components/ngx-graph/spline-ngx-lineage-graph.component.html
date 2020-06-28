@@ -1,0 +1,67 @@
+<!--
+  ~ Copyright (c) 2020 ABSA Group Limited
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<div class="spline-lineage-graph__container" xmlns:svg="http://www.w3.org/1999/XSL/Transform" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <ngx-graph [links]="links"
+               [nodes]="nodes"
+               [curve]="curve"
+               [autoZoom]="true"
+               [autoCenter]="false"
+               [draggingEnabled]="false"
+               [layoutSettings]="layoutSettings"
+               [nodeWidth]="354"
+               [nodeMinHeight]="84"
+               [enableZoom]="true"
+                (clickHandler)="onNodeClicked($event)">
+
+<!--        <ng-template #defsTemplate let-link>-->
+<!--            <svg:marker class="arrow" [ngClass]="link?.classes" id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="8" markerHeight="8" orient="auto" fill="#7a7a7d">-->
+<!--                <svg:path d="M0,-5L10,0L0,5" class="arrow-head" stroke="#7a7a7d" />-->
+<!--            </svg:marker>-->
+<!--        </ng-template>-->
+
+        <ng-template #linkTemplate let-link>
+            <svg:g class="edge" [ngClass]="link?.classes">
+                <svg:path class="line" stroke-width="2" stroke="#7a7a7d" marker-end="url(#arrow)"></svg:path>
+            </svg:g>
+        </ng-template>
+
+
+        <ng-template #defsTemplate>
+            <svg:marker id="arrow"
+                        fill="#ccc"
+                        markerWidth="40" markerHeight="40" viewBox="0 0 50 50"
+                        refX="15" refY="5"
+                        markerUnits="strokeWidth"
+                        strok-width="2"
+                        orient="auto-start-reverse"
+            >
+                <svg:rect x="5" y="4" width="10" height="2" class="arrow-shield"/>
+                <svg:polygon points=" 0,0 2.5,5 0,10 14,5 " fill="#444"/>
+            </svg:marker>
+        </ng-template>
+
+        <ng-template #nodeTemplate let-node>
+            <svg:g class="node" xmlns="http://www.w3.org/1999/xhtml" width="354" height="84">
+                <svg:foreignObject width="354" height="84">
+                    <xhtml:div class="spline-lineage-graph__node-container">
+                        <spline-lineage-graph-node-control></spline-lineage-graph-node-control>
+                    </xhtml:div>
+                </svg:foreignObject>
+            </svg:g>
+        </ng-template>
+
+    </ngx-graph>
+</div>

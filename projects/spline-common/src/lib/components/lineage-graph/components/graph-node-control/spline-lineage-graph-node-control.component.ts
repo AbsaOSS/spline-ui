@@ -23,4 +23,9 @@ import { Component } from '@angular/core'
 })
 export class SplineLineageGraphNodeControlComponent {
 
+    onMoreBtnClicked($event: MouseEvent) {
+        $event.stopPropagation()
+        console.log('click', $event)
+    }
+
 }

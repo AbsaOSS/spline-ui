@@ -14,7 +14,7 @@
   ~ limitations under the License.
   -->
 
-<div class="spline-lineage-graph-node-control" (click)="$event.stopPropagation()">
+<div class="spline-lineage-graph-node-control">
 
     <div class="spline-lineage-graph-node-control__icon">
         <div class="spline-lineage-graph-node-control__icon-wrapper">
@@ -26,9 +26,10 @@
         <div class="spline-lineage-graph-node-control__header">
             SomeFileName.csv
         </div>
-
-        <div class="spline-lineage-graph-node-control__footer">
-
+        <div class="spline-lineage-graph-node-control__actions">
+            <button mat-button mat-icon-button (click)="onMoreBtnClicked($event)">
+                <mat-icon>more_vert</mat-icon>
+            </button>
         </div>
     </div>
 </div>

@@ -17,6 +17,7 @@
 import { CommonModule } from '@angular/common'
 import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
+import { MatDividerModule } from '@angular/material/divider'
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
@@ -55,7 +56,8 @@ import * as fromPages from './pages'
         SplineSortHeaderModule,
         MatPaginatorModule,
         RouterModule,
-        SplineLineageGraphModule
+        SplineLineageGraphModule,
+        MatDividerModule,
     ],
     exports: [
         ...fromPages.pageComponents,

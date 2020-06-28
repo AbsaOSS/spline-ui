@@ -16,3 +16,4 @@
 
 export * from './graph/spline-lineage-graph.component'
 export * from './graph-node-control/spline-lineage-graph-node-control.component'
+export * from './ngx-graph/spline-ngx-lineage-graph.component'
