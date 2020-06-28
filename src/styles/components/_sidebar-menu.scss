@@ -15,6 +15,7 @@
  */
 
 @import 'vars';
+@import 'mixins';
 
 .spline-sidebar-menu {
     padding: 0 0.75rem 0 0;
@@ -25,11 +26,11 @@
         overflow: hidden;
 
         &.active {
-            background-color: $color-green;
-            color: $color-white;
+            @include shadow-light();
+            background-color: $color-white;
 
             &:hover {
-                background-color: $color-green-dark;
+                background-color: $color-white;
             }
         }
 

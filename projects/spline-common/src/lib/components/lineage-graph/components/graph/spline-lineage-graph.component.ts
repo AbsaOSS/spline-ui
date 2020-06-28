@@ -106,7 +106,7 @@ export class SplineLineageGraphComponent<TGraphNodeData extends NodeDataDefiniti
 
         cytoscapeInstance.nodeHtmlLabel([{
             tpl: (nodeData): string => {
-                return `<div class="spline-lineage-graph__node-container" data-node-id="${nodeData.id}">ccc</div>`
+                return `<div class="spline-lineage-graph__node-container" data-node-id="${nodeData.id}"></div>`
             },
         }])
 

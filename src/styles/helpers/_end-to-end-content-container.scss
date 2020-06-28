@@ -15,41 +15,27 @@
  */
 
 
-@import 'vars';
-
-.graph-container {
+.end-to-end-content-container {
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
     height: 100%;
+    left: 0;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
-.graph-container-inner {
-    height: 100%;
+.end-to-end-content-container__body {
+    flex: 1;
     overflow: hidden;
     position: relative;
-
 }
 
-.column-layout {
-    &__container {
-        bottom: 0;
-        display: flex;
-        left: 0;
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
-
-    &__column {
-        padding: 32px 24px;
-        position: relative;
-        width: 50%;
-    }
-
-    &__column--right {
-        border-top-right-radius: 32px;
-    }
-
-    &__column--grey {
-        background: $color-grey-light;
-    }
-
+.end-to-end-content-container__body-with-scroll {
+    flex: 1;
+    overflow: auto;
+    position: relative;
 }

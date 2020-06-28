@@ -37,19 +37,19 @@ export namespace SplineLineageGraph {
         }
 
     export const LINE_WIDTH_PLANE = 10
-    export const LINE_WIDTH_HIGHLIGHTED = 10
-    export const LINE_WIDTH_SELECTED = 16
-    export const LINE_COLOR_PLANE = '#eaeaea'
+    export const LINE_WIDTH_HIGHLIGHTED = 0
+    export const LINE_WIDTH_SELECTED = 10
+    export const LINE_COLOR_PLANE = '#ccc'
     export const LINE_COLOR_SELECTED = 'orange'
     export const LINE_COLOR_HLT_PRIMARY = 'black'
     export const LINE_COLOR_HLT_LINEAGE = 'magenta'
     export const LINE_COLOR_HLT_IMPACT = 'green'
-    export const LINE_COLOR_HLT_NONE = '#eaeaea'
+    export const LINE_COLOR_HLT_NONE = '#7a7a7d'
 
     export const selectedNodeStyles = {
         'border-color': LINE_COLOR_SELECTED,
         'border-width': LINE_WIDTH_SELECTED,
-        padding: 70,
+        padding: 0,
     }
 
     export const DEFAULT_STYLES: ReadonlyArray<Stylesheet> = [
@@ -63,13 +63,14 @@ export namespace SplineLineageGraph {
 
             selector: 'node',
             style: {
-                'background-color': '#fff',
+                'background-color': '#ffffff',
                 'border-color': LINE_COLOR_HLT_NONE,
                 'border-width': LINE_WIDTH_HIGHLIGHTED,
-                padding: 50, // that settings is not a part of the Stylesheet for now (it is a bug and it will be fixed in the future).
-                content: 'data(name)',
-                'text-valign': 'bottom',
-                'text-margin-y': 12,
+                padding: 0, // that settings is not a part of the Stylesheet for now (it is a bug and it will be fixed in the future).
+                shape: 'round-rectangle',
+                'background-opacity': 0,
+                width: '350px',
+                height: '80px'
             },
         } as Stylesheet,
         {
@@ -225,6 +226,7 @@ export namespace SplineLineageGraph {
                 This requires node and port coordinates to have been set to sensible values.
             */
             direction: 'DOWN', // Overall direction of edges: horizontal (right / left) or vertical (down / up)
+            // direction: 'RIGHT', // Overall direction of edges: horizontal (right / left) or vertical (down / up)
             /* UNDEFINED, RIGHT, LEFT, DOWN, UP */
             edgeRouting: 'SPLINES', // Defines how edges are routed (POLYLINE, ORTHOGONAL, SPLINES)
             edgeSpacingFactor: 0.5, // Factor by which the object spacing is multiplied to arrive at the minimal spacing between edges.
@@ -232,12 +234,14 @@ export namespace SplineLineageGraph {
             // Tells the BK node placer to use a certain alignment instead of taking the optimal result.
             // This option should usually be left alone.
             fixedAlignment: 'NONE',
-            /* NONE Chooses the sTmallest layout from the four possible candidates.
-            LEFTUP Chooses the left-up candidate from the four possible candidates.
-            RIGHTUP Chooses the right-up candidate from the four possible candidates.
-            LEFTDOWN Chooses the left-down candidate from the four possible candidates.
-            RIGHTDOWN Chooses the right-down candidate from the four possible candidates.
-            BALANCED Creates a balanced layout from the four possible candidates. */
+            /*
+                NONE Chooses the sTmallest layout from the four possible candidates.
+                LEFTUP Chooses the left-up candidate from the four possible candidates.
+                RIGHTUP Chooses the right-up candidate from the four possible candidates.
+                LEFTDOWN Chooses the left-down candidate from the four possible candidates.
+                RIGHTDOWN Chooses the right-down candidate from the four possible candidates.
+                BALANCED Creates a balanced layout from the four possible candidates.
+            */
             inLayerSpacingFactor: 1.0, // Factor by which the usual spacing is multiplied to determine the in-layer spacing between objects.
             layoutHierarchy: true, // Whether the selected layouter should consider the full hierarchy
             linearSegmentsDeflectionDampening: 0.3, // Dampens the movement of nodes to keep the diagram from getting too large.
@@ -280,7 +284,7 @@ export namespace SplineLineageGraph {
     export const DEFAULT_OPTIONS: cytoscape.CytoscapeOptions = Object.freeze<cytoscape.CytoscapeOptions>({
         layout: DEFAULT_LAYOUT,
         style: DEFAULT_STYLES as Stylesheet[],
-        minZoom: 0.1,
+        minZoom: 0.5,
         maxZoom: 1.5,
     })
 }

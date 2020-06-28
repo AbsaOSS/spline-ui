@@ -16,6 +16,7 @@
 
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
+import { MatIconModule } from '@angular/material/icon'
 
 import { SplineLineageGraphComponent, SplineLineageGraphNodeControlComponent } from './components'
 
@@ -27,6 +28,7 @@ import { SplineLineageGraphComponent, SplineLineageGraphNodeControlComponent } f
     ],
     imports: [
         CommonModule,
+        MatIconModule,
     ],
     exports: [
         SplineLineageGraphComponent,

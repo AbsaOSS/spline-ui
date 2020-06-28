@@ -13,19 +13,29 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+<div class="column-layout__container">
+    <div class="column-layout__column">
+        <div class="container">
+            <h1 class="page-title">
+                Execution Event Overview
+            </h1>
 
-<div class="container">
+            <h2 class="text-center">{{executionEventId}}</h2>
 
-    <h1 class="page-title">
-        Execution Event Overview
-    </h1>
-
-    <h2 class="text-center">{{executionEventId}}</h2>
-
-    <div style="width: 100%; height: 800px; position: relative">
-        <spline-lineage-graph *ngIf="graphData$ | async as graphData"
-                              [data]="graphData">
-        </spline-lineage-graph>
+        </div>
     </div>
+    <div class="column-layout__column column-layout__column--right column-layout__column--grey">
 
+        <div class="graph-container">
+            <div class="graph-container-inner">
+                <spline-lineage-graph *ngIf="graphData$ | async as graphData"
+                                      [data]="graphData">
+                </spline-lineage-graph>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
+
