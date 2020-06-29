@@ -59,9 +59,33 @@
         border: 2px solid $color-pink;
         border-radius: 9px;
         color: $color-pink;
+        display: inline-block;
         font-size: 10px;
         line-height: 1;
-        margin-top: 4px;
+        margin-top: 8px;
         padding: 2px 8px;
+    }
+}
+
+.event-details-container {
+    display: flex;
+}
+
+.event-details {
+    padding: 0.5rem 1rem;
+
+    &:first-child {
+        padding-left: 0;
+    }
+
+    &__label {
+        color: $color-grey-dark-50;
+        font-size: 11px;
+    }
+
+    &__value {
+        color: $color-grey-dark;
+        font-size: 13px;
+        font-weight: 500;
     }
 }

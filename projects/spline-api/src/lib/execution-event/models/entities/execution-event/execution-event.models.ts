@@ -49,6 +49,6 @@ export type ExecutionEvent =
 export function toExecutionEvent(entity: ExecutionEventDto): ExecutionEvent {
     return {
         ...entity,
-        executedAt: new Date(entity.timestamp * 1000),
+        executedAt: new Date(entity.timestamp),
     }
 }

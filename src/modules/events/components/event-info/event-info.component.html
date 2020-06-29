@@ -15,20 +15,65 @@
   -->
 
 <div class="event-info">
+
+    <!-- ICON -->
     <div class="event-info__icon-container">
         <div class="event-info__icon-wrapper">
             <mat-icon>play_arrow</mat-icon>
         </div>
     </div>
+    <!-- ./ICON -->
+
     <div class="event-info__content">
         <div>
+            <!-- TITLE -->
             <h2 class="event-info__title">{{data.name}}</h2>
+            <!-- ./TITLE -->
+
+            <!-- ENTITY NAME -->
             <span class="event-info__entity-name">
                 Execution Event
             </span>
+            <!-- ./ENTITY NAME -->
         </div>
-        <div class="event-details">
+
+        <!-- DETAILS -->
+        <div class="event-details-container">
+            <!-- EXECUTED AT -->
+            <div class="event-details">
+                <div class="event-details__label">
+                    Executed At:
+                </div>
+                <div class="event-details__value">
+                    {{data.executedAt | date:'yyyy-MM-dd HH:mm:ss'}}
+                </div>
+            </div>
+            <!-- ./EXECUTED AT -->
+
+            <!-- ID -->
+            <div class="event-details">
+                <div class="event-details__label">
+                    Event Id:
+                </div>
+                <div class="event-details__value">
+                    {{ data.id }}
+                </div>
+            </div>
+            <!-- ./ID -->
+
+            <!-- APPLICATION ID -->
+            <div class="event-details">
+                <div class="event-details__label">
+                    Application Id:
+                </div>
+                <div class="event-details__value">
+                    {{ data.applicationId }}
+                </div>
+            </div>
+            <!-- ./APPLICATION ID -->
 
         </div>
+        <!-- ./DETAILS -->
+
     </div>
 </div>

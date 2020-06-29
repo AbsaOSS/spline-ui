@@ -43,7 +43,7 @@ export class EventOverviewPageComponent implements OnInit {
         this.executionEventId = this.activatedRoute.snapshot.params['id']
         this.data$ = this.executionEventFacade.fetchLineageOverview(this.executionEventId)
             .pipe(
-                map(lineageData => EventOverviewPage.toData(lineageData)),
+                map(lineageData => EventOverviewPage.toData(this.executionEventId, lineageData)),
             )
     }
 }

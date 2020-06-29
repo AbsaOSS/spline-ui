@@ -28,7 +28,7 @@ export namespace EventOverviewPage {
     }
 
 
-    export function toData(lineageOverview: ExecutionEventLineageOverview): Data {
+    export function toData(executionEventId: string, lineageOverview: ExecutionEventLineageOverview): Data {
         const targetEdge = lineageOverview.lineage.transitions
             .find(
                 x => x.targetNodeId === lineageOverview.executionEventInfo.targetDataSourceId,
@@ -56,9 +56,10 @@ export namespace EventOverviewPage {
                     })),
             },
             eventInfo: {
-                applicationId: lineageOverview.executionEventInfo.applicationId,
-                executedAt: new Date(lineageOverview.executionEventInfo.timestamp * 1000),
+                id: executionEventId,
                 name: eventNode ? eventNode.name : 'NaN',
+                applicationId: lineageOverview.executionEventInfo.applicationId,
+                executedAt: new Date(lineageOverview.executionEventInfo.timestamp)
             },
         }
     }

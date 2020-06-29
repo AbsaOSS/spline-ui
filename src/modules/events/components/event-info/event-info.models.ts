@@ -18,8 +18,9 @@
 export namespace EventInfo {
 
     export type Data = {
-        applicationId: string
-        executedAt: Date
+        id: string
         name: string
+        executedAt: Date
+        applicationId: string
     }
 }

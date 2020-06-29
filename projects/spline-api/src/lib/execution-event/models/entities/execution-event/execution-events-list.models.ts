@@ -42,8 +42,8 @@ export function toExecutionEventsPageResponse(entity: ExecutionEventsPageRespons
         ...entity,
         items: entity.items.map(toExecutionEvent),
         totalDateRange: {
-            from: new Date(entity.totalDateRange[0] * 1000),
-            to: new Date(entity.totalDateRange[0] * 1000),
+            from: new Date(entity.totalDateRange[0]),
+            to: new Date(entity.totalDateRange[0]),
         },
     }
 }
