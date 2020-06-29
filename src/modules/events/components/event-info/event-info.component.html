@@ -13,24 +13,22 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<div *ngIf="data$ | async as data" class="end-to-end-content-container">
-    <div class="end-to-end-content-container__body">
-        <div class="event-info-container">
-            <div class="spline-container-md">
-                <event-info [data]="data.eventInfo"></event-info>
-            </div>
-        </div>
 
-        <div class="graph-container">
-            <div class="graph-container-inner">
-                <spline-ngx-lineage-graph
-                        [data]="data.graphData">
-                </spline-ngx-lineage-graph>
-            </div>
+<div class="event-info">
+    <div class="event-info__icon-container">
+        <div class="event-info__icon-wrapper">
+            <mat-icon>play_arrow</mat-icon>
+        </div>
+    </div>
+    <div class="event-info__content">
+        <div>
+            <h2 class="event-info__title">{{data.name}}</h2>
+            <span class="event-info__entity-name">
+                Execution Event
+            </span>
+        </div>
+        <div class="event-details">
+
         </div>
     </div>
 </div>
-
-
-
-

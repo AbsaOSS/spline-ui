@@ -35,6 +35,7 @@ import {
 } from 'spline-common'
 import { SplineApiConfigModule } from 'spline-shared'
 
+import * as fromComponents from './components'
 import { EventsRoutingModule } from './events-routing.module'
 import * as fromPages from './pages'
 
@@ -42,6 +43,7 @@ import * as fromPages from './pages'
 @NgModule({
     declarations: [
         ...fromPages.pageComponents,
+        ...fromComponents.components,
     ],
     imports: [
         CommonModule,

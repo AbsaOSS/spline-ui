@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-@import '../mixins';
+import { EventInfoComponent } from './event-info/event-info.component'
 
-.long-text-wrapper {
-    @include long-text-wrapper();
-}
 
-.spline-container-md {
-    margin: 0 auto;
-    max-width: 960px;
-    padding: 0 1.5rem;
-}
+export const components: any[] = [
+    EventInfoComponent
+]
+
+export * from './event-info/event-info.component'
+export * from './event-info/event-info.models'

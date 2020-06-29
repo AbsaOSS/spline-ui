@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,14 +14,24 @@
  * limitations under the License.
  */
 
-@import '../mixins';
+import { Component, Input, OnInit } from '@angular/core'
 
-.long-text-wrapper {
-    @include long-text-wrapper();
-}
+import { EventInfo } from './event-info.models'
 
-.spline-container-md {
-    margin: 0 auto;
-    max-width: 960px;
-    padding: 0 1.5rem;
+
+@Component({
+    selector: 'event-info',
+    templateUrl: './event-info.component.html',
+    styleUrls: ['./event-info.component.scss'],
+})
+export class EventInfoComponent implements OnInit {
+
+    @Input() data: EventInfo.Data
+
+    constructor() {
+    }
+
+    ngOnInit(): void {
+    }
+
 }

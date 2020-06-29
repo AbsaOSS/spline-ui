@@ -20,13 +20,22 @@
 
 .graph-container {
     height: 100%;
+    z-index: 1;
 }
 
 .graph-container-inner {
     height: 100%;
     overflow: hidden;
     position: relative;
+}
 
+.event-info-container {
+    left: 0;
+    margin-top: 24px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 2;
 }
 
 .column-layout {

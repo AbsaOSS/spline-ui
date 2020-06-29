@@ -40,8 +40,8 @@ export class SplineNgxLineageGraphComponent<TGraphNodeData extends NodeDataDefin
     layoutSettings = {
         orientation: 'TB',
         marginX: 50,
-        marginY: 80,
-        edgePadding: 200,
+        marginY: 250,
+        edgePadding: 120,
     }
 
     nodes: Node[]
