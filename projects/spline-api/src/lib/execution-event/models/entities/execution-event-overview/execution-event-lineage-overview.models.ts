@@ -53,7 +53,7 @@ export type ExecutionEventLineageOverviewDto = {
 export function toExecutionEventLineageOverview(entity: ExecutionEventLineageOverviewDto): ExecutionEventLineageOverview {
     return {
         lineage: {
-            transitions: entity.graph.edges.map(toLineageNodeTransition),
+            links: entity.graph.edges.map(toLineageNodeTransition),
             nodes: entity.graph.nodes.map(toExecutionEventLineageNode),
         },
         executionEventInfo: {

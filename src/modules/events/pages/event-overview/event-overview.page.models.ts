@@ -15,7 +15,7 @@
  */
 
 import { ExecutionEventLineageNode, ExecutionEventLineageOverview } from 'spline-api'
-import { SplineLineageGraph } from 'spline-common'
+import { SplineGraph } from 'spline-common'
 
 import { EventInfo } from '../../components'
 
@@ -23,13 +23,13 @@ import { EventInfo } from '../../components'
 export namespace EventOverviewPage {
 
     export type Data = {
-        graphData: SplineLineageGraph.GraphData<ExecutionEventLineageNode>
+        graphData: SplineGraph.GraphData<ExecutionEventLineageNode>
         eventInfo: EventInfo.Data
     }
 
 
     export function toData(executionEventId: string, lineageOverview: ExecutionEventLineageOverview): Data {
-        const targetEdge = lineageOverview.lineage.transitions
+        const targetEdge = lineageOverview.lineage.links
             .find(
                 x => x.targetNodeId === lineageOverview.executionEventInfo.targetDataSourceId,
             )
@@ -42,17 +42,16 @@ export namespace EventOverviewPage {
             graphData: {
                 nodes: lineageOverview.lineage.nodes
                     .map(node => ({
-                        data: {
+                        id: node.id,
+                        label: node.name.split('/').slice(-1)[0],
+                        extraData: {
                             ...node,
-                            name: node.name.split('/').slice(-1)[0],
                         },
                     })),
-                edges: lineageOverview.lineage.transitions
-                    .map(transition => ({
-                        data: {
-                            target: transition.targetNodeId,
-                            source: transition.sourceNodeId,
-                        },
+                links: lineageOverview.lineage.links
+                    .map(link => ({
+                        target: link.targetNodeId,
+                        source: link.sourceNodeId,
                     })),
             },
             eventInfo: {

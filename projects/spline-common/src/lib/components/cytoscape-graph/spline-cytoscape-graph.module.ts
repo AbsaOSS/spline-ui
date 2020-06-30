@@ -14,24 +14,22 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
+
+import { SplineCytoscapeGraphComponent } from './components'
 
 
-@Component({
-    selector: 'spline-lineage-graph-node-control',
-    templateUrl: './spline-lineage-graph-node-control.component.html',
+@NgModule({
+    declarations: [
+        SplineCytoscapeGraphComponent,
+    ],
+    imports: [
+        CommonModule,
+    ],
+    exports: [
+        SplineCytoscapeGraphComponent,
+    ],
 })
-export class SplineLineageGraphNodeControlComponent implements OnInit {
-
-    @Input() data: Node | any
-
-    onMoreBtnClicked($event: MouseEvent): void {
-        $event.stopPropagation()
-        console.log('click', $event)
-    }
-
-    ngOnInit(): void {
-        console.log(this.data)
-    }
-
+export class SplineCytoscapeGraphModule {
 }

@@ -16,4 +16,4 @@
 
 export * from './lineage.models'
 export * from './lineage-node.models'
-export * from './lineage-node-transition.models'
+export * from './lineage-node-link.models'

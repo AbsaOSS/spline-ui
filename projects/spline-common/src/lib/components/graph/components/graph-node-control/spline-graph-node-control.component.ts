@@ -14,6 +14,26 @@
  * limitations under the License.
  */
 
-export * from './components/public-api'
-export * from './models/public-api'
-export * from './spline-lineage-graph.module'
+import { Component, Input, OnInit } from '@angular/core'
+
+import { SplineGraph } from '../../models'
+
+
+@Component({
+    selector: 'spline-graph-node-control',
+    templateUrl: './spline-graph-node-control.component.html',
+})
+export class SplineGraphNodeControlComponent implements OnInit {
+
+    @Input() node: SplineGraph.GraphNode
+
+    onMoreBtnClicked($event: MouseEvent): void {
+        $event.stopPropagation()
+        console.log('click', $event)
+    }
+
+    ngOnInit(): void {
+        console.log(this.node)
+    }
+
+}

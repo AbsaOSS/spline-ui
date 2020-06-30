@@ -14,18 +14,4 @@
  * limitations under the License.
  */
 
-export type LineageNodeTransition = {
-    sourceNodeId: string
-    targetNodeId: string
-}
-export type LineageNodeTransitionDto = {
-    source: string
-    target: string
-}
-
-export function toLineageNodeTransition(entity: LineageNodeTransitionDto): LineageNodeTransition {
-    return {
-        sourceNodeId: entity.source,
-        targetNodeId: entity.target,
-    }
-}
+export * from './spline-cytoscape-graph.models'

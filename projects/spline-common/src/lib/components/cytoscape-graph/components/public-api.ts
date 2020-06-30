@@ -14,9 +14,4 @@
  * limitations under the License.
  */
 
-export type LineageNode =
-    {
-        id: string
-    }
-    & Record<string, any>
-
+export * from './graph/spline-cytoscape-graph.component'

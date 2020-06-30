@@ -34,7 +34,7 @@ export type ExecutionPlanLineageOverviewDto = {
 export function toExecutionPlanLineageOverview(entity: ExecutionPlanLineageOverviewDto): ExecutionPlanLineageOverview {
     return {
         lineage: {
-            transitions: entity.graph.edges.map(toLineageNodeTransition),
+            links: entity.graph.edges.map(toLineageNodeTransition),
             nodes: entity.graph.nodes.map(toOperation),
         },
         executionPlan: toExecutionPlan(entity.executionPlan),

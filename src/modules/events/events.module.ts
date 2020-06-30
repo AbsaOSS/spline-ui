@@ -26,13 +26,7 @@ import { MatTableModule } from '@angular/material/table'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { RouterModule } from '@angular/router'
 import { SplineApiModule } from 'spline-api'
-import {
-    SplineContentErrorModule,
-    SplineLayoutModule,
-    SplineLineageGraphModule,
-    SplineLoaderModule,
-    SplineSortHeaderModule,
-} from 'spline-common'
+import { SplineContentErrorModule, SplineGraphModule, SplineLayoutModule, SplineLoaderModule, SplineSortHeaderModule } from 'spline-common'
 import { SplineApiConfigModule } from 'spline-shared'
 
 import * as fromComponents from './components'
@@ -60,7 +54,7 @@ import * as fromPages from './pages'
         SplineSortHeaderModule,
         MatPaginatorModule,
         RouterModule,
-        SplineLineageGraphModule,
+        SplineGraphModule,
         MatDividerModule,
         MatCardModule,
         MatIconModule,

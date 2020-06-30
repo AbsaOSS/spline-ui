@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-import { LineageNodeTransition, LineageNodeTransitionDto } from './lineage-node-transition.models'
+import { LineageNodeLink, LineageNodeLinkDto } from './lineage-node-link.models'
 import { LineageNode } from './lineage-node.models'
 
 
 export type Lineage<TNode extends LineageNode> = {
-    transitions: LineageNodeTransition[]
+    links: LineageNodeLink[]
     nodes: TNode[]
 }
 
 export type LineageDto<TNode> = {
-    edges: LineageNodeTransitionDto[]
+    edges: LineageNodeLinkDto[]
     nodes: TNode[]
 }

@@ -14,9 +14,18 @@
  * limitations under the License.
  */
 
-export type LineageNode =
-    {
-        id: string
-    }
-    & Record<string, any>
+export type LineageNodeLink = {
+    sourceNodeId: string
+    targetNodeId: string
+}
+export type LineageNodeLinkDto = {
+    source: string
+    target: string
+}
 
+export function toLineageNodeTransition(entity: LineageNodeLinkDto): LineageNodeLink {
+    return {
+        sourceNodeId: entity.source,
+        targetNodeId: entity.target,
+    }
+}

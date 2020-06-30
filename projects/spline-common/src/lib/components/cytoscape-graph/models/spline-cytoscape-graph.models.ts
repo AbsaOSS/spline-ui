@@ -17,7 +17,7 @@
 import { EdgeDefinition, ElementsDefinition, NodeDataDefinition, NodeDefinition, Stylesheet } from 'cytoscape'
 
 
-export namespace SplineLineageGraph {
+export namespace SplineCytoscapeGraph {
 
     export type GraphEdge = EdgeDefinition
 

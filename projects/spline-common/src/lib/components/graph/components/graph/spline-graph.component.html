@@ -15,12 +15,12 @@
   -->
 
 <div class="spline-lineage-graph__container" xmlns:svg="http://www.w3.org/1999/XSL/Transform" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <ngx-graph [links]="links"
-               [nodes]="nodes"
+    <ngx-graph [links]="graphData.links"
+               [nodes]="graphData.nodes"
                [curve]="curve"
                [autoZoom]="true"
                [autoCenter]="true"
-               [draggingEnabled]="false"
+               [draggingEnabled]="true"
                [layoutSettings]="layoutSettings"
                [nodeWidth]="304"
                [nodeMinHeight]="54"
@@ -51,7 +51,7 @@
             <svg:g class="node" xmlns="http://www.w3.org/1999/xhtml" width="304" height="54">
                 <svg:foreignObject width="304" height="54">
                     <xhtml:div class="spline-lineage-graph__node-container">
-                        <spline-lineage-graph-node-control [data]="node"></spline-lineage-graph-node-control>
+                        <spline-graph-node-control [node]="node"></spline-graph-node-control>
                     </xhtml:div>
                 </svg:foreignObject>
             </svg:g>
