@@ -26,10 +26,12 @@
         overflow: hidden;
 
         &.active {
-            background-color: $color-white-smoked;
+            background-color: $color-bg-black;
+            color: $color-white;
 
             &:hover {
-                background-color: $color-white-smoked;
+                background-color: $color-bg-black;
+                color: $color-white-smoked;
             }
         }
 
