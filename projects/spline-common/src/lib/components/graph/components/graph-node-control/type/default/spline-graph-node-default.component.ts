@@ -14,5 +14,16 @@
  * limitations under the License.
  */
 
-export * from './spline-graph.models'
-export * from './spline-graph-node-control.models'
+import { Component } from '@angular/core'
+
+import { SplineGraphNodeBaseComponent } from '../spline-graph-node-base.component'
+
+
+@Component({
+    selector: 'spline-graph-node-default',
+    templateUrl: './spline-graph-node-default.component.html',
+})
+export class SplineGraphNodeDefaultComponent<TData extends object, TOptions extends object = {}>
+    extends SplineGraphNodeBaseComponent<TData, TOptions> {
+
+}

@@ -14,4 +14,15 @@
  * limitations under the License.
  */
 
+import { SplineGraphNodeControlComponent } from './graph-node-control/spline-graph-node-control.component'
+import { SplineGraphNodeDefaultComponent } from './graph-node-control/type'
+import { SplineGraphComponent } from './graph/spline-graph.component'
+
+
+export const splineGraphComponents: any[] = [
+    SplineGraphComponent,
+    SplineGraphNodeControlComponent,
+    SplineGraphNodeDefaultComponent
+]
+
 export * from './public-api'

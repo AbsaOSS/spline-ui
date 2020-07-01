@@ -16,9 +16,8 @@
 
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core'
 import { Subject } from 'rxjs'
-import { debounceTime, distinctUntilChanged, map, skip, takeUntil, tap } from 'rxjs/operators'
-
-import { BaseComponent } from '../../common'
+import { debounceTime, distinctUntilChanged, map, takeUntil } from 'rxjs/operators'
+import { BaseComponent } from 'spline-utils'
 
 
 @Component({
@@ -27,7 +26,7 @@ import { BaseComponent } from '../../common'
 })
 export class SplineSearchComponent extends BaseComponent {
 
-    @ViewChild('inputRef', { read: ElementRef, static: true }) inputRef: ElementRef<HTMLElement>;
+    @ViewChild('inputRef', { read: ElementRef, static: true }) inputRef: ElementRef<HTMLElement>
 
     @Input() placeholder = 'Search'
 

@@ -14,5 +14,18 @@
  * limitations under the License.
  */
 
-export * from './spline-graph.models'
-export * from './spline-graph-node-control.models'
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
+
+
+@NgModule({
+    imports: [
+        CommonModule,
+    ],
+    declarations: [],
+    exports: [],
+    providers: []
+})
+export class SplineUtilsCommonModule {
+
+}

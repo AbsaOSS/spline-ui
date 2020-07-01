@@ -16,15 +16,22 @@
 
 
 import { DagreSettings, Edge, Node } from '@swimlane/ngx-graph'
+import { Observable } from 'rxjs'
 
 
 export namespace SplineGraph {
 
-    export type GraphNode<TData extends object = {}> =
+    export type ValueProviderFn<T> = () => T;
+    export type ValueProvider<T> = T | ValueProviderFn<T> | ValueProviderFn<Observable<T>> | Observable<T>;
+
+    export type GraphNode<TData extends object = {}, TOptions extends object = {}> =
         & Node
         &
         {
-            extraData: TData
+            label: string
+            type?: string
+            splineData?: ValueProvider<TData>
+            splineOptions?: ValueProvider<TOptions>
         }
 
     export type GraphNodeLink = Edge

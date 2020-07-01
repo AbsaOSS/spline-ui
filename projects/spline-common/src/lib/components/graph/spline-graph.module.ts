@@ -22,13 +22,13 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { NgxGraphModule } from '@swimlane/ngx-graph'
 
-import { SplineGraphComponent, SplineGraphNodeControlComponent } from './components'
+import * as fromComponents from './components'
+import * as fromServices from './services'
 
 
 @NgModule({
     declarations: [
-        SplineGraphComponent,
-        SplineGraphNodeControlComponent,
+        ...fromComponents.splineGraphComponents
     ],
     imports: [
         CommonModule,
@@ -39,9 +39,11 @@ import { SplineGraphComponent, SplineGraphNodeControlComponent } from './compone
         MatTooltipModule,
     ],
     exports: [
-        SplineGraphComponent,
-        SplineGraphNodeControlComponent,
+        ...fromComponents.splineGraphComponents
     ],
+    providers: [
+        ...fromServices.splineGraphServices
+    ]
 })
 export class SplineGraphModule {
 }

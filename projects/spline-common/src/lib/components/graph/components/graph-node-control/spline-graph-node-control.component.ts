@@ -14,26 +14,60 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit } from '@angular/core'
+import {
+    Component,
+    ComponentFactoryResolver,
+    ComponentRef,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    SimpleChanges,
+    Type,
+} from '@angular/core'
+import { BaseDynamicContentComponent } from 'spline-utils'
 
-import { SplineGraph } from '../../models'
+import { SplineGraph, SplineGraphNodeControl } from '../../models'
+import { SplineGraphNodeManager } from '../../services'
+import INodeControl = SplineGraphNodeControl.INodeControl
 
 
 @Component({
     selector: 'spline-graph-node-control',
     templateUrl: './spline-graph-node-control.component.html',
 })
-export class SplineGraphNodeControlComponent implements OnInit {
+export class SplineGraphNodeControlComponent<TData extends object, TOptions extends object = {}>
+    extends BaseDynamicContentComponent<INodeControl<TData, TOptions>> implements OnChanges {
 
-    @Input() node: SplineGraph.GraphNode
+    @Input() node: SplineGraph.GraphNode<TData, TOptions>
+    @Output() event$ = new EventEmitter<SplineGraphNodeControl.Event<TData>>()
 
-    onMoreBtnClicked($event: MouseEvent): void {
-        $event.stopPropagation()
-        console.log('click', $event)
+    constructor(protected readonly componentFactoryResolver: ComponentFactoryResolver,
+                protected readonly splineGraphNodeManager: SplineGraphNodeManager) {
+        super(componentFactoryResolver)
     }
 
-    ngOnInit(): void {
-        console.log(this.node)
+    get componentType(): Type<INodeControl<TData, TOptions>> {
+        return this.splineGraphNodeManager.getComponentType(this.node.type)
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        const schemaChange = changes['node']
+        if (schemaChange) {
+            this.rebuildComponent()
+        }
+    }
+
+    protected initCreatedComponent(componentRef: ComponentRef<INodeControl<TData, TOptions>>): void {
+        // initialize component
+        const instance = componentRef.instance
+        instance.schema = SplineGraphNodeControl.extractSchema(this.node)
+
+        console.log(instance.schema)
+
+        this.eventsSubscriptionRefs.push(
+            instance.event$.subscribe((event) => this.event$.emit(event)),
+        )
     }
 
 }

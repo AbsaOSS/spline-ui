@@ -20,8 +20,7 @@ import { MatSort, MatSortable } from '@angular/material/sort'
 import { Observable } from 'rxjs'
 import { map, takeUntil } from 'rxjs/operators'
 import { ExecutionEventFacade, ExecutionEventField, ExecutionEventsPageResponse, QuerySorter } from 'spline-api'
-import { BaseComponent } from 'spline-common'
-import { ProcessingStore } from 'spline-utils'
+import { BaseComponent, ProcessingStore } from 'spline-utils'
 
 import { ExecutionEventsDataSource } from '../../data-sources'
 import SortDir = QuerySorter.SortDir

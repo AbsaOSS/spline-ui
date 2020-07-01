@@ -14,4 +14,5 @@
  * limitations under the License.
  */
 
-export * from './base/base-component'
+export * from './spline-graph-node-base.component'
+export * from './default/spline-graph-node-default.component'

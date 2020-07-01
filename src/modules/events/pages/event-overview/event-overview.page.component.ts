@@ -17,7 +17,7 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { map, tap } from 'rxjs/operators'
 import { ExecutionEventFacade } from 'spline-api'
 
 import { EventOverviewPage } from './event-overview.page.models'
@@ -44,6 +44,7 @@ export class EventOverviewPageComponent implements OnInit {
         this.data$ = this.executionEventFacade.fetchLineageOverview(this.executionEventId)
             .pipe(
                 map(lineageData => EventOverviewPage.toData(this.executionEventId, lineageData)),
+                tap(x => console.log(x))
             )
     }
 }

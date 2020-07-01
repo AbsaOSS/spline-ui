@@ -14,22 +14,4 @@
   ~ limitations under the License.
   -->
 
-<div [ngStyle]="{borderLeftColor: node.extraData.type === 'DataSourceNode' ? '#337AB7' : '#e39255'}" class="spline-lineage-graph-node-control">
-    <div class="spline-lineage-graph-node-control__icon">
-        <mat-icon *ngIf="node.extraData.type === 'DataSourceNode'" style="color: #337AB7">insert_drive_file</mat-icon>
-        <mat-icon *ngIf="node.extraData.type === 'ExecutionNode'" style="color: #e39255">settings</mat-icon>
-    </div>
-
-    <div class="spline-lineage-graph-node-control__content">
-        <div class="max-width-100">
-            <div class="long-text-wrapper">
-                {{node.label}}
-            </div>
-        </div>
-    </div>
-    <div *ngIf="node.extraData.type === 'ExecutionNode'" class="spline-lineage-graph-node-control__actions">
-        <button (click)="onMoreBtnClicked($event)" [matTooltip]="'Open Execution Plan Graph'" mat-button mat-icon-button>
-            <mat-icon>launch</mat-icon>
-        </button>
-    </div>
-</div>
+<ng-container #componentViewContainer></ng-container>

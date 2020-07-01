@@ -14,5 +14,11 @@
  * limitations under the License.
  */
 
-export * from './spline-graph.models'
-export * from './spline-graph-node-control.models'
+import { SplineGraphNodeManager } from './spline-graph-node.manager'
+
+
+export const splineGraphServices: any[] = [
+    SplineGraphNodeManager
+]
+
+export * from './public-api'

@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export * from './spline-graph.models'
-export * from './spline-graph-node-control.models'
+export * from './base/base-component'
+export * from './base/base-dynamic-content.component'

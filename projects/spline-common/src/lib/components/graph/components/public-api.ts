@@ -15,4 +15,5 @@
  */
 
 export * from './graph-node-control/spline-graph-node-control.component'
+export * from './graph-node-control/type/public-api'
 export * from './graph/spline-graph.component'

@@ -44,7 +44,7 @@ export namespace EventOverviewPage {
                     .map(node => ({
                         id: node.id,
                         label: node.name.split('/').slice(-1)[0],
-                        extraData: {
+                        splineData: {
                             ...node,
                         },
                     })),
