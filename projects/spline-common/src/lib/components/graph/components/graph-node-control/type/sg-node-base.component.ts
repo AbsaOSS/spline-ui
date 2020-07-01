@@ -19,16 +19,14 @@ import { BehaviorSubject, isObservable, Observable, Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
 import { BaseComponent } from 'spline-utils'
 
-import { SplineGraphNodeControl } from '../../../models'
-import INodeControl = SplineGraphNodeControl.INodeControl
-import Schema = SplineGraphNodeControl.Schema
+import { ISgNodeControl, SgNodeControlEvent, SgNodeSchema } from '../../../models'
 
 
-export abstract class SplineGraphNodeBaseComponent<TData extends object, TOptions extends object = {}>
-    extends BaseComponent implements INodeControl<TData, TOptions>, OnInit {
+export abstract class SgNodeBaseComponent<TData extends object, TOptions extends object = {}>
+    extends BaseComponent implements ISgNodeControl<TData, TOptions>, OnInit {
 
-    @Input() schema: Schema<TData, TOptions>
-    @Output() event$ = new EventEmitter<SplineGraphNodeControl.Event<TData>>()
+    @Input() schema: SgNodeSchema<TData, TOptions>
+    @Output() event$ = new EventEmitter<SgNodeControlEvent<TData>>()
 
     data$ = new BehaviorSubject<TData | null>(null)
     options$ = new BehaviorSubject<TOptions | null>(null)
@@ -46,7 +44,7 @@ export abstract class SplineGraphNodeBaseComponent<TData extends object, TOption
         this.initOptionsFromSchema(this.schema)
     }
 
-    protected initDataFromSchema(schema: Schema<TData, TOptions>): void {
+    protected initDataFromSchema(schema: SgNodeSchema<TData, TOptions>): void {
         const schemaData = schema.data
         if (schemaData !== undefined) {
             const value = typeof schemaData === 'function'
@@ -56,7 +54,7 @@ export abstract class SplineGraphNodeBaseComponent<TData extends object, TOption
         }
     }
 
-    protected initOptionsFromSchema(schema: Schema<TData, TOptions>): void {
+    protected initOptionsFromSchema(schema: SgNodeSchema<TData, TOptions>): void {
         const schemaOptions = schema.options
         if (schemaOptions !== undefined) {
             const value = typeof schemaOptions === 'function'

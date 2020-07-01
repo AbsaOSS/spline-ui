@@ -14,6 +14,4 @@
  * limitations under the License.
  */
 
-export * from './graph-node-control/public-api'
-export * from './graph-node-view/public-api'
-export * from './graph/spline-graph.component'
+export * from './default-view/sg-node-view-default.component'

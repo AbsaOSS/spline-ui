@@ -16,37 +16,55 @@
 
 
 import { DagreSettings, Edge, Node } from '@swimlane/ngx-graph'
+import _ from 'lodash'
 import { Observable } from 'rxjs'
 
 
-export namespace SplineGraph {
+export type SgValueProviderFn<T> = () => T;
+export type SgValueProvider<T> = T | SgValueProviderFn<T> | SgValueProviderFn<Observable<T>> | Observable<T>;
 
-    export type ValueProviderFn<T> = () => T;
-    export type ValueProvider<T> = T | ValueProviderFn<T> | ValueProviderFn<Observable<T>> | Observable<T>;
+export type SgNodeSchema<TData extends object = {}, TOptions extends object = {}> = {
+    id: string
+    type?: string
+    data?: SgValueProvider<TData>
+    options?: SgValueProvider<TOptions>
+}
 
-    export type GraphNode<TData extends object = {}, TOptions extends object = {}> =
-        & Node
-        &
-        {
-            label: string
-            type?: string
-            splineData?: ValueProvider<TData>
-            splineOptions?: ValueProvider<TOptions>
-        }
-
-    export type GraphNodeLink = Edge
-
-    export type GraphData<TData extends object = {}> = {
-        nodes: GraphNode<TData>[]
-        links: GraphNodeLink[]
+export type SgNode<TData extends object = {}, TOptions extends object = {}> =
+    & SgNodeSchema<TData, TOptions>
+    &
+    {
+        nativeOptions?: Omit<Node, 'id'>
     }
 
-    export type LayoutSettings = DagreSettings
+export type SgNativeNode<TData extends object = {}, TOptions extends object = {}> =
+    & Node
+    &
+    {
+        schema: SgNodeSchema<TData, TOptions>
+    }
 
-    export const DEFAULT_LAYOUT_SETTINGS: LayoutSettings = Object.freeze<LayoutSettings>({
-        orientation: 'TB',
-        marginX: 50,
-        marginY: 250,
-        edgePadding: 120,
-    } as LayoutSettings)
+export type SgNodeLink = Edge
+
+export type SgData = {
+    nodes: SgNode<any>[]
+    links: SgNodeLink[]
 }
+
+export function toSgNativeNode(node: SgNode): SgNativeNode {
+    return {
+        id: node.id,
+        label: '', // it is needed for graph rendering
+        ...(node?.nativeOptions ?? {}),
+        schema: _.omit(node, ['nativeOptions']),
+    }
+}
+
+export type SgLayoutSettings = DagreSettings
+
+export const SG_DEFAULT_LAYOUT_SETTINGS: Readonly<SgLayoutSettings> = Object.freeze<SgLayoutSettings>({
+    orientation: 'TB',
+    marginX: 50,
+    marginY: 250,
+    edgePadding: 120,
+} as SgLayoutSettings)

@@ -14,6 +14,21 @@
  * limitations under the License.
  */
 
-export * from './graph-node-control/public-api'
-export * from './graph-node-view/public-api'
-export * from './graph/spline-graph.component'
+import { Component, Input } from '@angular/core'
+import { BaseComponent } from 'spline-utils'
+
+
+@Component({
+    selector: 'sg-node-view-default',
+    templateUrl: './sg-node-view-default.component.html',
+})
+export class SgNodeViewDefaultComponent extends BaseComponent {
+
+    readonly defaultIcon = 'scatter_plot'
+    readonly defaultColor = '#7a7a7d'
+
+    @Input() icon: string
+    @Input() color: string
+    @Input() showActions = false
+
+}

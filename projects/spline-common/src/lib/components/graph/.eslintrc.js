@@ -14,16 +14,23 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core'
-
-import { SplineGraphNodeBaseComponent } from '../spline-graph-node-base.component'
-
-
-@Component({
-    selector: 'spline-graph-node-default',
-    templateUrl: './spline-graph-node-default.component.html',
-})
-export class SplineGraphNodeDefaultComponent<TData extends object, TOptions extends object = {}>
-    extends SplineGraphNodeBaseComponent<TData, TOptions> {
-
-}
+module.exports = {
+    'rules': {
+        '@angular-eslint/directive-selector': [
+            'error',
+            {
+                'type': 'attribute',
+                'prefix': ['splineGraph', 'sg'],
+                'style': 'camelCase'
+            }
+        ],
+        '@angular-eslint/component-selector': [
+            'error',
+            {
+                'type': 'element',
+                'prefix': ['spline-graph', 'sg', 'spline'],
+                'style': 'kebab-case'
+            }
+        ]
+    }
+};

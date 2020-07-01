@@ -21,7 +21,7 @@ $border-radius: 8px;
 
 $icon-width: 24px;
 
-.spline-lineage-graph-node-control {
+.sg-node-view {
     @include shadow-light();
     align-items: center;
     background-color: $color-white;
@@ -64,7 +64,7 @@ $icon-width: 24px;
         padding-right: 16px;
     }
 
-    &__actions {
+    &__actions-container {
         align-items: center;
         background: $color-grey-light-1;
         border-left: 1px solid $color-grey-light;

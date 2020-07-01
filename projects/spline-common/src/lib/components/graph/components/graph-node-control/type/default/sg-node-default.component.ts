@@ -14,6 +14,17 @@
  * limitations under the License.
  */
 
-export * from './graph-node-control/public-api'
-export * from './graph-node-view/public-api'
-export * from './graph/spline-graph.component'
+import { Component } from '@angular/core'
+
+import { SgNodeBaseComponent } from '../sg-node-base.component'
+
+import { SgNodeDefault } from './sg-node-default.models'
+
+
+@Component({
+    selector: 'sg-node-default',
+    templateUrl: './sg-node-default.component.html',
+})
+export class SgNodeDefaultComponent extends SgNodeBaseComponent<SgNodeDefault.Data, SgNodeDefault.Options> {
+
+}

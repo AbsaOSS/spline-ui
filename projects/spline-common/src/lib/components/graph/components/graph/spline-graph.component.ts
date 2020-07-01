@@ -14,27 +14,33 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
 import * as fromD3Shape from 'd3-shape'
 
-import { SplineGraph } from '../../models'
+import { SgData, SgLayoutSettings, SgNativeNode, SgNode, SG_DEFAULT_LAYOUT_SETTINGS, toSgNativeNode } from '../../models'
 
 
 @Component({
     selector: 'spline-graph',
     templateUrl: './spline-graph.component.html',
 })
-export class SplineGraphComponent<TGraphNodeData extends object = {}> implements OnInit {
+export class SplineGraphComponent implements OnChanges {
 
-    @Input() graphData: SplineGraph.GraphData<TGraphNodeData>
+    @Input() graphData: SgData
 
     @Output() substrateClick$ = new EventEmitter<void>()
-    @Output() nodeClick$ = new EventEmitter<{ node: SplineGraph.GraphNode<TGraphNodeData> }>()
+    @Output() nodeClick$ = new EventEmitter<{ node: SgNode }>()
 
     @Input() curve: fromD3Shape.CurveFactoryLineOnly | fromD3Shape.CurveFactory = fromD3Shape.curveBundle.beta(0)
-    @Input() layoutSettings: SplineGraph.LayoutSettings = SplineGraph.DEFAULT_LAYOUT_SETTINGS
+    @Input() layoutSettings: SgLayoutSettings = SG_DEFAULT_LAYOUT_SETTINGS
 
-    ngOnInit(): void {
+    nativeNodes: SgNativeNode[] = []
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes?.graphData && changes.graphData.currentValue) {
+            const currentGraphData: SgData = changes.graphData.currentValue
+            this.nativeNodes = currentGraphData.nodes.map(toSgNativeNode)
+        }
     }
 
 }

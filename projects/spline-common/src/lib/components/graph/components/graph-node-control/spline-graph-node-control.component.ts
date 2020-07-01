@@ -27,9 +27,11 @@ import {
 } from '@angular/core'
 import { BaseDynamicContentComponent } from 'spline-utils'
 
-import { SplineGraph, SplineGraphNodeControl } from '../../models'
+import { ISgNodeControl, SgNodeControlEvent, SgNodeSchema } from '../../models'
 import { SplineGraphNodeManager } from '../../services'
-import INodeControl = SplineGraphNodeControl.INodeControl
+
+import { SgNodeDefault } from './type'
+import decorateDefaultSgNodeSchema = SgNodeDefault.decorateDefaultSchema
 
 
 @Component({
@@ -37,31 +39,33 @@ import INodeControl = SplineGraphNodeControl.INodeControl
     templateUrl: './spline-graph-node-control.component.html',
 })
 export class SplineGraphNodeControlComponent<TData extends object, TOptions extends object = {}>
-    extends BaseDynamicContentComponent<INodeControl<TData, TOptions>> implements OnChanges {
+    extends BaseDynamicContentComponent<ISgNodeControl<TData, TOptions>> implements OnChanges {
 
-    @Input() node: SplineGraph.GraphNode<TData, TOptions>
-    @Output() event$ = new EventEmitter<SplineGraphNodeControl.Event<TData>>()
+    @Input() schema: SgNodeSchema<TData, TOptions>
+    @Output() event$ = new EventEmitter<SgNodeControlEvent<TData>>()
 
     constructor(protected readonly componentFactoryResolver: ComponentFactoryResolver,
                 protected readonly splineGraphNodeManager: SplineGraphNodeManager) {
         super(componentFactoryResolver)
     }
 
-    get componentType(): Type<INodeControl<TData, TOptions>> {
-        return this.splineGraphNodeManager.getComponentType(this.node.type)
+    get componentType(): Type<ISgNodeControl<TData, TOptions>> {
+        return this.splineGraphNodeManager.getComponentType(this.schema?.type)
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        const schemaChange = changes['node']
+        const schemaChange = changes['schema']
         if (schemaChange) {
             this.rebuildComponent()
         }
     }
 
-    protected initCreatedComponent(componentRef: ComponentRef<INodeControl<TData, TOptions>>): void {
+    protected initCreatedComponent(componentRef: ComponentRef<ISgNodeControl<TData, TOptions>>): void {
         // initialize component
         const instance = componentRef.instance
-        instance.schema = SplineGraphNodeControl.extractSchema(this.node)
+        instance.schema = !this.schema?.type
+            ? decorateDefaultSgNodeSchema(this.schema) as SgNodeSchema<TData, TOptions>
+            : this.schema
 
         console.log(instance.schema)
 

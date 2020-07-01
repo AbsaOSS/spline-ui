@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { ExecutionEventLineageNode, ExecutionEventLineageOverview } from 'spline-api'
-import { SplineGraph } from 'spline-common'
+import { ExecutionEventLineageOverview } from 'spline-api'
+import { SgData } from 'spline-common'
 
 import { EventInfo } from '../../components'
 
@@ -23,7 +23,7 @@ import { EventInfo } from '../../components'
 export namespace EventOverviewPage {
 
     export type Data = {
-        graphData: SplineGraph.GraphData<ExecutionEventLineageNode>
+        graphData: SgData
         eventInfo: EventInfo.Data
     }
 
@@ -43,8 +43,7 @@ export namespace EventOverviewPage {
                 nodes: lineageOverview.lineage.nodes
                     .map(node => ({
                         id: node.id,
-                        label: node.name.split('/').slice(-1)[0],
-                        splineData: {
+                        data: {
                             ...node,
                         },
                     })),
