@@ -30,11 +30,13 @@ export type SgNodeSchema<TData extends object = {}, TOptions extends object = {}
     options?: SgValueProvider<TOptions>
 }
 
+export type SgNodeNativeOptions = Omit<Node, 'id'>
+
 export type SgNode<TData extends object = {}, TOptions extends object = {}> =
     & SgNodeSchema<TData, TOptions>
     &
     {
-        nativeOptions?: Omit<Node, 'id'>
+        nativeOptions?: SgNodeNativeOptions
     }
 
 export type SgNativeNode<TData extends object = {}, TOptions extends object = {}> =

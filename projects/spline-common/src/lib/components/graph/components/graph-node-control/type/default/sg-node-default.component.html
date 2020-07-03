@@ -16,8 +16,10 @@
 
 
 <sg-node-view-default *ngIf="data$ | async as dataValue"
-        [icon]="dataValue?.icon"
-        [color]="dataValue?.color">
+                      [isSelected]="isSelected"
+                      [icon]="dataValue?.icon"
+                      [showActions]="true"
+                      [color]="dataValue?.color">
 
     <spline-long-text [tooltip]="dataValue?.label">
         {{dataValue?.label}}
@@ -25,7 +27,7 @@
 
     <!-- ACTIONS -->
     <div class="sg-node-view__actions">
-        <button [matTooltip]="'Open Execution Plan Graph'" mat-button mat-icon-button>
+        <button [matTooltip]="'Open Execution Plan Graph'" mat-button mat-icon-button (click)="onAction($event)">
             <mat-icon>launch</mat-icon>
         </button>
     </div>

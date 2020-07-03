@@ -17,7 +17,16 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
 import * as fromD3Shape from 'd3-shape'
 
-import { SgData, SgLayoutSettings, SgNativeNode, SgNode, SG_DEFAULT_LAYOUT_SETTINGS, toSgNativeNode } from '../../models'
+import {
+    SG_DEFAULT_LAYOUT_SETTINGS,
+    SgData,
+    SgLayoutSettings,
+    SgNativeNode,
+    SgNode,
+    SgNodeControlEvent,
+    SgNodeEvent,
+    toSgNativeNode,
+} from '../../models'
 
 
 @Component({
@@ -28,14 +37,22 @@ export class SplineGraphComponent implements OnChanges {
 
     @Input() graphData: SgData
 
-    @Output() substrateClick$ = new EventEmitter<void>()
-    @Output() nodeClick$ = new EventEmitter<{ node: SgNode }>()
+    @Output() substrateClick$ = new EventEmitter<{ mouseEvent: MouseEvent }>()
+    @Output() nodeClick$ = new EventEmitter<{ node: SgNode; mouseEvent: MouseEvent }>()
+    @Output() nodeEvent$ = new EventEmitter<SgNodeEvent>()
+    @Output() nodeSelectionChange$ = new EventEmitter<{ node: SgNode | null }>()
 
     @Input() curve: fromD3Shape.CurveFactoryLineOnly | fromD3Shape.CurveFactory = fromD3Shape.curveBundle.beta(0)
     @Input() layoutSettings: SgLayoutSettings = SG_DEFAULT_LAYOUT_SETTINGS
 
-    readonly defaultNodeWidth = 350;
-    readonly defaultNodeHeight = 50;
+    @Input() set selectedNodeId(nodeId: string) {
+        this._selectedNodeId = nodeId
+    }
+
+    _selectedNodeId: string
+
+    readonly defaultNodeWidth = 350
+    readonly defaultNodeHeight = 50
 
     nativeNodes: SgNativeNode[] = []
 
@@ -46,4 +63,38 @@ export class SplineGraphComponent implements OnChanges {
         }
     }
 
+    onNodeEvent(node: SgNode, event: SgNodeControlEvent<any>): void {
+        this.nodeEvent$.emit({
+            node,
+            event,
+        })
+    }
+
+    onNodeClicked(node: SgNode, mouseEvent: MouseEvent): void {
+        mouseEvent.stopPropagation()
+
+        this.selectNode(node)
+
+        this.nodeClick$.emit({
+            node,
+            mouseEvent,
+        })
+    }
+
+    onGraphClicked($event: MouseEvent): void {
+        this.clearNodeSelection()
+        this.substrateClick$.emit({ mouseEvent: $event })
+    }
+
+    private selectNode(node: SgNode): void {
+        if (this._selectedNodeId !== node.id) {
+            this._selectedNodeId = node.id
+            this.nodeSelectionChange$.emit({ node })
+        }
+    }
+
+    private clearNodeSelection(): void {
+        this._selectedNodeId = null
+        this.nodeSelectionChange$.emit({ node: null })
+    }
 }

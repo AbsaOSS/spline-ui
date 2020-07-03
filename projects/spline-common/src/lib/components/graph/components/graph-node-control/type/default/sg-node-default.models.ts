@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { SgNodeSchema } from '../../../../models'
+import { SgNode, SgNodeNativeOptions, SgNodeSchema } from '../../../../models'
 
 
 export namespace SgNodeDefault {
@@ -23,15 +23,34 @@ export namespace SgNodeDefault {
         label: string
         icon?: string
         color?: string // valid CSS color
+        inlineActions?: Action[]
+        actions?: Action[]
+    }
+
+    export type Action = {
+        type: string
+        icon: string
+        tooltip?: string
     }
 
     export type Options = {}
 
-    export function toSchema(id: string, nodeData: Data): SgNodeSchema<Data, Options> {
+    export const DEFAULT_NATIVE_OPTIONS: Readonly<SgNodeNativeOptions> = Object.freeze({
+        dimension: {
+            width: 320,
+            height: 50,
+        },
+    })
+
+    export function toNode(id: string, nodeData: Data, nativeOptions: SgNodeNativeOptions = {}): SgNode<Data, Options> {
         return {
             id,
             data: {
                 ...nodeData,
+            },
+            nativeOptions: {
+                ...DEFAULT_NATIVE_OPTIONS,
+                ...nativeOptions,
             },
         }
     }

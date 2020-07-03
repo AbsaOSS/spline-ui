@@ -24,7 +24,10 @@
         <div class="graph-container">
             <div class="graph-container-inner">
                 <spline-graph
-                        [graphData]="data.graphData">
+                        [graphData]="data.graphData"
+                        (nodeClick$)="onNodeClicked($event)"
+                        (nodeSelectionChange$)="onNodeSelected($event)"
+                        (nodeEvent$)="onNodeEvent($event)">
                 </spline-graph>
             </div>
         </div>

@@ -17,8 +17,9 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { Observable } from 'rxjs'
-import { map, tap } from 'rxjs/operators'
+import { map } from 'rxjs/operators'
 import { ExecutionEventFacade } from 'spline-api'
+import { SgNode, SgNodeEvent } from 'spline-common'
 
 import { EventOverviewPage } from './event-overview.page.models'
 
@@ -44,7 +45,18 @@ export class EventOverviewPageComponent implements OnInit {
         this.data$ = this.executionEventFacade.fetchLineageOverview(this.executionEventId)
             .pipe(
                 map(lineageData => EventOverviewPage.toData(this.executionEventId, lineageData)),
-                tap(x => console.log(x))
             )
+    }
+
+    onNodeEvent(nodeEvent: SgNodeEvent): void {
+        console.log('nodeEvent', nodeEvent)
+    }
+
+    onNodeClicked($event: { node: SgNode; mouseEvent: MouseEvent }): void {
+        console.log('nodeClick', $event)
+    }
+
+    onNodeSelected($event: { node: SgNode | null }): void {
+        console.log('node selection change', $event)
     }
 }

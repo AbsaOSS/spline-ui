@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export * from './lib/events-graph/public-api'
+export * from './lib/events/public-api'
 export * from './lib/spline-api-config/public-api'

@@ -18,6 +18,7 @@ import { ExecutionEventLineageOverview } from 'spline-api'
 import { SgData } from 'spline-common'
 
 import { EventInfo } from '../../components'
+import { EventNodeControl } from '../../models'
 
 
 export namespace EventOverviewPage {
@@ -31,27 +32,17 @@ export namespace EventOverviewPage {
     export function toData(executionEventId: string, lineageOverview: ExecutionEventLineageOverview): Data {
         const targetEdge = lineageOverview.lineage.links
             .find(
-                x => x.targetNodeId === lineageOverview.executionEventInfo.targetDataSourceId,
+                x => x.target === lineageOverview.executionEventInfo.targetDataSourceId,
             )
         const eventNode = targetEdge
-            ? lineageOverview.lineage.nodes.find(x => x.id === targetEdge.sourceNodeId)
+            ? lineageOverview.lineage.nodes.find(x => x.id === targetEdge.source)
             : undefined
 
 
         return {
             graphData: {
-                nodes: lineageOverview.lineage.nodes
-                    .map(node => ({
-                        id: node.id,
-                        data: {
-                            ...node,
-                        },
-                    })),
+                nodes: lineageOverview.lineage.nodes.map(nodeSource => EventNodeControl.toNode(nodeSource)),
                 links: lineageOverview.lineage.links
-                    .map(link => ({
-                        target: link.targetNodeId,
-                        source: link.sourceNodeId,
-                    })),
             },
             eventInfo: {
                 id: executionEventId,

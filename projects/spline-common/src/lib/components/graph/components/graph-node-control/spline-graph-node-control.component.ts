@@ -42,6 +42,8 @@ export class SplineGraphNodeControlComponent<TData extends object, TOptions exte
     extends BaseDynamicContentComponent<ISgNodeControl<TData, TOptions>> implements OnChanges {
 
     @Input() schema: SgNodeSchema<TData, TOptions>
+    @Input() isSelected: boolean
+
     @Output() event$ = new EventEmitter<SgNodeControlEvent<TData>>()
 
     constructor(protected readonly componentFactoryResolver: ComponentFactoryResolver,
@@ -58,6 +60,12 @@ export class SplineGraphNodeControlComponent<TData extends object, TOptions exte
         if (schemaChange) {
             this.rebuildComponent()
         }
+
+        // synchronize selection info
+        if (changes.isSelected && !changes.isSelected.isFirstChange() && this.componentRef) {
+            this.componentRef.instance.isSelected = changes.isSelected.currentValue
+            this.componentRef.changeDetectorRef.detectChanges()
+        }
     }
 
     protected initCreatedComponent(componentRef: ComponentRef<ISgNodeControl<TData, TOptions>>): void {
@@ -66,8 +74,6 @@ export class SplineGraphNodeControlComponent<TData extends object, TOptions exte
         instance.schema = !this.schema?.type
             ? decorateDefaultSgNodeSchema(this.schema) as SgNodeSchema<TData, TOptions>
             : this.schema
-
-        console.log(instance.schema)
 
         this.eventsSubscriptionRefs.push(
             instance.event$.subscribe((event) => this.event$.emit(event)),

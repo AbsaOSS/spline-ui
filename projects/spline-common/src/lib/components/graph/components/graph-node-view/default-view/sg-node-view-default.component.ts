@@ -27,6 +27,7 @@ export class SgNodeViewDefaultComponent extends BaseComponent {
     readonly defaultIcon = 'extension'
     readonly defaultColor = '#7a7a7d'
 
+    @Input() isSelected: boolean
     @Input() icon: string
     @Input() color: string
     @Input() showActions = false

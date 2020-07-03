@@ -2,8 +2,8 @@
  * Copyright 2020 ABSA Group Limited
  */
 
-@mixin shadow-light() {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.12);
+@mixin shadow-light($color: rgba(0, 0, 0, 0.12)) {
+    box-shadow: 2px 2px 2px $color;
 }
 
 @mixin shadow-level-1() {

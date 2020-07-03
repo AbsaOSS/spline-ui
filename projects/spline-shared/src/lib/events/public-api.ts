@@ -14,18 +14,4 @@
  * limitations under the License.
  */
 
-export type LineageNodeLink = {
-    source: string
-    target: string
-}
-export type LineageNodeLinkDto = {
-    source: string
-    target: string
-}
-
-export function toLineageNodeTransition(entity: LineageNodeLinkDto): LineageNodeLink {
-    return {
-        source: entity.source,
-        target: entity.target,
-    }
-}
+export * from './spline-events-shared.module'

@@ -26,6 +26,8 @@ export abstract class SgNodeBaseComponent<TData extends object, TOptions extends
     extends BaseComponent implements ISgNodeControl<TData, TOptions>, OnInit {
 
     @Input() schema: SgNodeSchema<TData, TOptions>
+    @Input() isSelected: boolean
+
     @Output() event$ = new EventEmitter<SgNodeControlEvent<TData>>()
 
     data$ = new BehaviorSubject<TData | null>(null)

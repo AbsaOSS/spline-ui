@@ -27,4 +27,10 @@ import { SgNodeDefault } from './sg-node-default.models'
 })
 export class SgNodeDefaultComponent extends SgNodeBaseComponent<SgNodeDefault.Data, SgNodeDefault.Options> {
 
+    onAction($event: MouseEvent) {
+        $event.stopPropagation()
+        this.event$.emit({
+            type: 'action',
+        })
+    }
 }

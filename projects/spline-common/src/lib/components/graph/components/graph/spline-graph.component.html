@@ -22,6 +22,7 @@
                [autoCenter]="true"
                [draggingEnabled]="false"
                [layoutSettings]="layoutSettings"
+               (clickHandler)="onGraphClicked($event)"
                [enableZoom]="true">
 
         <ng-template #linkTemplate let-link>
@@ -29,7 +30,6 @@
                 <svg:path class="line" stroke-width="2" stroke="#7a7a7d" marker-end="url(#arrow)"></svg:path>
             </svg:g>
         </ng-template>
-
 
         <ng-template #defsTemplate>
             <svg:marker id="arrow"
@@ -47,13 +47,21 @@
 
         <ng-template #nodeTemplate let-node>
             <svg:g class="node" xmlns="http://www.w3.org/1999/xhtml"
-                   [attr.width]="node?.width ? node.width : defaultNodeWidth"
-                   [attr.height]="node?.height ? node.height : defaultNodeHeight">
-                <svg:foreignObject [attr.width]="node?.width ? node.width : defaultNodeWidth"
-                                   [attr.height]="node?.height ? node.height : defaultNodeHeight"
-                                    class="position-relative overflow-visible">
+                   [attr.width]="node?.dimension?.width ? node.dimension.width : defaultNodeWidth"
+                   [attr.height]="node?.dimension?.height ? node.dimension.height : defaultNodeHeight">
+
+                <svg:foreignObject [attr.width]="node?.dimension?.width ? node.dimension.width : defaultNodeWidth"
+                                   [attr.height]="node?.dimension?.height ? node.dimension.height : defaultNodeHeight"
+                                   class="spline-graph__node-container"
+                                   [class.spline-graph__node--selected]="node.id === _selectedNodeId">
                     <xhtml:div>
-                        <spline-graph-node-control [schema]="node.schema"></spline-graph-node-control>
+                        <spline-graph-node-control
+
+                                [schema]="node.schema"
+                                [isSelected]="node.id === _selectedNodeId"
+                                (click)="onNodeClicked(node, $event)"
+                                (event$)="onNodeEvent(node, $event)">
+                        </spline-graph-node-control>
                     </xhtml:div>
                 </svg:foreignObject>
             </svg:g>

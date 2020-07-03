@@ -22,12 +22,15 @@ $border-radius: 8px;
 $icon-width: 24px;
 
 .sg-node-view {
+
+    $self: &;
+
     @include shadow-light();
     align-items: center;
     background-color: $color-white;
-    border-left: 5px solid $color-green;
     border-radius: $border-radius;
     bottom: 0;
+    cursor: pointer;
     display: flex;
     left: 0;
     overflow: hidden;
