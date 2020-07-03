@@ -14,21 +14,9 @@
   ~ limitations under the License.
   -->
 
-
-<sg-node-view-default *ngIf="data$ | async as dataValue"
-        [icon]="dataValue?.icon"
-        [color]="dataValue?.color">
-
-    <spline-long-text [tooltip]="dataValue?.label">
-        {{dataValue?.label}}
-    </spline-long-text>
-
-    <!-- ACTIONS -->
-    <div class="sg-node-view__actions">
-        <button [matTooltip]="'Open Execution Plan Graph'" mat-button mat-icon-button>
-            <mat-icon>launch</mat-icon>
-        </button>
-    </div>
-    <!-- ./ACTIONS -->
-
-</sg-node-view-default>
+<div class="spline-long-text-wrapper"
+     [matTooltip]="tooltip"
+     [matTooltipDisabled]="!isTextTooLong"
+     #contentWrapperRef>
+        <ng-content></ng-content>
+</div>

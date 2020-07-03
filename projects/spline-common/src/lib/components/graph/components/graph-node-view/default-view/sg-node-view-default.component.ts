@@ -24,7 +24,7 @@ import { BaseComponent } from 'spline-utils'
 })
 export class SgNodeViewDefaultComponent extends BaseComponent {
 
-    readonly defaultIcon = 'scatter_plot'
+    readonly defaultIcon = 'extension'
     readonly defaultColor = '#7a7a7d'
 
     @Input() icon: string

@@ -16,24 +16,23 @@
 
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
-import { FormsModule } from '@angular/forms'
-import { MatIconModule } from '@angular/material/icon'
-import { MatSortModule } from '@angular/material/sort'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
-import { SplineSortHeaderComponent } from './spline-sort-header.component'
+import { SplineLongTextComponent } from './spline-long-text.component'
 
 
 @NgModule({
-    declarations: [
-        SplineSortHeaderComponent,
-    ],
     imports: [
         CommonModule,
-        FormsModule,
-        MatIconModule,
-        MatSortModule,
+        MatTooltipModule,
     ],
-    exports: [SplineSortHeaderComponent],
+    declarations: [
+        SplineLongTextComponent,
+    ],
+    exports: [
+        SplineLongTextComponent,
+    ],
+    entryComponents: [],
 })
-export class SplineSortHeaderModule {
+export class SplineLongTextModule {
 }

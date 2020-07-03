@@ -30,6 +30,7 @@ $icon-width: 24px;
     bottom: 0;
     display: flex;
     left: 0;
+    overflow: hidden;
     position: absolute;
     right: 0;
     top: 0;
@@ -56,8 +57,12 @@ $icon-width: 24px;
     }
 
     &__content {
-        display: inline-grid;
         flex: 1;
+        padding-right: 12px;
+
+        > * {
+            display: inline-grid;
+        }
     }
 
     &__header {

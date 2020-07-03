@@ -22,6 +22,8 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { NgxGraphModule } from '@swimlane/ngx-graph'
 
+import { SplineLongTextModule } from '../long-text'
+
 import * as fromComponents from './components'
 import * as fromServices from './services'
 
@@ -37,6 +39,7 @@ import * as fromServices from './services'
         NgxGraphModule,
         MatDividerModule,
         MatTooltipModule,
+        SplineLongTextModule
     ],
     exports: [
         ...fromComponents.splineGraphComponents
