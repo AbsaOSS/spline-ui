@@ -34,6 +34,9 @@ export class SplineGraphComponent implements OnChanges {
     @Input() curve: fromD3Shape.CurveFactoryLineOnly | fromD3Shape.CurveFactory = fromD3Shape.curveBundle.beta(0)
     @Input() layoutSettings: SgLayoutSettings = SG_DEFAULT_LAYOUT_SETTINGS
 
+    readonly defaultNodeWidth = 350;
+    readonly defaultNodeHeight = 50;
+
     nativeNodes: SgNativeNode[] = []
 
     ngOnChanges(changes: SimpleChanges): void {

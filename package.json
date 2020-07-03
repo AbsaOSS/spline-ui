@@ -90,7 +90,7 @@
   },
   "lint-staged": {
     "*.scss": [
-      "stylelint --syntax=scss",
+      "stylelint --syntax=scss --fix",
       "git add"
     ],
     "*.ts": [
