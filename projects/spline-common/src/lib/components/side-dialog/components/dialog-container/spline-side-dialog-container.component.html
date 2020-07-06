@@ -1,0 +1,33 @@
+<div class="spline-side-dialog__wrapper"
+     (click)="$event.stopPropagation()"
+     [class.visible]="isVisible"
+     [ngStyle]="{'z-index': zIndex}">
+
+    <div class="spline-side-dialog">
+
+        <!-- TITLE -->
+        <div class="spline-side-dialog__header">
+
+            <div class="spline-side-dialog__close-btn">
+                <button
+                        mat-button
+                        mat-icon-button
+                        (click)="onCloseButtonClicked()">
+
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+
+            <ng-content select=".spline-side-dialog__header-content"></ng-content>
+
+        </div>
+        <!-- ./TITLE -->
+
+        <!-- CONTENT -->
+        <div class="spline-side-dialog__content">
+            <ng-content></ng-content>
+        </div>
+        <!-- ./CONTENT -->
+
+    </div>
+</div>

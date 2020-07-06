@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { ExecutionEventFacade } from 'spline-api'
-import { SgNode, SgNodeEvent } from 'spline-common'
+import { SgNode, SgNodeEvent, SplineSideDialogContainerComponent } from 'spline-common'
 
 import { EventOverviewPage } from './event-overview.page.models'
 
@@ -31,9 +31,11 @@ import { EventOverviewPage } from './event-overview.page.models'
 })
 export class EventOverviewPageComponent implements OnInit {
 
+    @ViewChild('sideDialog', { static: false}) sideDialog: SplineSideDialogContainerComponent
     executionEventId: string
 
     data$: Observable<EventOverviewPage.Data>
+    selectedNode: SgNode
 
     constructor(private readonly activatedRoute: ActivatedRoute,
                 private readonly executionEventFacade: ExecutionEventFacade) {
@@ -54,9 +56,14 @@ export class EventOverviewPageComponent implements OnInit {
 
     onNodeClicked($event: { node: SgNode; mouseEvent: MouseEvent }): void {
         console.log('nodeClick', $event)
+        this.sideDialog.show()
     }
 
     onNodeSelected($event: { node: SgNode | null }): void {
         console.log('node selection change', $event)
+        this.selectedNode = $event.node
+        if ($event.node === null) {
+            this.sideDialog.hide()
+        }
     }
 }

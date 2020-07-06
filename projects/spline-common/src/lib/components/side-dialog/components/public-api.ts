@@ -14,11 +14,4 @@
  * limitations under the License.
  */
 
-export * from './content-error/public-api'
-export * from './loader/public-api'
-export * from './search-box/public-api'
-export * from './sort-header/public-api'
-export * from './graph/public-api'
-export * from './cytoscape-graph/public-api'
-export * from './long-text/public-api'
-export * from './side-dialog/public-api'
+export * from './dialog-container/spline-side-dialog-container.component'

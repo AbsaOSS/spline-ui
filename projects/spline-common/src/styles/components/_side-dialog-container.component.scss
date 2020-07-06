@@ -1,0 +1,62 @@
+@import 'vars';
+@import 'mixins';
+
+$dialog-width: 350px;
+$dialog-width__small: 544px;
+
+$dialog-full-width-break: 1280px;
+
+$top-offset: 100px;
+$padding-x: 16px;
+$padding-y: 24px;
+
+.spline-side-dialog {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+
+    &__wrapper {
+        background-color: $color-white-90;
+        border-top-right-radius: 32px;
+        bottom: 0;
+        box-shadow: -2px 2px 2px 0 $color-shadow;
+        height: calc(100% - #{$top-offset});
+        opacity: 0.5;
+        overflow: hidden;
+        position: fixed;
+        right: 0;
+        top: $top-offset;
+        transition: all ease .3s;
+
+        visibility: hidden;
+
+        width: 0;
+
+        &.visible {
+            opacity: 1;
+            visibility: visible;
+            width: $dialog-width;
+            @media (max-width: $dialog-full-width-break) {
+                width: calc(100% - 270px);
+            }
+        }
+    }
+
+    &__close-btn {
+        position: absolute;
+        right: $padding-x;
+        top: $padding-y;
+    }
+
+    &__header {
+        min-height: 64px;
+    }
+
+    &__content {
+        flex: 1;
+        overflow: auto;
+        padding: $padding-y $padding-x;
+
+    }
+}
