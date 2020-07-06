@@ -104,11 +104,6 @@ export class EventsListPageComponent extends BaseComponent implements OnInit, Af
     }
 
     onPaginationChanged(pageEvent: PageEvent): void {
-        if (pageEvent.pageIndex > pageEvent.previousPageIndex) {
-            this.dataSource.nextPage()
-        }
-        else {
-            this.dataSource.prevPage()
-        }
+        this.dataSource.goToPage(pageEvent.pageIndex)
     }
 }

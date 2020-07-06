@@ -14,11 +14,4 @@
  * limitations under the License.
  */
 
-import { SplineSideDialogContainerComponent } from './dialog-container/spline-side-dialog-container.component'
-
-
-export const sideDialogComponents = [
-    SplineSideDialogContainerComponent
-]
-
-export * from './public-api'
+export * from './panel-container/spline-side-panel-container.component'

@@ -1,7 +1,7 @@
 @import 'vars';
 @import 'mixins';
 
-$dialog-width: 350px;
+$dialog-width: 420px;
 $dialog-width__small: 544px;
 
 $dialog-full-width-break: 1280px;
@@ -26,15 +26,16 @@ $padding-y: 24px;
         overflow: hidden;
         position: fixed;
         right: 0;
-        top: $top-offset;
-        transition: all ease .3s;
+        top: $top-offset - 100px;
+        transition: all ease .1s;
 
         visibility: hidden;
 
-        width: 0;
+        width: $dialog-width;
 
         &.visible {
             opacity: 1;
+            top: $top-offset;
             visibility: visible;
             width: $dialog-width;
             @media (max-width: $dialog-full-width-break) {

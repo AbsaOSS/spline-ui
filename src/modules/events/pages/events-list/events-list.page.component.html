@@ -149,9 +149,11 @@
                 (page)="onPaginationChanged($event)"
                 [length]="(data$ | async)?.totalCount"
                 [pageSize]="dataSource.searchParams?.pager?.limit"
-                [showFirstLastButtons]="false"
+                [showFirstLastButtons]="true"
                 [hidePageSize]="true">
 
         </mat-paginator>
+
+        {{(data$ | async)?.totalCount}}
     </div>
 </div>

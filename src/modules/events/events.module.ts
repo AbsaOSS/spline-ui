@@ -28,7 +28,8 @@ import { RouterModule } from '@angular/router'
 import { SplineApiModule } from 'spline-api'
 import { SplineContentErrorModule, SplineGraphModule, SplineLayoutModule, SplineLoaderModule, SplineSortHeaderModule } from 'spline-common'
 import { SplineApiConfigModule } from 'spline-shared'
-import { SplineSideDialogModule } from '../../../projects/spline-common/src/lib/components/side-dialog/spline-side-dialog.module'
+
+import { SplineSidePanelModule } from '../../../projects/spline-common/src/lib/components/side-panel/spline-side-panel.module'
 
 import * as fromComponents from './components'
 import { EventsRoutingModule } from './events-routing.module'
@@ -59,7 +60,7 @@ import * as fromPages from './pages'
         MatDividerModule,
         MatCardModule,
         MatIconModule,
-        SplineSideDialogModule
+        SplineSidePanelModule
     ],
     exports: [
         ...fromPages.pageComponents,

@@ -18,13 +18,13 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import * as fromD3Shape from 'd3-shape'
 
 import {
-    SG_DEFAULT_LAYOUT_SETTINGS,
     SgData,
     SgLayoutSettings,
     SgNativeNode,
-    SgNode,
     SgNodeControlEvent,
     SgNodeEvent,
+    SgNodeSchema,
+    SG_DEFAULT_LAYOUT_SETTINGS,
     toSgNativeNode,
 } from '../../models'
 
@@ -38,9 +38,9 @@ export class SplineGraphComponent implements OnChanges {
     @Input() graphData: SgData
 
     @Output() substrateClick$ = new EventEmitter<{ mouseEvent: MouseEvent }>()
-    @Output() nodeClick$ = new EventEmitter<{ node: SgNode; mouseEvent: MouseEvent }>()
+    @Output() nodeClick$ = new EventEmitter<{ nodeSchema: SgNodeSchema; mouseEvent: MouseEvent }>()
     @Output() nodeEvent$ = new EventEmitter<SgNodeEvent>()
-    @Output() nodeSelectionChange$ = new EventEmitter<{ node: SgNode | null }>()
+    @Output() nodeSelectionChange$ = new EventEmitter<{ nodeSchema: SgNodeSchema | null }>()
 
     @Input() curve: fromD3Shape.CurveFactoryLineOnly | fromD3Shape.CurveFactory = fromD3Shape.curveBundle.beta(0)
     @Input() layoutSettings: SgLayoutSettings = SG_DEFAULT_LAYOUT_SETTINGS
@@ -63,20 +63,20 @@ export class SplineGraphComponent implements OnChanges {
         }
     }
 
-    onNodeEvent(node: SgNode, event: SgNodeControlEvent<any>): void {
+    onNodeEvent(node: SgNativeNode, event: SgNodeControlEvent<any>): void {
         this.nodeEvent$.emit({
-            node,
+            nodeSchema: node,
             event,
         })
     }
 
-    onNodeClicked(node: SgNode, mouseEvent: MouseEvent): void {
+    onNodeClicked(node: SgNativeNode, mouseEvent: MouseEvent): void {
         mouseEvent.stopPropagation()
 
         this.selectNode(node)
 
         this.nodeClick$.emit({
-            node,
+            nodeSchema: node.schema,
             mouseEvent,
         })
     }
@@ -86,15 +86,15 @@ export class SplineGraphComponent implements OnChanges {
         this.substrateClick$.emit({ mouseEvent: $event })
     }
 
-    private selectNode(node: SgNode): void {
+    private selectNode(node: SgNativeNode): void {
         if (this._selectedNodeId !== node.id) {
             this._selectedNodeId = node.id
-            this.nodeSelectionChange$.emit({ node })
+            this.nodeSelectionChange$.emit({ nodeSchema: node.schema })
         }
     }
 
     private clearNodeSelection(): void {
         this._selectedNodeId = null
-        this.nodeSelectionChange$.emit({ node: null })
+        this.nodeSelectionChange$.emit({ nodeSchema: null })
     }
 }

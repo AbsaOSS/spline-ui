@@ -1,6 +1,6 @@
 <div class="spline-side-dialog__wrapper"
      (click)="$event.stopPropagation()"
-     [class.visible]="isVisible"
+     [class.visible]="_isVisible"
      [ngStyle]="{'z-index': zIndex}">
 
     <div class="spline-side-dialog">

@@ -36,6 +36,6 @@ export interface ISgNodeControlFactory<TData extends object, TOptions extends ob
 }
 
 export type SgNodeEvent = {
-    node: SgNode
+    nodeSchema: SgNodeSchema
     event: SgNodeControlEvent<any>
 }

@@ -20,5 +20,5 @@ import * as fromComponents from './components'
         ...fromComponents.sideDialogComponents
     ],
 })
-export class SplineSideDialogModule {
+export class SplineSidePanelModule {
 }
