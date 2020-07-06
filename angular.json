@@ -102,17 +102,29 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "localhost": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.localhost.ts"
+                }
+              ]
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "spline-ui:build"
+            "browserTarget": "spline-ui:build",
+            "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {
               "browserTarget": "spline-ui:build:production"
+            },
+            "localhost": {
+              "browserTarget": "spline-ui:build:localhost"
             }
           }
         },
