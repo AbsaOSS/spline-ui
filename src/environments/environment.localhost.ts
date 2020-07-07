@@ -21,6 +21,6 @@ import { Environment } from './shared'
 export const environment: Environment = {
     ...environmentBase,
     splineConsumerApi: {
-        fullPath: '/consumer'
+        fullPath: '/consumer-localhost'
     }
 }

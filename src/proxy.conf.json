@@ -1,6 +1,13 @@
 {
+  "/consumer-localhost": {
+    "target": "http://localhost:8080/rest_gateway_war_exploded/",
+    "secure": false,
+    "pathRewrite": {
+      "^/consumer-localhost": "/consumer"
+    }
+  },
   "/consumer": {
-    "target": "http://localhost:8080/",
+    "target": "https://opensource.bigusdatus.com/spline/rest/",
     "secure": false
   }
 }

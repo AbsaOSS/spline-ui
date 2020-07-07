@@ -20,7 +20,4 @@ import { Environment } from './shared'
 
 export const environment: Environment = {
     ...environmentBase,
-    splineConsumerApi: {
-        fullPath: 'https://opensource.bigusdatus.com/spline/rest/consumer'
-    }
 }
