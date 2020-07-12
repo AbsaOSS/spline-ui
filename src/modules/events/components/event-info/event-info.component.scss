@@ -21,7 +21,7 @@
     @include shadow-light();
     background: $color-white-90;
     border-radius: 2rem;
-    display: flex;
+    margin-bottom: 1rem;
     padding: 1.5rem;
 
     &__icon-container {
@@ -34,15 +34,15 @@
 
     &__icon-wrapper {
         align-items: center;
-        border: 6px solid $color-green;
+        border: 3px solid $color-green;
         border-radius: 50%;
         display: flex;
-        height: 80px;
+        height: 52px;
         justify-content: center;
-        width: 80px;
+        width: 52px;
 
         .mat-icon {
-            @include icon-size(48px);
+            @include icon-size(36px);
         }
     }
 
@@ -69,10 +69,11 @@
 
 .event-details-container {
     display: flex;
+    flex-direction: column;
 }
 
 .event-details {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0;
 
     &:first-child {
         padding-left: 0;

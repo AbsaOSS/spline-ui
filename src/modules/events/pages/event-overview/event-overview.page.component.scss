@@ -101,3 +101,11 @@
 
     }
 }
+
+.left-side-container {
+    background: $color-grey-light;
+    box-shadow: 0 0 4px $color-shadow;
+    padding: 1.5rem 1rem;
+    position: relative;
+    z-index: 2;
+}

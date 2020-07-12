@@ -13,13 +13,16 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<div *ngIf="data$ | async as data" class="end-to-end-content-container">
+<div *ngIf="data$ | async as data" class="end-to-end-content-container flex-row">
+    <div class="left-side-container" style="width: 600px">
+        <event-info [data]="data.eventInfo"></event-info>
+    </div>
     <div class="end-to-end-content-container__body">
-        <div class="event-info-container">
-            <div class="spline-container-md">
-                <event-info [data]="data.eventInfo"></event-info>
-            </div>
-        </div>
+<!--        <div class="event-info-container">-->
+<!--            <div class="spline-container-md">-->
+<!--                <event-info [data]="data.eventInfo"></event-info>-->
+<!--            </div>-->
+<!--        </div>-->
 
         <div class="graph-container">
             <div class="graph-container-inner">
