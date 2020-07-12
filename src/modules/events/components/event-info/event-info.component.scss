@@ -17,16 +17,20 @@
 @import 'vars';
 @import 'mixins';
 
+$container-padding: 1.5rem;
+$entity-name-color: $color-black;
+$icon-color: $color-pink;
+
 .event-info {
     @include shadow-light();
     background: $color-white-90;
     border-radius: 2rem;
     margin-bottom: 1rem;
-    padding: 1.5rem;
+    padding: $container-padding;
 
     &__icon-container {
         align-items: center;
-        color: $color-green;
+        color: $icon-color;
         display: flex;
         justify-content: center;
         padding-right: 1.5rem;
@@ -34,15 +38,15 @@
 
     &__icon-wrapper {
         align-items: center;
-        border: 3px solid $color-green;
+        border: 4px solid $icon-color;
         border-radius: 50%;
         display: flex;
-        height: 52px;
+        height: 60px;
         justify-content: center;
-        width: 52px;
+        width: 60px;
 
         .mat-icon {
-            @include icon-size(36px);
+            @include icon-size(42px);
         }
     }
 
@@ -56,14 +60,20 @@
     }
 
     &__entity-name {
-        border: 2px solid $color-pink;
-        border-radius: 9px;
-        color: $color-pink;
+        border: 2px solid $entity-name-color;
+        border-radius: 16px;
+        color: $entity-name-color;
         display: inline-block;
-        font-size: 10px;
+        font-size: 11px;
         line-height: 1;
         margin-top: 8px;
-        padding: 2px 8px;
+        padding: 4px 8px;
+    }
+
+    &__divider {
+        border-top: 1px solid $color-grey;
+        height: 1px;
+        margin: 1rem #{-$container-padding};
     }
 }
 
@@ -73,19 +83,19 @@
 }
 
 .event-details {
-    padding: 0.5rem 0;
+    padding: 0 0 0.5rem;
 
-    &:first-child {
-        padding-left: 0;
+    &:last-child {
+        padding-bottom: 0;
     }
 
     &__label {
-        color: $color-grey-dark-50;
-        font-size: 11px;
+        color: $color-grey-dark-75;
+        font-size: 12px;
     }
 
     &__value {
-        color: $color-grey-dark;
+        color: $color-black;
         font-size: 13px;
         font-weight: 500;
     }

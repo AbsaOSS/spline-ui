@@ -26,6 +26,7 @@ $spline-layout-settings-default: (
     sidebar-width: 64px,
     sidebar-width--expanded: 250px,
     sidebar-bg-color: $color-bg-black,
+    sidebar-bg-color--expanded: $color-grey-light-2,
     sidebar-right-border-color: $color-grey
 );
 
@@ -89,7 +90,7 @@ $spline-layout-settings-default: (
             width: map-get($settings, sidebar-width);
 
             &--expanded {
-                background: $color-grey-light;
+                background: map-get($settings, sidebar-bg-color--expanded);
                 box-shadow: 0 0 10px $color-shadow;
                 width: map-get($settings, sidebar-width--expanded);
             }

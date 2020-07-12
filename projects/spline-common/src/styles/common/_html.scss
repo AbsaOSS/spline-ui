@@ -55,13 +55,15 @@ h5 {
 }
 
 a {
-    color: $color-green-light;
+    color: $color-black;
+    text-decoration: underline;
 }
 
 a:hover,
 a:focus,
 a:active {
-    color: $color-green-dark;
+    color: $color-black;
+    text-decoration: underline;
 }
 
 a.link {

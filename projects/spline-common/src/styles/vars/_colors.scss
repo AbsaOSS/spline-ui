@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-$color-black: #444;
+$color-black: #2d2323;
 
 $color-grey: #ddd;
 
@@ -28,9 +28,9 @@ $color-grey-light-2: #f5f5f5;
 $color-grey-light-3: #f3f3f3;
 $color-grey-light-4: #f0f0f0;
 
-$color-bg-black: #303a40;
+$color-bg-black: #2d2323;
 
-$color-grey-dark: #7a7a7d;
+$color-grey-dark: #736464;
 $color-grey-dark-75: rgba(122, 122, 125, 0.75);
 $color-grey-dark-50: rgba(122, 122, 125, 0.5);
 
@@ -38,10 +38,11 @@ $color-green-light: #0da7a7;
 $color-green: #329b9b;
 $color-green-dark: #2b8181;
 
-$color-orange: #ce820f;
-$color-orange-50: rgba(206, 130, 15, 0.5);
-$color-orange-25: rgba(206, 130, 15, 0.25);
+$color-orange: #f47721;
+$color-orange-75: rgba(244, 119, 33, 0.75);
+$color-orange-50: rgba(244, 119, 33, 0.5);
+$color-orange-25: rgba(244, 119, 33, 0.25);
 
-$color-pink: #c3216e;
+$color-pink: #dc0032;
 
 $color-shadow: rgba(0, 0, 0, 0.12);
