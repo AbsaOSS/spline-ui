@@ -6,28 +6,30 @@ $dialog-width__small: 544px;
 
 $dialog-full-width-break: 1280px;
 
-$top-offset: 100px;
-$padding-x: 16px;
+$top-offset: 80px;
+$margin: 8px;
+
+$padding-x: 24px;
 $padding-y: 24px;
 
-.spline-side-dialog {
+.spline-side-panel {
     display: flex;
     flex-direction: column;
     height: 100%;
     position: relative;
 
     &__wrapper {
-        background-color: $color-white-90;
-        border-top-right-radius: 32px;
+        background-color: $color-white;
+        border-radius: 32px;
         bottom: 0;
-        box-shadow: -2px 2px 2px 0 $color-shadow;
-        height: calc(100% - #{$top-offset});
+        box-shadow: 0 0 8px 0 $color-shadow;
+        height: calc(100% - #{$top-offset} - #{$margin * 2});
         opacity: 0.5;
         overflow: hidden;
         position: fixed;
-        right: 0;
-        top: $top-offset - 100px;
-        transition: all ease .1s;
+        right: -$dialog-width;
+        top: $top-offset + $margin;
+        transition: all ease .2s;
 
         visibility: hidden;
 
@@ -35,7 +37,8 @@ $padding-y: 24px;
 
         &.visible {
             opacity: 1;
-            top: $top-offset;
+            right: $margin;
+            top: $top-offset + $margin;
             visibility: visible;
             width: $dialog-width;
             @media (max-width: $dialog-full-width-break) {
@@ -47,15 +50,22 @@ $padding-y: 24px;
     &__close-btn {
         position: absolute;
         right: $padding-x;
-        top: $padding-y;
+        top: 0;
+        z-index: 2;
+    }
+
+    &__header-content {
+        line-height: 64px;
     }
 
     &__header {
+        line-height: 64px;
         min-height: 64px;
+        padding: 0 16px;
+
     }
 
     &__content {
-        flex: 1;
         overflow: auto;
         padding: $padding-y $padding-x;
 

@@ -30,56 +30,8 @@
                         (nodeEvent$)="onNodeEvent($event)">
                 </spline-graph>
 
-                <spline-side-dialog-container #sideDialog>
-
-                    <div class="spline-side-dialog__header-content text-center">
-                        <mat-icon>settings</mat-icon>
-                        <h2>label</h2>
-                    </div>
-
-                    <div>
-                        Some content
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                        <p>Some content</p>
-                    </div>
+                <spline-side-dialog-container #sidePanel>
+                    {{selectedNode?.data?.label}}
                 </spline-side-dialog-container>
             </div>
         </div>

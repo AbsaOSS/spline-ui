@@ -40,7 +40,7 @@
             </div>
 
             <div class="spline-sidebar-menu__section">
-                <div class="spline-sidebar-menu__section-title">
+                <div class="spline-sidebar-menu__section-title" >
                     {{isExpanded ? 'Data Entities' : '&nbsp;'}}
                 </div>
 
@@ -50,7 +50,7 @@
                        [class.active]="true">
 
                         <mat-icon>play_arrow</mat-icon>
-                        <span [hidden]="!isExpanded">Execution Events</span>
+                        <span *ngIf="isExpanded">Execution Events</span>
 
                     </a>
 

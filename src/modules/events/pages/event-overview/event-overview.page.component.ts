@@ -19,7 +19,7 @@ import { ActivatedRoute } from '@angular/router'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { ExecutionEventFacade } from 'spline-api'
-import { SgNativeNode, SgNode, SgNodeEvent, SgNodeSchema, SplineSidePanelContainerComponent } from 'spline-common'
+import { SgNodeEvent, SgNodeSchema, SplineSidePanelContainerComponent } from 'spline-common'
 
 import { EventOverviewPage } from './event-overview.page.models'
 
@@ -31,7 +31,7 @@ import { EventOverviewPage } from './event-overview.page.models'
 })
 export class EventOverviewPageComponent implements OnInit {
 
-    @ViewChild('sideDialog', { static: false}) sideDialog: SplineSidePanelContainerComponent
+    @ViewChild('sidePanel', { static: false}) sidePanel: SplineSidePanelContainerComponent
     executionEventId: string
 
     data$: Observable<EventOverviewPage.Data>
@@ -56,14 +56,14 @@ export class EventOverviewPageComponent implements OnInit {
 
     onNodeClicked($event: { nodeSchema: SgNodeSchema; mouseEvent: MouseEvent }): void {
         console.log('nodeClick', $event)
-        this.sideDialog.show()
+        this.sidePanel.show()
     }
 
     onNodeSelected($event: { nodeSchema: SgNodeSchema | null }): void {
         console.log('node selection change', $event)
         this.selectedNode = $event.nodeSchema
         if (this.selectedNode === null) {
-            this.sideDialog.hide()
+            this.sidePanel.hide()
         }
     }
 }

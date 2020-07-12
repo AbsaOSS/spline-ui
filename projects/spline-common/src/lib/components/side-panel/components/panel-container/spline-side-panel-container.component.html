@@ -1,14 +1,14 @@
-<div class="spline-side-dialog__wrapper"
+<div class="spline-side-panel__wrapper"
      (click)="$event.stopPropagation()"
      [class.visible]="_isVisible"
      [ngStyle]="{'z-index': zIndex}">
 
-    <div class="spline-side-dialog">
+    <div class="spline-side-panel">
 
         <!-- TITLE -->
-        <div class="spline-side-dialog__header">
+        <div class="spline-side-panel__header">
 
-            <div class="spline-side-dialog__close-btn">
+            <div class="spline-side-panel__close-btn">
                 <button
                         mat-button
                         mat-icon-button
@@ -18,13 +18,13 @@
                 </button>
             </div>
 
-            <ng-content select=".spline-side-dialog__header-content"></ng-content>
+            <ng-content select=".spline-side-panel__header-content"></ng-content>
 
         </div>
         <!-- ./TITLE -->
 
         <!-- CONTENT -->
-        <div class="spline-side-dialog__content">
+        <div class="spline-side-panel__content">
             <ng-content></ng-content>
         </div>
         <!-- ./CONTENT -->

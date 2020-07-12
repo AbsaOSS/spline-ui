@@ -72,6 +72,8 @@ $color-schema-settings--expanded: (
         height: 40px;
         margin-bottom: 4px;
         overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
 
         .mat-icon {
             margin-right: 0.5rem;
@@ -85,8 +87,11 @@ $color-schema-settings--expanded: (
     &__section-title {
         font-size: 12px;
         margin-bottom: 0.5rem;
+        overflow: hidden;
         padding-left: 1rem;
+        text-overflow: ellipsis;
         text-transform: uppercase;
+        white-space: nowrap;
     }
 }
 
