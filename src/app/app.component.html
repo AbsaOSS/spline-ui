@@ -23,30 +23,17 @@
     <!-- ./HEADER -->
 
     <!-- SIDEBAR -->
-    <ng-template splineLayoutSection="sidebar">
+    <ng-template splineLayoutSection="sidebar" let-isExpanded="isExpanded">
         <div class="spline-sidebar-menu">
 
             <div class="spline-sidebar-menu__section">
-                <div class="spline-sidebar-menu__section-title">
-                    Summary
-                </div>
-
                 <mat-nav-list>
                     <a mat-list-item
                        routerLink="/dashboard"
                        routerLinkActive="active">
 
                         <mat-icon>dashboard</mat-icon>
-                        <span>Dashboard</span>
-
-                    </a>
-
-                    <a mat-list-item
-                       routerLink="/statistics"
-                       routerLinkActive="active">
-
-                        <mat-icon>insert_chart_outlined</mat-icon>
-                        <span>Statistics</span>
+                        <span *ngIf="isExpanded">Dashboard</span>
 
                     </a>
                 </mat-nav-list>
@@ -54,16 +41,16 @@
 
             <div class="spline-sidebar-menu__section">
                 <div class="spline-sidebar-menu__section-title">
-                    Data Entities
+                    {{isExpanded ? 'Data Entities' : '&nbsp;'}}
                 </div>
 
                 <mat-nav-list>
                     <a mat-list-item
                        routerLink="/events/list"
-                       routerLinkActive="active">
+                       [class.active]="true">
 
-                        <mat-icon>play_circle_outline</mat-icon>
-                        <span>Execution Events</span>
+                        <mat-icon>play_arrow</mat-icon>
+                        <span [hidden]="!isExpanded">Execution Events</span>
 
                     </a>
 
@@ -72,7 +59,7 @@
                        routerLinkActive="active">
 
                         <mat-icon>description</mat-icon>
-                        <span>Data Sources</span>
+                        <span *ngIf="isExpanded">Data Sources</span>
 
                     </a>
                 </mat-nav-list>

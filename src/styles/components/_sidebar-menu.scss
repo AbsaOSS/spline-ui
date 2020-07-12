@@ -17,23 +17,61 @@
 @import 'vars';
 @import 'mixins';
 
+
+$color-schema-settings--default: (
+    link-color: $color-grey-light,
+    link-color--hover: $color-black,
+    link-color--active: $color-black,
+    link-bg-color--hover: $color-grey-light,
+    link-bg-color--active: $color-grey-light,
+    section-title-color: $color-grey-dark,
+);
+
+$color-schema-settings--expanded: (
+    link-color: $color-black,
+    link-color--hover: $color-black,
+    link-color--active: $color-white,
+    link-bg-color--hover: darken($color-grey-light, 4),
+    link-bg-color--active: $color-bg-black,
+    section-title-color: $color-grey-dark,
+);
+
+@mixin side-nav-links-color-schema($settings: $color-schema-settings--default) {
+    .mat-nav-list .mat-list-item {
+        color: map-get($settings, link-color);
+
+        &:hover {
+            background-color: map-get($settings, link-bg-color--hover);
+            color: map-get($settings, link-color--hover);
+        }
+
+        &.active {
+            background-color: map-get($settings, link-bg-color--active);
+            color: map-get($settings, link-color--active);
+
+            &:hover {
+                background-color: map-get($settings, link-bg-color--active);
+                color: map-get($settings, link-color--active);
+            }
+        }
+    }
+
+    &__section-title {
+        color: map-get($settings, section-title-color);
+    }
+}
+
 .spline-sidebar-menu {
+    @include side-nav-links-color-schema();
+
     padding: 0 0.75rem 0 0;
 
     .mat-nav-list .mat-list-item {
         border-radius: 0 24px 24px 0;
+        font-size: 14px;
+        height: 40px;
         margin-bottom: 4px;
         overflow: hidden;
-
-        &.active {
-            background-color: $color-bg-black;
-            color: $color-white;
-
-            &:hover {
-                background-color: $color-bg-black;
-                color: $color-white-smoked;
-            }
-        }
 
         .mat-icon {
             margin-right: 0.5rem;
@@ -41,14 +79,17 @@
     }
 
     &__section {
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
     }
 
     &__section-title {
-        color: $color-grey-dark;
         font-size: 12px;
         margin-bottom: 0.5rem;
         padding-left: 1rem;
         text-transform: uppercase;
     }
+}
+
+.sl-sidenav--expanded .spline-sidebar-menu {
+    @include side-nav-links-color-schema($color-schema-settings--expanded);
 }

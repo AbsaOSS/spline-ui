@@ -1,6 +1,6 @@
 {
   "/consumer-localhost": {
-    "target": "http://localhost:8080/rest_gateway_war_exploded/",
+    "target": "http://localhost:8080/",
     "secure": false,
     "pathRewrite": {
       "^/consumer-localhost": "/consumer"

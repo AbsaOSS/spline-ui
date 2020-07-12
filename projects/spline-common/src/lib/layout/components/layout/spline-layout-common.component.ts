@@ -23,7 +23,6 @@ import { SplineLayoutSection } from '../../models'
 @Component({
     selector: 'spline-layout-common',
     templateUrl: './spline-layout-common.component.html',
-    styleUrls: ['./spline-layout-common.component.scss'],
 })
 export class SplineLayoutCommonComponent implements AfterContentInit {
 
@@ -32,6 +31,8 @@ export class SplineLayoutCommonComponent implements AfterContentInit {
     sectionsTemplatesCollection: Partial<{ [K in SplineLayoutSection.SectionName]: TemplateRef<any> }> = {}
 
     readonly SectionName = SplineLayoutSection.SectionName
+
+    isSideNavExpanded = false
 
     ngAfterContentInit(): void {
         // calculate templates collection

@@ -32,11 +32,17 @@
 <mat-sidenav-container class="sl-sidenav-container">
 
     <!-- SIDEBAR -->
-    <mat-sidenav #sidenav mode="side" class="sl-sidenav" [opened]="true">
+    <mat-sidenav #sidenav mode="side" class="sl-sidenav"
+                 [opened]="true"
+                 [class.sl-sidenav--expanded]="isSideNavExpanded"
+                 (mouseenter)="isSideNavExpanded = true"
+                 (mouseleave)="isSideNavExpanded = false"
+    >
 
         <!-- SECTION :: SIDEBAR -->
         <ng-template *ngIf="sectionsTemplatesCollection[SectionName.sidebar]"
-                     [ngTemplateOutlet]="sectionsTemplatesCollection[SectionName.sidebar]">
+                     [ngTemplateOutlet]="sectionsTemplatesCollection[SectionName.sidebar]"
+                     [ngTemplateOutletContext]="{isExpanded: isSideNavExpanded}">
         </ng-template>
         <!-- ./SECTION :: SIDEBAR -->
 

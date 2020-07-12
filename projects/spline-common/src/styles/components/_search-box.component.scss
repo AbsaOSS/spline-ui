@@ -23,8 +23,8 @@ $input-text-color: rgba(255, 255, 255, .55);
 $input-bg--active: $color-grey-light-2;
 $input-text-color--active: inherit;
 
-$height: 42px;
-$border-radius: 2rem;
+$height: 40px;
+$border-radius: $height / 2;
 
 .spline-search-box {
     // CONTAINER
@@ -63,6 +63,7 @@ $border-radius: 2rem;
         flex: 1;
         font-size: 14px;
         outline: none;
+        padding: 0;
 
         &::placeholder {
             color: $input-text-color;

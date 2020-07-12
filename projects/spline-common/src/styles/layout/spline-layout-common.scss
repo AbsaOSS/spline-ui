@@ -18,13 +18,14 @@
 
 $spline-layout-settings-default: (
     header-bg-color: $color-bg-black,
-    header-height: 100px,
+    header-height: 80px,
 
     content-bg: $color-grey-light-2,
-    content-border-radius: 2rem 2rem 0 0,
+    content-border-radius: 2rem 0 0 0,
 
-    sidebar-width: 270px,
-    sidebar-bg-color: $color-grey-light,
+    sidebar-width: 64px,
+    sidebar-width--expanded: 250px,
+    sidebar-bg-color: $color-bg-black,
     sidebar-right-border-color: $color-grey
 );
 
@@ -38,7 +39,7 @@ $spline-layout-settings-default: (
             background-color: map-get($settings, header-bg-color);
             height: map-get($settings, header-height);
             left: 0;
-            padding: 1.5rem 2rem;
+            padding: 0 1rem;
             position: absolute;
             right: 0;
             top: 0;
@@ -47,13 +48,13 @@ $spline-layout-settings-default: (
             &__container {
                 align-items: center;
                 display: flex;
+                height: 100%;
                 width: 100%;
             }
         }
 
         .mat-sidenav-container {
-            background: map-get($settings, content-bg);
-            border-radius: map-get($settings, content-border-radius);
+            background: transparent;
             bottom: 0;
             left: 0;
             position: absolute;
@@ -66,19 +67,31 @@ $spline-layout-settings-default: (
             background: map-get($settings, sidebar-bg-color);
             border-radius: 2rem 0 0;
             border-style: none;
-            padding-top: 2rem;
+            padding-top: 1rem;
             width: map-get($settings, sidebar-width);
         }
 
         .sl-content__wrapper {
+            background: map-get($settings, content-bg);
             border-radius: map-get($settings, content-border-radius);
+            height: 100%;
             overflow: auto;
             padding: 2rem;
             position: relative;
-            height: 100%;
 
             &.no-padding {
                 padding: 0;
+            }
+        }
+
+        .sl-sidenav {
+            transition: all ease-in-out 100ms;
+            width: map-get($settings, sidebar-width);
+
+            &--expanded {
+                background: $color-grey-light;
+                box-shadow: 0 0 10px $color-shadow;
+                width: map-get($settings, sidebar-width--expanded);
             }
         }
 
