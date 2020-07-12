@@ -66,7 +66,4 @@ export type SgLayoutSettings = DagreSettings
 
 export const SG_DEFAULT_LAYOUT_SETTINGS: Readonly<SgLayoutSettings> = Object.freeze<SgLayoutSettings>({
     orientation: 'TB',
-    marginX: 50,
-    marginY: 250,
-    edgePadding: 120,
 } as SgLayoutSettings)
