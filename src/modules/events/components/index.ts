@@ -14,12 +14,15 @@
  * limitations under the License.
  */
 
+import { EventCardHeaderComponent } from './card/card-header/event-card-header.component'
 import { EventInfoComponent } from './event-info/event-info.component'
 
 
 export const components: any[] = [
-    EventInfoComponent
+    EventInfoComponent,
+    EventCardHeaderComponent
 ]
 
 export * from './event-info/event-info.component'
+export * from './card/card-header/event-card-header.component'
 export * from './event-info/event-info.models'

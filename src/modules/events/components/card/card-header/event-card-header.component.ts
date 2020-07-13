@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,6 +14,20 @@
  * limitations under the License.
  */
 
-@import './common';
-@import './colors';
-@import './fonts';
+import { Component, Input } from '@angular/core'
+import { SplineColors } from 'spline-common'
+
+
+@Component({
+    selector: 'event-card-header',
+    templateUrl: './event-card-header.component.html',
+    styleUrls: ['./event-card-header.component.scss']
+})
+export class EventCardHeaderComponent {
+
+    @Input() headerTitle: string
+    @Input() color = SplineColors.BLACK // valid CSS color
+    @Input() icon: string
+    @Input() label: string
+
+}

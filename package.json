@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --open --port 4300 --base-href=/app/",
+    "start": "ng serve --open --port 4300 --base-href=/appp/",
     "start:localhost": "ng serve -c localhost --open --port 4300 --base-href=/app/",
     "build": "ng build --base-href=/app/",
     "build:prod": "ng build --prod --base-href=/app/",

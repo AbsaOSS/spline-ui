@@ -17,22 +17,38 @@
 @import 'mixins';
 @import 'vars';
 
-.spline-graph__container {
-    bottom: 0;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-}
+$label-color: $color-black;
 
-.spline-graph__node-container {
-    border-left: 5px solid transparent;
-    border-radius: 8px;
-    overflow: visible;
-    position: relative;
 
-    &.spline-graph__node--selected {
-        border-left-color: $color-orange;
+.event-card-header {
+    display: flex;
+    padding-bottom: 1rem;
+
+    &__icon-container {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        padding-right: 1rem;
+    }
+
+    &__icon {
+        @include icon-size(48px);
+    }
+
+    &__title-container {
+        flex: 1;
+    }
+
+    &__title {
+        font-size: 18px;
+    }
+
+    &__label {
+        border: 2px solid $label-color;
+        border-radius: 16px;
+        color: $label-color;
+        display: inline-block;
+        font-size: 10px;
+        padding: 2px 8px;
     }
 }

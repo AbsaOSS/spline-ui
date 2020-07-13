@@ -18,15 +18,11 @@
 @import 'mixins';
 
 $container-padding: 1.5rem;
-$entity-name-color: $color-black;
+$label-color: $color-black;
 $icon-color: $color-pink;
 
 .event-info {
-    @include shadow-light();
-    background: $color-white-90;
-    border-radius: 2rem;
     margin-bottom: 1rem;
-    padding: $container-padding;
 
     &__icon-container {
         align-items: center;
@@ -60,9 +56,9 @@ $icon-color: $color-pink;
     }
 
     &__entity-name {
-        border: 2px solid $entity-name-color;
+        border: 2px solid $label-color;
         border-radius: 16px;
-        color: $entity-name-color;
+        color: $label-color;
         display: inline-block;
         font-size: 11px;
         line-height: 1;

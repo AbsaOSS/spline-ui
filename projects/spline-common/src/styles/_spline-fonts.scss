@@ -14,6 +14,22 @@
  * limitations under the License.
  */
 
-@import './common';
-@import './colors';
-@import './fonts';
+@import './vars';
+
+@font-face {
+    font-family: $font-name;
+    font-weight: 300;
+    src: url('~projects/spline-common/src/assets/fonts/BraveSans/BraveSans-Light.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: $font-name;
+    font-weight: bold;
+    src: url('~projects/spline-common/src/assets/fonts/BraveSans/BraveSans-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: $font-name;
+    font-weight: normal;
+    src: url('~projects/spline-common/src/assets/fonts/BraveSans/BraveSans-Regular.ttf') format('truetype');
+}

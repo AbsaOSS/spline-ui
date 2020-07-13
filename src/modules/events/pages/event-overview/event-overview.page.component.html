@@ -18,12 +18,6 @@
         <event-info [data]="data.eventInfo"></event-info>
     </div>
     <div class="end-to-end-content-container__body">
-<!--        <div class="event-info-container">-->
-<!--            <div class="spline-container-md">-->
-<!--                <event-info [data]="data.eventInfo"></event-info>-->
-<!--            </div>-->
-<!--        </div>-->
-
         <div class="graph-container">
             <div class="graph-container-inner">
                 <spline-graph
@@ -32,10 +26,6 @@
                         (nodeSelectionChange$)="onNodeSelected($event)"
                         (nodeEvent$)="onNodeEvent($event)">
                 </spline-graph>
-
-                <spline-side-dialog-container #sidePanel>
-                    {{selectedNode?.data?.label}}
-                </spline-side-dialog-container>
             </div>
         </div>
     </div>

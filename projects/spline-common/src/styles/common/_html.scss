@@ -39,7 +39,7 @@ summary {
 html,
 body {
     color: $color-black;
-    font-family: $font-family--body;
+    font-family: $font-name;
     margin: 0;
     padding: 0;
 }
@@ -50,7 +50,7 @@ h3,
 h4,
 h5 {
     color: $color-black;
-    font-family: $font-family--title;
+    font-family: $font-name;
     font-weight: 300;
 }
 

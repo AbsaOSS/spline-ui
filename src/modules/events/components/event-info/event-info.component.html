@@ -14,33 +14,16 @@
   ~ limitations under the License.
   -->
 
-<div class="event-info">
-    <div class="d-flex">
-        <!-- ICON -->
-        <div class="event-info__icon-container">
-            <div class="event-info__icon-wrapper">
-                <mat-icon>play_arrow</mat-icon>
-            </div>
-        </div>
-        <!-- ./ICON -->
+<mat-card class="event-info">
 
-        <div class="event-info__content">
-            <div>
-                <!-- TITLE -->
-                <h2 class="event-info__title">{{data.name}}</h2>
-                <!-- ./TITLE -->
+    <event-card-header color="#aa052d"
+                       icon="play_circle_outline"
+                       [headerTitle]="data.name"
+                       label="Execution Event">
+    </event-card-header>
 
-                <!-- ENTITY NAME -->
-                <span class="event-info__entity-name">
-                    Execution Event
-                </span>
-                <!-- ./ENTITY NAME -->
-            </div>
-        </div>
-    </div>
-    <div class="event-info__divider">&nbsp;</div>
     <!-- DETAILS -->
-    <div class="event-details-container width-100">
+    <div class="event-details-container width-100 pt-3">
         <!-- EXECUTED AT -->
         <div class="event-details">
             <div class="event-details__label">
@@ -77,4 +60,30 @@
     </div>
     <!-- ./DETAILS -->
 
-</div>
+</mat-card>
+
+<mat-card class="event-info border-color--orange">
+
+    <event-card-header color="#337AB7"
+                       icon="insert_drive_file"
+                       headerTitle="Transactions.csv"
+                       label="Data Source">
+    </event-card-header>
+
+    <!-- DETAILS -->
+    <div class="event-details-container width-100 pt-3">
+        <!-- EXECUTED AT -->
+        <div class="event-details">
+            <div class="event-details__label">
+                URI:
+            </div>
+            <div class="event-details__value">
+                file:/home/ec2-user/spline-spark-agent/examples/data/_temp/standard/dce/Transactions/2020/01/01/v1
+            </div>
+        </div>
+        <!-- ./EXECUTED AT -->
+
+    </div>
+    <!-- ./DETAILS -->
+
+</mat-card>

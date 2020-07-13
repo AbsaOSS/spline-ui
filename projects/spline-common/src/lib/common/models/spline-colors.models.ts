@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
-@import './common';
-@import './colors';
-@import './fonts';
+export namespace SplineColors {
+
+    export const ORANGE = '#f47721'
+    export const BLACK = '#2d2323'
+}

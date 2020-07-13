@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
-@import './common';
-@import './colors';
-@import './fonts';
+@import '../../vars';
+
+.mat-card {
+    border-radius: $container-border-radius !important;
+}
