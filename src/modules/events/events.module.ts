@@ -26,10 +26,16 @@ import { MatTableModule } from '@angular/material/table'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { RouterModule } from '@angular/router'
 import { SplineApiModule } from 'spline-api'
-import { SplineContentErrorModule, SplineGraphModule, SplineLayoutModule, SplineLoaderModule, SplineSortHeaderModule } from 'spline-common'
+import {
+    SplineContentErrorModule,
+    SplineGraphModule, SplineLabelModule,
+    SplineLayoutModule,
+    SplineLoaderModule,
+    SplineSidePanelModule,
+    SplineSortHeaderModule,
+} from 'spline-common'
 import { SplineApiConfigModule } from 'spline-shared'
 
-import { SplineSidePanelModule } from '../../../projects/spline-common/src/lib/components/side-panel/spline-side-panel.module'
 
 import * as fromComponents from './components'
 import { EventsRoutingModule } from './events-routing.module'
@@ -60,7 +66,8 @@ import * as fromPages from './pages'
         MatDividerModule,
         MatCardModule,
         MatIconModule,
-        SplineSidePanelModule
+        SplineSidePanelModule,
+        SplineLabelModule
     ],
     exports: [
         ...fromPages.pageComponents,

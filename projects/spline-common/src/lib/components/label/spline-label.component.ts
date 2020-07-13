@@ -14,12 +14,18 @@
  * limitations under the License.
  */
 
-export * from './content-error/public-api'
-export * from './cytoscape-graph/public-api'
-export * from './graph/public-api'
-export * from './label/public-api'
-export * from './loader/public-api'
-export * from './long-text/public-api'
-export * from './search-box/public-api'
-export * from './side-panel/public-api'
-export * from './sort-header/public-api'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { SplineColors } from 'spline-common'
+
+
+@Component({
+    selector: 'spline-label',
+    templateUrl: './spline-label.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class SplineLabelComponent {
+
+    readonly defaultColor = SplineColors.BLACK
+
+    @Input() color
+}

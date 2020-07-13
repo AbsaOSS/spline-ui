@@ -14,12 +14,15 @@
  * limitations under the License.
  */
 
-export * from './content-error/public-api'
-export * from './cytoscape-graph/public-api'
-export * from './graph/public-api'
-export * from './label/public-api'
-export * from './loader/public-api'
-export * from './long-text/public-api'
-export * from './search-box/public-api'
-export * from './side-panel/public-api'
-export * from './sort-header/public-api'
+@import '../vars';
+
+$label-color: $color-black;
+
+.spline-label {
+    border: 2px solid $label-color;
+    border-radius: 16px;
+    color: $label-color;
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 8px;
+}

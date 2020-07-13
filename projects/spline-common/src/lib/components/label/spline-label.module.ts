@@ -14,12 +14,24 @@
  * limitations under the License.
  */
 
-export * from './content-error/public-api'
-export * from './cytoscape-graph/public-api'
-export * from './graph/public-api'
-export * from './label/public-api'
-export * from './loader/public-api'
-export * from './long-text/public-api'
-export * from './search-box/public-api'
-export * from './side-panel/public-api'
-export * from './sort-header/public-api'
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
+import { FormsModule } from '@angular/forms'
+import { MatIconModule } from '@angular/material/icon'
+
+import { SplineLabelComponent } from './spline-label.component'
+
+
+@NgModule({
+    declarations: [
+        SplineLabelComponent,
+    ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        MatIconModule,
+    ],
+    exports: [SplineLabelComponent],
+})
+export class SplineLabelModule {
+}

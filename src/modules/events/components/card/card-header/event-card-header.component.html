@@ -35,11 +35,9 @@
             <!-- ./TITLE -->
 
             <!-- LABEL -->
-            <span *ngIf="label"
-                  class="event-card-header__label"
-                  [ngStyle]="{color: color, borderColor: color}">
+            <spline-label [color]="color">
                 {{label}}
-            </span>
+            </spline-label>
             <!-- ./LABEL -->
         </div>
     </div>
