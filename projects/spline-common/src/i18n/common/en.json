@@ -1,0 +1,16 @@
+{
+  "COMMON": {
+    "APPLY": "Apply",
+    "YES": "Yes",
+    "NO": "No",
+    "SAVE": "Save",
+    "CREATE": "Create",
+    "CLOSE": "Close",
+    "EDIT": "Edit",
+    "DETAILS": "Details",
+    "DELETE": "Delete",
+    "CANCEL": "Cancel",
+    "SUBMIT": "Submit",
+    "ADD": "Add"
+  }
+}

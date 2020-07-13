@@ -16,4 +16,4 @@
 
 export * from './components/public-api'
 export * from './models/public-api'
-export * from './spline-utils-common.module'
+export * from './spline-utils-core.module'

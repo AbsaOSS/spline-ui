@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-export * from './lib/common/public-api'
+export * from './lib/core/public-api'
 export * from './lib/store/public-api'
 export * from './lib/search-query/public-api'

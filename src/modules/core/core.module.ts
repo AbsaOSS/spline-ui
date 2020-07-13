@@ -17,6 +17,7 @@
 import { CommonModule } from '@angular/common'
 import { HttpClientModule } from '@angular/common/http'
 import { NgModule, Optional, SkipSelf } from '@angular/core'
+import { SplineTranslateCoreModule } from 'spline-common'
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { NgModule, Optional, SkipSelf } from '@angular/core'
     imports: [
         CommonModule,
         HttpClientModule,
+        SplineTranslateCoreModule
     ],
     exports: [],
     providers: [],

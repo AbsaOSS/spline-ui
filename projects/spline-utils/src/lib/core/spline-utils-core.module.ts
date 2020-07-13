@@ -14,4 +14,18 @@
  * limitations under the License.
  */
 
-export * from './dynamic-rendering/dynamic-component.manager'
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
+
+
+@NgModule({
+    imports: [
+        CommonModule,
+    ],
+    declarations: [],
+    exports: [],
+    providers: []
+})
+export class SplineUtilsCoreModule {
+
+}

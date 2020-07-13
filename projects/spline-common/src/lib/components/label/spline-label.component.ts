@@ -15,7 +15,8 @@
  */
 
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { SplineColors } from 'spline-common'
+
+import { SplineColors } from '../../common'
 
 
 @Component({

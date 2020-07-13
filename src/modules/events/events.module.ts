@@ -28,11 +28,13 @@ import { RouterModule } from '@angular/router'
 import { SplineApiModule } from 'spline-api'
 import {
     SplineContentErrorModule,
-    SplineGraphModule, SplineLabelModule,
+    SplineGraphModule,
+    SplineLabelModule,
     SplineLayoutModule,
     SplineLoaderModule,
     SplineSidePanelModule,
     SplineSortHeaderModule,
+    SplineTranslateModule,
 } from 'spline-common'
 import { SplineApiConfigModule } from 'spline-shared'
 
@@ -67,7 +69,8 @@ import * as fromPages from './pages'
         MatCardModule,
         MatIconModule,
         SplineSidePanelModule,
-        SplineLabelModule
+        SplineLabelModule,
+        SplineTranslateModule.forChild({ moduleNames: ['events'] }),
     ],
     exports: [
         ...fromPages.pageComponents,

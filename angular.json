@@ -55,6 +55,21 @@
                 "glob": "**/*",
                 "input": "projects/spline-common/src/assets",
                 "output": "/assets/spline-common"
+              },
+              {
+                "glob": "**/*",
+                "input": "projects/spline-shared/src/assets",
+                "output": "/assets/spline-shared"
+              },
+              {
+                "glob": "**/*",
+                "input": "projects/spline-shared/src/i18n",
+                "output": "/assets/i18n"
+              },
+              {
+                "glob": "**/*",
+                "input": "projects/spline-common/src/i18n",
+                "output": "/assets/i18n"
               }
             ],
             "styles": [

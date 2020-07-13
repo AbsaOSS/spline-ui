@@ -4,6 +4,8 @@
   "peerDependencies": {
     "@angular/common": "^9.1.1",
     "@angular/core": "^9.1.1",
+    "@ngx-translate/core": "^12.1.2",
+    "ngx-translate-multi-http-loader": "^3.0.0",
     "tslib": "^1.10.0"
   }
 }
