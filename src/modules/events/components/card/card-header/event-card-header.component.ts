@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { SplineColors } from 'spline-common'
 
 
 @Component({
     selector: 'event-card-header',
     templateUrl: './event-card-header.component.html',
-    styleUrls: ['./event-card-header.component.scss']
+    styleUrls: ['./event-card-header.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EventCardHeaderComponent {
 

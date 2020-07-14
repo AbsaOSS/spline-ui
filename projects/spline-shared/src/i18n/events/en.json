@@ -1,5 +1,11 @@
 {
   "EVENTS": {
-    "EVENTS_LIST_PAGE__TITLE" : "Execution Events"
+    "EVENTS_LIST_PAGE__TITLE" : "Execution Events",
+    "EVENT_INFO__LABEL" : "Execution Event",
+    "EVENT_INFO__DETAILS__EXECUTED_AT" : "Executed At",
+    "EVENT_INFO__DETAILS__EVENT_ID" : "Event Id",
+    "EVENT_INFO__DETAILS__APPLICATION_ID" : "Application Id",
+    "EVENT_NODE_INFO__LABEL__DATA_SOURCE" : "Data Source",
+    "EVENT_NODE_INFO__LABEL__EXECUTION" : "Execution"
   }
 }

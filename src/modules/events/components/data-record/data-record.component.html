@@ -14,31 +14,11 @@
   ~ limitations under the License.
   -->
 
-<div class="event-card-header">
-
-    <!-- ICON -->
-    <div *ngIf="icon"
-         class="event-card-header__icon-container"
-         [ngStyle]="{color: color}">
-
-        <mat-icon class="event-card-header__icon">{{icon}}</mat-icon>
-
+<div class="event-data-record">
+    <div class="event-data-record__label" *ngIf="label">
+        {{label}}:
     </div>
-    <!-- ./ICON -->
-
-    <div class="event-card-header__title-container">
-        <div>
-            <!-- TITLE -->
-            <div class="event-card-header__title">
-                {{headerTitle}}
-            </div>
-            <!-- ./TITLE -->
-
-            <!-- LABEL -->
-            <spline-label [color]="color">
-                {{label}}
-            </spline-label>
-            <!-- ./LABEL -->
-        </div>
+    <div class="event-data-record__value">
+        <ng-content></ng-content>
     </div>
 </div>

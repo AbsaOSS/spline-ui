@@ -14,13 +14,17 @@
  * limitations under the License.
  */
 
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
-export namespace EventInfo {
 
-    export type Data = {
-        id: string
-        name: string
-        executedAt: Date
-        applicationId: string
-    }
+@Component({
+    selector: 'event-data-record',
+    templateUrl: './data-record.component.html',
+    styleUrls: ['./data-record.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DataRecordComponent {
+
+    @Input() label: string
+
 }

@@ -14,27 +14,14 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common'
-import { NgModule } from '@angular/core'
-import { MatButtonModule } from '@angular/material/button'
-import { MatIconModule } from '@angular/material/icon'
-
-import * as fromComponents from './components'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 
 
-@NgModule({
-    imports: [
-        CommonModule,
-        MatIconModule,
-        MatButtonModule,
-    ],
-    declarations: [
-        ...fromComponents.sideDialogComponents
-    ],
-    providers: [],
-    exports: [
-        ...fromComponents.sideDialogComponents
-    ],
+@Component({
+    selector: 'event-card-content',
+    templateUrl: './event-card-content.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SplineSidePanelModule {
+export class EventCardContentComponent {
+
 }

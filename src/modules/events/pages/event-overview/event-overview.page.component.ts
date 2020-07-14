@@ -15,36 +15,55 @@
  */
 
 import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
-import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
-import { ExecutionEventFacade } from 'spline-api'
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router'
+import { takeUntil } from 'rxjs/operators'
+import { ExecutionEventFacade, ExecutionEventLineageNode } from 'spline-api'
 import { SgNodeEvent, SgNodeSchema } from 'spline-common'
+import { BaseComponent } from 'spline-utils'
 
-import { EventOverviewPage } from './event-overview.page.models'
+import { EventOverviewStoreFacade } from '../../store'
 
 
 @Component({
     selector: 'event-overview-page',
     templateUrl: './event-overview.page.component.html',
     styleUrls: ['./event-overview.page.component.scss'],
+    providers: [
+        {
+            provide: EventOverviewStoreFacade,
+            useFactory: (executionEventFacade: ExecutionEventFacade) => {
+                return new EventOverviewStoreFacade(executionEventFacade)
+            },
+            deps: [ExecutionEventFacade],
+        },
+    ],
 })
-export class EventOverviewPageComponent implements OnInit {
+export class EventOverviewPageComponent extends BaseComponent implements OnInit {
 
-    executionEventId: string
-
-    data$: Observable<EventOverviewPage.Data>
+    readonly selectedNodeQueryParamName: string = 'selectedNodeId'
 
     constructor(private readonly activatedRoute: ActivatedRoute,
-                private readonly executionEventFacade: ExecutionEventFacade) {
-
+                private readonly router: Router,
+                readonly store: EventOverviewStoreFacade) {
+        super()
     }
 
     ngOnInit(): void {
-        this.executionEventId = this.activatedRoute.snapshot.params['id']
-        this.data$ = this.executionEventFacade.fetchLineageOverview(this.executionEventId)
+        const executionEventId = this.activatedRoute.snapshot.params['id']
+        const selectedNodeId = this.activatedRoute.snapshot.queryParamMap.get(this.selectedNodeQueryParamName)
+
+        this.store.init(executionEventId, selectedNodeId)
+
+        //
+        // [ACTION] :: SELECTED NODE CHANGE
+        //      => update query params
+        //
+        this.store.selectedNode$
             .pipe(
-                map(lineageData => EventOverviewPage.toData(this.executionEventId, lineageData)),
+                takeUntil(this.destroyed$),
+            )
+            .subscribe(
+                selectedNode => this.updateQueryParams(selectedNode),
             )
     }
 
@@ -52,10 +71,23 @@ export class EventOverviewPageComponent implements OnInit {
         console.log('nodeEvent', nodeEvent)
     }
 
-    onNodeClicked($event: { nodeSchema: SgNodeSchema; mouseEvent: MouseEvent }): void {
-        console.log('nodeClick', $event)
+    onNodeSelected($event: { nodeSchema: SgNodeSchema | null }): void {
+        this.store.selectNode($event.nodeSchema ? $event.nodeSchema.id : null)
     }
 
-    onNodeSelected($event: { nodeSchema: SgNodeSchema | null }): void {
+    private updateQueryParams(selectedNode: ExecutionEventLineageNode | null): void {
+        const queryParams = selectedNode
+            ? {
+                [this.selectedNodeQueryParamName]: selectedNode.id,
+            }
+            : {}
+
+        const extras: NavigationExtras = {
+            queryParams,
+            relativeTo: this.activatedRoute,
+            replaceUrl: true,
+        }
+
+        this.router.navigate([], extras)
     }
 }

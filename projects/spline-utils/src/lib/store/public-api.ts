@@ -16,3 +16,4 @@
 
 export * from './models/base-store.models'
 export * from './models/processing-store.models'
+export * from './models/entity-store.models'

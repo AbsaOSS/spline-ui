@@ -14,24 +14,22 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { SplineColors } from 'spline-common'
 
-import { EventInfo } from './event-info.models'
+import { EventInfo } from '../../models'
 
 
 @Component({
     selector: 'event-info',
     templateUrl: './event-info.component.html',
     styleUrls: ['./event-info.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EventInfoComponent implements OnInit {
+export class EventInfoComponent {
 
-    @Input() data: EventInfo.Data
+    @Input() data: EventInfo
 
-    constructor() {
-    }
-
-    ngOnInit(): void {
-    }
+    readonly color = SplineColors.PINK
 
 }

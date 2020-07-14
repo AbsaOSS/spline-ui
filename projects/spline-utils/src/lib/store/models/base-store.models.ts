@@ -17,47 +17,44 @@
 import { BehaviorSubject, Observable, Subject } from 'rxjs'
 
 
-export namespace BaseStore {
+export abstract class BaseStore<State> {
 
-    export abstract class Store<State> {
+    readonly state$: Observable<State>
 
-        readonly state$: Observable<State>
+    protected readonly _defaultState: State
+    protected readonly _state$: BehaviorSubject<State>
+    protected readonly disconnected$ = new Subject<void>()
 
-        protected readonly _defaultState: State
-        protected readonly _state$: BehaviorSubject<State>
-        protected readonly disconnected$ = new Subject<void>()
-
-        constructor(defaultState: State) {
-            this._defaultState = defaultState
-            this._state$ = new BehaviorSubject<State>(this._defaultState)
-            this.state$ = this._state$.asObservable()
-        }
-
-        get state(): State {
-            return this._state$.getValue()
-        }
-
-        resetState() {
-            this.updateState(this._defaultState)
-        }
-
-        disconnect(): void {
-            this._state$.complete()
-            this.disconnected$.next()
-            this.disconnected$.complete()
-        }
-
-        protected updateState(state: Partial<State>): State {
-
-            const newValue = {
-                ...this.state,
-                ...state,
-            } as State
-
-            this._state$.next(newValue)
-
-            return newValue
-        }
-
+    constructor(defaultState: State) {
+        this._defaultState = defaultState
+        this._state$ = new BehaviorSubject<State>(this._defaultState)
+        this.state$ = this._state$.asObservable()
     }
+
+    get state(): State {
+        return this._state$.getValue()
+    }
+
+    resetState() {
+        this.updateState(this._defaultState)
+    }
+
+    disconnect(): void {
+        this._state$.complete()
+        this.disconnected$.next()
+        this.disconnected$.complete()
+    }
+
+    protected updateState(state: Partial<State>): State {
+
+        const newValue = {
+            ...this.state,
+            ...state,
+        } as State
+
+        this._state$.next(newValue)
+
+        return newValue
+    }
+
 }

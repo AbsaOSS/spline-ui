@@ -46,7 +46,9 @@ export class SplineGraphComponent implements OnChanges {
     @Input() layoutSettings: SgLayoutSettings = SG_DEFAULT_LAYOUT_SETTINGS
 
     @Input() set selectedNodeId(nodeId: string) {
-        this._selectedNodeId = nodeId
+        if (nodeId !== this._selectedNodeId) {
+            this._selectedNodeId = nodeId
+        }
     }
 
     _selectedNodeId: string
@@ -82,7 +84,6 @@ export class SplineGraphComponent implements OnChanges {
     }
 
     onGraphClicked($event: MouseEvent): void {
-        this.clearNodeSelection()
         this.substrateClick$.emit({ mouseEvent: $event })
     }
 
@@ -90,6 +91,9 @@ export class SplineGraphComponent implements OnChanges {
         if (this._selectedNodeId !== node.id) {
             this._selectedNodeId = node.id
             this.nodeSelectionChange$.emit({ nodeSchema: node.schema })
+        }
+        else {
+            this.clearNodeSelection()
         }
     }
 

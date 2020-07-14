@@ -19,71 +19,48 @@
     <event-card-header color="#aa052d"
                        icon="play_circle_outline"
                        [headerTitle]="data.name"
-                       label="Execution Event">
+                       [label]="'EVENTS.EVENT_INFO__LABEL' | translate">
     </event-card-header>
 
-    <!-- DETAILS -->
-    <div class="event-details-container width-100 pt-3">
-        <!-- EXECUTED AT -->
-        <div class="event-details">
-            <div class="event-details__label">
-                Executed At:
+    <event-card-content>
+
+        <!-- DETAILS -->
+        <div>
+            <!-- EXECUTED AT -->
+            <div class="event-details">
+                <div class="event-details__label">
+                    {{'EVENTS.EVENT_INFO__DETAILS__EXECUTED_AT' | translate}}:
+                </div>
+                <div class="event-details__value">
+                    {{data.executedAt | date:'yyyy-MM-dd HH:mm:ss'}}
+                </div>
             </div>
-            <div class="event-details__value">
-                {{data.executedAt | date:'yyyy-MM-dd HH:mm:ss'}}
+            <!-- ./EXECUTED AT -->
+
+            <!-- ID -->
+            <div class="event-details">
+                <div class="event-details__label">
+                    {{'EVENTS.EVENT_INFO__DETAILS__EVENT_ID' | translate}}:
+                </div>
+                <div class="event-details__value">
+                    {{ data.id }}
+                </div>
             </div>
+            <!-- ./ID -->
+
+            <!-- APPLICATION ID -->
+            <div class="event-details">
+                <div class="event-details__label">
+                    {{'EVENTS.EVENT_INFO__DETAILS__APPLICATION_ID' | translate}}:
+                </div>
+                <div class="event-details__value">
+                    {{ data.applicationId }}
+                </div>
+            </div>
+            <!-- ./APPLICATION ID -->
+
         </div>
-        <!-- ./EXECUTED AT -->
-
-        <!-- ID -->
-        <div class="event-details">
-            <div class="event-details__label">
-                Event Id:
-            </div>
-            <div class="event-details__value">
-                {{ data.id }}
-            </div>
-        </div>
-        <!-- ./ID -->
-
-        <!-- APPLICATION ID -->
-        <div class="event-details">
-            <div class="event-details__label">
-                Application Id:
-            </div>
-            <div class="event-details__value">
-                {{ data.applicationId }}
-            </div>
-        </div>
-        <!-- ./APPLICATION ID -->
-
-    </div>
-    <!-- ./DETAILS -->
-
-</mat-card>
-
-<mat-card class="event-info border-color--orange">
-
-    <event-card-header color="#337AB7"
-                       icon="insert_drive_file"
-                       headerTitle="Transactions.csv"
-                       label="Data Source">
-    </event-card-header>
-
-    <!-- DETAILS -->
-    <div class="event-details-container width-100 pt-3">
-        <!-- EXECUTED AT -->
-        <div class="event-details">
-            <div class="event-details__label">
-                URI:
-            </div>
-            <div class="event-details__value">
-                file:/home/ec2-user/spline-spark-agent/examples/data/_temp/standard/dce/Transactions/2020/01/01/v1
-            </div>
-        </div>
-        <!-- ./EXECUTED AT -->
-
-    </div>
-    <!-- ./DETAILS -->
+        <!-- ./DETAILS -->
+    </event-card-content>
 
 </mat-card>

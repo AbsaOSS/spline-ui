@@ -15,36 +15,55 @@
  */
 
 import { ExecutionEventLineageNode, ExecutionEventLineageNodeType } from 'spline-api'
-import { SgNode, SgNodeDefault } from 'spline-common'
+import { SgNode, SgNodeDefault, SplineColors } from 'spline-common'
 
 
 export namespace EventNodeControl {
 
-    export const NODE_STYLES_MAP: ReadonlyMap<ExecutionEventLineageNodeType, { icon: string; color: string }> =
-        new Map<ExecutionEventLineageNodeType, { icon: string; color: string }>([
+    export type NodeStyles = {
+        icon: string
+        color: string
+    }
+
+    export const NODE_STYLES_MAP: ReadonlyMap<ExecutionEventLineageNodeType, NodeStyles> =
+        new Map<ExecutionEventLineageNodeType, NodeStyles>([
             [
                 ExecutionEventLineageNodeType.DataSource,
                 {
                     icon: 'insert_drive_file',
-                    color: '#337AB7',
+                    color: SplineColors.BLUE,
                 },
             ],
             [
                 ExecutionEventLineageNodeType.Execution,
                 {
                     icon: 'settings',
-                    color: '#e39255',
+                    color: SplineColors.ORANGE,
                 },
             ],
         ])
 
-    export function toNode(nodeSource: ExecutionEventLineageNode): SgNode {
-        const nodeStyles = NODE_STYLES_MAP.get(nodeSource.type)
+    export function getNodeTitle(nodeSource: ExecutionEventLineageNode): string {
+        return nodeSource.name.split('/').slice(-1)[0]
+    }
+
+    export function getNodeLabel(nodeSource: ExecutionEventLineageNode): string {
+        return nodeSource.type === ExecutionEventLineageNodeType.DataSource
+            ? 'EVENTS.EVENT_NODE_INFO__LABEL__DATA_SOURCE'
+            : 'EVENTS.EVENT_NODE_INFO__LABEL__EXECUTION'
+    }
+
+    export function getNodeStyles(nodeSource: ExecutionEventLineageNode): NodeStyles {
+        return NODE_STYLES_MAP.get(nodeSource.type)
+    }
+
+    export function toSgNode(nodeSource: ExecutionEventLineageNode): SgNode {
+        const nodeStyles = getNodeStyles(nodeSource)
 
         return SgNodeDefault.toNode(
             nodeSource.id,
             {
-                label: nodeSource.name.split('/').slice(-1)[0],
+                label: getNodeTitle(nodeSource),
                 ...nodeStyles,
             },
         )
