@@ -17,6 +17,7 @@
 import { NgModule } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
 import { MatListModule } from '@angular/material/list'
+import { MatTooltipModule } from '@angular/material/tooltip'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { CoreModule } from '@core'
@@ -59,6 +60,7 @@ export const metaReducers: MetaReducer<any>[] =
         SplineSearchBoxModule,
         MatListModule,
         MatIconModule,
+        MatTooltipModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

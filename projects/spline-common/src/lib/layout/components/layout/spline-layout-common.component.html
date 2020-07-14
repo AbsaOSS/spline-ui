@@ -29,15 +29,15 @@
 </div>
 <!-- ./HEADER -->
 
-<mat-sidenav-container class="sl-sidenav-container">
+<mat-sidenav-container>
 
     <!-- SIDEBAR -->
-    <mat-sidenav #sidenav mode="side" class="sl-sidenav"
-                 [opened]="true"
-                 [class.sl-sidenav--expanded]="isSideNavExpanded"
-                 (mouseenter)="isSideNavExpanded = true"
-                 (mouseleave)="isSideNavExpanded = false"
-    >
+    <mat-sidenav #sidenav
+                 class="sl-sidenav"
+                 mode="side"
+                 disableClose="true"
+                 opened="true"
+                 [class.sl-sidenav--expanded]="isSideNavExpanded">
 
         <!-- SECTION :: SIDEBAR -->
         <ng-template *ngIf="sectionsTemplatesCollection[SectionName.sidebar]"

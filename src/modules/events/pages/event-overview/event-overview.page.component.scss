@@ -41,6 +41,7 @@
 .left-side-container {
     background: $color-grey-light;
     box-shadow: 0 0 4px $color-shadow;
+    overflow: auto;
     padding: 1rem;
     position: relative;
     width: 600px;
