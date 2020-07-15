@@ -50,7 +50,12 @@ export type ExecutionPlanDto = {
     extra?: ExecutionPlanExtraInfo
 }
 
-export type ExecutionPlanExtraInfo = Record<string, any>
+export type ExecutionPlanExtraInfo =
+    &
+    {
+        appName: string
+    }
+    & Record<string, any>
 
 export function toExecutionPlan(entity: ExecutionPlanDto): ExecutionPlan {
     return {

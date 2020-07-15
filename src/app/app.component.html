@@ -32,7 +32,7 @@
                        matTooltip="Dashboard"
                        [matTooltipDisabled]="isExpanded"
                        [matTooltipPosition]="'right'"
-                       routerLink="/dashboard"
+                       routerLink="/fake-url"
                        routerLinkActive="active">
 
                         <mat-icon>dashboard</mat-icon>
@@ -61,10 +61,21 @@
                     </a>
 
                     <a mat-list-item
+                       matTooltip="Execution Plans"
+                       [matTooltipDisabled]="isExpanded"
+                       [matTooltipPosition]="'right'"
+                       routerLink="/fake-url">
+
+                        <mat-icon>playlist_play</mat-icon>
+                        <span *ngIf="isExpanded">Execution Events</span>
+
+                    </a>
+
+                    <a mat-list-item
                        matTooltip="Data Sources"
                        [matTooltipDisabled]="isExpanded"
                        [matTooltipPosition]="'right'"
-                       routerLink="events/overview/test"
+                       routerLink="/fake-url"
                        routerLinkActive="active">
 
                         <mat-icon>description</mat-icon>

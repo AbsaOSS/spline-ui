@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,5 +14,22 @@
  * limitations under the License.
  */
 
-@import './sidebar-menu';
-@import './layout';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { ExecutionPlan } from 'spline-api'
+import { SplineColors } from 'spline-common'
+
+
+@Component({
+    selector: 'event-execution-plan-info',
+    templateUrl: './execution-plan-info.component.html',
+    styleUrls: ['./execution-plan-info.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ExecutionPlanInfoComponent {
+
+    @Input() data: ExecutionPlan
+
+    readonly color = SplineColors.ORANGE
+    readonly icon = 'playlist_play'
+
+}

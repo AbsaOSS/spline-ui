@@ -6,6 +6,10 @@
     "EVENT_INFO__DETAILS__EVENT_ID" : "Event Id",
     "EVENT_INFO__DETAILS__APPLICATION_ID" : "Application Id",
     "EVENT_NODE_INFO__LABEL__DATA_SOURCE" : "Data Source",
-    "EVENT_NODE_INFO__LABEL__EXECUTION" : "Execution"
+    "EVENT_NODE_INFO__LABEL__EXECUTION" : "Execution",
+    "EXECUTION_EVENT_INFO__LABEL" : "Execution Plan",
+    "EXECUTION_EVENT_INFO__DEFAULT_NAME" : "Execution Plan",
+    "EXECUTION_EVENT_INFO__DETAILS__SYSTEM_INFO" : "System Info",
+    "EXECUTION_EVENT_INFO__DETAILS__AGENT_INFO" : "Agent Info"
   }
 }

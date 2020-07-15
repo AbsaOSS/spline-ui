@@ -15,7 +15,7 @@
  */
 
 
-.end-to-end-content-container {
+.end-to-end-container {
     bottom: 0;
     display: flex;
     flex-direction: column;
@@ -28,13 +28,13 @@
     top: 0;
 }
 
-.end-to-end-content-container__body {
+.end-to-end-container__body {
     flex: 1;
     overflow: hidden;
     position: relative;
 }
 
-.end-to-end-content-container__body-with-scroll {
+.end-to-end-container__body-with-scroll {
     flex: 1;
     overflow: auto;
     position: relative;

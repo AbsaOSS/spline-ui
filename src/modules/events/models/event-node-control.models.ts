@@ -30,14 +30,14 @@ export namespace EventNodeControl {
             [
                 ExecutionEventLineageNodeType.DataSource,
                 {
-                    icon: 'insert_drive_file',
+                    icon: 'description',
                     color: SplineColors.BLUE,
                 },
             ],
             [
                 ExecutionEventLineageNodeType.Execution,
                 {
-                    icon: 'settings',
+                    icon: 'playlist_play',
                     color: SplineColors.ORANGE,
                 },
             ],

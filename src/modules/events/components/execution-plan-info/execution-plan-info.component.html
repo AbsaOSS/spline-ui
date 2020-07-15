@@ -14,33 +14,27 @@
   ~ limitations under the License.
   -->
 
-<mat-card class="event-info">
+<mat-card class="execution-plan-info">
 
     <event-card-header [color]="color"
                        [icon]="icon"
-                       [headerTitle]="data.name"
-                       [label]="'EVENTS.EVENT_INFO__LABEL' | translate">
+                       [headerTitle]="data?.extraInfo?.appName ? data?.extraInfo?.appName : 'EVENTS.EXECUTION_EVENT_INFO__DEFAULT_NAME' | translate"
+                       [label]="'EVENTS.EXECUTION_EVENT_INFO__LABEL' | translate">
     </event-card-header>
 
     <event-card-content>
 
-        <!-- EXECUTED AT -->
-        <event-data-record [label]="'EVENTS.EVENT_INFO__DETAILS__EXECUTED_AT' | translate">
-            {{data.executedAt | date:'yyyy-MM-dd HH:mm:ss'}}
+        <!-- SYSTEM INFO -->
+        <event-data-record [label]="'EVENTS.EXECUTION_EVENT_INFO__DETAILS__SYSTEM_INFO' | translate">
+            {{data.systemInfo.name }} {{data.systemInfo.version }}
         </event-data-record>
-        <!-- ./EXECUTED AT -->
+        <!-- ./SYSTEM INFO -->
 
-        <!-- ID -->
-        <event-data-record [label]="'EVENTS.EVENT_INFO__DETAILS__EVENT_ID' | translate">
-            {{ data.id }}
+        <!-- AGENT INFO -->
+        <event-data-record [label]="'EVENTS.EXECUTION_EVENT_INFO__DETAILS__AGENT_INFO' | translate">
+            {{data.agentInfo.name }} {{data.agentInfo.version }}
         </event-data-record>
-        <!-- ./ID -->
-
-        <!-- APPLICATION ID -->
-        <event-data-record [label]="'EVENTS.EVENT_INFO__DETAILS__APPLICATION_ID' | translate">
-            {{ data.applicationId }}
-        </event-data-record>
-        <!-- ./APPLICATION ID -->
+        <!-- ./AGENT INFO -->
 
     </event-card-content>
 

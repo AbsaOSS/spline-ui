@@ -26,7 +26,7 @@
     <event-card-content *ngIf="nodeInfo.data?.length">
 
         <event-data-record *ngFor="let record of nodeInfo.data"
-                           [label]="record.label">
+                           [label]="record.label | translate">
             {{record.value}}
         </event-data-record>
 
