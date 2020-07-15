@@ -15,24 +15,79 @@
  */
 
 import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
-import { ExecutionPlanFacade } from 'spline-api'
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router'
+import { takeUntil } from 'rxjs/operators'
+import { ExecutionPlanFacade, ExecutionPlanLineageNode } from 'spline-api'
+import { SgNodeEvent, SgNodeSchema } from 'spline-common'
+import { BaseComponent } from 'spline-utils'
+
+import { ExecutionPlanOverviewStoreFacade } from '../../store'
 
 
 @Component({
     selector: 'event-overview-page',
     templateUrl: './plan-overview.page.component.html',
     styleUrls: ['./plan-overview.page.component.scss'],
+    providers: [
+        {
+            provide: ExecutionPlanOverviewStoreFacade,
+            useFactory: (executionPlanFacade: ExecutionPlanFacade) => {
+                return new ExecutionPlanOverviewStoreFacade(executionPlanFacade)
+            },
+            deps: [ExecutionPlanFacade],
+        },
+    ],
 })
-export class PlanOverviewPageComponent implements OnInit {
+export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
 
-    executionPlanId: string
+    readonly selectedNodeQueryParamName: string = 'selectedNodeId'
 
     constructor(private readonly activatedRoute: ActivatedRoute,
-                private readonly executionPlanFacade: ExecutionPlanFacade) {
+                private readonly router: Router,
+                readonly store: ExecutionPlanOverviewStoreFacade) {
+        super()
     }
 
     ngOnInit(): void {
-        this.executionPlanId = this.activatedRoute.snapshot.params['id']
+        const executionPlanId = this.activatedRoute.snapshot.params['id']
+        const selectedNodeId = this.activatedRoute.snapshot.queryParamMap.get(this.selectedNodeQueryParamName)
+
+        this.store.init(executionPlanId, selectedNodeId)
+
+        //
+        // [ACTION] :: SELECTED NODE CHANGE
+        //      => update query params
+        //
+        this.store.selectedNode$
+            .pipe(
+                takeUntil(this.destroyed$),
+            )
+            .subscribe(
+                selectedNode => this.updateQueryParams(selectedNode),
+            )
+    }
+
+    onNodeEvent(nodeEvent: SgNodeEvent): void {
+        console.log('nodeEvent', nodeEvent)
+    }
+
+    onNodeSelected($event: { nodeSchema: SgNodeSchema | null }): void {
+        this.store.setSelectedNode($event.nodeSchema ? $event.nodeSchema.id : null)
+    }
+
+    private updateQueryParams(selectedNode: ExecutionPlanLineageNode | null): void {
+        const queryParams = selectedNode
+            ? {
+                [this.selectedNodeQueryParamName]: selectedNode.id,
+            }
+            : {}
+
+        const extras: NavigationExtras = {
+            queryParams,
+            relativeTo: this.activatedRoute,
+            replaceUrl: true,
+        }
+
+        this.router.navigate([], extras)
     }
 }

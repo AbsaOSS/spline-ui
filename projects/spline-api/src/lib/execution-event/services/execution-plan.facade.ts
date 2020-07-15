@@ -19,6 +19,7 @@ import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
+import { Cacheable } from '../../core'
 import { ExecutionPlanLineageOverview, ExecutionPlanLineageOverviewDto, toExecutionPlanLineageOverview } from '../models'
 
 import { BaseFacade } from './base.facade'
@@ -31,6 +32,7 @@ export class ExecutionPlanFacade extends BaseFacade {
         super(http)
     }
 
+    @Cacheable
     fetchLineageOverview(executionPlanId: string): Observable<ExecutionPlanLineageOverview> {
         let params = new HttpParams()
         params = params.append('execId', executionPlanId)

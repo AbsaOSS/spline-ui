@@ -14,9 +14,48 @@
  * limitations under the License.
  */
 
-export type EventInfo = {
-    id: string
-    name: string
-    executedAt: Date
-    applicationId: string
+import { ExecutionEventLineageNode, ExecutionEventLineageNodeType } from 'spline-api'
+
+import { EventNodeControl } from './event-node-control.models'
+
+
+export type EventNodeInfo = {
+    title: string
+    label: string
+    icon: string
+    color: string
+    data: EventNodeInfoDataRecord[]
+}
+
+export type EventNodeInfoDataRecord = {
+    label: string
+    value: string
+}
+
+export type EventNodeInfoData = EventNodeInfoDataRecord[]
+
+export function getEventNodeInfoLabel(nodeSource: ExecutionEventLineageNode): string {
+    return nodeSource.type === ExecutionEventLineageNodeType.DataSource
+        ? 'EVENTS.EVENT_NODE_INFO__LABEL__DATA_SOURCE'
+        : 'EVENTS.EVENT_NODE_INFO__LABEL__EXECUTION'
+}
+
+export function toEventNodeInfo(nodeSource: ExecutionEventLineageNode): EventNodeInfo {
+    const nodeStyles = EventNodeControl.getNodeStyles(nodeSource)
+
+    const data: EventNodeInfoData = nodeSource.type === ExecutionEventLineageNodeType.DataSource
+        ? [
+            {
+                label: 'URI',
+                value: nodeSource.name,
+            },
+        ]
+        : []
+
+    return {
+        title: EventNodeControl.extractNodeName(nodeSource),
+        label: getEventNodeInfoLabel(nodeSource),
+        ...nodeStyles,
+        data,
+    }
 }

@@ -14,28 +14,33 @@
  * limitations under the License.
  */
 
-import { ExecutionEventLineageNode, ExecutionEventLineageNodeType } from 'spline-api'
+import { ExecutionPlanLineageNode, OperationType } from 'spline-api'
 import { SgNode, SgNodeDefault, SplineColors } from 'spline-common'
 
 import { SgNodeControl } from './sg-node-control.models'
 
 
-export namespace EventNodeControl {
+export namespace ExecutionPlanNodeControl {
 
     import NodeStyles = SgNodeControl.NodeStyles
 
 
-    export const NODE_STYLES_MAP: ReadonlyMap<ExecutionEventLineageNodeType, NodeStyles> =
-        new Map<ExecutionEventLineageNodeType, NodeStyles>([
+    export const GENERIC_NODE_STYLES: NodeStyles = Object.freeze({
+        icon: 'insert_drive_file',
+        color: SplineColors.BLUE,
+    })
+
+    export const NODE_STYLES_MAP: ReadonlyMap<OperationType, NodeStyles> =
+        new Map<OperationType, NodeStyles>([
             [
-                ExecutionEventLineageNodeType.DataSource,
+                OperationType.Projection,
                 {
                     icon: 'insert_drive_file',
                     color: SplineColors.BLUE,
                 },
             ],
             [
-                ExecutionEventLineageNodeType.Execution,
+                OperationType.Alias,
                 {
                     icon: 'settings',
                     color: SplineColors.ORANGE,
@@ -43,21 +48,23 @@ export namespace EventNodeControl {
             ],
         ])
 
-    export function extractNodeName(nodeSource: ExecutionEventLineageNode): string {
-        return nodeSource.name.split('/').slice(-1)[0]
+    export function getNodeName(nodeSource: ExecutionPlanLineageNode): string {
+        return nodeSource.name
     }
 
-    export function getNodeStyles(nodeSource: ExecutionEventLineageNode): NodeStyles {
-        return NODE_STYLES_MAP.get(nodeSource.type)
+    export function getNodeStyles(nodeSource: ExecutionPlanLineageNode): NodeStyles {
+        return OperationType[nodeSource.type]
+            ? NODE_STYLES_MAP.get(nodeSource.type as OperationType)
+            : GENERIC_NODE_STYLES
     }
 
-    export function toSgNode(nodeSource: ExecutionEventLineageNode): SgNode {
+    export function toSgNode(nodeSource: ExecutionPlanLineageNode): SgNode {
         const nodeStyles = getNodeStyles(nodeSource)
 
         return SgNodeDefault.toNode(
             nodeSource.id,
             {
-                label: extractNodeName(nodeSource),
+                label: getNodeName(nodeSource),
                 ...nodeStyles,
             },
         )

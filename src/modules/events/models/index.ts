@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
-export * from './event-info.models'
-export * from './event-node-control.models'
 export * from './event-node-info.models'
+export * from './event-node-control.models'
+export * from './event-info.models'
+export * from './execution-plan-node-control.models'
+export * from './sg-node-control.models'

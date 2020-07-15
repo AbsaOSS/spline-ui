@@ -27,7 +27,7 @@ import { SplineColors } from 'spline-common'
 export class EventCardHeaderComponent {
 
     @Input() headerTitle: string
-    @Input() color = SplineColors.BLACK // valid CSS color
+    @Input() color = SplineColors.PINK // valid CSS color
     @Input() icon: string
     @Input() label: string
 

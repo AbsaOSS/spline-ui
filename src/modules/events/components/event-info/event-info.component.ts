@@ -31,5 +31,6 @@ export class EventInfoComponent {
     @Input() data: EventInfo
 
     readonly color = SplineColors.PINK
+    readonly icon = 'play_circle_outline'
 
 }

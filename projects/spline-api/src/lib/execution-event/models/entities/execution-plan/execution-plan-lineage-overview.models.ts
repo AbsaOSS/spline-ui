@@ -21,9 +21,11 @@ import { Operation, OperationDto, toOperation } from '../operation'
 import { ExecutionPlan, ExecutionPlanDto, toExecutionPlan } from './execution-plan.models'
 
 
+export type ExecutionPlanLineageNode = Operation
+
 export type ExecutionPlanLineageOverview = {
     executionPlan: ExecutionPlan
-    lineage: Lineage<Operation>
+    lineage: Lineage<ExecutionPlanLineageNode>
 }
 
 export type ExecutionPlanLineageOverviewDto = {

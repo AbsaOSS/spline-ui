@@ -15,3 +15,4 @@
  */
 
 export * from './event-overview.store'
+export * from './execution-plan-overview.store'

@@ -13,12 +13,39 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<div class="container">
 
-    <h1 class="page-title">
-        Execution Plan Overview
-    </h1>
+<div *ngIf="(store.loadingProcessing$ | async) as loadingProcessing">
 
-    <h2 class="text-center">{{executionPlanId}}</h2>
+    <!-- LOADER -->
+    <spline-loader *ngIf="loadingProcessing.processing"></spline-loader>
+    <!-- ./LOADER -->
 
+    <!-- ERROR -->
+    <spline-content-error *ngIf="loadingProcessing.processingError"></spline-content-error>
+    <!-- ./ERROR -->
+
+    <ng-container *ngIf="!loadingProcessing.processingError && !loadingProcessing.processing">
+        <div *ngIf="store.state$ | async as state" class="end-to-end-content-container flex-row">
+            <div class="left-side-container">
+<!--                <event-info [data]="state.eventInfo"></event-info>-->
+
+            </div>
+            <div class="end-to-end-content-container__body">
+                <div class="graph-container">
+                    <div class="graph-container-inner">
+                        <spline-graph
+                                [selectedNodeId]="state.selectedNodeId"
+                                [graphData]="state.graphData"
+                                (nodeSelectionChange$)="onNodeSelected($event)"
+                                (nodeEvent$)="onNodeEvent($event)">
+                        </spline-graph>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
 </div>
+
+
+
+

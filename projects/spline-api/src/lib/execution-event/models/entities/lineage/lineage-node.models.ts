@@ -17,6 +17,7 @@
 export type LineageNode =
     {
         id: string
+        name: string
     }
     & Record<string, any>
 

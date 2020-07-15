@@ -22,7 +22,6 @@ import { ExecutionEventLineageNodeType } from './execution-event-lineage-node-ty
 export type ExecutionEventLineageNode =
     & LineageNode
     & {
-        name: string
         type: ExecutionEventLineageNodeType
     }
 

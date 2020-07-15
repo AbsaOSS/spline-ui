@@ -15,4 +15,5 @@
  */
 
 export * from './event-overview-store.facade'
+export * from './execution-plan-overview-store.facade'
 

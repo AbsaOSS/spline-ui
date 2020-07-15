@@ -14,8 +14,13 @@
  * limitations under the License.
  */
 
-export * from './cachable.models'
-export * from './page-response.models'
-export * from './query-pager.models'
-export * from './query-params.models'
-export * from './query-sorter.models'
+
+export namespace SgNodeControl {
+
+    export type NodeStyles = {
+        icon: string
+        color: string
+    }
+
+}
+

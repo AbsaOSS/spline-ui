@@ -68,11 +68,11 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
     }
 
     onNodeEvent(nodeEvent: SgNodeEvent): void {
-        console.log('nodeEvent', nodeEvent)
+        this.router.navigate(['/events/plan-overview', nodeEvent.nodeSchema.id])
     }
 
     onNodeSelected($event: { nodeSchema: SgNodeSchema | null }): void {
-        this.store.selectNode($event.nodeSchema ? $event.nodeSchema.id : null)
+        this.store.setSelectedNode($event.nodeSchema ? $event.nodeSchema.id : null)
     }
 
     private updateQueryParams(selectedNode: ExecutionEventLineageNode | null): void {

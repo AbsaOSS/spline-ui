@@ -19,6 +19,7 @@ import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
+import { Cacheable } from '../../core/'
 import { ExecutionEventsPageResponse, ExecutionEventsPageResponseDto, ExecutionEventsQuery, toExecutionEventsPageResponse } from '../models'
 import {
     ExecutionEventLineageOverview,
@@ -36,6 +37,7 @@ export class ExecutionEventFacade extends BaseFacade {
         super(http)
     }
 
+    @Cacheable
     fetchLineageOverview(executionEventId: string, maxDepth: number = 10): Observable<ExecutionEventLineageOverview> {
         let params = new HttpParams()
         params = params.append('eventId', executionEventId)
@@ -48,6 +50,7 @@ export class ExecutionEventFacade extends BaseFacade {
             )
     }
 
+    @Cacheable
     fetchList(queryParams: ExecutionEventsQuery.QueryParams): Observable<ExecutionEventsPageResponse> {
         const params = ExecutionEventsQuery.queryParamsToHttpParams(queryParams)
         const url = this.toUrl('execution-events')

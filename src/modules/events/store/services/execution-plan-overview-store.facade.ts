@@ -16,23 +16,23 @@
 
 import { Injectable } from '@angular/core'
 import { Observable, of } from 'rxjs'
-import { catchError, delay, distinctUntilChanged, map, shareReplay, take, tap } from 'rxjs/operators'
-import { ExecutionEventFacade, ExecutionEventLineageNode } from 'spline-api'
+import { catchError, distinctUntilChanged, map, shareReplay, take, tap } from 'rxjs/operators'
+import { ExecutionPlanFacade, ExecutionPlanLineageNode } from 'spline-api'
 import { BaseStore, ProcessingStore, SplineEntityStore } from 'spline-utils'
 
-import { EventOverviewStore } from '../models'
+import { ExecutionPlanOverviewStore } from '../models'
 
 
 @Injectable()
-export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State> {
+export class ExecutionPlanOverviewStoreFacade extends BaseStore<ExecutionPlanOverviewStore.State> {
 
-    readonly loadingProcessingEvents: ProcessingStore.ProcessingEvents<EventOverviewStore.State>
+    readonly loadingProcessingEvents: ProcessingStore.ProcessingEvents<ExecutionPlanOverviewStore.State>
     readonly loadingProcessing$: Observable<ProcessingStore.EventProcessingState>
 
-    selectedNode$: Observable<ExecutionEventLineageNode | null>
+    selectedNode$: Observable<ExecutionPlanLineageNode | null>
 
-    constructor(private readonly executionEventFacade: ExecutionEventFacade) {
-        super(EventOverviewStore.getDefaultState())
+    constructor(private readonly executionPlanFacade: ExecutionPlanFacade) {
+        super(ExecutionPlanOverviewStore.getDefaultState())
 
         this.loadingProcessingEvents = ProcessingStore.createProcessingEvents(
             this.state$, (state) => state.loadingProcessing,
@@ -47,9 +47,9 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
                     if (state.selectedNodeId === null) {
                         return null
                     }
-                    return SplineEntityStore.selectOne<ExecutionEventLineageNode>(state.selectedNodeId, state.nodes)
+                    return SplineEntityStore.selectOne<ExecutionPlanLineageNode>(state.selectedNodeId, state.nodes)
                 }),
-                shareReplay(1)
+                shareReplay(1),
             )
     }
 
@@ -61,12 +61,12 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
         }
     }
 
-    init(executionEventId: string, selectedNodeId: string | null = null): void {
+    init(executionPlanId: string, selectedNodeId: string | null = null): void {
         this.updateState({
             loadingProcessing: ProcessingStore.eventProcessingStart(this.state.loadingProcessing),
         })
 
-        this.executionEventFacade.fetchLineageOverview(executionEventId)
+        this.executionPlanFacade.fetchLineageOverview(executionPlanId)
             .pipe(
                 catchError((error) => {
                     this.updateState({
@@ -78,7 +78,7 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
                 tap((lineageData) => {
                     if (lineageData !== null) {
                         this.updateState({
-                            ...EventOverviewStore.reduceLineageOverviewData(this.state, executionEventId, lineageData),
+                            ...ExecutionPlanOverviewStore.reduceLineageOverviewData(this.state, executionPlanId, lineageData),
                             loadingProcessing: ProcessingStore.eventProcessingFinish(this.state.loadingProcessing),
                             selectedNodeId,
                         })
