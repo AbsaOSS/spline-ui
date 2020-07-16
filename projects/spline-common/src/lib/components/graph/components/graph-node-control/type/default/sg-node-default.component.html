@@ -14,23 +14,33 @@
   ~ limitations under the License.
   -->
 
+<ng-container *ngIf="data$ | async as dataValue">
+    <sg-node-view-default [isSelected]="isSelected"
+                          [icon]="dataValue?.icon"
+                          [showActions]="!!dataValue?.inlineActions?.length || !!dataValue?.actions?.length"
+                          [color]="dataValue?.color">
 
-<sg-node-view-default *ngIf="data$ | async as dataValue"
-                      [isSelected]="isSelected"
-                      [icon]="dataValue?.icon"
-                      [showActions]="true"
-                      [color]="dataValue?.color">
+        <spline-long-text [tooltip]="dataValue?.label">
+            {{dataValue?.label}}
+        </spline-long-text>
 
-    <spline-long-text [tooltip]="dataValue?.label">
-        {{dataValue?.label}}
-    </spline-long-text>
+        <!-- ACTIONS CONTAINER -->
+        <div class="sg-node-view__actions" *ngIf="!!dataValue?.inlineActions || !!dataValue?.actions">
 
-    <!-- ACTIONS -->
-    <div class="sg-node-view__actions">
-        <button [matTooltip]="'Open Execution Plan Graph'" mat-button mat-icon-button (click)="onAction($event)">
-            <mat-icon>launch</mat-icon>
-        </button>
-    </div>
-    <!-- ./ACTIONS -->
+            <!-- INLINE ACTIONS -->
+            <button *ngFor="let action of dataValue.inlineActions"
+                    [matTooltip]="action?.tooltip | translate"
+                    mat-button
+                    mat-icon-button
+                    (click)="onInlineActionClicked($event, action)">
 
-</sg-node-view-default>
+                <mat-icon>{{action.icon}}</mat-icon>
+
+            </button>
+            <!-- ./INLINE ACTIONS -->
+
+        </div>
+        <!-- ./ACTIONS CONTAINER -->
+
+    </sg-node-view-default>
+</ng-container>

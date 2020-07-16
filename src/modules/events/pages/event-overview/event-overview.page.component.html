@@ -24,32 +24,33 @@
     <spline-content-error *ngIf="loadingProcessing.processingError"></spline-content-error>
     <!-- ./ERROR -->
 
-    <ng-container *ngIf="!loadingProcessing.processingError && !loadingProcessing.processing">
-        <div *ngIf="store.state$ | async as state" class="end-to-end-container flex-row">
-            <div class="spline-content-details-section">
+    <ng-container *ngIf="graphData$ | async as graphData">
+        <ng-container *ngIf="!loadingProcessing.processingError && !loadingProcessing.processing">
+            <div *ngIf="store.state$ | async as state" class="end-to-end-container flex-row">
+                <div class="spline-content-details-section">
 
-                <!-- EVENT INFO -->
-                <event-info [data]="state.eventInfo"></event-info>
-                <!-- ./EVENT INFO -->
+                    <!-- EVENT INFO -->
+                    <event-info [data]="state.eventInfo"></event-info>
+                    <!-- ./EVENT INFO -->
 
-                <!-- SELECTED NODE INFO -->
-                <event-node-info *ngIf="store.selectedNode$ | async as selectedNode"
-                                 [node]="selectedNode">
-                </event-node-info>
-                <!-- ./SELECTED NODE INFO -->
+                    <!-- SELECTED NODE INFO -->
+                    <event-node-info *ngIf="store.selectedNode$ | async as selectedNode"
+                                     [node]="selectedNode">
+                    </event-node-info>
+                    <!-- ./SELECTED NODE INFO -->
 
+                </div>
+                <div class="end-to-end-container__body">
+                    <!-- GRAPH -->
+                    <spline-graph
+                            [selectedNodeId]="state.selectedNodeId"
+                            [graphData]="graphData"
+                            (nodeSelectionChange$)="onNodeSelected($event)">
+                    </spline-graph>
+                    <!-- ./GRAPH -->
+                </div>
             </div>
-            <div class="end-to-end-container__body">
-                <!-- GRAPH -->
-                <spline-graph
-                        [selectedNodeId]="state.selectedNodeId"
-                        [graphData]="state.graphData"
-                        (nodeSelectionChange$)="onNodeSelected($event)"
-                        (nodeEvent$)="onNodeEvent($event)">
-                </spline-graph>
-                <!-- ./GRAPH -->
-            </div>
-        </div>
+        </ng-container>
     </ng-container>
 </div>
 

@@ -51,7 +51,7 @@ export namespace EventNodeControl {
         return NODE_STYLES_MAP.get(nodeSource.type)
     }
 
-    export function toSgNode(nodeSource: ExecutionEventLineageNode): SgNode {
+    export function toSgNode(nodeSource: ExecutionEventLineageNode, onExecutionPlanLaunchAction: (nodeId: string) => void): SgNode {
         const nodeStyles = getNodeStyles(nodeSource)
 
         return SgNodeDefault.toNode(
@@ -59,6 +59,15 @@ export namespace EventNodeControl {
             {
                 label: extractNodeName(nodeSource),
                 ...nodeStyles,
+                inlineActions: nodeSource.type === ExecutionEventLineageNodeType.DataSource
+                    ? []
+                    : [{
+                        icon: 'launch',
+                        onClick: () => {
+                            onExecutionPlanLaunchAction(nodeSource.id)
+                        },
+                        tooltip: 'EVENTS.EVENT_NODE_CONTROL__ACTION__LAUNCH'
+                    }]
             },
         )
     }

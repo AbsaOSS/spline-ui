@@ -23,14 +23,20 @@ export namespace SgNodeDefault {
         label: string
         icon?: string
         color?: string // valid CSS color
-        inlineActions?: Action[]
+        inlineActions?: InlineAction[]
         actions?: Action[]
     }
 
     export type Action = {
-        type: string
+        label: string
+        icon: string
+        onClick: () => void
+    }
+
+    export type InlineAction = {
         icon: string
         tooltip?: string
+        onClick: () => void
     }
 
     export type Options = {}

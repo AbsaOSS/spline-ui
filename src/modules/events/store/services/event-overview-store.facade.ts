@@ -16,7 +16,7 @@
 
 import { Injectable } from '@angular/core'
 import { Observable, of } from 'rxjs'
-import { catchError, delay, distinctUntilChanged, map, shareReplay, take, tap } from 'rxjs/operators'
+import { catchError, distinctUntilChanged, map, shareReplay, take, tap } from 'rxjs/operators'
 import { ExecutionEventFacade, ExecutionEventLineageNode } from 'spline-api'
 import { BaseStore, ProcessingStore, SplineEntityStore } from 'spline-utils'
 

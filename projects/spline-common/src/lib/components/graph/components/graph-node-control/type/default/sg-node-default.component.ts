@@ -19,6 +19,7 @@ import { Component } from '@angular/core'
 import { SgNodeBaseComponent } from '../sg-node-base.component'
 
 import { SgNodeDefault } from './sg-node-default.models'
+import InlineAction = SgNodeDefault.InlineAction
 
 
 @Component({
@@ -27,10 +28,8 @@ import { SgNodeDefault } from './sg-node-default.models'
 })
 export class SgNodeDefaultComponent extends SgNodeBaseComponent<SgNodeDefault.Data, SgNodeDefault.Options> {
 
-    onAction($event: MouseEvent) {
+    onInlineActionClicked($event: MouseEvent, action: InlineAction): void {
         $event.stopPropagation()
-        this.event$.emit({
-            type: 'action',
-        })
+        action.onClick()
     }
 }

@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-import { ExecutionEventLineageNode, ExecutionEventLineageOverview } from 'spline-api'
-import { SgData } from 'spline-common'
+import { ExecutionEventLineageNode, ExecutionEventLineageOverview, LineageNodeLink } from 'spline-api'
 import { ProcessingStore, SplineEntityStore } from 'spline-utils'
 
-import { EventInfo, EventNodeControl } from '../../models'
+import { EventInfo } from '../../models'
 
 
 export namespace EventOverviewStore {
 
     export type State = {
         nodes: SplineEntityStore.EntityState<ExecutionEventLineageNode>
+        links: LineageNodeLink[],
         executionEventId: string | null
-        graphData: SgData | null
         eventInfo: EventInfo | null
         loadingProcessing: ProcessingStore.EventProcessingState
         selectedNodeId: string | null
@@ -35,8 +34,8 @@ export namespace EventOverviewStore {
     export function getDefaultState(): State {
         return {
             nodes: SplineEntityStore.getDefaultState<ExecutionEventLineageNode>(),
+            links: [],
             executionEventId: null,
-            graphData: null,
             eventInfo: null,
             loadingProcessing: ProcessingStore.getDefaultProcessingState(),
             selectedNodeId: null,
@@ -59,10 +58,7 @@ export namespace EventOverviewStore {
         return {
             ...state,
             nodes: SplineEntityStore.addAll(lineageOverview.lineage.nodes, state.nodes),
-            graphData: {
-                nodes: lineageOverview.lineage.nodes.map(nodeSource => EventNodeControl.toSgNode(nodeSource)),
-                links: lineageOverview.lineage.links,
-            },
+            links: lineageOverview.lineage.links,
             eventInfo: {
                 id: executionEventId,
                 name: eventNode ? eventNode.name : 'NaN',
@@ -70,6 +66,10 @@ export namespace EventOverviewStore {
                 executedAt: new Date(lineageOverview.executionEventInfo.timestamp),
             },
         }
+    }
+
+    export function selectAllNodes(state: State): ExecutionEventLineageNode[] {
+        return SplineEntityStore.selectAll(state.nodes)
     }
 
     export function selectNode(state: State, nodeId: string): ExecutionEventLineageNode | undefined {

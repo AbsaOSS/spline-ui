@@ -16,12 +16,14 @@
 
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router'
-import { takeUntil } from 'rxjs/operators'
+import { Observable } from 'rxjs'
+import { map, shareReplay, takeUntil } from 'rxjs/operators'
 import { ExecutionEventFacade, ExecutionEventLineageNode } from 'spline-api'
-import { SgNodeEvent, SgNodeSchema } from 'spline-common'
+import { SgData, SgNodeSchema } from 'spline-common'
 import { BaseComponent } from 'spline-utils'
 
-import { EventOverviewStoreFacade } from '../../store'
+import { EventNodeControl } from '../../models'
+import { EventOverviewStore, EventOverviewStoreFacade } from '../../store'
 
 
 @Component({
@@ -42,10 +44,32 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
 
     readonly selectedNodeQueryParamName: string = 'selectedNodeId'
 
+    readonly graphData$: Observable<SgData>
+
     constructor(private readonly activatedRoute: ActivatedRoute,
                 private readonly router: Router,
                 readonly store: EventOverviewStoreFacade) {
         super()
+
+        this.graphData$ = this.store.loadingProcessingEvents.success$
+            .pipe(
+                map(state => {
+                    // select all nodes list from the store
+                    const nodesList = EventOverviewStore.selectAllNodes(state)
+                    return {
+                        links: state.links,
+                        nodes: nodesList
+                            // map node source data to the SgNode schema
+                            .map(
+                                nodeSource => EventNodeControl.toSgNode(
+                                    nodeSource,
+                                    (nodeId) => this.onExecutionPlanNodeLaunchAction(nodeId),
+                                ),
+                            ),
+                    }
+                }),
+                shareReplay(1),
+            )
     }
 
     ngOnInit(): void {
@@ -67,12 +91,12 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
             )
     }
 
-    onNodeEvent(nodeEvent: SgNodeEvent): void {
-        this.router.navigate(['/events/plan-overview', nodeEvent.nodeSchema.id])
-    }
-
     onNodeSelected($event: { nodeSchema: SgNodeSchema | null }): void {
         this.store.setSelectedNode($event.nodeSchema ? $event.nodeSchema.id : null)
+    }
+
+    private onExecutionPlanNodeLaunchAction(nodeId: string): void {
+        this.router.navigate(['/events/plan-overview', nodeId])
     }
 
     private updateQueryParams(selectedNode: ExecutionEventLineageNode | null): void {
