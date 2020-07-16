@@ -14,5 +14,19 @@
  * limitations under the License.
  */
 
-export * from './component/public-api'
-export * from './models/public-api'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+
+import { SplineColors } from '../../models'
+
+
+@Component({
+    selector: 'spline-label',
+    templateUrl: './spline-label.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class SplineLabelComponent {
+
+    readonly defaultColor = SplineColors.BLACK
+
+    @Input() color
+}

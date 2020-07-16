@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,22 +14,4 @@
  * limitations under the License.
  */
 
-@import 'vars';
-
-$label-color: $color-black;
-
-
-.event-data-record {
-    padding: 0.25rem 0;
-
-    &__label {
-        color: $color-grey-dark-75;
-        font-size: 12px;
-    }
-
-    &__value {
-        color: $color-black;
-        font-size: 13px;
-        font-weight: 500;
-    }
-}
+export * from './spline-data-widget.manager'

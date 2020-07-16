@@ -14,5 +14,11 @@
  * limitations under the License.
  */
 
-export * from './component/public-api'
+/*
+ * Public API Surface of spline-common
+ */
+
+export * from './components/public-api'
 export * from './models/public-api'
+export * from './services/public-api'
+export * from './spline-data-widget.module'

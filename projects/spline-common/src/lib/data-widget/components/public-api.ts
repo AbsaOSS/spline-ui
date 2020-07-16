@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export * from './component/public-api'
-export * from './models/public-api'
+export * from './widget/spline-data-widget.component'
+export * from './widget-type/public-api'

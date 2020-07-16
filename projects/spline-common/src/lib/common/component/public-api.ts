@@ -14,5 +14,11 @@
  * limitations under the License.
  */
 
-export * from './component/public-api'
-export * from './models/public-api'
+export * from './content-error/public-api'
+export * from './data-record/public-api'
+export * from './label/public-api'
+export * from './loader/public-api'
+export * from './long-text/public-api'
+export * from './search-box/public-api'
+export * from './side-panel/public-api'
+export * from './sort-header/public-api'

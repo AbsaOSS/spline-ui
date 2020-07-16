@@ -14,5 +14,27 @@
  * limitations under the License.
  */
 
-export * from './component/public-api'
-export * from './models/public-api'
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
+import { FormsModule } from '@angular/forms'
+import { MatIconModule } from '@angular/material/icon'
+
+import { SplineTranslateModule } from '../../../translate'
+
+import { SplineDataRecordComponent } from './components'
+
+
+@NgModule({
+    declarations: [
+        SplineDataRecordComponent,
+    ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        MatIconModule,
+        SplineTranslateModule,
+    ],
+    exports: [SplineDataRecordComponent],
+})
+export class SplineDataRecordModule {
+}

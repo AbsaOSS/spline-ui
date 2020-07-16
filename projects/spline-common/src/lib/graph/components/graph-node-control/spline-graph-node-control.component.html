@@ -14,11 +14,4 @@
   ~ limitations under the License.
   -->
 
-<div class="event-data-record">
-    <div class="event-data-record__label" *ngIf="label">
-        {{label}}:
-    </div>
-    <div class="event-data-record__value">
-        <ng-content></ng-content>
-    </div>
-</div>
+<ng-container #componentViewContainer></ng-container>

@@ -16,17 +16,14 @@
 
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
-import { SplineColors } from '../../common'
-
 
 @Component({
-    selector: 'spline-label',
-    templateUrl: './spline-label.component.html',
+    selector: 'spline-data-record',
+    templateUrl: './spline-data-record.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SplineLabelComponent {
+export class SplineDataRecordComponent {
 
-    readonly defaultColor = SplineColors.BLACK
+    @Input() label: string
 
-    @Input() color
 }

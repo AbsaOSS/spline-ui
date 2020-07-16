@@ -16,7 +16,6 @@
 
 import { EventCardContentComponent } from './card/card-content/event-card-content.component'
 import { EventCardHeaderComponent } from './card/card-header/event-card-header.component'
-import { DataRecordComponent } from './data-record/data-record.component'
 import { EventInfoComponent } from './event-info/event-info.component'
 import { EventNodeInfoComponent } from './event-node-info/event-node-info.component'
 import { ExecutionPlanInfoComponent } from './execution-plan-info/execution-plan-info.component'
@@ -26,14 +25,12 @@ export const components: any[] = [
     EventInfoComponent,
     EventCardContentComponent,
     EventCardHeaderComponent,
-    DataRecordComponent,
     EventNodeInfoComponent,
     ExecutionPlanInfoComponent
 ]
 
 export * from './card/card-content/event-card-content.component'
 export * from './card/card-header/event-card-header.component'
-export * from './data-record/data-record.component'
 export * from './event-info/event-info.component'
 export * from './event-node-info/event-node-info.component'
 export * from './execution-plan-info/execution-plan-info.component'

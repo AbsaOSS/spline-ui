@@ -22,8 +22,8 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { NgxGraphModule } from '@swimlane/ngx-graph'
 
-import { SplineTranslateModule } from '../../translate'
-import { SplineLongTextModule } from '../long-text'
+import { SplineTranslateModule } from '../translate'
+import { SplineLongTextModule } from '../common/component/long-text'
 
 import * as fromComponents from './components'
 import * as fromServices from './services'

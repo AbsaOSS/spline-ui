@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { SplineColors } from 'spline-common'
+import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core'
+import { SdWidgetDefault, SdWidgetSchema, SplineColors } from 'spline-common'
+import { DateTimeHelpers } from 'spline-utils'
 
 import { EventInfo } from '../../models'
 
@@ -26,11 +27,42 @@ import { EventInfo } from '../../models'
     styleUrls: ['./event-info.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EventInfoComponent {
+export class EventInfoComponent implements OnChanges {
 
     @Input() data: EventInfo
 
+    detailsDataSchema: SdWidgetSchema[] = []
+
     readonly color = SplineColors.PINK
     readonly icon = 'play_arrow'
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes?.data && !!changes.data.currentValue) {
+            this.detailsDataSchema = this.toDetailsDataSchema(changes.data.currentValue)
+        }
+    }
+
+    private toDetailsDataSchema(data: EventInfo): SdWidgetSchema[] {
+        return [
+            {
+                data: {
+                    label: 'EVENTS.EVENT_INFO__DETAILS__EXECUTED_AT',
+                    value: DateTimeHelpers.toString(data.executedAt),
+                } as SdWidgetDefault.Data,
+            },
+            {
+                data: {
+                    label: 'EVENTS.EVENT_INFO__DETAILS__EVENT_ID',
+                    value: data.id,
+                } as SdWidgetDefault.Data,
+            },
+            {
+                data: {
+                    label: 'EVENTS.EVENT_INFO__DETAILS__APPLICATION_ID',
+                    value: data.applicationId,
+                } as SdWidgetDefault.Data,
+            },
+        ]
+    }
 
 }

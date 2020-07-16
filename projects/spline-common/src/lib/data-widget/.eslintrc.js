@@ -14,5 +14,23 @@
  * limitations under the License.
  */
 
-export * from './component/public-api'
-export * from './models/public-api'
+module.exports = {
+    'rules': {
+        '@angular-eslint/directive-selector': [
+            'error',
+            {
+                'type': 'attribute',
+                'prefix': ['spline', 'sdWidget', 'splineDataWidget'],
+                'style': 'camelCase'
+            }
+        ],
+        '@angular-eslint/component-selector': [
+            'error',
+            {
+                'type': 'element',
+                'prefix': ['spline', 'sd-widget', 'spline-data-widget'],
+                'style': 'kebab-case'
+            }
+        ]
+    }
+};

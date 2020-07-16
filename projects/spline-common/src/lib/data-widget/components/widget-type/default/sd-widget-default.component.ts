@@ -14,5 +14,17 @@
  * limitations under the License.
  */
 
-export * from './component/public-api'
-export * from './models/public-api'
+import { Component } from '@angular/core'
+
+import { SgWidgetBaseComponent } from '../sg-widget-base.component'
+
+import { SdWidgetDefault } from './sd-widget-default.models'
+
+
+@Component({
+    selector: 'sd-widget-default',
+    templateUrl: './sd-widget-default.component.html',
+})
+export class SdWidgetDefaultComponent extends SgWidgetBaseComponent<SdWidgetDefault.Data> {
+
+}

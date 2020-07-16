@@ -14,23 +14,11 @@
   ~ limitations under the License.
   -->
 
-<mat-card class="event-node-info">
-
-    <event-card-header [color]="nodeInfo.color"
-                       [icon]="nodeInfo.icon"
-                       [headerTitle]="nodeInfo.title | translate"
-                       [label]="nodeInfo.label | translate">
-    </event-card-header>
-
-    <!-- DATA -->
-    <event-card-content *ngIf="nodeInfo.data?.length">
-
-        <spline-data-record *ngFor="let record of nodeInfo.data"
-                           [label]="record.label | translate">
-            {{record.value}}
-        </spline-data-record>
-
-    </event-card-content>
-    <!-- ./DATA -->
-
-</mat-card>
+<div class="spline-data-record">
+    <div class="spline-data-record__label" *ngIf="label">
+        {{label | translate}}:
+    </div>
+    <div class="spline-data-record__value">
+        <ng-content></ng-content>
+    </div>
+</div>

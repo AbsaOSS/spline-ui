@@ -28,6 +28,8 @@ import { RouterModule } from '@angular/router'
 import { SplineApiModule } from 'spline-api'
 import {
     SplineContentErrorModule,
+    SplineDataRecordModule,
+    SplineDataWidgetModule,
     SplineGraphModule,
     SplineLabelModule,
     SplineLayoutModule,
@@ -71,6 +73,8 @@ import * as fromPages from './pages'
         SplineSidePanelModule,
         SplineLabelModule,
         SplineTranslateModule.forChild({ moduleNames: ['events'] }),
+        SplineDataRecordModule,
+        SplineDataWidgetModule,
     ],
     exports: [
         ...fromPages.pageComponents,

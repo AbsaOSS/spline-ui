@@ -14,5 +14,13 @@
  * limitations under the License.
  */
 
-export * from './component/public-api'
-export * from './models/public-api'
+import { SdWidgetDefaultComponent } from './widget-type'
+import { SplineDataWidgetComponent } from './widget/spline-data-widget.component'
+
+
+export const widgetComponents: any[] = [
+    SplineDataWidgetComponent,
+    SdWidgetDefaultComponent
+]
+
+export * from './public-api'

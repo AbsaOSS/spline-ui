@@ -14,17 +14,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+export * from './sg-widget-base.component'
 
-
-@Component({
-    selector: 'event-data-record',
-    templateUrl: './data-record.component.html',
-    styleUrls: ['./data-record.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class DataRecordComponent {
-
-    @Input() label: string
-
-}
+export * from './default/sd-widget-default.component'
+export * from './default/sd-widget-default.models'

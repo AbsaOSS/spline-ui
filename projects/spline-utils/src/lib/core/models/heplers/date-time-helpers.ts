@@ -14,5 +14,15 @@
  * limitations under the License.
  */
 
-export * from './component/public-api'
-export * from './models/public-api'
+import moment from 'moment'
+
+
+export namespace DateTimeHelpers {
+
+    const FULL_DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss'
+
+    export function toString(date: Date, format = FULL_DATE_TIME_FORMAT): string {
+        return moment(date).format(format)
+    }
+
+}

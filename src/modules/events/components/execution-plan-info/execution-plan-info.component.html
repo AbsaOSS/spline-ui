@@ -24,17 +24,11 @@
 
     <event-card-content>
 
-        <!-- SYSTEM INFO -->
-        <event-data-record [label]="'EVENTS.EXECUTION_EVENT_INFO__DETAILS__SYSTEM_INFO' | translate">
-            {{data.systemInfo.name }} {{data.systemInfo.version }}
-        </event-data-record>
-        <!-- ./SYSTEM INFO -->
-
-        <!-- AGENT INFO -->
-        <event-data-record [label]="'EVENTS.EXECUTION_EVENT_INFO__DETAILS__AGENT_INFO' | translate">
-            {{data.agentInfo.name }} {{data.agentInfo.version }}
-        </event-data-record>
-        <!-- ./AGENT INFO -->
+        <ng-container *ngIf="detailsDataSchema.length">
+            <spline-data-widget [schema]="schema"
+                                *ngFor="let schema of detailsDataSchema">
+            </spline-data-widget>
+        </ng-container>
 
     </event-card-content>
 
