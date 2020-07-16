@@ -53,6 +53,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
 
         this.graphData$ = this.store.loadingProcessingEvents.success$
             .pipe(
+                takeUntil(this.destroyed$),
                 map(state => {
                     // select all nodes list from the store
                     const nodesList = EventOverviewStore.selectAllNodes(state)

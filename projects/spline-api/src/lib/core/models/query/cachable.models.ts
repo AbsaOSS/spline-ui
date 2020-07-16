@@ -15,7 +15,7 @@
  */
 
 import { of } from 'rxjs'
-import { tap } from 'rxjs/operators'
+import { delay, tap } from 'rxjs/operators'
 
 
 export function Cacheable(target: any, name: string, descriptor: PropertyDescriptor): void {
@@ -35,7 +35,11 @@ export function Cacheable(target: any, name: string, descriptor: PropertyDescrip
         }, '')
 
         if (cache.has(requestId)) {
+            const fakeResponseDelay = 50
             return of(cache.get(requestId))
+                .pipe(
+                    delay(fakeResponseDelay)
+                )
         }
         else {
             return method.apply(this, args)

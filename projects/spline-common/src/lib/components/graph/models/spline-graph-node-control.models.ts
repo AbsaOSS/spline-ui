@@ -17,7 +17,7 @@
 import { EventEmitter, Type } from '@angular/core'
 import { IDynamicComponentFactory } from 'spline-utils'
 
-import { SgNode, SgNodeSchema } from './spline-graph.models'
+import { SgNodeSchema } from './spline-graph.models'
 
 
 export type SgNodeControlEvent<TData extends {} = {}> = {
