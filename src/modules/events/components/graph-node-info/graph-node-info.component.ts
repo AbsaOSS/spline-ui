@@ -14,7 +14,18 @@
  * limitations under the License.
  */
 
-export type SplineDataRecordData = {
-    label?: string
-    value: string
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+
+import { GraphNodeInfo } from '../../models'
+
+
+@Component({
+    selector: 'event-graph-node-info',
+    templateUrl: './graph-node-info.component.html',
+    styleUrls: ['./graph-node-info.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class GraphNodeInfoComponent {
+
+    @Input() nodeInfo: GraphNodeInfo
 }

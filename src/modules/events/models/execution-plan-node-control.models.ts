@@ -48,7 +48,7 @@ export namespace ExecutionPlanNodeControl {
             ],
         ])
 
-    export function getNodeName(nodeSource: ExecutionPlanLineageNode): string {
+    export function extractNodeName(nodeSource: ExecutionPlanLineageNode): string {
         return nodeSource.name
     }
 
@@ -64,7 +64,7 @@ export namespace ExecutionPlanNodeControl {
         return SgNodeDefault.toNode(
             nodeSource.id,
             {
-                label: getNodeName(nodeSource),
+                label: extractNodeName(nodeSource),
                 ...nodeStyles,
             },
         )

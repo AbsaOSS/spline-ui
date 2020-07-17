@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import { SdWidgetDefaultComponent } from './widget-type'
+import { SdWidgetSimpleRecordComponent } from './widget-type'
 import { SplineDataWidgetComponent } from './widget/spline-data-widget.component'
 
 
 export const widgetComponents: any[] = [
     SplineDataWidgetComponent,
-    SdWidgetDefaultComponent
+    SdWidgetSimpleRecordComponent
 ]
 
 export * from './public-api'

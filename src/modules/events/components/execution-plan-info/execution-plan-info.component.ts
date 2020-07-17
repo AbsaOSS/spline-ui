@@ -16,7 +16,7 @@
 
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core'
 import { ExecutionPlan } from 'spline-api'
-import { SdWidgetDefault, SdWidgetSchema, SplineColors } from 'spline-common'
+import { SdWidgetSchema, SdWidgetSimpleRecord, SplineColors } from 'spline-common'
 
 
 @Component({
@@ -42,18 +42,16 @@ export class ExecutionPlanInfoComponent implements OnChanges {
 
     private toDetailsDataSchema(data: ExecutionPlan): SdWidgetSchema[] {
         return [
-            {
-                data: {
+            SdWidgetSimpleRecord.toSchema([
+                {
                     label: 'EVENTS.EXECUTION_EVENT_INFO__DETAILS__SYSTEM_INFO',
                     value: `${data.systemInfo.name} ${data.systemInfo.version}`,
-                } as SdWidgetDefault.Data,
-            },
-            {
-                data: {
+                },
+                {
                     label: 'EVENTS.EXECUTION_EVENT_INFO__DETAILS__AGENT_INFO',
                     value: `${data.agentInfo.name} ${data.agentInfo.version}`,
-                } as SdWidgetDefault.Data,
-            },
+                }
+            ]),
         ]
     }
 

@@ -14,11 +14,27 @@
  * limitations under the License.
  */
 
-export namespace SdWidgetDefault {
+import { TypeHelpers } from 'spline-utils'
+
+import { SplineDataRecordData } from '../../../../common'
+import { SdWidgetSchema } from '../../../models'
+
+
+export namespace SdWidgetSimpleRecord {
+
+    export const TYPE = 'SimpleRecord'
 
     export type Data = {
-        label?: string
-        value: string
+        records: SplineDataRecordData[]
+    }
+
+    export function toSchema(records: SplineDataRecordData | SplineDataRecordData[]): SdWidgetSchema<Data> {
+        return {
+            type: TYPE,
+            data: {
+                records: TypeHelpers.isArray(records) ? records : [records],
+            },
+        }
     }
 
 }

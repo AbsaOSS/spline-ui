@@ -14,7 +14,22 @@
   ~ limitations under the License.
   -->
 
-<spline-data-record *ngIf="data$ | async as dataValue"
-                    [label]="dataValue?.label">
-    {{dataValue.value}}
-</spline-data-record>
+<mat-card class="graph-node-info">
+
+    <event-card-header [color]="nodeInfo.color"
+                       [icon]="nodeInfo.icon"
+                       [headerTitle]="nodeInfo.title | translate"
+                       [label]="nodeInfo.label | translate">
+    </event-card-header>
+
+    <!-- DATA -->
+    <event-card-content *ngIf="nodeInfo.dataSchema?.length">
+
+        <spline-data-widget [schema]="schema"
+                            *ngFor="let schema of nodeInfo.dataSchema">
+        </spline-data-widget>
+
+    </event-card-content>
+    <!-- ./DATA -->
+
+</mat-card>

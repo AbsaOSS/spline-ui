@@ -19,10 +19,12 @@ import { IDynamicComponentFactory } from 'spline-utils'
 
 
 export type SdWidgetSchema<TData extends object = {}, TOptions extends object = {}> = {
-    type?: string
+    type: string
     data?: TData
     options?: TOptions
 }
+
+export type SplineDataSchema = SdWidgetSchema[]
 
 export interface SplineDataWidgetEvent<TData extends {} = {}> {
     type: string

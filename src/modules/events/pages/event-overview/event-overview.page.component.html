@@ -30,13 +30,13 @@
                 <div class="spline-content-details-section">
 
                     <!-- EVENT INFO -->
-                    <event-info [data]="state.eventInfo"></event-info>
+                    <event-info [data]="state.eventInfo" class="mb-3"></event-info>
                     <!-- ./EVENT INFO -->
 
                     <!-- SELECTED NODE INFO -->
-                    <event-node-info *ngIf="store.selectedNode$ | async as selectedNode"
-                                     [node]="selectedNode">
-                    </event-node-info>
+                    <event-graph-node-info *ngIf="selectedNodeInfo$ | async as selectedNodeInfo"
+                                           [nodeInfo]="selectedNodeInfo">
+                    </event-graph-node-info>
                     <!-- ./SELECTED NODE INFO -->
 
                 </div>

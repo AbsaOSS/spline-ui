@@ -14,23 +14,15 @@
   ~ limitations under the License.
   -->
 
-<mat-card class="event-node-info">
+<ng-container *ngIf="data$ | async as dataValue">
 
-    <event-card-header [color]="nodeInfo.color"
-                       [icon]="nodeInfo.icon"
-                       [headerTitle]="nodeInfo.title | translate"
-                       [label]="nodeInfo.label | translate">
-    </event-card-header>
+    <spline-data-record *ngFor="let record of  dataValue.records"
+                        [label]="record?.label">
 
-    <!-- DATA -->
-    <event-card-content *ngIf="nodeInfo.data?.length">
+        {{record.value}}
 
-        <spline-data-record *ngFor="let record of nodeInfo.data"
-                           [label]="record.label | translate">
-            {{record.value}}
-        </spline-data-record>
+    </spline-data-record>
 
-    </event-card-content>
-    <!-- ./DATA -->
+</ng-container>
 
-</mat-card>
+

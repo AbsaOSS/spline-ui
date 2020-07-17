@@ -14,35 +14,33 @@
  * limitations under the License.
  */
 
-import { ExecutionEventLineageNode, ExecutionEventLineageNodeType } from 'spline-api'
+import { ExecutionEventLineageNodeType, ExecutionPlanLineageNode } from 'spline-api'
 import { SdWidgetSimpleRecord, SplineDataSchema } from 'spline-common'
 
-import { EventNodeControl } from './event-node-control.models'
+import { ExecutionPlanNodeControl } from './execution-plan-node-control.models'
 import { GraphNodeInfo } from './graph-node-info.models'
 
 
-export namespace EventNodeInfo {
+export namespace ExecutionPlanNodeInfo {
 
-    export function getNodeInfoLabel(nodeSource: ExecutionEventLineageNode): string {
-        return nodeSource.type === ExecutionEventLineageNodeType.DataSource
-            ? 'EVENTS.EVENT_NODE_INFO__LABEL__DATA_SOURCE'
-            : 'EVENTS.EVENT_NODE_INFO__LABEL__EXECUTION'
+    export function getNodeInfoLabel(nodeSource: ExecutionPlanLineageNode): string {
+        return 'EVENTS.EVENT_NODE_INFO__LABEL__DATA_SOURCE'
     }
 
-    export function toNodeInfo(nodeSource: ExecutionEventLineageNode): GraphNodeInfo {
-        const nodeStyles = EventNodeControl.getNodeStyles(nodeSource)
+    export function toNodeInfo(nodeSource: ExecutionPlanLineageNode): GraphNodeInfo {
+        const nodeStyles = ExecutionPlanNodeControl.getNodeStyles(nodeSource)
 
         const data: SplineDataSchema = nodeSource.type === ExecutionEventLineageNodeType.DataSource
             ? [
                 SdWidgetSimpleRecord.toSchema({
-                    label: 'URI',
+                    label: 'Name',
                     value: nodeSource.name,
                 }),
             ]
             : []
 
         return {
-            title: EventNodeControl.extractNodeName(nodeSource),
+            title: ExecutionPlanNodeControl.extractNodeName(nodeSource),
             label: getNodeInfoLabel(nodeSource),
             ...nodeStyles,
             dataSchema: data,

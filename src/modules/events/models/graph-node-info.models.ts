@@ -14,7 +14,15 @@
  * limitations under the License.
  */
 
-export type SplineDataRecordData = {
-    label?: string
-    value: string
+import { SplineDataSchema } from 'spline-common'
+
+
+export type GraphNodeInfo = {
+    title: string
+    label: string
+    icon: string
+    color: string
+    dataSchema: SplineDataSchema
 }
+
+

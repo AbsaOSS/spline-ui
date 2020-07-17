@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,8 +14,17 @@
  * limitations under the License.
  */
 
-@import 'vars';
+import { Component } from '@angular/core'
 
-.event-node-info {
-    border-top: 5px solid $color-orange;
+import { SgWidgetBaseComponent } from '../sg-widget-base.component'
+
+import { SdWidgetSimpleRecord } from './sd-widget-simple-record.models'
+
+
+@Component({
+    selector: 'sd-widget-simple-record',
+    templateUrl: './sd-widget-simple-record.component.html',
+})
+export class SdWidgetSimpleRecordComponent extends SgWidgetBaseComponent<SdWidgetSimpleRecord.Data> {
+
 }

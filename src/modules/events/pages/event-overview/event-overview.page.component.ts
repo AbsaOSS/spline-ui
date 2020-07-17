@@ -22,7 +22,7 @@ import { ExecutionEventFacade, ExecutionEventLineageNode } from 'spline-api'
 import { SgData, SgNodeSchema } from 'spline-common'
 import { BaseComponent } from 'spline-utils'
 
-import { EventNodeControl } from '../../models'
+import { EventNodeControl, EventNodeInfo, GraphNodeInfo } from '../../models'
 import { EventOverviewStore, EventOverviewStoreFacade } from '../../store'
 
 
@@ -45,6 +45,8 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
     readonly selectedNodeQueryParamName: string = 'selectedNodeId'
 
     readonly graphData$: Observable<SgData>
+
+    readonly selectedNodeInfo$: Observable<GraphNodeInfo>
 
     constructor(private readonly activatedRoute: ActivatedRoute,
                 private readonly router: Router,
@@ -70,6 +72,11 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
                     }
                 }),
                 shareReplay(1),
+            )
+
+        this.selectedNodeInfo$ = this.store.selectedNode$
+            .pipe(
+                map(selectedNode => selectedNode ? EventNodeInfo.toNodeInfo(selectedNode) : null),
             )
     }
 

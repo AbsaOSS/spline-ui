@@ -17,7 +17,7 @@
 import { Inject, Injectable, InjectionToken, Injector, Optional, Type } from '@angular/core'
 import { DynamicComponentManager } from 'spline-utils'
 
-import { SdWidgetDefaultComponent } from '../components/widget-type'
+import { SdWidgetSimpleRecord, SdWidgetSimpleRecordComponent } from '../components/widget-type'
 import { ISplineDataWidget, ISplineDataWidgetFactory } from '../models'
 
 
@@ -29,7 +29,9 @@ export const SD_WIDGET_FACTORY = new InjectionToken<ISplineDataWidgetFactory<any
 })
 export class SplineDataWidgetManager extends DynamicComponentManager<ISplineDataWidgetFactory<any>, ISplineDataWidget<any>> {
 
-    readonly defaultCellTypesMap: { [type: string]: Type<ISplineDataWidget<any>> } = {}
+    readonly defaultCellTypesMap: { [type: string]: Type<ISplineDataWidget<any>> } = {
+        [SdWidgetSimpleRecord.TYPE]: SdWidgetSimpleRecordComponent
+    }
 
     constructor(
         @Optional() @Inject(SD_WIDGET_FACTORY) protected readonly factoriesProvidersList: Type<ISplineDataWidgetFactory<any>>[],
@@ -38,11 +40,7 @@ export class SplineDataWidgetManager extends DynamicComponentManager<ISplineData
         super(injector)
     }
 
-    getComponentType(type?: string): Type<ISplineDataWidget<any, any>> | null {
-        // in case if type is not specified return the default one.
-        if (!type) {
-            return SdWidgetDefaultComponent
-        }
+    getComponentType(type: string): Type<ISplineDataWidget<any, any>> | null {
 
         // default types
         if (this.defaultCellTypesMap[type]) {
