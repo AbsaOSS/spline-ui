@@ -66,8 +66,8 @@ export namespace EventNodeControl {
                         onClick: () => {
                             onExecutionPlanLaunchAction(nodeSource.id)
                         },
-                        tooltip: 'EVENTS.EVENT_NODE_CONTROL__ACTION__LAUNCH'
-                    }]
+                        tooltip: 'EVENTS.EVENT_NODE_CONTROL__ACTION__LAUNCH',
+                    }],
             },
         )
     }

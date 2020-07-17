@@ -16,7 +16,9 @@
 
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core'
 import { ExecutionPlan } from 'spline-api'
-import { SdWidgetSchema, SdWidgetSimpleRecord, SplineColors } from 'spline-common'
+import { SplineDataViewSchema } from 'spline-common'
+
+import { ExecutionPlanInfo } from '../../models'
 
 
 @Component({
@@ -29,30 +31,12 @@ export class ExecutionPlanInfoComponent implements OnChanges {
 
     @Input() data: ExecutionPlan
 
-    detailsDataSchema: SdWidgetSchema[] = []
-
-    readonly color = SplineColors.ORANGE
-    readonly icon = 'playlist_play'
+    dataViewSchema: SplineDataViewSchema
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.data && !!changes.data.currentValue) {
-            this.detailsDataSchema = this.toDetailsDataSchema(changes.data.currentValue)
+            this.dataViewSchema = ExecutionPlanInfo.toDataViewSchema(changes.data.currentValue)
         }
-    }
-
-    private toDetailsDataSchema(data: ExecutionPlan): SdWidgetSchema[] {
-        return [
-            SdWidgetSimpleRecord.toSchema([
-                {
-                    label: 'EVENTS.EXECUTION_EVENT_INFO__DETAILS__SYSTEM_INFO',
-                    value: `${data.systemInfo.name} ${data.systemInfo.version}`,
-                },
-                {
-                    label: 'EVENTS.EXECUTION_EVENT_INFO__DETAILS__AGENT_INFO',
-                    value: `${data.agentInfo.name} ${data.agentInfo.version}`,
-                }
-            ]),
-        ]
     }
 
 }

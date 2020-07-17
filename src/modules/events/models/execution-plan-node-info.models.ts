@@ -14,36 +14,34 @@
  * limitations under the License.
  */
 
-import { ExecutionEventLineageNodeType, ExecutionPlanLineageNode } from 'spline-api'
-import { SdWidgetSimpleRecord, SplineDataSchema } from 'spline-common'
-
-import { ExecutionPlanNodeControl } from './execution-plan-node-control.models'
-import { GraphNodeInfo } from './graph-node-info.models'
+import { ExecutionPlan } from 'spline-api'
+import { SdWidgetCard, SdWidgetSimpleRecord, SplineColors, SplineDataViewSchema } from 'spline-common'
 
 
-export namespace ExecutionPlanNodeInfo {
+export namespace ExecutionPlanInfo {
 
-    export function getNodeInfoLabel(nodeSource: ExecutionPlanLineageNode): string {
-        return 'EVENTS.EVENT_NODE_INFO__LABEL__DATA_SOURCE'
-    }
-
-    export function toNodeInfo(nodeSource: ExecutionPlanLineageNode): GraphNodeInfo {
-        const nodeStyles = ExecutionPlanNodeControl.getNodeStyles(nodeSource)
-
-        const data: SplineDataSchema = nodeSource.type === ExecutionEventLineageNodeType.DataSource
-            ? [
-                SdWidgetSimpleRecord.toSchema({
-                    label: 'Name',
-                    value: nodeSource.name,
-                }),
-            ]
-            : []
-
-        return {
-            title: ExecutionPlanNodeControl.extractNodeName(nodeSource),
-            label: getNodeInfoLabel(nodeSource),
-            ...nodeStyles,
-            dataSchema: data,
-        }
+    export function toDataViewSchema(data: ExecutionPlan): SplineDataViewSchema {
+        return [
+            SdWidgetCard.toSchema(
+                {
+                    color: SplineColors.ORANGE,
+                    icon: 'playlist_play',
+                    title: data?.extraInfo?.appName ? data?.extraInfo?.appName : 'EVENTS.EXECUTION_EVENT_INFO__DEFAULT_NAME',
+                    label: 'EVENTS.EXECUTION_EVENT_INFO__LABEL',
+                },
+                [
+                    SdWidgetSimpleRecord.toSchema([
+                        {
+                            label: 'EVENTS.EXECUTION_EVENT_INFO__DETAILS__SYSTEM_INFO',
+                            value: `${data.systemInfo.name} ${data.systemInfo.version}`,
+                        },
+                        {
+                            label: 'EVENTS.EXECUTION_EVENT_INFO__DETAILS__AGENT_INFO',
+                            value: `${data.agentInfo.name} ${data.agentInfo.version}`,
+                        },
+                    ]),
+                ],
+            ),
+        ]
     }
 }

@@ -15,10 +15,9 @@
  */
 
 import { ExecutionEventLineageNode, ExecutionEventLineageNodeType } from 'spline-api'
-import { SdWidgetSimpleRecord, SplineDataSchema } from 'spline-common'
+import { SdWidgetCard, SdWidgetSimpleRecord, SplineDataViewSchema } from 'spline-common'
 
 import { EventNodeControl } from './event-node-control.models'
-import { GraphNodeInfo } from './graph-node-info.models'
 
 
 export namespace EventNodeInfo {
@@ -29,10 +28,9 @@ export namespace EventNodeInfo {
             : 'EVENTS.EVENT_NODE_INFO__LABEL__EXECUTION'
     }
 
-    export function toNodeInfo(nodeSource: ExecutionEventLineageNode): GraphNodeInfo {
+    export function toDataSchema(nodeSource: ExecutionEventLineageNode): SplineDataViewSchema {
         const nodeStyles = EventNodeControl.getNodeStyles(nodeSource)
-
-        const data: SplineDataSchema = nodeSource.type === ExecutionEventLineageNodeType.DataSource
+        const contentDataSchema: SplineDataViewSchema = nodeSource.type === ExecutionEventLineageNodeType.DataSource
             ? [
                 SdWidgetSimpleRecord.toSchema({
                     label: 'URI',
@@ -40,12 +38,16 @@ export namespace EventNodeInfo {
                 }),
             ]
             : []
-
-        return {
-            title: EventNodeControl.extractNodeName(nodeSource),
-            label: getNodeInfoLabel(nodeSource),
-            ...nodeStyles,
-            dataSchema: data,
-        }
+        return [
+            SdWidgetCard.toSchema(
+                {
+                    color: nodeStyles.color,
+                    icon: nodeStyles.icon,
+                    title: EventNodeControl.extractNodeName(nodeSource),
+                    label: getNodeInfoLabel(nodeSource),
+                },
+                contentDataSchema,
+            ),
+        ]
     }
 }

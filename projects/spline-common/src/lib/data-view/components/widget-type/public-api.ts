@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,14 +14,10 @@
  * limitations under the License.
  */
 
-@import 'card/index';
-@import 'data-record/index';
-@import 'content-error.component';
-@import 'graph.component';
-@import 'label.component';
-@import 'loader.component';
-@import 'long-text.component';
-@import 'search-box.component';
-@import 'sg-node-view.component';
-@import 'side-panel.component';
-@import 'sort-header.component';
+export * from './sg-widget-base.component'
+
+export * from './simple-record/sd-widget-simple-record.component'
+export * from './simple-record/sd-widget-simple-record.models'
+
+export * from './card/sd-widget-card.component'
+export * from './card/sd-widget-card.models'

@@ -24,7 +24,7 @@ export namespace EventOverviewStore {
 
     export type State = {
         nodes: SplineEntityStore.EntityState<ExecutionEventLineageNode>
-        links: LineageNodeLink[],
+        links: LineageNodeLink[]
         executionEventId: string | null
         eventInfo: EventInfo | null
         loadingProcessing: ProcessingStore.EventProcessingState

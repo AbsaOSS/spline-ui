@@ -14,23 +14,14 @@
  * limitations under the License.
  */
 
-import { EventCardContentComponent } from './card/card-content/event-card-content.component'
-import { EventCardHeaderComponent } from './card/card-header/event-card-header.component'
 import { EventInfoComponent } from './event-info/event-info.component'
 import { ExecutionPlanInfoComponent } from './execution-plan-info/execution-plan-info.component'
-import { GraphNodeInfoComponent } from './graph-node-info/graph-node-info.component'
 
 
 export const components: any[] = [
     EventInfoComponent,
-    EventCardContentComponent,
-    EventCardHeaderComponent,
-    GraphNodeInfoComponent,
     ExecutionPlanInfoComponent,
 ]
 
-export * from './card/card-content/event-card-content.component'
-export * from './card/card-header/event-card-header.component'
 export * from './event-info/event-info.component'
 export * from './execution-plan-info/execution-plan-info.component'
-export * from './graph-node-info/graph-node-info.component'

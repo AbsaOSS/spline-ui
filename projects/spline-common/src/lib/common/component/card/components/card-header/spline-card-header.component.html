@@ -1,0 +1,44 @@
+<!--
+  ~ Copyright (c) 2020 ABSA Group Limited
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<div class="spline-card-header">
+
+    <!-- ICON -->
+    <div *ngIf="icon"
+         class="spline-card-header__icon-container"
+         [ngStyle]="{color: color}">
+
+        <mat-icon class="spline-card-header__icon">{{icon}}</mat-icon>
+
+    </div>
+    <!-- ./ICON -->
+
+    <div class="spline-card-header__title-container">
+        <div>
+            <!-- TITLE -->
+            <div class="spline-card-header__title">
+                {{headerTitle}}
+            </div>
+            <!-- ./TITLE -->
+
+            <!-- LABEL -->
+            <spline-label [color]="color" *ngIf="label">
+                {{label}}
+            </spline-label>
+            <!-- ./LABEL -->
+        </div>
+    </div>
+</div>

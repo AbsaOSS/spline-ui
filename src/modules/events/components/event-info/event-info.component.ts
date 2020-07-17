@@ -15,10 +15,9 @@
  */
 
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core'
-import { SdWidgetSchema, SdWidgetSimpleRecord, SplineColors } from 'spline-common'
-import { DateTimeHelpers } from 'spline-utils'
+import { SplineDataViewSchema } from 'spline-common'
 
-import { EventInfo } from '../../models'
+import { EventInfo, toEventInfoDataViewSchema } from '../../models'
 
 
 @Component({
@@ -31,34 +30,12 @@ export class EventInfoComponent implements OnChanges {
 
     @Input() data: EventInfo
 
-    detailsDataSchema: SdWidgetSchema[] = []
-
-    readonly color = SplineColors.PINK
-    readonly icon = 'play_arrow'
+    dataViewSchema: SplineDataViewSchema
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.data && !!changes.data.currentValue) {
-            this.detailsDataSchema = this.toDetailsDataSchema(changes.data.currentValue)
+            this.dataViewSchema = toEventInfoDataViewSchema(changes.data.currentValue)
         }
-    }
-
-    private toDetailsDataSchema(data: EventInfo): SdWidgetSchema[] {
-        return [
-            SdWidgetSimpleRecord.toSchema([
-                {
-                    label: 'EVENTS.EVENT_INFO__DETAILS__EXECUTED_AT',
-                    value: DateTimeHelpers.toString(data.executedAt),
-                },
-                {
-                    label: 'EVENTS.EVENT_INFO__DETAILS__EVENT_ID',
-                    value: data.id,
-                },
-                {
-                    label: 'EVENTS.EVENT_INFO__DETAILS__APPLICATION_ID',
-                    value: data.applicationId,
-                }
-            ]),
-        ]
     }
 
 }

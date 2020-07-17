@@ -20,7 +20,7 @@
 
 export * from './lib/common/public-api'
 export * from './lib/cytoscape-graph/public-api'
-export * from './lib/data-widget/public-api'
+export * from './lib/data-view/public-api'
 export * from './lib/graph/public-api'
 export * from './lib/layout/public-api'
 export * from './lib/translate/public-api'

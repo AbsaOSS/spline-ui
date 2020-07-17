@@ -49,7 +49,7 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
                     }
                     return SplineEntityStore.selectOne<ExecutionEventLineageNode>(state.selectedNodeId, state.nodes)
                 }),
-                shareReplay(1)
+                shareReplay(1),
             )
     }
 

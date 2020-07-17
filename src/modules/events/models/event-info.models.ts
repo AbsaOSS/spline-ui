@@ -14,9 +14,42 @@
  * limitations under the License.
  */
 
+import { SdWidgetCard, SdWidgetSimpleRecord, SplineColors, SplineDataViewSchema } from 'spline-common'
+import { DateTimeHelpers } from 'spline-utils'
+
+
 export type EventInfo = {
     id: string
     name: string
     executedAt: Date
     applicationId: string
+}
+
+export function toEventInfoDataViewSchema(eventInfo: EventInfo): SplineDataViewSchema {
+    return [
+        SdWidgetCard.toSchema(
+            {
+                color: SplineColors.PINK,
+                icon: 'play_arrow',
+                title: eventInfo.name,
+                label: 'EVENTS.EVENT_INFO__LABEL',
+            },
+            [
+                SdWidgetSimpleRecord.toSchema([
+                    {
+                        label: 'EVENTS.EVENT_INFO__DETAILS__EXECUTED_AT',
+                        value: DateTimeHelpers.toString(eventInfo.executedAt),
+                    },
+                    {
+                        label: 'EVENTS.EVENT_INFO__DETAILS__EVENT_ID',
+                        value: eventInfo.id,
+                    },
+                    {
+                        label: 'EVENTS.EVENT_INFO__DETAILS__APPLICATION_ID',
+                        value: eventInfo.applicationId,
+                    },
+                ])
+            ]
+        ),
+    ]
 }

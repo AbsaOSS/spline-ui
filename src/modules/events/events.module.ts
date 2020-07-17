@@ -27,9 +27,10 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import { RouterModule } from '@angular/router'
 import { SplineApiModule } from 'spline-api'
 import {
+    SplineCardModule,
     SplineContentErrorModule,
     SplineDataRecordModule,
-    SplineDataWidgetModule,
+    SplineDataViewModule,
     SplineGraphModule,
     SplineLabelModule,
     SplineLayoutModule,
@@ -74,7 +75,8 @@ import * as fromPages from './pages'
         SplineLabelModule,
         SplineTranslateModule.forChild({ moduleNames: ['events'] }),
         SplineDataRecordModule,
-        SplineDataWidgetModule,
+        SplineDataViewModule,
+        SplineCardModule,
     ],
     exports: [
         ...fromPages.pageComponents,

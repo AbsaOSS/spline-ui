@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+export * from './card/public-api'
 export * from './content-error/public-api'
 export * from './data-record/public-api'
 export * from './label/public-api'

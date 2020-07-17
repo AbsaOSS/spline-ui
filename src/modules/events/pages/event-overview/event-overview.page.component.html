@@ -30,22 +30,22 @@
                 <div class="spline-content-details-section">
 
                     <!-- EVENT INFO -->
-                    <event-info [data]="state.eventInfo" class="mb-3"></event-info>
+                    <event-info [data]="state.eventInfo"></event-info>
                     <!-- ./EVENT INFO -->
 
                     <!-- SELECTED NODE INFO -->
-                    <event-graph-node-info *ngIf="selectedNodeInfo$ | async as selectedNodeInfo"
-                                           [nodeInfo]="selectedNodeInfo">
-                    </event-graph-node-info>
+                    <spline-data-view *ngIf="selectedNodeViewSchema$ | async as dataSchema"
+                                      [dataViewSchema]="dataSchema">
+                    </spline-data-view>
                     <!-- ./SELECTED NODE INFO -->
 
                 </div>
                 <div class="end-to-end-container__body">
                     <!-- GRAPH -->
                     <spline-graph
-                            [selectedNodeId]="state.selectedNodeId"
+                            (nodeSelectionChange$)="onNodeSelected($event)"
                             [graphData]="graphData"
-                            (nodeSelectionChange$)="onNodeSelected($event)">
+                            [selectedNodeId]="state.selectedNodeId">
                     </spline-graph>
                     <!-- ./GRAPH -->
                 </div>
