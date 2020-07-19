@@ -18,6 +18,7 @@ export namespace SplineColors {
 
     export const BLACK = '#2d2323'
     export const BLUE = '#337AB7'
+    export const GREY = '#efefef'
     export const ORANGE = '#f47721'
     export const PINK = '#aa052d'
 }

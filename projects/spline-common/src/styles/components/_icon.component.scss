@@ -14,40 +14,6 @@
  * limitations under the License.
  */
 
-@import 'mixins';
-@import 'vars';
-
-$label-color: $color-black;
-
-
-.spline-card-header {
+spline-icon {
     display: flex;
-
-    &__icon-container {
-        align-items: center;
-        display: flex;
-        justify-content: center;
-        padding-right: 1rem;
-    }
-
-    &__icon .mat-icon {
-        @include icon-size(42px);
-    }
-
-    &__title-container {
-        flex: 1;
-    }
-
-    &__title {
-        font-size: 18px;
-    }
-
-    &__label {
-        border: 2px solid $label-color;
-        border-radius: 16px;
-        color: $label-color;
-        display: inline-block;
-        font-size: 10px;
-        padding: 2px 8px;
-    }
 }

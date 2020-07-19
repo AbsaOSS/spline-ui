@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
-@import 'mat-card';
-@import 'mat-divider';
-@import 'mat-icon';
-@import 'mat-tab';
-@import 'mat-table';
+export const SPLINE_ICONS_COLLECTION: Set<string> = new Set<string>([
+    'database',
+    'cog-transfer',
+    'arrow-down-circle',
+    'source-branch',
+    'head-cog',
+])

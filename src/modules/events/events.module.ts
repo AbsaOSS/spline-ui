@@ -35,6 +35,7 @@ import {
     SplineDataRecordModule,
     SplineDataViewModule,
     SplineGraphModule,
+    SplineIconModule,
     SplineLabelModule,
     SplineLayoutModule,
     SplineLoaderModule,
@@ -83,6 +84,7 @@ import * as fromPages from './pages'
         MatTreeModule,
         MatButtonModule,
         MatTabsModule,
+        SplineIconModule,
     ],
     exports: [
         ...fromPages.pageComponents,

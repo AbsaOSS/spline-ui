@@ -28,7 +28,16 @@ export namespace SgNodeControl {
     export enum NodeType {
         DataSource = 'DataSource',
         ExecutionPlan = 'ExecutionPlan',
+        Read = 'Read',
+        Write = 'Write',
+        Join = 'Join',
+        Transformation = 'Transformation',
     }
+
+    export const DEFAULT_NODE_STYLES: NodeStyles = Object.freeze<NodeStyles>({
+        icon: 'extension',
+        color: SplineColors.GREY,
+    })
 
     export const NODE_STYLES_MAP: ReadonlyMap<NodeType, NodeStyles> =
         new Map<NodeType, NodeStyles>([
@@ -46,10 +55,38 @@ export namespace SgNodeControl {
                     color: SplineColors.ORANGE,
                 },
             ],
+            [
+                NodeType.Read,
+                {
+                    icon: 'database',
+                    color: SplineColors.ORANGE,
+                },
+            ],
+            [
+                NodeType.Write,
+                {
+                    icon: 'save',
+                    color: SplineColors.BLACK,
+                },
+            ],
+            [
+                NodeType.Join,
+                {
+                    icon: 'source-branch',
+                    color: SplineColors.ORANGE,
+                },
+            ],
+            [
+                NodeType.Transformation,
+                {
+                    icon: 'arrow-down-circle',
+                    color: SplineColors.BLUE,
+                },
+            ],
         ])
 
-    export function getNodeStyles(type: NodeType): NodeStyles | undefined {
-        return NODE_STYLES_MAP.get(type)
+    export function getNodeStyles(type: NodeType): NodeStyles {
+        return NODE_STYLES_MAP.get(type) ?? {...DEFAULT_NODE_STYLES}
     }
 
 }

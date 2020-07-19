@@ -15,7 +15,7 @@
  */
 
 import { ExecutionPlanLineageNode, OperationType } from 'spline-api'
-import { SgNode, SgNodeDefault, SplineColors } from 'spline-common'
+import { SgNode, SgNodeDefault } from 'spline-common'
 
 import { SgNodeControl } from './sg-node-control.models'
 
@@ -25,37 +25,30 @@ export namespace ExecutionPlanNodeControl {
     import NodeStyles = SgNodeControl.NodeStyles
 
 
-    export const GENERIC_NODE_STYLES: NodeStyles = Object.freeze({
-        icon: 'insert_drive_file',
-        color: SplineColors.BLUE,
-    })
-
-    export const NODE_STYLES_MAP: ReadonlyMap<OperationType, NodeStyles> =
-        new Map<OperationType, NodeStyles>([
-            [
-                OperationType.Projection,
-                {
-                    icon: 'insert_drive_file',
-                    color: SplineColors.BLUE,
-                },
-            ],
-            [
-                OperationType.Alias,
-                {
-                    icon: 'settings',
-                    color: SplineColors.ORANGE,
-                },
-            ],
-        ])
-
     export function extractNodeName(nodeSource: ExecutionPlanLineageNode): string {
         return nodeSource.name
     }
 
     export function getNodeStyles(nodeSource: ExecutionPlanLineageNode): NodeStyles {
-        return OperationType[nodeSource.type]
-            ? NODE_STYLES_MAP.get(nodeSource.type as OperationType)
-            : GENERIC_NODE_STYLES
+        console.log(nodeSource.type)
+        switch (nodeSource.type) {
+            case OperationType.Transformation:
+                switch(nodeSource.name) {
+                    case 'Join':
+                        return SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Join)
+                    default:
+                        return SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Transformation)
+                }
+
+            case OperationType.Read:
+                return SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Read)
+
+            case OperationType.Write:
+                return SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Write)
+
+            default:
+                return { ...SgNodeControl.DEFAULT_NODE_STYLES }
+        }
     }
 
     export function toSgNode(nodeSource: ExecutionPlanLineageNode): SgNode {

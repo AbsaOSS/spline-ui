@@ -22,6 +22,7 @@ import { MatDividerModule } from '@angular/material/divider'
 import { MatIconModule } from '@angular/material/icon'
 
 import { SplineTranslateModule } from '../../../translate'
+import { SplineIconModule } from '../icon'
 import { SplineLabelModule } from '../label'
 
 import { SplineCardContentComponent, SplineCardHeaderComponent } from './components'
@@ -40,6 +41,7 @@ import { SplineCardContentComponent, SplineCardHeaderComponent } from './compone
         MatDividerModule,
         SplineLabelModule,
         MatButtonModule,
+        SplineIconModule,
     ],
     exports: [
         SplineCardHeaderComponent,

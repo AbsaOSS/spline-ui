@@ -48,14 +48,7 @@ $icon-width: 24px;
         text-align: center;
 
         .mat-icon {
-            font-size: $icon-width;
-            height: $icon-width;
-            width: $icon-width;
-
-            svg {
-                height: $icon-width;
-                width: $icon-width;
-            }
+            @include icon-size($icon-width);
         }
     }
 

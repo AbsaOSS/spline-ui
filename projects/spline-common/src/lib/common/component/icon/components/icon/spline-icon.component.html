@@ -1,0 +1,11 @@
+<ng-container [ngSwitch]="isCustomIcon">
+
+ <!-- CUSTOM SVG ICON -->
+ <mat-icon *ngSwitchCase="true" [svgIcon]="icon"></mat-icon>
+ <!-- ./CUSTOM SVG ICON -->
+
+ <!-- MATERIAL ICON -->
+ <mat-icon *ngSwitchCase="false">{{ icon }}</mat-icon>
+ <!-- ./MATERIAL ICON -->
+
+</ng-container>

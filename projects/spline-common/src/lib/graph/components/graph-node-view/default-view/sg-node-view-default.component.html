@@ -20,9 +20,9 @@
 
     <!-- ICON -->
     <div class="sg-node-view__icon">
-        <mat-icon [ngStyle]="{color: color ? color : defaultColor }">
-            {{icon ? icon : defaultIcon}}
-        </mat-icon>
+        <spline-icon [icon]="icon ? icon : defaultIcon"
+                     [ngStyle]="{color: color ? color : defaultColor }">
+        </spline-icon>
     </div>
     <!-- ./ICON -->
 

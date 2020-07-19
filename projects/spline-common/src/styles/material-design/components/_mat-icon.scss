@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-@import 'mat-card';
-@import 'mat-divider';
-@import 'mat-icon';
-@import 'mat-tab';
-@import 'mat-table';
+.mat-icon {
+    line-height: 24px;
+}

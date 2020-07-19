@@ -24,5 +24,6 @@
 @mixin icon-size($size: 24px) {
     font-size: $size;
     height: $size;
+    line-height: $size;
     width: $size;
 }
