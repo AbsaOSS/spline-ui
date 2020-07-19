@@ -14,38 +14,66 @@
  * limitations under the License.
  */
 
-import { ExecutionEventLineageNodeType, ExecutionPlanLineageNode } from 'spline-api'
-import { SdWidgetCard, SdWidgetSimpleRecord, SplineDataViewSchema } from 'spline-common'
+import { DataSourceInfo, ExecutionPlan } from 'spline-api'
+import { SdWidgetCard, SdWidgetSchema, SdWidgetSimpleRecord, SplineColors, SplineDataViewSchema } from 'spline-common'
 
-import { ExecutionPlanNodeControl } from './execution-plan-node-control.models'
+import { SgNodeControl } from './sg-node-control.models'
 
 
-export namespace ExecutionPlanNodeInfo {
+export namespace ExecutionPlanInfo {
 
-    export function getNodeInfoLabel(nodeSource: ExecutionPlanLineageNode): string {
-        return 'EVENTS.EVENT_NODE_INFO__LABEL__DATA_SOURCE'
+    import getNodeStyles = SgNodeControl.getNodeStyles
+
+
+    export function toDataViewSchema(data: ExecutionPlan): SplineDataViewSchema {
+        return [
+            SdWidgetCard.toSchema(
+                {
+                    color: SplineColors.ORANGE,
+                    icon: 'playlist_play',
+                    title: data?.extraInfo?.appName ? data?.extraInfo?.appName : 'EVENTS.EXECUTION_EVENT_INFO__DEFAULT_NAME',
+                    label: 'EVENTS.EXECUTION_EVENT_INFO__LABEL',
+                },
+                [
+                    SdWidgetSimpleRecord.toSchema([
+                        {
+                            label: 'EVENTS.EXECUTION_EVENT_INFO__DETAILS__SYSTEM_INFO',
+                            value: `${data.systemInfo.name} ${data.systemInfo.version}`,
+                        },
+                        {
+                            label: 'EVENTS.EXECUTION_EVENT_INFO__DETAILS__AGENT_INFO',
+                            value: `${data.agentInfo.name} ${data.agentInfo.version}`,
+                        },
+                    ]),
+                ],
+            ),
+        ]
     }
 
-    export function toDataSchema(nodeSource: ExecutionPlanLineageNode): SplineDataViewSchema {
-        const nodeStyles = ExecutionPlanNodeControl.getNodeStyles(nodeSource)
+    export function getInputsDataViewSchema(data: ExecutionPlan): SplineDataViewSchema {
+        return data.inputDataSources.map(dataSourceInfoToDataViewSchema)
+    }
 
-        const contentDataSchema: SplineDataViewSchema = nodeSource.type === ExecutionEventLineageNodeType.DataSource
-            ? [
-                SdWidgetSimpleRecord.toSchema({
-                    label: 'Name',
-                    value: nodeSource.name,
-                }),
-            ]
-            : []
+    export function getOutputDataViewSchema(data: ExecutionPlan): SplineDataViewSchema {
+        const dataSourceInfo = data.outputDataSource
+        return dataSourceInfoToDataViewSchema(dataSourceInfo)
+    }
 
+    function dataSourceInfoToDataViewSchema(dataSourceInfo: DataSourceInfo): SdWidgetSchema {
         return SdWidgetCard.toSchema(
             {
-                color: nodeStyles.color,
-                icon: nodeStyles.icon,
-                title: ExecutionPlanNodeControl.extractNodeName(nodeSource),
-                label: getNodeInfoLabel(nodeSource),
+                ...getNodeStyles(SgNodeControl.NodeType.DataSource),
+                title: dataSourceInfo.name,
+                label: dataSourceInfo.type // 'EVENTS.EVENT_NODE_INFO__LABEL__DATA_SOURCE',
             },
-            contentDataSchema,
+            [
+                SdWidgetSimpleRecord.toSchema([
+                    {
+                        label: 'URI',
+                        value: dataSourceInfo.uri,
+                    },
+                ]),
+            ],
         )
     }
 }

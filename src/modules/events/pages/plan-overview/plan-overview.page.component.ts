@@ -21,10 +21,10 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router'
 import { Observable } from 'rxjs'
 import { map, takeUntil } from 'rxjs/operators'
 import { ExecutionPlanFacade, ExecutionPlanLineageNode } from 'spline-api'
-import { SgNodeSchema, SplineDataViewSchema } from 'spline-common'
+import { SgData, SgNodeSchema, SplineDataViewSchema } from 'spline-common'
 import { BaseComponent } from 'spline-utils'
 
-import { ExecutionPlanNodeInfo } from '../../models'
+import { ExecutionPlanInfo, ExecutionPlanNodeInfo } from '../../models'
 import { ExecutionPlanOverviewStoreFacade } from '../../store'
 
 
@@ -52,6 +52,8 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
     readonly selectedNodeQueryParamName: string = 'selectedNodeId'
 
     readonly selectedNodeViewSchema$: Observable<SplineDataViewSchema>
+    readonly inputDataSourcesViewSchema$: Observable<SplineDataViewSchema>
+    readonly outputDataSourcesViewSchema$: Observable<SplineDataViewSchema>
 
     treeData = [
         {
@@ -83,6 +85,16 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         this.selectedNodeViewSchema$ = this.store.selectedNode$
             .pipe(
                 map(selectedNode => selectedNode ? ExecutionPlanNodeInfo.toDataSchema(selectedNode) : null),
+            )
+
+        this.inputDataSourcesViewSchema$ = this.store.executionPlan$
+            .pipe(
+                map(executionPlan => executionPlan ? ExecutionPlanInfo.getInputsDataViewSchema(executionPlan) : null),
+            )
+
+        this.outputDataSourcesViewSchema$ = this.store.executionPlan$
+            .pipe(
+                map(executionPlan => executionPlan ? ExecutionPlanInfo.getOutputDataViewSchema(executionPlan) : null),
             )
     }
 

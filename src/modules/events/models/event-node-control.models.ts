@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-import { ExecutionEventLineageNode, ExecutionEventLineageNodeType } from 'spline-api'
-import { SgNode, SgNodeDefault, SplineColors } from 'spline-common'
+import { dataSourceUriToName, ExecutionEventLineageNode, ExecutionEventLineageNodeType } from 'spline-api'
+import { SgNode, SgNodeDefault } from 'spline-common'
 
 import { SgNodeControl } from './sg-node-control.models'
+import NodeType = SgNodeControl.NodeType
 
 
 export namespace EventNodeControl {
@@ -25,30 +26,19 @@ export namespace EventNodeControl {
     import NodeStyles = SgNodeControl.NodeStyles
 
 
-    export const NODE_STYLES_MAP: ReadonlyMap<ExecutionEventLineageNodeType, NodeStyles> =
-        new Map<ExecutionEventLineageNodeType, NodeStyles>([
-            [
-                ExecutionEventLineageNodeType.DataSource,
-                {
-                    icon: 'description',
-                    color: SplineColors.BLUE,
-                },
-            ],
-            [
-                ExecutionEventLineageNodeType.Execution,
-                {
-                    icon: 'playlist_play',
-                    color: SplineColors.ORANGE,
-                },
-            ],
-        ])
-
     export function extractNodeName(nodeSource: ExecutionEventLineageNode): string {
-        return nodeSource.name.split('/').slice(-1)[0]
+        return dataSourceUriToName(nodeSource.name)
     }
 
     export function getNodeStyles(nodeSource: ExecutionEventLineageNode): NodeStyles {
-        return NODE_STYLES_MAP.get(nodeSource.type)
+        switch (nodeSource.type) {
+            case ExecutionEventLineageNodeType.DataSource:
+                return SgNodeControl.getNodeStyles(NodeType.DataSource)
+            case ExecutionEventLineageNodeType.Execution:
+                return SgNodeControl.getNodeStyles(NodeType.ExecutionPlan)
+            default:
+                throw new Error(`Unknown node type ${nodeSource.type}`)
+        }
     }
 
     export function toSgNode(nodeSource: ExecutionEventLineageNode, onExecutionPlanLaunchAction: (nodeId: string) => void): SgNode {

@@ -15,11 +15,41 @@
  */
 
 
+import { SplineColors } from 'spline-common'
+
+
 export namespace SgNodeControl {
 
     export type NodeStyles = {
         icon: string
         color: string
+    }
+
+    export enum NodeType {
+        DataSource = 'DataSource',
+        ExecutionPlan = 'ExecutionPlan',
+    }
+
+    export const NODE_STYLES_MAP: ReadonlyMap<NodeType, NodeStyles> =
+        new Map<NodeType, NodeStyles>([
+            [
+                NodeType.DataSource,
+                {
+                    icon: 'description',
+                    color: SplineColors.BLUE,
+                },
+            ],
+            [
+                NodeType.ExecutionPlan,
+                {
+                    icon: 'playlist_play',
+                    color: SplineColors.ORANGE,
+                },
+            ],
+        ])
+
+    export function getNodeStyles(type: NodeType): NodeStyles | undefined {
+        return NODE_STYLES_MAP.get(type)
     }
 
 }

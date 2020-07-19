@@ -17,7 +17,7 @@
 import { Injectable } from '@angular/core'
 import { Observable, of } from 'rxjs'
 import { catchError, distinctUntilChanged, map, shareReplay, take, tap } from 'rxjs/operators'
-import { ExecutionPlanFacade, ExecutionPlanLineageNode } from 'spline-api'
+import { ExecutionPlan, ExecutionPlanFacade, ExecutionPlanLineageNode } from 'spline-api'
 import { BaseStore, ProcessingStore, SplineEntityStore } from 'spline-utils'
 
 import { ExecutionPlanOverviewStore } from '../models'
@@ -30,6 +30,7 @@ export class ExecutionPlanOverviewStoreFacade extends BaseStore<ExecutionPlanOve
     readonly loadingProcessing$: Observable<ProcessingStore.EventProcessingState>
 
     selectedNode$: Observable<ExecutionPlanLineageNode | null>
+    executionPlan$: Observable<ExecutionPlan | null>
 
     constructor(private readonly executionPlanFacade: ExecutionPlanFacade) {
         super(ExecutionPlanOverviewStore.getDefaultState())
@@ -48,6 +49,18 @@ export class ExecutionPlanOverviewStoreFacade extends BaseStore<ExecutionPlanOve
                         return null
                     }
                     return SplineEntityStore.selectOne<ExecutionPlanLineageNode>(state.selectedNodeId, state.nodes)
+                }),
+                shareReplay(1),
+            )
+
+        this.executionPlan$ = this.state$
+            .pipe(
+                distinctUntilChanged((stateX, stateY) => stateX.executionPlanId === stateY.executionPlanId),
+                map(state => {
+                    if (state.executionPlan === null) {
+                        return null
+                    }
+                    return state.executionPlan
                 }),
                 shareReplay(1),
             )

@@ -15,7 +15,7 @@
  */
 
 
-import { DataSourceInfo } from '../data-source'
+import { DataSourceInfo, DataSourceInfoDto, toDataSourceInfo } from '../data-source'
 
 
 export type ExecutionPlan = {
@@ -43,8 +43,8 @@ export type ExecutionPlanSystemInfo =
 
 export type ExecutionPlanDto = {
     _id: string
-    inputs?: DataSourceInfo[]
-    output?: DataSourceInfo
+    inputs?: DataSourceInfoDto[]
+    output?: DataSourceInfoDto
     agentInfo?: ExecutionPlanAgentInfo
     systemInfo?: ExecutionPlanSystemInfo
     extra?: ExecutionPlanExtraInfo
@@ -60,8 +60,8 @@ export type ExecutionPlanExtraInfo =
 export function toExecutionPlan(entity: ExecutionPlanDto): ExecutionPlan {
     return {
         id: entity._id,
-        inputDataSources: entity.inputs,
-        outputDataSource: entity.output,
+        inputDataSources: entity.inputs.map(toDataSourceInfo),
+        outputDataSource: toDataSourceInfo(entity.output),
         agentInfo: entity.agentInfo,
         systemInfo: entity.systemInfo,
         extraInfo: entity.extra,
