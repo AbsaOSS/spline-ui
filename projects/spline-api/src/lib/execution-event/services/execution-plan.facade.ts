@@ -20,7 +20,13 @@ import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 import { Cacheable } from '../../core'
-import { ExecutionPlanLineageOverview, ExecutionPlanLineageOverviewDto, toExecutionPlanLineageOverview } from '../models'
+import {
+    ExecutionPlanLineageOverview,
+    ExecutionPlanLineageOverviewDto,
+    OperationDetails,
+    OperationDetailsDto,
+    toExecutionPlanLineageOverview, toOperationDetails,
+} from '../models'
 
 import { BaseFacade } from './base.facade'
 
@@ -41,6 +47,15 @@ export class ExecutionPlanFacade extends BaseFacade {
         return this.http.get<ExecutionPlanLineageOverviewDto>(url, { params: params })
             .pipe(
                 map(toExecutionPlanLineageOverview),
+            )
+    }
+
+    @Cacheable
+    fetchOperationDetails(operationId: string): Observable<OperationDetails> {
+        const url = this.toUrl(`operations/${operationId}`)
+        return this.http.get<OperationDetailsDto>(url)
+            .pipe(
+                map(toOperationDetails),
             )
     }
 }

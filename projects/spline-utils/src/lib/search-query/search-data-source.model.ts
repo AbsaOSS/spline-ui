@@ -31,9 +31,7 @@ import SearchParams = SearchQuery.SearchParams
 export abstract class SearchDataSource<TDataRecord,
     TData extends PageResponse<TDataRecord>,
     TFilter extends object = {},
-    TSortableFields = string>
-
-implements DataSource<TDataRecord> {
+    TSortableFields = string> implements DataSource<TDataRecord> {
 
     readonly dataState$: Observable<DataState<TData>>
     readonly searchParams$: Observable<SearchParams<TFilter, TSortableFields>>

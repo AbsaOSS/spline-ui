@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { ExecutionEventLineageNodeType, ExecutionPlanLineageNode } from 'spline-api'
+import { Attribute, ExecutionEventLineageNodeType, ExecutionPlanLineageNode } from 'spline-api'
 import { SdWidgetCard, SdWidgetSimpleRecord, SplineDataViewSchema } from 'spline-common'
 
 import { ExecutionPlanNodeControl } from './execution-plan-node-control.models'

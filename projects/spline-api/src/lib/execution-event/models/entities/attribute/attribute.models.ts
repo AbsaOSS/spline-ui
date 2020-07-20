@@ -14,17 +14,13 @@
  * limitations under the License.
  */
 
-import { EventInfoComponent } from './event-info/event-info.component'
-import { ExecutionPlanInfoComponent } from './execution-plan-info/execution-plan-info.component'
-import { ExecutionPlanNodeInfoComponent } from './execution-plan-node-info/execution-plan-node-info.component'
+import { AttributeDataType } from './attribute-data-type.models'
 
 
-export const components: any[] = [
-    EventInfoComponent,
-    ExecutionPlanInfoComponent,
-    ExecutionPlanNodeInfoComponent
-]
+export type Attribute = {
+    id: string
+    name: string
+    dataType: AttributeDataType
+    dataTypeId: string
+}
 
-export * from './event-info/event-info.component'
-export * from './execution-plan-info/execution-plan-info.component'
-export * from './execution-plan-node-info/execution-plan-node-info.component'

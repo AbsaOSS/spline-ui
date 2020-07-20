@@ -15,5 +15,6 @@
  */
 
 export * from './operation.models'
+export * from './operation-details.models'
 export * from './operation-type.models'
 

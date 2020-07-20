@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+export * from './attribute'
 export * from './data-source'
 export * from './execution-event'
 export * from './execution-event-overview'

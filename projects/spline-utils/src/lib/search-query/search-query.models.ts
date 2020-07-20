@@ -38,7 +38,7 @@ export namespace SearchQuery {
         searchTerm: '',
     })
 
-    export type DataState<TData extends PageResponse<any>> = {
+    export type DataState<TData> = {
         data: TData | null
         loadingProcessing: ProcessingStore.EventProcessingState
     }
