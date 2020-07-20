@@ -14,5 +14,6 @@
  * limitations under the License.
  */
 
-export * from './base/base-component'
+export * from './base/base.component'
+export * from './base/base-local-state.component'
 export * from './base/base-dynamic-content.component'

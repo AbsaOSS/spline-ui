@@ -30,78 +30,22 @@
             <div class="spline-content-details-section">
 
                 <!-- EXECUTION PLAN INFO -->
-                <event-execution-plan-info *ngIf="store.executionPlan$ | async as executionPlan"
-                                           [data]="executionPlan">
+                <event-execution-plan-info *ngIf="!state.selectedNodeId"
+                                           [executionPlan]="state.executionPlan">
                 </event-execution-plan-info>
                 <!-- ./EXECUTION PLAN INFO -->
 
-                <mat-tab-group [selectedIndex]="0" #group>
+                <!--  SELECTED NODE INFO -->
+                <div *ngIf="selectedNodeViewSchema$ | async as dataSchema">
+                    <button mat-button class="mb-3" (click)="onShowEpDetailsBtnCLicked()">
+                        <mat-icon class="mr-2">arrow_back</mat-icon>
+                        <span class="pr-2">Execution Plan Details</span>
+                    </button>
 
-                    <mat-tab label="Output">
-                        <ng-template matTabContent>
-                            <spline-data-view *ngIf="outputDataSourcesViewSchema$ | async as dataViewSchema"
-                                              [dataViewSchema]="dataViewSchema">
-                            </spline-data-view>
-                        </ng-template>
-                    </mat-tab>
-                    <mat-tab>
-                        <ng-template matTabLabel>
-                            Inputs ({{state?.executionPlan.inputDataSources.length}})
-                        </ng-template>
+                    <spline-data-view [dataViewSchema]="dataSchema"></spline-data-view>
+                </div>
+                <!-- ./SELECTED NODE INFO -->
 
-                        <spline-data-view *ngIf="inputDataSourcesViewSchema$ | async as dataViewSchema"
-                                          [dataViewSchema]="dataViewSchema">
-                        </spline-data-view>
-
-<!--                        <div class="py-3">-->
-<!--                            <mat-card>-->
-<!--                            <mat-tree [dataSource]="treeDataSource" [treeControl]="treeControl" class="example-tree">-->
-<!--                                &lt;!&ndash; This is the tree node template for leaf nodes &ndash;&gt;-->
-<!--                                <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>-->
-<!--                                    <li class="mat-tree-node">-->
-<!--                                        &lt;!&ndash; use a disabled button to provide padding for tree leaf &ndash;&gt;-->
-<!--                                        <button mat-icon-button disabled></button>-->
-<!--                                        {{node.name}}-->
-<!--                                        <div class="flex-grow-1 text-right" style="color: #7a7a7d">-->
-<!--                                            <button mat-button mat-icon-button matTooltip="Show on Graph">-->
-<!--                                                <mat-icon>highlight</mat-icon>-->
-<!--                                            </button>-->
-<!--                                        </div>-->
-<!--                                    </li>-->
-<!--                                </mat-tree-node>-->
-<!--                                &lt;!&ndash; This is the tree node template for expandable nodes &ndash;&gt;-->
-<!--                                <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">-->
-<!--                                    <li>-->
-<!--                                        <div class="mat-tree-node">-->
-<!--                                            <button mat-icon-button matTreeNodeToggle-->
-<!--                                                    [attr.aria-label]="'toggle ' + node.name">-->
-<!--                                                <mat-icon class="mat-icon-rtl-mirror">-->
-<!--                                                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}-->
-<!--                                                </mat-icon>-->
-<!--                                            </button>-->
-<!--                                            {{node.name}}-->
-<!--                                        </div>-->
-<!--                                        <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">-->
-<!--                                            <ng-container matTreeNodeOutlet></ng-container>-->
-<!--                                        </ul>-->
-<!--                                    </li>-->
-<!--                                </mat-nested-tree-node>-->
-<!--                            </mat-tree>-->
-<!--                        </mat-card>-->
-<!--                        </div>-->
-                    </mat-tab>
-                    <mat-tab label="Selected Node" *ngIf="selectedNodeViewSchema$ | async as dataSchema">
-                        <ng-template matTabContent>
-                            <div class="py-3">
-                                <!--  SELECTED NODE INFO -->
-                                <spline-data-view *ngIf="selectedNodeViewSchema$ | async as dataSchema"
-                                                  [dataViewSchema]="dataSchema">
-                                </spline-data-view>
-                                <!-- ./SELECTED NODE INFO -->
-                            </div>
-                        </ng-template>
-                    </mat-tab>
-                </mat-tab-group>
             </div>
 
             <div class="end-to-end-container__body">

@@ -64,7 +64,7 @@ export namespace ExecutionPlanInfo {
             {
                 ...getNodeStyles(SgNodeControl.NodeType.DataSource),
                 title: dataSourceInfo.name,
-                label: dataSourceInfo.type // 'EVENTS.EVENT_NODE_INFO__LABEL__DATA_SOURCE',
+                label: dataSourceInfo.type
             },
             [
                 SdWidgetSimpleRecord.toSchema([

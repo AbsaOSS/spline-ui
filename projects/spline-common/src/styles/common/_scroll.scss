@@ -26,17 +26,16 @@ $scrollbar-size: 17px;
 
 *::-webkit-scrollbar-thumb {
     background-clip: content-box;
-    background-color: $color-green-dark;
+    background-color: $color-black-50;
     border: 5px solid transparent;
     border-radius: 20px;
 }
 
 * {
-    scrollbar-3dlight-color: transparent;
     scrollbar-arrow-color: $color-grey-dark;
     /* SCROLLBAR IE */
     scrollbar-base-color: $color-grey-dark;
-    scrollbar-face-color: $color-green-dark;
+    scrollbar-face-color: $color-black-50;
     scrollbar-highlight-color: transparent;
     scrollbar-track-color: $color-grey-dark;
 }

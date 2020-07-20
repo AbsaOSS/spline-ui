@@ -14,4 +14,30 @@
   ~ limitations under the License.
   -->
 
-<spline-data-view [dataViewSchema]="dataViewSchema"></spline-data-view>
+<ng-container *ngIf="state$ | async as state">
+
+    <!-- EXECUTION PLAN INFO -->
+    <spline-data-view [dataViewSchema]="state.executionPlanVs"></spline-data-view>
+    <!-- ./EXECUTION PLAN INFO -->
+
+    <mat-tab-group>
+        <!-- OUTPUT DS -->
+        <mat-tab [label]="'EVENTS.EXECUTION_PLAN_INFO__TAB__OUTPUT' | translate">
+            <ng-template matTabContent>
+                <spline-data-view [dataViewSchema]="state.outputVs"></spline-data-view>
+            </ng-template>
+        </mat-tab>
+        <!-- OUTPUT DS -->
+
+        <!-- INPUTS DS -->
+        <mat-tab>
+            <ng-template matTabLabel>
+                {{'EVENTS.EXECUTION_PLAN_INFO__TAB__INPUTS' | translate}} ({{state.inputsNumber}})
+            </ng-template>
+
+            <spline-data-view [dataViewSchema]="state.inputsVs"></spline-data-view>
+        </mat-tab>
+        <!-- ./INPUTS DS -->
+
+    </mat-tab-group>
+</ng-container>

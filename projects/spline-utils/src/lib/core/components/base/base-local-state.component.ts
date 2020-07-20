@@ -14,35 +14,22 @@
  * limitations under the License.
  */
 
-import { BehaviorSubject, Observable, Subject } from 'rxjs'
+import { OnDestroy } from '@angular/core'
+import { BehaviorSubject, Observable } from 'rxjs'
+
+import { BaseComponent } from './base.component'
 
 
-export abstract class BaseStore<TState> {
-
-    readonly state$: Observable<TState>
-
-    protected readonly _defaultState: TState
-    protected readonly _state$: BehaviorSubject<TState>
-    protected readonly disconnected$ = new Subject<void>()
+export abstract class BaseLocalStateComponent<TState> extends BaseComponent implements OnDestroy {
+    readonly state$: BehaviorSubject<TState | null>
 
     constructor(defaultState: TState = null) {
-        this._defaultState = defaultState
-        this._state$ = new BehaviorSubject<TState>(this._defaultState)
-        this.state$ = this._state$.asObservable()
+        super()
+        this.state$ = new BehaviorSubject<TState | null>(defaultState)
     }
 
     get state(): TState {
-        return this._state$.getValue()
-    }
-
-    resetState() {
-        this.updateState(this._defaultState)
-    }
-
-    disconnect(): void {
-        this._state$.complete()
-        this.disconnected$.next()
-        this.disconnected$.complete()
+        return this.state$.getValue()
     }
 
     protected updateState(state: Partial<TState>): TState {
@@ -52,7 +39,7 @@ export abstract class BaseStore<TState> {
             ...state,
         } as TState
 
-        this._state$.next(newValue)
+        this.state$.next(newValue)
 
         return newValue
     }

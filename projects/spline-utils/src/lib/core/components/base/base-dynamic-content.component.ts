@@ -17,7 +17,7 @@
 import { ComponentFactoryResolver, ComponentRef, Type, ViewChild, ViewContainerRef } from '@angular/core'
 import { Subscription } from 'rxjs'
 
-import { BaseComponent } from './base-component'
+import { BaseComponent } from './base.component'
 
 
 export abstract class BaseDynamicContentComponent<TComponent> extends BaseComponent {

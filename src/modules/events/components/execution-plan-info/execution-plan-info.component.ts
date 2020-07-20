@@ -16,9 +16,9 @@
 
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core'
 import { ExecutionPlan } from 'spline-api'
-import { SplineDataViewSchema } from 'spline-common'
+import { BaseLocalStateComponent } from 'spline-utils'
 
-import { ExecutionPlanInfo } from '../../models'
+import { ExecutionPlanInfoStore } from '../../store'
 
 
 @Component({
@@ -27,15 +27,19 @@ import { ExecutionPlanInfo } from '../../models'
     styleUrls: ['./execution-plan-info.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExecutionPlanInfoComponent implements OnChanges {
+export class ExecutionPlanInfoComponent extends BaseLocalStateComponent<ExecutionPlanInfoStore.State> implements OnChanges {
 
-    @Input() data: ExecutionPlan
+    @Input() executionPlan: ExecutionPlan
 
-    dataViewSchema: SplineDataViewSchema
+    constructor() {
+        super()
+    }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes?.data && !!changes.data.currentValue) {
-            this.dataViewSchema = ExecutionPlanInfo.toDataViewSchema(changes.data.currentValue)
+        if (changes?.executionPlan && !!changes.executionPlan.currentValue) {
+            this.updateState(
+                ExecutionPlanInfoStore.toState(changes.executionPlan.currentValue),
+            )
         }
     }
 
