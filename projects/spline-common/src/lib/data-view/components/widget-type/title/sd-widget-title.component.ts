@@ -14,13 +14,17 @@
  * limitations under the License.
  */
 
-export * from './sg-widget-base.component'
+import { Component } from '@angular/core'
 
-export * from './simple-record/sd-widget-simple-record.component'
-export * from './simple-record/sd-widget-simple-record.models'
+import { SgWidgetBaseComponent } from '../sg-widget-base.component'
 
-export * from './card/sd-widget-card.component'
-export * from './card/sd-widget-card.models'
+import { SdWidgetTitle } from './sd-widget-title.models'
 
-export * from './title/sd-widget-title.component'
-export * from './title/sd-widget-title.models'
+
+@Component({
+    selector: 'sd-widget-title',
+    templateUrl: './sd-widget-title.component.html',
+})
+export class SdWidgetTitleComponent extends SgWidgetBaseComponent<SdWidgetTitle.Data, SdWidgetTitle.Options> {
+
+}

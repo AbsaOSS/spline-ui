@@ -15,16 +15,26 @@
  */
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
+import { filter, takeUntil } from 'rxjs/operators'
 import { ExecutionPlanFacade, ExecutionPlanLineageNode } from 'spline-api'
-import { BaseComponent } from 'spline-utils'
+import { SplineDataViewSchema } from 'spline-common'
+import { BaseLocalStateComponent } from 'spline-utils'
 
 import { OperationDetailsDataSource } from '../../data-sources'
+import { OperationInfo } from '../../models'
 
+
+export type ExecutionPlanNodeInfoState = {
+    operationDvs: SplineDataViewSchema
+    inputsDvs: SplineDataViewSchema | null
+    outputDvs: SplineDataViewSchema | null
+    detailsDvs: SplineDataViewSchema | null
+}
 
 @Component({
-    selector: 'event-execution-plan-node-info',
-    templateUrl: './execution-plan-node-info.component.html',
-    styleUrls: ['./execution-plan-node-info.component.scss'],
+    selector: 'event-operation-info',
+    templateUrl: './operation-info.component.html',
+    styleUrls: ['./operation-info.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         {
@@ -32,24 +42,40 @@ import { OperationDetailsDataSource } from '../../data-sources'
             useFactory: (executionPlanFacade: ExecutionPlanFacade) => {
                 return new OperationDetailsDataSource(executionPlanFacade)
             },
-            deps: [ExecutionPlanFacade]
-        }
-    ]
+            deps: [ExecutionPlanFacade],
+        },
+    ],
 })
-export class ExecutionPlanNodeInfoComponent extends BaseComponent implements OnChanges {
+export class OperationInfoComponent extends BaseLocalStateComponent<ExecutionPlanNodeInfoState> implements OnChanges {
 
     @Input() node: ExecutionPlanLineageNode
     @Input() selectedAttributeId: string
 
-    @Output() attributeSelected$ = new EventEmitter<{ attributeId: string | null }>()
+    @Output() selectedAttributeChanged$ = new EventEmitter<{ attributeId: string | null }>()
 
     constructor(readonly dataSource: OperationDetailsDataSource) {
         super()
+
+        this.dataSource.data$
+            .pipe(
+                filter(state => !!state),
+                takeUntil(this.destroyed$),
+            )
+            .subscribe(data =>
+                this.updateState({
+                    operationDvs: OperationInfo.toDataViewSchema(data.operation),
+                    inputsDvs: OperationInfo.toInputsDvs(data),
+                    outputDvs: OperationInfo.toOutputsDvs(data),
+                    detailsDvs: OperationInfo.toDetailsDvs(data),
+                }),
+            )
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.node && !!changes.node.currentValue) {
-
+            this.dataSource.setFilter({
+                operationId: changes.node.currentValue.id,
+            })
         }
     }
 

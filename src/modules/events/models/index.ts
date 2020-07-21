@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-export * from './event-info.models'
-export * from './event-node-control.models'
-export * from './event-node-info.models'
-export * from './execution-plan-node-info.models'
-export * from './execution-plan-node-control.models'
-export * from './execution-plan-info.models'
+export * from './event/event-info.models'
+export * from './event/event-node-control.models'
+export * from './event/event-node-info.models'
+export * from './operation/operation-info.models'
+export * from './execution-plan/execution-plan-node-control.models'
+export * from './execution-plan/execution-plan-info.models'
 export * from './sg-node-control.models'

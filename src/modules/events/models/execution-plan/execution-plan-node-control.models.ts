@@ -14,45 +14,20 @@
  * limitations under the License.
  */
 
-import { ExecutionPlanLineageNode, OperationType } from 'spline-api'
+import { ExecutionPlanLineageNode } from 'spline-api'
 import { SgNode, SgNodeDefault } from 'spline-common'
 
-import { SgNodeControl } from './sg-node-control.models'
+import { OperationInfo } from '../operation'
 
 
 export namespace ExecutionPlanNodeControl {
-
-    import NodeStyles = SgNodeControl.NodeStyles
-
 
     export function extractNodeName(nodeSource: ExecutionPlanLineageNode): string {
         return nodeSource.name
     }
 
-    export function getNodeStyles(nodeSource: ExecutionPlanLineageNode): NodeStyles {
-        console.log(nodeSource.type)
-        switch (nodeSource.type) {
-            case OperationType.Transformation:
-                switch(nodeSource.name) {
-                    case 'Join':
-                        return SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Join)
-                    default:
-                        return SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Transformation)
-                }
-
-            case OperationType.Read:
-                return SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Read)
-
-            case OperationType.Write:
-                return SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Write)
-
-            default:
-                return { ...SgNodeControl.DEFAULT_NODE_STYLES }
-        }
-    }
-
     export function toSgNode(nodeSource: ExecutionPlanLineageNode): SgNode {
-        const nodeStyles = getNodeStyles(nodeSource)
+        const nodeStyles = OperationInfo.getNodeStyles(nodeSource.type, nodeSource.name)
 
         return SgNodeDefault.toNode(
             nodeSource.id,

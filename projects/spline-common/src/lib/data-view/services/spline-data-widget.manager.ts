@@ -17,7 +17,14 @@
 import { Inject, Injectable, InjectionToken, Injector, Optional, Type } from '@angular/core'
 import { DynamicComponentManager } from 'spline-utils'
 
-import { SdWidgetCard, SdWidgetCardComponent, SdWidgetSimpleRecord, SdWidgetSimpleRecordComponent } from '../components/widget-type'
+import {
+    SdWidgetCard,
+    SdWidgetCardComponent,
+    SdWidgetSimpleRecord,
+    SdWidgetSimpleRecordComponent,
+    SdWidgetTitle,
+    SdWidgetTitleComponent,
+} from '../components/widget-type'
 import { ISplineDataWidget, ISplineDataWidgetFactory } from '../models'
 
 
@@ -25,13 +32,14 @@ export const SD_WIDGET_FACTORY = new InjectionToken<ISplineDataWidgetFactory<any
 
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class SplineDataWidgetManager extends DynamicComponentManager<ISplineDataWidgetFactory<any>, ISplineDataWidget<any>> {
 
     readonly defaultCellTypesMap: { [type: string]: Type<ISplineDataWidget<any>> } = {
         [SdWidgetSimpleRecord.TYPE]: SdWidgetSimpleRecordComponent,
-        [SdWidgetCard.TYPE]: SdWidgetCardComponent
+        [SdWidgetCard.TYPE]: SdWidgetCardComponent,
+        [SdWidgetTitle.TYPE]: SdWidgetTitleComponent,
     }
 
     constructor(

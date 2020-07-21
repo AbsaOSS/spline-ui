@@ -42,7 +42,8 @@
                         <span class="pr-2">Execution Plan Details</span>
                     </button>
 
-                    <spline-data-view [dataViewSchema]="dataSchema"></spline-data-view>
+                    <event-operation-info [node]="store.selectedNode$ | async"></event-operation-info>
+
                 </div>
                 <!-- ./SELECTED NODE INFO -->
 

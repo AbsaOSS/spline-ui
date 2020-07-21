@@ -17,7 +17,7 @@
 import { DataSourceInfo, ExecutionPlan } from 'spline-api'
 import { SdWidgetCard, SdWidgetSchema, SdWidgetSimpleRecord, SplineColors, SplineDataViewSchema } from 'spline-common'
 
-import { SgNodeControl } from './sg-node-control.models'
+import { SgNodeControl } from '../sg-node-control.models'
 
 
 export namespace ExecutionPlanInfo {

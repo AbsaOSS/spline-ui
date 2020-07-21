@@ -17,11 +17,13 @@
 
 import { SdWidgetCardComponent } from './card/sd-widget-card.component'
 import { SdWidgetSimpleRecordComponent } from './simple-record/sd-widget-simple-record.component'
+import { SdWidgetTitleComponent } from './title/sd-widget-title.component'
 
 
 export const widgetTypesComponents: any[] = [
     SdWidgetSimpleRecordComponent,
     SdWidgetCardComponent,
+    SdWidgetTitleComponent
 ]
 
 export * from './public-api'

@@ -22,7 +22,7 @@ import { ExecutionPlanFacade, ExecutionPlanLineageNode } from 'spline-api'
 import { SgNodeSchema, SplineDataViewSchema } from 'spline-common'
 import { BaseComponent } from 'spline-utils'
 
-import { ExecutionPlanNodeInfo } from '../../models'
+import { OperationInfo } from '../../models'
 import { ExecutionPlanOverviewStoreFacade } from '../../store'
 
 
@@ -57,7 +57,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
 
         this.selectedNodeViewSchema$ = this.store.selectedNode$
             .pipe(
-                map(selectedNode => selectedNode ? ExecutionPlanNodeInfo.toDataSchema(selectedNode) : null),
+                map(selectedNode => selectedNode ? OperationInfo.toDataViewSchema(selectedNode) : null),
             )
 
     }

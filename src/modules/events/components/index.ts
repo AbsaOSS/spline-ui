@@ -16,15 +16,15 @@
 
 import { EventInfoComponent } from './event-info/event-info.component'
 import { ExecutionPlanInfoComponent } from './execution-plan-info/execution-plan-info.component'
-import { ExecutionPlanNodeInfoComponent } from './execution-plan-node-info/execution-plan-node-info.component'
+import { OperationInfoComponent } from './operation-info/operation-info.component'
 
 
 export const components: any[] = [
     EventInfoComponent,
     ExecutionPlanInfoComponent,
-    ExecutionPlanNodeInfoComponent
+    OperationInfoComponent
 ]
 
 export * from './event-info/event-info.component'
 export * from './execution-plan-info/execution-plan-info.component'
-export * from './execution-plan-node-info/execution-plan-node-info.component'
+export * from './operation-info/operation-info.component'

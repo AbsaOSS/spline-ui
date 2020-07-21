@@ -24,6 +24,13 @@ export type Operation = {
     properties: Record<string, any>
 }
 
+export type OperationProperties =
+    &
+    {
+        name: string
+    }
+    & Record<string, any>
+
 export type OperationDto = {
     _id: string
     _type: OperationType | string

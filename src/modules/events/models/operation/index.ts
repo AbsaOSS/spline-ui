@@ -14,13 +14,5 @@
  * limitations under the License.
  */
 
-export * from './sg-widget-base.component'
-
-export * from './simple-record/sd-widget-simple-record.component'
-export * from './simple-record/sd-widget-simple-record.models'
-
-export * from './card/sd-widget-card.component'
-export * from './card/sd-widget-card.models'
-
-export * from './title/sd-widget-title.component'
-export * from './title/sd-widget-title.models'
+export * from './type'
+export * from './operation-info.models'

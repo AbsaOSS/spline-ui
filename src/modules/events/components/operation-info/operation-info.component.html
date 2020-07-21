@@ -1,0 +1,67 @@
+<!--
+  ~ Copyright (c) 2020 ABSA Group Limited
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<div *ngIf="(dataSource.loadingProcessing$ | async) as loadingProcessing">
+
+    <!-- LOADER -->
+    <spline-loader *ngIf="loadingProcessing.processing"></spline-loader>
+    <!-- ./LOADER -->
+
+    <!-- ERROR -->
+    <spline-content-error *ngIf="loadingProcessing.processingError"></spline-content-error>
+    <!-- ./ERROR -->
+
+    <ng-container *ngIf="state$ | async as state">
+
+        <ng-container *ngIf="!loadingProcessing.processingError && !loadingProcessing.processing">
+
+            <!-- OPERATION -->
+            <spline-data-view [dataViewSchema]="state.operationDvs"></spline-data-view>
+            <!-- ./OPERATION -->
+
+            <mat-tab-group>
+
+                <!-- DETAILS -->
+                <mat-tab [label]="'Details' | translate" *ngIf="!!state.detailsDvs">
+                    <ng-template matTabContent>
+                        <spline-data-view [dataViewSchema]="state.detailsDvs"></spline-data-view>
+                    </ng-template>
+                </mat-tab>
+                <!-- DETAILS -->
+
+                <!-- OUTPUT DS -->
+                <mat-tab [label]="'Output Schema' | translate" *ngIf="!!state.outputDvs">
+                    <ng-template matTabContent>
+                        <spline-data-view [dataViewSchema]="state.outputDvs"></spline-data-view>
+                    </ng-template>
+                </mat-tab>
+                <!-- OUTPUT DS -->
+
+                <!-- INPUTS DS -->
+                <mat-tab *ngIf="!!state.inputsDvs" [label]="'Inputs Schema' | translate">
+                    <ng-template matTabContent>
+                        <spline-data-view [dataViewSchema]="state.inputsDvs"></spline-data-view>
+                    </ng-template>
+                </mat-tab>
+                <!-- ./INPUTS DS -->
+
+            </mat-tab-group>
+        </ng-container>
+    </ng-container>
+
+</div>
+
+

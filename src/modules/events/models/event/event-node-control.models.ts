@@ -17,7 +17,7 @@
 import { dataSourceUriToName, ExecutionEventLineageNode, ExecutionEventLineageNodeType } from 'spline-api'
 import { SgNode, SgNodeDefault } from 'spline-common'
 
-import { SgNodeControl } from './sg-node-control.models'
+import { SgNodeControl } from '../sg-node-control.models'
 import NodeType = SgNodeControl.NodeType
 
 

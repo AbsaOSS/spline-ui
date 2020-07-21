@@ -17,7 +17,6 @@
 export enum OperationType {
     Projection = 'Project',
     Transformation = 'Transformation',
-    LogicalRelation = 'LogicalRelation',
     Join = 'Join',
     Read = 'Read',
     Union = 'Union',
