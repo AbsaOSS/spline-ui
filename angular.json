@@ -78,7 +78,8 @@
             "stylePreprocessorOptions": {
               "includePaths": [
                 "src/styles",
-                "projects/spline-common/src/styles"
+                "projects/spline-common/src/styles",
+                "projects/spline-shared/src/styles"
               ]
             },
             "scripts": [
@@ -239,7 +240,8 @@
             "project": "projects/spline-common/ng-package.json",
             "stylePreprocessorOptions": {
               "includePaths": [
-                "projects/spline-common/src/styles"
+                "projects/spline-common/src/styles",
+                "projects/spline-shared/src/styles"
               ]
             }
           },

@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-@import 'spline-common';
-@import 'spline-shared';
-@import './components/index';
-@import './helpers/index';
+export * from './spline-attributes-tree.module'
+export * from './components/public-api'
+export * from './models/public-api'

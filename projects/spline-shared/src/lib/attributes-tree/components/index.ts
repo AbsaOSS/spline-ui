@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +14,11 @@
  * limitations under the License.
  */
 
-@import 'spline-common';
-@import 'spline-shared';
-@import './components/index';
-@import './helpers/index';
+import { SplineAttributesTreeComponent } from './attributes-tree/spline-attributes-tree.component'
+
+
+export * from './public-api'
+
+export const attributesTreeComponents = [
+    SplineAttributesTreeComponent
+]

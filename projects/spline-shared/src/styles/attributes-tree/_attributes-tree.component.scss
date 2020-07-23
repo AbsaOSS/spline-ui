@@ -14,7 +14,27 @@
  * limitations under the License.
  */
 
-@import 'spline-common';
-@import 'spline-shared';
-@import './components/index';
-@import './helpers/index';
+@import 'vars';
+
+.spline-attributes-tree {
+    ul,
+    li {
+        list-style-type: none;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+
+    &__highlight-btn {
+        color: $color-grey-dark;
+
+        &--active {
+            color: $color-orange;
+        }
+    }
+
+    .mat-tree-node--active {
+        color: $color-orange;
+        font-weight: bold;
+    }
+
+}

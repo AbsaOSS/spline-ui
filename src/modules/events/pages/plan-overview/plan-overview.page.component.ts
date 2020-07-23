@@ -50,6 +50,27 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
     readonly selectedNodeQueryParamName: string = 'selectedNodeId'
     readonly selectedNodeViewSchema$: Observable<SplineDataViewSchema>
 
+    treeData = [
+        {
+            id: '1',
+            name: 'Attr1',
+        },
+        {
+            id: '2',
+            name: 'Attr2',
+            children: [
+                {
+                    id: '3',
+                    name: 'Attr2.1',
+                },
+                {
+                    id: '4',
+                    name: 'Attr2.2',
+                },
+            ],
+        },
+    ]
+
     constructor(private readonly activatedRoute: ActivatedRoute,
                 private readonly router: Router,
                 readonly store: ExecutionPlanOverviewStoreFacade) {
