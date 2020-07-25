@@ -16,6 +16,7 @@
 
 import { Operation, OperationDetails, OperationType } from 'spline-api'
 import { SdWidgetCard, SplineDataViewSchema } from 'spline-common'
+import { SdWidgetAttributesTree, SplineAttributesTree } from 'spline-shared'
 
 import { SgNodeControl } from '../sg-node-control.models'
 
@@ -69,7 +70,14 @@ export namespace OperationInfo {
 
     export function toInputsDvs(operationDetails: OperationDetails): SplineDataViewSchema | null {
         if (!operationDetails.inputs || !operationDetails.inputs?.length) {
-            return null
+            return operationDetails.inputs
+                .map(
+                    index => SdWidgetAttributesTree.toSchema(
+                        SplineAttributesTree.toData(
+                            operationDetails.schemas[index], operationDetails.dataTypes
+                        ),
+                    )
+                )
         }
         return []
     }

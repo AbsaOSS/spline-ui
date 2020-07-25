@@ -21,8 +21,10 @@ import { MatCardModule } from '@angular/material/card'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatTreeModule } from '@angular/material/tree'
+import { SD_WIDGET_FACTORY } from 'spline-common'
 
 import * as fromComponents from './components'
+import { SdWidgetAttributesTreeFactory } from './services/sd-widget-attributes-tree.factory'
 
 @NgModule({
     imports: [
@@ -38,6 +40,13 @@ import * as fromComponents from './components'
     ],
     exports: [
         ...fromComponents.attributesTreeComponents,
+    ],
+    providers: [
+        {
+            provide: SD_WIDGET_FACTORY,
+            useClass: SdWidgetAttributesTreeFactory,
+            multi: true,
+        }
     ]
 })
 export class SplineAttributesTreeModule { }

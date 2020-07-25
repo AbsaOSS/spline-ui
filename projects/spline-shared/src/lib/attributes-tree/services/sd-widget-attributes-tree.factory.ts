@@ -14,7 +14,20 @@
  * limitations under the License.
  */
 
-export * from './spline-attributes-tree.module'
-export * from './components/public-api'
-export * from './models/public-api'
-export * from './services/public-api'
+import { Injectable, Type } from '@angular/core'
+import { ISplineDataWidget, ISplineDataWidgetFactory } from 'spline-common'
+
+import { SdWidgetAttributesTreeComponent } from '../components'
+import { SdWidgetAttributesTree } from '../models'
+
+
+@Injectable()
+export class SdWidgetAttributesTreeFactory implements ISplineDataWidgetFactory<SdWidgetAttributesTree.Data> {
+
+    readonly type = SdWidgetAttributesTree.TYPE
+
+    get componentType(): Type<ISplineDataWidget<SdWidgetAttributesTree.Data>> {
+        return SdWidgetAttributesTreeComponent
+    }
+
+}

@@ -14,7 +14,23 @@
  * limitations under the License.
  */
 
-export * from './spline-attributes-tree.module'
-export * from './components/public-api'
-export * from './models/public-api'
-export * from './services/public-api'
+module.exports = {
+    'rules': {
+        '@angular-eslint/directive-selector': [
+            'error',
+            {
+                'type': 'attribute',
+                'prefix': ['spline', 'sd'],
+                'style': 'camelCase'
+            }
+        ],
+        '@angular-eslint/component-selector': [
+            'error',
+            {
+                'type': 'element',
+                'prefix': ['spline', 'sd'],
+                'style': 'kebab-case'
+            }
+        ]
+    }
+};

@@ -29,19 +29,19 @@ import { SplineAttributesTree } from '../../models'
 })
 export class SplineAttributesTreeComponent extends BaseComponent implements OnChanges {
 
-    @Input() attributesTree: SplineAttributesTree.Data
+    @Input() attributesTree: SplineAttributesTree.Tree
     @Input() selectedAttributeId: string
 
     @Output() selectedAttributeChanged$ = new EventEmitter<{ attributeId: string }>()
 
-    treeControl = new NestedTreeControl<SplineAttributesTree.DataRecord>(node => node.children)
-    treeDataSource = new MatTreeNestedDataSource<SplineAttributesTree.DataRecord>()
+    treeControl = new NestedTreeControl<SplineAttributesTree.TreeRecord>(node => node.children)
+    treeDataSource = new MatTreeNestedDataSource<SplineAttributesTree.TreeRecord>()
 
     constructor() {
         super()
     }
 
-    hasChild = (_: number, node: SplineAttributesTree.DataRecord) => !!node.children && node.children.length > 0
+    hasChild = (_: number, node: SplineAttributesTree.TreeRecord) => !!node.children && node.children.length > 0
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.attributesTree?.currentValue) {

@@ -15,3 +15,4 @@
  */
 
 export * from './spline-attributes-tree.models'
+export * from './sd-widget-attributes-tree.models'

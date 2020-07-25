@@ -14,14 +14,31 @@
  * limitations under the License.
  */
 
+import _ from 'lodash'
+import { AttributeDataType, AttributeSchema } from 'spline-api'
+
+
 export namespace SplineAttributesTree {
 
-    export type DataRecord = {
+    export type TreeRecord = {
         id: string
         name: string
         icon?: string
-        children?: DataRecord[]
+        children?: TreeRecord[]
+        canBeHighlighted?: boolean
     }
 
-    export type Data = DataRecord[]
+    export type Tree = TreeRecord[]
+
+    export function toData(attributesSchema: AttributeSchema[], dataTypes: AttributeDataType[]): Tree {
+        const dataTypesDic = _.keyBy(dataTypes, 'id')
+        return attributesSchema
+            .map(attrSchema => {
+                return {
+                    id: attrSchema.id,
+                    name: attrSchema.name,
+                    canBeHighlighted: true
+                }
+            })
+    }
 }
