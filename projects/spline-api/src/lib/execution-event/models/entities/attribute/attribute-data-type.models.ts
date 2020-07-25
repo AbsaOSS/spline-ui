@@ -19,24 +19,70 @@ import _ from 'lodash'
 import { AttributeDtType } from './attribute-dt-type.models'
 
 
-export type AttributeDataType = {
+export type AttributeDataType =
+    | AttributeDataTypeSimple
+    | AttributeDataTypeStruct
+    | AttributeDataTypeArray
+
+export type AttributeDataTypeBase = {
     id: string
-    name: string
     nullable: boolean
     type: AttributeDtType
 }
 
 
+export type AttributeDataTypeSimple =
+    & AttributeDataTypeBase
+    &
+    {
+        name: string
+    }
+
+export type AttributeDataTypeStruct =
+    & AttributeDataTypeBase
+    &
+    {
+        fields: AttributeDataTypeField[]
+    }
+
+export type AttributeDataTypeArray =
+    & AttributeDataTypeBase
+    &
+    {
+        elementDataTypeId: string
+    }
+
+
 export type AttributeDataTypeDto = {
     id: string
-    name: string
     nullable: boolean
-    _type: AttributeDtType
+    _type?: string
+    _typeHint?: string
+    name?: string
+    elementDataTypeId?: string
+    fields?: AttributeDataTypeField[]
+}
+
+
+export type AttributeDataTypeField = {
+    dataTypeId: string
+    name: string
 }
 
 export function toAttributeDataType(entity: AttributeDataTypeDto): AttributeDataType {
     return {
-        ...(_.omit<AttributeDataTypeDto, '_type'>(entity, ['_type'])),
-        type: entity._type,
+        ...(_.omit<AttributeDataTypeDto, '_type' | '_typeHint'>(entity, ['_type'], '_typeHint')),
+        type: extractAttributeDtType(entity),
+    } as AttributeDataType
+}
+
+
+function extractAttributeDtType(entity: AttributeDataTypeDto): AttributeDtType {
+    const typeSource = entity._type ?? entity._typeHint
+    for (const value of Object.values(AttributeDtType)) {
+        if (typeSource.includes(value)) {
+            return value
+        }
     }
+    return AttributeDtType.Struct
 }

@@ -38,7 +38,7 @@ export class ExecutionEventFacade extends BaseFacade {
     }
 
     @Cacheable
-    fetchLineageOverview(executionEventId: string, maxDepth: number = 10): Observable<ExecutionEventLineageOverview> {
+    fetchLineageOverview(executionEventId: string, maxDepth: number = 1): Observable<ExecutionEventLineageOverview> {
         let params = new HttpParams()
         params = params.append('eventId', executionEventId)
         params = params.append('maxDepth', maxDepth.toString())

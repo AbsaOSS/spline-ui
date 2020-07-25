@@ -21,13 +21,18 @@
     <!-- ./EXECUTION PLAN INFO -->
 
     <mat-tab-group>
+
+        <!-- ATTR SCHEMA -->
+        <mat-tab [label]="'EVENTS.EXECUTION_PLAN_INFO__TAB__ATTR_SCHEMA' | translate">
+            <spline-data-view [dataViewSchema]="state.attributesSchema" (event$)="onDataViewEvent($event)"></spline-data-view>
+        </mat-tab>
+        <!-- ./ATTR SCHEMA -->
+
         <!-- OUTPUT DS -->
         <mat-tab [label]="'EVENTS.EXECUTION_PLAN_INFO__TAB__OUTPUT' | translate">
-            <ng-template matTabContent>
-                <spline-data-view [dataViewSchema]="state.outputVs"></spline-data-view>
-            </ng-template>
+            <spline-data-view [dataViewSchema]="state.outputVs" (event$)="onDataViewEvent($event)"></spline-data-view>
         </mat-tab>
-        <!-- OUTPUT DS -->
+        <!-- ./OUTPUT DS -->
 
         <!-- INPUTS DS -->
         <mat-tab>
@@ -35,7 +40,7 @@
                 {{'EVENTS.EXECUTION_PLAN_INFO__TAB__INPUTS' | translate}} ({{state.inputsNumber}})
             </ng-template>
 
-            <spline-data-view [dataViewSchema]="state.inputsVs"></spline-data-view>
+            <spline-data-view [dataViewSchema]="state.inputsVs" (event$)="onDataViewEvent($event)"></spline-data-view>
         </mat-tab>
         <!-- ./INPUTS DS -->
 

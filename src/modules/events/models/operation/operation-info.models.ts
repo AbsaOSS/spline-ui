@@ -20,6 +20,7 @@ import { AttributeDataType, AttributeSchema, Operation, OperationDetails, Operat
 import { SdWidgetCard, SdWidgetSchema, SplineDataViewSchema } from 'spline-common'
 import { SdWidgetAttributesTree, SplineAttributesTree } from 'spline-shared'
 
+import { attributesSchemaToDataViewSchema } from '../attribute/attributes-schema.models'
 import { SgNodeControl } from '../sg-node-control.models'
 
 import { OperationRead } from './type'
@@ -104,26 +105,6 @@ export namespace OperationInfo {
             default:
                 return null
         }
-    }
-
-    function attributesSchemaToDataViewSchema(attributesSchema: AttributeSchema[],
-                                              dataTypes: AttributeDataType[],
-                                              selectedAttributeId$: Observable<string | null>): SdWidgetSchema {
-
-        const treeData = SplineAttributesTree.toData(
-            attributesSchema, dataTypes,
-        )
-
-        const treeOptions: Observable<SdWidgetAttributesTree.Options> = selectedAttributeId$
-            .pipe(
-                map(selectedAttributeId => ({
-                    selectedAttributeId,
-                })),
-            )
-
-        return SdWidgetCard.toContentOnlySchema(
-            SdWidgetAttributesTree.toSchema(treeData, treeOptions),
-        )
     }
 
 }

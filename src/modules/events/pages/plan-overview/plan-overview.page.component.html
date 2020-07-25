@@ -30,7 +30,9 @@
             <div class="spline-content-details-section">
 
                 <!-- EXECUTION PLAN INFO -->
-                <event-execution-plan-info *ngIf="!state.selectedNodeId"
+                <event-execution-plan-info [hidden]="state.selectedNodeId"
+                                           [selectedAttributeId]="state.selectedAttributeId"
+                                           (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"
                                            [executionPlan]="state.executionPlan">
                 </event-execution-plan-info>
                 <!-- ./EXECUTION PLAN INFO -->
@@ -44,7 +46,7 @@
 
                     <event-operation-info [node]="store.selectedNode$ | async"
                                           [selectedAttributeId]="state.selectedAttributeId"
-                                          (selectedAttributeChanged$)="onSelectedAttributeChanged($event)"></event-operation-info>
+                                          (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"></event-operation-info>
 
                 </div>
                 <!-- ./SELECTED NODE INFO -->

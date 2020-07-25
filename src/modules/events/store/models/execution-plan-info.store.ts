@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
+import { Observable } from 'rxjs'
 import { ExecutionPlan } from 'spline-api'
 import { SplineDataViewSchema } from 'spline-common'
 
-import { ExecutionPlanInfo } from '../../models'
+import { attributesSchemaToDataViewSchema, ExecutionPlanInfo } from '../../models'
 
 
 export namespace ExecutionPlanInfoStore {
@@ -27,16 +28,22 @@ export namespace ExecutionPlanInfoStore {
         executionPlanVs: SplineDataViewSchema
         inputsVs: SplineDataViewSchema
         outputVs: SplineDataViewSchema
+        attributesSchema: SplineDataViewSchema
         inputsNumber: number
     }
 
-    export function toState(executionPlan: ExecutionPlan): State {
+    export function toState(executionPlan: ExecutionPlan, selectedAttributeId$: Observable<string | null>): State {
         return {
             executionPlan: executionPlan,
             executionPlanVs: ExecutionPlanInfo.toDataViewSchema(executionPlan),
             inputsVs: ExecutionPlanInfo.getInputsDataViewSchema(executionPlan),
             outputVs: ExecutionPlanInfo.getOutputDataViewSchema(executionPlan),
             inputsNumber: executionPlan.inputDataSources.length,
+            attributesSchema: attributesSchemaToDataViewSchema(
+                executionPlan.extraInfo.attributes,
+                executionPlan.extraInfo.dataTypes,
+                selectedAttributeId$,
+            ),
         }
     }
 

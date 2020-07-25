@@ -134,8 +134,8 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         this.store.setSelectedNode(null)
     }
 
-    onSelectedAttributeChanged($event: { attributeId: string | null }): void {
-        this.store.setSelectedAttribute($event.attributeId)
+    onSelectedAttributeChanged(attributeId: string | null): void {
+        this.store.setSelectedAttribute(attributeId)
     }
 
     private updateQueryParams(queryParams: Params, replaceUrl: boolean = true): void {

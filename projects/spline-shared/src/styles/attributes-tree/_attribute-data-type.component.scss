@@ -1,4 +1,4 @@
-/*
+/*!
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,15 +14,8 @@
  * limitations under the License.
  */
 
-import { SplineAttributeDataTypeComponent } from './attribute-data-type/spline-attribute-data-type.component'
-import { SdWidgetAttributesTreeComponent } from './attributes-tree-widget/sd-widget-attributes-tree.component'
-import { SplineAttributesTreeComponent } from './attributes-tree/spline-attributes-tree.component'
-
-
-export * from './public-api'
-
-export const attributesTreeComponents = [
-    SplineAttributesTreeComponent,
-    SdWidgetAttributesTreeComponent,
-    SplineAttributeDataTypeComponent
-]
+.spline-attribute-data-type {
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+}

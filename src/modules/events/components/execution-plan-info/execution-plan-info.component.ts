@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core'
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
+import { BehaviorSubject } from 'rxjs'
 import { ExecutionPlan } from 'spline-api'
+import { SplineDataWidgetEvent } from 'spline-common'
+import { SdWidgetAttributesTree } from 'spline-shared'
 import { BaseLocalStateComponent } from 'spline-utils'
 
 import { ExecutionPlanInfoStore } from '../../store'
@@ -31,6 +34,14 @@ export class ExecutionPlanInfoComponent extends BaseLocalStateComponent<Executio
 
     @Input() executionPlan: ExecutionPlan
 
+    @Input() set selectedAttributeId(attributeId: string | null) {
+        this.selectedAttributeId$.next(attributeId)
+    }
+
+    @Output() selectedAttributeChanged$ = new EventEmitter<{ attributeId: string | null }>()
+
+    private readonly selectedAttributeId$ = new BehaviorSubject<string | null>(null)
+
     constructor() {
         super()
     }
@@ -38,9 +49,29 @@ export class ExecutionPlanInfoComponent extends BaseLocalStateComponent<Executio
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.executionPlan && !!changes.executionPlan.currentValue) {
             this.updateState(
-                ExecutionPlanInfoStore.toState(changes.executionPlan.currentValue),
+                ExecutionPlanInfoStore.toState(changes.executionPlan.currentValue, this.selectedAttributeId$.asObservable()),
             )
         }
+    }
+
+
+    onDataViewEvent($event: SplineDataWidgetEvent): void {
+        switch ($event.type) {
+            // SELECTED ATTR CHANGED
+            case SdWidgetAttributesTree.EVENT_TYPE__SELECTED_ATTR_CHANGED:
+
+                this.onSelectedAttributeChanged(($event as SdWidgetAttributesTree.EventSelectedAttrChanged).data.attributeId)
+
+                break
+
+            default:
+            // DO NOTHING
+        }
+    }
+
+    private onSelectedAttributeChanged(attributeId: string | null): void {
+        this.selectedAttributeId$.next(attributeId)
+        this.selectedAttributeChanged$.emit({ attributeId })
     }
 
 }

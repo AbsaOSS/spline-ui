@@ -36,17 +36,13 @@
 
                 <!-- DETAILS -->
                 <mat-tab [label]="'Details' | translate" *ngIf="!!state.detailsDvs">
-                    <ng-template matTabContent>
-                        <spline-data-view [dataViewSchema]="state.detailsDvs" (event$)="onDataViewEvent($event)"></spline-data-view>
-                    </ng-template>
+                    <spline-data-view [dataViewSchema]="state.detailsDvs" (event$)="onDataViewEvent($event)"></spline-data-view>
                 </mat-tab>
                 <!-- DETAILS -->
 
                 <!-- OUTPUT DS -->
                 <mat-tab [label]="'Output Schema' | translate" *ngIf="!!state.outputDvs">
-                    <ng-template matTabContent>
-                        <spline-data-view [dataViewSchema]="state.outputDvs" (event$)="onDataViewEvent($event)"></spline-data-view>
-                    </ng-template>
+                    <spline-data-view [dataViewSchema]="state.outputDvs" (event$)="onDataViewEvent($event)"></spline-data-view>
                 </mat-tab>
                 <!-- OUTPUT DS -->
 
@@ -57,9 +53,7 @@
                         {{ 'Inputs Schema' | translate}} ({{state.inputsNumber}})
                     </ng-template>
 
-                    <ng-template matTabContent>
-                        <spline-data-view [dataViewSchema]="state.inputsDvs" (event$)="onDataViewEvent($event)"></spline-data-view>
-                    </ng-template>
+                    <spline-data-view [dataViewSchema]="state.inputsDvs" (event$)="onDataViewEvent($event)"></spline-data-view>
                 </mat-tab>
                 <!-- ./INPUTS DS -->
 

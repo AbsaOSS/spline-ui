@@ -15,6 +15,8 @@
  */
 
 export enum AttributeDtType {
-    Simple = 'SimpleDataType'
+    Simple = 'Simple',
+    Array = 'Array',
+    Struct = 'Struct'
 }
 
