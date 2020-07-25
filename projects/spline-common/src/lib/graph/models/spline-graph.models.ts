@@ -17,17 +17,15 @@
 
 import { DagreSettings, Edge, Node } from '@swimlane/ngx-graph'
 import _ from 'lodash'
-import { Observable } from 'rxjs'
+import { DynamicValueProvider } from 'spline-utils'
 
 
-export type SgValueProviderFn<T> = () => T;
-export type SgValueProvider<T> = T | SgValueProviderFn<T> | SgValueProviderFn<Observable<T>> | Observable<T>;
 
 export type SgNodeSchema<TData extends object = {}, TOptions extends object = {}> = {
     id: string
     type?: string
-    data?: SgValueProvider<TData>
-    options?: SgValueProvider<TOptions>
+    data?: DynamicValueProvider<TData>
+    options?: DynamicValueProvider<TOptions>
 }
 
 export type SgNodeNativeOptions = Omit<Node, 'id'>

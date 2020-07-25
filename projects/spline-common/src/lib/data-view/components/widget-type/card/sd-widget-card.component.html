@@ -16,15 +16,18 @@
 
 <mat-card class="mb-3" *ngIf="data$ | async as dataValue">
 
-    <spline-card-header [color]="dataValue.header.color"
+    <spline-card-header *ngIf="dataValue?.header"
+                        [color]="dataValue.header.color"
                         [headerTitle]="dataValue.header.title"
                         [icon]="dataValue.header?.icon"
                         [label]="dataValue.header?.label | translate">
     </spline-card-header>
 
-    <spline-card-content *ngIf="dataValue?.content?.dataSchema?.length > 0">
+    <spline-card-content *ngIf="dataValue?.content?.dataSchema?.length > 0"
+                         [showDivider]="!!dataValue?.header">
 
         <spline-data-widget *ngFor="let schema of dataValue?.content?.dataSchema"
+                            (event$)="onWidgetEvent($event)"
                             [schema]="schema">
         </spline-data-widget>
 

@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-import { SdWidgetSchema } from 'spline-common'
+import { SdWidgetSchema, SplineDataWidgetEvent } from 'spline-common'
+import { DynamicValueProvider } from 'spline-utils'
 
 import { SplineAttributesTree } from './spline-attributes-tree.models'
 
@@ -31,13 +32,30 @@ export namespace SdWidgetAttributesTree {
         selectedAttributeId?: string
     }
 
-    export function toSchema(attributesTree: SplineAttributesTree.Tree, options?: Options): SdWidgetSchema<Data> {
+    export function toSchema(attributesTree: SplineAttributesTree.Tree, options?: DynamicValueProvider<Options>): SdWidgetSchema<Data> {
         return {
             type: TYPE,
             data: {
                 attributesTree,
             },
             options,
+        }
+    }
+
+    // EVENTS :: SELECTED ATTR CHANGED
+
+    export const EVENT_TYPE__SELECTED_ATTR_CHANGED = 'AttributesTree.SelectedAttrChanged'
+    export type EventSelectedAttrChangedData = {
+        attributeId: string | null
+    }
+    export type EventSelectedAttrChanged = SplineDataWidgetEvent<EventSelectedAttrChangedData>
+
+    export function createEventSelectedAttrChanged(attrId: string | null): EventSelectedAttrChanged {
+        return {
+            type: EVENT_TYPE__SELECTED_ATTR_CHANGED,
+            data: {
+                attributeId: attrId
+            }
         }
     }
 

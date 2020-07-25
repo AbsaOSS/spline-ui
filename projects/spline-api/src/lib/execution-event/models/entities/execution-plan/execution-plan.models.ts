@@ -15,6 +15,7 @@
  */
 
 
+import { AttributeDataType, AttributeDataTypeDto, AttributeSchema, toAttributeDataType } from '../attribute'
 import { DataSourceInfo, DataSourceInfoDto, toDataSourceInfo } from '../data-source'
 
 
@@ -47,13 +48,25 @@ export type ExecutionPlanDto = {
     output?: DataSourceInfoDto
     agentInfo?: ExecutionPlanAgentInfo
     systemInfo?: ExecutionPlanSystemInfo
-    extra?: ExecutionPlanExtraInfo
+    extra?: ExecutionPlanExtraInfoDto
 }
 
 export type ExecutionPlanExtraInfo =
     &
     {
         appName: string
+        attributes?: AttributeSchema[]
+        dataTypes?: AttributeDataType[]
+    }
+    & Record<string, any>
+
+
+export type ExecutionPlanExtraInfoDto =
+    &
+    {
+        appName: string
+        attributes?: AttributeSchema[]
+        dataTypes?: AttributeDataTypeDto[]
     }
     & Record<string, any>
 
@@ -64,7 +77,14 @@ export function toExecutionPlan(entity: ExecutionPlanDto): ExecutionPlan {
         outputDataSource: toDataSourceInfo(entity.output),
         agentInfo: entity.agentInfo,
         systemInfo: entity.systemInfo,
-        extraInfo: entity.extra,
+        extraInfo: toExecutionPlanExtraInfo(entity.extra),
+    }
+}
+
+export function toExecutionPlanExtraInfo(entity: ExecutionPlanExtraInfoDto): ExecutionPlanExtraInfo {
+    return {
+        ...entity,
+        dataTypes: entity.dataTypes.map(toAttributeDataType),
     }
 }
 

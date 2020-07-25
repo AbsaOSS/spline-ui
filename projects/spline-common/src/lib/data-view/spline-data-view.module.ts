@@ -18,6 +18,7 @@ import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { MatButtonModule } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card'
+import { MatDividerModule } from '@angular/material/divider'
 import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
 import { MatSidenavModule } from '@angular/material/sidenav'
@@ -28,6 +29,7 @@ import { SplineCardModule, SplineDataRecordModule } from '../common'
 import { SplineTranslateModule } from '../translate'
 
 import * as fromComponents from './components'
+import { SplineDataWidgetManager } from './services'
 
 
 @NgModule({
@@ -43,12 +45,16 @@ import * as fromComponents from './components'
         MatCardModule,
         SplineCardModule,
         SplineTranslateModule,
+        MatDividerModule,
     ],
     declarations: [
         ...fromComponents.widgetComponents,
     ],
     exports: [
         ...fromComponents.widgetComponents,
+    ],
+    providers: [
+        SplineDataWidgetManager,
     ],
 })
 export class SplineDataViewModule {

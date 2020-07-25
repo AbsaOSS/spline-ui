@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import { TypeHelpers } from 'spline-utils'
+
 import { SdWidgetSchema, SplineDataViewSchema } from '../../../models'
 
 
@@ -33,7 +35,7 @@ export namespace SdWidgetCard {
     }
 
     export type Data = {
-        header: HeaderData
+        header?: HeaderData
         content?: ContentData
     }
 
@@ -42,8 +44,19 @@ export namespace SdWidgetCard {
             type: TYPE,
             data: {
                 header,
-                content: contentDataSchema ? { dataSchema: contentDataSchema } : undefined
-            }
+                content: contentDataSchema ? { dataSchema: contentDataSchema } : undefined,
+            },
+        }
+    }
+
+    export function toContentOnlySchema(contentDataSchema: SplineDataViewSchema): SdWidgetSchema<Data> {
+        return {
+            type: TYPE,
+            data: {
+                content: contentDataSchema
+                    ? { dataSchema: TypeHelpers.isArray(contentDataSchema) ? contentDataSchema : [contentDataSchema] }
+                    : undefined,
+            },
         }
     }
 

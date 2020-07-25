@@ -16,7 +16,8 @@
 
 <spline-attributes-tree *ngIf="attributesTree$ | async as attributesTree"
                         [attributesTree]="attributesTree"
-                        [selectedAttributeId]="(selectedAttributeId$ | async)">
+                        [selectedAttributeId]="(selectedAttributeId$ | async)"
+                        (selectedAttributeChanged$)="onSelectedAttrChanged($event)">
 </spline-attributes-tree>
 
 

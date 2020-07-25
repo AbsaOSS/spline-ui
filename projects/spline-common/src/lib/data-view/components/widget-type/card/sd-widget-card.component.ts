@@ -16,6 +16,7 @@
 
 import { Component } from '@angular/core'
 
+import { SplineDataWidgetEvent } from '../../../models'
 import { SgWidgetBaseComponent } from '../sg-widget-base.component'
 
 import { SdWidgetCard } from './sd-widget-card.models'
@@ -26,5 +27,9 @@ import { SdWidgetCard } from './sd-widget-card.models'
     templateUrl: './sd-widget-card.component.html',
 })
 export class SdWidgetCardComponent extends SgWidgetBaseComponent<SdWidgetCard.Data> {
+
+    onWidgetEvent($event: SplineDataWidgetEvent): void {
+        this.event$.emit($event)
+    }
 
 }

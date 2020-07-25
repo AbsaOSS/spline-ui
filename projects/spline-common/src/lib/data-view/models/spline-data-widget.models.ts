@@ -15,13 +15,13 @@
  */
 
 import { EventEmitter, Type } from '@angular/core'
-import { IDynamicComponentFactory } from 'spline-utils'
+import { DynamicValueProvider, IDynamicComponentFactory } from 'spline-utils'
 
 
 export type SdWidgetSchema<TData extends object = {}, TOptions extends object = {}> = {
     type: string
-    data?: TData
-    options?: TOptions
+    data?: DynamicValueProvider<TData>
+    options?: DynamicValueProvider<TOptions>
 }
 
 export interface SplineDataWidgetEvent<TData extends {} = {}> {

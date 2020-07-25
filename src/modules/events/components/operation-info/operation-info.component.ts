@@ -15,9 +15,11 @@
  */
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
+import { BehaviorSubject } from 'rxjs'
 import { filter, takeUntil } from 'rxjs/operators'
 import { ExecutionPlanFacade, ExecutionPlanLineageNode } from 'spline-api'
-import { SplineDataViewSchema } from 'spline-common'
+import { SplineDataViewSchema, SplineDataWidgetEvent } from 'spline-common'
+import { SdWidgetAttributesTree } from 'spline-shared'
 import { BaseLocalStateComponent } from 'spline-utils'
 
 import { OperationDetailsDataSource } from '../../data-sources'
@@ -29,6 +31,7 @@ export type ExecutionPlanNodeInfoState = {
     inputsDvs: SplineDataViewSchema | null
     outputDvs: SplineDataViewSchema | null
     detailsDvs: SplineDataViewSchema | null
+    inputsNumber: number
 }
 
 @Component({
@@ -49,9 +52,14 @@ export type ExecutionPlanNodeInfoState = {
 export class OperationInfoComponent extends BaseLocalStateComponent<ExecutionPlanNodeInfoState> implements OnChanges {
 
     @Input() node: ExecutionPlanLineageNode
-    @Input() selectedAttributeId: string
+
+    @Input() set selectedAttributeId(attributeId: string | null) {
+        this.selectedAttributeId$.next(attributeId)
+    }
 
     @Output() selectedAttributeChanged$ = new EventEmitter<{ attributeId: string | null }>()
+
+    private readonly selectedAttributeId$ = new BehaviorSubject<string | null>(null)
 
     constructor(readonly dataSource: OperationDetailsDataSource) {
         super()
@@ -64,9 +72,10 @@ export class OperationInfoComponent extends BaseLocalStateComponent<ExecutionPla
             .subscribe(data =>
                 this.updateState({
                     operationDvs: OperationInfo.toDataViewSchema(data.operation),
-                    inputsDvs: OperationInfo.toInputsDvs(data),
-                    outputDvs: OperationInfo.toOutputsDvs(data),
+                    inputsDvs: OperationInfo.toInputsDvs(data, this.selectedAttributeId$.asObservable()),
+                    outputDvs: OperationInfo.toOutputsDvs(data, this.selectedAttributeId$.asObservable()),
                     detailsDvs: OperationInfo.toDetailsDvs(data),
+                    inputsNumber: data?.inputs?.length ?? 0
                 }),
             )
     }
@@ -79,4 +88,22 @@ export class OperationInfoComponent extends BaseLocalStateComponent<ExecutionPla
         }
     }
 
+    onDataViewEvent($event: SplineDataWidgetEvent): void {
+        switch ($event.type) {
+            // SELECTED ATTR CHANGED
+            case SdWidgetAttributesTree.EVENT_TYPE__SELECTED_ATTR_CHANGED:
+
+                this.onSelectedAttributeChanged(($event as SdWidgetAttributesTree.EventSelectedAttrChanged).data.attributeId)
+
+                break
+
+            default:
+            // DO NOTHING
+        }
+    }
+
+    private onSelectedAttributeChanged(attributeId: string | null): void {
+        this.selectedAttributeId$.next(attributeId)
+        this.selectedAttributeChanged$.emit({ attributeId })
+    }
 }

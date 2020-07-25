@@ -31,9 +31,7 @@ import { ISplineDataWidget, ISplineDataWidgetFactory } from '../models'
 export const SD_WIDGET_FACTORY = new InjectionToken<ISplineDataWidgetFactory<any>[]>('SD_WIDGET_FACTORY')
 
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable()
 export class SplineDataWidgetManager extends DynamicComponentManager<ISplineDataWidgetFactory<any>, ISplineDataWidget<any>> {
 
     readonly defaultCellTypesMap: { [type: string]: Type<ISplineDataWidget<any>> } = {

@@ -79,13 +79,13 @@ import * as fromPages from './pages'
         SplineLabelModule,
         SplineTranslateModule.forChild({ moduleNames: ['events'] }),
         SplineDataRecordModule,
+        SplineAttributesTreeModule,
         SplineDataViewModule,
         SplineCardModule,
         MatTreeModule,
         MatButtonModule,
         MatTabsModule,
         SplineIconModule,
-        SplineAttributesTreeModule
     ],
     exports: [
         ...fromPages.pageComponents,

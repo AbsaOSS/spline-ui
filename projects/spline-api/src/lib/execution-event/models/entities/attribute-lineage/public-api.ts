@@ -14,29 +14,6 @@
  * limitations under the License.
  */
 
-import { LineageNode } from '../lineage'
+export * from './attribute-lineage.models'
+export * from './attribute-linieage-node.models'
 
-import { ExecutionEventLineageNodeType } from './execution-event-lineage-node-type.models'
-
-
-export type ExecutionEventLineageNode =
-    & LineageNode
-    &
-    {
-        name: string
-        type: ExecutionEventLineageNodeType
-    }
-
-export type ExecutionEventLineageNodeDto = {
-    _id: string
-    name: string
-    _type: ExecutionEventLineageNodeType
-}
-
-export function toExecutionEventLineageNode(entity: ExecutionEventLineageNodeDto): ExecutionEventLineageNode {
-    return {
-        id: entity._id,
-        name: entity.name,
-        type: entity._type
-    }
-}

@@ -15,5 +15,6 @@
   -->
 
 <spline-data-widget *ngFor="let schema of widgetSchemas"
+                    (event$)="onWidgetEvent($event)"
                     [schema]="schema">
 </spline-data-widget>

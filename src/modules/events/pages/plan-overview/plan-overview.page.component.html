@@ -42,16 +42,12 @@
                         <span class="pr-2">Execution Plan Details</span>
                     </button>
 
-                    <event-operation-info [node]="store.selectedNode$ | async"></event-operation-info>
+                    <event-operation-info [node]="store.selectedNode$ | async"
+                                          [selectedAttributeId]="state.selectedAttributeId"
+                                          (selectedAttributeChanged$)="onSelectedAttributeChanged($event)"></event-operation-info>
 
                 </div>
                 <!-- ./SELECTED NODE INFO -->
-
-                <mat-card>
-                    <spline-attributes-tree [attributesTree]="treeData"
-                    [selectedAttributeId]="'3'"></spline-attributes-tree>
-                </mat-card>
-
             </div>
 
             <div class="end-to-end-container__body">

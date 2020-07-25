@@ -15,10 +15,11 @@
  */
 
 import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router'
-import { Observable } from 'rxjs'
+import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router'
+import _ from 'lodash'
+import { BehaviorSubject, Observable } from 'rxjs'
 import { map, takeUntil } from 'rxjs/operators'
-import { ExecutionPlanFacade, ExecutionPlanLineageNode } from 'spline-api'
+import { ExecutionPlanFacade } from 'spline-api'
 import { SgNodeSchema, SplineDataViewSchema } from 'spline-common'
 import { BaseComponent } from 'spline-utils'
 
@@ -47,29 +48,10 @@ interface FoodNode {
 })
 export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
 
-    readonly selectedNodeQueryParamName: string = 'selectedNodeId'
     readonly selectedNodeViewSchema$: Observable<SplineDataViewSchema>
 
-    treeData = [
-        {
-            id: '1',
-            name: 'Attr1',
-        },
-        {
-            id: '2',
-            name: 'Attr2',
-            children: [
-                {
-                    id: '3',
-                    name: 'Attr2.1',
-                },
-                {
-                    id: '4',
-                    name: 'Attr2.2',
-                },
-            ],
-        },
-    ]
+    private readonly selectedNodeQueryParamName: string = 'nodeId'
+    private readonly selectedAttributeQueryParamName: string = 'attributeId'
 
     constructor(private readonly activatedRoute: ActivatedRoute,
                 private readonly router: Router,
@@ -86,8 +68,9 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
     ngOnInit(): void {
         const executionPlanId = this.activatedRoute.snapshot.params['id']
         const selectedNodeId = this.activatedRoute.snapshot.queryParamMap.get(this.selectedNodeQueryParamName)
+        const selectedAttributeId = this.activatedRoute.snapshot.queryParamMap.get(this.selectedAttributeQueryParamName)
 
-        this.store.init(executionPlanId, selectedNodeId)
+        this.store.init(executionPlanId, selectedNodeId, selectedAttributeId)
 
         //
         // [ACTION] :: SELECTED NODE CHANGE
@@ -97,9 +80,50 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
             .pipe(
                 takeUntil(this.destroyed$),
             )
-            .subscribe(
-                selectedNode => this.updateQueryParams(selectedNode),
+            .subscribe(selectedNode => {
+                const queryParams = selectedNode
+                    ? {
+                        ...this.activatedRoute.snapshot.queryParams,
+                        [this.selectedNodeQueryParamName]: selectedNode.id,
+                    }
+                    : _.omit(this.activatedRoute.snapshot.queryParams, this.selectedNodeQueryParamName)
+
+                this.updateQueryParams(queryParams)
+            })
+
+        //
+        // [ACTION] :: SELECTED NODE CHANGE
+        //      => update query params
+        //
+        this.store.selectedAttribute$
+            .pipe(
+                takeUntil(this.destroyed$),
             )
+            .subscribe(selectedAttribute => {
+                const queryParams = selectedAttribute
+                    ? {
+                        ...this.activatedRoute.snapshot.queryParams,
+                        [this.selectedAttributeQueryParamName]: selectedAttribute.id,
+                    }
+                    : _.omit(this.activatedRoute.snapshot.queryParams, this.selectedAttributeQueryParamName)
+
+                this.updateQueryParams(queryParams)
+            })
+
+        this.store.selectedNode$
+            .pipe(
+                takeUntil(this.destroyed$),
+            )
+            .subscribe(selectedNode => {
+                const queryParams = selectedNode
+                    ? {
+                        ...this.activatedRoute.snapshot.queryParams,
+                        [this.selectedNodeQueryParamName]: selectedNode.id,
+                    }
+                    : _.omit(this.activatedRoute.snapshot.queryParams, this.selectedNodeQueryParamName)
+
+                this.updateQueryParams(queryParams)
+            })
     }
 
     onNodeSelected($event: { nodeSchema: SgNodeSchema | null }): void {
@@ -110,17 +134,16 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         this.store.setSelectedNode(null)
     }
 
-    private updateQueryParams(selectedNode: ExecutionPlanLineageNode | null): void {
-        const queryParams = selectedNode
-            ? {
-                [this.selectedNodeQueryParamName]: selectedNode.id,
-            }
-            : {}
+    onSelectedAttributeChanged($event: { attributeId: string | null }): void {
+        this.store.setSelectedAttribute($event.attributeId)
+    }
+
+    private updateQueryParams(queryParams: Params, replaceUrl: boolean = true): void {
 
         const extras: NavigationExtras = {
             queryParams,
             relativeTo: this.activatedRoute,
-            replaceUrl: true,
+            replaceUrl,
         }
 
         this.router.navigate([], extras)

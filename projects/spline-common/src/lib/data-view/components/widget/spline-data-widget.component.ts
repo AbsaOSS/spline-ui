@@ -14,7 +14,17 @@
  * limitations under the License.
  */
 
-import { Component, ComponentFactoryResolver, ComponentRef, EventEmitter, Input, OnChanges, SimpleChanges, Type } from '@angular/core'
+import {
+    Component,
+    ComponentFactoryResolver,
+    ComponentRef,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    SimpleChanges,
+    Type,
+} from '@angular/core'
 import { BaseDynamicContentComponent } from 'spline-utils'
 
 import { ISplineDataWidget, SdWidgetSchema, SplineDataWidgetEvent } from '../../models'
@@ -29,7 +39,7 @@ export class SplineDataWidgetComponent<TData extends object, TOptions extends ob
     extends BaseDynamicContentComponent<ISplineDataWidget<TData, TOptions>> implements OnChanges {
 
     @Input() schema: SdWidgetSchema<TData, TOptions>
-    @Input() event$ = new EventEmitter<SplineDataWidgetEvent>()
+    @Output() event$ = new EventEmitter<SplineDataWidgetEvent>()
 
     constructor(protected readonly componentFactoryResolver: ComponentFactoryResolver,
                 private readonly splineDataWidgetManager: SplineDataWidgetManager) {

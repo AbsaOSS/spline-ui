@@ -28,7 +28,7 @@ export abstract class SgWidgetBaseComponent<TData extends object, TOptions exten
     @Input() schema: SdWidgetSchema<TData, TOptions>
     @Input() isSelected: boolean
 
-    @Output() event$ = new EventEmitter<SplineDataWidgetEvent<TData>>()
+    @Output() event$ = new EventEmitter<SplineDataWidgetEvent>()
 
     data$ = new BehaviorSubject<TData | null>(null)
     options$ = new BehaviorSubject<TOptions | null>(null)

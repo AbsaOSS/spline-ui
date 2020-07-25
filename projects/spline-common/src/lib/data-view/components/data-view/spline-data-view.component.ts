@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { TypeHelpers } from 'spline-utils'
 
-import { SdWidgetSchema, SplineDataViewSchema } from '../../models'
+import { SdWidgetSchema, SplineDataViewSchema, SplineDataWidgetEvent } from '../../models'
 
 
 @Component({
@@ -32,6 +32,12 @@ export class SplineDataViewComponent {
             : [schema]
     }
 
+    @Output() event$ = new EventEmitter<SplineDataWidgetEvent>()
+
     widgetSchemas: SdWidgetSchema[]
+
+    onWidgetEvent($event: SplineDataWidgetEvent): void {
+        this.event$.emit($event)
+    }
 
 }

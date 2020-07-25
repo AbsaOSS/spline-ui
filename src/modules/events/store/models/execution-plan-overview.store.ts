@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { ExecutionPlan, ExecutionPlanLineageNode, ExecutionPlanLineageOverview } from 'spline-api'
+import { AttributeLineage, ExecutionPlan, ExecutionPlanLineageNode, ExecutionPlanLineageOverview } from 'spline-api'
 import { SgData } from 'spline-common'
 import { ProcessingStore, SplineEntityStore } from 'spline-utils'
 
@@ -29,7 +29,12 @@ export namespace ExecutionPlanOverviewStore {
         graphData: SgData | null
         executionPlan: ExecutionPlan | null
         loadingProcessing: ProcessingStore.EventProcessingState
+
         selectedNodeId: string | null
+        selectedAttributeId: string | null
+
+        attributeLineage: AttributeLineage | null
+        attributeLineageLoadingProcessing: ProcessingStore.EventProcessingState
     }
 
     export function getDefaultState(): State {
@@ -39,7 +44,12 @@ export namespace ExecutionPlanOverviewStore {
             graphData: null,
             executionPlan: null,
             loadingProcessing: ProcessingStore.getDefaultProcessingState(),
+
             selectedNodeId: null,
+            selectedAttributeId: null,
+
+            attributeLineage: null,
+            attributeLineageLoadingProcessing: ProcessingStore.getDefaultProcessingState(),
         }
     }
 

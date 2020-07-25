@@ -34,14 +34,14 @@ export class SplineAttributesTreeComponent extends BaseComponent implements OnCh
 
     @Output() selectedAttributeChanged$ = new EventEmitter<{ attributeId: string }>()
 
-    treeControl = new NestedTreeControl<SplineAttributesTree.TreeRecord>(node => node.children)
-    treeDataSource = new MatTreeNestedDataSource<SplineAttributesTree.TreeRecord>()
+    treeControl = new NestedTreeControl<SplineAttributesTree.TreeNode>(node => node.children)
+    treeDataSource = new MatTreeNestedDataSource<SplineAttributesTree.TreeNode>()
 
     constructor() {
         super()
     }
 
-    hasChild = (_: number, node: SplineAttributesTree.TreeRecord) => !!node.children && node.children.length > 0
+    hasChild = (_: number, node: SplineAttributesTree.TreeNode) => !!node.children && node.children.length > 0
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.attributesTree?.currentValue) {

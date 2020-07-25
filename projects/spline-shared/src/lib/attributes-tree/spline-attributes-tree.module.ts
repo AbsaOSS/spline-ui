@@ -42,9 +42,10 @@ import { SdWidgetAttributesTreeFactory } from './services/sd-widget-attributes-t
         ...fromComponents.attributesTreeComponents,
     ],
     providers: [
+        SdWidgetAttributesTreeFactory,
         {
             provide: SD_WIDGET_FACTORY,
-            useClass: SdWidgetAttributesTreeFactory,
+            useValue: SdWidgetAttributesTreeFactory,
             multi: true,
         }
     ]

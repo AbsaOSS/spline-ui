@@ -15,6 +15,7 @@
  */
 
 export * from './dynamic-rendering/dynamic-component.manager'
+export * from './dynamic-rendering/dynamic-components.models'
 export * from './heplers/date-time-helpers'
 export * from './heplers/string-helpers'
 export * from './heplers/type-helpers'

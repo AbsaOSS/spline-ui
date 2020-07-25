@@ -20,15 +20,15 @@ import { AttributeDataType, AttributeSchema } from 'spline-api'
 
 export namespace SplineAttributesTree {
 
-    export type TreeRecord = {
+    export type TreeNode = {
         id: string
         name: string
         icon?: string
-        children?: TreeRecord[]
+        children?: TreeNode[]
         canBeHighlighted?: boolean
     }
 
-    export type Tree = TreeRecord[]
+    export type Tree = TreeNode[]
 
     export function toData(attributesSchema: AttributeSchema[], dataTypes: AttributeDataType[]): Tree {
         const dataTypesDic = _.keyBy(dataTypes, 'id')

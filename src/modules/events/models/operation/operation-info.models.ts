@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
-import { Operation, OperationDetails, OperationType } from 'spline-api'
-import { SdWidgetCard, SplineDataViewSchema } from 'spline-common'
+import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
+import { AttributeDataType, AttributeSchema, Operation, OperationDetails, OperationType } from 'spline-api'
+import { SdWidgetCard, SdWidgetSchema, SplineDataViewSchema } from 'spline-common'
 import { SdWidgetAttributesTree, SplineAttributesTree } from 'spline-shared'
 
 import { SgNodeControl } from '../sg-node-control.models'
@@ -68,25 +70,31 @@ export namespace OperationInfo {
         ]
     }
 
-    export function toInputsDvs(operationDetails: OperationDetails): SplineDataViewSchema | null {
+    export function toInputsDvs(operationDetails: OperationDetails,
+                                selectedAttributeId$: Observable<string | null>): SplineDataViewSchema | null {
+
         if (!operationDetails.inputs || !operationDetails.inputs?.length) {
-            return operationDetails.inputs
-                .map(
-                    index => SdWidgetAttributesTree.toSchema(
-                        SplineAttributesTree.toData(
-                            operationDetails.schemas[index], operationDetails.dataTypes
-                        ),
-                    )
-                )
+            return null
         }
-        return []
+
+        return operationDetails.inputs
+            .map(
+                index => attributesSchemaToDataViewSchema(
+                    operationDetails.schemas[index], operationDetails.dataTypes, selectedAttributeId$,
+                ),
+            )
     }
 
-    export function toOutputsDvs(operationDetails: OperationDetails): SplineDataViewSchema | null {
+    export function toOutputsDvs(operationDetails: OperationDetails,
+                                 selectedAttributeId$: Observable<string | null>): SplineDataViewSchema | null {
+
         if (operationDetails.output === null) {
             return null
         }
-        return []
+
+        return attributesSchemaToDataViewSchema(
+            operationDetails.schemas[operationDetails.output], operationDetails.dataTypes, selectedAttributeId$,
+        )
     }
 
     export function toDetailsDvs(operationDetails: OperationDetails): SplineDataViewSchema | null {
@@ -96,6 +104,26 @@ export namespace OperationInfo {
             default:
                 return null
         }
+    }
+
+    function attributesSchemaToDataViewSchema(attributesSchema: AttributeSchema[],
+                                              dataTypes: AttributeDataType[],
+                                              selectedAttributeId$: Observable<string | null>): SdWidgetSchema {
+
+        const treeData = SplineAttributesTree.toData(
+            attributesSchema, dataTypes,
+        )
+
+        const treeOptions: Observable<SdWidgetAttributesTree.Options> = selectedAttributeId$
+            .pipe(
+                map(selectedAttributeId => ({
+                    selectedAttributeId,
+                })),
+            )
+
+        return SdWidgetCard.toContentOnlySchema(
+            SdWidgetAttributesTree.toSchema(treeData, treeOptions),
+        )
     }
 
 }

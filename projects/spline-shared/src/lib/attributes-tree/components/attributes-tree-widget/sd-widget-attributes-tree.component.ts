@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core'
+import { Component, EventEmitter, Output } from '@angular/core'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { SgWidgetBaseComponent } from 'spline-common'
@@ -31,6 +31,8 @@ export class SdWidgetAttributesTreeComponent extends SgWidgetBaseComponent<SdWid
     selectedAttributeId$: Observable<string | null>
     attributesTree$: Observable<SplineAttributesTree.Tree | null>
 
+    @Output() event$ = new EventEmitter<SdWidgetAttributesTree.EventSelectedAttrChanged>()
+
     constructor() {
         super()
 
@@ -45,4 +47,9 @@ export class SdWidgetAttributesTreeComponent extends SgWidgetBaseComponent<SdWid
             )
     }
 
+    onSelectedAttrChanged($event: { attributeId: string }): void {
+        const eventObj = SdWidgetAttributesTree.createEventSelectedAttrChanged($event.attributeId)
+        console.log(eventObj)
+        this.event$.emit(eventObj)
+    }
 }

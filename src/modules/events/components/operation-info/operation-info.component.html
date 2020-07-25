@@ -29,7 +29,7 @@
         <ng-container *ngIf="!loadingProcessing.processingError && !loadingProcessing.processing">
 
             <!-- OPERATION -->
-            <spline-data-view [dataViewSchema]="state.operationDvs"></spline-data-view>
+            <spline-data-view [dataViewSchema]="state.operationDvs" (event$)="onDataViewEvent($event)"></spline-data-view>
             <!-- ./OPERATION -->
 
             <mat-tab-group>
@@ -37,7 +37,7 @@
                 <!-- DETAILS -->
                 <mat-tab [label]="'Details' | translate" *ngIf="!!state.detailsDvs">
                     <ng-template matTabContent>
-                        <spline-data-view [dataViewSchema]="state.detailsDvs"></spline-data-view>
+                        <spline-data-view [dataViewSchema]="state.detailsDvs" (event$)="onDataViewEvent($event)"></spline-data-view>
                     </ng-template>
                 </mat-tab>
                 <!-- DETAILS -->
@@ -45,15 +45,20 @@
                 <!-- OUTPUT DS -->
                 <mat-tab [label]="'Output Schema' | translate" *ngIf="!!state.outputDvs">
                     <ng-template matTabContent>
-                        <spline-data-view [dataViewSchema]="state.outputDvs"></spline-data-view>
+                        <spline-data-view [dataViewSchema]="state.outputDvs" (event$)="onDataViewEvent($event)"></spline-data-view>
                     </ng-template>
                 </mat-tab>
                 <!-- OUTPUT DS -->
 
                 <!-- INPUTS DS -->
-                <mat-tab *ngIf="!!state.inputsDvs" [label]="'Inputs Schema' | translate">
+                <mat-tab *ngIf="!!state.inputsDvs">
+
+                    <ng-template matTabLabel>
+                        {{ 'Inputs Schema' | translate}} ({{state.inputsNumber}})
+                    </ng-template>
+
                     <ng-template matTabContent>
-                        <spline-data-view [dataViewSchema]="state.inputsDvs"></spline-data-view>
+                        <spline-data-view [dataViewSchema]="state.inputsDvs" (event$)="onDataViewEvent($event)"></spline-data-view>
                     </ng-template>
                 </mat-tab>
                 <!-- ./INPUTS DS -->
