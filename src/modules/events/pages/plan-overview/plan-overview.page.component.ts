@@ -17,7 +17,7 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router'
 import _ from 'lodash'
-import { BehaviorSubject, Observable } from 'rxjs'
+import { Observable } from 'rxjs'
 import { map, takeUntil } from 'rxjs/operators'
 import { ExecutionPlanFacade } from 'spline-api'
 import { SgNodeSchema, SplineDataViewSchema } from 'spline-common'
@@ -33,7 +33,7 @@ interface FoodNode {
 }
 
 @Component({
-    selector: 'event-overview-page',
+    selector: 'event-plan-overview-page',
     templateUrl: './plan-overview.page.component.html',
     styleUrls: ['./plan-overview.page.component.scss'],
     providers: [
@@ -148,4 +148,5 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
 
         this.router.navigate([], extras)
     }
+
 }

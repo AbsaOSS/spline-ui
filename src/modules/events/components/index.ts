@@ -14,17 +14,23 @@
  * limitations under the License.
  */
 
+import { AttributeLineageInfoComponent } from './attribute-lineage-info/attribute-lineage-info.component'
 import { EventInfoComponent } from './event-info/event-info.component'
 import { ExecutionPlanInfoComponent } from './execution-plan-info/execution-plan-info.component'
+import { SgLegendComponent } from './graph-legend/sg-legend.component'
 import { OperationInfoComponent } from './operation-info/operation-info.component'
 
 
 export const components: any[] = [
     EventInfoComponent,
     ExecutionPlanInfoComponent,
-    OperationInfoComponent
+    OperationInfoComponent,
+    AttributeLineageInfoComponent,
+    SgLegendComponent,
 ]
 
 export * from './event-info/event-info.component'
 export * from './execution-plan-info/execution-plan-info.component'
 export * from './operation-info/operation-info.component'
+export * from './attribute-lineage-info/attribute-lineage-info.component'
+export * from './graph-legend/sg-legend.component'

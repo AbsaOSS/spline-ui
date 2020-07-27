@@ -26,27 +26,6 @@
     <ng-template splineLayoutSection="sidebar" let-isExpanded="isExpanded">
         <div class="spline-sidebar-menu">
 
-            <div class="spline-sidebar-menu__section">
-                <mat-nav-list>
-                    <a mat-list-item
-                       matTooltip="Dashboard"
-                       [matTooltipDisabled]="isExpanded"
-                       [matTooltipPosition]="'right'"
-                       routerLink="/fake-url"
-                       routerLinkActive="active">
-
-                        <mat-icon>dashboard</mat-icon>
-                        <span *ngIf="isExpanded">Dashboard</span>
-
-                    </a>
-                </mat-nav-list>
-            </div>
-
-            <div class="spline-sidebar-menu__section">
-                <div class="spline-sidebar-menu__section-title" >
-                    {{isExpanded ? 'Data Entities' : '&nbsp;'}}
-                </div>
-
                 <mat-nav-list>
                     <a mat-list-item
                        matTooltip="Execution Events"
@@ -83,7 +62,6 @@
 
                     </a>
                 </mat-nav-list>
-            </div>
         </div>
     </ng-template>
     <!-- ./SIDEBAR -->

@@ -15,10 +15,14 @@
  */
 
 .spline-loader {
-    left: 0;
-    padding-top: 5rem;
-    position: absolute;
+    padding: 1rem 0;
     text-align: center;
-    width: 100%;
-    z-index: 100;
+
+    &--floating {
+        left: 0;
+        padding-top: 5rem;
+        position: absolute;
+        width: 100%;
+        z-index: 100;
+    }
 }

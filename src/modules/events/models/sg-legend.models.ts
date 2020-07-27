@@ -14,21 +14,8 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core'
-
-import { SplineLoader } from './spline-loader.models'
-
-
-@Component({
-    selector: 'spline-loader',
-    templateUrl: './spline-loader.component.html',
-})
-export class SplineLoaderComponent {
-
-    readonly defaultSize = SplineLoader.Size.lg
-    readonly SPINNER_DIAMETER_MAP = SplineLoader.SPINNER_DIAMETER_MAP
-
-    @Input() size: SplineLoader.Size = this.defaultSize
-
-    @Input() floating = true
+export type SgLegend = {
+    title: string
+    color: string
+    description?: string
 }

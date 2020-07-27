@@ -19,12 +19,15 @@
 .spline-content-error {
 
     color: $color-pink;
-    left: 0;
-    padding-top: 3rem;
-    position: absolute;
     text-align: center;
-    width: 100%;
-    z-index: 100;
+
+    &--floating {
+        left: 0;
+        padding-top: 3rem;
+        position: absolute;
+        width: 100%;
+        z-index: 100;
+    }
 
     mat-icon.mat-icon {
         font-size: 72px;

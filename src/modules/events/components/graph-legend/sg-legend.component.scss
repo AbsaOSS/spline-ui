@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 ABSA Group Limited
+ * Copyright 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,25 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core'
+@import 'vars';
+@import 'mixins';
 
-import { SplineLoader } from './spline-loader.models'
+.legend {
+    align-items: center;
+    display: flex;
+    font-size: 12px;
+    margin-bottom: 0.25rem;
 
+    &__circle {
+        border-radius: 50%;
+        display: inline-block;
+        height: 1rem;
+        width: 1rem;
+    }
+}
 
-@Component({
-    selector: 'spline-loader',
-    templateUrl: './spline-loader.component.html',
-})
-export class SplineLoaderComponent {
-
-    readonly defaultSize = SplineLoader.Size.lg
-    readonly SPINNER_DIAMETER_MAP = SplineLoader.SPINNER_DIAMETER_MAP
-
-    @Input() size: SplineLoader.Size = this.defaultSize
-
-    @Input() floating = true
+.legend mat-icon.mat-icon {
+    @include icon-size(1.25rem);
+    color: $color-grey-dark-50;
+    cursor: pointer;
 }

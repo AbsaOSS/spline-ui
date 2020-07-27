@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 ABSA Group Limited
+ * Copyright 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
-import { SplineLoader } from './spline-loader.models'
+import { SgLegend } from '../../models'
 
 
 @Component({
-    selector: 'spline-loader',
-    templateUrl: './spline-loader.component.html',
+    selector: 'event-sg-legend',
+    templateUrl: './sg-legend.component.html',
+    styleUrls: ['./sg-legend.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SplineLoaderComponent {
+export class SgLegendComponent {
 
-    readonly defaultSize = SplineLoader.Size.lg
-    readonly SPINNER_DIAMETER_MAP = SplineLoader.SPINNER_DIAMETER_MAP
-
-    @Input() size: SplineLoader.Size = this.defaultSize
-
-    @Input() floating = true
+    @Input() legend: SgLegend
 }

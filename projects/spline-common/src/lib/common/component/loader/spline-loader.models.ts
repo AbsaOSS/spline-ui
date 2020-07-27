@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core'
 
-import { SplineLoader } from './spline-loader.models'
+export namespace SplineLoader {
 
+    export type Size = 'md' | 'lg'
 
-@Component({
-    selector: 'spline-loader',
-    templateUrl: './spline-loader.component.html',
-})
-export class SplineLoaderComponent {
+    export const Size = {
+        md: 'md' as Size,
+        lg: 'lg' as Size,
+    }
 
-    readonly defaultSize = SplineLoader.Size.lg
-    readonly SPINNER_DIAMETER_MAP = SplineLoader.SPINNER_DIAMETER_MAP
-
-    @Input() size: SplineLoader.Size = this.defaultSize
-
-    @Input() floating = true
+    export const SPINNER_DIAMETER_MAP: Readonly<Record<Size, number>> = Object.freeze<Record<Size, number>>({
+        lg: 120,
+        md: 50,
+    })
 }

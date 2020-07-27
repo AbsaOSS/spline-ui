@@ -30,23 +30,23 @@
             <div class="spline-content-details-section">
 
                 <!-- EXECUTION PLAN INFO -->
-                <event-execution-plan-info [hidden]="state.selectedNodeId"
-                                           [selectedAttributeId]="state.selectedAttributeId"
-                                           (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"
-                                           [executionPlan]="state.executionPlan">
+                <event-execution-plan-info (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"
+                                           [executionPlan]="state.executionPlan"
+                                           [hidden]="state.selectedNodeId"
+                                           [selectedAttributeId]="state.selectedAttributeId">
                 </event-execution-plan-info>
                 <!-- ./EXECUTION PLAN INFO -->
 
                 <!--  SELECTED NODE INFO -->
                 <div *ngIf="selectedNodeViewSchema$ | async as dataSchema">
-                    <button mat-button class="mb-3" (click)="onShowEpDetailsBtnCLicked()">
+                    <button (click)="onShowEpDetailsBtnCLicked()" class="mb-3" mat-button>
                         <mat-icon class="mr-2">arrow_back</mat-icon>
                         <span class="pr-2">Execution Plan Details</span>
                     </button>
 
-                    <event-operation-info [node]="store.selectedNode$ | async"
-                                          [selectedAttributeId]="state.selectedAttributeId"
-                                          (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"></event-operation-info>
+                    <event-operation-info (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"
+                                          [node]="store.selectedNode$ | async"
+                                          [selectedAttributeId]="state.selectedAttributeId"></event-operation-info>
 
                 </div>
                 <!-- ./SELECTED NODE INFO -->
@@ -59,6 +59,15 @@
                         (nodeSelectionChange$)="onNodeSelected($event)"
                         [graphData]="state.graphData"
                         [selectedNodeId]="state.selectedNodeId">
+
+                    <div class="graph-toolbar" *ngIf="store.selectedAttribute$ | async as selectedAttribute">
+                        <event-attribute-lineage-info (close$)="onSelectedAttributeChanged(null)"
+                                                      [loading]="state.attributeLineageLoadingProcessing.processing"
+                                                      [attributeLineage]="state.attributeLineage"
+                                                      [attribute]="selectedAttribute">
+                        </event-attribute-lineage-info>
+                    </div>
+
                 </spline-graph>
                 <!-- ./GRAPH -->
 

@@ -14,6 +14,13 @@
     "EXECUTION_EVENT_INFO__DETAILS__AGENT_INFO" : "Agent Info",
     "EXECUTION_PLAN_INFO__TAB__INPUTS" : "Inputs",
     "EXECUTION_PLAN_INFO__TAB__OUTPUT" : "Output",
-    "EXECUTION_PLAN_INFO__TAB__ATTR_SCHEMA" : "Attributes"
+    "EXECUTION_PLAN_INFO__TAB__ATTR_SCHEMA" : "Attributes",
+    "ATTRIBUTE_LINEAGE__LABEL" : "Attribute",
+    "ATTRIBUTE_LINEAGE__LEGEND__USAGE__TITLE" : "Usage",
+    "ATTRIBUTE_LINEAGE__LEGEND__USAGE__DESCRIPTION" : "Usage - consists of operations that have the selected attribute in their output. I.e operations that either create the attribute or propagate through.",
+    "ATTRIBUTE_LINEAGE__LEGEND__LINEAGE__TITLE" : "Lineage",
+    "ATTRIBUTE_LINEAGE__LEGEND__LINEAGE__DESCRIPTION" : "Lineage - outlines operations that produces or propagate attributes that affects the selected one transitively (at any level of nesting). In other words, the operations containing attributes which the selected attribute depends on.",
+    "ATTRIBUTE_LINEAGE__LEGEND__IMPACT__TITLE" : "Impact",
+    "ATTRIBUTE_LINEAGE__LEGEND__IMPACT__DESCRIPTION" : " Impact - the part of the graph affected by the selected attribute (opposite to the lineage part). That is, the operations that produces/propagate attributes that depend on selected one transitively."
   }
 }

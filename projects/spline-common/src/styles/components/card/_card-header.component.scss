@@ -50,4 +50,9 @@ $label-color: $color-black;
         font-size: 10px;
         padding: 2px 8px;
     }
+
+    &__actions {
+        align-items: center;
+        display: flex;
+    }
 }

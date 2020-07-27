@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core'
+import { Component, Input } from '@angular/core'
 
 
 @Component({
@@ -22,4 +22,5 @@ import { Component } from '@angular/core'
     templateUrl: './spline-content-error.component.html',
 })
 export class SplineContentErrorComponent {
+    @Input() floating = true
 }
