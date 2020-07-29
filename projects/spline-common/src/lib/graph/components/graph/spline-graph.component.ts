@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core'
+import { GraphComponent } from '@swimlane/ngx-graph'
 import * as fromD3Shape from 'd3-shape'
 
 import {
@@ -34,6 +35,8 @@ import {
     templateUrl: './spline-graph.component.html',
 })
 export class SplineGraphComponent implements OnChanges {
+
+    @ViewChild(GraphComponent) ngxGraphComponent: GraphComponent
 
     @Input() graphData: SgData
 

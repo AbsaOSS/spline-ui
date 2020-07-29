@@ -47,6 +47,7 @@ import { SplineApiConfigModule, SplineAttributesTreeModule } from 'spline-shared
 
 
 import * as fromComponents from './components'
+import * as fromDirectives from './directives'
 import { EventsRoutingModule } from './events-routing.module'
 import * as fromPages from './pages'
 
@@ -55,6 +56,7 @@ import * as fromPages from './pages'
     declarations: [
         ...fromPages.pageComponents,
         ...fromComponents.components,
+        ...fromDirectives.directives,
     ],
     imports: [
         CommonModule,

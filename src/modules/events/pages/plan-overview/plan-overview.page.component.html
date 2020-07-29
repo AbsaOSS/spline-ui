@@ -58,6 +58,7 @@
                 <spline-graph
                         (nodeSelectionChange$)="onNodeSelected($event)"
                         [graphData]="state.graphData"
+                        [sgAttributeLineage]="state.attributeLineage"
                         [selectedNodeId]="state.selectedNodeId">
 
                     <div class="graph-toolbar" *ngIf="store.selectedAttribute$ | async as selectedAttribute">

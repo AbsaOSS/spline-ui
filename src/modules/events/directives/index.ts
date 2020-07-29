@@ -14,23 +14,12 @@
  * limitations under the License.
  */
 
-module.exports = {
-    'rules': {
-        '@angular-eslint/directive-selector': [
-            'error',
-            {
-                'type': 'attribute',
-                'prefix': ['event', 'events', 'sg', 'spline'],
-                'style': 'camelCase'
-            }
-        ],
-        '@angular-eslint/component-selector': [
-            'error',
-            {
-                'type': 'element',
-                'prefix': ['event', 'events', 'sg', 'spline'],
-                'style': 'kebab-case'
-            }
-        ]
-    }
-};
+
+import { SgAttributeLineageDirective } from './sg-attrubute-lineage/sg-attribute-lineage.directive'
+
+
+export const directives: any[] = [
+    SgAttributeLineageDirective
+]
+
+export * from './sg-attrubute-lineage/sg-attribute-lineage.directive'
