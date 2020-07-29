@@ -15,9 +15,10 @@
  */
 
 import { AttributeLineageType } from 'spline-api'
-import { SplineColors } from 'spline-common'
 
 import { SgLegend } from '../sg-legend.models'
+
+import { LINEAGE_TYPE_COLOR_MAP } from './attribute-lineage.models'
 
 
 export const LINAGE_TYPE_LEGENDS_MAP: Readonly<Record<AttributeLineageType, SgLegend>>
@@ -25,21 +26,20 @@ export const LINAGE_TYPE_LEGENDS_MAP: Readonly<Record<AttributeLineageType, SgLe
         [AttributeLineageType.Usage]: {
             title: 'EVENTS.ATTRIBUTE_LINEAGE__LEGEND__USAGE__TITLE',
             description: 'EVENTS.ATTRIBUTE_LINEAGE__LEGEND__USAGE__DESCRIPTION',
-            color: SplineColors.BLACK,
+            color: LINEAGE_TYPE_COLOR_MAP[AttributeLineageType.Usage],
         },
         [AttributeLineageType.Lineage]: {
             title: 'EVENTS.ATTRIBUTE_LINEAGE__LEGEND__LINEAGE__TITLE',
             description: 'EVENTS.ATTRIBUTE_LINEAGE__LEGEND__LINEAGE__DESCRIPTION',
-            color: SplineColors.PINK,
+            color: LINEAGE_TYPE_COLOR_MAP[AttributeLineageType.Lineage],
         },
         [AttributeLineageType.Impact]: {
             title: 'EVENTS.ATTRIBUTE_LINEAGE__LEGEND__IMPACT__TITLE',
             description: 'EVENTS.ATTRIBUTE_LINEAGE__LEGEND__IMPACT__DESCRIPTION',
-            color: SplineColors.GREEN,
+            color: LINEAGE_TYPE_COLOR_MAP[AttributeLineageType.Impact],
         },
     })
 
 export function getAttributeLineageTypeLegend(type: AttributeLineageType): SgLegend {
     return LINAGE_TYPE_LEGENDS_MAP[type]
 }
-

@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-@import 'mixins';
-@import 'vars';
+@import '../mixins';
+@import '../vars';
 
 .spline-graph__container {
     bottom: 0;
@@ -27,12 +27,17 @@
 }
 
 .spline-graph__node-container {
-    border-left: 5px solid transparent;
+    background: none;
     border-radius: 8px;
     overflow: visible;
     position: relative;
 
     &.spline-graph__node--selected {
-        border-left-color: $color-orange;
+        background: $color-orange;
+
+        .sg-node-view {
+            left: 5px;
+            top: -5px;
+        }
     }
 }

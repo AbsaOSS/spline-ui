@@ -49,7 +49,6 @@ export class SdWidgetAttributesTreeComponent extends SgWidgetBaseComponent<SdWid
 
     onSelectedAttrChanged($event: { attributeId: string }): void {
         const eventObj = SdWidgetAttributesTree.createEventSelectedAttrChanged($event.attributeId)
-        console.log(eventObj)
         this.event$.emit(eventObj)
     }
 }

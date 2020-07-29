@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
-@import './sidebar-menu';
-@import './sg-attributes-lineage.component';
-@import './layout';
+export * from './attribute-lineage.models'
+export * from './attribute-lineage-legend.models'
+export * from './attributes-schema.models'
+

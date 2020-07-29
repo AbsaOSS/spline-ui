@@ -1,0 +1,69 @@
+/*!
+ * Copyright (c) 2020 ABSA Group Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+@import 'vars';
+
+.sg-attribute__edge--usage {
+    path {
+        stroke: $color-orange;
+    }
+}
+
+@mixin node-edg-styles($color) {
+    // EDGE
+    .edge path {
+        stroke: $color;
+    }
+    // NODE
+    .spline-graph__node-container:not(.spline-graph__node--selected) {
+        background: $color;
+
+        .sg-node-view {
+            left: 5px;
+            top: -5px;
+        }
+    }
+}
+
+$none-type__opacity: 0.3;
+
+.sg-attribute-lineage {
+    &--usage {
+        @include node-edg-styles($color-black);
+    }
+
+    &--lineage {
+        @include node-edg-styles(magenta);
+    }
+
+    &--impact {
+        @include node-edg-styles(green);
+    }
+
+    &--none {
+        .edge path {
+            opacity: $none-type__opacity;
+        }
+
+        .spline-graph__node-container:not(.spline-graph__node--selected) {
+            opacity: $none-type__opacity;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+}

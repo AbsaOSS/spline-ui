@@ -25,18 +25,19 @@ $icon-width: 24px;
 
     $self: &;
 
-    @include shadow-light();
+    @include shadow-level-2();
     align-items: center;
     background-color: $color-white;
+    border: 1px solid $color-grey-light;
     border-radius: $border-radius;
-    bottom: 0;
     cursor: pointer;
     display: flex;
+    height: 100%;
     left: 0;
     overflow: hidden;
     position: absolute;
-    right: 0;
     top: 0;
+    width: 100%;
 
     &__icon {
         align-items: center;

@@ -17,8 +17,10 @@
 
 import { AfterViewInit, Directive, forwardRef, Host, Inject, Input, OnChanges, SimpleChanges } from '@angular/core'
 import { GraphComponent } from '@swimlane/ngx-graph'
-import { AttributeLineage } from 'spline-api'
+import { AttributeLineage, AttributeLineageType } from 'spline-api'
 import { SplineGraphComponent } from 'spline-common'
+
+import { extractAttributeLineageNodesMap } from '../../models/attribute'
 
 
 @Directive({
@@ -35,7 +37,7 @@ export class SgAttributeLineageDirective implements AfterViewInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.sgAttributeLineage && !changes.sgAttributeLineage.isFirstChange()) {
-            this.applyLineageStyles(this.sgAttributeLineage, this.splineGraph.ngxGraphComponent)
+            this.applyLineageStyles(changes.sgAttributeLineage.currentValue, this.splineGraph.ngxGraphComponent)
         }
     }
 
@@ -44,6 +46,81 @@ export class SgAttributeLineageDirective implements AfterViewInit, OnChanges {
     }
 
     private applyLineageStyles(attributeLineage: AttributeLineage | null, ngxGraphComponent: GraphComponent): void {
+        const attributesLineageNodesMap = extractAttributeLineageNodesMap(attributeLineage)
 
+        const cssClassesMap = {
+            [AttributeLineageType.Usage]: 'sg-attribute-lineage--usage',
+            [AttributeLineageType.Lineage]: 'sg-attribute-lineage--lineage',
+            [AttributeLineageType.Impact]: 'sg-attribute-lineage--impact',
+            none: 'sg-attribute-lineage--none',
+        }
+
+        const lineageTypesList = Object.values(AttributeLineageType)
+
+        function applyStylesToDomElm(selector: string,
+                                     rootElmRef: HTMLElement,
+                                     evaluationFn: (lineageType: AttributeLineageType) => boolean,
+        ): void {
+            const elementRef = rootElmRef.querySelector(selector)
+            if (elementRef) {
+                let hasAnyType = false
+                lineageTypesList
+                    .forEach(lineageType => {
+                        const refCssClassName = cssClassesMap[lineageType]
+                        if (evaluationFn(lineageType)) {
+                            elementRef.classList.add(refCssClassName)
+                            hasAnyType = true
+                        }
+                        else {
+                            elementRef.classList.remove(refCssClassName)
+                        }
+                    })
+
+                // no type styles
+                if (hasAnyType || attributeLineage === null) {
+                    elementRef.classList.remove(cssClassesMap.none)
+                }
+                else {
+                    elementRef.classList.add(cssClassesMap.none)
+                }
+            }
+        }
+
+        ngxGraphComponent.nodes
+            .forEach(item =>
+                applyStylesToDomElm(
+                    `[id="${item.id}"]`,
+                    ngxGraphComponent.chart.nativeElement,
+                    (lineageType) => attributesLineageNodesMap[lineageType].has(item.id),
+                ),
+            )
+
+        ngxGraphComponent.links
+            .forEach(item =>
+                applyStylesToDomElm(
+                    `#${item.id}.link-group`,
+                    ngxGraphComponent.chart.nativeElement,
+                    (lineageType) => {
+                        switch (lineageType) {
+                            case AttributeLineageType.Lineage:
+                                return attributesLineageNodesMap[lineageType].has(item.source)
+                                    && (
+                                        attributesLineageNodesMap[lineageType].has(item.target)
+                                        || attributesLineageNodesMap[AttributeLineageType.Usage].has(item.target)
+                                    )
+
+                            case AttributeLineageType.Impact:
+                                return attributesLineageNodesMap[lineageType].has(item.target)
+                                    && (
+                                        attributesLineageNodesMap[lineageType].has(item.source)
+                                        || attributesLineageNodesMap[AttributeLineageType.Usage].has(item.source)
+                                    )
+
+                            default:
+                                return attributesLineageNodesMap[lineageType].has(item.source)
+                        }
+                    },
+                ),
+            )
     }
 }

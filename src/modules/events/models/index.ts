@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-export * from './attribute/attributes-schema.models'
-export * from './attribute/attribute-lineage-legend.models'
+export * from './attribute'
 export * from './event/event-info.models'
 export * from './event/event-node-control.models'
 export * from './event/event-node-info.models'
