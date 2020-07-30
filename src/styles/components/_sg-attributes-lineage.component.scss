@@ -42,15 +42,15 @@ $none-type__opacity: 0.3;
 
 .sg-attribute-lineage {
     &--usage {
-        @include node-edg-styles($color-black);
+        @include node-edg-styles($color-silver);
     }
 
     &--lineage {
-        @include node-edg-styles(magenta);
+        @include node-edg-styles($color-smile);
     }
 
     &--impact {
-        @include node-edg-styles(green);
+        @include node-edg-styles($color-calm);
     }
 
     &--none {

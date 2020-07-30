@@ -16,10 +16,20 @@
 
 export namespace SplineColors {
 
+    export const SILVER = '#736464'
+    export const PLATINUM = '#5a4b4b'
+    export const HUMAN = '#aa052d'
+    export const PASSION = '#dc0032'
+    export const CARE = '#f05a78'
+    export const SMILE = '#f0325a'
+    export const CALM = '#870a3c'
+    export const ENERGY = '#f47721'
+
+
     export const BLACK = '#2d2323'
     export const BLUE = '#337AB7'
     export const GREY = '#efefef'
-    export const ORANGE = '#f47721'
-    export const PINK = '#aa052d'
+    export const ORANGE = ENERGY
+    export const PINK = HUMAN
     export const GREEN = '#2799a1'
 }

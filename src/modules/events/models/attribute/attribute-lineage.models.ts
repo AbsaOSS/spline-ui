@@ -21,9 +21,9 @@ import { SplineColors } from 'spline-common'
 
 export const LINEAGE_TYPE_COLOR_MAP: Readonly<Record<AttributeLineageType, string>>
     = Object.freeze<Record<AttributeLineageType, string>>({
-        [AttributeLineageType.Usage]: SplineColors.BLACK,
-        [AttributeLineageType.Lineage]: SplineColors.PINK,
-        [AttributeLineageType.Impact]: SplineColors.GREEN,
+        [AttributeLineageType.Usage]: SplineColors.SILVER,
+        [AttributeLineageType.Lineage]: SplineColors.SMILE,
+        [AttributeLineageType.Impact]: SplineColors.CALM,
     })
 
 // TODO: write some tests
