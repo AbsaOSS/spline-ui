@@ -21,12 +21,13 @@ import { MatIconModule } from '@angular/material/icon'
 
 import { SplineTranslateModule } from '../../../translate'
 
-import { SplineDataRecordComponent } from './components'
+import { SplineDataRecordComponent, SplineDataRecordsListComponent } from './components'
 
 
 @NgModule({
     declarations: [
         SplineDataRecordComponent,
+        SplineDataRecordsListComponent
     ],
     imports: [
         CommonModule,
@@ -34,7 +35,10 @@ import { SplineDataRecordComponent } from './components'
         MatIconModule,
         SplineTranslateModule,
     ],
-    exports: [SplineDataRecordComponent],
+    exports: [
+        SplineDataRecordComponent,
+        SplineDataRecordsListComponent
+    ],
 })
 export class SplineDataRecordModule {
 }

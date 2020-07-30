@@ -20,6 +20,8 @@ import { DynamicComponentManager } from 'spline-utils'
 import {
     SdWidgetCard,
     SdWidgetCardComponent,
+    SdWidgetRecordsList,
+    SdWidgetRecordsListComponent,
     SdWidgetSimpleRecord,
     SdWidgetSimpleRecordComponent,
     SdWidgetTitle,
@@ -35,6 +37,7 @@ export const SD_WIDGET_FACTORY = new InjectionToken<ISplineDataWidgetFactory<any
 export class SplineDataWidgetManager extends DynamicComponentManager<ISplineDataWidgetFactory<any>, ISplineDataWidget<any>> {
 
     readonly defaultCellTypesMap: { [type: string]: Type<ISplineDataWidget<any>> } = {
+        [SdWidgetRecordsList.TYPE]: SdWidgetRecordsListComponent,
         [SdWidgetSimpleRecord.TYPE]: SdWidgetSimpleRecordComponent,
         [SdWidgetCard.TYPE]: SdWidgetCardComponent,
         [SdWidgetTitle.TYPE]: SdWidgetTitleComponent,

@@ -15,3 +15,4 @@
  */
 
 export * from './record/spline-data-record.component'
+export * from './records-list/spline-data-records-list.component'

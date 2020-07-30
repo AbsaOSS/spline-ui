@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,22 +14,17 @@
  * limitations under the License.
  */
 
-@import 'vars';
+import { Component } from '@angular/core'
 
-$label-color: $color-black;
+import { SgWidgetBaseComponent } from '../sg-widget-base.component'
+
+import { SdWidgetRecordsList } from './sd-widget-records-list.models'
 
 
-.spline-data-record {
-    padding: 0.25rem 0;
+@Component({
+    selector: 'sd-widget-simple-list',
+    templateUrl: './sd-widget-records-list.component.html',
+})
+export class SdWidgetRecordsListComponent extends SgWidgetBaseComponent<SdWidgetRecordsList.Data> {
 
-    &__label {
-        color: $color-grey-dark-75;
-        font-size: 12px;
-    }
-
-    &__value {
-        color: $color-black;
-        font-size: 13px;
-        font-weight: 500;
-    }
 }

@@ -25,5 +25,6 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 export class SplineDataRecordComponent {
 
     @Input() label: string
+    @Input() description: string
 
 }

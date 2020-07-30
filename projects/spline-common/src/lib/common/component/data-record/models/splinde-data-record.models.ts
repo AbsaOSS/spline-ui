@@ -15,6 +15,7 @@
  */
 
 export type SplineDataRecordData = {
-    label?: string
     value: string
+    label?: string
+    description?: string
 }

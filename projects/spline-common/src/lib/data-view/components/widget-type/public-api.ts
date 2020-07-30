@@ -19,6 +19,9 @@ export * from './sg-widget-base.component'
 export * from './simple-record/sd-widget-simple-record.component'
 export * from './simple-record/sd-widget-simple-record.models'
 
+export * from './records-list/sd-widget-records-list.component'
+export * from './records-list/sd-widget-records-list.models'
+
 export * from './card/sd-widget-card.component'
 export * from './card/sd-widget-card.models'
 

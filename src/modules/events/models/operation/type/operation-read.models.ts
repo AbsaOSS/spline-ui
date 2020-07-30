@@ -15,7 +15,7 @@
  */
 
 import { dataSourceUriToName, OperationDetails, OperationProperties } from 'spline-api'
-import { SdWidgetCard, SdWidgetSimpleRecord, SdWidgetTitle, SplineDataViewSchema } from 'spline-common'
+import { SdWidgetCard, SdWidgetRecordsList, SplineDataViewSchema } from 'spline-common'
 
 import { SgNodeControl } from '../../sg-node-control.models'
 
@@ -34,25 +34,22 @@ export namespace OperationRead {
 
         const properties = operationDetails.operation.properties as Properties
         return [
-            SdWidgetTitle.toSchema('Input Data Sources'),
-            ...properties.inputSources
-                .map(
-                    uri => SdWidgetCard.toSchema(
-                        {
-                            ...SgNodeControl.getNodeStyles(SgNodeControl.NodeType.DataSource),
-                            title: dataSourceUriToName(uri),
-                            label: properties.sourceType,
-                        },
-                        [
-                            SdWidgetSimpleRecord.toSchema([
-                                {
-                                    label: 'URI',
-                                    value: uri,
-                                },
-                            ]),
-                        ],
+            SdWidgetCard.toSchema(
+                {
+                    ...SgNodeControl.getNodeStyles(SgNodeControl.NodeType.DataSource),
+                    title: 'Input Data Sources',
+                    label: properties.sourceType,
+                },
+                [
+                    SdWidgetRecordsList.toSchema(
+                        properties.inputSources
+                            .map(uri => ({
+                                value: dataSourceUriToName(uri),
+                                description: uri,
+                            })),
                     ),
-                ),
+                ],
+            ),
         ]
     }
 

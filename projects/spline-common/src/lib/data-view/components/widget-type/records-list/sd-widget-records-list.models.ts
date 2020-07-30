@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,27 +14,27 @@
  * limitations under the License.
  */
 
-@import 'vars';
+import { SplineDataRecordData } from '../../../../common'
+import { SdWidgetSchema } from '../../../models'
 
-$label-color: $color-black;
 
+export namespace SdWidgetRecordsList {
 
-.spline-data-record {
-    padding: 0.25rem 0;
+    export const TYPE = 'RecordsList'
 
-    &__label {
-        color: $color-grey-dark-75;
-        font-size: 12px;
+    export type Data = {
+        records: SplineDataRecordData[]
+        label?: string
     }
 
-    &__description {
-        color: $color-grey-dark-75;
-        font-size: 10px;
+    export function toSchema(records: SplineDataRecordData[], label?: string): SdWidgetSchema<Data> {
+        return {
+            type: TYPE,
+            data: {
+                label,
+                records: records,
+            },
+        }
     }
 
-    &__value {
-        color: $color-black;
-        font-size: 13px;
-        font-weight: 500;
-    }
 }

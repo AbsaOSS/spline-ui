@@ -14,16 +14,13 @@
   ~ limitations under the License.
   -->
 
-<ng-container *ngIf="data$ | async as data">
 
-    <spline-data-record *ngFor="let record of  data.records"
-                        [label]="record?.label"
-                        [description]="record?.description">
-
-        {{record.value}}
-
-    </spline-data-record>
-
-</ng-container>
-
-
+<spline-data-record [label]="label">
+    <ul *ngIf="records?.length">
+        <li *ngFor="let record of records">
+            <spline-data-record [label]="record?.label" [description]="record?.description">
+                {{record.value | translate}}
+            </spline-data-record>
+        </li>
+    </ul>
+</spline-data-record>

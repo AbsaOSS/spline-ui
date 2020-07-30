@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,27 +14,18 @@
  * limitations under the License.
  */
 
-@import 'vars';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { SplineDataRecordData } from 'spline-common'
 
-$label-color: $color-black;
 
+@Component({
+    selector: 'spline-data-records-list',
+    templateUrl: './spline-data-records-list.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class SplineDataRecordsListComponent {
 
-.spline-data-record {
-    padding: 0.25rem 0;
+    @Input() label: string
+    @Input() records: SplineDataRecordData[] = []
 
-    &__label {
-        color: $color-grey-dark-75;
-        font-size: 12px;
-    }
-
-    &__description {
-        color: $color-grey-dark-75;
-        font-size: 10px;
-    }
-
-    &__value {
-        color: $color-black;
-        font-size: 13px;
-        font-weight: 500;
-    }
 }

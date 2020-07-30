@@ -20,5 +20,10 @@
     </div>
     <div class="spline-data-record__value">
         <ng-content></ng-content>
+
+        <div class="spline-data-record__description" *ngIf="description">
+            {{description | translate}}
+        </div>
+
     </div>
 </div>
