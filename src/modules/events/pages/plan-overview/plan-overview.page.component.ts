@@ -50,6 +50,9 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
 
     readonly selectedNodeViewSchema$: Observable<SplineDataViewSchema>
 
+    eventId: string
+
+    private readonly executionEventQueryParamName: string = 'eventId'
     private readonly selectedNodeQueryParamName: string = 'nodeId'
     private readonly selectedAttributeQueryParamName: string = 'attributeId'
 
@@ -66,7 +69,8 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const executionPlanId = this.activatedRoute.snapshot.params['id']
+        const executionPlanId = this.activatedRoute.snapshot.params['planId']
+        this.eventId = this.activatedRoute.snapshot.queryParamMap.get(this.executionEventQueryParamName)
         const selectedNodeId = this.activatedRoute.snapshot.queryParamMap.get(this.selectedNodeQueryParamName)
         const selectedAttributeId = this.activatedRoute.snapshot.queryParamMap.get(this.selectedAttributeQueryParamName)
 

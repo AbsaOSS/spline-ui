@@ -30,7 +30,7 @@ const routes: Routes = [
         component: EventOverviewPageComponent,
     },
     {
-        path: 'plan-overview/:id',
+        path: 'plan-overview/:planId',
         component: PlanOverviewPageComponent,
     },
     {

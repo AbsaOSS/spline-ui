@@ -29,19 +29,29 @@
 
             <div class="spline-content-details-section">
 
-                <!-- EXECUTION PLAN INFO -->
-                <event-execution-plan-info (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"
-                                           [executionPlan]="state.executionPlan"
-                                           [hidden]="state.selectedNodeId"
-                                           [selectedAttributeId]="state.selectedAttributeId">
-                </event-execution-plan-info>
-                <!-- ./EXECUTION PLAN INFO -->
+                <div [hidden]="state.selectedNodeId">
+                    <button *ngIf="eventId" [routerLink]="['/events/event-overview', eventId]"
+                            class="mb-3"
+                            mat-button>
+                        <mat-icon class="mr-2">arrow_back</mat-icon>
+                        <span class="pr-2">Execution Event</span>
+                    </button>
+
+                    <!-- EXECUTION PLAN INFO -->
+                    <event-execution-plan-info (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"
+                                               [executionPlan]="state.executionPlan"
+                                               [selectedAttributeId]="state.selectedAttributeId">
+                    </event-execution-plan-info>
+                    <!-- ./EXECUTION PLAN INFO -->
+                </div>
 
                 <!--  SELECTED NODE INFO -->
                 <div *ngIf="selectedNodeViewSchema$ | async as dataSchema">
-                    <button (click)="onShowEpDetailsBtnCLicked()" class="mb-3" mat-button>
+                    <button (click)="onShowEpDetailsBtnCLicked()"
+                            class="mb-3"
+                            mat-button>
                         <mat-icon class="mr-2">arrow_back</mat-icon>
-                        <span class="pr-2">Execution Plan Details</span>
+                        <span class="pr-2">Execution Plan Overview</span>
                     </button>
 
                     <event-operation-info (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"

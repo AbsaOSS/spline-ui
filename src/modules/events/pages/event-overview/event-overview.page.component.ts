@@ -48,6 +48,8 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
 
     readonly selectedNodeViewSchema$: Observable<SplineDataViewSchema>
 
+    executionEventId: string
+
     constructor(private readonly activatedRoute: ActivatedRoute,
                 private readonly router: Router,
                 readonly store: EventOverviewStoreFacade) {
@@ -76,15 +78,19 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
 
         this.selectedNodeViewSchema$ = this.store.selectedNode$
             .pipe(
-                map(selectedNode => selectedNode ? EventNodeInfo.toDataSchema(selectedNode) : null),
+                map(
+                    selectedNode => selectedNode
+                        ? EventNodeInfo.toDataSchema(selectedNode, (nodeId) => this.onExecutionPlanNodeLaunchAction(nodeId))
+                        : null,
+                ),
             )
     }
 
     ngOnInit(): void {
-        const executionEventId = this.activatedRoute.snapshot.params['id']
+        this.executionEventId = this.activatedRoute.snapshot.params['id']
         const selectedNodeId = this.activatedRoute.snapshot.queryParamMap.get(this.selectedNodeQueryParamName)
 
-        this.store.init(executionEventId, selectedNodeId)
+        this.store.init(this.executionEventId, selectedNodeId)
 
         //
         // [ACTION] :: SELECTED NODE CHANGE
@@ -104,7 +110,14 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
     }
 
     private onExecutionPlanNodeLaunchAction(nodeId: string): void {
-        this.router.navigate(['/events/plan-overview', nodeId])
+        this.router.navigate(
+            ['/events/plan-overview', nodeId],
+            {
+                queryParams: {
+                    eventId: this.executionEventId,
+                },
+            },
+        )
     }
 
     private updateQueryParams(selectedNode: ExecutionEventLineageNode | null): void {

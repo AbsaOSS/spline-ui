@@ -32,15 +32,8 @@
         </ng-template>
 
         <ng-template #defsTemplate>
-            <svg:marker id="arrow"
-                        fill="#ccc"
-                        markerWidth="40" markerHeight="40" viewBox="0 0 50 50"
-                        refX="15" refY="5"
-                        markerUnits="strokeWidth"
-                        strok-width="2"
-                        orient="auto-start-reverse"
-            >
-                <svg:polygon points=" 0,0 2.5,5 0,10 14,5 " fill="#7a7a7d"/>
+            <svg:marker id="arrow" viewBox="0 -5 12 12" refX="10" refY="0" markerWidth="6" markerHeight="6" orient="auto">
+                <svg:path d="M0,-5L12,0L0,5" class="arrow-head" fill="#7a7a7d"/>
             </svg:marker>
         </ng-template>
 

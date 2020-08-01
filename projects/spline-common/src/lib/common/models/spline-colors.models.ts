@@ -32,4 +32,5 @@ export namespace SplineColors {
     export const ORANGE = ENERGY
     export const PINK = HUMAN
     export const GREEN = '#2799a1'
+    export const GREEN_LIGHT = '#0da7a7'
 }

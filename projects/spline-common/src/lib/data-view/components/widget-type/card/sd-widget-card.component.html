@@ -14,19 +14,20 @@
   ~ limitations under the License.
   -->
 
-<mat-card class="mb-3" *ngIf="data$ | async as dataValue">
+<mat-card class="mb-3" *ngIf="data$ | async as data">
 
-    <spline-card-header *ngIf="dataValue?.header"
-                        [color]="dataValue.header.color"
-                        [headerTitle]="dataValue.header.title"
-                        [icon]="dataValue.header?.icon"
-                        [label]="dataValue.header?.label | translate">
+    <spline-card-header *ngIf="data?.header"
+                        [color]="data.header.color"
+                        [headerTitle]="data.header.title"
+                        [icon]="data.header?.icon"
+                        [actions]="data.header?.actions"
+                        [label]="data.header?.label | translate">
     </spline-card-header>
 
-    <spline-card-content *ngIf="dataValue?.content?.dataSchema?.length > 0"
-                         [showDivider]="!!dataValue?.header">
+    <spline-card-content *ngIf="data?.content?.dataSchema?.length > 0"
+                         [showDivider]="!!data?.header">
 
-        <spline-data-widget *ngFor="let schema of dataValue?.content?.dataSchema"
+        <spline-data-widget *ngFor="let schema of data?.content?.dataSchema"
                             (event$)="onWidgetEvent($event)"
                             [schema]="schema">
         </spline-data-widget>

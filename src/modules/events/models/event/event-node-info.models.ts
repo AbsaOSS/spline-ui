@@ -25,10 +25,11 @@ export namespace EventNodeInfo {
     export function getNodeInfoLabel(nodeSource: ExecutionEventLineageNode): string {
         return nodeSource.type === ExecutionEventLineageNodeType.DataSource
             ? 'EVENTS.EVENT_NODE_INFO__LABEL__DATA_SOURCE'
-            : 'EVENTS.EVENT_NODE_INFO__LABEL__EXECUTION'
+            : 'EVENTS.EVENT_NODE_INFO__LABEL__EXECUTION_PLAN'
     }
 
-    export function toDataSchema(nodeSource: ExecutionEventLineageNode): SplineDataViewSchema {
+    export function toDataSchema(nodeSource: ExecutionEventLineageNode,
+                                 onExecutionPlanLaunchAction: (nodeId: string) => void): SplineDataViewSchema {
         const nodeStyles = EventNodeControl.getNodeStyles(nodeSource)
         const contentDataSchema: SplineDataViewSchema = nodeSource.type === ExecutionEventLineageNodeType.DataSource
             ? [
@@ -45,6 +46,15 @@ export namespace EventNodeInfo {
                     icon: nodeStyles.icon,
                     title: EventNodeControl.extractNodeName(nodeSource),
                     label: getNodeInfoLabel(nodeSource),
+                    actions: [
+                        {
+                            icon: 'launch',
+                            onClick: () => {
+                                onExecutionPlanLaunchAction(nodeSource.id)
+                            },
+                            tooltip: 'EVENTS.EVENT_NODE_CONTROL__ACTION__LAUNCH',
+                        },
+                    ],
                 },
                 contentDataSchema,
             ),

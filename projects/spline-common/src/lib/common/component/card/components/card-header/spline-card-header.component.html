@@ -42,5 +42,18 @@
     </div>
     <div class="spline-card-header__actions">
         <ng-content></ng-content>
+
+        <ng-container *ngIf="actions?.length">
+            <button *ngFor="let action of actions"
+                    [matTooltip]="action?.tooltip | translate"
+                    mat-button
+                    mat-icon-button
+                    class="ml-2"
+                    (click)="onActionClicked($event, action)">
+
+                <mat-icon>{{action.icon}}</mat-icon>
+
+            </button>
+        </ng-container>
     </div>
 </div>

@@ -14,6 +14,4 @@
  * limitations under the License.
  */
 
-export * from './components/public-api'
-export * from './models/public-api'
-export * from './spline-card.module'
+export * from './public-api'

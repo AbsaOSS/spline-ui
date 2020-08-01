@@ -17,6 +17,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
 import { SplineColors } from '../../../../models'
+import { SplineCardHeader } from '../../models'
 
 
 @Component({
@@ -30,5 +31,11 @@ export class SplineCardHeaderComponent {
     @Input() color = SplineColors.PINK // valid CSS color
     @Input() icon: string
     @Input() label: string
+    @Input() actions: SplineCardHeader.Action[]
 
+
+    onActionClicked($event: MouseEvent, action: SplineCardHeader.Action): void {
+        $event.stopPropagation()
+        action.onClick()
+    }
 }

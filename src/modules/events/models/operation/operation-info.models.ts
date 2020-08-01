@@ -15,10 +15,8 @@
  */
 
 import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
-import { AttributeDataType, AttributeSchema, Operation, OperationDetails, OperationType } from 'spline-api'
-import { SdWidgetCard, SdWidgetSchema, SplineDataViewSchema } from 'spline-common'
-import { SdWidgetAttributesTree, SplineAttributesTree } from 'spline-shared'
+import { Operation, OperationDetails, OperationType } from 'spline-api'
+import { SdWidgetCard, SplineDataViewSchema } from 'spline-common'
 
 import { attributesSchemaToDataViewSchema } from '../attribute/attributes-schema.models'
 import { SgNodeControl } from '../sg-node-control.models'

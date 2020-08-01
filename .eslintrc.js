@@ -65,7 +65,7 @@ module.exports = {
                 '@typescript-eslint/tslint/config': [
                     'error',
                     {
-                        'lintFile': './tslint.json'
+                        'lintFile': __dirname + '/tslint.json'
                     }
                 ],
                 '@typescript-eslint/no-namespace': 0,

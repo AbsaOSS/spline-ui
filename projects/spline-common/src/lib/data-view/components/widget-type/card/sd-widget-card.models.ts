@@ -16,6 +16,7 @@
 
 import { TypeHelpers } from 'spline-utils'
 
+import { SplineCardHeader } from '../../../../common'
 import { SdWidgetSchema, SplineDataViewSchema } from '../../../models'
 
 
@@ -28,6 +29,7 @@ export namespace SdWidgetCard {
         icon: string
         label: string
         title: string
+        actions?: SplineCardHeader.Action[]
     }
 
     export type ContentData = {

@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
-export * from './components/public-api'
-export * from './models/public-api'
-export * from './spline-card.module'
+export namespace SplineCardHeader {
+
+    export type Action = {
+        icon: string
+        tooltip?: string
+        onClick: () => void
+    }
+
+}
