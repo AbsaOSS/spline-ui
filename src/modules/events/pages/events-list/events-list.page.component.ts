@@ -106,4 +106,8 @@ export class EventsListPageComponent extends BaseComponent implements OnInit, Af
     onPaginationChanged(pageEvent: PageEvent): void {
         this.dataSource.goToPage(pageEvent.pageIndex)
     }
+
+    onSearch(searchTerm: string): void {
+        this.dataSource.search(searchTerm)
+    }
 }

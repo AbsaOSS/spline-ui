@@ -6,11 +6,15 @@
     "SAVE": "Save",
     "CREATE": "Create",
     "CLOSE": "Close",
+    "CLEAR": "Clear",
     "EDIT": "Edit",
     "DETAILS": "Details",
     "DELETE": "Delete",
     "CANCEL": "Cancel",
     "SUBMIT": "Submit",
-    "ADD": "Add"
+    "SEARCH": "Search",
+    "ADD": "Add",
+    "SERVER_COMMUNICATION_ERROR_MESSAGE": "Error has been occurred during communication with a server.",
+    "NO_RESULTS_MESSAGE": "No data found."
   }
 }

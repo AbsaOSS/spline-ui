@@ -1,4 +1,4 @@
-/*
+/*!
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,25 +14,21 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common'
-import { HttpClientModule } from '@angular/common/http'
-import { NgModule, Optional, SkipSelf } from '@angular/core'
+@import 'vars';
+@import 'mixins';
 
+.spline-no-result {
+    color: $color-grey-dark-50;
+    padding: 1rem 0;
+    text-align: center;
 
-@NgModule({
-    declarations: [],
-    imports: [
-        CommonModule,
-        HttpClientModule,
-    ],
-    exports: [],
-    providers: [],
-})
-export class CoreModule {
-    constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
-        if (parentModule) {
-            throw new Error(
-                'CoreModule is already loaded. Import it in the AppModule only')
-        }
+    mat-icon.mat-icon {
+        @include icon-size(72px);
+    }
+
+    .message {
+        color: $color-grey-dark;
     }
 }
+
+

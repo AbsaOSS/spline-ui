@@ -26,13 +26,13 @@
            (focusout)="isFocused = false"
            [ngModel]="inputValue"
            (ngModelChange)="onSearchChanged($event)"
-           [placeholder]="placeholder"
+           [placeholder]="placeholder | translate"
            type="text">
 
     <!-- CLEAR ICON -->
     <mat-icon class="spline-search-box__clear-icon"
               *ngIf="inputRef.value?.length"
-              matTooltip="Clear"
+              [matTooltip]="'COMMON.CLEAR' | translate"
               (click)="onClearBtnClicked()">
         close
     </mat-icon>

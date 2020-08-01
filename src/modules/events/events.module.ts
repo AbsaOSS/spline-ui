@@ -39,9 +39,11 @@ import {
     SplineLabelModule,
     SplineLayoutModule,
     SplineLoaderModule,
+    SplineNoResultModule,
+    SplineSearchBoxModule,
     SplineSidePanelModule,
     SplineSortHeaderModule,
-    SplineTranslateModule,
+    SplineTranslateModule
 } from 'spline-common'
 import { SplineApiConfigModule, SplineAttributesTreeModule } from 'spline-shared'
 
@@ -84,6 +86,8 @@ import * as fromPages from './pages'
         SplineAttributesTreeModule,
         SplineDataViewModule,
         SplineCardModule,
+        SplineSearchBoxModule,
+        SplineNoResultModule,
         MatTreeModule,
         MatButtonModule,
         MatTabsModule,

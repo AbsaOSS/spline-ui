@@ -28,7 +28,7 @@ export class SplineSearchComponent extends BaseComponent {
 
     @ViewChild('inputRef', { read: ElementRef, static: true }) inputRef: ElementRef<HTMLElement>
 
-    @Input() placeholder = 'Search'
+    @Input() placeholder = 'COMMON.SEARCH'
 
     @Input() set searchTerm(value: string) {
         this.inputValue = value
@@ -68,7 +68,7 @@ export class SplineSearchComponent extends BaseComponent {
     }
 
     onClearBtnClicked(): void {
-        this.inputValue = ''
+        this.onSearchChanged('')
         this.focusSearchInput()
     }
 

@@ -74,7 +74,7 @@ export namespace ExecutionEventsQuery {
         return {
             timestampStart: queryFilter?.expiredAtFrom ? queryFilter?.expiredAtFrom.getTime() / 1000 : undefined,
             timestampEnd: queryFilter?.expiredAtTo ? queryFilter?.expiredAtTo.getTime() / 1000 : undefined,
-            searchTerm: queryFilter?.searchTerm,
+            searchTerm: queryFilter?.searchTerm?.length ? queryFilter?.searchTerm : undefined,
             dataSourceUri: queryFilter?.dataSourceUri,
             asAtTime: queryFilter?.asAtTime,
             applicationId: queryFilter?.applicationId,

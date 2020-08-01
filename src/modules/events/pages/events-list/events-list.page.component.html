@@ -30,6 +30,13 @@
             <!-- ./ERROR -->
         </ng-container>
 
+        <div class="pb-3">
+            <spline-search-box class="table-search"
+                               [searchTerm]="(dataSource.searchParams$ | async).searchTerm"
+                               (search$)="onSearch($event)">
+            </spline-search-box>
+        </div>
+
         <mat-table [dataSource]="(data$ | async)?.items" matSort>
 
             <!-- applicationName -->
@@ -144,11 +151,16 @@
 
         </mat-table>
 
+        <div class="pt-2">
+            <spline-no-result *ngIf="(data$ | async)?.totalCount === 0"></spline-no-result>
+        </div>
+
         <mat-paginator
                 (page)="onPaginationChanged($event)"
                 [hidePageSize]="true"
                 [length]="(data$ | async)?.totalCount"
                 [pageSize]="dataSource.searchParams?.pager?.limit"
+                [pageIndex]="dataSource.searchParams?.pager?.offset / dataSource.searchParams?.pager?.limit"
                 [showFirstLastButtons]="true"
                 class="mat-paginator--no-bg">
 

@@ -15,24 +15,26 @@
  */
 
 import { CommonModule } from '@angular/common'
-import { HttpClientModule } from '@angular/common/http'
-import { NgModule, Optional, SkipSelf } from '@angular/core'
+import { NgModule } from '@angular/core'
+import { FormsModule } from '@angular/forms'
+import { MatIconModule } from '@angular/material/icon'
+
+import { SplineTranslateModule } from '../../../translate'
+
+import { SplineNoResultComponent } from './spline-no-result.component'
 
 
 @NgModule({
-    declarations: [],
+    declarations: [
+        SplineNoResultComponent,
+    ],
     imports: [
         CommonModule,
-        HttpClientModule,
+        FormsModule,
+        MatIconModule,
+        SplineTranslateModule,
     ],
-    exports: [],
-    providers: [],
+    exports: [SplineNoResultComponent],
 })
-export class CoreModule {
-    constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
-        if (parentModule) {
-            throw new Error(
-                'CoreModule is already loaded. Import it in the AppModule only')
-        }
-    }
+export class SplineNoResultModule {
 }

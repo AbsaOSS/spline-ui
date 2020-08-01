@@ -20,6 +20,8 @@ import { FormsModule } from '@angular/forms'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 
+import { SplineTranslateModule } from '../../../translate'
+
 import { SplineSearchComponent } from './spline-search-box.component'
 
 
@@ -32,6 +34,7 @@ import { SplineSearchComponent } from './spline-search-box.component'
         FormsModule,
         MatIconModule,
         MatTooltipModule,
+        SplineTranslateModule.forChild({}),
     ],
     exports: [SplineSearchComponent],
 })

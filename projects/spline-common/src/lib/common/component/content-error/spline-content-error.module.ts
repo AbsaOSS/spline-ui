@@ -19,6 +19,8 @@ import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { MatIconModule } from '@angular/material/icon'
 
+import { SplineTranslateModule } from '../../../translate'
+
 import { SplineContentErrorComponent } from './spline-content-error.component'
 
 
@@ -30,6 +32,7 @@ import { SplineContentErrorComponent } from './spline-content-error.component'
         CommonModule,
         FormsModule,
         MatIconModule,
+        SplineTranslateModule,
     ],
     exports: [SplineContentErrorComponent],
 })
