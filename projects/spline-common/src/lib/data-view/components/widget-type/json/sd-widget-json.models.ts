@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,11 +14,29 @@
  * limitations under the License.
  */
 
-@import 'bootstrap/index';
-@import 'material-design/index';
-@import 'spline-fonts';
-@import 'data-view/index';
-@import 'common/index';
-@import 'graph/index';
-@import 'components/index';
-@import 'layout/index';
+import { SdWidgetSchema } from '../../../models'
+
+
+export namespace SdWidgetJson {
+
+    export const TYPE = 'Json'
+
+    export type Data = {
+        json: Record<string | number, any> | any[]
+    }
+
+    export type Options = {
+        expanded?: boolean
+    }
+
+    export function toSchema(json: Record<string | number, any>, options?: Options): SdWidgetSchema<Data> {
+        return {
+            type: TYPE,
+            data: {
+                json,
+            },
+            options,
+        }
+    }
+
+}

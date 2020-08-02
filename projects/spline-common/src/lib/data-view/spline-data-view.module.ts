@@ -25,6 +25,7 @@ import { MatInputModule } from '@angular/material/input'
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { RouterModule } from '@angular/router'
+import { NgxJsonViewerModule } from 'ngx-json-viewer'
 
 import { SplineCardModule, SplineDataRecordModule, SplineIconModule } from '../common'
 import { SplineTranslateModule } from '../translate'
@@ -49,6 +50,7 @@ import { SplineDataWidgetManager } from './services'
         MatDividerModule,
         MatExpansionModule,
         SplineIconModule,
+        NgxJsonViewerModule,
     ],
     declarations: [
         ...fromComponents.widgetComponents,

@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,11 +14,18 @@
  * limitations under the License.
  */
 
-@import 'bootstrap/index';
-@import 'material-design/index';
-@import 'spline-fonts';
-@import 'data-view/index';
-@import 'common/index';
-@import 'graph/index';
-@import 'components/index';
-@import 'layout/index';
+import { ChangeDetectionStrategy, Component } from '@angular/core'
+
+import { SgWidgetBaseComponent } from '../sg-widget-base.component'
+
+import { SdWidgetJson } from './sd-widget-json.models'
+
+
+@Component({
+    selector: 'sd-widget-json',
+    templateUrl: './sd-widget-json.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class SdWidgetJsonComponent extends SgWidgetBaseComponent<SdWidgetJson.Data, SdWidgetJson.Options> {
+
+}

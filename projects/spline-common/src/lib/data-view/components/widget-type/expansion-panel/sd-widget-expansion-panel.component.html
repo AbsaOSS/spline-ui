@@ -14,9 +14,9 @@
   ~ limitations under the License.
   -->
 
-<ng-container *ngIf="data$ | async as data">
+<div class="sd-widget-expansion-panel" *ngIf="data$ | async as data">
 
-    <mat-expansion-panel [expanded]="options?.expanded"
+    <mat-expansion-panel [expanded]="options?.expanded !== null ? options?.expanded : true"
                          [disabled]="options?.disabled"
                          [hideToggle]="options?.hideToggle"
                          [togglePosition]="options?.togglePosition">
@@ -49,6 +49,6 @@
 
     </mat-expansion-panel>
 
-</ng-container>
+</div>
 
 

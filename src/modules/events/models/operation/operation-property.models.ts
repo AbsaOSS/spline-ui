@@ -16,7 +16,7 @@
 
 
 import { AttributeSchema, OpExpression } from 'spline-api'
-import { SdWidgetSchema, SdWidgetSimpleRecord } from 'spline-common'
+import { SdWidgetExpansionPanel, SdWidgetJson, SdWidgetSchema, SdWidgetSimpleRecord, SplineColors } from 'spline-common'
 import { PrimitiveNotEmpty } from 'spline-utils'
 
 import { EventOpExpression } from './operation-property-expression.models'
@@ -115,14 +115,19 @@ export namespace EventOperationProperty {
     }
 
     export function jsonPropsToDvs(props: ExtraPropertyValueJson[]): SdWidgetSchema[] {
-        return [
-            // SdWidgetSimpleRecord.toSchema(
-            //     props.map(item => ({
-            //         label: item.label,
-            //         value: item.value
-            //     }))
-            // )
-        ]
+        return props.map(
+            item => SdWidgetExpansionPanel.toSchema(
+                {
+                    title: item.label,
+                    icon: 'code-json',
+                    iconColor: SplineColors.BLUE,
+                },
+                [
+                    SdWidgetJson.toSchema(item.value),
+                ],
+            ),
+        )
+
     }
 
     function toExpressionValue(key: string, expressionsList: OpExpression[], attrs: AttributeSchema[]): ExtraPropertyValueExpression {

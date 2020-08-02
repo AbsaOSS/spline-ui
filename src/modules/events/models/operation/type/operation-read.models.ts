@@ -30,15 +30,16 @@ export namespace OperationRead {
         const defaultProps = [
             'name', 'inputSources',
         ]
-        const extraProps = _.omit(properties, defaultProps)
-
+        const extraPropsNative = _.omit(properties, defaultProps)
+        const extraProps = EventOperationProperty.parseExtraOptions(extraPropsNative, operationDetails.schemas[0])
         return [
             SdWidgetExpansionPanel.toSchema(
                 {
-                    title: 'Read From',
+                    title: 'EVENTS.OPERATION__READ__READ_FROM_TITLE',
                     icon: 'database',
                     iconColor: SplineColors.ORANGE
                 },
+                // INPUT DATA SOURCES & EXTRA PROPS :: PRIMITIVE
                 [
                     SdWidgetRecordsList.toSchema(
                         properties.inputSources
@@ -48,12 +49,12 @@ export namespace OperationRead {
                             })),
                         'EVENTS.OPERATION__READ__INPUT_DATA_SOURCES_TITLE',
                     ),
-                    ...EventOperationProperty.extraPropsToDvs(extraProps, operationDetails.schemas[0]),
+                    ...EventOperationProperty.primitivePropsToDvs(extraProps.primitive),
                 ],
-                {
-                    expanded: true
-                }
             ),
+            // EXTRA PROPS :: JSON & EXPRESSION
+            ...EventOperationProperty.jsonPropsToDvs(extraProps.json),
+            ...EventOperationProperty.expressionPropsToDvs(extraProps.expression),
         ]
     }
 

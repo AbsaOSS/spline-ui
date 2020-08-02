@@ -20,4 +20,5 @@ export const SPLINE_ICONS_COLLECTION: Set<string> = new Set<string>([
     'arrow-down-circle',
     'source-branch',
     'head-cog',
+    'code-json',
 ])

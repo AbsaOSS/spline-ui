@@ -22,6 +22,8 @@ import {
     SdWidgetCardComponent,
     SdWidgetExpansionPanel,
     SdWidgetExpansionPanelComponent,
+    SdWidgetJson,
+    SdWidgetJsonComponent,
     SdWidgetRecordsList,
     SdWidgetRecordsListComponent,
     SdWidgetSimpleRecord,
@@ -39,6 +41,7 @@ export const SD_WIDGET_FACTORY = new InjectionToken<ISplineDataWidgetFactory<any
 export class SplineDataWidgetManager extends DynamicComponentManager<ISplineDataWidgetFactory<any>, ISplineDataWidget<any>> {
 
     readonly defaultCellTypesMap: { [type: string]: Type<ISplineDataWidget<any>> } = {
+        [SdWidgetJson.TYPE]: SdWidgetJsonComponent,
         [SdWidgetExpansionPanel.TYPE]: SdWidgetExpansionPanelComponent,
         [SdWidgetRecordsList.TYPE]: SdWidgetRecordsListComponent,
         [SdWidgetSimpleRecord.TYPE]: SdWidgetSimpleRecordComponent,

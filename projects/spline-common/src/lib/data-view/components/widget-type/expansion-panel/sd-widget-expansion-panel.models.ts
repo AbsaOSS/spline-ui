@@ -40,7 +40,7 @@ export namespace SdWidgetExpansionPanel {
     }
 
     export type Options = {
-        expanded?: boolean
+        expanded?: boolean // TRUE by default
         hideToggle?: boolean
         disabled?: boolean
         togglePosition?: MatAccordionTogglePosition

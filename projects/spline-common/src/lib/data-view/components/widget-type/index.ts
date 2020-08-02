@@ -17,6 +17,7 @@
 
 import { SdWidgetCardComponent } from './card/sd-widget-card.component'
 import { SdWidgetExpansionPanelComponent } from './expansion-panel/sd-widget-expansion-panel.component'
+import { SdWidgetJsonComponent } from './json/sd-widget-json.component'
 import { SdWidgetRecordsListComponent } from './records-list/sd-widget-records-list.component'
 import { SdWidgetSimpleRecordComponent } from './simple-record/sd-widget-simple-record.component'
 import { SdWidgetTitleComponent } from './title/sd-widget-title.component'
@@ -27,7 +28,8 @@ export const widgetTypesComponents: any[] = [
     SdWidgetCardComponent,
     SdWidgetTitleComponent,
     SdWidgetRecordsListComponent,
-    SdWidgetExpansionPanelComponent
+    SdWidgetExpansionPanelComponent,
+    SdWidgetJsonComponent
 ]
 
 export * from './public-api'
