@@ -1,4 +1,4 @@
-/*
+/*!
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +14,15 @@
  * limitations under the License.
  */
 
-export * from './lib/attributes-tree/public-api'
-export * from './lib/events/public-api'
-export * from './lib/expression/public-api'
-export * from './lib/spline-api-config/public-api'
+@import 'vars';
+
+.spline-expression-value {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    font-size: 1em;
+
+    &::before {
+        color: $color-green-light;
+        content: 'λ = ';
+        font-weight: bold;
+    }
+}

@@ -21,7 +21,7 @@ import { SdWidgetCard, SplineDataViewSchema } from 'spline-common'
 import { attributesSchemaToDataViewSchema } from '../attribute'
 import { SgNodeControl } from '../sg-node-control.models'
 
-import { OperationRead } from './type'
+import { OperationFilter, OperationRead } from './type'
 
 
 export namespace OperationInfo {
@@ -39,6 +39,8 @@ export namespace OperationInfo {
                 switch (name) {
                     case 'Join':
                         return SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Join)
+                    case 'Filter':
+                        return SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Filter)
                     default:
                         return SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Transformation)
                 }
@@ -97,9 +99,18 @@ export namespace OperationInfo {
     }
 
     export function toDetailsDvs(operationDetails: OperationDetails): SplineDataViewSchema | null {
+
         switch (operationDetails.operation.type) {
             case OperationType.Read:
                 return OperationRead.toDataViewSchema(operationDetails)
+
+            case OperationType.Transformation:
+                switch (operationDetails.operation.name) {
+                    case 'Filter':
+                        return OperationFilter.toDataViewSchema(operationDetails)
+                    default:
+                        return null
+                }
             default:
                 return null
         }

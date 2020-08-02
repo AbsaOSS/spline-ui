@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-export * from './attribute.models'
 export * from './attribute-data-type.models'
 export * from './attribute-dt-type.models'
 export * from './attribute-schema.models'

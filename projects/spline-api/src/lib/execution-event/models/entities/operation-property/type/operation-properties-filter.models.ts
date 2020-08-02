@@ -14,7 +14,13 @@
  * limitations under the License.
  */
 
-export * from './lib/attributes-tree/public-api'
-export * from './lib/events/public-api'
-export * from './lib/expression/public-api'
-export * from './lib/spline-api-config/public-api'
+import { OpExpression } from '../expression'
+import { OperationProperties } from '../operation-properties.models'
+
+
+export type OperationPropertiesFilter =
+    & OperationProperties
+    &
+    {
+        condition: OpExpression
+    }

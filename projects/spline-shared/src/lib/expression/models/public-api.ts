@@ -14,7 +14,5 @@
  * limitations under the License.
  */
 
-export * from './lib/attributes-tree/public-api'
-export * from './lib/events/public-api'
-export * from './lib/expression/public-api'
-export * from './lib/spline-api-config/public-api'
+export * from './sd-widget/public-api'
+export * from './spline-expression-value.models'

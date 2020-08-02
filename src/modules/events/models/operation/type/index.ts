@@ -15,3 +15,4 @@
  */
 
 export * from './operation-read.models'
+export * from './operation-filter.models'

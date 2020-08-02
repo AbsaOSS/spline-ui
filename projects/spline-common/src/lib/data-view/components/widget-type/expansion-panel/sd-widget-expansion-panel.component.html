@@ -23,13 +23,16 @@
         <!-- HEADER -->
         <mat-expansion-panel-header>
             <mat-panel-title>
-                <spline-icon [ngStyle]="data.header?.iconColor ? {color: data.header.iconColor} : {}"
-                             [icon]="data.header.icon"
-                             *ngIf="data.header?.icon"
-                             class="mr-3">
-                </spline-icon>
 
-                {{ data.header.title | translate }}
+                <div class="d-flex align-items-center w-100">
+                    <spline-icon [ngStyle]="data.header?.iconColor ? {color: data.header.iconColor} : {}"
+                                 [icon]="data.header.icon"
+                                 *ngIf="data.header?.icon"
+                                 class="mr-3">
+                    </spline-icon>
+
+                    {{ data.header.title | translate }}
+                </div>
 
             </mat-panel-title>
 

@@ -14,13 +14,7 @@
  * limitations under the License.
  */
 
-import { AttributeDataType } from './attribute-data-type.models'
-
-
-export type Attribute = {
-    id: string
-    name: string
-    dataType: AttributeDataType
-    dataTypeId: string
-}
-
+export * from './spline-expression.module'
+export * from './components/public-api'
+export * from './models/public-api'
+export * from './services/public-api'

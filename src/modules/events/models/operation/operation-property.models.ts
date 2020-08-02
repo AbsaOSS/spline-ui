@@ -15,11 +15,10 @@
  */
 
 
-import { AttributeSchema, OpExpression } from 'spline-api'
+import { AttrSchemasCollection, OpExpression } from 'spline-api'
 import { SdWidgetExpansionPanel, SdWidgetJson, SdWidgetSchema, SdWidgetSimpleRecord, SplineColors } from 'spline-common'
+import { SdWidgetExpression } from 'spline-shared'
 import { PrimitiveNotEmpty } from 'spline-utils'
-
-import { EventOpExpression } from './operation-property-expression.models'
 
 
 export namespace EventOperationProperty {
@@ -31,13 +30,8 @@ export namespace EventOperationProperty {
         value: T
     }
 
-    export type ExpressionValue = {
-        value: string
-        rawValue: Record<string, any>
-    }
-
     export type ExtraPropertyValuePrimitive = ExtraPropertyValue<PrimitiveNotEmpty>
-    export type ExtraPropertyValueExpression = ExtraPropertyValue<ExpressionValue[]>
+    export type ExtraPropertyValueExpression = ExtraPropertyValue<OpExpression[]>
     export type ExtraPropertyValueJson = ExtraPropertyValue<any[] | Record<any, any>>
 
     export type ExtraProperties = {
@@ -46,7 +40,7 @@ export namespace EventOperationProperty {
         json: ExtraPropertyValueJson[]
     }
 
-    export function parseExtraOptions(nativeProperties: NativeProperties, attributesList: AttributeSchema[]): ExtraProperties {
+    export function parseExtraOptions(nativeProperties: NativeProperties): ExtraProperties {
         return Object.entries(nativeProperties)
             .filter(([, v]) => v != null)
             .reduce(
@@ -59,10 +53,10 @@ export namespace EventOperationProperty {
                         return { ...acc, primitive: [...acc.primitive, primitiveValue] }
                     }
                     else if (typeof value === 'object' && isExpresionProperty(value)) {
-                        return { ...acc, expression: [...acc.expression, toExpressionValue(key, [value], attributesList)] }
+                        return { ...acc, expression: [...acc.expression, toExpressionValue(key, [value])] }
                     }
                     else if (typeof Array.isArray(value) && value.length && isExpresionProperty(value[0])) {
-                        return { ...acc, expression: [...acc.expression, toExpressionValue(key, value, attributesList)] }
+                        return { ...acc, expression: [...acc.expression, toExpressionValue(key, value)] }
                     }
                     else {
                         const jsonValue: ExtraPropertyValueJson = {
@@ -80,18 +74,6 @@ export namespace EventOperationProperty {
             )
     }
 
-
-    export function extraPropsToDvs(nativeProperties: NativeProperties, attributesList: AttributeSchema[]): SdWidgetSchema[] {
-
-        const extraProps = parseExtraOptions(nativeProperties, attributesList)
-
-        return [
-            ...primitivePropsToDvs(extraProps.primitive),
-            ...expressionPropsToDvs(extraProps.expression),
-            ...jsonPropsToDvs(extraProps.json),
-        ]
-    }
-
     export function primitivePropsToDvs(props: ExtraPropertyValuePrimitive[]): SdWidgetSchema[] {
         return [
             SdWidgetSimpleRecord.toSchema(
@@ -103,15 +85,20 @@ export namespace EventOperationProperty {
         ]
     }
 
-    export function expressionPropsToDvs(props: ExtraPropertyValueExpression[]): SdWidgetSchema[] {
-        return [
-            // SdWidgetSimpleRecord.toSchema(
-            //     props.map(item => ({
-            //         label: item.label,
-            //         value: item.value
-            //     }))
-            // )
-        ]
+    export function expressionPropsToDvs(props: ExtraPropertyValueExpression[],
+                                         attrSchemasCollection: AttrSchemasCollection): SdWidgetSchema[] {
+        return props.map(
+            item => SdWidgetExpansionPanel.toSchema(
+                {
+                    title: item.label,
+                    icon: 'code-json',
+                    iconColor: SplineColors.BLUE,
+                },
+                item.value.map(
+                    expression => SdWidgetExpression.toSchema({ expression, attrSchemasCollection }),
+                ),
+            ),
+        )
     }
 
     export function jsonPropsToDvs(props: ExtraPropertyValueJson[]): SdWidgetSchema[] {
@@ -130,13 +117,10 @@ export namespace EventOperationProperty {
 
     }
 
-    function toExpressionValue(key: string, expressionsList: OpExpression[], attrs: AttributeSchema[]): ExtraPropertyValueExpression {
+    function toExpressionValue(key: string, expressionsList: OpExpression[]): ExtraPropertyValueExpression {
         return {
             label: humanizeCase(key),
-            value: expressionsList.map(e => ({
-                value: EventOpExpression.getText(e, attrs),
-                rawValue: e,
-            })),
+            value: expressionsList,
         }
     }
 
@@ -150,7 +134,7 @@ export namespace EventOperationProperty {
             .map(s => s.substring(0, 1).toUpperCase() + s.substring(1)).join(' ')
     }
 
-    function isExpresionProperty(propertyValue: Record<string, any>): boolean {
+    function isExpresionProperty(propertyValue: Record<string, any>): propertyValue is OpExpression {
         return propertyValue._typeHint && (propertyValue._typeHint as string).startsWith('expr.')
     }
 }

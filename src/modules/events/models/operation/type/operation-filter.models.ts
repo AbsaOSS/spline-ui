@@ -15,42 +15,42 @@
  */
 
 import _ from 'lodash'
-import { dataSourceUriToName, OperationDetails, OperationPropertiesRead } from 'spline-api'
-import { SdWidgetExpansionPanel, SdWidgetRecordsList, SplineColors, SplineDataViewSchema } from 'spline-common'
+import { OperationDetails, OperationPropertiesFilter } from 'spline-api'
+import { SdWidgetExpansionPanel, SplineDataViewSchema } from 'spline-common'
+import { SdWidgetExpression } from 'spline-shared'
 
+import { SgNodeControl } from '../../sg-node-control.models'
 import { EventOperationProperty } from '../operation-property.models'
+import NodeType = SgNodeControl.NodeType
 
 
-export namespace OperationRead {
+export namespace OperationFilter {
 
     export function toDataViewSchema(operationDetails: OperationDetails): SplineDataViewSchema {
 
-        const properties = operationDetails.operation.properties as OperationPropertiesRead
-
+        const properties = operationDetails.operation.properties as OperationPropertiesFilter
+        console.log(properties)
         const defaultProps = [
-            'name', 'inputSources',
+            'name', 'condition',
         ]
         const extraPropsNative = _.omit(properties, defaultProps)
         const extraProps = EventOperationProperty.parseExtraOptions(extraPropsNative)
+        const nodeStyles = SgNodeControl.getNodeStyles(NodeType.Filter)
+
         return [
             SdWidgetExpansionPanel.toSchema(
                 {
-                    title: 'EVENTS.OPERATION__READ__READ_FROM_TITLE',
-                    icon: 'database',
-                    iconColor: SplineColors.ORANGE
+                    title: 'EVENTS.OPERATION__FILTER__FILTER_ON_TITLE',
+                    icon: nodeStyles.icon,
+                    iconColor: nodeStyles.color,
                 },
-                // INPUT DATA SOURCES & EXTRA PROPS :: PRIMITIVE
                 [
-                    SdWidgetRecordsList.toSchema(
-                        properties.inputSources
-                            .map(uri => ({
-                                value: dataSourceUriToName(uri),
-                                description: uri,
-                            })),
-                        'EVENTS.OPERATION__READ__INPUT_DATA_SOURCES_TITLE',
-                    ),
-                    ...EventOperationProperty.primitivePropsToDvs(extraProps.primitive),
+                    SdWidgetExpression.toSchema({
+                        expression: properties.condition,
+                        attrSchemasCollection: operationDetails.schemasCollection,
+                    }),
                 ],
+                // INPUT DATA SOURCES & EXTRA PROPS :: PRIMITIVE
             ),
             // EXTRA PROPS :: JSON & EXPRESSION
             ...EventOperationProperty.jsonPropsToDvs(extraProps.json),

@@ -55,6 +55,7 @@ module.exports = {
                 '@typescript-eslint/no-empty-function': 0,
                 '@typescript-eslint/no-var-requires': 0,
                 '@typescript-eslint/no-explicit-any': 0,
+                '@typescript-eslint/no-unnecessary-type-assertion': 1,
                 '@typescript-eslint/unbound-method': [
                     'error',
                     {

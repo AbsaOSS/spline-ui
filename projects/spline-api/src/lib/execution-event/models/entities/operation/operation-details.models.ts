@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-import { AttributeDataType, AttributeDataTypeDto, AttributeSchema, toAttributeDataType } from '../attribute'
+import _ from 'lodash'
+
+import { AttributeDataType, AttributeDataTypeDto, AttributeSchema, AttrSchemasCollection, toAttributeDataType } from '../attribute'
 
 import { Operation, OperationDto, toOperation } from './operation.models'
 
@@ -22,6 +24,7 @@ import { Operation, OperationDto, toOperation } from './operation.models'
 export type OperationDetails = {
     operation: Operation
     schemas: AttributeSchema[][]
+    schemasCollection: AttrSchemasCollection
     output: number // output DS index
     inputs: number[] // output DS index
     dataTypes: AttributeDataType[]
@@ -39,8 +42,9 @@ export function toOperationDetails(entity: OperationDetailsDto): OperationDetail
     return {
         operation: toOperation(entity.operation),
         schemas: entity.schemas,
+        schemasCollection: _.keyBy(entity.schemas.reduce((acc, curr) => [...acc, ...curr], []), 'id'),
         output: entity.output,
         inputs: entity.inputs,
-        dataTypes: entity.dataTypes.map(item => toAttributeDataType(item))
+        dataTypes: entity.dataTypes.map(item => toAttributeDataType(item)),
     }
 }

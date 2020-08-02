@@ -14,7 +14,27 @@
  * limitations under the License.
  */
 
-export * from './lib/attributes-tree/public-api'
-export * from './lib/events/public-api'
-export * from './lib/expression/public-api'
-export * from './lib/spline-api-config/public-api'
+import { AttrSchemasCollection, OpExpression } from 'spline-api'
+import { SdWidgetSchema } from 'spline-common'
+import { DynamicValueProvider } from 'spline-utils'
+
+
+export namespace SdWidgetExpression {
+
+    export const TYPE = 'Expression'
+
+    export type Data = {
+        expression: OpExpression
+        attrSchemasCollection: AttrSchemasCollection
+    }
+
+    export type Options = {}
+
+    export function toSchema(data: DynamicValueProvider<Data>): SdWidgetSchema<Data> {
+        return {
+            type: TYPE,
+            data,
+        }
+    }
+
+}

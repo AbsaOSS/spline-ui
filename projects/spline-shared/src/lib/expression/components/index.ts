@@ -14,7 +14,15 @@
  * limitations under the License.
  */
 
-export * from './lib/attributes-tree/public-api'
-export * from './lib/events/public-api'
-export * from './lib/expression/public-api'
-export * from './lib/spline-api-config/public-api'
+import { SplineExpressionValueComponent } from './expression-value/spline-expression-value.component'
+import { SplineExpressionComponent } from './expression/spline-expression.component'
+import { SdWidgetExpressionComponent } from './sd-widgets/expression/sd-widget-expression.component'
+
+
+export * from './public-api'
+
+export const attributesTreeComponents = [
+    SplineExpressionValueComponent,
+    SdWidgetExpressionComponent,
+    SplineExpressionComponent,
+]

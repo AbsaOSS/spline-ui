@@ -14,7 +14,17 @@
  * limitations under the License.
  */
 
-export * from './lib/attributes-tree/public-api'
-export * from './lib/events/public-api'
-export * from './lib/expression/public-api'
-export * from './lib/spline-api-config/public-api'
+import { Component } from '@angular/core'
+import { BehaviorSubject } from 'rxjs'
+import { SgWidgetBaseComponent } from 'spline-common'
+
+import { SdWidgetExpression } from '../../../models'
+
+
+@Component({
+    selector: 'sd-widget-expression',
+    templateUrl: './sd-widget-expression.component.html',
+})
+export class SdWidgetExpressionComponent extends SgWidgetBaseComponent<SdWidgetExpression.Data, SdWidgetExpression.Options> {
+    readonly data$ = new BehaviorSubject<SdWidgetExpression.Data>(null)
+}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 ABSA Group Limited
+ * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 import * as _ from 'lodash'
 import {
-    AttributeSchema,
+    AttrSchemasCollection,
     OpExpression,
     OpExpressionAlias,
     OpExpressionAttrRef,
@@ -30,9 +30,10 @@ import {
 import { TypeHelpers } from 'spline-utils'
 
 
-export namespace EventOpExpression {
+export namespace SplineExpressionValue {
 
-    export function getName(expr: OpExpression, attributeList: AttributeSchema[]): string {
+    // TODO: it should be a part of tree models
+    export function getExpressionName(expr: OpExpression, attrSchemasCollection: AttrSchemasCollection): string {
         switch (expr._typeHint) {
             case OpExpressionType.Literal: {
                 return (expr as OpExpressionLiteral).value
@@ -48,7 +49,7 @@ export namespace EventOpExpression {
             }
             case OpExpressionType.AttrRef: {
                 const ar = expr as OpExpressionAttrRef
-                return getText(ar, attributeList)
+                return expressionToString(ar, attrSchemasCollection)
             }
             case OpExpressionType.Generic:
             case OpExpressionType.GenericLeaf: {
@@ -59,46 +60,46 @@ export namespace EventOpExpression {
         }
     }
 
-    export function getText(expr: OpExpression, attributeList: AttributeSchema[]): string {
+    export function expressionToString(expr: OpExpression, attrSchemasCollection: AttrSchemasCollection): string {
         switch (expr._typeHint) {
             case OpExpressionType.Literal: {
                 return (expr as OpExpressionLiteral).value
             }
             case OpExpressionType.Binary: {
                 const binaryExpr = expr as OpExpressionBinary
-                const leftOperand = getText(binaryExpr.children[0], attributeList)
-                const rightOperand = getText(binaryExpr.children[1], attributeList)
+                const leftOperand = expressionToString(binaryExpr.children[0], attrSchemasCollection)
+                const rightOperand = expressionToString(binaryExpr.children[1], attrSchemasCollection)
                 return `${leftOperand} ${binaryExpr.symbol} ${rightOperand}`
             }
             case OpExpressionType.Alias: {
                 const ae = expr as OpExpressionAlias
-                return `${getText(ae.child, attributeList)} AS  ${ae.alias}`
+                return `${expressionToString(ae.child, attrSchemasCollection)} AS  ${ae.alias}`
             }
             case OpExpressionType.UDF: {
                 const udf = expr as OpExpressionUDF
-                const paramList = _.map(udf.children, child => getText(child, attributeList))
+                const paramList = _.map(udf.children, child => expressionToString(child, attrSchemasCollection))
                 return `UDF:${udf.name}(${_.join(paramList, ', ')})`
             }
             case OpExpressionType.AttrRef: {
                 const attrRef = expr as OpExpressionAttrRef
-                return attributeList.find(a => a.id === attrRef.refId).name
+                return attrSchemasCollection[attrRef.refId]?.name
             }
             case OpExpressionType.GenericLeaf: {
-                return renderAsGenericLeafExpr(expr as OpExpressionGenericLeaf, attributeList)
+                return renderAsGenericLeafExpr(expr as OpExpressionGenericLeaf, attrSchemasCollection)
             }
             case OpExpressionType.Generic: {
-                const leafText = renderAsGenericLeafExpr(expr as OpExpressionGenericLeaf, attributeList)
-                const childrenTexts = (expr as OpExpressionGeneric).children.map(child => getText(child, attributeList))
+                const leafText = renderAsGenericLeafExpr(expr as OpExpressionGenericLeaf, attrSchemasCollection)
+                const childrenTexts = (expr as OpExpressionGeneric).children.map(child => expressionToString(child, attrSchemasCollection))
                 return leafText + _.join(childrenTexts, ', ')
             }
         }
     }
 
-    function renderAsGenericLeafExpr(expression: OpExpressionGenericLeaf, attributeList: AttributeSchema[]): string {
+    function renderAsGenericLeafExpr(expression: OpExpressionGenericLeaf, attrSchemasCollection: AttrSchemasCollection): string {
         const paramList = expression.params
             .map(
                 (value, name) => {
-                    const renderedValue = renderGenericLeafParamValue(value, attributeList)
+                    const renderedValue = renderGenericLeafParamValue(value, attrSchemasCollection)
                     return `${name}=${renderedValue}`
                 },
             )
@@ -107,20 +108,21 @@ export namespace EventOpExpression {
             : `${expression.name}[${paramList.join(', ')}]`
     }
 
-    function renderGenericLeafParamValue(paramValue: OpExpression | object | number | string, attributeList: AttributeSchema[]): string {
+    function renderGenericLeafParamValue(paramValue: OpExpression | object | number | string,
+                                         attrSchemasCollection: AttrSchemasCollection): string {
 
         if ((paramValue as OpExpression)?._typeHint) {
-            return getText(paramValue as OpExpression, attributeList)
+            return expressionToString(paramValue as OpExpression, attrSchemasCollection)
         }
 
         if (TypeHelpers.isArray(paramValue)) {
-            return `[${paramValue.map(valueItem => renderGenericLeafParamValue(valueItem, attributeList)).join(', ')}]`
+            return `[${paramValue.map(valueItem => renderGenericLeafParamValue(valueItem, attrSchemasCollection)).join(', ')}]`
         }
 
         if (_.isPlainObject(paramValue)) {
             const renderedPairs = Object.entries(paramValue)
                 .map(
-                    ([key, value]) => `${key}: ${renderGenericLeafParamValue(value, attributeList)}`,
+                    ([key, value]) => `${key}: ${renderGenericLeafParamValue(value, attrSchemasCollection)}`,
                 )
             return `{${renderedPairs.join(', ')}}`
         }
@@ -133,7 +135,6 @@ export namespace EventOpExpression {
             return paramValue
         }
 
-        throw new Error(`Unknown data type`)
+        throw new Error('Unknown data type')
     }
-
 }

@@ -21,3 +21,4 @@ export type AttributeSchema = {
     dataTypeId: string
 }
 
+export type AttrSchemasCollection = Record<string, AttributeSchema>

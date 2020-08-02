@@ -45,7 +45,7 @@ import {
     SplineSortHeaderModule,
     SplineTranslateModule
 } from 'spline-common'
-import { SplineApiConfigModule, SplineAttributesTreeModule } from 'spline-shared'
+import { SplineApiConfigModule, SplineAttributesTreeModule, SplineExpressionModule } from 'spline-shared'
 
 
 import * as fromComponents from './components'
@@ -92,6 +92,7 @@ import * as fromPages from './pages'
         MatButtonModule,
         MatTabsModule,
         SplineIconModule,
+        SplineExpressionModule
     ],
     exports: [
         ...fromPages.pageComponents,

@@ -31,6 +31,7 @@ export namespace SgNodeControl {
         Read = 'Read',
         Write = 'Write',
         Join = 'Join',
+        Filter = 'Filter',
         Transformation = 'Transformation',
     }
 
@@ -81,6 +82,13 @@ export namespace SgNodeControl {
                 {
                     icon: 'arrow-down-circle',
                     color: SplineColors.BLUE,
+                },
+            ],
+            [
+                NodeType.Filter,
+                {
+                    icon: 'filter_alt',
+                    color: SplineColors.SMILE,
                 },
             ],
         ])

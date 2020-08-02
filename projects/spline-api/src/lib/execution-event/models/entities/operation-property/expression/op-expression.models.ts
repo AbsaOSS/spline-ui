@@ -35,58 +35,72 @@ export type OpExpressionCommon =
     & Record<string, any>
 
 export type OpExpressionAttrRef =
+    & OpExpressionCommon
+    &
     {
         refId: string
+        _typeHint: OpExpressionType.AttrRef
     }
-    & OpExpressionCommon
+
 
 export type OpExpressionGeneric =
+    & OpExpressionCommon
+    &
     {
         params: Record<string, any> | null
         exprType: string
         children: OpExpression[]
         dataTypeId: string
         name: string
+        _typeHint: OpExpressionType.Generic
     }
-    & OpExpressionCommon
 
 
 export type OpExpressionGenericLeaf =
+    & OpExpressionCommon
+    &
     {
         params: Record<string, any> | null
         exprType: string
         dataTypeId: string
         name: string
+        _typeHint: OpExpressionType.GenericLeaf
     }
-    & OpExpressionCommon
 
 export type OpExpressionAlias =
+    & OpExpressionCommon
+    &
     {
         child: OpExpression
         alias: string
+        _typeHint: OpExpressionType.Alias
     }
-    & OpExpressionCommon
 
 export type OpExpressionBinary =
+    & OpExpressionCommon
+    &
     {
         children: OpExpression[]
         dataTypeId: string
         symbol: string
+        _typeHint: OpExpressionType.Binary
     }
-    & OpExpressionCommon
 
 export type OpExpressionUDF =
+    & OpExpressionCommon
+    &
     {
         children: OpExpression[]
         dataTypeId: string
         name: string
+        _typeHint: OpExpressionType.UDF
     }
-    & OpExpressionCommon
 
 export type OpExpressionLiteral =
+    & OpExpressionCommon
+    &
     {
         dataTypeId: string
         value: string
+        _typeHint: OpExpressionType.Literal
     }
-    & OpExpressionCommon
-

@@ -14,7 +14,20 @@
  * limitations under the License.
  */
 
-export * from './lib/attributes-tree/public-api'
-export * from './lib/events/public-api'
-export * from './lib/expression/public-api'
-export * from './lib/spline-api-config/public-api'
+import { Injectable, Type } from '@angular/core'
+import { ISplineDataWidget, ISplineDataWidgetFactory } from 'spline-common'
+
+import { SdWidgetExpressionComponent } from '../components'
+import { SdWidgetExpression } from '../models'
+
+
+@Injectable()
+export class SdWidgetExpressionFactory implements ISplineDataWidgetFactory<SdWidgetExpression.Data> {
+
+    readonly type = SdWidgetExpression.TYPE
+
+    get componentType(): Type<ISplineDataWidget<SdWidgetExpression.Data>> {
+        return SdWidgetExpressionComponent
+    }
+
+}
