@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import { OperationProperties } from '../operation-property'
+
 import { OperationType } from './operation-type.models'
 
 
@@ -21,21 +23,15 @@ export type Operation = {
     id: string
     type: OperationType | string
     name: string
-    properties: Record<string, any>
+    properties: OperationProperties
 }
 
-export type OperationProperties =
-    &
-    {
-        name: string
-    }
-    & Record<string, any>
 
 export type OperationDto = {
     _id: string
     _type: OperationType | string
     name: string
-    properties: Record<string, any>
+    properties: OperationProperties
 }
 
 export function toOperation(entity: OperationDto): Operation {

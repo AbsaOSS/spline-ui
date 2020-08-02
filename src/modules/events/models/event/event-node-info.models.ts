@@ -15,7 +15,7 @@
  */
 
 import { ExecutionEventLineageNode, ExecutionEventLineageNodeType } from 'spline-api'
-import { SdWidgetCard, SdWidgetSimpleRecord, SplineDataViewSchema } from 'spline-common'
+import { SdWidgetCard, SdWidgetSimpleRecord, SplineCardHeader, SplineDataViewSchema } from 'spline-common'
 
 import { EventNodeControl } from './event-node-control.models'
 
@@ -39,6 +39,18 @@ export namespace EventNodeInfo {
                 }),
             ]
             : []
+
+        const actions: SplineCardHeader.Action[] = nodeSource.type === ExecutionEventLineageNodeType.Execution
+            ? [
+                {
+                    icon: 'launch',
+                    onClick: () => {
+                        onExecutionPlanLaunchAction(nodeSource.id)
+                    },
+                    tooltip: 'EVENTS.EVENT_NODE_CONTROL__ACTION__LAUNCH',
+                },
+            ]
+            : []
         return [
             SdWidgetCard.toSchema(
                 {
@@ -46,15 +58,7 @@ export namespace EventNodeInfo {
                     icon: nodeStyles.icon,
                     title: EventNodeControl.extractNodeName(nodeSource),
                     label: getNodeInfoLabel(nodeSource),
-                    actions: [
-                        {
-                            icon: 'launch',
-                            onClick: () => {
-                                onExecutionPlanLaunchAction(nodeSource.id)
-                            },
-                            tooltip: 'EVENTS.EVENT_NODE_CONTROL__ACTION__LAUNCH',
-                        },
-                    ],
+                    actions
                 },
                 contentDataSchema,
             ),

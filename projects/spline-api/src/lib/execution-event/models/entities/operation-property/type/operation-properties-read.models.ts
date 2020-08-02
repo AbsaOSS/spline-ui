@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-import { PrimitiveNotEmpty } from 'spline-utils'
+import { OperationProperties } from '../operation-properties.models'
 
 
-export type SplineDataRecordData = {
-    value: PrimitiveNotEmpty
-    label?: string
-    description?: string
-}
+export type OperationPropertiesRead =
+    & OperationProperties
+    &
+    {
+        inputSources: string[]
+        sourceType: string
+    }

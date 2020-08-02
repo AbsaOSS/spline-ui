@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 ABSA Group Limited
+ * Copyright 2019 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-import { PrimitiveNotEmpty } from 'spline-utils'
 
-
-export type SplineDataRecordData = {
-    value: PrimitiveNotEmpty
-    label?: string
-    description?: string
+export enum OpExpressionType {
+    Binary = 'expr.Binary',
+    Literal = 'expr.Literal',
+    Alias = 'expr.Alias',
+    UDF = 'expr.UDF',
+    Union = 'expr.Union',
+    Generic = 'expr.Generic',
+    GenericLeaf = 'expr.GenericLeaf',
+    AttrRef = 'expr.AttrRef'
 }

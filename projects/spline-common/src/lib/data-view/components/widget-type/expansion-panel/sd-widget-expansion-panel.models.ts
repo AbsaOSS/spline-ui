@@ -14,22 +14,20 @@
  * limitations under the License.
  */
 
-import { TypeHelpers } from 'spline-utils'
+import { MatAccordionTogglePosition } from '@angular/material/expansion/accordion-base'
 
-import { SplineCardHeader } from '../../../../common'
 import { SdWidgetSchema, SplineDataViewSchema } from '../../../models'
 
 
-export namespace SdWidgetCard {
+export namespace SdWidgetExpansionPanel {
 
-    export const TYPE = 'Card'
+    export const TYPE = 'ExpansionPanel'
 
     export type HeaderData = {
-        color?: string
-        icon: string
-        label: string
         title: string
-        actions?: SplineCardHeader.Action[]
+        description?: string
+        icon?: string
+        iconColor?: string
     }
 
     export type ContentData = {
@@ -41,24 +39,21 @@ export namespace SdWidgetCard {
         content?: ContentData
     }
 
-    export function toSchema(header?: HeaderData, contentDataSchema?: SplineDataViewSchema): SdWidgetSchema<Data> {
+    export type Options = {
+        expanded?: boolean
+        hideToggle?: boolean
+        disabled?: boolean
+        togglePosition?: MatAccordionTogglePosition
+    }
+
+    export function toSchema(header: HeaderData, contentDataSchema?: SplineDataViewSchema, options?: Options): SdWidgetSchema<Data> {
         return {
             type: TYPE,
             data: {
                 header,
                 content: contentDataSchema ? { dataSchema: contentDataSchema } : undefined,
             },
-        }
-    }
-
-    export function toContentOnlySchema(contentDataSchema: SplineDataViewSchema): SdWidgetSchema<Data> {
-        return {
-            type: TYPE,
-            data: {
-                content: contentDataSchema
-                    ? { dataSchema: TypeHelpers.isArray(contentDataSchema) ? contentDataSchema : [contentDataSchema] }
-                    : undefined,
-            },
+            options
         }
     }
 

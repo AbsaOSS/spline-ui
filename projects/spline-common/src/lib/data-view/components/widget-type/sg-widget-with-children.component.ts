@@ -14,11 +14,16 @@
  * limitations under the License.
  */
 
-import { PrimitiveNotEmpty } from 'spline-utils'
+import { SplineDataWidgetEvent } from '../../models'
+
+import { SgWidgetBaseComponent } from './sg-widget-base.component'
 
 
-export type SplineDataRecordData = {
-    value: PrimitiveNotEmpty
-    label?: string
-    description?: string
+export abstract class SgWidgetWithChildrenComponent<TData extends object, TOptions extends object = {}>
+    extends SgWidgetBaseComponent<TData, TOptions> {
+
+    onChildWidgetEvent($event: SplineDataWidgetEvent): void {
+        this.event$.emit($event)
+    }
+
 }

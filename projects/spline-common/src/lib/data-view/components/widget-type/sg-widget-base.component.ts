@@ -30,8 +30,8 @@ export abstract class SgWidgetBaseComponent<TData extends object, TOptions exten
 
     @Output() event$ = new EventEmitter<SplineDataWidgetEvent>()
 
-    data$ = new BehaviorSubject<TData | null>(null)
-    options$ = new BehaviorSubject<TOptions | null>(null)
+    readonly data$ = new BehaviorSubject<TData | null>(null)
+    readonly options$ = new BehaviorSubject<TOptions | null>(null)
 
     get options(): TOptions {
         return this.options$.getValue()

@@ -1,0 +1,54 @@
+<!--
+  ~ Copyright (c) 2020 ABSA Group Limited
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<ng-container *ngIf="data$ | async as data">
+
+    <mat-expansion-panel [expanded]="options?.expanded"
+                         [disabled]="options?.disabled"
+                         [hideToggle]="options?.hideToggle"
+                         [togglePosition]="options?.togglePosition">
+        <!-- HEADER -->
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <spline-icon [ngStyle]="data.header?.iconColor ? {color: data.header.iconColor} : {}"
+                             [icon]="data.header.icon"
+                             *ngIf="data.header?.icon"
+                             class="mr-3">
+                </spline-icon>
+
+                {{ data.header.title | translate }}
+
+            </mat-panel-title>
+
+            <mat-panel-description *ngIf="data.header?.description?.length">
+                {{data.header.description | translate}}
+            </mat-panel-description>
+
+        </mat-expansion-panel-header>
+        <!-- ./HEADER -->
+
+        <!-- CONTENT -->
+        <spline-data-widget *ngFor="let schema of data?.content?.dataSchema"
+                            (event$)="onChildWidgetEvent($event)"
+                            [schema]="schema">
+        </spline-data-widget>
+        <!-- ./CONTENT -->
+
+    </mat-expansion-panel>
+
+</ng-container>
+
+

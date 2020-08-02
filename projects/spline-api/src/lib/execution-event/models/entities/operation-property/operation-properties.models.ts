@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-import { PrimitiveNotEmpty } from 'spline-utils'
+import { OpExpression } from './expression/op-expression.models'
 
 
-export type SplineDataRecordData = {
-    value: PrimitiveNotEmpty
-    label?: string
-    description?: string
-}
+export type OperationProperties =
+    &
+    {
+        name: string
+    }
+    & (Record<string, any> | OpExpression)

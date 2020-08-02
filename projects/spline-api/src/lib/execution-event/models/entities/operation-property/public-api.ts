@@ -14,11 +14,8 @@
  * limitations under the License.
  */
 
-import { PrimitiveNotEmpty } from 'spline-utils'
+export * from './expression/public-api'
+export * from './type/public-api'
 
+export * from './operation-properties.models'
 
-export type SplineDataRecordData = {
-    value: PrimitiveNotEmpty
-    label?: string
-    description?: string
-}

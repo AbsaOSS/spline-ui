@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 
 import { SgWidgetBaseComponent } from '../sg-widget-base.component'
 
@@ -24,6 +24,7 @@ import { SdWidgetSimpleRecord } from './sd-widget-simple-record.models'
 @Component({
     selector: 'sd-widget-simple-record',
     templateUrl: './sd-widget-simple-record.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SdWidgetSimpleRecordComponent extends SgWidgetBaseComponent<SdWidgetSimpleRecord.Data> {
 

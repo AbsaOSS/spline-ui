@@ -14,11 +14,19 @@
  * limitations under the License.
  */
 
-import { PrimitiveNotEmpty } from 'spline-utils'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
+
+import { SgWidgetWithChildrenComponent } from '../sg-widget-with-children.component'
+
+import { SdWidgetExpansionPanel } from './sd-widget-expansion-panel.models'
 
 
-export type SplineDataRecordData = {
-    value: PrimitiveNotEmpty
-    label?: string
-    description?: string
+@Component({
+    selector: 'sd-widget-expansion-panel',
+    templateUrl: './sd-widget-expansion-panel.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class SdWidgetExpansionPanelComponent
+    extends SgWidgetWithChildrenComponent<SdWidgetExpansionPanel.Data, SdWidgetExpansionPanel.Options> {
+
 }

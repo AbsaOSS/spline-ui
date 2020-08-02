@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 
 import { SgWidgetBaseComponent } from '../sg-widget-base.component'
 
@@ -24,6 +24,7 @@ import { SdWidgetTitle } from './sd-widget-title.models'
 @Component({
     selector: 'sd-widget-title',
     templateUrl: './sd-widget-title.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SdWidgetTitleComponent extends SgWidgetBaseComponent<SdWidgetTitle.Data, SdWidgetTitle.Options> {
 

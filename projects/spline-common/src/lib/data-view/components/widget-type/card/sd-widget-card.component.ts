@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 
 import { SplineDataWidgetEvent } from '../../../models'
 import { SgWidgetBaseComponent } from '../sg-widget-base.component'
@@ -25,6 +25,7 @@ import { SdWidgetCard } from './sd-widget-card.models'
 @Component({
     selector: 'sd-widget-card',
     templateUrl: './sd-widget-card.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SdWidgetCardComponent extends SgWidgetBaseComponent<SdWidgetCard.Data> {
 

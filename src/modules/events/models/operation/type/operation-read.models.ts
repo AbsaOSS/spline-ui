@@ -14,31 +14,30 @@
  * limitations under the License.
  */
 
-import { dataSourceUriToName, OperationDetails, OperationProperties } from 'spline-api'
-import { SdWidgetCard, SdWidgetRecordsList, SplineDataViewSchema } from 'spline-common'
+import _ from 'lodash'
+import { dataSourceUriToName, OperationDetails, OperationPropertiesRead } from 'spline-api'
+import { SdWidgetExpansionPanel, SdWidgetRecordsList, SplineColors, SplineDataViewSchema } from 'spline-common'
 
-import { SgNodeControl } from '../../sg-node-control.models'
+import { EventOperationProperty } from '../operation-property.models'
 
 
 export namespace OperationRead {
 
-    export type Properties =
-        & OperationProperties
-        &
-        {
-            inputSources: string[]
-            sourceType: string
-        }
-
     export function toDataViewSchema(operationDetails: OperationDetails): SplineDataViewSchema {
 
-        const properties = operationDetails.operation.properties as Properties
+        const properties = operationDetails.operation.properties as OperationPropertiesRead
+
+        const defaultProps = [
+            'name', 'inputSources',
+        ]
+        const extraProps = _.omit(properties, defaultProps)
+
         return [
-            SdWidgetCard.toSchema(
+            SdWidgetExpansionPanel.toSchema(
                 {
-                    ...SgNodeControl.getNodeStyles(SgNodeControl.NodeType.DataSource),
-                    title: 'Input Data Sources',
-                    label: properties.sourceType,
+                    title: 'Read From',
+                    icon: 'database',
+                    iconColor: SplineColors.ORANGE
                 },
                 [
                     SdWidgetRecordsList.toSchema(
@@ -47,8 +46,13 @@ export namespace OperationRead {
                                 value: dataSourceUriToName(uri),
                                 description: uri,
                             })),
+                        'EVENTS.OPERATION__READ__INPUT_DATA_SOURCES_TITLE',
                     ),
+                    ...EventOperationProperty.extraPropsToDvs(extraProps, operationDetails.schemas[0]),
                 ],
+                {
+                    expanded: true
+                }
             ),
         ]
     }
