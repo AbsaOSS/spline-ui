@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-import { MatDialog, MatDialogRef } from '@angular/material/dialog'
 import { AttrSchemasCollection, OpExpression } from 'spline-api'
-import { SplineExpressionTreeDialogComponent } from 'spline-shared'
 
 
 export namespace SplineExpressionTreeDialog {
@@ -24,23 +22,6 @@ export namespace SplineExpressionTreeDialog {
     export type Data = {
         expression: OpExpression
         attrSchemasCollection: AttrSchemasCollection
-    }
-
-    export function openDialog(dialog: MatDialog,
-                               expression: OpExpression,
-                               attrSchemasCollection: AttrSchemasCollection): MatDialogRef<SplineExpressionTreeDialogComponent, Data> {
-
-        return dialog.open<SplineExpressionTreeDialogComponent, Data>(
-            SplineExpressionTreeDialogComponent,
-            {
-                data: {
-                    expression,
-                    attrSchemasCollection,
-                },
-                minWidth: '700px',
-                autoFocus: false
-            }
-        )
     }
 
 }

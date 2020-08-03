@@ -21,7 +21,6 @@ import { SdWidgetExpression } from 'spline-shared'
 
 import { SgNodeControl } from '../../sg-node-control.models'
 import { EventOperationProperty } from '../operation-property.models'
-import NodeType = SgNodeControl.NodeType
 
 
 export namespace OperationFilter {
@@ -29,13 +28,12 @@ export namespace OperationFilter {
     export function toDataViewSchema(operationDetails: OperationDetails): SplineDataViewSchema {
 
         const properties = operationDetails.operation.properties as OperationPropertiesFilter
-        console.log(properties)
         const defaultProps = [
             'name', 'condition',
         ]
         const extraPropsNative = _.omit(properties, defaultProps)
         const extraProps = EventOperationProperty.parseExtraOptions(extraPropsNative)
-        const nodeStyles = SgNodeControl.getNodeStyles(NodeType.Filter)
+        const nodeStyles = SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Filter)
 
         return [
             SdWidgetExpansionPanel.toSchema(

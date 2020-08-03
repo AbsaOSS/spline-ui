@@ -14,5 +14,6 @@
  * limitations under the License.
  */
 
-export * from './operation-read.models'
 export * from './operation-filter.models'
+export * from './operation-read.models'
+export * from './operation-write.models'

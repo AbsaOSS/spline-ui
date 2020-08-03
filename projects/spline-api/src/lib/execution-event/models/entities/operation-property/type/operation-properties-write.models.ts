@@ -14,20 +14,14 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core'
-import { MAT_DIALOG_DATA } from '@angular/material/dialog'
-
-import { SplineExpressionTreeDialog } from '../../models'
+import { OperationProperties } from '../operation-properties.models'
 
 
-@Component({
-    selector: 'spline-expression-tree-dialog',
-    templateUrl: './spline-expression-tree-dialog.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class SplineExpressionTreeDialogComponent {
-
-    constructor(@Inject(MAT_DIALOG_DATA) public data: SplineExpressionTreeDialog.Data) {
+export type OperationPropertiesWrite =
+    & OperationProperties
+    &
+    {
+        append: boolean
+        outputSource: string
+        destinationType: string
     }
-
-}

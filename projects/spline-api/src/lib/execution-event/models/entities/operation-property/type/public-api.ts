@@ -16,4 +16,5 @@
 
 export * from './operation-properties-filter.models'
 export * from './operation-properties-read.models'
+export * from './operation-properties-write.models'
 

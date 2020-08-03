@@ -19,6 +19,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { AttrSchemasCollection, OpExpression } from 'spline-api'
 
 import { SplineExpressionTreeDialog, SplineExpressionValue } from '../../models'
+import { SplineExpressionTreeDialogComponent } from '../expression-tree-dialog/spline-expression-tree-dialog.component'
 
 
 @Component({
@@ -42,10 +43,16 @@ export class SplineExpressionComponent implements OnInit {
     }
 
     onShowTreeViewBtnClicked(): void {
-        SplineExpressionTreeDialog.openDialog(
-            this.dialog,
-            this.expression,
-            this.attrSchemasCollection
+        this.dialog.open<SplineExpressionTreeDialogComponent, SplineExpressionTreeDialog.Data>(
+            SplineExpressionTreeDialogComponent,
+            {
+                data: {
+                    expression: this.expression,
+                    attrSchemasCollection: this.attrSchemasCollection,
+                },
+                minWidth: '700px',
+                autoFocus: false,
+            },
         )
     }
 }

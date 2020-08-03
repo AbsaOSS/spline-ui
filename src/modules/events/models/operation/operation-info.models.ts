@@ -21,7 +21,7 @@ import { SdWidgetCard, SplineDataViewSchema } from 'spline-common'
 import { attributesSchemaToDataViewSchema } from '../attribute'
 import { SgNodeControl } from '../sg-node-control.models'
 
-import { OperationFilter, OperationRead } from './type'
+import { OperationFilter, OperationRead, OperationWrite } from './type'
 
 
 export namespace OperationInfo {
@@ -111,6 +111,10 @@ export namespace OperationInfo {
                     default:
                         return null
                 }
+
+            case OperationType.Write:
+                return OperationWrite.toDataViewSchema(operationDetails)
+
             default:
                 return null
         }

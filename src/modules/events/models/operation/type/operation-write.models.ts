@@ -15,41 +15,42 @@
  */
 
 import _ from 'lodash'
-import { dataSourceUriToName, OperationDetails, OperationPropertiesRead } from 'spline-api'
+import { dataSourceUriToName, OperationDetails, OperationPropertiesWrite } from 'spline-api'
 import { SdWidgetExpansionPanel, SdWidgetRecordsList, SplineDataViewSchema } from 'spline-common'
 
 import { SgNodeControl } from '../../sg-node-control.models'
 import { EventOperationProperty } from '../operation-property.models'
 
 
-export namespace OperationRead {
+export namespace OperationWrite {
 
     export function toDataViewSchema(operationDetails: OperationDetails): SplineDataViewSchema {
 
-        const properties = operationDetails.operation.properties as OperationPropertiesRead
+        const properties = operationDetails.operation.properties as OperationPropertiesWrite
 
         const defaultProps = [
-            'name', 'inputSources',
+            'name', 'outputSource',
         ]
         const extraPropsNative = _.omit(properties, defaultProps)
         const extraProps = EventOperationProperty.parseExtraOptions(extraPropsNative)
-        const nodeStyles = SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Read)
+        const nodeStyles = SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Write)
         return [
             SdWidgetExpansionPanel.toSchema(
                 {
-                    title: 'EVENTS.OPERATION__READ__READ_FROM_TITLE',
+                    title: 'EVENTS.OPERATION__WRITE__WRITE_TO_TITLE',
                     icon: nodeStyles.icon,
                     iconColor: nodeStyles.color,
                 },
                 // INPUT DATA SOURCES & EXTRA PROPS :: PRIMITIVE
                 [
                     SdWidgetRecordsList.toSchema(
-                        properties.inputSources
-                            .map(uri => ({
-                                value: dataSourceUriToName(uri),
-                                description: uri,
-                            })),
-                        'EVENTS.OPERATION__READ__INPUT_DATA_SOURCES_TITLE',
+                        [
+                            {
+                                value: dataSourceUriToName(properties.outputSource),
+                                description: properties.outputSource,
+                            },
+                        ],
+                        'EVENTS.OPERATION__WRITE__OUTPUT_DATA_SOURCE_TITLE',
                     ),
                     ...EventOperationProperty.primitivePropsToDvs(extraProps.primitive),
                 ],
