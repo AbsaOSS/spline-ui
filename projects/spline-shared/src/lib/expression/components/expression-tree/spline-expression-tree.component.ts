@@ -14,38 +14,42 @@
  * limitations under the License.
  */
 
+import { NestedTreeControl } from '@angular/cdk/tree'
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core'
-import { MatDialog } from '@angular/material/dialog'
+import { MatTreeNestedDataSource } from '@angular/material/tree'
 import { AttrSchemasCollection, OpExpression } from 'spline-api'
 
-import { SplineExpressionTreeDialog, SplineExpressionValue } from '../../models'
+import { SplineExpressionTree } from '../../models'
 
 
 @Component({
-    selector: 'spline-expression',
-    templateUrl: './spline-expression.component.html',
+    selector: 'spline-expression-tree',
+    templateUrl: './spline-expression-tree.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SplineExpressionComponent implements OnInit {
+export class SplineExpressionTreeComponent implements OnInit {
 
     @Input() expression: OpExpression
     @Input() attrSchemasCollection: AttrSchemasCollection
-    @Input() showActions = true
 
-    expressionString: string
+    treeControl = new NestedTreeControl<SplineExpressionTree.TreeNode>(node => node.children)
+    treeDataSource = new MatTreeNestedDataSource<SplineExpressionTree.TreeNode>()
 
-    constructor(private readonly dialog: MatDialog) {
-    }
+    hasChild = (_: number, node: SplineExpressionTree.TreeNode) => !!node.children && node.children.length > 0
 
     ngOnInit(): void {
-        this.expressionString = SplineExpressionValue.expressionToString(this.expression, this.attrSchemasCollection)
+
+        const tree = SplineExpressionTree.toTree(this.expression, this.attrSchemasCollection)
+
+        this.treeDataSource.data = tree
+
+        // expand first level
+        tree
+            .filter(node => !!node?.children?.length)
+            .forEach(
+                node => this.treeControl.expand(node),
+            )
     }
 
-    onShowTreeViewBtnClicked(): void {
-        SplineExpressionTreeDialog.openDialog(
-            this.dialog,
-            this.expression,
-            this.attrSchemasCollection
-        )
-    }
+
 }

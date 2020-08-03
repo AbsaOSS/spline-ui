@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,11 +14,21 @@
  * limitations under the License.
  */
 
-@import 'mat-button';
-@import 'mat-card';
-@import 'mat-divider';
-@import 'mat-expansion-panel';
-@import 'mat-icon';
-@import 'mat-tab';
-@import 'mat-table';
-@import 'mat-tree';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core'
+import { MAT_DIALOG_DATA } from '@angular/material/dialog'
+
+import { SplineExpressionTreeDialog } from '../../models'
+
+
+@Component({
+    selector: 'spline-expression-tree-dialog',
+    templateUrl: './spline-expression-tree-dialog.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class SplineExpressionTreeDialogComponent {
+
+    constructor(@Inject(MAT_DIALOG_DATA) public data: SplineExpressionTreeDialog.Data) {
+        console.log(data)
+    }
+
+}

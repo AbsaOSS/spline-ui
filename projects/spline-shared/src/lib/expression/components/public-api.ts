@@ -15,5 +15,7 @@
  */
 
 export * from './sd-widgets/expression/sd-widget-expression.component'
+export * from './expression-tree/spline-expression-tree.component'
+export * from './expression-tree-dialog/spline-expression-tree-dialog.component'
 export * from './expression-value/spline-expression-value.component'
 export * from './expression/spline-expression.component'

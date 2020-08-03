@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import { SplineExpressionTreeDialogComponent } from './expression-tree-dialog/spline-expression-tree-dialog.component'
+import { SplineExpressionTreeComponent } from './expression-tree/spline-expression-tree.component'
 import { SplineExpressionValueComponent } from './expression-value/spline-expression-value.component'
 import { SplineExpressionComponent } from './expression/spline-expression.component'
 import { SdWidgetExpressionComponent } from './sd-widgets/expression/sd-widget-expression.component'
@@ -25,4 +27,6 @@ export const attributesTreeComponents = [
     SplineExpressionValueComponent,
     SdWidgetExpressionComponent,
     SplineExpressionComponent,
+    SplineExpressionTreeComponent,
+    SplineExpressionTreeDialogComponent
 ]

@@ -16,7 +16,6 @@
 
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
-import { FormsModule } from '@angular/forms'
 import { MatIconModule } from '@angular/material/icon'
 
 import { SplineLabelComponent } from './spline-label.component'
@@ -28,7 +27,6 @@ import { SplineLabelComponent } from './spline-label.component'
     ],
     imports: [
         CommonModule,
-        FormsModule,
         MatIconModule,
     ],
     exports: [SplineLabelComponent],

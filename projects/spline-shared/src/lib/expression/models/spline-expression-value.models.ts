@@ -32,34 +32,6 @@ import { TypeHelpers } from 'spline-utils'
 
 export namespace SplineExpressionValue {
 
-    // TODO: it should be a part of tree models
-    export function getExpressionName(expr: OpExpression, attrSchemasCollection: AttrSchemasCollection): string {
-        switch (expr._typeHint) {
-            case OpExpressionType.Literal: {
-                return (expr as OpExpressionLiteral).value
-            }
-            case OpExpressionType.Binary: {
-                return (expr as OpExpressionBinary).symbol
-            }
-            case OpExpressionType.Alias: {
-                return (expr as OpExpressionAlias).alias
-            }
-            case OpExpressionType.UDF: {
-                return `UDF:${(expr as OpExpressionUDF).name}`
-            }
-            case OpExpressionType.AttrRef: {
-                const ar = expr as OpExpressionAttrRef
-                return expressionToString(ar, attrSchemasCollection)
-            }
-            case OpExpressionType.Generic:
-            case OpExpressionType.GenericLeaf: {
-                return (expr as OpExpressionGeneric | OpExpressionGenericLeaf).name
-            }
-            default:
-                throw new Error(`Unknown expression type: ${expr._typeHint}`)
-        }
-    }
-
     export function expressionToString(expr: OpExpression, attrSchemasCollection: AttrSchemasCollection): string {
         switch (expr._typeHint) {
             case OpExpressionType.Literal: {

@@ -16,3 +16,5 @@
 
 export * from './sd-widget/public-api'
 export * from './spline-expression-value.models'
+export * from './spline-expression-tree.models'
+export * from './spline-expression-tree-dialog.models'

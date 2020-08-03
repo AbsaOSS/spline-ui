@@ -14,11 +14,16 @@
  * limitations under the License.
  */
 
-@import 'mat-button';
-@import 'mat-card';
-@import 'mat-divider';
-@import 'mat-expansion-panel';
-@import 'mat-icon';
-@import 'mat-tab';
-@import 'mat-table';
-@import 'mat-tree';
+.mat-tree {
+    ul {
+        padding-inline-start: 24px;
+    }
+
+    ul,
+    li {
+        list-style-type: none;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+
+}
