@@ -16,6 +16,7 @@
 
 <ng-container *ngIf="data$ | async as data">
     <spline-expression [expression]="data.expression"
-                       [attrSchemasCollection]="data.attrSchemasCollection">
+                       [attrSchemasCollection]="data.attrSchemasCollection"
+                       [prefix]="data?.prefix">
     </spline-expression>
 </ng-container>

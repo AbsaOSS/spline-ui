@@ -22,6 +22,7 @@ export namespace SplineExpressionTreeDialog {
     export type Data = {
         expression: OpExpression
         attrSchemasCollection: AttrSchemasCollection
+        prefix?: string
     }
 
 }

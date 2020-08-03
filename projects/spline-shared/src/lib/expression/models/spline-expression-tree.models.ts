@@ -34,7 +34,6 @@ export namespace SplineExpressionTree {
 
     export type TreeNode = {
         name: string
-        expanded?: boolean
         children?: TreeNode[]
     }
 
@@ -48,8 +47,7 @@ export namespace SplineExpressionTree {
 
         return [{
             name: getNodeName(expression, attrSchemasCollection),
-            children,
-            expanded: true
+            children
         }]
     }
 

@@ -14,30 +14,35 @@
  * limitations under the License.
  */
 
-import _ from 'lodash'
-import { dataSourceUriToName, OperationDetails, OperationPropertiesRead } from 'spline-api'
-import { SdWidgetExpansionPanel, SdWidgetRecordsList, SplineDataViewSchema } from 'spline-common'
+import { dataSourceUriToName, OperationDetails } from 'spline-api'
+import { SdWidgetExpansionPanel, SdWidgetRecordsList, SdWidgetSchema, SplineDataViewSchema } from 'spline-common'
 
 import { SgNodeControl } from '../../sg-node-control.models'
 import { EventOperationProperty } from '../operation-property.models'
+
+import { getBaseOperationDetailsSchema } from './operation-bais.models'
 
 
 export namespace OperationRead {
 
     export function toDataViewSchema(operationDetails: OperationDetails): SplineDataViewSchema {
+        return getBaseOperationDetailsSchema(
+            operationDetails,
+            getMainSection,
+            ['inputSources'],
+        )
+    }
 
-        const properties = operationDetails.operation.properties as OperationPropertiesRead
+    export function getMainSection(operationDetails: OperationDetails,
+                                   primitiveProps: EventOperationProperty.ExtraPropertyValuePrimitive[]): SdWidgetSchema[] {
 
-        const defaultProps = [
-            'name', 'inputSources',
-        ]
-        const extraPropsNative = _.omit(properties, defaultProps)
-        const extraProps = EventOperationProperty.parseExtraOptions(extraPropsNative)
+        const properties = operationDetails.operation.properties
         const nodeStyles = SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Read)
+
         return [
             SdWidgetExpansionPanel.toSchema(
                 {
-                    title: 'EVENTS.OPERATION__READ__READ_FROM_TITLE',
+                    title: 'EVENTS.OPERATION__READ__MAIN_SECTION_TITLE',
                     icon: nodeStyles.icon,
                     iconColor: nodeStyles.color,
                 },
@@ -51,12 +56,9 @@ export namespace OperationRead {
                             })),
                         'EVENTS.OPERATION__READ__INPUT_DATA_SOURCES_TITLE',
                     ),
-                    ...EventOperationProperty.primitivePropsToDvs(extraProps.primitive),
+                    ...EventOperationProperty.primitivePropsToDvs(primitiveProps),
                 ],
             ),
-            // EXTRA PROPS :: JSON & EXPRESSION
-            ...EventOperationProperty.jsonPropsToDvs(extraProps.json),
-            ...EventOperationProperty.expressionPropsToDvs(extraProps.expression, operationDetails.schemasCollection),
         ]
     }
 

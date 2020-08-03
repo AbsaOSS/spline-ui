@@ -33,6 +33,8 @@ export namespace SgNodeControl {
         Join = 'Join',
         Filter = 'Filter',
         Transformation = 'Transformation',
+        Alias = 'SubqueryAlias',
+        Generic = 'Generic',
     }
 
     export const DEFAULT_NODE_STYLES: NodeStyles = Object.freeze<NodeStyles>({
@@ -91,10 +93,17 @@ export namespace SgNodeControl {
                     color: SplineColors.SMILE,
                 },
             ],
+            [
+                NodeType.Alias,
+                {
+                    icon: 'local_offer',
+                    color: SplineColors.BLUE,
+                },
+            ],
         ])
 
     export function getNodeStyles(type: NodeType): NodeStyles {
-        return NODE_STYLES_MAP.get(type) ?? {...DEFAULT_NODE_STYLES}
+        return NODE_STYLES_MAP.get(type) ?? { ...DEFAULT_NODE_STYLES }
     }
 
 }

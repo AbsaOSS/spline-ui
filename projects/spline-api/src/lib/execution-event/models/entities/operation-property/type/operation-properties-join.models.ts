@@ -14,8 +14,14 @@
  * limitations under the License.
  */
 
-export * from './operation-alias.models'
-export * from './operation-filter.models'
-export * from './operation-read.models'
-export * from './operation-join.models'
-export * from './operation-write.models'
+import { OpExpression } from '../expression'
+import { OperationProperties } from '../operation-properties.models'
+
+
+export type OperationPropertiesJoin =
+    & OperationProperties
+    &
+    {
+        condition: OpExpression
+        joinType: string
+    }

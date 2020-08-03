@@ -21,7 +21,7 @@ import { SdWidgetCard, SplineDataViewSchema } from 'spline-common'
 import { attributesSchemaToDataViewSchema } from '../attribute'
 import { SgNodeControl } from '../sg-node-control.models'
 
-import { OperationFilter, OperationRead, OperationWrite } from './type'
+import { OperationAlias, OperationFilter, OperationJoin, OperationRead, OperationWrite } from './type'
 
 
 export namespace OperationInfo {
@@ -33,27 +33,28 @@ export namespace OperationInfo {
         return operation.type
     }
 
-    export function getNodeStyles(operationType: OperationType | string, name: string): NodeStyles {
+    export function toNodeType(operationType: OperationType | string, name: string): SgNodeControl.NodeType {
+
+        const typeAsAName = Object.values(SgNodeControl.NodeType)
+
         switch (operationType) {
-            case OperationType.Transformation:
-                switch (name) {
-                    case 'Join':
-                        return SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Join)
-                    case 'Filter':
-                        return SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Filter)
-                    default:
-                        return SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Transformation)
-                }
-
+            case OperationType.Transformation: {
+                return typeAsAName.includes(name as SgNodeControl.NodeType)
+                    ? name as SgNodeControl.NodeType
+                    : SgNodeControl.NodeType.Transformation
+            }
             case OperationType.Read:
-                return SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Read)
-
+                return SgNodeControl.NodeType.Read
             case OperationType.Write:
-                return SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Write)
-
+                return SgNodeControl.NodeType.Write
             default:
-                return { ...SgNodeControl.DEFAULT_NODE_STYLES }
+                return SgNodeControl.NodeType.Generic
         }
+    }
+
+    export function getNodeStyles(operationType: OperationType | string, name: string): NodeStyles {
+        const nodeType = toNodeType(operationType, name)
+        return SgNodeControl.getNodeStyles(nodeType)
     }
 
     export function toDataViewSchema(operation: Operation): SplineDataViewSchema {
@@ -99,21 +100,22 @@ export namespace OperationInfo {
     }
 
     export function toDetailsDvs(operationDetails: OperationDetails): SplineDataViewSchema | null {
-
-        switch (operationDetails.operation.type) {
-            case OperationType.Read:
+        const nodeType = toNodeType(operationDetails.operation.type, operationDetails.operation.name)
+        switch (nodeType) {
+            case SgNodeControl.NodeType.Read:
                 return OperationRead.toDataViewSchema(operationDetails)
 
-            case OperationType.Transformation:
-                switch (operationDetails.operation.name) {
-                    case 'Filter':
-                        return OperationFilter.toDataViewSchema(operationDetails)
-                    default:
-                        return null
-                }
-
-            case OperationType.Write:
+            case SgNodeControl.NodeType.Write:
                 return OperationWrite.toDataViewSchema(operationDetails)
+
+            case SgNodeControl.NodeType.Filter:
+                return OperationFilter.toDataViewSchema(operationDetails)
+
+            case SgNodeControl.NodeType.Alias:
+                return OperationAlias.toDataViewSchema(operationDetails)
+
+            case SgNodeControl.NodeType.Join:
+                return OperationJoin.toDataViewSchema(operationDetails)
 
             default:
                 return null

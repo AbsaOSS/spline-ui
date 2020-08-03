@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-import { dataSourceUriToName, OperationDetails } from 'spline-api'
-import { SdWidgetExpansionPanel, SdWidgetRecordsList, SdWidgetSchema, SplineDataViewSchema } from 'spline-common'
+import { OperationDetails } from 'spline-api'
+import { SdWidgetExpansionPanel, SdWidgetSchema, SplineDataViewSchema } from 'spline-common'
+import { SdWidgetExpression } from 'spline-shared'
 
 import { SgNodeControl } from '../../sg-node-control.models'
 import { EventOperationProperty } from '../operation-property.models'
@@ -23,14 +24,13 @@ import { EventOperationProperty } from '../operation-property.models'
 import { getBaseOperationDetailsSchema } from './operation-bais.models'
 
 
-export namespace OperationWrite {
+export namespace OperationJoin {
 
     export function toDataViewSchema(operationDetails: OperationDetails): SplineDataViewSchema {
-
         return getBaseOperationDetailsSchema(
             operationDetails,
             getMainSection,
-            ['outputSource'],
+            ['condition', 'joinType'],
         )
     }
 
@@ -38,26 +38,21 @@ export namespace OperationWrite {
                                    primitiveProps: EventOperationProperty.ExtraPropertyValuePrimitive[]): SdWidgetSchema[] {
 
         const properties = operationDetails.operation.properties
-        const nodeStyles = SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Write)
+        const nodeStyles = SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Join)
 
         return [
             SdWidgetExpansionPanel.toSchema(
                 {
-                    title: 'EVENTS.OPERATION__WRITE__MAIN_SECTION_TITLE',
+                    title: 'EVENTS.OPERATION__JOIN__MAIN_SECTION_TITLE',
                     icon: nodeStyles.icon,
                     iconColor: nodeStyles.color,
                 },
-                // OUTPUT DATA SOURCE & EXTRA PROPS :: PRIMITIVE
                 [
-                    SdWidgetRecordsList.toSchema(
-                        [
-                            {
-                                value: dataSourceUriToName(properties.outputSource),
-                                description: properties.outputSource,
-                            },
-                        ],
-                        'EVENTS.OPERATION__WRITE__OUTPUT_DATA_SOURCE_TITLE',
-                    ),
+                    SdWidgetExpression.toSchema({
+                        prefix: `${properties.joinType} JOIN ON `,
+                        expression: properties.condition,
+                        attrSchemasCollection: operationDetails.schemasCollection,
+                    }),
                     ...EventOperationProperty.primitivePropsToDvs(primitiveProps),
                 ],
             ),

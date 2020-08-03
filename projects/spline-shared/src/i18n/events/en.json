@@ -22,11 +22,13 @@
     "ATTRIBUTE_LINEAGE__LEGEND__LINEAGE__DESCRIPTION": "Lineage - outlines operations that produces or propagate attributes that affects the selected one transitively (at any level of nesting). In other words, the operations containing attributes which the selected attribute depends on.",
     "ATTRIBUTE_LINEAGE__LEGEND__IMPACT__TITLE": "Impact",
     "ATTRIBUTE_LINEAGE__LEGEND__IMPACT__DESCRIPTION": " Impact - the part of the graph affected by the selected attribute (opposite to the lineage part). That is, the operations that produces/propagate attributes that depend on selected one transitively.",
-    "OPERATION__READ__INPUT_DATA_SOURCES_TITLE": "Input Data Sources",
-    "OPERATION__FILTER__FILTER_ON_TITLE": "Filter On",
-    "OPERATION__READ__READ_FROM_TITLE": "Read From",
     "EXPRESSION__ACTION__TREE_VIEW__TOOLTIP": "Tree View",
-    "OPERATION__WRITE__WRITE_TO_TITLE": "Write To",
-    "OPERATION__WRITE__OUTPUT_DATA_SOURCE_TITLE": "Output Data Source"
+    "OPERATION__READ__INPUT_DATA_SOURCES_TITLE": "Input Data Sources",
+    "OPERATION__FILTER__MAIN_SECTION_TITLE": "Filter On",
+    "OPERATION__READ__MAIN_SECTION_TITLE": "Read From",
+    "OPERATION__WRITE__MAIN_SECTION_TITLE": "Write To",
+    "OPERATION__WRITE__OUTPUT_DATA_SOURCE_TITLE": "Output Data Source",
+    "OPERATION__JOIN__MAIN_SECTION_TITLE": "Join",
+    "OPERATION__ALIAS__MAIN_SECTION_TITLE": "Alias"
   }
 }

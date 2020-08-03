@@ -16,7 +16,6 @@
 
 import { OperationDetails } from 'spline-api'
 import { SdWidgetExpansionPanel, SdWidgetSchema, SplineDataViewSchema } from 'spline-common'
-import { SdWidgetExpression } from 'spline-shared'
 
 import { SgNodeControl } from '../../sg-node-control.models'
 import { EventOperationProperty } from '../operation-property.models'
@@ -24,38 +23,33 @@ import { EventOperationProperty } from '../operation-property.models'
 import { getBaseOperationDetailsSchema } from './operation-bais.models'
 
 
-export namespace OperationFilter {
+export namespace OperationAlias {
 
     export function toDataViewSchema(operationDetails: OperationDetails): SplineDataViewSchema {
+
         return getBaseOperationDetailsSchema(
             operationDetails,
             getMainSection,
-            ['condition'],
         )
     }
 
     export function getMainSection(operationDetails: OperationDetails,
                                    primitiveProps: EventOperationProperty.ExtraPropertyValuePrimitive[]): SdWidgetSchema[] {
 
-        const properties = operationDetails.operation.properties
-        const nodeStyles = SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Filter)
+        const nodeStyles = SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Alias)
 
-        return [
-            SdWidgetExpansionPanel.toSchema(
-                {
-                    title: 'EVENTS.OPERATION__FILTER__MAIN_SECTION_TITLE',
-                    icon: nodeStyles.icon,
-                    iconColor: nodeStyles.color,
-                },
-                [
-                    SdWidgetExpression.toSchema({
-                        expression: properties.condition,
-                        attrSchemasCollection: operationDetails.schemasCollection,
-                    }),
-                    ...EventOperationProperty.primitivePropsToDvs(primitiveProps),
-                ],
-            ),
-        ]
+        return primitiveProps.length
+            ? [
+                SdWidgetExpansionPanel.toSchema(
+                    {
+                        title: 'EVENTS.OPERATION__ALIAS__MAIN_SECTION_TITLE',
+                        icon: nodeStyles.icon,
+                        iconColor: nodeStyles.color,
+                    },
+                    EventOperationProperty.primitivePropsToDvs(primitiveProps),
+                ),
+            ]
+            : []
     }
 
 }
