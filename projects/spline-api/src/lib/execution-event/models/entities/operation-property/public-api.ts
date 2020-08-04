@@ -15,7 +15,6 @@
  */
 
 export * from './expression/public-api'
-export * from './type/public-api'
 
 export * from './operation-properties.models'
 

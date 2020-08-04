@@ -17,6 +17,10 @@
 @import 'vars';
 @import 'mixins';
 
+.table-container {
+    min-height: 300px;
+}
+
 .minor-text {
     @include long-text-wrapper();
     color: $color-grey-dark;

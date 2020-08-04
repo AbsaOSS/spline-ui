@@ -21,4 +21,5 @@ export const SPLINE_ICONS_COLLECTION: Set<string> = new Set<string>([
     'source-branch',
     'head-cog',
     'code-json',
+    'shuffle-variant',
 ])

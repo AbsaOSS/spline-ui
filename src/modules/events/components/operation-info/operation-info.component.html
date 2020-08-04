@@ -35,13 +35,13 @@
             <mat-tab-group>
 
                 <!-- DETAILS -->
-                <mat-tab [label]="'Details' | translate" *ngIf="!!state.detailsDvs">
+                <mat-tab [label]="'EVENTS.OPERATION_INFO__TAB__DETAILS' | translate" *ngIf="!!state.detailsDvs">
                     <spline-data-view [dataViewSchema]="state.detailsDvs" (event$)="onDataViewEvent($event)"></spline-data-view>
                 </mat-tab>
                 <!-- DETAILS -->
 
                 <!-- OUTPUT DS -->
-                <mat-tab [label]="'Output Schema' | translate" *ngIf="!!state.outputDvs">
+                <mat-tab [label]="'EVENTS.OPERATION_INFO__TAB__OUTPUT' | translate" *ngIf="!!state.outputDvs">
                     <spline-data-view [dataViewSchema]="state.outputDvs" (event$)="onDataViewEvent($event)"></spline-data-view>
                 </mat-tab>
                 <!-- OUTPUT DS -->
@@ -50,7 +50,7 @@
                 <mat-tab *ngIf="!!state.inputsDvs">
 
                     <ng-template matTabLabel>
-                        {{ 'Inputs Schema' | translate}} ({{state.inputsNumber}})
+                        {{ 'EVENTS.OPERATION_INFO__TAB__INPUTS' | translate}} ({{state.inputsNumber}})
                     </ng-template>
 
                     <spline-data-view [dataViewSchema]="state.inputsDvs" (event$)="onDataViewEvent($event)"></spline-data-view>

@@ -34,7 +34,9 @@
                             class="mb-3"
                             mat-button>
                         <mat-icon class="mr-2">arrow_back</mat-icon>
-                        <span class="pr-2">Execution Event</span>
+                        <span class="pr-2">
+                            {{ 'EVENTS.EXECUTION_PLAN__BACK_TO_EVENT_BUTTON' | translate }}
+                        </span>
                     </button>
 
                     <!-- EXECUTION PLAN INFO -->
@@ -51,7 +53,9 @@
                             class="mb-3"
                             mat-button>
                         <mat-icon class="mr-2">arrow_back</mat-icon>
-                        <span class="pr-2">Execution Plan Overview</span>
+                        <span class="pr-2">
+                            {{ 'EVENTS.EXECUTION_PLAN__BACK_TO_PLAN_BUTTON' | translate }}
+                        </span>
                     </button>
 
                     <event-operation-info (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"

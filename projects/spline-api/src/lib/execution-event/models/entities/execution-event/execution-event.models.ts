@@ -17,7 +17,6 @@
 
 export enum ExecutionEventField {
     append = 'append',
-    applicationId = 'applicationId',
     applicationName = 'applicationName',
     dataSourceType = 'dataSourceType',
     dataSourceUri = 'dataSourceUri',
@@ -29,7 +28,6 @@ export enum ExecutionEventField {
 
 export type ExecutionEventDto = {
     [ExecutionEventField.append]: boolean
-    [ExecutionEventField.applicationId]: string
     [ExecutionEventField.applicationName]: string
     [ExecutionEventField.dataSourceType]: string
     [ExecutionEventField.dataSourceUri]: string

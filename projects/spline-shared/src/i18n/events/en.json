@@ -1,6 +1,12 @@
 {
   "EVENTS": {
     "EVENTS_LIST_PAGE__TITLE": "Execution Events",
+    "EVENTS_LIST__COL__APPLICATION": "Application",
+    "EVENTS_LIST__COL__EXECUTION_PLAN": "Execution Plan",
+    "EVENTS_LIST__COL__TIMESTAMP": "Executed At",
+    "EVENTS_LIST__COL__DESTINATION": "Destination",
+    "EVENTS_LIST__COL__TYPE": "Type",
+    "EVENTS_LIST__COL__WRITE_MODE": "Write Mode",
     "EVENT_INFO__LABEL": "Execution Event",
     "EVENT_INFO__DETAILS__EXECUTED_AT": "Executed At",
     "EVENT_INFO__DETAILS__EVENT_ID": "Event Id",
@@ -12,9 +18,14 @@
     "EXECUTION_EVENT_INFO__DEFAULT_NAME": "Execution Plan",
     "EXECUTION_EVENT_INFO__DETAILS__SYSTEM_INFO": "System Info",
     "EXECUTION_EVENT_INFO__DETAILS__AGENT_INFO": "Agent Info",
+    "EXECUTION_PLAN__BACK_TO_EVENT_BUTTON": "Execution Event",
+    "EXECUTION_PLAN__BACK_TO_PLAN_BUTTON": "Execution Plan Overview",
     "EXECUTION_PLAN_INFO__TAB__INPUTS": "Inputs",
     "EXECUTION_PLAN_INFO__TAB__OUTPUT": "Output",
     "EXECUTION_PLAN_INFO__TAB__ATTR_SCHEMA": "Attributes",
+    "OPERATION_INFO__TAB__DETAILS": "Details",
+    "OPERATION_INFO__TAB__OUTPUT": "Output Schema",
+    "OPERATION_INFO__TAB__INPUTS": "Input Schemas",
     "ATTRIBUTE_LINEAGE__LABEL": "Attribute",
     "ATTRIBUTE_LINEAGE__LEGEND__USAGE__TITLE": "Usage",
     "ATTRIBUTE_LINEAGE__LEGEND__USAGE__DESCRIPTION": "Usage - consists of operations that have the selected attribute in their output. I.e operations that either create the attribute or propagate through.",
@@ -29,6 +40,9 @@
     "OPERATION__WRITE__MAIN_SECTION_TITLE": "Write To",
     "OPERATION__WRITE__OUTPUT_DATA_SOURCE_TITLE": "Output Data Source",
     "OPERATION__JOIN__MAIN_SECTION_TITLE": "Join",
-    "OPERATION__ALIAS__MAIN_SECTION_TITLE": "Alias"
+    "OPERATION__ALIAS__MAIN_SECTION_TITLE": "Alias",
+    "OPERATION__PROJECTION__MAIN_SECTION_TITLE": "Projection",
+    "OPERATION__PROJECTION__DROPPED_ATTRIBUTES_TITLE": "Dropped Attributes",
+    "OPERATION__PROJECTION__TRANSFORMATIONS_TITLE": "Transformations"
   }
 }

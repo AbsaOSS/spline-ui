@@ -22,4 +22,43 @@ export type OperationProperties =
     {
         name: string
     }
-    & (Record<string, any> | OpExpression)
+    & (Record<string, any>)
+
+export type OperationPropertiesFilter =
+    & OperationProperties
+    &
+    {
+        condition: OpExpression
+    }
+
+export type OperationPropertiesJoin =
+    & OperationProperties
+    &
+    {
+        condition: OpExpression
+        joinType: string
+    }
+
+export type OperationPropertiesProjection =
+    & OperationProperties
+    &
+    {
+        projectList: OpExpression[]
+    }
+
+export type OperationPropertiesRead =
+    & OperationProperties
+    &
+    {
+        inputSources: string[]
+        sourceType: string
+    }
+
+export type OperationPropertiesWrite =
+    & OperationProperties
+    &
+    {
+        append: boolean
+        outputSource: string
+        destinationType: string
+    }

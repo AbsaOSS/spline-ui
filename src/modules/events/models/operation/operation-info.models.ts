@@ -21,7 +21,8 @@ import { SdWidgetCard, SplineDataViewSchema } from 'spline-common'
 import { attributesSchemaToDataViewSchema } from '../attribute'
 import { SgNodeControl } from '../sg-node-control.models'
 
-import { OperationAlias, OperationFilter, OperationJoin, OperationRead, OperationWrite } from './type'
+import { OperationAlias, OperationFilter, OperationGeneric, OperationJoin, OperationRead, OperationWrite } from './type'
+import { OperationProjection } from './type/operation-projection.models'
 
 
 export namespace OperationInfo {
@@ -116,6 +117,13 @@ export namespace OperationInfo {
 
             case SgNodeControl.NodeType.Join:
                 return OperationJoin.toDataViewSchema(operationDetails)
+
+            case SgNodeControl.NodeType.Projection:
+                return OperationProjection.toDataViewSchema(operationDetails)
+
+            case SgNodeControl.NodeType.Transformation:
+            case SgNodeControl.NodeType.Generic:
+                return OperationGeneric.toDataViewSchema(operationDetails)
 
             default:
                 return null

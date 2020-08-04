@@ -18,7 +18,7 @@
         {{'EVENTS.EVENTS_LIST_PAGE__TITLE' | translate}}
     </h1>
 
-    <div style="min-height: 300px">
+    <div class="table-container">
 
         <ng-container *ngIf="(loadingProcessing$ | async) as loadingProcessing">
             <!-- LOADER -->
@@ -42,7 +42,7 @@
             <!-- applicationName -->
             <ng-container [matColumnDef]="ExecutionEventField.applicationName">
                 <mat-header-cell *matHeaderCellDef spline-sort-header>
-                    Application
+                    {{ 'EVENTS.EVENTS_LIST__COL__APPLICATION' | translate }}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let rowData">
                     <div class="max-width-100">
@@ -57,10 +57,10 @@
             </ng-container>
             <!-- ./applicationName -->
 
-            <!-- applicationName -->
+            <!-- Execution Plan -->
             <ng-container [matColumnDef]="ExecutionEventField.executionPlanId">
                 <mat-header-cell *matHeaderCellDef spline-sort-header>
-                    Execution Plan
+                    {{ 'EVENTS.EVENTS_LIST__COL__EXECUTION_PLAN' | translate }}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let rowData">
                     <div class="max-width-100">
@@ -73,27 +73,12 @@
                     </div>
                 </mat-cell>
             </ng-container>
-            <!-- ./applicationName -->
-
-            <!-- applicationId -->
-            <ng-container [matColumnDef]="ExecutionEventField.applicationId">
-                <mat-header-cell *matHeaderCellDef spline-sort-header>
-                    Application Id
-                </mat-header-cell>
-                <mat-cell *matCellDef="let rowData">
-                    <div class="max-width-100">
-                        <div class="long-text-wrapper">
-                            {{rowData.applicationId}}
-                        </div>
-                    </div>
-                </mat-cell>
-            </ng-container>
-            <!-- ./applicationId -->
+            <!-- ./Execution Plan -->
 
             <!-- timestamp -->
             <ng-container [matColumnDef]="ExecutionEventField.timestamp">
                 <mat-header-cell *matHeaderCellDef spline-sort-header>
-                    Executed At
+                    {{ 'EVENTS.EVENTS_LIST__COL__TIMESTAMP' | translate }}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let rowData">
                     <div class="max-width-100 text-center">
@@ -109,11 +94,11 @@
             <!-- dataSource -->
             <ng-container [matColumnDef]="ExecutionEventField.dataSourceUri">
                 <mat-header-cell *matHeaderCellDef spline-sort-header>
-                    Destination
+                    {{ 'EVENTS.EVENTS_LIST__COL__DESTINATION' | translate }}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let rowData">
                     <div class="max-width-100">
-                        <a href="/">{{rowData.dataSourceUri.split('/').slice(-1)[0]}}</a>
+                        {{rowData.dataSourceUri.split('/').slice(-1)[0]}}
                         <div class="minor-text">
                             {{rowData.dataSourceUri}}
                         </div>
@@ -125,7 +110,7 @@
             <!-- dataSourceType -->
             <ng-container [matColumnDef]="ExecutionEventField.dataSourceType">
                 <mat-header-cell *matHeaderCellDef spline-sort-header>
-                    Type
+                    {{ 'EVENTS.EVENTS_LIST__COL__TYPE' | translate }}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let rowData">
                     {{rowData.dataSourceType}}
@@ -136,7 +121,7 @@
             <!-- append -->
             <ng-container [matColumnDef]="ExecutionEventField.append">
                 <mat-header-cell *matHeaderCellDef spline-sort-header>
-                    Write Mode
+                    {{ 'EVENTS.EVENTS_LIST__COL__WRITE_MODE' | translate }}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let rowData">
                     <div [class.write-mode--pink]="!rowData.append" class="write-mode">

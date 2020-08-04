@@ -27,7 +27,7 @@ export type OperationDetailsMainSectionResolver
     = (operationDetails: OperationDetails, primitiveProps: EventOperationProperty.ExtraPropertyValuePrimitive[]) => SdWidgetSchema[]
 
 export function getBaseOperationDetailsSchema(operationDetails: OperationDetails,
-                                              mainSectionResolver: OperationDetailsMainSectionResolver,
+                                              mainSectionResolver: OperationDetailsMainSectionResolver = () => [],
                                               extraDefaultProps: string[] = []): SdWidgetSchema[] {
 
     const properties = operationDetails.operation.properties

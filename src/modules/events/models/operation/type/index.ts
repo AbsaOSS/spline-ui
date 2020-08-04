@@ -16,6 +16,7 @@
 
 export * from './operation-alias.models'
 export * from './operation-filter.models'
-export * from './operation-read.models'
+export * from './operation-generic.models'
 export * from './operation-join.models'
+export * from './operation-read.models'
 export * from './operation-write.models'

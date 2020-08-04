@@ -35,6 +35,7 @@ export namespace SgNodeControl {
         Transformation = 'Transformation',
         Alias = 'SubqueryAlias',
         Generic = 'Generic',
+        Projection = 'Project',
     }
 
     export const DEFAULT_NODE_STYLES: NodeStyles = Object.freeze<NodeStyles>({
@@ -82,7 +83,14 @@ export namespace SgNodeControl {
             [
                 NodeType.Transformation,
                 {
-                    icon: 'arrow-down-circle',
+                    icon: 'shuffle-variant',
+                    color: SplineColors.BLUE,
+                },
+            ],
+            [
+                NodeType.Projection,
+                {
+                    icon: 'shuffle-variant',
                     color: SplineColors.BLUE,
                 },
             ],
@@ -97,6 +105,13 @@ export namespace SgNodeControl {
                 NodeType.Alias,
                 {
                     icon: 'local_offer',
+                    color: SplineColors.BLUE,
+                },
+            ],
+            [
+                NodeType.Generic,
+                {
+                    icon: 'arrow-down-circle',
                     color: SplineColors.BLUE,
                 },
             ],

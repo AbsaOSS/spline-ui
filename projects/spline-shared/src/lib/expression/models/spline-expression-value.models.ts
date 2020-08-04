@@ -68,13 +68,15 @@ export namespace SplineExpressionValue {
     }
 
     function renderAsGenericLeafExpr(expression: OpExpressionGenericLeaf, attrSchemasCollection: AttrSchemasCollection): string {
-        const paramList = expression.params
-            .map(
-                (value, name) => {
-                    const renderedValue = renderGenericLeafParamValue(value, attrSchemasCollection)
-                    return `${name}=${renderedValue}`
-                },
-            )
+        const paramList = expression?.params?.length
+            ? expression.params
+                .map(
+                    (value, name) => {
+                        const renderedValue = renderGenericLeafParamValue(value, attrSchemasCollection)
+                        return `${name}=${renderedValue}`
+                    },
+                )
+            : []
         return _.isEmpty(paramList)
             ? expression.name
             : `${expression.name}[${paramList.join(', ')}]`
