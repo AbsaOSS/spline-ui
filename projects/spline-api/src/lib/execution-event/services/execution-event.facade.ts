@@ -50,7 +50,6 @@ export class ExecutionEventFacade extends BaseFacade {
             )
     }
 
-    @Cacheable
     fetchList(queryParams: ExecutionEventsQuery.QueryParams): Observable<ExecutionEventsPageResponse> {
         const params = ExecutionEventsQuery.queryParamsToHttpParams(queryParams)
         const url = this.toUrl('execution-events')

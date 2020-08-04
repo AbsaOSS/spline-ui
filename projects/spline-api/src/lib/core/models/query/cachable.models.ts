@@ -35,7 +35,7 @@ export function Cacheable(target: any, name: string, descriptor: PropertyDescrip
         }, '')
 
         if (cache.has(requestId)) {
-            const fakeResponseDelay = 50
+            const fakeResponseDelay = 80
             return of(cache.get(requestId))
                 .pipe(
                     delay(fakeResponseDelay)

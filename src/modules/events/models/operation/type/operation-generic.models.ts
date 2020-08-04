@@ -15,7 +15,7 @@
  */
 
 import { OperationDetails } from 'spline-api'
-import { SdWidgetCard, SdWidgetSchema, SplineDataViewSchema } from 'spline-common'
+import { SdWidgetExpansionPanel, SdWidgetSchema, SplineColors, SplineDataViewSchema } from 'spline-common'
 
 import { EventOperationProperty } from '../operation-property.models'
 
@@ -37,8 +37,15 @@ export namespace OperationGeneric {
 
         return primitiveProps.length
             ? [
-                SdWidgetCard.toContentOnlySchema(
-                    EventOperationProperty.primitivePropsToDvs(primitiveProps),
+                SdWidgetExpansionPanel.toSchema(
+                    {
+                        title: 'EVENTS.OPERATION__GENERIC__MAIN_SECTION_TITLE',
+                        icon: 'scatter_plot',
+                        iconColor: SplineColors.BLUE,
+                    },
+                    [
+                        ...EventOperationProperty.primitivePropsToDvs(primitiveProps),
+                    ],
                 ),
             ]
             : []
