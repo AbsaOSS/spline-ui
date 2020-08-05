@@ -24,6 +24,14 @@ export type OperationProperties =
     }
     & (Record<string, any>)
 
+export type OperationPropertiesAggregate =
+    & OperationProperties
+    &
+    {
+        aggregateExpressions: OpExpression[]
+        groupingExpressions: OpExpression[]
+    }
+
 export type OperationPropertiesFilter =
     & OperationProperties
     &

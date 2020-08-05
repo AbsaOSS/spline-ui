@@ -36,6 +36,7 @@ export namespace SgNodeControl {
         Alias = 'SubqueryAlias',
         Generic = 'Generic',
         Projection = 'Project',
+        Aggregate = 'Aggregate',
     }
 
     export const DEFAULT_NODE_STYLES: NodeStyles = Object.freeze<NodeStyles>({
@@ -113,6 +114,13 @@ export namespace SgNodeControl {
                 {
                     icon: 'arrow-down-circle',
                     color: SplineColors.BLUE,
+                },
+            ],
+            [
+                NodeType.Aggregate,
+                {
+                    icon: 'arrow-collapse-all',
+                    color: SplineColors.GREEN_LIGHT,
                 },
             ],
         ])

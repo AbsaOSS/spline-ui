@@ -22,4 +22,6 @@ export const SPLINE_ICONS_COLLECTION: Set<string> = new Set<string>([
     'head-cog',
     'code-json',
     'shuffle-variant',
+    'arrow-collapse-all',
+    's-group',
 ])
