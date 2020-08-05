@@ -15,8 +15,10 @@
  */
 
 import { NgModule } from '@angular/core'
+import { MatAutocompleteModule } from '@angular/material/autocomplete'
 import { MatIconModule } from '@angular/material/icon'
 import { MatListModule } from '@angular/material/list'
+import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -27,7 +29,9 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { storeFreeze } from 'ngrx-store-freeze'
+import { SplineApiExecutionEventModule } from 'spline-api'
 import { SplineLayoutModule, SplineSearchBoxModule, SplineTranslateCoreModule } from 'spline-common'
+import { SplineApiConfigModule } from 'spline-shared'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -62,6 +66,10 @@ export const metaReducers: MetaReducer<any>[] =
         MatListModule,
         MatIconModule,
         MatTooltipModule,
+        MatAutocompleteModule,
+        SplineApiConfigModule,
+        SplineApiExecutionEventModule,
+        MatProgressBarModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

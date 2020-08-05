@@ -14,6 +14,23 @@
  * limitations under the License.
  */
 
-export * from './attribute.facade'
-export * from './execution-event.facade'
-export * from './execution-plan.facade'
+module.exports = {
+    'rules': {
+        '@angular-eslint/directive-selector': [
+            'error',
+            {
+                'type': 'attribute',
+                'prefix': ['spline', 'sd'],
+                'style': 'camelCase'
+            }
+        ],
+        '@angular-eslint/component-selector': [
+            'error',
+            {
+                'type': 'element',
+                'prefix': ['spline', 'sd'],
+                'style': 'kebab-case'
+            }
+        ]
+    }
+};

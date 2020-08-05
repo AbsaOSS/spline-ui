@@ -16,33 +16,34 @@
 
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
-import { FormsModule } from '@angular/forms'
 import { MatAutocompleteModule } from '@angular/material/autocomplete'
+import { MatButtonModule } from '@angular/material/button'
+import { MatCardModule } from '@angular/material/card'
 import { MatIconModule } from '@angular/material/icon'
-import { MatProgressBarModule } from '@angular/material/progress-bar'
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { MatTreeModule } from '@angular/material/tree'
+import { SplineSearchBoxModule } from 'spline-common'
 
-import { SplineTranslateModule } from '../../../translate'
-
-import { SplineSearchComponent } from './spline-search-box.component'
+import * as fromComponents from './components'
 
 
 @NgModule({
-    declarations: [
-        SplineSearchComponent,
-    ],
     imports: [
         CommonModule,
-        FormsModule,
+        MatCardModule,
+        MatTreeModule,
         MatIconModule,
+        MatButtonModule,
         MatTooltipModule,
-        SplineTranslateModule.forChild({}),
         MatAutocompleteModule,
-        MatProgressSpinnerModule,
-        MatProgressBarModule,
+        SplineSearchBoxModule,
     ],
-    exports: [SplineSearchComponent],
+    declarations: [
+        ...fromComponents.attributeSearchComponents,
+    ],
+    exports: [
+        ...fromComponents.attributeSearchComponents,
+    ],
 })
-export class SplineSearchBoxModule {
+export class SplineAttributeSearchModule {
 }

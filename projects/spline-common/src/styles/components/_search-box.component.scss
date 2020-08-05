@@ -15,6 +15,7 @@
  */
 
 @import '../vars';
+@import '../mixins';
 
 // TODO: adjust colors and use it from palette.
 $input-bg: rgba(255, 255, 255, .25);
@@ -27,6 +28,7 @@ $height: 40px;
 $border-radius: $height / 2;
 
 .spline-search-box {
+    align-items: center;
     // CONTAINER
     background: $input-bg;
     border-radius: $border-radius;
@@ -39,10 +41,13 @@ $border-radius: $height / 2;
 
     .spline-search-box__search-icon,
     .spline-search-box__clear-icon {
+        @include icon-size(22px);
         color: $input-text-color;
-        font-size: 22px;
-        height: $height;
-        line-height: $height;
+    }
+
+    .spline-search-box__loading-icon {
+        @include icon-size(22px);
+        color: $color-orange;
     }
 
     .spline-search-box__search-icon {

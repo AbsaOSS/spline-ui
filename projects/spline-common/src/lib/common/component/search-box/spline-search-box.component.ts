@@ -15,8 +15,9 @@
  */
 
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core'
+import { MatAutocomplete } from '@angular/material/autocomplete'
 import { Subject } from 'rxjs'
-import { debounceTime, distinctUntilChanged, map, takeUntil } from 'rxjs/operators'
+import { debounceTime, distinctUntilChanged, map, takeUntil, tap } from 'rxjs/operators'
 import { BaseComponent } from 'spline-utils'
 
 
@@ -29,6 +30,8 @@ export class SplineSearchComponent extends BaseComponent {
     @ViewChild('inputRef', { read: ElementRef, static: true }) inputRef: ElementRef<HTMLElement>
 
     @Input() placeholder = 'COMMON.SEARCH'
+    @Input() loading = false
+    @Input() matAutocomplete = MatAutocomplete
 
     @Input() set searchTerm(value: string) {
         this.inputValue = value
@@ -51,6 +54,7 @@ export class SplineSearchComponent extends BaseComponent {
                 takeUntil(this.destroyed$),
                 // skip default value
                 // skip(1),
+                tap(val => console.log(val)),
                 map(val => val.trim().toLowerCase()),
                 // wait 200 us between keyUp events
                 debounceTime(this.emitSearchEventDebounceTimeInUs),

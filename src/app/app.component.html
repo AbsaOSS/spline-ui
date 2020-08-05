@@ -18,50 +18,73 @@
 
     <!-- HEADER -->
     <ng-template splineLayoutSection="header">
-        <spline-search-box class="header-search-box"></spline-search-box>
+        <spline-search-box (search$)="onSearch($event)"
+                           [loading]="loading"
+                           [matAutocomplete]="matAutocomplete"
+                           [searchTerm]="searchTerm"
+                           class="header-search-box"
+                           placeholder="Search for an attribute ...">
+        </spline-search-box>
+
+        <mat-autocomplete #matAutocomplete="matAutocomplete"
+                          (optionActivated)="onOptionActivated($event)"
+                          (optionSelected)="onAutocompleteOpenSelected($event)"
+                          [displayWith]="displayWitFn">
+            <ng-container *ngIf="attributesList$ | async as attributesList">
+
+                <mat-option *ngFor="let option of attributesList" [value]="option.name">{{ option.name }}</mat-option>
+
+                <!-- DEFAULT VALUE -->
+                <mat-option *ngIf="attributesList.length === 0 && !loading" [value]="null" disabled="true">
+                    <h4 style="margin-bottom: 0">No options found ...</h4>
+                </mat-option>
+                <!-- ./DEFAULT VALUE -->
+            </ng-container>
+
+        </mat-autocomplete>
     </ng-template>
     <!-- ./HEADER -->
 
     <!-- SIDEBAR -->
-    <ng-template splineLayoutSection="sidebar" let-isExpanded="isExpanded">
+    <ng-template let-isExpanded="isExpanded" splineLayoutSection="sidebar">
         <div class="spline-sidebar-menu">
 
-                <mat-nav-list>
-                    <a mat-list-item
-                       matTooltip="Execution Events"
-                       [matTooltipDisabled]="isExpanded"
-                       [matTooltipPosition]="'right'"
-                       routerLink="/events/list"
-                       [class.active]="true">
+            <mat-nav-list>
+                <a [class.active]="true"
+                   [matTooltipDisabled]="isExpanded"
+                   [matTooltipPosition]="'right'"
+                   mat-list-item
+                   matTooltip="Execution Events"
+                   routerLink="/events/list">
 
-                        <mat-icon>play_arrow</mat-icon>
-                        <span *ngIf="isExpanded">Execution Events</span>
+                    <mat-icon>play_arrow</mat-icon>
+                    <span *ngIf="isExpanded">Execution Events</span>
 
-                    </a>
+                </a>
 
-                    <a mat-list-item
-                       matTooltip="Execution Plans"
-                       [matTooltipDisabled]="isExpanded"
-                       [matTooltipPosition]="'right'"
-                       routerLink="/fake-url">
+                <a [matTooltipDisabled]="isExpanded"
+                   [matTooltipPosition]="'right'"
+                   mat-list-item
+                   matTooltip="Execution Plans"
+                   routerLink="/fake-url">
 
-                        <mat-icon>playlist_play</mat-icon>
-                        <span *ngIf="isExpanded">Execution Events</span>
+                    <mat-icon>playlist_play</mat-icon>
+                    <span *ngIf="isExpanded">Execution Events</span>
 
-                    </a>
+                </a>
 
-                    <a mat-list-item
-                       matTooltip="Data Sources"
-                       [matTooltipDisabled]="isExpanded"
-                       [matTooltipPosition]="'right'"
-                       routerLink="/fake-url"
-                       routerLinkActive="active">
+                <a [matTooltipDisabled]="isExpanded"
+                   [matTooltipPosition]="'right'"
+                   mat-list-item
+                   matTooltip="Data Sources"
+                   routerLink="/fake-url"
+                   routerLinkActive="active">
 
-                        <mat-icon>description</mat-icon>
-                        <span *ngIf="isExpanded">Data Sources</span>
+                    <mat-icon>description</mat-icon>
+                    <span *ngIf="isExpanded">Data Sources</span>
 
-                    </a>
-                </mat-nav-list>
+                </a>
+            </mat-nav-list>
         </div>
     </ng-template>
     <!-- ./SIDEBAR -->

@@ -14,24 +14,25 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { MatAutocompleteActivatedEvent, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 import { BehaviorSubject, of } from 'rxjs'
-import { catchError, tap } from 'rxjs/operators'
+import { catchError } from 'rxjs/operators'
 import { AttributeFacade, AttributeSearchRecord } from 'spline-api'
 
 
 @Component({
-    selector: 'spline-app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
+    selector: 'spline-attribute-search',
+    templateUrl: './spline-attribute-search.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {
+export class SplineAttributeSearchComponent {
 
     searchTerm$ = new BehaviorSubject<string>(null)
     attributesList$ = new BehaviorSubject<AttributeSearchRecord[]>([])
     loading = false
     searchTerm: string
+
     constructor(private readonly attributeFacade: AttributeFacade) {
     }
 
@@ -51,13 +52,13 @@ export class AppComponent {
                     catchError(error => {
                         // show ERROR MESSAGE
                         return of([])
-                    })
+                    }),
                 )
                 .subscribe(
                     result => {
                         this.loading = false
                         this.attributesList$.next(result)
-                    }
+                    },
                 )
         }
         else {
@@ -68,4 +69,5 @@ export class AppComponent {
     onOptionActivated($event: MatAutocompleteActivatedEvent) {
         console.log($event)
     }
+
 }

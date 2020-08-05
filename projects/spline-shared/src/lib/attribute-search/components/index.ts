@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
-export * from './attribute.facade'
-export * from './execution-event.facade'
-export * from './execution-plan.facade'
+import { SplineAttributeSearchComponent } from './search/spline-attribute-search.component'
+
+
+export * from './public-api'
+
+export const attributeSearchComponents = [
+    SplineAttributeSearchComponent,
+]

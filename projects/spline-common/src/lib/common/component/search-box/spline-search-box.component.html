@@ -25,11 +25,17 @@
            (focusin)="isFocused = true"
            (focusout)="isFocused = false"
            [ngModel]="inputValue"
+           [matAutocomplete]="matAutocomplete"
            (ngModelChange)="onSearchChanged($event)"
            [placeholder]="placeholder | translate"
            type="text">
 
     <!-- CLEAR ICON -->
+    <mat-icon class="spline-search-box__loading-icon"
+              *ngIf="loading">
+        hourglass_top
+    </mat-icon>
+
     <mat-icon class="spline-search-box__clear-icon"
               *ngIf="inputRef.value?.length"
               [matTooltip]="'COMMON.CLEAR' | translate"

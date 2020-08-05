@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import { AttributeFacade } from './attribute.facade'
 import { ExecutionEventFacade } from './execution-event.facade'
 import { ExecutionPlanFacade } from './execution-plan.facade'
 
@@ -21,6 +22,7 @@ import { ExecutionPlanFacade } from './execution-plan.facade'
 export const executionEventServices: any[] = [
     ExecutionEventFacade,
     ExecutionPlanFacade,
+    AttributeFacade,
 ]
 
 export * from './public-api'

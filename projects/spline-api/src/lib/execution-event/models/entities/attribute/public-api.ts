@@ -17,4 +17,5 @@
 export * from './attribute-data-type.models'
 export * from './attribute-dt-type.models'
 export * from './attribute-schema.models'
+export * from './attribute-search.models'
 

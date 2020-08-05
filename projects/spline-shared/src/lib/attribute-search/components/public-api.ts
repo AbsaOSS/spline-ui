@@ -14,6 +14,4 @@
  * limitations under the License.
  */
 
-export * from './attribute.facade'
-export * from './execution-event.facade'
-export * from './execution-plan.facade'
+export * from './search/spline-attribute-search.component'
