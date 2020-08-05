@@ -19,7 +19,7 @@ import { SdWidgetExpansionPanel, SdWidgetSchema, SplineColors, SplineDataViewSch
 
 import { EventOperationProperty } from '../operation-property.models'
 
-import { getBaseOperationDetailsSchema } from './operation-bais.models'
+import { getBaseOperationDetailsSchema } from './operation-common.models'
 
 
 export namespace OperationGeneric {

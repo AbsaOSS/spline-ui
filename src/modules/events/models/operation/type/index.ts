@@ -14,9 +14,13 @@
  * limitations under the License.
  */
 
+export * from './operation-aggregate.models'
 export * from './operation-alias.models'
+export * from './operation-common.models'
 export * from './operation-filter.models'
 export * from './operation-generic.models'
 export * from './operation-join.models'
+export * from './operation-projection.models'
 export * from './operation-read.models'
+export * from './operation-sort.models'
 export * from './operation-write.models'

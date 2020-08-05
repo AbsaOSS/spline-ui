@@ -32,6 +32,7 @@ export class SplineExpressionComponent implements OnInit {
     @Input() expression: OpExpression
     @Input() attrSchemasCollection: AttrSchemasCollection
     @Input() prefix: string
+    @Input() suffix: string
     @Input() showActions = true
 
     expressionString: string
@@ -51,6 +52,7 @@ export class SplineExpressionComponent implements OnInit {
                     expression: this.expression,
                     attrSchemasCollection: this.attrSchemasCollection,
                     prefix: this.prefix,
+                    suffix: this.suffix,
                 },
                 minWidth: '700px',
                 autoFocus: false,

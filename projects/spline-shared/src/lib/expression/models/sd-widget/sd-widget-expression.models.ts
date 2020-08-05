@@ -27,6 +27,7 @@ export namespace SdWidgetExpression {
         expression: OpExpression
         attrSchemasCollection: AttrSchemasCollection
         prefix?: string
+        suffix?: string
     }
 
     export type Options = {}

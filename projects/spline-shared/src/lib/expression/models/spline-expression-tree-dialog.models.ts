@@ -23,6 +23,7 @@ export namespace SplineExpressionTreeDialog {
         expression: OpExpression
         attrSchemasCollection: AttrSchemasCollection
         prefix?: string
+        suffix?: string
     }
 
 }

@@ -62,6 +62,16 @@ export type OperationPropertiesRead =
         sourceType: string
     }
 
+export type OperationPropertiesSort =
+    & OperationProperties
+    &
+    {
+        order: Array<{
+            expression: OpExpression
+            direction: string
+        }>
+    }
+
 export type OperationPropertiesWrite =
     & OperationProperties
     &

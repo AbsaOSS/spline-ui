@@ -20,7 +20,7 @@ import { SdWidgetExpansionPanel, SdWidgetRecordsList, SdWidgetSchema, SplineData
 import { SgNodeControl } from '../../sg-node-control.models'
 import { EventOperationProperty } from '../operation-property.models'
 
-import { getBaseOperationDetailsSchema } from './operation-bais.models'
+import { getBaseOperationDetailsSchema } from './operation-common.models'
 
 
 export namespace OperationRead {

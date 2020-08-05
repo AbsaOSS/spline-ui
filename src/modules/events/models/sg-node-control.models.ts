@@ -37,6 +37,7 @@ export namespace SgNodeControl {
         Generic = 'Generic',
         Projection = 'Project',
         Aggregate = 'Aggregate',
+        Sort = 'Sort',
     }
 
     export const DEFAULT_NODE_STYLES: NodeStyles = Object.freeze<NodeStyles>({
@@ -120,7 +121,14 @@ export namespace SgNodeControl {
                 NodeType.Aggregate,
                 {
                     icon: 'arrow-collapse-all',
-                    color: SplineColors.GREEN_LIGHT,
+                    color: SplineColors.GREEN,
+                },
+            ],
+            [
+                NodeType.Sort,
+                {
+                    icon: 'sort_by_alpha',
+                    color: SplineColors.GREEN,
                 },
             ],
         ])

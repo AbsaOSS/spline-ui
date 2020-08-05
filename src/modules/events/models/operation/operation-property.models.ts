@@ -91,7 +91,7 @@ export namespace EventOperationProperty {
             item => SdWidgetExpansionPanel.toSchema(
                 {
                     title: item.label,
-                    icon: 'shuffle-variant',
+                    icon: 'code',
                     iconColor: SplineColors.BLUE,
                 },
                 item.value.map(

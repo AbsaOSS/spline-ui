@@ -14,42 +14,53 @@
  * limitations under the License.
  */
 
-import { OperationDetails } from 'spline-api'
+import { OperationDetails, OperationPropertiesSort } from 'spline-api'
 import { SdWidgetExpansionPanel, SdWidgetSchema, SplineDataViewSchema } from 'spline-common'
+import { SdWidgetExpression } from 'spline-shared'
 
 import { SgNodeControl } from '../../sg-node-control.models'
 import { EventOperationProperty } from '../operation-property.models'
 
 import { getBaseOperationDetailsSchema } from './operation-common.models'
+import { OperationGeneric } from './operation-generic.models'
 
 
-export namespace OperationAlias {
+export namespace OperationSort {
 
     export function toDataViewSchema(operationDetails: OperationDetails): SplineDataViewSchema {
-
         return getBaseOperationDetailsSchema(
             operationDetails,
             getMainSection,
+            ['condition', 'joinType'],
         )
     }
 
     export function getMainSection(operationDetails: OperationDetails,
                                    primitiveProps: EventOperationProperty.ExtraPropertyValuePrimitive[]): SdWidgetSchema[] {
 
-        const nodeStyles = SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Alias)
+        const properties = operationDetails.operation.properties as OperationPropertiesSort
+        const nodeStyles = SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Sort)
 
-        return primitiveProps.length
-            ? [
-                SdWidgetExpansionPanel.toSchema(
-                    {
-                        title: 'EVENTS.OPERATION__ALIAS__MAIN_SECTION_TITLE',
-                        icon: nodeStyles.icon,
-                        iconColor: nodeStyles.color,
-                    },
-                    EventOperationProperty.primitivePropsToDvs(primitiveProps),
+        const mainSectionSchema = OperationGeneric.getMainSection(operationDetails, primitiveProps)
+
+        const sortSchema = [
+            SdWidgetExpansionPanel.toSchema(
+                {
+                    title: 'EVENTS.OPERATION__SORT__MAIN_SECTION_TITLE',
+                    icon: nodeStyles.icon,
+                    iconColor: nodeStyles.color,
+                },
+                properties.order.map(
+                    sortInfo => SdWidgetExpression.toSchema({
+                        suffix: sortInfo.direction,
+                        expression: sortInfo.expression,
+                        attrSchemasCollection: operationDetails.schemasCollection,
+                    }),
                 ),
-            ]
-            : []
+            ),
+        ]
+
+        return [...mainSectionSchema, ...sortSchema]
     }
 
 }
