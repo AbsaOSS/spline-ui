@@ -14,7 +14,31 @@
  * limitations under the License.
  */
 
-export * from './spline-attribute-search.module'
-export * from './components/public-api'
-export * from './models/public-api'
-export * from './data-source/public-api'
+import { EventEmitter, Injectable } from '@angular/core'
+import { Observable, of } from 'rxjs'
+
+
+@Injectable()
+export class TranslateServiceTest {
+
+    onLangChange = new EventEmitter();
+    onTranslationChange = new EventEmitter();
+    onDefaultLangChange = new EventEmitter();
+
+    get<T>(key: T): Observable<T> {
+        return of(key)
+    }
+
+    addLangs(langs: string[]) {
+    }
+
+    setDefaultLang(lang: string) {
+    }
+
+    getBrowserLang(): string {
+        return 'en'
+    }
+
+    use(lang: string) {
+    }
+}

@@ -116,7 +116,7 @@ export abstract class SimpleDataSource<TData, TFilter extends object = {}> {
                 tap((result) => {
                     if (result !== null) {
                         this.updateDataState({
-                            data: { ...result },
+                            data: result,
                             loadingProcessing: ProcessingStore.eventProcessingFinish(this.dataState.loadingProcessing),
                         })
                     }

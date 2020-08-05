@@ -22,7 +22,10 @@ import { MatCardModule } from '@angular/material/card'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatTreeModule } from '@angular/material/tree'
-import { SplineSearchBoxModule } from 'spline-common'
+import { SplineApiExecutionEventModule } from 'spline-api'
+import { SplineSearchBoxModule, SplineTranslateModule } from 'spline-common'
+
+import { SplineApiConfigModule } from '../spline-api-config'
 
 import * as fromComponents from './components'
 
@@ -37,6 +40,9 @@ import * as fromComponents from './components'
         MatTooltipModule,
         MatAutocompleteModule,
         SplineSearchBoxModule,
+        SplineApiConfigModule,
+        SplineApiExecutionEventModule,
+        SplineTranslateModule.forChild({moduleNames: ['events']}),
     ],
     declarations: [
         ...fromComponents.attributeSearchComponents,

@@ -18,30 +18,7 @@
 
     <!-- HEADER -->
     <ng-template splineLayoutSection="header">
-        <spline-search-box (search$)="onSearch($event)"
-                           [loading]="loading"
-                           [matAutocomplete]="matAutocomplete"
-                           [searchTerm]="searchTerm"
-                           class="header-search-box"
-                           placeholder="Search for an attribute ...">
-        </spline-search-box>
-
-        <mat-autocomplete #matAutocomplete="matAutocomplete"
-                          (optionActivated)="onOptionActivated($event)"
-                          (optionSelected)="onAutocompleteOpenSelected($event)"
-                          [displayWith]="displayWitFn">
-            <ng-container *ngIf="attributesList$ | async as attributesList">
-
-                <mat-option *ngFor="let option of attributesList" [value]="option.name">{{ option.name }}</mat-option>
-
-                <!-- DEFAULT VALUE -->
-                <mat-option *ngIf="attributesList.length === 0 && !loading" [value]="null" disabled="true">
-                    <h4 style="margin-bottom: 0">No options found ...</h4>
-                </mat-option>
-                <!-- ./DEFAULT VALUE -->
-            </ng-container>
-
-        </mat-autocomplete>
+        <spline-attribute-search (attributeSelected$)="onAttributeSearchSelected($event.attributeInfo)"></spline-attribute-search>
     </ng-template>
     <!-- ./HEADER -->
 

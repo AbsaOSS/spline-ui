@@ -15,24 +15,27 @@
   -->
 
 <spline-search-box (search$)="onSearch($event)"
-                   [loading]="loading"
+                   [loading]="(dataSource.loadingProcessing$ | async).processing"
                    [matAutocomplete]="matAutocomplete"
                    [searchTerm]="searchTerm"
                    class="header-search-box"
-                   placeholder="Search for an attribute ...">
+                   [placeholder]="'EVENTS.ATTR_SEARCH__PLACEHOLDER' | translate">
 </spline-search-box>
 
 <mat-autocomplete #matAutocomplete="matAutocomplete"
-                  (optionActivated)="onOptionActivated($event)"
-                  (optionSelected)="onAutocompleteOpenSelected($event)"
-                  [displayWith]="displayWitFn">
-    <ng-container *ngIf="attributesList$ | async as attributesList">
+                  (optionSelected)="onAutocompleteOpenSelected($event)">
 
-        <mat-option *ngFor="let option of attributesList" [value]="option.name">{{ option.name }}</mat-option>
+    <ng-container *ngIf="dataSource.dataState$ | async as dataState">
+
+        <mat-option *ngFor="let option of dataState.data" [value]="option">{{ option.name }}</mat-option>
 
         <!-- DEFAULT VALUE -->
-        <mat-option *ngIf="attributesList.length === 0 && !loading" [value]="null" disabled="true">
-            <h4 style="margin-bottom: 0">No options found ...</h4>
+        <mat-option *ngIf="noOptionsFound$ | async"
+                    [value]="null"
+                    disabled="true">
+            <h4 class="my-0">
+                {{'COMMON.NO_OPTIONS_FOUND' | translate }}
+            </h4>
         </mat-option>
         <!-- ./DEFAULT VALUE -->
     </ng-container>

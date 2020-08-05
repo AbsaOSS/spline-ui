@@ -15,6 +15,7 @@
     "SEARCH": "Search",
     "ADD": "Add",
     "SERVER_COMMUNICATION_ERROR_MESSAGE": "Error has been occurred during communication with a server.",
-    "NO_RESULTS_MESSAGE": "No data found."
+    "NO_RESULTS_MESSAGE": "No data found.",
+    "NO_OPTIONS_FOUND": "No options found."
   }
 }

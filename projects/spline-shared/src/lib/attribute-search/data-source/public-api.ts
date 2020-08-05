@@ -14,7 +14,4 @@
  * limitations under the License.
  */
 
-export * from './spline-attribute-search.module'
-export * from './components/public-api'
-export * from './models/public-api'
-export * from './data-source/public-api'
+export * from './attribute-search.data-source'

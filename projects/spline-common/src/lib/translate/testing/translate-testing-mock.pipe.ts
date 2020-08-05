@@ -14,7 +14,16 @@
  * limitations under the License.
  */
 
-export * from './spline-attribute-search.module'
-export * from './components/public-api'
-export * from './models/public-api'
-export * from './data-source/public-api'
+import { Pipe, PipeTransform } from '@angular/core'
+
+
+@Pipe({
+    name: 'translate',
+})
+export class TranslatePipeMock implements PipeTransform {
+    name = 'translate'
+
+    transform(query: string, ...args: any[]): any {
+        return query
+    }
+}

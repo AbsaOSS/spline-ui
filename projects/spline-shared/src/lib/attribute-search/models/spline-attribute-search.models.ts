@@ -14,7 +14,11 @@
  * limitations under the License.
  */
 
-export * from './spline-attribute-search.module'
-export * from './components/public-api'
-export * from './models/public-api'
-export * from './data-source/public-api'
+import { AttributeSearchRecord } from 'spline-api'
+
+
+export namespace SplineAttributeSearch {
+
+    export type Data = AttributeSearchRecord[]
+
+}

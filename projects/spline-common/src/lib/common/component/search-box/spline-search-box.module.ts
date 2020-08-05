@@ -25,12 +25,12 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 
 import { SplineTranslateModule } from '../../../translate'
 
-import { SplineSearchComponent } from './spline-search-box.component'
+import { SplineSearchBoxComponent } from './spline-search-box.component'
 
 
 @NgModule({
     declarations: [
-        SplineSearchComponent,
+        SplineSearchBoxComponent,
     ],
     imports: [
         CommonModule,
@@ -42,7 +42,7 @@ import { SplineSearchComponent } from './spline-search-box.component'
         MatProgressSpinnerModule,
         MatProgressBarModule,
     ],
-    exports: [SplineSearchComponent],
+    exports: [SplineSearchBoxComponent],
 })
 export class SplineSearchBoxModule {
 }

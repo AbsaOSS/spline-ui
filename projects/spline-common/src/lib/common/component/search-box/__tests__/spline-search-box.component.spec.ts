@@ -14,36 +14,43 @@
  * limitations under the License.
  */
 
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing'
 import { FormsModule } from '@angular/forms'
+import { MatAutocompleteModule } from '@angular/material/autocomplete'
 import { By } from '@angular/platform-browser'
 
-import { SplineSearchComponent } from '../spline-search-box.component'
+import { SplineTranslateTestingModule } from '../../../../translate'
+import { SplineSearchBoxComponent } from '../spline-search-box.component'
 
 
 describe('SplineSearchComponent', () => {
-    let component: SplineSearchComponent
-    let fixture: ComponentFixture<SplineSearchComponent>
+    let component: SplineSearchBoxComponent
+    let fixture: ComponentFixture<SplineSearchBoxComponent>
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
                 FormsModule,
+                HttpClientTestingModule,
+                // TranslateModule,
+                SplineTranslateTestingModule,
+                MatAutocompleteModule,
             ],
-            declarations: [SplineSearchComponent],
+            declarations: [SplineSearchBoxComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
         })
             .compileComponents()
     }))
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(SplineSearchComponent)
+        fixture = TestBed.createComponent(SplineSearchBoxComponent)
         component = fixture.componentInstance
         fixture.detectChanges()
     })
 
-    function extractInputNativeElm(componentFixture: ComponentFixture<SplineSearchComponent>) {
+    function extractInputNativeElm(componentFixture: ComponentFixture<SplineSearchBoxComponent>): HTMLInputElement {
         return componentFixture.debugElement.query(By.css('.spline-search-box__input')).nativeElement
     }
 
@@ -62,7 +69,7 @@ describe('SplineSearchComponent', () => {
             const inputDomElm = extractInputNativeElm(fixture)
             expect(inputDomElm.value).toEqual(defaultValue)
             // do not emit event for default value initialization
-            expect(component.search$.emit).toHaveBeenCalledTimes(0)
+            expect(component.search$['emit']).toHaveBeenCalledTimes(0)
         })
     }))
 
@@ -74,14 +81,14 @@ describe('SplineSearchComponent', () => {
         const newValue = 'new value'
         const inputDomElm = extractInputNativeElm(fixture)
         inputDomElm.value = newValue
-        inputDomElm.dispatchEvent(new Event('input'))
+        inputDomElm.dispatchEvent(new Event('keyup'))
         fixture.detectChanges()
         tick(component.emitSearchEventDebounceTimeInUs)
 
         fixture.whenStable().then(() => {
             expect(component.inputValue).toEqual(newValue)
-            expect(component.search$.emit).toHaveBeenCalledTimes(1)
-            expect(component.search$.emit).toHaveBeenCalledWith(newValue)
+            expect(component.search$['emit']).toHaveBeenCalledTimes(1)
+            expect(component.search$['emit']).toHaveBeenCalledWith(newValue)
         })
     }))
 })

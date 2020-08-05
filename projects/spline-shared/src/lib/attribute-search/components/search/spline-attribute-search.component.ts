@@ -14,60 +14,70 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { MatAutocompleteActivatedEvent, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
-import { BehaviorSubject, of } from 'rxjs'
-import { catchError } from 'rxjs/operators'
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core'
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
+import { Observable } from 'rxjs'
+import { map, switchMap } from 'rxjs/operators'
 import { AttributeFacade, AttributeSearchRecord } from 'spline-api'
+
+import { AttributeSearchDataSource } from '../../data-source/attribute-search.data-source'
 
 
 @Component({
     selector: 'spline-attribute-search',
     templateUrl: './spline-attribute-search.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: AttributeSearchDataSource,
+            useFactory: (attributeFacade: AttributeFacade) => {
+                return new AttributeSearchDataSource(attributeFacade)
+            },
+            deps: [AttributeFacade],
+        },
+    ],
 })
 export class SplineAttributeSearchComponent {
 
-    searchTerm$ = new BehaviorSubject<string>(null)
-    attributesList$ = new BehaviorSubject<AttributeSearchRecord[]>([])
-    loading = false
+    @Output() attributeSelected$ = new EventEmitter<{ attributeInfo: AttributeSearchRecord }>()
+
     searchTerm: string
 
-    constructor(private readonly attributeFacade: AttributeFacade) {
-    }
+    noOptionsFound$: Observable<boolean>
 
-    displayWitFn = (item: AttributeSearchRecord) => item?.id ? item.id : ''
+    constructor(readonly dataSource: AttributeSearchDataSource) {
+        this.noOptionsFound$ = this.dataSource.onFilterChanged$
+            .pipe(
+                switchMap(
+                    ({ filter }) => this.dataSource.dataState$
+                        .pipe(
+                            map(dataState => ({
+                                dataState,
+                                filter,
+                            })),
+                        ),
+                ),
+                map(({ dataState, filter }) => (
+                    !dataState.loadingProcessing.processing
+                    && dataState.data?.length === 0
+                    && filter?.search?.length > 0
+                )),
+            )
+
+    }
 
     onAutocompleteOpenSelected($event: MatAutocompleteSelectedEvent): void {
-        console.log($event)
-        // TODO: redirect
         this.searchTerm = ''
+        this.attributeSelected$.emit({
+            attributeInfo: $event.option.value,
+        })
     }
 
-    onSearch($event: string): void {
-        if ($event?.length) {
-            this.loading = true
-            this.attributeFacade.search($event)
-                .pipe(
-                    catchError(error => {
-                        // show ERROR MESSAGE
-                        return of([])
-                    }),
-                )
-                .subscribe(
-                    result => {
-                        this.loading = false
-                        this.attributesList$.next(result)
-                    },
-                )
-        }
-        else {
-            this.attributesList$.next([])
-        }
-    }
-
-    onOptionActivated($event: MatAutocompleteActivatedEvent) {
-        console.log($event)
+    onSearch(searchTerm: string): void {
+        this.searchTerm = searchTerm
+        this.dataSource.setFilter({
+            search: searchTerm,
+        })
     }
 
 }

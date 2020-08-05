@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core'
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core'
 import { MatAutocomplete } from '@angular/material/autocomplete'
 import { Subject } from 'rxjs'
-import { debounceTime, distinctUntilChanged, map, takeUntil, tap } from 'rxjs/operators'
+import { debounceTime, distinctUntilChanged, map, takeUntil } from 'rxjs/operators'
 import { BaseComponent } from 'spline-utils'
 
 
@@ -25,7 +25,7 @@ import { BaseComponent } from 'spline-utils'
     selector: 'spline-search-box',
     templateUrl: './spline-search-box.component.html',
 })
-export class SplineSearchComponent extends BaseComponent {
+export class SplineSearchBoxComponent extends BaseComponent {
 
     @ViewChild('inputRef', { read: ElementRef, static: true }) inputRef: ElementRef<HTMLElement>
 
@@ -42,7 +42,7 @@ export class SplineSearchComponent extends BaseComponent {
     isFocused = false
     inputValue: string
 
-    readonly emitSearchEventDebounceTimeInUs = 200
+    readonly emitSearchEventDebounceTimeInUs = 300
 
     protected searchValueChanged$ = new Subject<string>()
 
@@ -53,8 +53,6 @@ export class SplineSearchComponent extends BaseComponent {
             .pipe(
                 takeUntil(this.destroyed$),
                 // skip default value
-                // skip(1),
-                tap(val => console.log(val)),
                 map(val => val.trim().toLowerCase()),
                 // wait 200 us between keyUp events
                 debounceTime(this.emitSearchEventDebounceTimeInUs),

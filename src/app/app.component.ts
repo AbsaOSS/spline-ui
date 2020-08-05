@@ -15,10 +15,8 @@
  */
 
 import { Component } from '@angular/core'
-import { MatAutocompleteActivatedEvent, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
-import { BehaviorSubject, of } from 'rxjs'
-import { catchError, tap } from 'rxjs/operators'
-import { AttributeFacade, AttributeSearchRecord } from 'spline-api'
+import { Router } from '@angular/router'
+import { AttributeSearchRecord } from 'spline-api'
 
 
 @Component({
@@ -28,44 +26,17 @@ import { AttributeFacade, AttributeSearchRecord } from 'spline-api'
 })
 export class AppComponent {
 
-    searchTerm$ = new BehaviorSubject<string>(null)
-    attributesList$ = new BehaviorSubject<AttributeSearchRecord[]>([])
-    loading = false
-    searchTerm: string
-    constructor(private readonly attributeFacade: AttributeFacade) {
+    constructor(private readonly router: Router) {
     }
 
-    displayWitFn = (item: AttributeSearchRecord) => item?.id ? item.id : ''
-
-    onAutocompleteOpenSelected($event: MatAutocompleteSelectedEvent): void {
-        console.log($event)
-        // TODO: redirect
-        this.searchTerm = ''
-    }
-
-    onSearch($event: string): void {
-        if ($event?.length) {
-            this.loading = true
-            this.attributeFacade.search($event)
-                .pipe(
-                    catchError(error => {
-                        // show ERROR MESSAGE
-                        return of([])
-                    })
-                )
-                .subscribe(
-                    result => {
-                        this.loading = false
-                        this.attributesList$.next(result)
-                    }
-                )
-        }
-        else {
-            this.attributesList$.next([])
-        }
-    }
-
-    onOptionActivated($event: MatAutocompleteActivatedEvent) {
-        console.log($event)
+    onAttributeSearchSelected(attributeInfo: AttributeSearchRecord): void {
+        this.router.navigate(
+            ['/events/plan-overview', attributeInfo.executionEventId],
+            {
+                queryParams: {
+                    attributeId: attributeInfo.id,
+                },
+            },
+        )
     }
 }

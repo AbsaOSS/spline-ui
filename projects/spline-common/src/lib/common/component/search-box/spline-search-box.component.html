@@ -26,7 +26,7 @@
            (focusout)="isFocused = false"
            [ngModel]="inputValue"
            [matAutocomplete]="matAutocomplete"
-           (ngModelChange)="onSearchChanged($event)"
+           (keyup)="onSearchChanged(inputRef.value)"
            [placeholder]="placeholder | translate"
            type="text">
 
