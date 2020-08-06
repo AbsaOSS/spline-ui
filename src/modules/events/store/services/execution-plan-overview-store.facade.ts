@@ -105,7 +105,6 @@ export class ExecutionPlanOverviewStoreFacade extends BaseStore<ExecutionPlanOve
 
     setSelectedAttribute(attrId: string | null): void {
         if (this.state.selectedAttributeId !== attrId) {
-
             if (attrId === null) {
                 this.updateState({
                     selectedAttributeId: attrId,
