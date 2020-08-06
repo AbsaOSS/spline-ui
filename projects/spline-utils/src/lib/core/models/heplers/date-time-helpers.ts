@@ -19,9 +19,10 @@ import moment from 'moment'
 
 export namespace DateTimeHelpers {
 
-    const FULL_DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss'
+    export const FULL_DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss'
+    export const FULL_DATE = 'YYYY-MM-DD'
 
-    export function toString(date: Date, format = FULL_DATE_TIME_FORMAT): string {
+    export function toString(date: Date, format: string = FULL_DATE_TIME_FORMAT): string {
         return moment(date).format(format)
     }
 

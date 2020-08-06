@@ -31,10 +31,17 @@
         </ng-container>
 
         <div class="pb-3">
-            <spline-search-box class="table-search"
-                               [searchTerm]="(dataSource.searchParams$ | async).searchTerm"
-                               (search$)="onSearch($event)">
-            </spline-search-box>
+            <div class="d-flex w-100">
+                <div class="flex-grow-1">
+                    <spline-search-box class="table-search"
+                                       [searchTerm]="(dataSource.searchParams$ | async).searchTerm"
+                                       (search$)="onSearch($event)">
+                    </spline-search-box>
+                </div>
+
+                <spline-date-filter></spline-date-filter>
+
+            </div>
         </div>
 
         <mat-table [dataSource]="(data$ | async)?.items" matSort>

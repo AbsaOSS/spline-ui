@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-@import 'spline-common';
-@import 'spline-shared';
-@import './components/index';
-@import './helpers/index';
+@import 'vars';
+@import 'mixins';
 
-@import '~ngx-daterangepicker-material/daterangepicker-theme';
-@include date-range-picker-theme($spline-theme);
+::ng-deep {
+
+    .mat-menu-panel {
+        max-width: 600px !important;
+    }
+}
+

@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,10 +14,20 @@
  * limitations under the License.
  */
 
-@import 'spline-common';
-@import 'spline-shared';
-@import './components/index';
-@import './helpers/index';
+import { DateTimeHelpers } from 'spline-utils'
 
-@import '~ngx-daterangepicker-material/daterangepicker-theme';
-@include date-range-picker-theme($spline-theme);
+
+export namespace SplineDateFilter {
+
+    export type Value = {
+        dateFrom: Date
+        dateTo: Date
+    }
+
+    export function valueToString(value: Value): string {
+        const dateFromString = DateTimeHelpers.toString(value.dateFrom, DateTimeHelpers.FULL_DATE)
+        const dateToString = DateTimeHelpers.toString(value.dateTo, DateTimeHelpers.FULL_DATE)
+
+        return `${dateFromString} - ${dateToString}`
+    }
+}

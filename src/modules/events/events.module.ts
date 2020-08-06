@@ -21,6 +21,8 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card'
 import { MatDividerModule } from '@angular/material/divider'
 import { MatIconModule } from '@angular/material/icon'
+import { MatInputModule } from '@angular/material/input'
+import { MatMenuModule } from '@angular/material/menu'
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
@@ -28,6 +30,7 @@ import { MatTabsModule } from '@angular/material/tabs'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatTreeModule } from '@angular/material/tree'
 import { RouterModule } from '@angular/router'
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material'
 import { SplineApiModule } from 'spline-api'
 import {
     SplineCardModule,
@@ -92,7 +95,10 @@ import * as fromPages from './pages'
         MatButtonModule,
         MatTabsModule,
         SplineIconModule,
-        SplineExpressionModule
+        SplineExpressionModule,
+        NgxDaterangepickerMd.forRoot(),
+        MatInputModule,
+        MatMenuModule,
     ],
     exports: [
         ...fromPages.pageComponents,
