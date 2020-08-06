@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,12 +14,5 @@
  * limitations under the License.
  */
 
-@import 'mat-autocomplete';
-@import 'mat-button';
-@import 'mat-card';
-@import 'mat-divider';
-@import 'mat-expansion-panel';
-@import 'mat-icon';
-@import 'mat-tab';
-@import 'mat-table';
-@import 'mat-tree';
+export * from './spline-attributes.module'
+export * from './components/public-api'

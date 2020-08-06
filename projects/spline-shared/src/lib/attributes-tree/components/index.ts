@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import { SplineAttributeDataTypeComponent } from './attribute-data-type/spline-attribute-data-type.component'
 import { SdWidgetAttributesTreeComponent } from './attributes-tree-widget/sd-widget-attributes-tree.component'
 import { SplineAttributesTreeComponent } from './attributes-tree/spline-attributes-tree.component'
 
@@ -24,5 +23,4 @@ export * from './public-api'
 export const attributesTreeComponents = [
     SplineAttributesTreeComponent,
     SdWidgetAttributesTreeComponent,
-    SplineAttributeDataTypeComponent
 ]

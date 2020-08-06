@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core'
+import { ChangeDetectionStrategy, Component, EventEmitter, Output, ViewChild } from '@angular/core'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
-import { Observable } from 'rxjs'
+import { BehaviorSubject, Observable } from 'rxjs'
 import { map, switchMap } from 'rxjs/operators'
 import { AttributeFacade, AttributeSearchRecord } from 'spline-api'
+import { SplineSearchBoxComponent } from 'spline-common'
 
 import { AttributeSearchDataSource } from '../../data-source/attribute-search.data-source'
 
@@ -39,9 +40,11 @@ import { AttributeSearchDataSource } from '../../data-source/attribute-search.da
 })
 export class SplineAttributeSearchComponent {
 
+    @ViewChild(SplineSearchBoxComponent) splineSearchBoxComponent: SplineSearchBoxComponent
+
     @Output() attributeSelected$ = new EventEmitter<{ attributeInfo: AttributeSearchRecord }>()
 
-    searchTerm: string
+    searchTerm$ = new BehaviorSubject<string>('')
 
     noOptionsFound$: Observable<boolean>
 
@@ -63,21 +66,29 @@ export class SplineAttributeSearchComponent {
                     && filter?.search?.length > 0
                 )),
             )
-
     }
 
-    onAutocompleteOpenSelected($event: MatAutocompleteSelectedEvent): void {
-        this.searchTerm = ''
-        this.attributeSelected$.emit({
-            attributeInfo: $event.option.value,
-        })
-    }
+    displayWitFn = (item: AttributeSearchRecord) => item?.name ? item.name : ''
 
     onSearch(searchTerm: string): void {
-        this.searchTerm = searchTerm
+        this.searchTerm$.next(searchTerm)
         this.dataSource.setFilter({
             search: searchTerm,
         })
     }
 
+    onAutocompleteOptionSelected($event: MatAutocompleteSelectedEvent): void {
+        this.attributeSelected$.emit({
+            attributeInfo: $event.option.value,
+        })
+        this.searchTerm$.next('')
+        this.splineSearchBoxComponent.clearFocus()
+
+    }
+
+    onAutocompleteOpened(): void {
+        this.dataSource.setFilter({
+            search: this.searchTerm$.getValue(),
+        })
+    }
 }

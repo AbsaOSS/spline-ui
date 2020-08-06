@@ -15,21 +15,38 @@
   -->
 
 <spline-search-box (search$)="onSearch($event)"
-                   [loading]="(dataSource.loadingProcessing$ | async).processing"
                    [matAutocomplete]="matAutocomplete"
-                   [searchTerm]="searchTerm"
+                   [searchTerm]="searchTerm$ | async"
                    class="header-search-box"
                    [placeholder]="'EVENTS.ATTR_SEARCH__PLACEHOLDER' | translate">
 </spline-search-box>
 
 <mat-autocomplete #matAutocomplete="matAutocomplete"
-                  (optionSelected)="onAutocompleteOpenSelected($event)">
+                  (opened)="onAutocompleteOpened()"
+                  [displayWith]="displayWitFn"
+                  (optionSelected)="onAutocompleteOptionSelected($event)">
 
     <ng-container *ngIf="dataSource.dataState$ | async as dataState">
 
-        <mat-option *ngFor="let option of dataState.data" [value]="option">{{ option.name }}</mat-option>
+        <ng-container *ngIf="!dataState.loadingProcessing.processing">
+            <mat-option *ngFor="let option of dataState.data" [value]="option">
+                <div class="spline-search-attribute__option">
+                    <div class="spline-search-attribute__option-name-container">
+                        <div class="spline-search-attribute__option-name">
+                            {{ option.name }}
+                        </div>
+                        <div class="spline-search-attribute__option-execution-event-name">
+                            {{ option.executionEventName }}
+                        </div>
+                    </div>
+                    <div class="spline-search-attribute__option-type">
+                        <spline-attribute-data-type [dataType]="option.attributeType"></spline-attribute-data-type>
+                    </div>
+                </div>
+            </mat-option>
+        </ng-container>
 
-        <!-- DEFAULT VALUE -->
+        <!-- NO RESULT -->
         <mat-option *ngIf="noOptionsFound$ | async"
                     [value]="null"
                     disabled="true">
@@ -37,7 +54,21 @@
                 {{'COMMON.NO_OPTIONS_FOUND' | translate }}
             </h4>
         </mat-option>
-        <!-- ./DEFAULT VALUE -->
+        <!-- ./NO RESULT -->
+
+        <!-- LOADING -->
+        <mat-option *ngIf="dataState.loadingProcessing.processing"
+                    [value]="null"
+                    disabled="true">
+            <h4 class="my-0 d-flex align-items-center">
+                <spline-loader [inline]="true" size="xs"></spline-loader>
+                <span class="pl-3">
+                    {{'COMMON.LOADING' | translate }}
+                </span>
+            </h4>
+        </mat-option>
+        <!-- ./LOADING -->
+
     </ng-container>
 
 </mat-autocomplete>

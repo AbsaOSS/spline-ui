@@ -23,8 +23,11 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatTreeModule } from '@angular/material/tree'
 import { SD_WIDGET_FACTORY } from 'spline-common'
 
+import { SplineAttributesModule } from '../attributes'
+
 import * as fromComponents from './components'
 import { SdWidgetAttributesTreeFactory } from './services/sd-widget-attributes-tree.factory'
+
 
 @NgModule({
     imports: [
@@ -34,6 +37,7 @@ import { SdWidgetAttributesTreeFactory } from './services/sd-widget-attributes-t
         MatIconModule,
         MatButtonModule,
         MatTooltipModule,
+        SplineAttributesModule
     ],
     declarations: [
         ...fromComponents.attributesTreeComponents,

@@ -17,9 +17,11 @@
 
 export namespace SplineLoader {
 
-    export type Size = 'md' | 'lg'
+    export type Size = 'xs' | 'sm' | 'md' | 'lg'
 
     export const Size = {
+        xs: 'xs' as Size,
+        sm: 'sm' as Size,
         md: 'md' as Size,
         lg: 'lg' as Size,
     }
@@ -27,5 +29,7 @@ export namespace SplineLoader {
     export const SPINNER_DIAMETER_MAP: Readonly<Record<Size, number>> = Object.freeze<Record<Size, number>>({
         lg: 120,
         md: 50,
+        sm: 36,
+        xs: 24,
     })
 }

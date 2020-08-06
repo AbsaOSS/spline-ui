@@ -14,6 +14,5 @@
  * limitations under the License.
  */
 
-export * from './attribute-data-type/spline-attribute-data-type.component'
 export * from './attributes-tree/spline-attributes-tree.component'
 export * from './attributes-tree-widget/sd-widget-attributes-tree.component'

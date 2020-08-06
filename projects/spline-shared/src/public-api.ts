@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+export * from './lib/attributes/public-api'
 export * from './lib/attribute-search/public-api'
 export * from './lib/attributes-tree/public-api'
 export * from './lib/events/public-api'

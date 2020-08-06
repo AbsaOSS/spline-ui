@@ -65,12 +65,31 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         const routerState = ExecutionPlanOverview.extractRouterState(this.activatedRoute)
         this.eventId = routerState[QueryParamAlis.ExecutionEventId]
 
+        // init store state
         this.store.init(
             routerState[QueryParamAlis.ExecutionPlanId],
             routerState[QueryParamAlis.SelectedNodeId],
             routerState[QueryParamAlis.SelectedAttributeId],
         )
 
+        this.watchStoreStateChanges()
+        this.watchUrlChanges()
+    }
+
+    onNodeSelected($event: { nodeSchema: SgNodeSchema | null }): void {
+        this.store.setSelectedNode($event.nodeSchema ? $event.nodeSchema.id : null)
+    }
+
+    onShowEpDetailsBtnCLicked(): void {
+        this.store.setSelectedNode(null)
+    }
+
+    onSelectedAttributeChanged(attributeId: string | null): void {
+        this.store.setSelectedAttribute(attributeId)
+    }
+
+    // Watch Store State changes => update Router State if needed
+    private watchStoreStateChanges(): void {
         //
         // [ACTION] :: SELECTED NODE CHANGE
         //      => update query params
@@ -85,14 +104,14 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
                     return selectedNodeId !== nodeId
                 }),
             )
-            .subscribe(selectedNodeId => {
+            .subscribe(selectedNodeId =>
                 this.updateQueryParams(ExecutionPlanOverview.QueryParamAlis.SelectedNodeId, selectedNodeId)
-            })
+            )
+
         //
-        // //
-        // // [ACTION] :: SELECTED ATTRIBUTE CHANGE
-        // //      => update query params
-        // //
+        // [ACTION] :: SELECTED ATTRIBUTE CHANGE
+        //      => update query params
+        //
         this.store.selectedAttribute$
             .pipe(
                 skip(1),
@@ -103,23 +122,36 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
                     return selectedAttributeId !== attrId
                 }),
             )
-            .subscribe(attrId => {
+            .subscribe(attrId =>
                 this.updateQueryParams(ExecutionPlanOverview.QueryParamAlis.SelectedAttributeId, attrId)
+            )
+    }
+
+    // Watch Router State changes => update Store State if needed
+    private watchUrlChanges(): void {
+        this.router.events
+            .pipe(
+                filter(event => event instanceof NavigationEnd),
+                takeUntil(this.destroyed$),
+            )
+            .subscribe(() => {
+
+                const routerState = ExecutionPlanOverview.extractRouterState(this.activatedRoute)
+                this.eventId = routerState[QueryParamAlis.ExecutionEventId]
+
+                // reinitialize store state in case of new ExecutionPlan ID
+                if (routerState[QueryParamAlis.ExecutionPlanId] !== this.store.state.executionPlanId) {
+                    this.store.init(
+                        routerState[QueryParamAlis.ExecutionPlanId],
+                        routerState[QueryParamAlis.SelectedNodeId],
+                        routerState[QueryParamAlis.SelectedAttributeId],
+                    )
+                }
+                else {
+                    this.store.setSelectedNode(routerState[QueryParamAlis.SelectedNodeId])
+                    this.store.setSelectedAttribute(routerState[QueryParamAlis.SelectedAttributeId])
+                }
             })
-
-        this.watchUrlChanges()
-    }
-
-    onNodeSelected($event: { nodeSchema: SgNodeSchema | null }): void {
-        this.store.setSelectedNode($event.nodeSchema ? $event.nodeSchema.id : null)
-    }
-
-    onShowEpDetailsBtnCLicked(): void {
-        this.store.setSelectedNode(null)
-    }
-
-    onSelectedAttributeChanged(attributeId: string | null): void {
-        this.store.setSelectedAttribute(attributeId)
     }
 
     private updateQueryParams(paramName: string, value: string | null, replaceUrl: boolean = true): void {
@@ -138,32 +170,6 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         }
 
         this.router.navigate([], extras)
-    }
-
-    private watchUrlChanges(): void {
-        this.router.events
-            .pipe(
-                filter(event => event instanceof NavigationEnd),
-                takeUntil(this.destroyed$),
-            )
-            .subscribe(() => {
-                const routerState = ExecutionPlanOverview.extractRouterState(this.activatedRoute)
-                console.log(routerState)
-
-                this.eventId = routerState[QueryParamAlis.ExecutionEventId]
-
-                if (routerState[QueryParamAlis.ExecutionPlanId] !== this.store.state.executionPlanId) {
-                    this.store.init(
-                        routerState[QueryParamAlis.ExecutionPlanId],
-                        routerState[QueryParamAlis.SelectedNodeId],
-                        routerState[QueryParamAlis.SelectedAttributeId],
-                    )
-                }
-                else {
-                    this.store.setSelectedNode(routerState[QueryParamAlis.SelectedNodeId])
-                    this.store.setSelectedAttribute(routerState[QueryParamAlis.SelectedAttributeId])
-                }
-            })
     }
 
 }

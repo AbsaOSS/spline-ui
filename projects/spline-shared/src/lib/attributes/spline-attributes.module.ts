@@ -16,12 +16,6 @@
 
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
-import { MatAutocompleteModule } from '@angular/material/autocomplete'
-import { SplineApiExecutionEventModule } from 'spline-api'
-import { SplineLoaderModule, SplineSearchBoxModule, SplineTranslateModule } from 'spline-common'
-
-import { SplineAttributesModule } from '../attributes'
-import { SplineApiConfigModule } from '../spline-api-config'
 
 import * as fromComponents from './components'
 
@@ -29,20 +23,13 @@ import * as fromComponents from './components'
 @NgModule({
     imports: [
         CommonModule,
-        MatAutocompleteModule,
-        SplineSearchBoxModule,
-        SplineApiConfigModule,
-        SplineApiExecutionEventModule,
-        SplineTranslateModule.forChild({ moduleNames: ['events'] }),
-        SplineLoaderModule,
-        SplineAttributesModule,
     ],
     declarations: [
-        ...fromComponents.attributeSearchComponents,
+        ...fromComponents.attributesTreeComponents,
     ],
     exports: [
-        ...fromComponents.attributeSearchComponents,
+        ...fromComponents.attributesTreeComponents,
     ],
 })
-export class SplineAttributeSearchModule {
+export class SplineAttributesModule {
 }

@@ -31,4 +31,5 @@ export class SplineLoaderComponent {
     @Input() size: SplineLoader.Size = this.defaultSize
 
     @Input() floating = true
+    @Input() inline = false
 }

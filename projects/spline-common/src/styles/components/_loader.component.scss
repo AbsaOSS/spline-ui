@@ -25,4 +25,9 @@
         width: 100%;
         z-index: 100;
     }
+
+    &--inline {
+        display: flex;
+        padding: 0;
+    }
 }

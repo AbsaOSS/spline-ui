@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core'
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core'
 import { MatAutocomplete } from '@angular/material/autocomplete'
 import { Subject } from 'rxjs'
 import { debounceTime, distinctUntilChanged, map, takeUntil } from 'rxjs/operators'
@@ -30,14 +30,14 @@ export class SplineSearchBoxComponent extends BaseComponent {
     @ViewChild('inputRef', { read: ElementRef, static: true }) inputRef: ElementRef<HTMLElement>
 
     @Input() placeholder = 'COMMON.SEARCH'
-    @Input() loading = false
-    @Input() matAutocomplete = MatAutocomplete
+    @Input() matAutocomplete: MatAutocomplete
 
     @Input() set searchTerm(value: string) {
         this.inputValue = value
     }
 
     @Output() search$ = new EventEmitter<string>()
+    @Output() clear$ = new EventEmitter<string>()
 
     isFocused = false
     inputValue: string
@@ -76,6 +76,10 @@ export class SplineSearchBoxComponent extends BaseComponent {
 
     focusSearchInput(): void {
         this.inputRef.nativeElement.focus()
+    }
+
+    clearFocus(): void {
+        this.isFocused = false
     }
 
 }

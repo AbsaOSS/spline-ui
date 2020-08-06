@@ -15,7 +15,8 @@
   -->
 
 <div class="spline-loader spline-loader-size--{{size ? size : defaultSize}}"
-     [class.spline-loader--floating]="floating">
+     [class.spline-loader--floating]="!inline && floating"
+     [class.spline-loader--inline]="inline">
 
     <mat-spinner class="d-inline-block"
                  [diameter]="SPINNER_DIAMETER_MAP[size ? size : defaultSize]">

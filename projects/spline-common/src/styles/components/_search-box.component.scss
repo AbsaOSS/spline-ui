@@ -34,7 +34,8 @@ $border-radius: $height / 2;
     border-radius: $border-radius;
     display: flex;
     line-height: $height;
-    padding: 0 1rem;
+    padding: 0;
+    position: relative;
     transition: all 200ms ease-in-out;
 
     // ICONS
@@ -43,15 +44,15 @@ $border-radius: $height / 2;
     .spline-search-box__clear-icon {
         @include icon-size(22px);
         color: $input-text-color;
+        position: absolute;
     }
 
-    .spline-search-box__loading-icon {
-        @include icon-size(22px);
-        color: $color-orange;
+    .spline-search-box__clear-icon {
+        right: 1rem;
     }
 
     .spline-search-box__search-icon {
-        margin-right: 0.75rem;
+        left: 1rem;
     }
 
     .spline-search-box__clear-icon {
@@ -68,7 +69,7 @@ $border-radius: $height / 2;
         flex: 1;
         font-size: 14px;
         outline: none;
-        padding: 0;
+        padding: 0 3rem;
 
         &::placeholder {
             color: $input-text-color;
