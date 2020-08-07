@@ -13,31 +13,30 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<div style="position: relative">
-    <button mat-button [matMenuTriggerFor]="popover">
-        <mat-icon class="mr-2">schedule</mat-icon>
-        <span>{{ valueString?.length ? valueString : 'Everything' }}</span>
-    </button>
-    <mat-menu #popover="matMenu">
-        <!-- popover content begin -->
-        <ngx-daterangepicker-material
-                [showDropdowns]="true"
-                [autoApply]="false"
-                [showCustomRangeLabel]="false"
-                [alwaysShowCalendars]="true"
-                [showClearButton]="false"
-                [showCancel]="true"
-                [timePicker24Hour]="true"
-                [linkedCalendars]="false"
-                [locale]="{format: 'YYYY-MM-DD'}"
-                [keepCalendarOpeningWithRange]="true"
-                [showRangeLabelOnInput]="true"
-                (closeDateRangePicker)="onCancelBtnClicked()"
-                (chosenDate)="onDateChosen($event)"
-        >
-        </ngx-daterangepicker-material>
-        <!-- popover content end  -->
-    </mat-menu>
+
+<button mat-button [matMenuTriggerFor]="popover">
+    <mat-icon class="mr-2">schedule</mat-icon>
+    <span>{{ valueString?.length ? valueString : 'Everything' }}</span>
+</button>
+<mat-menu #popover="matMenu">
+    <!-- popover content begin -->
+    <ngx-daterangepicker-material
+            [showDropdowns]="true"
+            [autoApply]="false"
+            [showCustomRangeLabel]="false"
+            [alwaysShowCalendars]="true"
+            [showClearButton]="false"
+            [showCancel]="true"
+            [timePicker]="true"
+            [timePicker24Hour]="true"
+            [linkedCalendars]="false"
+            [keepCalendarOpeningWithRange]="true"
+            [showRangeLabelOnInput]="true"
+            (closeDateRangePicker)="onCancelBtnClicked()"
+            (chosenDate)="onDateChosen($event)"
+    >
+    </ngx-daterangepicker-material>
+    <!-- popover content end  -->
+</mat-menu>
 
 
-</div>
