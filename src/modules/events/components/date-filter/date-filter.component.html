@@ -18,21 +18,25 @@
     <mat-icon class="mr-2">schedule</mat-icon>
     <span>{{ valueString?.length ? valueString : 'Everything' }}</span>
 </button>
+
 <mat-menu #popover="matMenu">
     <!-- popover content begin -->
     <ngx-daterangepicker-material
+            [startDate]="_valueMoment?.dateFrom ? _valueMoment?.dateFrom : _minDateMoment"
+            [endDate]="_valueMoment?.dateTo ? _valueMoment?.dateTo : _maxDateMoment"
+            [maxDate]="_maxDateMoment"
+            [minDate]="_minDateMoment"
             [showDropdowns]="true"
+            [ranges]="customDateRanges"
             [autoApply]="false"
             [showCustomRangeLabel]="false"
             [alwaysShowCalendars]="true"
-            [showClearButton]="false"
+            [showClearButton]="true"
             [showCancel]="true"
-            [timePicker]="true"
-            [timePicker24Hour]="true"
             [linkedCalendars]="false"
             [keepCalendarOpeningWithRange]="true"
             [showRangeLabelOnInput]="true"
-            (closeDateRangePicker)="onCancelBtnClicked()"
+            (closeDateRangePicker)="onCloneDatePicker()"
             (chosenDate)="onDateChosen($event)"
     >
     </ngx-daterangepicker-material>

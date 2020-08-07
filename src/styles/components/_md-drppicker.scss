@@ -1,4 +1,4 @@
-/*
+/*!
  * Copyright (c) 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,27 +14,27 @@
  * limitations under the License.
  */
 
-import moment from 'moment'
-import { DateTimeHelpers } from 'spline-utils'
-
-
-export namespace SplineDateFilter {
-
-    export type Value = {
-        dateFrom: Date
-        dateTo: Date
+.md-drppicker {
+    .buttons button {
+        margin-top: 1rem;
     }
 
-    export type ValueMoment = {
-        dateFrom: moment.Moment
-        dateTo: moment.Moment
+    .navigation-button {
+        display: flex;
     }
 
-    export function valueToString(value: Value): string {
-        const dateFromString = DateTimeHelpers.toString(value.dateFrom, DateTimeHelpers.FULL_DATE)
-        const dateToString = DateTimeHelpers.toString(value.dateTo, DateTimeHelpers.FULL_DATE)
-
-        return `${dateFromString} - ${dateToString}`
+    .table-condensed thead tr {
+        height: 2rem;
     }
 
+    .clear-icon {
+        display: none;
+    }
+}
+
+.mat-menu-panel {
+    .md-drppicker {
+        box-shadow: none;
+        margin-top: 0;
+    }
 }

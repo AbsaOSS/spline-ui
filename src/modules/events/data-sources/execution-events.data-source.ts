@@ -24,15 +24,31 @@ export class ExecutionEventsDataSource extends SearchDataSource<ExecutionEvent,
     ExecutionEventsQuery.QueryFilter,
     ExecutionEventField> {
 
+    private initialRequestTime: Date
+
     constructor(private readonly executionEventFacade: ExecutionEventFacade) {
         super()
+
     }
 
     protected getDataObserver(
         searchParams: SearchQuery.SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>,
         force: boolean,
     ): Observable<ExecutionEventsPageResponse> {
-        const queryParams = this.toQueryParams(searchParams)
+
+
+        const queryParams = this.toQueryParams({
+            ...searchParams,
+            filter: {
+                ...searchParams.filter,
+                asAtTime: this.initialRequestTime ? this.initialRequestTime.getTime() : undefined,
+            },
+        })
+
+        if (!this.initialRequestTime) {
+            this.initialRequestTime = new Date()
+        }
+
         return this.executionEventFacade.fetchList(queryParams)
     }
 

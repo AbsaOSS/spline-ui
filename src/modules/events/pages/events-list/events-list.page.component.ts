@@ -22,6 +22,7 @@ import { map, takeUntil } from 'rxjs/operators'
 import { ExecutionEventFacade, ExecutionEventField, ExecutionEventsPageResponse, QuerySorter } from 'spline-api'
 import { BaseComponent, ProcessingStore } from 'spline-utils'
 
+import { SplineDateFilter } from '../../components'
 import { ExecutionEventsDataSource } from '../../data-sources'
 import SortDir = QuerySorter.SortDir
 
@@ -45,6 +46,7 @@ export class EventsListPageComponent extends BaseComponent implements OnInit, Af
     @ViewChild(MatSort, { static: true }) sortControl: MatSort
     readonly loadingProcessing$: Observable<ProcessingStore.EventProcessingState>
     readonly data$: Observable<ExecutionEventsPageResponse>
+    readonly dateFilter$: Observable<SplineDateFilter.Value | null>
 
     readonly visibleColumns = [
         ExecutionEventField.applicationName,
@@ -68,6 +70,22 @@ export class EventsListPageComponent extends BaseComponent implements OnInit, Af
 
         this.loadingProcessing$ = this.dataSource.loadingProcessing$
         this.data$ = this.dataSource.dataState$.pipe(map(dataState => dataState.data))
+
+        this.dateFilter$ = this.dataSource.searchParams$
+            .pipe(
+                map(searchParams => {
+                    if (searchParams.filter?.executedAtFrom && searchParams.filter?.executedAtTo) {
+
+                        return {
+                            dateFrom: searchParams.filter?.executedAtFrom,
+                            dateTo: searchParams.filter?.executedAtTo,
+                        }
+                    }
+                    else {
+                        return null
+                    }
+                }),
+            )
     }
 
     ngOnInit(): void {
@@ -109,5 +127,14 @@ export class EventsListPageComponent extends BaseComponent implements OnInit, Af
 
     onSearch(searchTerm: string): void {
         this.dataSource.search(searchTerm)
+    }
+
+    onDateFilterChanged(value: SplineDateFilter.Value): void {
+        this.dataSource.setFilter({
+            ...this.dataSource.searchParams.filter,
+            executedAtFrom: value?.dateFrom ?? undefined,
+            executedAtTo: value?.dateTo  ?? undefined
+        })
+
     }
 }

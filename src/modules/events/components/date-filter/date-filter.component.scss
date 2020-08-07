@@ -19,18 +19,7 @@
 
 ::ng-deep {
     .mat-menu-panel {
-        max-width: 600px !important;
-
-        .md-drppicker {
-            box-shadow: none;
-            margin-top: 0;
-
-            .buttons button {
-                margin-top: 1rem;
-            }
-        }
+        max-width: 800px !important;
     }
-
-
 }
 

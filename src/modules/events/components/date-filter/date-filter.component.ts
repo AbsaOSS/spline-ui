@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/core'
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core'
 import { MatMenuTrigger } from '@angular/material/menu'
 import moment from 'moment'
 import { DaterangepickerDirective } from 'ngx-daterangepicker-material'
-import { SplineColors } from 'spline-common'
 
 import { SplineDateFilter } from './date-filter.models'
 
@@ -31,34 +30,65 @@ import { SplineDateFilter } from './date-filter.models'
 })
 export class SplineDateFilterComponent {
 
+    readonly customDateRanges = {
+        Today: [moment().startOf('day'), moment().endOf('day')],
+        Yesterday: [moment().subtract(1, 'day').startOf('day'), moment().subtract(1, 'day').endOf('day')],
+        'This Week': [moment().startOf('isoWeek'), moment().endOf('isoWeek')],
+        'Last Week': [moment().subtract(1, 'week').startOf('isoWeek'), moment().subtract(1, 'week').endOf('isoWeek')],
+        'This Month': [moment().startOf('month'), moment().endOf('month')],
+        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+        'Last 3 Month': [moment().subtract(3, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+    }
+
     @ViewChild(DaterangepickerDirective, { static: true }) datePicker: DaterangepickerDirective
     @ViewChild(MatMenuTrigger, { static: true }) matMenuTrigger: MatMenuTrigger
 
-    readonly color = SplineColors.ORANGE
+    @Input() set maxDate(value: Date) {
+        this._maxDateMoment = moment(value).endOf('day')
+    }
 
-    @Input() dateFrom: Date
-    @Input() dateTo: Date
+    @Input() set minDate(value: Date) {
+        this._minDateMoment = moment(value).startOf('day')
+    }
 
     @Input() set value(value: SplineDateFilter.Value | null) {
         this.setValue(value)
     }
 
-    currentValue: SplineDateFilter.Value
+    @Output() valueChanged$ = new EventEmitter<SplineDateFilter.Value>()
+
     valueString: string
 
+    _maxDateMoment: moment.Moment
+    _minDateMoment: moment.Moment
+    _valueMoment: SplineDateFilter.ValueMoment
+
     onDateChosen($event: { chosenLabel: string; startDate: moment.Moment; endDate: moment.Moment }): void {
-        console.log($event)
+        const newValue = $event.startDate && $event.endDate
+            ? {
+                dateFrom: $event.startDate ? $event.startDate.startOf('day').toDate() : undefined,
+                dateTo: $event.endDate ? $event.endDate.endOf('day').toDate(): undefined,
+            }
+            : null
+        this.setValue(newValue)
+        this.valueChanged$.emit(newValue)
     }
 
-    onCancelBtnClicked(): void {
-        console.log('cancel')
+    onCloneDatePicker(): void {
         this.matMenuTrigger.closeMenu()
     }
 
     private setValue(value: SplineDateFilter.Value): void {
+
         this.valueString = value
             ? SplineDateFilter.valueToString(value)
             : ''
-        this.currentValue = value
+
+        this._valueMoment = value
+            ? {
+                dateFrom: moment(value.dateFrom),
+                dateTo: moment(value.dateTo),
+            }
+            : null
     }
 }

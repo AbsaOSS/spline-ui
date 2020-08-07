@@ -39,7 +39,13 @@
                     </spline-search-box>
                 </div>
 
-                <spline-date-filter></spline-date-filter>
+                <spline-date-filter *ngIf="(data$ | async) as data"
+                                    [maxDate]="data?.totalDateRange.to"
+                                    [minDate]="data?.totalDateRange.from"
+                                    [value]="dateFilter$ | async"
+                                    (valueChanged$)="onDateFilterChanged($event)">
+
+                </spline-date-filter>
 
             </div>
         </div>
@@ -144,8 +150,8 @@
 
         </mat-table>
 
-        <div class="pt-2">
-            <spline-no-result *ngIf="(data$ | async)?.totalCount === 0"></spline-no-result>
+        <div class="pt-2" *ngIf="(data$ | async)?.totalCount === 0">
+            <spline-no-result></spline-no-result>
         </div>
 
         <mat-paginator

@@ -24,8 +24,8 @@ import { ExecutionEventField } from './execution-event.models'
 export namespace ExecutionEventsQuery {
 
     export type QueryFilter = {
-        expiredAtFrom?: Date
-        expiredAtTo?: Date
+        executedAtFrom?: Date
+        executedAtTo?: Date
         searchTerm?: string
         dataSourceUri?: string
         asAtTime?: number
@@ -72,8 +72,8 @@ export namespace ExecutionEventsQuery {
 
     function toQueryFilterDto(queryFilter: QueryFilter): Partial<QueryParamsDto> {
         return {
-            timestampStart: queryFilter?.expiredAtFrom ? queryFilter?.expiredAtFrom.getTime() / 1000 : undefined,
-            timestampEnd: queryFilter?.expiredAtTo ? queryFilter?.expiredAtTo.getTime() / 1000 : undefined,
+            timestampStart: queryFilter?.executedAtFrom ? queryFilter?.executedAtFrom.getTime() : undefined,
+            timestampEnd: queryFilter?.executedAtTo ? queryFilter?.executedAtTo.getTime() : undefined,
             searchTerm: queryFilter?.searchTerm?.length ? queryFilter?.searchTerm : undefined,
             dataSourceUri: queryFilter?.dataSourceUri,
             asAtTime: queryFilter?.asAtTime,
