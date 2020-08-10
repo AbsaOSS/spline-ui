@@ -17,6 +17,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core'
 import { GraphComponent } from '@swimlane/ngx-graph'
 import * as fromD3Shape from 'd3-shape'
+import { Observable } from 'rxjs'
 
 import {
     SgData,
@@ -47,6 +48,8 @@ export class SplineGraphComponent implements OnChanges {
 
     @Input() curve: fromD3Shape.CurveFactoryLineOnly | fromD3Shape.CurveFactory = fromD3Shape.curveBundle.beta(0)
     @Input() layoutSettings: SgLayoutSettings = SG_DEFAULT_LAYOUT_SETTINGS
+
+    @Input() panToNode$: Observable<string>
 
     @Input() set selectedNodeId(nodeId: string) {
         if (nodeId !== this._selectedNodeId) {
