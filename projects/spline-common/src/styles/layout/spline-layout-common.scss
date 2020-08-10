@@ -107,7 +107,15 @@ $spline-layout-settings-default: (
         }
 
         &--embedded {
+            .mat-sidenav-container {
+                top: 0;
+            }
 
+            .mat-drawer,
+            .sl-content__container,
+            .sl-content__wrapper {
+                border-radius: 0;
+            }
         }
     }
 }

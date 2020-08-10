@@ -14,62 +14,65 @@
   ~ limitations under the License.
   -->
 
-<spline-layout-common [isEmbeddedMode]="isEmbeddedMode$ | async">
+<ng-container *ngIf="splineConfig$ | async as splineConfig">
 
-    <!-- HEADER -->
-    <ng-template splineLayoutSection="header">
-        <spline-attribute-search (attributeSelected$)="onAttributeSearchSelected($event.attributeInfo)"></spline-attribute-search>
-    </ng-template>
-    <!-- ./HEADER -->
-
-    <!-- SIDEBAR -->
-    <ng-template let-isExpanded="isExpanded" splineLayoutSection="sidebar">
-        <div class="spline-sidebar-menu">
-
-            <mat-nav-list>
-                <a [class.active]="true"
-                   [matTooltipDisabled]="isExpanded"
-                   [matTooltipPosition]="'right'"
-                   mat-list-item
-                   matTooltip="Execution Events"
-                   routerLink="/events/list">
-
-                    <mat-icon>play_arrow</mat-icon>
-                    <span *ngIf="isExpanded">Execution Events</span>
-
-                </a>
-
-                <a [matTooltipDisabled]="isExpanded"
-                   [matTooltipPosition]="'right'"
-                   mat-list-item
-                   matTooltip="Execution Plans"
-                   routerLink="/fake-url">
-
-                    <mat-icon>playlist_play</mat-icon>
-                    <span *ngIf="isExpanded">Execution Events</span>
-
-                </a>
-
-                <a [matTooltipDisabled]="isExpanded"
-                   [matTooltipPosition]="'right'"
-                   mat-list-item
-                   matTooltip="Data Sources"
-                   routerLink="/fake-url"
-                   routerLinkActive="active">
-
-                    <mat-icon>description</mat-icon>
-                    <span *ngIf="isExpanded">Data Sources</span>
-
-                </a>
-            </mat-nav-list>
-        </div>
-    </ng-template>
-    <!-- ./SIDEBAR -->
-
-    <!-- CONTENT -->
-    <router-outlet></router-outlet>
-    <!-- CONTENT -->
-
-</spline-layout-common>
+    <spline-layout-common [isEmbeddedMode]="splineConfig.isEmbeddedMode">
 
 
+        <!-- HEADER -->
+        <ng-template splineLayoutSection="header">
+            <spline-attribute-search (attributeSelected$)="onAttributeSearchSelected($event.attributeInfo)"></spline-attribute-search>
+        </ng-template>
+        <!-- ./HEADER -->
+
+        <!-- SIDEBAR -->
+        <ng-template let-isExpanded="isExpanded" splineLayoutSection="sidebar">
+            <div class="spline-sidebar-menu">
+
+                <mat-nav-list>
+                    <a [class.active]="true"
+                       [matTooltipDisabled]="isExpanded"
+                       [matTooltipPosition]="'right'"
+                       mat-list-item
+                       matTooltip="Execution Events"
+                       routerLink="/events/list">
+
+                        <mat-icon>play_arrow</mat-icon>
+                        <span *ngIf="isExpanded">Execution Events</span>
+
+                    </a>
+
+                    <a [matTooltipDisabled]="isExpanded"
+                       [matTooltipPosition]="'right'"
+                       mat-list-item
+                       matTooltip="Execution Plans"
+                       routerLink="/fake-url">
+
+                        <mat-icon>playlist_play</mat-icon>
+                        <span *ngIf="isExpanded">Execution Events</span>
+
+                    </a>
+
+                    <a [matTooltipDisabled]="isExpanded"
+                       [matTooltipPosition]="'right'"
+                       mat-list-item
+                       matTooltip="Data Sources"
+                       routerLink="/fake-url"
+                       routerLinkActive="active">
+
+                        <mat-icon>description</mat-icon>
+                        <span *ngIf="isExpanded">Data Sources</span>
+
+                    </a>
+                </mat-nav-list>
+            </div>
+        </ng-template>
+        <!-- ./SIDEBAR -->
+
+        <!-- CONTENT -->
+        <router-outlet></router-outlet>
+        <!-- CONTENT -->
+
+    </spline-layout-common>
+
+</ng-container>
