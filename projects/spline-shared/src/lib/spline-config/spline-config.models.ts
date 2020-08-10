@@ -14,4 +14,21 @@
  * limitations under the License.
  */
 
-export * from './core.module'
+import { InjectionToken } from '@angular/core'
+
+
+export type SplineConfig = {
+    isEmbeddedMode: boolean
+    splineConsumerApiUrl: string
+}
+
+export const DEFAULT_SPLINE_CONFIG: Readonly<SplineConfig> = Object.freeze<SplineConfig>({
+    isEmbeddedMode: false,
+    splineConsumerApiUrl: '/consumer'
+})
+
+export type SplineConfigSettings = {
+    configFileUri: string
+}
+
+export const SPLINE_CONFIG_SETTINGS = new InjectionToken<SplineConfigSettings>('SPLINE_CONFIG_SETTINGS')

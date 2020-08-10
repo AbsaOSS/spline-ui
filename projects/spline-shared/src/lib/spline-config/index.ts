@@ -14,19 +14,4 @@
  * limitations under the License.
  */
 
-import { HttpClient } from '@angular/common/http'
-
-import { SplineConsumerApiSettings } from '../../core'
-
-
-export abstract class BaseFacade {
-
-    protected readonly BASE_PATH = `${SplineConsumerApiSettings.API_URL_PREFIX_ALIAS}/`
-
-    constructor(protected readonly http: HttpClient) {
-    }
-
-    protected toUrl(path: string): string {
-        return this.BASE_PATH + path
-    }
-}
+export * from './public-api'

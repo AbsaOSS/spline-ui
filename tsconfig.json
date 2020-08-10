@@ -25,12 +25,6 @@
       "@env": [
         "src/environments"
       ],
-      "@core/*": [
-        "src/modules/core/*"
-      ],
-      "@core": [
-        "src/modules/core"
-      ],
       "spline-api": [
         "projects/spline-api/src/public-api"
       ],

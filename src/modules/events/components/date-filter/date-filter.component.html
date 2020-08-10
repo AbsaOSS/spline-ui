@@ -20,7 +20,6 @@
 </button>
 
 <mat-menu #popover="matMenu">
-    <!-- popover content begin -->
     <ngx-daterangepicker-material
             [startDate]="_valueMoment?.dateFrom ? _valueMoment?.dateFrom : _minDateMoment"
             [endDate]="_valueMoment?.dateTo ? _valueMoment?.dateTo : _maxDateMoment"
@@ -40,7 +39,6 @@
             (chosenDate)="onDateChosen($event)"
     >
     </ngx-daterangepicker-material>
-    <!-- popover content end  -->
 </mat-menu>
 
 

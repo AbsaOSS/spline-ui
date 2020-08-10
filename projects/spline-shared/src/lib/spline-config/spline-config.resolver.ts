@@ -14,19 +14,24 @@
  * limitations under the License.
  */
 
-import { HttpClient } from '@angular/common/http'
+import { Injectable } from '@angular/core'
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router'
+import { Observable } from 'rxjs'
 
-import { SplineConsumerApiSettings } from '../../core'
+import { SplineConfig } from './spline-config.models'
+import { SplineConfigService } from './spline-config.service'
 
 
-export abstract class BaseFacade {
+@Injectable({
+    providedIn: 'root',
+})
+export class SplineConfigResolver implements Resolve<SplineConfig> {
 
-    protected readonly BASE_PATH = `${SplineConsumerApiSettings.API_URL_PREFIX_ALIAS}/`
-
-    constructor(protected readonly http: HttpClient) {
+    constructor(private readonly splineConfigService: SplineConfigService) {
     }
 
-    protected toUrl(path: string): string {
-        return this.BASE_PATH + path
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<SplineConfig> {
+        return this.splineConfigService.getConfig()
     }
+
 }

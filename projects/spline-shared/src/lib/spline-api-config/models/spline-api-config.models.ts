@@ -14,17 +14,45 @@
  * limitations under the License.
  */
 
-import { environment } from '@env/environment'
+import { SplineConsumerApiSettings } from 'spline-api'
+
+import { SplineConfig } from '../../spline-config'
 
 
-export const API_SPLINE_CONSUMER = '@splineConsumerApi'
+export namespace SplineApiConfig {
 
-export const API_BASE_PATH_MAP = Object.freeze({
-    [API_SPLINE_CONSUMER]: environment.splineConsumerApi.fullPath,
-})
+    export const API_BASE_PATH_MAP = [
+        SplineConsumerApiSettings.API_URL_PREFIX_ALIAS
+    ]
 
-export function getApiBasePath(alias: string): string {
-    return API_BASE_PATH_MAP[alias]
-        ? API_BASE_PATH_MAP[alias]
-        : ''
+    export function getApiBasePath(alias: string, splineConfig: SplineConfig): string {
+        switch (alias) {
+
+            case SplineConsumerApiSettings.API_URL_PREFIX_ALIAS:
+                return splineConfig.splineConsumerApiUrl
+
+            default:
+                return ''
+        }
+    }
+
+    export function hasUrlAnyApiAlias(url): boolean {
+        for (const alias of API_BASE_PATH_MAP) {
+            if (url.indexOf(alias) === 0) {
+                return true
+            }
+        }
+        return false
+    }
+
+    export function decorateUrl(url, splineConfig: SplineConfig): string {
+        for (const alias of API_BASE_PATH_MAP) {
+            if (url.indexOf(alias) === 0) {
+                return url.replace(alias, getApiBasePath(alias, splineConfig))
+            }
+        }
+        return url
+    }
 }
+
+

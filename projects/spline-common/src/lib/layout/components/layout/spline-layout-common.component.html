@@ -13,54 +13,55 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-
-<!-- HEADER -->
-<div class="sl-header">
-    <div class="sl-header__container">
-        <div class="pr-5">
-            <spline-layout-header-logo></spline-layout-header-logo>
-        </div>
-        <div class="flex-grow-1">
-            <ng-template *ngIf="sectionsTemplatesCollection[SectionName.header]"
-                         [ngTemplateOutlet]="sectionsTemplatesCollection[SectionName.header]">
-            </ng-template>
+<div class="spline-layout-common" [class.spline-layout-common--embedded]="isEmbeddedMode">
+    <!-- HEADER -->
+    <div class="sl-header">
+        <div class="sl-header__container">
+            <div class="pr-5">
+                <spline-layout-header-logo></spline-layout-header-logo>
+            </div>
+            <div class="flex-grow-1">
+                <ng-template *ngIf="sectionsTemplatesCollection[SectionName.header]"
+                             [ngTemplateOutlet]="sectionsTemplatesCollection[SectionName.header]">
+                </ng-template>
+            </div>
         </div>
     </div>
+    <!-- ./HEADER -->
+
+    <mat-sidenav-container>
+
+        <!-- SIDEBAR -->
+        <mat-sidenav #sidenav
+                     class="sl-sidenav"
+                     mode="side"
+                     disableClose="true"
+                     opened="true"
+                     [class.sl-sidenav--expanded]="isSideNavExpanded">
+
+            <!-- SECTION :: SIDEBAR -->
+            <ng-template *ngIf="sectionsTemplatesCollection[SectionName.sidebar]"
+                         [ngTemplateOutlet]="sectionsTemplatesCollection[SectionName.sidebar]"
+                         [ngTemplateOutletContext]="{isExpanded: isSideNavExpanded}">
+            </ng-template>
+            <!-- ./SECTION :: SIDEBAR -->
+
+        </mat-sidenav>
+        <!-- ./SIDEBAR -->
+
+        <!-- CONTENT -->
+        <mat-sidenav-content>
+
+            <div class="sl-content__wrapper">
+
+                <!-- SECTION :: CONTENT -->
+                <ng-content></ng-content>
+                <!-- ./SECTION :: CONTENT -->
+
+            </div>
+
+        </mat-sidenav-content>
+        <!-- ./CONTENT -->
+
+    </mat-sidenav-container>
 </div>
-<!-- ./HEADER -->
-
-<mat-sidenav-container>
-
-    <!-- SIDEBAR -->
-    <mat-sidenav #sidenav
-                 class="sl-sidenav"
-                 mode="side"
-                 disableClose="true"
-                 opened="true"
-                 [class.sl-sidenav--expanded]="isSideNavExpanded">
-
-        <!-- SECTION :: SIDEBAR -->
-        <ng-template *ngIf="sectionsTemplatesCollection[SectionName.sidebar]"
-                     [ngTemplateOutlet]="sectionsTemplatesCollection[SectionName.sidebar]"
-                     [ngTemplateOutletContext]="{isExpanded: isSideNavExpanded}">
-        </ng-template>
-        <!-- ./SECTION :: SIDEBAR -->
-
-    </mat-sidenav>
-    <!-- ./SIDEBAR -->
-
-    <!-- CONTENT -->
-    <mat-sidenav-content>
-
-        <div class="sl-content__wrapper">
-
-            <!-- SECTION :: CONTENT -->
-            <ng-content></ng-content>
-            <!-- ./SECTION :: CONTENT -->
-
-        </div>
-
-    </mat-sidenav-content>
-    <!-- ./CONTENT -->
-
-</mat-sidenav-container>

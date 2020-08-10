@@ -15,14 +15,11 @@
  */
 
 export const relativeUrl = '.'
-export const deploymentPrefix = '/app'
+export const deploymentPrefix = '/'
 
 export interface Environment {
     production: boolean
     deploymentPrefix: string
     url: string
-    appConfigUri: string
-    splineConsumerApi: {
-        fullPath: string
-    }
+    splineConfigUri: string
 }

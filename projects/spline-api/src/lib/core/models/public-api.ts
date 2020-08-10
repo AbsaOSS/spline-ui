@@ -15,3 +15,4 @@
  */
 
 export * from './query/public-api'
+export * from './consumer-api-settings.models'

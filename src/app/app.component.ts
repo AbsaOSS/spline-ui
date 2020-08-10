@@ -16,7 +16,10 @@
 
 import { Component } from '@angular/core'
 import { Router } from '@angular/router'
+import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
 import { AttributeSearchRecord } from 'spline-api'
+import { SplineConfigService } from 'spline-shared'
 
 
 @Component({
@@ -26,7 +29,14 @@ import { AttributeSearchRecord } from 'spline-api'
 })
 export class AppComponent {
 
-    constructor(private readonly router: Router) {
+    readonly isEmbeddedMode$: Observable<boolean>
+
+    constructor(private readonly router: Router, private readonly splineConfigService: SplineConfigService) {
+
+        this.isEmbeddedMode$ = this.splineConfigService.config$
+            .pipe(
+                map(config => config.isEmbeddedMode)
+            )
     }
 
     onAttributeSearchSelected(attributeInfo: AttributeSearchRecord): void {

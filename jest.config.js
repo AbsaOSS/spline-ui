@@ -28,7 +28,6 @@ module.exports = {
         'cobertura'
     ],
     'moduleNameMapper': {
-        "@core/(.*)": "<rootDir>/src/modules/core/$1",
         "/spline-api/": "<rootDir>/projects/spline-api/src/public-api",
         "^spline-api$": "<rootDir>/projects/spline-api/src/public-api",
         "/spline-common/": "<rootDir>/projects/spline-common/src/public-api",

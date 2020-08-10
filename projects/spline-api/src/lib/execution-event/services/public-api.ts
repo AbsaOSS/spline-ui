@@ -15,5 +15,6 @@
  */
 
 export * from './attribute.facade'
+export * from './base.facade'
 export * from './execution-event.facade'
 export * from './execution-plan.facade'

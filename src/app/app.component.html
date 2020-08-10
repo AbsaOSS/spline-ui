@@ -14,7 +14,7 @@
   ~ limitations under the License.
   -->
 
-<spline-layout-common>
+<spline-layout-common [isEmbeddedMode]="isEmbeddedMode$ | async">
 
     <!-- HEADER -->
     <ng-template splineLayoutSection="header">

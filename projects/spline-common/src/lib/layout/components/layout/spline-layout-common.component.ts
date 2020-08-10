@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { AfterContentInit, Component, ContentChildren, QueryList, TemplateRef } from '@angular/core'
+import { AfterContentInit, Component, ContentChildren, Input, QueryList, TemplateRef } from '@angular/core'
 
 import { SplineLayoutSectionDirective } from '../../directives'
 import { SplineLayoutSection } from '../../models'
@@ -27,6 +27,8 @@ import { SplineLayoutSection } from '../../models'
 export class SplineLayoutCommonComponent implements AfterContentInit {
 
     @ContentChildren(SplineLayoutSectionDirective) sectionTemplatesQueryList: QueryList<SplineLayoutSectionDirective>
+
+    @Input() isEmbeddedMode = false
 
     sectionsTemplatesCollection: Partial<{ [K in SplineLayoutSection.SectionName]: TemplateRef<any> }> = {}
 

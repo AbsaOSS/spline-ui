@@ -16,11 +16,15 @@
 
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
+import { SplineConfigResolver } from 'spline-shared'
 
 
 const routes: Routes = [
     {
         path: 'events',
+        resolve: [
+            SplineConfigResolver
+        ],
         loadChildren: () => import('../modules/events/events.module').then(m => m.EventsModule),
     },
     {

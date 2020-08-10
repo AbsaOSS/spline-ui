@@ -20,7 +20,6 @@ import { MatListModule } from '@angular/material/list'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { CoreModule } from '@core'
 import { environment } from '@env/environment'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreRouterConnectingModule } from '@ngrx/router-store'
@@ -28,7 +27,7 @@ import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { storeFreeze } from 'ngrx-store-freeze'
 import { SplineLayoutModule, SplineSearchBoxModule, SplineTranslateCoreModule } from 'spline-common'
-import { SplineAttributeSearchModule } from 'spline-shared'
+import { SplineAttributeSearchModule, SplineConfigModule, SplineConfigSettings, SPLINE_CONFIG_SETTINGS } from 'spline-shared'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -46,7 +45,6 @@ export const metaReducers: MetaReducer<any>[] =
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        CoreModule,
         SplineTranslateCoreModule,
         AppRoutingModule,
         // NGRX store
@@ -60,12 +58,22 @@ export const metaReducers: MetaReducer<any>[] =
         }),
         SplineLayoutModule,
         SplineSearchBoxModule,
+        SplineConfigModule,
         MatListModule,
         MatIconModule,
         MatTooltipModule,
         SplineAttributeSearchModule,
     ],
-    providers: [],
+    providers: [
+        {
+            provide: SPLINE_CONFIG_SETTINGS,
+            useFactory: (): SplineConfigSettings => {
+                return {
+                    configFileUri: environment.splineConfigUri,
+                }
+            },
+        },
+    ],
     bootstrap: [AppComponent],
 })
 export class AppModule {

@@ -35,7 +35,7 @@ $spline-layout-settings-default: (
         background-color: map-get($settings, header-bg-color);
     }
 
-    spline-layout-common {
+    .spline-layout-common {
         .sl-header {
             background-color: map-get($settings, header-bg-color);
             height: map-get($settings, header-height);
@@ -104,6 +104,10 @@ $spline-layout-settings-default: (
         .page-title {
             margin-bottom: 2rem;
             text-align: center;
+        }
+
+        &--embedded {
+
         }
     }
 }

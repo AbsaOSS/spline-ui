@@ -18,12 +18,15 @@ import { CommonModule } from '@angular/common'
 import { HTTP_INTERCEPTORS } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 
+import { SplineConfigModule } from '../spline-config'
+
 import { SplineApiConfigInterceptor } from './interceptors/spline-api-config.interceptor'
 
 
 @NgModule({
     imports: [
         CommonModule,
+        SplineConfigModule
     ],
     providers: [
         {
