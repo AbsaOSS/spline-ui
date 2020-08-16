@@ -24,4 +24,5 @@ export * from './execution-plan/execution-plan-node-control.models'
 export * from './execution-plan/execution-plan-info.models'
 export * from './sg-node-control.models'
 export * from './sg-legend.models'
+export * from './sg-relations.models'
 

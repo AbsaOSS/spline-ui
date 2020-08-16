@@ -41,8 +41,14 @@ export namespace EventNodeControl {
         }
     }
 
-    export function toSgNode(nodeSource: ExecutionEventLineageNode, onExecutionPlanLaunchAction: (nodeId: string) => void): SgNode {
+    export function toSgNode(nodeSource: ExecutionEventLineageNode,
+                             onExecutionPlanLaunchAction: (nodeId: string) => void,
+                             onNodeHighlightRelations: (nodeId: string) => void): SgNode {
         const nodeStyles = getNodeStyles(nodeSource)
+
+        const defaultActions = [
+            SgNodeControl.getNodeRelationsHighlightAction(() => onNodeHighlightRelations(nodeSource.id)),
+        ]
 
         return SgNodeDefault.toNode(
             nodeSource.id,
@@ -50,14 +56,19 @@ export namespace EventNodeControl {
                 label: extractNodeName(nodeSource),
                 ...nodeStyles,
                 inlineActions: nodeSource.type === ExecutionEventLineageNodeType.DataSource
-                    ? []
-                    : [{
-                        icon: 'launch',
-                        onClick: () => {
-                            onExecutionPlanLaunchAction(nodeSource.id)
+                    ? [
+                        ...defaultActions
+                    ]
+                    : [
+                        {
+                            icon: 'launch',
+                            onClick: () => {
+                                onExecutionPlanLaunchAction(nodeSource.id)
+                            },
+                            tooltip: 'EVENTS.EVENT_NODE_CONTROL__ACTION__LAUNCH',
                         },
-                        tooltip: 'EVENTS.EVENT_NODE_CONTROL__ACTION__LAUNCH',
-                    }],
+                        ...defaultActions
+                    ],
             },
         )
     }

@@ -65,3 +65,12 @@ export type SgLayoutSettings = DagreSettings
 export const SG_DEFAULT_LAYOUT_SETTINGS: Readonly<SgLayoutSettings> = Object.freeze<SgLayoutSettings>({
     orientation: 'TB',
 } as SgLayoutSettings)
+
+
+export function getNodeDomSelector(nodeId: string): string {
+    return `[id="${nodeId}"]`
+}
+
+export function getLinkDomSelector(linkId: string): string {
+    return `#${linkId}.link-group`
+}

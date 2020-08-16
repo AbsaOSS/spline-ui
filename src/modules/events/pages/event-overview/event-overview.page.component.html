@@ -45,6 +45,8 @@
                     <spline-graph
                             (nodeSelectionChange$)="onNodeSelected($event)"
                             [graphData]="graphData"
+                            [focusNode$]="focusNode$"
+                            [sgHighlightedRelations]="highlightedRelationsNodesIds$ | async"
                             [selectedNodeId]="state.selectedNodeId">
                     </spline-graph>
                     <!-- ./GRAPH -->

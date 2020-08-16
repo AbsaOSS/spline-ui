@@ -46,10 +46,10 @@ export class SplineGraphComponent implements OnChanges {
     @Output() nodeEvent$ = new EventEmitter<SgNodeEvent>()
     @Output() nodeSelectionChange$ = new EventEmitter<{ nodeSchema: SgNodeSchema | null }>()
 
-    @Input() curve: fromD3Shape.CurveFactoryLineOnly | fromD3Shape.CurveFactory = fromD3Shape.curveBundle.beta(0)
+    @Input() curve: fromD3Shape.CurveFactoryLineOnly | fromD3Shape.CurveFactory = fromD3Shape.curveBasis
     @Input() layoutSettings: SgLayoutSettings = SG_DEFAULT_LAYOUT_SETTINGS
 
-    @Input() panToNode$: Observable<string>
+    @Input() focusNode$: Observable<string>
 
     @Input() set selectedNodeId(nodeId: string) {
         if (nodeId !== this._selectedNodeId) {

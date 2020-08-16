@@ -15,7 +15,7 @@
  */
 
 
-import { SplineColors } from 'spline-common'
+import { SgNodeDefault, SplineColors } from 'spline-common'
 
 
 export namespace SgNodeControl {
@@ -135,6 +135,16 @@ export namespace SgNodeControl {
 
     export function getNodeStyles(type: NodeType): NodeStyles {
         return NODE_STYLES_MAP.get(type) ?? { ...DEFAULT_NODE_STYLES }
+    }
+
+    export function getNodeRelationsHighlightAction(onNodeHighlightRelations: () => void): SgNodeDefault.InlineAction {
+        return {
+            icon: 'eye-outline',
+            onClick: () => {
+                onNodeHighlightRelations()
+            },
+            tooltip: 'EVENTS.EVENT_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS',
+        }
     }
 
 }

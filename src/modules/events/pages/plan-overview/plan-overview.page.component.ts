@@ -17,14 +17,14 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router'
 import _ from 'lodash'
-import { Observable } from 'rxjs'
-import { filter, map, skip, takeUntil } from 'rxjs/operators'
+import { BehaviorSubject, Observable, Subject } from 'rxjs'
+import { filter, map, shareReplay, skip, takeUntil, withLatestFrom } from 'rxjs/operators'
 import { ExecutionPlanFacade } from 'spline-api'
-import { SgNodeSchema, SplineDataViewSchema } from 'spline-common'
+import { SgData, SgNodeSchema, SplineDataViewSchema } from 'spline-common'
 import { BaseComponent } from 'spline-utils'
 
-import { ExecutionPlanOverview, OperationInfo } from '../../models'
-import { ExecutionPlanOverviewStoreFacade } from '../../store'
+import { ExecutionPlanNodeControl, ExecutionPlanOverview, OperationInfo, SgRelations } from '../../models'
+import { ExecutionPlanOverviewStore, ExecutionPlanOverviewStoreFacade } from '../../store'
 import QueryParamAlis = ExecutionPlanOverview.QueryParamAlis
 
 
@@ -45,6 +45,9 @@ import QueryParamAlis = ExecutionPlanOverview.QueryParamAlis
 export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
 
     readonly selectedNodeViewSchema$: Observable<SplineDataViewSchema>
+    readonly graphData$: Observable<SgData>
+    readonly focusNode$ = new Subject<string>()
+    readonly highlightedRelationsNodesIds$ = new BehaviorSubject<string[]>([])
 
     eventId: string
 
@@ -56,6 +59,55 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         this.selectedNodeViewSchema$ = this.store.selectedNode$
             .pipe(
                 map(selectedNode => selectedNode ? OperationInfo.toDataViewSchema(selectedNode) : null),
+            )
+
+        this.graphData$ = this.store.loadingProcessingEvents.success$
+            .pipe(
+                takeUntil(this.destroyed$),
+                map(state => {
+                    // select all nodes list from the store
+                    const nodesList = ExecutionPlanOverviewStore.selectAllNodes(state)
+                    return {
+                        links: state.links,
+                        nodes: nodesList
+                            // map node source data to the SgNode schema
+                            .map(
+                                nodeSource => ExecutionPlanNodeControl.toSgNode(
+                                    nodeSource,
+                                    (nodeId) => this.onNodeHighlightRelations(nodeId),
+                                ),
+                            ),
+                    }
+                }),
+                shareReplay(1),
+            )
+
+        //
+        // [ACTION] :: ATTRIBUTE SELECTED
+        //      => reset node highlights
+        //
+        this.store.selectedAttribute$
+            .pipe(
+                takeUntil(this.destroyed$),
+                filter(attribute => !!attribute && this.highlightedRelationsNodesIds$.getValue().length > 0),
+            )
+            .subscribe(
+                () => this.resetNodeHighlightRelations(),
+            )
+
+        //
+        // [ACTION] :: HIGHLIGHTED RELATION CHANGE
+        //      => reset selected attribute
+        //
+        this.highlightedRelationsNodesIds$
+            .pipe(
+                takeUntil(this.destroyed$),
+                filter(highlightedRelationsNodesIds => highlightedRelationsNodesIds.length > 0),
+                withLatestFrom(this.store.selectedAttribute$),
+                filter(([highlightedRelationsNodesIds, selectedAttribute]) => !!selectedAttribute),
+            )
+            .subscribe(
+                () => this.onSelectedAttributeChanged(null),
             )
 
     }
@@ -86,6 +138,20 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
 
     onSelectedAttributeChanged(attributeId: string | null): void {
         this.store.setSelectedAttribute(attributeId)
+    }
+
+    private resetNodeHighlightRelations(): void {
+        this.highlightedRelationsNodesIds$.next([])
+    }
+
+    private onNodeHighlightRelations(nodeId: string): void {
+        const highlightedRelationsNodesIds = SgRelations.toggleSelection(
+            this.highlightedRelationsNodesIds$.getValue(),
+            nodeId,
+            this.store.state.links,
+        )
+
+        this.highlightedRelationsNodesIds$.next(highlightedRelationsNodesIds)
     }
 
     // Watch Store State changes => update Router State if needed

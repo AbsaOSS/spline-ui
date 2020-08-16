@@ -25,4 +25,6 @@ export const SPLINE_ICONS_COLLECTION: Set<string> = new Set<string>([
     'arrow-collapse-all',
     'group',
     'code-brackets',
+    'target',
+    'eye-outline',
 ])

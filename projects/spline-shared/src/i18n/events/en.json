@@ -48,6 +48,8 @@
     "OPERATION__AGGREGATE__AGGREGATE_SECTION_TITLE": "Aggregate",
     "OPERATION__AGGREGATE__GROUPING_SECTION_TITLE": "Grouping",
     "OPERATION__SORT__MAIN_SECTION_TITLE": "Sort On",
-    "ATTR_SEARCH__PLACEHOLDER": "Search for an attribute ..."
+    "ATTR_SEARCH__PLACEHOLDER": "Search for an attribute ...",
+    "EVENT_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS": "Highlight relations",
+    "EVENT_NODE_CONTROL__ACTION__FOCUS": "Focus on Graph"
   }
 }

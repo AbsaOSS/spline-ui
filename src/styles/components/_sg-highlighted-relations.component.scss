@@ -14,7 +14,20 @@
  * limitations under the License.
  */
 
-spline-icon {
-    display: flex;
-    justify-content: center;
+$opacity--hidden: 0.3;
+
+.sg-node-relation {
+    &--hidden {
+        .edge path {
+            opacity: $opacity--hidden;
+        }
+
+        .spline-graph__node-container:not(.spline-graph__node--selected) {
+            opacity: $opacity--hidden;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
 }

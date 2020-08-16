@@ -54,7 +54,6 @@ export class SplineConfigService {
     }
 
     private fetchConfig(): Observable<SplineConfig> {
-        console.log(this.settings)
         return !this.settings
             ? of(DEFAULT_SPLINE_CONFIG)
             : this.http.get<SplineConfig>(

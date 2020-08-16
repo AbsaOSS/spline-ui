@@ -24,70 +24,72 @@
     <spline-content-error *ngIf="loadingProcessing.processingError"></spline-content-error>
     <!-- ./ERROR -->
 
-    <ng-container *ngIf="!loadingProcessing.processingError && !loadingProcessing.processing">
-        <div *ngIf="store.state$ | async as state" class="end-to-end-container flex-row">
+        <ng-container *ngIf="graphData$ | async as graphData">
+            <div *ngIf="store.state$ | async as state" class="end-to-end-container flex-row">
 
-            <div class="spline-content-details-section">
+                <div class="spline-content-details-section">
 
-                <div [hidden]="state.selectedNodeId">
-                    <button *ngIf="eventId" [routerLink]="['/events/event-overview', eventId]"
-                            class="mb-3"
-                            mat-button>
-                        <mat-icon class="mr-2">arrow_back</mat-icon>
-                        <span class="pr-2">
-                            {{ 'EVENTS.EXECUTION_PLAN__BACK_TO_EVENT_BUTTON' | translate }}
-                        </span>
-                    </button>
+                    <div [hidden]="state.selectedNodeId">
+                        <button *ngIf="eventId" [routerLink]="['/events/event-overview', eventId]"
+                                class="mb-3"
+                                mat-button>
+                            <mat-icon class="mr-2">arrow_back</mat-icon>
+                            <span class="pr-2">
+                                {{ 'EVENTS.EXECUTION_PLAN__BACK_TO_EVENT_BUTTON' | translate }}
+                            </span>
+                        </button>
 
-                    <!-- EXECUTION PLAN INFO -->
-                    <event-execution-plan-info (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"
-                                               [executionPlan]="state.executionPlan"
-                                               [selectedAttributeId]="state.selectedAttributeId">
-                    </event-execution-plan-info>
-                    <!-- ./EXECUTION PLAN INFO -->
-                </div>
-
-                <!--  SELECTED NODE INFO -->
-                <div *ngIf="selectedNodeViewSchema$ | async as dataSchema">
-                    <button (click)="onShowEpDetailsBtnCLicked()"
-                            class="mb-3"
-                            mat-button>
-                        <mat-icon class="mr-2">arrow_back</mat-icon>
-                        <span class="pr-2">
-                            {{ 'EVENTS.EXECUTION_PLAN__BACK_TO_PLAN_BUTTON' | translate }}
-                        </span>
-                    </button>
-
-                    <event-operation-info (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"
-                                          [node]="store.selectedNode$ | async"
-                                          [selectedAttributeId]="state.selectedAttributeId"></event-operation-info>
-
-                </div>
-                <!-- ./SELECTED NODE INFO -->
-            </div>
-
-            <div class="end-to-end-container__body">
-
-                <!-- GRAPH -->
-                <spline-graph
-                        (nodeSelectionChange$)="onNodeSelected($event)"
-                        [graphData]="state.graphData"
-                        [sgAttributeLineage]="state.attributeLineage"
-                        [selectedNodeId]="state.selectedNodeId">
-
-                    <div class="graph-toolbar" *ngIf="store.selectedAttribute$ | async as selectedAttribute">
-                        <event-attribute-lineage-info (close$)="onSelectedAttributeChanged(null)"
-                                                      [loading]="state.attributeLineageLoadingProcessing.processing"
-                                                      [attributeLineage]="state.attributeLineage"
-                                                      [attribute]="selectedAttribute">
-                        </event-attribute-lineage-info>
+                        <!-- EXECUTION PLAN INFO -->
+                        <event-execution-plan-info (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"
+                                                   [executionPlan]="state.executionPlan"
+                                                   [selectedAttributeId]="state.selectedAttributeId">
+                        </event-execution-plan-info>
+                        <!-- ./EXECUTION PLAN INFO -->
                     </div>
 
-                </spline-graph>
-                <!-- ./GRAPH -->
+                    <!--  SELECTED NODE INFO -->
+                    <div *ngIf="selectedNodeViewSchema$ | async as dataSchema">
+                        <button (click)="onShowEpDetailsBtnCLicked()"
+                                class="mb-3"
+                                mat-button>
+                            <mat-icon class="mr-2">arrow_back</mat-icon>
+                            <span class="pr-2">
+                                {{ 'EVENTS.EXECUTION_PLAN__BACK_TO_PLAN_BUTTON' | translate }}
+                            </span>
+                        </button>
 
+                        <event-operation-info (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"
+                                              [node]="store.selectedNode$ | async"
+                                              [selectedAttributeId]="state.selectedAttributeId"></event-operation-info>
+
+                    </div>
+                    <!-- ./SELECTED NODE INFO -->
+                </div>
+
+                <div class="end-to-end-container__body">
+
+                    <!-- GRAPH -->
+                    <spline-graph
+                            (nodeSelectionChange$)="onNodeSelected($event)"
+                            [graphData]="graphData"
+                            [focusNode$]="focusNode$"
+                            [sgHighlightedRelations]="highlightedRelationsNodesIds$ | async"
+                            [sgAttributeLineage]="state.attributeLineage"
+                            [selectedNodeId]="state.selectedNodeId">
+
+                        <div class="graph-toolbar" *ngIf="store.selectedAttribute$ | async as selectedAttribute">
+                            <event-attribute-lineage-info (close$)="onSelectedAttributeChanged(null)"
+                                                          [loading]="state.attributeLineageLoadingProcessing.processing"
+                                                          [attributeLineage]="state.attributeLineage"
+                                                          [attribute]="selectedAttribute">
+                            </event-attribute-lineage-info>
+                        </div>
+
+                    </spline-graph>
+                    <!-- ./GRAPH -->
+
+                </div>
             </div>
-        </div>
     </ng-container>
 </div>
 

@@ -14,11 +14,8 @@
  * limitations under the License.
  */
 
-import { AttributeLineage, ExecutionPlan, ExecutionPlanLineageNode, ExecutionPlanLineageOverview } from 'spline-api'
-import { SgData } from 'spline-common'
+import { AttributeLineage, ExecutionPlan, ExecutionPlanLineageNode, ExecutionPlanLineageOverview, LineageNodeLink } from 'spline-api'
 import { ProcessingStore, SplineEntityStore } from 'spline-utils'
-
-import { ExecutionPlanNodeControl } from '../../models'
 
 
 export namespace ExecutionPlanOverviewStore {
@@ -26,7 +23,7 @@ export namespace ExecutionPlanOverviewStore {
     export type State = {
         nodes: SplineEntityStore.EntityState<ExecutionPlanLineageNode>
         executionPlanId: string | null
-        graphData: SgData | null
+        links: LineageNodeLink[]
         executionPlan: ExecutionPlan | null
         loadingProcessing: ProcessingStore.EventProcessingState
 
@@ -41,7 +38,7 @@ export namespace ExecutionPlanOverviewStore {
         return {
             nodes: SplineEntityStore.getDefaultState<ExecutionPlanLineageNode>(),
             executionPlanId: null,
-            graphData: null,
+            links: [],
             executionPlan: null,
             loadingProcessing: ProcessingStore.getDefaultProcessingState(),
 
@@ -59,12 +56,13 @@ export namespace ExecutionPlanOverviewStore {
         return {
             ...state,
             nodes: SplineEntityStore.addAll(executionPlanOverview.lineage.nodes, state.nodes),
-            graphData: {
-                nodes: executionPlanOverview.lineage.nodes.map(nodeSource => ExecutionPlanNodeControl.toSgNode(nodeSource)),
-                links: executionPlanOverview.lineage.links,
-            },
+            links: executionPlanOverview.lineage.links,
             executionPlan: executionPlanOverview.executionPlan,
         }
+    }
+
+    export function selectAllNodes(state: State): ExecutionPlanLineageNode[] {
+        return SplineEntityStore.selectAll(state.nodes)
     }
 
     export function selectNode(state: State, nodeId: string): ExecutionPlanLineageNode | undefined {

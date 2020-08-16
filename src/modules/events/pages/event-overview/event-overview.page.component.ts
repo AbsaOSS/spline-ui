@@ -16,13 +16,13 @@
 
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router'
-import { Observable } from 'rxjs'
+import { BehaviorSubject, Observable, Subject } from 'rxjs'
 import { map, shareReplay, takeUntil } from 'rxjs/operators'
 import { ExecutionEventFacade, ExecutionEventLineageNode } from 'spline-api'
 import { SgData, SgNodeSchema, SplineDataViewSchema } from 'spline-common'
 import { BaseComponent } from 'spline-utils'
 
-import { EventNodeControl, EventNodeInfo } from '../../models'
+import { EventNodeControl, EventNodeInfo, SgRelations } from '../../models'
 import { EventOverviewStore, EventOverviewStoreFacade } from '../../store'
 
 
@@ -48,6 +48,9 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
 
     readonly selectedNodeViewSchema$: Observable<SplineDataViewSchema>
 
+    readonly focusNode$ = new Subject<string>()
+    readonly highlightedRelationsNodesIds$ = new BehaviorSubject<string[]>([])
+
     executionEventId: string
 
     constructor(private readonly activatedRoute: ActivatedRoute,
@@ -69,6 +72,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
                                 nodeSource => EventNodeControl.toSgNode(
                                     nodeSource,
                                     (nodeId) => this.onExecutionPlanNodeLaunchAction(nodeId),
+                                    (nodeId) => this.onNodeHighlightRelations(nodeId),
                                 ),
                             ),
                     }
@@ -80,7 +84,11 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
             .pipe(
                 map(
                     selectedNode => selectedNode
-                        ? EventNodeInfo.toDataSchema(selectedNode, (nodeId) => this.onExecutionPlanNodeLaunchAction(nodeId))
+                        ? EventNodeInfo.toDataSchema(
+                            selectedNode,
+                            (nodeId) => this.onExecutionPlanNodeLaunchAction(nodeId),
+                            (nodeId) => this.onNodeFocus(nodeId)
+                        )
                         : null,
                 ),
             )
@@ -118,6 +126,20 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
                 },
             },
         )
+    }
+
+    private onNodeHighlightRelations(nodeId: string): void {
+        const highlightedRelationsNodesIds = SgRelations.toggleSelection(
+            this.highlightedRelationsNodesIds$.getValue(),
+            nodeId,
+            this.store.state.links
+        )
+
+        this.highlightedRelationsNodesIds$.next(highlightedRelationsNodesIds)
+    }
+
+    private onNodeFocus(nodeId: string): void {
+        this.focusNode$.next(nodeId)
     }
 
     private updateQueryParams(selectedNode: ExecutionEventLineageNode | null): void {

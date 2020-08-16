@@ -18,7 +18,7 @@
 import { AfterViewInit, Directive, forwardRef, Host, Inject, Input, OnChanges, SimpleChanges } from '@angular/core'
 import { GraphComponent } from '@swimlane/ngx-graph'
 import { AttributeLineage, AttributeLineageType } from 'spline-api'
-import { SplineGraphComponent } from 'spline-common'
+import { getLinkDomSelector, getNodeDomSelector, SplineGraphComponent } from 'spline-common'
 
 import { extractAttributeLineageNodesMap } from '../../models/attribute'
 
@@ -89,7 +89,7 @@ export class SgAttributeLineageDirective implements AfterViewInit, OnChanges {
         ngxGraphComponent.nodes
             .forEach(item =>
                 applyStylesToDomElm(
-                    `[id="${item.id}"]`,
+                    getNodeDomSelector(item.id),
                     ngxGraphComponent.chart.nativeElement,
                     (lineageType) => attributesLineageNodesMap[lineageType].has(item.id),
                 ),
@@ -98,7 +98,7 @@ export class SgAttributeLineageDirective implements AfterViewInit, OnChanges {
         ngxGraphComponent.links
             .forEach(item =>
                 applyStylesToDomElm(
-                    `#${item.id}.link-group`,
+                    getLinkDomSelector(item.id),
                     ngxGraphComponent.chart.nativeElement,
                     (lineageType) => {
                         switch (lineageType) {
