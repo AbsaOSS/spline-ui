@@ -147,5 +147,15 @@ export namespace SgNodeControl {
         }
     }
 
+    export function getNodeFocusAction(onNodeFocus: () => void): SgNodeDefault.InlineAction {
+        return {
+            icon: 'target',
+            onClick: () => {
+                onNodeFocus()
+            },
+            tooltip: 'EVENTS.EVENT_NODE_CONTROL__ACTION__FOCUS',
+        }
+    }
+
 }
 

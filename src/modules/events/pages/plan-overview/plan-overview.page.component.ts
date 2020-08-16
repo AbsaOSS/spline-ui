@@ -20,10 +20,10 @@ import _ from 'lodash'
 import { BehaviorSubject, Observable, Subject } from 'rxjs'
 import { filter, map, shareReplay, skip, takeUntil, withLatestFrom } from 'rxjs/operators'
 import { ExecutionPlanFacade } from 'spline-api'
-import { SgData, SgNodeSchema, SplineDataViewSchema } from 'spline-common'
+import { SgData, SgNodeSchema } from 'spline-common'
 import { BaseComponent } from 'spline-utils'
 
-import { ExecutionPlanNodeControl, ExecutionPlanOverview, OperationInfo, SgRelations } from '../../models'
+import { ExecutionPlanNodeControl, ExecutionPlanOverview, SgRelations } from '../../models'
 import { ExecutionPlanOverviewStore, ExecutionPlanOverviewStoreFacade } from '../../store'
 import QueryParamAlis = ExecutionPlanOverview.QueryParamAlis
 
@@ -44,7 +44,6 @@ import QueryParamAlis = ExecutionPlanOverview.QueryParamAlis
 })
 export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
 
-    readonly selectedNodeViewSchema$: Observable<SplineDataViewSchema>
     readonly graphData$: Observable<SgData>
     readonly focusNode$ = new Subject<string>()
     readonly highlightedRelationsNodesIds$ = new BehaviorSubject<string[]>([])
@@ -55,11 +54,6 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
                 private readonly router: Router,
                 readonly store: ExecutionPlanOverviewStoreFacade) {
         super()
-
-        this.selectedNodeViewSchema$ = this.store.selectedNode$
-            .pipe(
-                map(selectedNode => selectedNode ? OperationInfo.toDataViewSchema(selectedNode) : null),
-            )
 
         this.graphData$ = this.store.loadingProcessingEvents.success$
             .pipe(
@@ -138,6 +132,10 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
 
     onSelectedAttributeChanged(attributeId: string | null): void {
         this.store.setSelectedAttribute(attributeId)
+    }
+
+    onNodeFocus(nodeId: string): void {
+        this.focusNode$.next(nodeId)
     }
 
     private resetNodeHighlightRelations(): void {

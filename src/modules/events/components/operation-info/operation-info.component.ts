@@ -58,6 +58,7 @@ export class OperationInfoComponent extends BaseLocalStateComponent<ExecutionPla
     }
 
     @Output() selectedAttributeChanged$ = new EventEmitter<{ attributeId: string | null }>()
+    @Output() focusNode$ = new EventEmitter<{ nodeId: string }>()
 
     private readonly selectedAttributeId$ = new BehaviorSubject<string | null>(null)
 
@@ -71,7 +72,7 @@ export class OperationInfoComponent extends BaseLocalStateComponent<ExecutionPla
             )
             .subscribe(data =>
                 this.updateState({
-                    operationDvs: OperationInfo.toDataViewSchema(data.operation),
+                    operationDvs: OperationInfo.toDataViewSchema(data.operation, () => this.onNodeFocus()),
                     inputsDvs: OperationInfo.toInputsDvs(data, this.selectedAttributeId$.asObservable()),
                     outputDvs: OperationInfo.toOutputsDvs(data, this.selectedAttributeId$.asObservable()),
                     detailsDvs: OperationInfo.toDetailsDvs(data),
@@ -105,5 +106,9 @@ export class OperationInfoComponent extends BaseLocalStateComponent<ExecutionPla
     private onSelectedAttributeChanged(attributeId: string | null): void {
         this.selectedAttributeId$.next(attributeId)
         this.selectedAttributeChanged$.emit({ attributeId })
+    }
+
+    private onNodeFocus(): void {
+        this.focusNode$.next({ nodeId: this.node.id })
     }
 }

@@ -67,7 +67,7 @@ export namespace OperationInfo {
         return SgNodeControl.getNodeStyles(nodeType)
     }
 
-    export function toDataViewSchema(operation: Operation): SplineDataViewSchema {
+    export function toDataViewSchema(operation: Operation, onNodeFocus: (nodeId: string) => void): SplineDataViewSchema {
         const nodeStyles = getNodeStyles(operation.type, operation.name)
 
         return [
@@ -77,6 +77,9 @@ export namespace OperationInfo {
                     icon: nodeStyles.icon,
                     title: operation.name,
                     label: extractLabel(operation),
+                    actions: [
+                        SgNodeControl.getNodeFocusAction(() => onNodeFocus(operation.id))
+                    ]
                 },
             ),
         ]

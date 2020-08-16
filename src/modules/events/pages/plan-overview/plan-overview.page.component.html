@@ -48,7 +48,7 @@
                     </div>
 
                     <!--  SELECTED NODE INFO -->
-                    <div *ngIf="selectedNodeViewSchema$ | async as dataSchema">
+                    <div *ngIf="state.selectedNodeId">
                         <button (click)="onShowEpDetailsBtnCLicked()"
                                 class="mb-3"
                                 mat-button>
@@ -60,6 +60,7 @@
 
                         <event-operation-info (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"
                                               [node]="store.selectedNode$ | async"
+                                              (focusNode$)="onNodeFocus($event.nodeId)"
                                               [selectedAttributeId]="state.selectedAttributeId"></event-operation-info>
 
                     </div>

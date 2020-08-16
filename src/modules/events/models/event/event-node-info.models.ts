@@ -17,6 +17,8 @@
 import { ExecutionEventLineageNode, ExecutionEventLineageNodeType } from 'spline-api'
 import { SdWidgetCard, SdWidgetSimpleRecord, SplineCardHeader, SplineDataViewSchema } from 'spline-common'
 
+import { SgNodeControl } from '../sg-node-control.models'
+
 import { EventNodeControl } from './event-node-control.models'
 
 
@@ -42,13 +44,7 @@ export namespace EventNodeInfo {
             : []
 
         const defaultActions = [
-            {
-                icon: 'target',
-                onClick: () => {
-                    onNodeFocus(nodeSource.id)
-                },
-                tooltip: 'EVENTS.EVENT_NODE_CONTROL__ACTION__FOCUS',
-            }
+            SgNodeControl.getNodeFocusAction(() => onNodeFocus(nodeSource.id))
         ]
 
         const actions: SplineCardHeader.Action[] = nodeSource.type === ExecutionEventLineageNodeType.Execution
