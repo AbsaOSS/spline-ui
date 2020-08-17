@@ -24,7 +24,7 @@ export type SplineConfig = {
 
 export const DEFAULT_SPLINE_CONFIG: Readonly<SplineConfig> = Object.freeze<SplineConfig>({
     isEmbeddedMode: false,
-    splineConsumerApiUrl: '/consumer'
+    splineConsumerApiUrl: '../rest/consumer'
 })
 
 export type SplineConfigSettings = {
