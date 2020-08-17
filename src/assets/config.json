@@ -1,4 +1,4 @@
 {
   "isEmbeddedMode": false,
-  "splineConsumerApiUrl": "/consumer"
+  "splineConsumerApiUrl": "../rest/consumer"
 }

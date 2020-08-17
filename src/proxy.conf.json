@@ -6,8 +6,11 @@
       "^/consumer-localhost": "/consumer"
     }
   },
-  "/consumer": {
-    "target": "https://opensource.bigusdatus.com/spline/rest/",
-    "secure": false
+  "/rest/consumer": {
+    "target": "https://opensource.bigusdatus.com/spline/rest/consumer",
+    "secure": false,
+    "pathRewrite": {
+      "^/rest/consumer": ""
+    }
   }
 }
