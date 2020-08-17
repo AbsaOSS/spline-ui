@@ -6,7 +6,7 @@
     "start": "ng serve --open --port 4300 --base-href=/ui/",
     "start:localhost": "ng serve -c localhost --open --port 4300 --base-href=/ui/",
     "build": "ng build",
-    "build:prod": "ng build --prod --base-href=/ui/ --deploy-url==/ui/",
+    "build:prod": "ng build --prod",
     "test": "jest --passWithNoTests",
     "lint": "ng lint && npm run lint:styles",
     "lint:ts": "eslint src/**/*.ts",
