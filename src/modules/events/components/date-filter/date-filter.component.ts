@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core'
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core'
 import { MatMenuTrigger } from '@angular/material/menu'
 import moment from 'moment'
 import { DaterangepickerDirective } from 'ngx-daterangepicker-material'
@@ -26,7 +26,6 @@ import { SplineDateFilter } from './date-filter.models'
     selector: 'spline-date-filter',
     templateUrl: './date-filter.component.html',
     styleUrls: ['./date-filter.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SplineDateFilterComponent {
 
@@ -67,7 +66,7 @@ export class SplineDateFilterComponent {
         const newValue = $event.startDate && $event.endDate
             ? {
                 dateFrom: $event.startDate ? $event.startDate.startOf('day').toDate() : undefined,
-                dateTo: $event.endDate ? $event.endDate.endOf('day').toDate(): undefined,
+                dateTo: $event.endDate ? $event.endDate.endOf('day').toDate() : undefined,
             }
             : null
         this.setValue(newValue)

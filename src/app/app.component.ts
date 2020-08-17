@@ -37,7 +37,7 @@ export class AppComponent {
 
     onAttributeSearchSelected(attributeInfo: AttributeSearchRecord): void {
         this.router.navigate(
-            ['/events/plan-overview', attributeInfo.executionEventId],
+            ['/app/events/plan-overview', attributeInfo.executionEventId],
             {
                 queryParams: {
                     attributeId: attributeInfo.id,

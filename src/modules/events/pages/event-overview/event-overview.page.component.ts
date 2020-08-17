@@ -119,7 +119,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
 
     private onExecutionPlanNodeLaunchAction(nodeId: string): void {
         this.router.navigate(
-            ['/events/plan-overview', nodeId],
+            ['/app/events/plan-overview', nodeId],
             {
                 queryParams: {
                     eventId: this.executionEventId,

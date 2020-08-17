@@ -35,33 +35,10 @@
                        [matTooltipPosition]="'right'"
                        mat-list-item
                        matTooltip="Execution Events"
-                       routerLink="/events/list">
+                       routerLink="/app/events/list">
 
                         <mat-icon>play_arrow</mat-icon>
                         <span *ngIf="isExpanded">Execution Events</span>
-
-                    </a>
-
-                    <a [matTooltipDisabled]="isExpanded"
-                       [matTooltipPosition]="'right'"
-                       mat-list-item
-                       matTooltip="Execution Plans"
-                       routerLink="/fake-url">
-
-                        <mat-icon>playlist_play</mat-icon>
-                        <span *ngIf="isExpanded">Execution Events</span>
-
-                    </a>
-
-                    <a [matTooltipDisabled]="isExpanded"
-                       [matTooltipPosition]="'right'"
-                       mat-list-item
-                       matTooltip="Data Sources"
-                       routerLink="/fake-url"
-                       routerLinkActive="active">
-
-                        <mat-icon>description</mat-icon>
-                        <span *ngIf="isExpanded">Data Sources</span>
 
                     </a>
                 </mat-nav-list>
