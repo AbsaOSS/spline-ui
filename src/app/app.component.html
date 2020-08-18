@@ -30,15 +30,39 @@
             <div class="spline-sidebar-menu">
 
                 <mat-nav-list>
-                    <a [class.active]="true"
+                    <a [class.active]="isEventsLinkActive.isActive"
                        [matTooltipDisabled]="isExpanded"
                        [matTooltipPosition]="'right'"
                        mat-list-item
+                       *ngIf="isEventsLinkActive$ | async as isEventsLinkActive"
                        matTooltip="Execution Events"
                        routerLink="/app/events/list">
 
                         <mat-icon>play_arrow</mat-icon>
                         <span *ngIf="isExpanded">Execution Events</span>
+
+                    </a>
+                    <a [matTooltipDisabled]="isExpanded"
+                       [matTooltipPosition]="'right'"
+                       mat-list-item
+                       matTooltip="Execution Plans"
+                       routerLink="/app/events/plans"
+                       routerLinkActive="active">
+
+                        <mat-icon>playlist_play</mat-icon>
+                        <span *ngIf="isExpanded">Execution Events</span>
+
+                    </a>
+
+                    <a [matTooltipDisabled]="isExpanded"
+                       [matTooltipPosition]="'right'"
+                       mat-list-item
+                       matTooltip="Data Sources"
+                       routerLink="/app/events/data-sources"
+                       routerLinkActive="active">
+
+                        <mat-icon>description</mat-icon>
+                        <span *ngIf="isExpanded">Data Sources</span>
 
                     </a>
                 </mat-nav-list>

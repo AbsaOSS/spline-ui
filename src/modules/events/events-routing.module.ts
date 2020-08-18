@@ -17,7 +17,13 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 
-import { EventOverviewPageComponent, EventsListPageComponent, PlanOverviewPageComponent } from './pages'
+import {
+    DataSourcesListPageComponent,
+    EventOverviewPageComponent,
+    EventsListPageComponent,
+    PlanOverviewPageComponent,
+    PlansListPageComponent,
+} from './pages'
 
 
 const routes: Routes = [
@@ -32,6 +38,14 @@ const routes: Routes = [
     {
         path: 'plan-overview/:planId',
         component: PlanOverviewPageComponent,
+    },
+    {
+        path: 'plans',
+        component: PlansListPageComponent,
+    },
+    {
+        path: 'data-sources',
+        component: DataSourcesListPageComponent,
     },
     {
         path: '**',

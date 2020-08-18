@@ -15,8 +15,9 @@
  */
 
 import { Component } from '@angular/core'
-import { Router } from '@angular/router'
-import { Observable } from 'rxjs'
+import { NavigationEnd, Router } from '@angular/router'
+import { BehaviorSubject, Observable } from 'rxjs'
+import { filter } from 'rxjs/operators'
 import { AttributeSearchRecord } from 'spline-api'
 import { SplineConfig, SplineConfigService } from 'spline-shared'
 
@@ -29,10 +30,25 @@ import { SplineConfig, SplineConfigService } from 'spline-shared'
 export class AppComponent {
 
     readonly splineConfig$: Observable<SplineConfig>
+    readonly isEventsLinkActive$ = new BehaviorSubject<{ isActive: boolean }>({ isActive: false })
 
     constructor(private readonly router: Router, private readonly splineConfigService: SplineConfigService) {
 
         this.splineConfig$ = this.splineConfigService.config$
+
+        // TODO: replace that logic with some directive.
+        this.router.events
+            .pipe(
+                filter(event => event instanceof NavigationEnd),
+            )
+            .subscribe((event: NavigationEnd) => {
+                const urlsFromOtherScopes = [
+                    '/app/events/plans',
+                    '/app/events/data-sources',
+                ]
+                const isActive = !urlsFromOtherScopes.includes(event.url)
+                this.isEventsLinkActive$.next({ isActive })
+            })
     }
 
     onAttributeSearchSelected(attributeInfo: AttributeSearchRecord): void {
