@@ -39,9 +39,9 @@
                     </spline-search-box>
                 </div>
 
-                <spline-date-filter *ngIf="(data$ | async) as data"
-                                    [maxDate]="data?.totalDateRange.to"
-                                    [minDate]="data?.totalDateRange.from"
+                <spline-date-filter *ngIf="(data$ | async).totalDateRange as totalDateRange"
+                                    [maxDate]="totalDateRange?.to"
+                                    [minDate]="totalDateRange?.from"
                                     [value]="dateFilter$ | async"
                                     (valueChanged$)="onDateFilterChanged($event)">
 

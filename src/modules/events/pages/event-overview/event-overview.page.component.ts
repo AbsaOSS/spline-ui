@@ -15,12 +15,12 @@
  */
 
 import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { BehaviorSubject, Observable, Subject } from 'rxjs'
 import { map, shareReplay, takeUntil } from 'rxjs/operators'
 import { ExecutionEventFacade, ExecutionEventLineageNode } from 'spline-api'
 import { SgData, SgNodeSchema, SplineDataViewSchema } from 'spline-common'
-import { BaseComponent } from 'spline-utils'
+import { BaseComponent, RouterHelpers } from 'spline-utils'
 
 import { EventNodeControl, EventNodeInfo, SgRelations } from '../../models'
 import { EventOverviewStore, EventOverviewStoreFacade } from '../../store'
@@ -87,7 +87,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
                         ? EventNodeInfo.toDataSchema(
                             selectedNode,
                             (nodeId) => this.onExecutionPlanNodeLaunchAction(nodeId),
-                            (nodeId) => this.onNodeFocus(nodeId)
+                            (nodeId) => this.onNodeFocus(nodeId),
                         )
                         : null,
                 ),
@@ -132,7 +132,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
         const highlightedRelationsNodesIds = SgRelations.toggleSelection(
             this.highlightedRelationsNodesIds$.getValue(),
             nodeId,
-            this.store.state.links
+            this.store.state.links,
         )
 
         this.highlightedRelationsNodesIds$.next(highlightedRelationsNodesIds)
@@ -143,18 +143,11 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
     }
 
     private updateQueryParams(selectedNode: ExecutionEventLineageNode | null): void {
-        const queryParams = selectedNode
-            ? {
-                [this.selectedNodeQueryParamName]: selectedNode.id,
-            }
-            : {}
-
-        const extras: NavigationExtras = {
-            queryParams,
-            relativeTo: this.activatedRoute,
-            replaceUrl: true,
-        }
-
-        this.router.navigate([], extras)
+        RouterHelpers.updateCurrentRouterOneQueryParam(
+            this.router,
+            this.activatedRoute,
+            this.selectedNodeQueryParamName,
+            selectedNode?.id ?? null,
+        )
     }
 }

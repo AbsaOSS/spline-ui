@@ -15,13 +15,12 @@
  */
 
 import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router'
-import _ from 'lodash'
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
 import { BehaviorSubject, Observable, Subject } from 'rxjs'
 import { filter, map, shareReplay, skip, takeUntil, withLatestFrom } from 'rxjs/operators'
 import { ExecutionPlanFacade } from 'spline-api'
 import { SgData, SgNodeSchema } from 'spline-common'
-import { BaseComponent } from 'spline-utils'
+import { BaseComponent, RouterHelpers } from 'spline-utils'
 
 import { ExecutionPlanNodeControl, ExecutionPlanOverview, SgRelations } from '../../models'
 import { ExecutionPlanOverviewStore, ExecutionPlanOverviewStoreFacade } from '../../store'
@@ -169,7 +168,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
                 }),
             )
             .subscribe(selectedNodeId =>
-                this.updateQueryParams(ExecutionPlanOverview.QueryParamAlis.SelectedNodeId, selectedNodeId)
+                this.updateQueryParams(ExecutionPlanOverview.QueryParamAlis.SelectedNodeId, selectedNodeId),
             )
 
         //
@@ -187,7 +186,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
                 }),
             )
             .subscribe(attrId =>
-                this.updateQueryParams(ExecutionPlanOverview.QueryParamAlis.SelectedAttributeId, attrId)
+                this.updateQueryParams(ExecutionPlanOverview.QueryParamAlis.SelectedAttributeId, attrId),
             )
     }
 
@@ -219,21 +218,13 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
     }
 
     private updateQueryParams(paramName: string, value: string | null, replaceUrl: boolean = true): void {
-
-        const queryParams = value
-            ? {
-                ...this.activatedRoute.snapshot.queryParams,
-                [paramName]: value,
-            }
-            : _.omit(this.activatedRoute.snapshot.queryParams, paramName)
-
-        const extras: NavigationExtras = {
-            queryParams,
-            relativeTo: this.activatedRoute,
+        RouterHelpers.updateCurrentRouterOneQueryParam(
+            this.router,
+            this.activatedRoute,
+            paramName,
+            value,
             replaceUrl,
-        }
-
-        this.router.navigate([], extras)
+        )
     }
 
 }

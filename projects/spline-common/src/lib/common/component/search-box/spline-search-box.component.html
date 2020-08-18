@@ -26,6 +26,7 @@
            (focusout)="isFocused = false"
            [ngModel]="inputValue"
            [matAutocomplete]="matAutocomplete"
+           [matAutocompleteDisabled]="!matAutocomplete"
            (keyup)="onSearchChanged(inputRef.value)"
            [placeholder]="placeholder | translate"
            type="text">

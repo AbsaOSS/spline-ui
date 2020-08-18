@@ -24,7 +24,7 @@ export class ExecutionEventsDataSource extends SearchDataSource<ExecutionEvent,
     ExecutionEventsQuery.QueryFilter,
     ExecutionEventField> {
 
-    private initialRequestTime: Date
+    initialRequestTime: Date
 
     constructor(private readonly executionEventFacade: ExecutionEventFacade) {
         super()
