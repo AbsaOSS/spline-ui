@@ -39,7 +39,7 @@
                     </spline-search-box>
                 </div>
 
-                <spline-date-filter *ngIf="(data$ | async).totalDateRange as totalDateRange"
+                <spline-date-filter *ngIf="(data$ | async)?.totalDateRange as totalDateRange"
                                     [maxDate]="totalDateRange?.to"
                                     [minDate]="totalDateRange?.from"
                                     [value]="dateFilter$ | async"
@@ -50,7 +50,7 @@
             </div>
         </div>
 
-        <mat-table [dataSource]="(data$ | async)?.items" matSort>
+        <mat-table [dataSource]="(data$ | async)?.items" matSort [matSortDisableClear]="true">
 
             <!-- applicationName -->
             <ng-container [matColumnDef]="ExecutionEventField.applicationName">

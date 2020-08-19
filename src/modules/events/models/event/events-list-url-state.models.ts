@@ -16,44 +16,45 @@
 
 
 import { Params } from '@angular/router'
-import { QueryPager } from 'spline-api'
-import { RouterHelpers } from 'spline-utils'
+import { ExecutionEventField, ExecutionEventsQuery } from 'spline-api'
+import { RouterHelpers, SearchQuery } from 'spline-utils'
 
 
 export namespace EventsListUrlState {
 
-    export const URL_QUERY_PARAM__PAGER = 'pager'
+    export const URL_QUERY_PARAM__SEARCH_PARAMS = 'searchParams'
 
-    export type PagerState = {
-        pager: QueryPager
-        initialRequestTime: Date
-    }
+    export type State = SearchQuery.SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>
 
-    export function extractPager(queryParams: Params): PagerState | null {
-        if (!queryParams[URL_QUERY_PARAM__PAGER]) {
+    export function extractSearchParams(queryParams: Params): State | null {
+        if (!queryParams[URL_QUERY_PARAM__SEARCH_PARAMS]) {
             return null
         }
-        return decodePagerState(queryParams[URL_QUERY_PARAM__PAGER])
+        return decodeSearchParams(queryParams[URL_QUERY_PARAM__SEARCH_PARAMS])
     }
 
-    export function applyPager(queryParams: Params, pager: PagerState | null): Params {
+    export function applySearchParams(queryParams: Params, state: State | null): Params {
         return RouterHelpers.setQueryParam(
             queryParams,
-            URL_QUERY_PARAM__PAGER,
-            pager !== null ? encodePagerState(pager) : null,
+            URL_QUERY_PARAM__SEARCH_PARAMS,
+            state !== null ? encodeSearchParams(state) : null,
         )
     }
 
-    export function encodePagerState(pagerState: PagerState): string {
+    export function encodeSearchParams(pagerState: State): string {
         return window.btoa(JSON.stringify(pagerState))
     }
 
-    export function decodePagerState(pagerStateUrlString: string): PagerState {
+    export function decodeSearchParams(pagerStateUrlString: string): State {
         const pagerState = JSON.parse(window.atob(pagerStateUrlString))
         return {
             ...pagerState,
-            initialRequestTime: new Date(pagerState.initialRequestTime),
-        }
+            filter: {
+                ...pagerState.filter,
+                executedAtFrom: pagerState.filter.executedAtFrom ? new Date(pagerState.filter.executedAtFrom) : undefined,
+                executedAtTo: pagerState.filter.executedAtTo ? new Date(pagerState.filter.executedAtFrom) : undefined,
+            },
+        } as State
     }
 
 }

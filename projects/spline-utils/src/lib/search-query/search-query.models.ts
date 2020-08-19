@@ -15,12 +15,18 @@
  */
 
 
-import { DEFAULT_PAGER, PageResponse, QueryPager, QuerySorter } from 'spline-api'
+import { MatSortable } from '@angular/material/sort'
+import { Sort } from '@angular/material/sort/sort'
+import { DEFAULT_PAGER, QueryPager, QuerySorter } from 'spline-api'
 
 import { ProcessingStore } from '../store'
 
 
 export namespace SearchQuery {
+
+    import FieldSorter = QuerySorter.FieldSorter
+    import SortDir = QuerySorter.SortDir
+
 
     export interface SearchParams<TFilter extends object = {}, TSortableField = string> {
         pager: QueryPager
@@ -45,7 +51,22 @@ export namespace SearchQuery {
 
     export const DEFAULT_RENDER_DATA: DataState<any> = {
         data: null,
-        loadingProcessing: ProcessingStore.getDefaultProcessingState()
+        loadingProcessing: ProcessingStore.getDefaultProcessingState(),
+    }
+
+    export function toMatSortable(fieldSorter: QuerySorter.FieldSorter, disableClear = true): MatSortable {
+        return {
+            id: fieldSorter.field,
+            start: fieldSorter.dir.toLowerCase(),
+            disableClear,
+        } as MatSortable
+    }
+
+    export function matSortToFiledSorter<TFiled = string>(sort: Sort): FieldSorter<TFiled> {
+        return {
+            field: sort.active as any,
+            dir: sort.direction === 'asc' ? SortDir.ASC : SortDir.DESC,
+        }
     }
 
 }

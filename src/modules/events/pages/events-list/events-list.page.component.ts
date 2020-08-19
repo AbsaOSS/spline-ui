@@ -16,18 +16,17 @@
 
 import { AfterContentInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { PageEvent } from '@angular/material/paginator'
-import { MatSort, MatSortable } from '@angular/material/sort'
+import { MatSort } from '@angular/material/sort'
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
 import _ from 'lodash'
 import { Observable } from 'rxjs'
 import { distinctUntilChanged, filter, map, skip, takeUntil } from 'rxjs/operators'
 import { ExecutionEventFacade, ExecutionEventField, ExecutionEventsPageResponse, QuerySorter } from 'spline-api'
-import { BaseComponent, ProcessingStore, RouterHelpers } from 'spline-utils'
+import { BaseComponent, ProcessingStore, RouterHelpers, SearchQuery } from 'spline-utils'
 
 import { SplineDateFilter } from '../../components'
 import { ExecutionEventsDataSource } from '../../data-sources'
 import { EventsListUrlState } from '../../models'
-import SortDir = QuerySorter.SortDir
 
 
 @Component({
@@ -60,12 +59,6 @@ export class EventsListPageComponent extends BaseComponent implements OnInit, Af
         ExecutionEventField.append,
         ExecutionEventField.timestamp,
     ]
-
-    readonly initSorting: MatSortable = {
-        id: ExecutionEventField.timestamp,
-        start: 'desc',
-        disableClear: false,
-    }
 
     readonly ExecutionEventField = ExecutionEventField
 
@@ -101,26 +94,12 @@ export class EventsListPageComponent extends BaseComponent implements OnInit, Af
     }
 
     ngAfterContentInit(): void {
-        // setup view layer
-        this.sortControl.sort(this.initSorting)
-        // watch sorting change
-        this.sortControl.sortChange
-            .pipe(
-                takeUntil(this.destroyed$),
-            )
-            .subscribe((sort) => {
-                const sortBy: QuerySorter.FieldSorter<ExecutionEventField>[] = sort.direction.length === 0
-                    ? []
-                    : [{
-                        field: sort.active as ExecutionEventField,
-                        dir: sort.direction === 'asc' ? SortDir.ASC : SortDir.DESC,
-                    }]
-
-                this.dataSource.sort(sortBy)
-            })
+        // init view layer Table sorting logic
+        this.initTableSortingState()
     }
 
     ngOnDestroy(): void {
+        super.ngOnDestroy()
         this.dataSource.disconnect()
     }
 
@@ -138,32 +117,18 @@ export class EventsListPageComponent extends BaseComponent implements OnInit, Af
             executedAtFrom: value?.dateFrom ?? undefined,
             executedAtTo: value?.dateTo ?? undefined,
         })
-
     }
 
     private initDataSource(): void {
-        // initial sorting
-        this.dataSource.sort(
-            [{
-                field: this.initSorting.id as ExecutionEventField,
-                dir: this.initSorting.start === 'asc' ? SortDir.ASC : SortDir.DESC,
-            }],
-            false,
-        )
-
-        // init pagination
-        const pagerState = EventsListUrlState.extractPager(this.activatedRoute.snapshot.queryParams)
-        if (pagerState !== null) {
-            this.dataSource.updateSearchParams({
-                pager: pagerState.pager,
-            }, false)
-
-            this.dataSource.initialRequestTime = pagerState.initialRequestTime
+        // init from URL
+        const searchParamsFromUrl = EventsListUrlState.extractSearchParams(this.activatedRoute.snapshot.queryParams)
+        if (searchParamsFromUrl !== null) {
+            this.dataSource.updateSearchParams(searchParamsFromUrl, false)
         }
 
         //
-        // [ACTION] :: PAGINATION CHANGED
-        //      => sync URL
+        // [ACTION] :: SEARCH PARAMS CHANGED
+        //      => update URL
         //
         this.dataSource.searchParams$
             .pipe(
@@ -171,37 +136,74 @@ export class EventsListPageComponent extends BaseComponent implements OnInit, Af
                 skip(1),
             )
             .subscribe(searchParams => {
-                const queryParams = EventsListUrlState.applyPager(
+                const queryParams = EventsListUrlState.applySearchParams(
                     this.activatedRoute.snapshot.queryParams,
-                    {
-                        pager: searchParams.pager,
-                        initialRequestTime: this.dataSource.initialRequestTime,
-                    },
+                    searchParams,
                 )
                 this.updateRouterState(queryParams)
             })
 
-        // watch pager changes from URL
+        //
+        // [ACTION] :: URL QUERY PARAMS CHANGED
+        //      => update DataSource state
+        //
         this.router.events
             .pipe(
                 filter(event => event instanceof NavigationEnd),
                 takeUntil(this.destroyed$),
                 // extract pagerState
-                map(() => EventsListUrlState.extractPager(this.activatedRoute.snapshot.queryParams)),
-                filter((newPagerState) => {
-                    const currentPagerState: EventsListUrlState.PagerState = {
-                        pager: this.dataSource.searchParams.pager,
-                        initialRequestTime: this.dataSource.initialRequestTime,
+                map(() => EventsListUrlState.extractSearchParams(this.activatedRoute.snapshot.queryParams)),
+                filter((newSearchParams) => !_.isEqual(newSearchParams, this.dataSource.searchParams)),
+            )
+            .subscribe((newSearchParams) => {
+                this.dataSource.updateSearchParams(
+                    newSearchParams ?? this.dataSource.defaultSearchParams,
+                )
+            })
+    }
+
+    private initTableSortingState(): void {
+        // setup default value
+        this.setTableSorting(this.dataSource.searchParams.sortBy)
+        //
+        // [ACTION] :: UI TABLE SORTING CHANGED
+        //      => update DataSource Search Params
+        //
+        this.sortControl.sortChange
+            .pipe(
+                takeUntil(this.destroyed$),
+                map(sort => {
+                    return sort.direction.length === 0
+                        ? []
+                        : [
+                            SearchQuery.matSortToFiledSorter(sort),
+                        ]
+                }),
+                filter(sortBy => !_.isEqual(sortBy, this.dataSource.searchParams.sortBy)),
+            )
+            .subscribe((sortBy: QuerySorter.FieldSorter<ExecutionEventField>[]) => {
+                this.dataSource.sort(sortBy)
+            })
+
+        //
+        // [ACTION] :: DATA SOURCE SORTING CHANGED
+        //      => update UI Table sort state
+        //
+        this.dataSource.searchParams$
+            .pipe(
+                map(searchParams => searchParams.sortBy),
+                filter(sortBy => {
+                    const sort = {
+                        active: this.sortControl.active,
+                        direction: this.sortControl.direction,
                     }
-                    return !_.isEqual(newPagerState, currentPagerState)
+                    const currentSortBy = [SearchQuery.matSortToFiledSorter(sort)]
+                    return !_.isEqual(sortBy, currentSortBy)
                 }),
             )
-            .subscribe((newPagerState) => {
-                this.dataSource.initialRequestTime = newPagerState?.initialRequestTime ?? null
-                this.dataSource.updateSearchParams({
-                    pager: newPagerState?.pager ?? this.dataSource.defaultSearchParams.pager,
-                })
-            })
+            .subscribe(
+                sortBy => this.setTableSorting(sortBy),
+            )
     }
 
     private updateRouterState(queryParams, replaceUrl: boolean = true): void {
@@ -211,5 +213,10 @@ export class EventsListPageComponent extends BaseComponent implements OnInit, Af
             queryParams,
             replaceUrl,
         )
+    }
+
+    private setTableSorting(sortBy: QuerySorter.FieldSorter[]): void {
+        const initSorting = SearchQuery.toMatSortable(sortBy[0])
+        this.sortControl.sort(initSorting)
     }
 }
