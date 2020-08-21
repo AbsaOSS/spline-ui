@@ -49,7 +49,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
     readonly selectedNodeViewSchema$: Observable<SplineDataViewSchema>
 
     readonly focusNode$ = new Subject<string>()
-    readonly highlightedRelationsNodesIds$ = new BehaviorSubject<string[]>([])
+    readonly highlightedRelationsNodesIds$ = new BehaviorSubject<string[] | null>(null)
 
     executionEventId: string
 
@@ -117,6 +117,18 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
         this.store.setSelectedNode($event.nodeSchema ? $event.nodeSchema.id : null)
     }
 
+    onShowAllRelationsBtnClicked(): void {
+        this.resetNodeHighlightRelations()
+    }
+
+    onHideAllRelationsBtnClicked(): void {
+        this.highlightedRelationsNodesIds$.next([])
+    }
+
+    private resetNodeHighlightRelations(): void {
+        this.highlightedRelationsNodesIds$.next(null)
+    }
+
     private onExecutionPlanNodeLaunchAction(nodeId: string): void {
         this.router.navigate(
             ['/app/events/plan-overview', nodeId],
@@ -130,7 +142,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
 
     private onNodeHighlightRelations(nodeId: string): void {
         const highlightedRelationsNodesIds = SgRelations.toggleSelection(
-            this.highlightedRelationsNodesIds$.getValue(),
+            this.highlightedRelationsNodesIds$.getValue() ?? [],
             nodeId,
             this.store.state.links,
         )

@@ -20,6 +20,7 @@ import { EventInfoComponent } from './event-info/event-info.component'
 import { ExecutionPlanInfoComponent } from './execution-plan-info/execution-plan-info.component'
 import { SgLegendComponent } from './graph-legend/sg-legend.component'
 import { OperationInfoComponent } from './operation-info/operation-info.component'
+import { SgHighlightedRelationsActionsComponent } from './sg-highlighted-relations-actions/sg-highlighted-relations-actions.component'
 
 
 export const components: any[] = [
@@ -28,7 +29,8 @@ export const components: any[] = [
     OperationInfoComponent,
     AttributeLineageInfoComponent,
     SgLegendComponent,
-    SplineDateFilterComponent
+    SplineDateFilterComponent,
+    SgHighlightedRelationsActionsComponent,
 ]
 
 export * from './event-info/event-info.component'

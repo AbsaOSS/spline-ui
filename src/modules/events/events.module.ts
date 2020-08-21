@@ -36,7 +36,7 @@ import {
     SplineCardModule,
     SplineContentErrorModule,
     SplineDataRecordModule,
-    SplineDataViewModule,
+    SplineDataViewModule, SplineDividerModule,
     SplineGraphModule,
     SplineIconModule,
     SplineLabelModule,
@@ -46,7 +46,7 @@ import {
     SplineSearchBoxModule,
     SplineSidePanelModule,
     SplineSortHeaderModule,
-    SplineTranslateModule
+    SplineTranslateModule,
 } from 'spline-common'
 import { SplineApiConfigModule, SplineAttributesTreeModule, SplineExpressionModule } from 'spline-shared'
 
@@ -99,6 +99,7 @@ import * as fromPages from './pages'
         NgxDaterangepickerMd.forRoot(),
         MatInputModule,
         MatMenuModule,
+        SplineDividerModule
     ],
     exports: [
         ...fromPages.pageComponents,

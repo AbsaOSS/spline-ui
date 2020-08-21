@@ -14,7 +14,12 @@
  * limitations under the License.
  */
 
-export * from './components/public-api'
-export * from './directives/public-api'
-export * from './models/public-api'
-export * from './spline-graph.module'
+
+import { SgControlPanelActionDirective } from './control-panel-action/sg-control-panel-action.directive'
+
+
+export const splineGraphDirectives: any[] = [
+    SgControlPanelActionDirective,
+]
+
+export * from './public-api'

@@ -48,6 +48,17 @@
                             [focusNode$]="focusNode$"
                             [sgHighlightedRelations]="highlightedRelationsNodesIds$ | async"
                             [selectedNodeId]="state.selectedNodeId">
+
+                        <ng-template sgControlPanelAction>
+
+                            <spline-divider class="py-2"></spline-divider>
+
+                            <sg-highlighted-relations-actions (showAll$)="onShowAllRelationsBtnClicked()"
+                                                              (hideAll$)="onHideAllRelationsBtnClicked()">
+                            </sg-highlighted-relations-actions>
+
+                        </ng-template>
+
                     </spline-graph>
                     <!-- ./GRAPH -->
                 </div>

@@ -14,31 +14,20 @@
   ~ limitations under the License.
   -->
 
-<div class="sg-zoom-control">
-
-
-
-    <!-- ZOOM IN -->
+<div class="d-flex flex-column">
+    <!-- CENTER GRAPH -->
     <button mat-button mat-icon-button
-            [matTooltip]="'SG.RESET_LAYOUT' | translate"
-            (click)="onZoomInBtnClicked()">
-        <mat-icon>zoom_in</mat-icon>
+            [matTooltip]="'EVENTS.SG__ACTION__SHOW_ALL_RELATIONS' | translate"
+            (click)="onShowAllRelationsBtnClicked()">
+        <mat-icon>visibility</mat-icon>
     </button>
-    <!-- ./ZOOM IN -->
+    <!-- ./CENTER GRAPH -->
 
-    <!-- ZOOM VALUE -->
-    <div class="sg-zoom-control__value">
-        {{ (zoomLevel * 100) | number: '1.0-0' }}%
-    </div>
-    <!-- ./ZOOM VALUE -->
-
-    <!-- ZOOM OUT -->
+    <!-- CENTER GRAPH -->
     <button mat-button mat-icon-button
-            [matTooltip]="'SG.ZOOM_OUT' | translate"
-            (click)="onZoomOutBtnClicked()">
-        <mat-icon>zoom_out</mat-icon>
+            [matTooltip]="'EVENTS.SG__ACTION__HIDE_ALL_RELATIONS' | translate"
+            (click)="onHideAllRelationsBtnClicked()">
+        <mat-icon>visibility_off</mat-icon>
     </button>
-    <!-- ./ZOOM OUT -->
-
+    <!-- ./CENTER GRAPH -->
 </div>
-

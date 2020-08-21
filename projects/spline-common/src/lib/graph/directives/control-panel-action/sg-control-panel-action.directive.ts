@@ -14,7 +14,13 @@
  * limitations under the License.
  */
 
-export * from './components/public-api'
-export * from './directives/public-api'
-export * from './models/public-api'
-export * from './spline-graph.module'
+import { Directive, TemplateRef } from '@angular/core'
+
+
+@Directive({
+    selector: '[sgControlPanelAction]'
+})
+export class SgControlPanelActionDirective {
+    constructor(public template: TemplateRef<any>) {
+    }
+}

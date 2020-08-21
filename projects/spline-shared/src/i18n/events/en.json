@@ -49,7 +49,9 @@
     "OPERATION__AGGREGATE__GROUPING_SECTION_TITLE": "Grouping",
     "OPERATION__SORT__MAIN_SECTION_TITLE": "Sort On",
     "ATTR_SEARCH__PLACEHOLDER": "Search for an attribute ...",
-    "EVENT_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS": "Highlight relations",
-    "EVENT_NODE_CONTROL__ACTION__FOCUS": "Focus on Graph"
+    "EVENT_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS": "Highlight Relations",
+    "EVENT_NODE_CONTROL__ACTION__FOCUS": "Focus on Graph",
+    "SG__ACTION__SHOW_ALL_RELATIONS": "Show All Relations",
+    "SG__ACTION__HIDE_ALL_RELATIONS": "Hide All Relations"
   }
 }

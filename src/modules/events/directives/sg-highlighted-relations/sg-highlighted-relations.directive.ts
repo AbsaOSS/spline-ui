@@ -26,7 +26,7 @@ import { getLinkDomSelector, getNodeDomSelector, SgData, SplineGraphComponent } 
 export class SgHighlightedRelationsDirective implements AfterViewInit, OnChanges {
 
     @Input() graphData: SgData
-    @Input() sgHighlightedRelations: string[] = [] // node ids
+    @Input() sgHighlightedRelations: string[] | null = null // node ids
 
     constructor(
         @Host() @Inject(forwardRef(() => SplineGraphComponent)) private splineGraph: SplineGraphComponent,
@@ -43,7 +43,7 @@ export class SgHighlightedRelationsDirective implements AfterViewInit, OnChanges
         this.applyNodeStyles(this.sgHighlightedRelations, this.splineGraph.ngxGraphComponent)
     }
 
-    private applyNodeStyles(highlightedNodes: string[], ngxGraphComponent: GraphComponent): void {
+    private applyNodeStyles(highlightedNodes: string[] | null, ngxGraphComponent: GraphComponent): void {
 
         const highlightedNodesSet = new Set<string>(highlightedNodes)
 
@@ -79,7 +79,7 @@ export class SgHighlightedRelationsDirective implements AfterViewInit, OnChanges
                 applyStylesToDomElm(
                     getNodeDomSelector(item.id),
                     ngxGraphComponent.chart.nativeElement,
-                    highlightedNodesSet.size > 0
+                    highlightedNodes
                         ? highlightedNodesSet.has(item.id)
                         : null
                 )
@@ -90,7 +90,7 @@ export class SgHighlightedRelationsDirective implements AfterViewInit, OnChanges
                 applyStylesToDomElm(
                     getLinkDomSelector(item.id),
                     ngxGraphComponent.chart.nativeElement,
-                    highlightedNodesSet.size > 0
+                    highlightedNodes
                         ? highlightedNodesSet.has(item.source) && highlightedNodesSet.has(item.target)
                         : null,
                 ),

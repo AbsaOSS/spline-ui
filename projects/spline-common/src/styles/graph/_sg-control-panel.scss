@@ -21,6 +21,7 @@
 .sg-control-panel {
     align-items: center;
     bottom: 0;
+    color: $color-grey-dark;
     display: flex;
     height: 100%;
     justify-content: center;
@@ -28,7 +29,8 @@
     right: 16px;
     top: 0;
 
-    &__inner {
-
+    button {
+        color: $color-grey-dark;
     }
+
 }

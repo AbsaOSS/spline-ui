@@ -27,12 +27,14 @@ import { SplineDividerModule, SplineIconModule, SplineLongTextModule } from '../
 import { SplineTranslateModule } from '../translate'
 
 import * as fromComponents from './components'
+import * as fromDirectives from './directives'
 import * as fromServices from './services'
 
 
 @NgModule({
     declarations: [
-        ...fromComponents.splineGraphComponents
+        ...fromComponents.splineGraphComponents,
+        ...fromDirectives.splineGraphDirectives
     ],
     imports: [
         CommonModule,
@@ -48,7 +50,8 @@ import * as fromServices from './services'
         SplineDividerModule,
     ],
     exports: [
-        ...fromComponents.splineGraphComponents
+        ...fromComponents.splineGraphComponents,
+        ...fromDirectives.splineGraphDirectives,
     ],
     providers: [
         ...fromServices.splineGraphServices

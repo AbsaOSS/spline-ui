@@ -62,7 +62,13 @@
 
     </ngx-graph>
 
-    <sg-control-panel></sg-control-panel>
+    <sg-control-panel>
+        <ng-container *ngFor="let actionTmpl of controlPanelActions">
+            <ng-container *ngTemplateOutlet="actionTmpl.template"></ng-container>
+        </ng-container>
+    </sg-control-panel>
+
+
 
     <ng-content></ng-content>
 </div>

@@ -53,6 +53,7 @@ $label-color: $color-black;
 
     &__actions {
         align-items: center;
+        color: $color-grey-dark;
         display: flex;
         padding-right: 0.5rem;
     }

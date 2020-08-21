@@ -45,7 +45,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
 
     readonly graphData$: Observable<SgData>
     readonly focusNode$ = new Subject<string>()
-    readonly highlightedRelationsNodesIds$ = new BehaviorSubject<string[]>([])
+    readonly highlightedRelationsNodesIds$ = new BehaviorSubject<string[] | null>(null)
 
     eventId: string
 
@@ -82,7 +82,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         this.store.selectedAttribute$
             .pipe(
                 takeUntil(this.destroyed$),
-                filter(attribute => !!attribute && this.highlightedRelationsNodesIds$.getValue().length > 0),
+                filter(attribute => !!attribute && this.highlightedRelationsNodesIds$.getValue()?.length > 0),
             )
             .subscribe(
                 () => this.resetNodeHighlightRelations(),
@@ -95,7 +95,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         this.highlightedRelationsNodesIds$
             .pipe(
                 takeUntil(this.destroyed$),
-                filter(highlightedRelationsNodesIds => highlightedRelationsNodesIds.length > 0),
+                filter(highlightedRelationsNodesIds => highlightedRelationsNodesIds?.length !== undefined),
                 withLatestFrom(this.store.selectedAttribute$),
                 filter(([highlightedRelationsNodesIds, selectedAttribute]) => !!selectedAttribute),
             )
@@ -137,13 +137,21 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         this.focusNode$.next(nodeId)
     }
 
-    private resetNodeHighlightRelations(): void {
+    onShowAllRelationsBtnClicked(): void {
+        this.resetNodeHighlightRelations()
+    }
+
+    onHideAllRelationsBtnClicked(): void {
         this.highlightedRelationsNodesIds$.next([])
+    }
+
+    private resetNodeHighlightRelations(): void {
+        this.highlightedRelationsNodesIds$.next(null)
     }
 
     private onNodeHighlightRelations(nodeId: string): void {
         const highlightedRelationsNodesIds = SgRelations.toggleSelection(
-            this.highlightedRelationsNodesIds$.getValue(),
+            this.highlightedRelationsNodesIds$.getValue() ?? [],
             nodeId,
             this.store.state.links,
         )
@@ -226,5 +234,4 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
             replaceUrl,
         )
     }
-
 }
