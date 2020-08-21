@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,20 +14,22 @@
  * limitations under the License.
  */
 
-@import '../vars';
-@import '../mixins';
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
+import { MatDividerModule } from '@angular/material/divider'
+
+import { SplineDividerComponent } from './spline-divider.component'
 
 
-.sg-zoom-control {
-
-    display: flex;
-    flex-direction: column;
-
-    &__value {
-        font-size: 13px;
-    }
-
-    &__value-btn {
-        font-size: 13px;
-    }
+@NgModule({
+    declarations: [
+        SplineDividerComponent,
+    ],
+    imports: [
+        CommonModule,
+        MatDividerModule,
+    ],
+    exports: [SplineDividerComponent],
+})
+export class SplineDividerModule {
 }

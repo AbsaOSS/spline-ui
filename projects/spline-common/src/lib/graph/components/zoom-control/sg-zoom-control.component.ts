@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,20 +14,26 @@
  * limitations under the License.
  */
 
-@import '../vars';
-@import '../mixins';
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 
 
-.sg-zoom-control {
+@Component({
+    selector: 'sg-zoom-control',
+    templateUrl: './sg-zoom-control.component.html',
+})
+export class SgZoomControlComponent {
 
-    display: flex;
-    flex-direction: column;
+    @Input() zoomLevel = 1
 
-    &__value {
-        font-size: 13px;
+    @Output() zoomIn$ = new EventEmitter<void>()
+    @Output() zoomOut$ = new EventEmitter<void>()
+
+    onZoomInBtnClicked(): void {
+        this.zoomIn$.next()
     }
 
-    &__value-btn {
-        font-size: 13px;
+    onZoomOutBtnClicked(): void {
+        this.zoomOut$.next()
     }
+
 }

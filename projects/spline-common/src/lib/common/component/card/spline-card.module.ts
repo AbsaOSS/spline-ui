@@ -23,6 +23,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 
 import { SplineTranslateModule } from '../../../translate'
+import { SplineDividerModule } from '../divider'
 import { SplineIconModule } from '../icon'
 import { SplineLabelModule } from '../label'
 
@@ -44,6 +45,7 @@ import { SplineCardContentComponent, SplineCardHeaderComponent } from './compone
         MatButtonModule,
         SplineIconModule,
         MatTooltipModule,
+        SplineDividerModule,
     ],
     exports: [
         SplineCardHeaderComponent,

@@ -18,45 +18,23 @@
     <mat-card class="bg-white-90 px-1 py-2">
         <div class="text-center">
 
+            <!-- CENTER GRAPH -->
             <button mat-button mat-icon-button
-                    [matTooltip]="'Center Graph'"
+                    [matTooltip]="'SG.RESET_LAYOUT' | translate"
                     (click)="onCenterGraphBtnClicked()">
                 <mat-icon>center_focus_weak</mat-icon>
             </button>
+            <!-- ./CENTER GRAPH -->
 
-            <div class="py-2">
-                <mat-divider></mat-divider>
-            </div>
+            <spline-divider class="py-2"></spline-divider>
 
-            <div class="sg-zoom-control">
-                <div class="sg-zoom-control__value">
-                    <button mat-button mat-icon-button
-                            class="sg-zoom-control__value-btn"
-                            [matTooltip]="'Reset Zoom'"
-                            (click)="onZoomValueBtnClicked()">
-                        {{ (currentZoomLevel * 100) | number: '1.0-0' }}%
-                    </button>
-                </div>
-                <button mat-button mat-icon-button
-                        [matTooltip]="'Zoom In'"
-                        (click)="onZoomInBtnClicked()">
-                    <mat-icon>zoom_in</mat-icon>
-                </button>
-
-                <button mat-button mat-icon-button
-                        [matTooltip]="'Zoom Out'"
-                        (click)="onZoomOutBtnClicked()">
-                    <mat-icon>zoom_out</mat-icon>
-                </button>
-            </div>
-
-            <div class="py-2">
-                <mat-divider></mat-divider>
-            </div>
-
-            <button mat-button mat-icon-button [matTooltip]="'Link Curve Type'">
-                <spline-icon icon="vector-line"></spline-icon>
-            </button>
+            <!-- ZOOM CONTROL -->
+            <sg-zoom-control
+                    [zoomLevel]="currentZoomLevel"
+                    (zoomIn$)="onZoomIn()"
+                    (zoomOut$)="onZoomOut()">
+            </sg-zoom-control>
+            <!-- ./ZOOM CONTROL -->
         </div>
     </mat-card>
 </div>

@@ -18,6 +18,7 @@ import { SgControlPanelComponent } from './control-panel/sg-control-panel.compon
 import { SgNodeDefaultComponent, SplineGraphNodeControlComponent } from './graph-node-control'
 import { SgNodeViewDefaultComponent } from './graph-node-view'
 import { SplineGraphComponent } from './graph/spline-graph.component'
+import { SgZoomControlComponent } from './zoom-control/sg-zoom-control.component'
 
 
 export const splineGraphComponents: any[] = [
@@ -26,6 +27,7 @@ export const splineGraphComponents: any[] = [
     SgNodeDefaultComponent,
     SgNodeViewDefaultComponent,
     SgControlPanelComponent,
+    SgZoomControlComponent,
 ]
 
 export * from './public-api'

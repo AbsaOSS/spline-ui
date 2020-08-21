@@ -14,20 +14,6 @@
  * limitations under the License.
  */
 
-@import '../vars';
-@import '../mixins';
-
-
-.sg-zoom-control {
-
-    display: flex;
-    flex-direction: column;
-
-    &__value {
-        font-size: 13px;
-    }
-
-    &__value-btn {
-        font-size: 13px;
-    }
+spline-divider {
+    display: block;
 }

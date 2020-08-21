@@ -84,7 +84,7 @@ import * as fromPages from './pages'
         MatIconModule,
         SplineSidePanelModule,
         SplineLabelModule,
-        SplineTranslateModule.forChild({ moduleNames: ['events'] }),
+        SplineTranslateModule.forChild({ moduleNames: ['events', 'graph'] }),
         SplineDataRecordModule,
         SplineAttributesTreeModule,
         SplineDataViewModule,

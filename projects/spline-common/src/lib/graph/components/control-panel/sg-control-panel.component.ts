@@ -15,7 +15,6 @@
  */
 
 import { AfterViewInit, Component, forwardRef, Host, Inject } from '@angular/core'
-import { Subject } from 'rxjs'
 
 import { SplineGraphComponent } from '../graph/spline-graph.component'
 
@@ -26,7 +25,6 @@ import { SplineGraphComponent } from '../graph/spline-graph.component'
 })
 export class SgControlPanelComponent implements AfterViewInit {
 
-    readonly graphActionCenter$ = new Subject<void>()
     readonly zoomLevelStep = 0.1
 
     currentZoomLevel = 1
@@ -43,29 +41,23 @@ export class SgControlPanelComponent implements AfterViewInit {
             .subscribe(
                 zoomLevel => {
                     this.currentZoomLevel = zoomLevel
-                    console.log(zoomLevel)
                 },
             )
-
-        console.log(this.splineGraph.ngxGraphComponent.zoomLevel)
     }
 
     onCenterGraphBtnClicked(): void {
+        this.splineGraph.ngxGraphComponent.zoomToFit()
         this.splineGraph.ngxGraphComponent.center()
     }
 
-    onZoomInBtnClicked(): void {
+    onZoomIn(): void {
         const zoomFactor = 1 + this.zoomLevelStep
         this.splineGraph.ngxGraphComponent.zoom(zoomFactor)
     }
 
-    onZoomOutBtnClicked(): void {
+    onZoomOut(): void {
         const zoomFactor = 1 - this.zoomLevelStep
         this.splineGraph.ngxGraphComponent.zoom(zoomFactor)
-    }
-
-    onZoomValueBtnClicked(): void {
-        this.splineGraph.ngxGraphComponent.zoomToFit()
     }
 
 }

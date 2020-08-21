@@ -17,6 +17,7 @@
 export * from './card/public-api'
 export * from './content-error/public-api'
 export * from './data-record/public-api'
+export * from './divider/public-api'
 export * from './icon/public-api'
 export * from './label/public-api'
 export * from './loader/public-api'
