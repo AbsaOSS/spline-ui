@@ -1,4 +1,4 @@
-/*
+/*!
  * Copyright 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,18 +14,21 @@
  * limitations under the License.
  */
 
-export const SPLINE_ICONS_COLLECTION: Set<string> = new Set<string>([
-    'database',
-    'cog-transfer',
-    'arrow-down-circle',
-    'source-branch',
-    'head-cog',
-    'code-json',
-    'shuffle-variant',
-    'arrow-collapse-all',
-    'group',
-    'code-brackets',
-    'target',
-    'eye-outline',
-    'vector-line',
-])
+@import 'vars';
+@import 'mixins';
+
+
+.sg-control-panel {
+    align-items: center;
+    bottom: 0;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    position: absolute;
+    right: 16px;
+    top: 0;
+
+    &__inner {
+
+    }
+}

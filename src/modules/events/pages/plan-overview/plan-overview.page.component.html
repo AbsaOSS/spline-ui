@@ -86,6 +86,44 @@
                             </event-attribute-lineage-info>
                         </div>
 
+                        <div class="sg-control-panel">
+                            <mat-card class="bg-white-90 px-1 py-2">
+                                <div class="text-center">
+
+                                    <button mat-button mat-icon-button [matTooltip]="'Zoom In'">
+                                        <mat-icon>center_focus_weak</mat-icon>
+                                    </button>
+
+                                    <div class="py-2">
+                                        <mat-divider></mat-divider>
+                                    </div>
+
+                                    <div class="sg-zoom-control">
+                                        <div class="sg-zoom-control__value">
+                                            <button mat-button mat-icon-button class="sg-zoom-control__value-btn">
+                                                100%
+                                            </button>
+                                        </div>
+                                        <button mat-button mat-icon-button [matTooltip]="'Zoom In'">
+                                            <mat-icon>zoom_in</mat-icon>
+                                        </button>
+
+                                        <button mat-button mat-icon-button [matTooltip]="'Zoom Out'">
+                                            <mat-icon>zoom_out</mat-icon>
+                                        </button>
+                                    </div>
+
+                                    <div class="py-2">
+                                        <mat-divider></mat-divider>
+                                    </div>
+
+                                    <button mat-button mat-icon-button [matTooltip]="'Link Curve Type'">
+                                        <spline-icon icon="vector-line"></spline-icon>
+                                    </button>
+                                </div>
+                            </mat-card>
+                        </div>
+
                     </spline-graph>
                     <!-- ./GRAPH -->
 

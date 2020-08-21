@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
-@import './md-drppicker';
-@import './sidebar-menu';
-@import './sg-attributes-lineage.component';
-@import './sg-highlighted-relations.component';
 @import './layout';
+@import './md-drppicker';
+@import './sg-attributes-lineage.component';
+@import './sg-control-panel';
+@import './sg-highlighted-relations.component';
+@import './sg-zoom-control';
+@import './sidebar-menu';
 @import './table-search';
