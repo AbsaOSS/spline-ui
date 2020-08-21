@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import { SgControlPanelComponent } from './control-panel/sg-control-panel.component'
 import { SgNodeDefaultComponent, SplineGraphNodeControlComponent } from './graph-node-control'
 import { SgNodeViewDefaultComponent } from './graph-node-view'
 import { SplineGraphComponent } from './graph/spline-graph.component'
@@ -24,6 +25,7 @@ export const splineGraphComponents: any[] = [
     SplineGraphNodeControlComponent,
     SgNodeDefaultComponent,
     SgNodeViewDefaultComponent,
+    SgControlPanelComponent,
 ]
 
 export * from './public-api'
