@@ -82,7 +82,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         this.store.selectedAttribute$
             .pipe(
                 takeUntil(this.destroyed$),
-                filter(attribute => !!attribute && this.highlightedRelationsNodesIds$.getValue()?.length > 0),
+                filter(attribute => !!attribute && this.highlightedRelationsNodesIds$.getValue()?.length !== undefined),
             )
             .subscribe(
                 () => this.resetNodeHighlightRelations(),
