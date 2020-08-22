@@ -49,15 +49,28 @@
                             [sgHighlightedRelations]="highlightedRelationsNodesIds$ | async"
                             [selectedNodeId]="state.selectedNodeId">
 
-                        <ng-template sgControlPanelAction>
+                        <!-- TOOLBAR -->
+                        <sg-toolbar *ngIf="state.graphHasMoreDepth">
+                            <!-- DEPTH CONTROL -->
+                            <sg-depth-control
+                                    [loading]="state.loadingProcessing.processing"
+                                    [depth]="state?.lineageDepth?.depthRequested"
+                                    [maxDepth]="state?.lineageDepth?.depthComputed"
+                                    (depthChanged$)="onChangeGraphDepth($event.depth)">
+                            </sg-depth-control>
+                            <!-- ./DEPTH CONTROL -->
+                        </sg-toolbar>
+                        <!-- ./TOOLBAR -->
 
-                            <spline-divider class="py-2"></spline-divider>
+                        <!-- CONTROL PANEL :: ACTIONS -->
+                        <ng-template sgControlPanelSection>
 
                             <sg-highlighted-relations-actions (showAll$)="onShowAllRelationsBtnClicked()"
                                                               (hideAll$)="onHideAllRelationsBtnClicked()">
                             </sg-highlighted-relations-actions>
 
                         </ng-template>
+                        <!-- ./CONTROL PANEL :: ACTIONS -->
 
                     </spline-graph>
                     <!-- ./GRAPH -->

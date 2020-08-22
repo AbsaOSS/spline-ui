@@ -28,6 +28,16 @@
 
             <spline-divider class="py-2"></spline-divider>
 
+            <!-- CENTER GRAPH -->
+            <button mat-button mat-icon-button
+                    [matTooltip]="'SG.CHANGE_GRAPH_DIRECTION' | translate"
+                    (click)="onChangeGraphDirectionBtnClicked()">
+                <mat-icon>screen_rotation</mat-icon>
+            </button>
+            <!-- ./CENTER GRAPH -->
+
+            <spline-divider class="py-2"></spline-divider>
+
             <!-- ZOOM CONTROL -->
             <sg-zoom-control
                     [zoomLevel]="currentZoomLevel"

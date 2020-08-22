@@ -62,13 +62,18 @@
 
     </ngx-graph>
 
+    <!-- CONTROL PANEL -->
     <sg-control-panel>
-        <ng-container *ngFor="let actionTmpl of controlPanelActions">
+
+        <!-- CP :: EXTRA SECTIONS -->
+        <ng-container *ngFor="let actionTmpl of controlPanelExtraSections">
+            <spline-divider class="py-2"></spline-divider>
             <ng-container *ngTemplateOutlet="actionTmpl.template"></ng-container>
         </ng-container>
+        <!-- ./CP :: EXTRA SECTIONS -->
+
     </sg-control-panel>
-
-
+    <!-- ./CONTROL PANEL -->
 
     <ng-content></ng-content>
 </div>

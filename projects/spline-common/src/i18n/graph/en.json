@@ -2,6 +2,7 @@
   "SG": {
     "ZOOM_IN": "Zoom In",
     "ZOOM_OUT": "Zoom Out",
-    "RESET_LAYOUT": "Reset Layout"
+    "RESET_LAYOUT": "Reset Layout",
+    "CHANGE_GRAPH_DIRECTION": "Change Graph Direction"
   }
 }

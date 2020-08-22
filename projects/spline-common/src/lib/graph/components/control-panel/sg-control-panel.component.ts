@@ -16,6 +16,7 @@
 
 import { AfterViewInit, Component, forwardRef, Host, Inject } from '@angular/core'
 
+import { SgLayoutSettings } from '../../models'
 import { SplineGraphComponent } from '../graph/spline-graph.component'
 
 
@@ -60,4 +61,14 @@ export class SgControlPanelComponent implements AfterViewInit {
         this.splineGraph.ngxGraphComponent.zoom(zoomFactor)
     }
 
+    onChangeGraphDirectionBtnClicked(): void {
+        const orientation = this.splineGraph.layoutSettings.orientation === 'LR'
+            ? 'TB'
+            : 'LR'
+
+        this.splineGraph.layoutSettings = {
+            ...this.splineGraph.layoutSettings,
+            orientation,
+        } as SgLayoutSettings
+    }
 }

@@ -16,7 +16,7 @@
 
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { BehaviorSubject, Observable, Subject } from 'rxjs'
+import { BehaviorSubject, merge, Observable, Subject } from 'rxjs'
 import { map, shareReplay, takeUntil } from 'rxjs/operators'
 import { ExecutionEventFacade, ExecutionEventLineageNode } from 'spline-api'
 import { SgData, SgNodeSchema, SplineDataViewSchema } from 'spline-common'
@@ -58,10 +58,13 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
                 readonly store: EventOverviewStoreFacade) {
         super()
 
-        this.graphData$ = this.store.loadingProcessingEvents.success$
+        this.graphData$ = merge(
+            this.store.loadingProcessingEvents.success$,
+            this.store.graphLoadingProcessingEvents.success$
+        )
             .pipe(
                 takeUntil(this.destroyed$),
-                map(state => {
+                map((state: EventOverviewStore.State) => {
                     // select all nodes list from the store
                     const nodesList = EventOverviewStore.selectAllNodes(state)
                     return {
@@ -123,6 +126,10 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
 
     onHideAllRelationsBtnClicked(): void {
         this.highlightedRelationsNodesIds$.next([])
+    }
+
+    onChangeGraphDepth(depth): void {
+        this.store.setGraphDepth(depth)
     }
 
     private resetNodeHighlightRelations(): void {

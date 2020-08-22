@@ -14,13 +14,7 @@
  * limitations under the License.
  */
 
-import { Directive, TemplateRef } from '@angular/core'
 
+export namespace SgDepthControl {
 
-@Directive({
-    selector: '[sgControlPanelAction]'
-})
-export class SgControlPanelActionDirective {
-    constructor(public template: TemplateRef<any>) {
-    }
 }

@@ -28,4 +28,5 @@ export const SPLINE_ICONS_COLLECTION: Set<string> = new Set<string>([
     'target',
     'eye-outline',
     'vector-line',
+    'graph-outline',
 ])

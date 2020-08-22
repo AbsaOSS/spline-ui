@@ -14,8 +14,6 @@
   ~ limitations under the License.
   -->
 
-<div class="spline-loader spline-loader-size--{{size ? size : defaultSize}} spline-loader--mode-{{mode ? mode : defaultMode}}">
-    <mat-spinner class="d-inline-block"
-                 [diameter]="SPINNER_DIAMETER_MAP[size ? size : defaultSize]">
-    </mat-spinner>
+<div class="sg-toolbar sg-toolbar--position-{{position ? position : defaultPosition}}">
+    <ng-content></ng-content>
 </div>

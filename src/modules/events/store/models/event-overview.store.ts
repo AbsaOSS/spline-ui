@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { ExecutionEventLineageNode, ExecutionEventLineageOverview, LineageNodeLink } from 'spline-api'
+import { ExecutionEventLineageNode, ExecutionEventLineageOverview, ExecutionEventLineageOverviewDepth, LineageNodeLink } from 'spline-api'
 import { ProcessingStore, SplineEntityStore } from 'spline-utils'
 
 import { EventInfo } from '../../models'
@@ -28,8 +28,18 @@ export namespace EventOverviewStore {
         executionEventId: string | null
         eventInfo: EventInfo | null
         loadingProcessing: ProcessingStore.EventProcessingState
+        graphLoadingProcessing: ProcessingStore.EventProcessingState
         selectedNodeId: string | null
+        lineageDepth: ExecutionEventLineageOverviewDepth
+        graphHasMoreDepth: boolean
     }
+
+    export const GRAPH_DEFAULT_DEPTH = 1
+
+    const DEFAULT_LINEAGE_DEPTH = Object.freeze<ExecutionEventLineageOverviewDepth>({
+        depthComputed: GRAPH_DEFAULT_DEPTH,
+        depthRequested: GRAPH_DEFAULT_DEPTH,
+    })
 
     export function getDefaultState(): State {
         return {
@@ -38,7 +48,10 @@ export namespace EventOverviewStore {
             executionEventId: null,
             eventInfo: null,
             loadingProcessing: ProcessingStore.getDefaultProcessingState(),
+            graphLoadingProcessing: ProcessingStore.getDefaultProcessingState(),
             selectedNodeId: null,
+            lineageDepth: {...DEFAULT_LINEAGE_DEPTH},
+            graphHasMoreDepth: calculateHasMoreDepth(DEFAULT_LINEAGE_DEPTH)
         }
     }
 
@@ -65,6 +78,8 @@ export namespace EventOverviewStore {
                 applicationId: lineageOverview.executionEventInfo.applicationId,
                 executedAt: new Date(lineageOverview.executionEventInfo.timestamp),
             },
+            lineageDepth: lineageOverview.executionEventInfo.lineageDepth,
+            graphHasMoreDepth: calculateHasMoreDepth(lineageOverview.executionEventInfo.lineageDepth)
         }
     }
 
@@ -74,6 +89,10 @@ export namespace EventOverviewStore {
 
     export function selectNode(state: State, nodeId: string): ExecutionEventLineageNode | undefined {
         return SplineEntityStore.selectOne(nodeId, state.nodes)
+    }
+
+    function calculateHasMoreDepth(lineageDepth: ExecutionEventLineageOverviewDepth): boolean {
+        return lineageDepth.depthRequested < lineageDepth.depthComputed
     }
 
 }

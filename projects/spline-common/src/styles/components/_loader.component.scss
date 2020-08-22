@@ -15,20 +15,41 @@
  */
 
 .spline-loader {
-    padding: 1rem 0;
+
     text-align: center;
 
-    &--floating {
-        left: 0;
-        padding-top: 5rem;
-        position: absolute;
-        right: 0;
-        width: 100%;
-        z-index: 100;
-    }
+    &--mode {
+        &-block {
+            padding: 1rem 0;
+        }
 
-    &--inline {
-        display: flex;
-        padding: 0;
+        &-floating {
+            left: 0;
+            padding-top: 5rem;
+            position: absolute;
+            right: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        &-cover {
+            align-items: center;
+            bottom: 0;
+            display: flex;
+            height: 100%;
+            justify-content: center;
+            left: 0;
+            padding: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        &-inline {
+            display: flex;
+            padding: 0;
+        }
     }
 }

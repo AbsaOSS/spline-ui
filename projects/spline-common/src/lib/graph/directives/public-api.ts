@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export * from './control-panel-action/sg-control-panel-action.directive'
+export * from './control-panel-action/sg-control-panel-section.directive'

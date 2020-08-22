@@ -26,10 +26,11 @@ import { SplineLoader } from './spline-loader.models'
 export class SplineLoaderComponent {
 
     readonly defaultSize = SplineLoader.Size.lg
+    readonly defaultMode = SplineLoader.Mode.floating
+
     readonly SPINNER_DIAMETER_MAP = SplineLoader.SPINNER_DIAMETER_MAP
 
     @Input() size: SplineLoader.Size = this.defaultSize
+    @Input() mode: SplineLoader.Mode = this.defaultMode
 
-    @Input() floating = true
-    @Input() inline = false
 }

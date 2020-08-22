@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,31 +14,13 @@
  * limitations under the License.
  */
 
-@import '../mixins';
-@import '../vars';
+import { Directive, TemplateRef } from '@angular/core'
 
-.spline-graph__container {
-    bottom: 0;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-}
 
-.spline-graph__node-container {
-    background: none;
-    border-radius: 8px;
-    overflow: visible;
-    position: relative;
-
-    &.spline-graph__node--selected {
-        background: $color-orange;
-
-        .sg-node-view {
-            left: 5px;
-            top: 5px;
-        }
+@Directive({
+    selector: '[sgControlPanelSection]'
+})
+export class SgControlPanelSectionDirective {
+    constructor(public template: TemplateRef<any>) {
     }
 }
-

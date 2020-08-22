@@ -78,23 +78,25 @@
                             [sgAttributeLineage]="state.attributeLineage"
                             [selectedNodeId]="state.selectedNodeId">
 
-                        <div class="graph-toolbar" *ngIf="store.selectedAttribute$ | async as selectedAttribute">
+                        <!-- TOOLBAR -->
+                        <sg-toolbar *ngIf="store.selectedAttribute$ | async as selectedAttribute">
                             <event-attribute-lineage-info (close$)="onSelectedAttributeChanged(null)"
                                                           [loading]="state.attributeLineageLoadingProcessing.processing"
                                                           [attributeLineage]="state.attributeLineage"
                                                           [attribute]="selectedAttribute">
                             </event-attribute-lineage-info>
-                        </div>
+                        </sg-toolbar>
+                        <!-- ./TOOLBAR -->
 
-                        <ng-template sgControlPanelAction>
-
-                            <spline-divider class="py-2"></spline-divider>
+                        <!-- CONTROL PANEL :: ACTIONS -->
+                        <ng-template sgControlPanelSection>
 
                             <sg-highlighted-relations-actions (showAll$)="onShowAllRelationsBtnClicked()"
                                                               (hideAll$)="onHideAllRelationsBtnClicked()">
                             </sg-highlighted-relations-actions>
 
                         </ng-template>
+                        <!-- ./CONTROL PANEL :: ACTIONS -->
 
 
                     </spline-graph>

@@ -19,7 +19,7 @@ import { GraphComponent } from '@swimlane/ngx-graph'
 import * as fromD3Shape from 'd3-shape'
 import { Observable } from 'rxjs'
 
-import { SgControlPanelActionDirective } from '../../directives'
+import { SgControlPanelSectionDirective } from '../../directives'
 import {
     SgData,
     SgLayoutSettings,
@@ -39,7 +39,7 @@ import {
 export class SplineGraphComponent implements OnChanges {
 
     @ViewChild(GraphComponent) ngxGraphComponent: GraphComponent
-    @ContentChildren(SgControlPanelActionDirective) controlPanelActions: QueryList<SgControlPanelActionDirective>
+    @ContentChildren(SgControlPanelSectionDirective) controlPanelExtraSections: QueryList<SgControlPanelSectionDirective>
 
 
     @Input() graphData: SgData

@@ -27,8 +27,18 @@ import { SPLINE_ICONS_COLLECTION } from '../../models/spline-icon.models'
 export class SplineIconComponent implements OnChanges {
 
     @Input() icon: string
+    @Input() set size(value: string) {
+        this.styles = {
+            width: value,
+            fontSize: value,
+            height: value,
+            lineHeight: value,
+        }
+    }
 
     isCustomIcon = false
+
+    styles: Partial<CSSStyleDeclaration>
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.icon && changes.icon.currentValue) {

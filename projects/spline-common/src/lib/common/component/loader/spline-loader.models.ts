@@ -32,4 +32,13 @@ export namespace SplineLoader {
         sm: 36,
         xs: 24,
     })
+
+    export type Mode = 'block' | 'inline' | 'floating' | 'cover'
+
+    export const Mode = {
+        block: 'block' as Mode,
+        inline: 'inline' as Mode,
+        floating: 'floating' as Mode,
+        cover: 'cover' as Mode,
+    }
 }

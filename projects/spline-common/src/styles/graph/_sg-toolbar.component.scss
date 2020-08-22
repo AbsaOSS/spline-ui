@@ -14,31 +14,30 @@
  * limitations under the License.
  */
 
-@import '../mixins';
-@import '../vars';
 
-.spline-graph__container {
-    bottom: 0;
-    height: 100%;
-    left: 0;
+.sg-toolbar {
+    min-width: 350px;
     position: absolute;
-    top: 0;
-    width: 100%;
-}
 
-.spline-graph__node-container {
-    background: none;
-    border-radius: 8px;
-    overflow: visible;
-    position: relative;
+    &--position {
+        &-top-left {
+            left: 1rem;
+            top: 1rem;
+        }
 
-    &.spline-graph__node--selected {
-        background: $color-orange;
+        &-top-right {
+            right: 1rem;
+            top: 1rem;
+        }
 
-        .sg-node-view {
-            left: 5px;
-            top: 5px;
+        &-bottom-left {
+            bottom: 1rem;
+            left: 1rem;
+        }
+
+        &-bottom-right {
+            bottom: 1rem;
+            right: 1rem;
         }
     }
 }
-

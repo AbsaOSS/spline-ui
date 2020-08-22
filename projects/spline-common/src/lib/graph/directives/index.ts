@@ -15,11 +15,11 @@
  */
 
 
-import { SgControlPanelActionDirective } from './control-panel-action/sg-control-panel-action.directive'
+import { SgControlPanelSectionDirective } from './control-panel-action/sg-control-panel-section.directive'
 
 
 export const splineGraphDirectives: any[] = [
-    SgControlPanelActionDirective,
+    SgControlPanelSectionDirective,
 ]
 
 export * from './public-api'

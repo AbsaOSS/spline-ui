@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,31 +14,19 @@
  * limitations under the License.
  */
 
-@import '../mixins';
-@import '../vars';
+import { Component, Input } from '@angular/core'
 
-.spline-graph__container {
-    bottom: 0;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
+import { SgToolbar } from './sg-toolbar.models'
+
+
+@Component({
+    selector: 'sg-toolbar',
+    templateUrl: './sg-toolbar.component.html',
+})
+export class SgToolbarComponent {
+
+    readonly defaultPosition: SgToolbar.Position = SgToolbar.Position.topLeft
+
+    @Input() position: SgToolbar.Position = this.defaultPosition
+
 }
-
-.spline-graph__node-container {
-    background: none;
-    border-radius: 8px;
-    overflow: visible;
-    position: relative;
-
-    &.spline-graph__node--selected {
-        background: $color-orange;
-
-        .sg-node-view {
-            left: 5px;
-            top: 5px;
-        }
-    }
-}
-
