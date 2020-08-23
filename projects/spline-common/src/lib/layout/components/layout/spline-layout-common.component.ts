@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { AfterContentInit, Component, ContentChildren, Input, QueryList, TemplateRef } from '@angular/core'
+import { AfterContentInit, ChangeDetectorRef, Component, ContentChildren, Input, QueryList, TemplateRef } from '@angular/core'
 
 import { SplineLayoutSectionDirective } from '../../directives'
 import { SplineLayoutSection } from '../../models'
@@ -29,12 +29,14 @@ export class SplineLayoutCommonComponent implements AfterContentInit {
     @ContentChildren(SplineLayoutSectionDirective) sectionTemplatesQueryList: QueryList<SplineLayoutSectionDirective>
 
     @Input() isEmbeddedMode = false
+    @Input() isSideNavExpanded = false
 
     sectionsTemplatesCollection: Partial<{ [K in SplineLayoutSection.SectionName]: TemplateRef<any> }> = {}
 
     readonly SectionName = SplineLayoutSection.SectionName
 
-    isSideNavExpanded = false
+    constructor(private readonly changeDetectorRef: ChangeDetectorRef) {
+    }
 
     ngAfterContentInit(): void {
         // calculate templates collection
@@ -49,4 +51,8 @@ export class SplineLayoutCommonComponent implements AfterContentInit {
             )
     }
 
+    onExpandedToggleBtnClicked(): void {
+        this.isSideNavExpanded = !this.isSideNavExpanded
+        this.changeDetectorRef.detectChanges()
+    }
 }

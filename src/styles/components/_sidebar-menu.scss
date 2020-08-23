@@ -97,6 +97,6 @@ $color-schema-settings--expanded: (
     }
 }
 
-.sl-sidenav--expanded .spline-sidebar-menu {
-    @include side-nav-links-color-schema($color-schema-settings--expanded);
-}
+//.sl-sidenav--expanded .spline-sidebar-menu {
+//    @include side-nav-links-color-schema($color-schema-settings--expanded);
+//}

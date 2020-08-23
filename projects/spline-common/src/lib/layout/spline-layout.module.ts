@@ -23,6 +23,9 @@ import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { RouterModule } from '@angular/router'
 
+import { SplineCommonModule } from '../common'
+import { SplineTranslateModule } from '../translate'
+
 import * as fromComponents from './components'
 import * as fromDirectives from './directives'
 
@@ -36,6 +39,8 @@ import * as fromDirectives from './directives'
         MatTooltipModule,
         RouterModule,
         MatButtonModule,
+        SplineCommonModule,
+        SplineTranslateModule,
     ],
     declarations: [
         ...fromComponents.layoutComponents,

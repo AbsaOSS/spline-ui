@@ -40,18 +40,33 @@
                      *ngIf="!isEmbeddedMode"
                      [class.sl-sidenav--expanded]="isSideNavExpanded">
 
-            <!-- SECTION :: SIDEBAR -->
-            <ng-template *ngIf="sectionsTemplatesCollection[SectionName.sidebar]"
-                         [ngTemplateOutlet]="sectionsTemplatesCollection[SectionName.sidebar]"
-                         [ngTemplateOutletContext]="{isExpanded: isSideNavExpanded}">
-            </ng-template>
-            <!-- ./SECTION :: SIDEBAR -->
+            <div class="sl-sidenav__inner">
+                <div class="flex-grow-1">
+                    <!-- SECTION :: SIDEBAR -->
+                    <ng-template *ngIf="sectionsTemplatesCollection[SectionName.sidebar]"
+                                 [ngTemplateOutlet]="sectionsTemplatesCollection[SectionName.sidebar]"
+                                 [ngTemplateOutletContext]="{isExpanded: isSideNavExpanded}">
+                    </ng-template>
+                    <!-- ./SECTION :: SIDEBAR -->
+                </div>
+                <div class="sl-sidenav__footer">
+                    <div class="sl-sidenav__version" [hidden]="!isSideNavExpanded">
+                        Version 0.6.0-SNAPSHOT
+                    </div>
+                    <button mat-button mat-icon-button
+                            [matTooltip]="(isSideNavExpanded ? 'Collapse' : 'Expand') | translate"
+                            class="sl-sidenav__expand-btn"
+                            (click)="onExpandedToggleBtnClicked()">
+                        <spline-icon [icon]="isSideNavExpanded ? 'chevron-triple-left' : 'chevron-triple-right'"></spline-icon>
+                    </button>
+                </div>
+            </div>
 
         </mat-sidenav>
         <!-- ./SIDEBAR -->
 
         <!-- CONTENT -->
-        <mat-sidenav-content>
+        <mat-sidenav-content [class.sl-sidenav-content--expanded]="isSideNavExpanded">
 
             <div class="sl-content__wrapper">
 

@@ -24,13 +24,16 @@ $spline-layout-settings-default: (
     content-border-radius: $container-border-radius 0 0 0,
 
     sidebar-width: 64px,
-    sidebar-width--expanded: 250px,
+    sidebar-width--expanded: 200px,
     sidebar-bg-color: $color-bg-black,
     sidebar-bg-color--expanded: $color-grey-light-2,
     sidebar-right-border-color: $color-grey
 );
 
 @mixin spline-layout($settings: $spline-layout-settings-default) {
+
+    $expanded-sidebar-width: map-get($settings, sidebar-width--expanded);
+
     body {
         background-color: map-get($settings, header-bg-color);
     }
@@ -90,9 +93,40 @@ $spline-layout-settings-default: (
             width: map-get($settings, sidebar-width);
 
             &--expanded {
-                background: map-get($settings, sidebar-bg-color--expanded);
-                box-shadow: 0 0 10px $color-shadow;
-                width: map-get($settings, sidebar-width--expanded);
+                width: $expanded-sidebar-width;
+            }
+
+            &__inner {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+
+            &__expand-btn {
+
+            }
+
+            &__footer {
+                align-items: center;
+                color: $color-grey;
+                display: flex;
+                padding: 1rem 1rem 0.5rem 0.75rem;
+            }
+
+            &__version {
+                flex: 1;
+                font-size: 10px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+
+        .mat-drawer-content {
+            margin-left: map-get($settings, sidebar-width) !important;
+
+            &.sl-sidenav-content--expanded {
+                margin-left: $expanded-sidebar-width !important;
             }
         }
 
