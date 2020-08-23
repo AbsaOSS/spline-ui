@@ -34,7 +34,7 @@ export namespace EventOverviewStore {
         graphHasMoreDepth: boolean
     }
 
-    export const GRAPH_DEFAULT_DEPTH = 1
+    export const GRAPH_DEFAULT_DEPTH = 5
 
     const DEFAULT_LINEAGE_DEPTH = Object.freeze<ExecutionEventLineageOverviewDepth>({
         depthComputed: GRAPH_DEFAULT_DEPTH,

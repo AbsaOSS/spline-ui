@@ -63,7 +63,7 @@ export function toSgNativeNode(node: SgNode): SgNativeNode {
 export type SgLayoutSettings = DagreSettings
 
 export const SG_DEFAULT_LAYOUT_SETTINGS: Readonly<SgLayoutSettings> = Object.freeze<SgLayoutSettings>({
-    orientation: 'LR',
+    orientation: 'TB',
 } as SgLayoutSettings)
 
 
