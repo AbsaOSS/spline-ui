@@ -51,10 +51,11 @@
                 </div>
                 <div class="sl-sidenav__footer">
                     <div class="sl-sidenav__version" [hidden]="!isSideNavExpanded">
-                        Version 0.6.0-SNAPSHOT
+                        <span *ngIf="appVersion?.length">
+                            {{ 'COMMON.LAYOUT__APP_VERSION' | translate }} {{ appVersion }}
+                        </span>
                     </div>
                     <button mat-button mat-icon-button
-                            [matTooltip]="(isSideNavExpanded ? 'Collapse' : 'Expand') | translate"
                             class="sl-sidenav__expand-btn"
                             (click)="onExpandedToggleBtnClicked()">
                         <spline-icon [icon]="isSideNavExpanded ? 'chevron-triple-left' : 'chevron-triple-right'"></spline-icon>

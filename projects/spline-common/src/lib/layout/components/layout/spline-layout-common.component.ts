@@ -30,6 +30,7 @@ export class SplineLayoutCommonComponent implements AfterContentInit {
 
     @Input() isEmbeddedMode = false
     @Input() isSideNavExpanded = false
+    @Input() appVersion: string
 
     sectionsTemplatesCollection: Partial<{ [K in SplineLayoutSection.SectionName]: TemplateRef<any> }> = {}
 
@@ -53,6 +54,5 @@ export class SplineLayoutCommonComponent implements AfterContentInit {
 
     onExpandedToggleBtnClicked(): void {
         this.isSideNavExpanded = !this.isSideNavExpanded
-        this.changeDetectorRef.detectChanges()
     }
 }

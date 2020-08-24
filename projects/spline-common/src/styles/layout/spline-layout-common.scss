@@ -102,10 +102,6 @@ $spline-layout-settings-default: (
                 height: 100%;
             }
 
-            &__expand-btn {
-
-            }
-
             &__footer {
                 align-items: center;
                 color: $color-grey;
@@ -115,7 +111,7 @@ $spline-layout-settings-default: (
 
             &__version {
                 flex: 1;
-                font-size: 10px;
+                font-size: 12px;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;

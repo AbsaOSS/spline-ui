@@ -16,6 +16,7 @@
 
 import { Component } from '@angular/core'
 import { NavigationEnd, Router } from '@angular/router'
+import { environment } from '@env/environment'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { filter } from 'rxjs/operators'
 import { AttributeSearchRecord } from 'spline-api'
@@ -31,6 +32,9 @@ export class AppComponent {
 
     readonly splineConfig$: Observable<SplineConfig>
     readonly isEventsLinkActive$ = new BehaviorSubject<{ isActive: boolean }>({ isActive: false })
+
+    readonly appVersion = environment.version
+    isSideNavExpanded = false
 
     constructor(private readonly router: Router, private readonly splineConfigService: SplineConfigService) {
 
@@ -60,5 +64,9 @@ export class AppComponent {
                 },
             },
         )
+    }
+
+    onExpandedToggleBtnClicked(): void {
+        this.isSideNavExpanded = !this.isSideNavExpanded
     }
 }

@@ -16,7 +16,8 @@
 
 <ng-container *ngIf="splineConfig$ | async as splineConfig">
 
-    <spline-layout-common [isEmbeddedMode]="splineConfig.isEmbeddedMode">
+    <spline-layout-common [isEmbeddedMode]="splineConfig.isEmbeddedMode"
+                          [appVersion]="appVersion">
 
 
         <!-- HEADER -->

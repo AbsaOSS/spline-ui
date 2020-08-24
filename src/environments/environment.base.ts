@@ -14,12 +14,15 @@
  * limitations under the License.
  */
 
+import * as config from '../../package.json'
+
 import { deploymentPrefix, Environment, relativeUrl } from './shared'
 
 
 const url = relativeUrl + deploymentPrefix
 export const environmentBase: Environment = {
     production: false,
+    version: config.version,
     deploymentPrefix,
     url,
     splineConfigUri: `${relativeUrl}/assets/config.json`,

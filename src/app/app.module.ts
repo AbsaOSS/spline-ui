@@ -15,13 +15,14 @@
  */
 
 import { NgModule } from '@angular/core'
+import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
 import { MatListModule } from '@angular/material/list'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { environment } from '@env/environment'
-import { SplineLayoutModule, SplineSearchBoxModule, SplineTranslateCoreModule } from 'spline-common'
+import { SplineIconModule, SplineLayoutModule, SplineSearchBoxModule, SplineTranslateCoreModule } from 'spline-common'
 import { SplineAttributeSearchModule, SplineConfigModule, SplineConfigSettings, SPLINE_CONFIG_SETTINGS } from 'spline-shared'
 
 import { AppRoutingModule } from './app-routing.module'
@@ -35,15 +36,17 @@ import { AppComponent } from './app.component'
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        SplineTranslateCoreModule,
         AppRoutingModule,
-        SplineLayoutModule,
-        SplineSearchBoxModule,
-        SplineConfigModule,
         MatListModule,
         MatIconModule,
         MatTooltipModule,
+        MatButtonModule,
+        SplineTranslateCoreModule,
+        SplineLayoutModule,
+        SplineSearchBoxModule,
+        SplineConfigModule,
         SplineAttributeSearchModule,
+        SplineIconModule
     ],
     providers: [
         {

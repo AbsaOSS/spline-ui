@@ -19,6 +19,7 @@ export const deploymentPrefix = '/'
 
 export interface Environment {
     production: boolean
+    version: string
     deploymentPrefix: string
     url: string
     splineConfigUri: string
