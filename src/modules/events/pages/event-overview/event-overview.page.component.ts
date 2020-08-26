@@ -19,7 +19,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { BehaviorSubject, merge, Observable, Subject } from 'rxjs'
 import { map, shareReplay, takeUntil } from 'rxjs/operators'
 import { ExecutionEventFacade, ExecutionEventLineageNode } from 'spline-api'
-import { SgData, SgNodeSchema, SplineDataViewSchema } from 'spline-common'
+import { SgData, SgNodeSchema } from 'spline-common'
 import { BaseComponent, RouterHelpers } from 'spline-utils'
 
 import { EventNodeControl, EventNodeInfo, SgRelations } from '../../models'
@@ -46,7 +46,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
 
     readonly graphData$: Observable<SgData>
 
-    readonly selectedNodeViewSchema$: Observable<SplineDataViewSchema>
+    readonly selectedNodeRelations$: Observable<EventNodeInfo.NodeRelationsInfo>
 
     readonly focusNode$ = new Subject<string>()
     readonly highlightedRelationsNodesIds$ = new BehaviorSubject<string[] | null>(null)
@@ -83,15 +83,15 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
                 shareReplay(1),
             )
 
-        this.selectedNodeViewSchema$ = this.store.selectedNode$
+        this.selectedNodeRelations$ = this.store.selectedNode$
             .pipe(
                 map(
                     selectedNode => selectedNode
-                        ? EventNodeInfo.toDataSchema(
-                            selectedNode,
-                            (nodeId) => this.onExecutionPlanNodeLaunchAction(nodeId),
-                            (nodeId) => this.onNodeFocus(nodeId),
-                        )
+                        ? {
+                            node: selectedNode,
+                            children: this.store.selectChildrenNodes(selectedNode.id),
+                            parents: this.store.selectParentNodes(selectedNode.id),
+                        }
                         : null,
                 ),
             )
@@ -132,11 +132,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
         this.store.setGraphDepth(depth)
     }
 
-    private resetNodeHighlightRelations(): void {
-        this.highlightedRelationsNodesIds$.next(null)
-    }
-
-    private onExecutionPlanNodeLaunchAction(nodeId: string): void {
+    onExecutionPlanNodeLaunchAction(nodeId: string): void {
         this.router.navigate(
             ['/app/events/plan-overview', nodeId],
             {
@@ -147,6 +143,14 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
         )
     }
 
+    onNodeFocus(nodeId: string): void {
+        this.focusNode$.next(nodeId)
+    }
+
+    private resetNodeHighlightRelations(): void {
+        this.highlightedRelationsNodesIds$.next(null)
+    }
+
     private onNodeHighlightRelations(nodeId: string): void {
         const highlightedRelationsNodesIds = SgRelations.toggleSelection(
             this.highlightedRelationsNodesIds$.getValue() ?? [],
@@ -155,10 +159,6 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
         )
 
         this.highlightedRelationsNodesIds$.next(highlightedRelationsNodesIds)
-    }
-
-    private onNodeFocus(nodeId: string): void {
-        this.focusNode$.next(nodeId)
     }
 
     private updateQueryParams(selectedNode: ExecutionEventLineageNode | null): void {

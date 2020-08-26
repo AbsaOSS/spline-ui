@@ -284,6 +284,11 @@ export namespace SplineEntityStore {
             .map(id => state.entities[id])
     }
 
+    export function selectByIds<T, TState extends EntityState<T> = EntityState<T>>(state: TState, ids: number[] | string[]): T[] {
+        return (ids as any[])
+            .map(id => state.entities[id])
+    }
+
     export function selectOne<T, TState extends EntityState<T> = EntityState<T>>(id: number | string, state: TState): T | undefined {
         return state.entities[id]
     }

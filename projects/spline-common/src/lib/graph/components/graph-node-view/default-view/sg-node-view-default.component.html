@@ -14,22 +14,24 @@
   ~ limitations under the License.
   -->
 
-<div class="sg-node-view"
+<div class="sg-node-view sg-node-view--actions-position-{{actionsPosition ? actionsPosition : defaultActionsPosition}}"
      [class.sg-node-view--selected]="isSelected">
 
-    <!-- ICON -->
-    <div class="sg-node-view__icon">
-        <spline-icon [icon]="icon ? icon : defaultIcon"
-                     [ngStyle]="{color: color ? color : defaultColor }">
-        </spline-icon>
-    </div>
-    <!-- ./ICON -->
+    <div class="sg-node-view__content-container">
+        <!-- ICON -->
+        <div class="sg-node-view__icon">
+            <spline-icon [icon]="icon ? icon : defaultIcon"
+                         [ngStyle]="{color: color ? color : defaultColor }">
+            </spline-icon>
+        </div>
+        <!-- ./ICON -->
 
-    <!-- CONTENT -->
-    <div class="sg-node-view__content">
-        <ng-content></ng-content>
+        <!-- CONTENT -->
+        <div class="sg-node-view__content">
+            <ng-content></ng-content>
+        </div>
+        <!-- ./CONTENT -->
     </div>
-    <!-- ./CONTENT -->
 
     <!-- ACTIONS -->
     <div *ngIf="showActions" class="sg-node-view__actions-container">

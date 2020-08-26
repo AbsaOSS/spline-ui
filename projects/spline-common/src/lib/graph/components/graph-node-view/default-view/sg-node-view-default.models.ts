@@ -14,5 +14,14 @@
  * limitations under the License.
  */
 
-export * from './default-view/sg-node-view-default.component'
-export * from './default-view/sg-node-view-default.models'
+export namespace SgNodeViewDefault {
+
+    export type ActionsPosition = 'right' | 'bottom'
+    export const ActionsPosition = {
+        right: 'right' as ActionsPosition,
+        bottom: 'bottom' as ActionsPosition,
+    }
+
+    export const DEFAULT_POSITION = ActionsPosition.right
+
+}

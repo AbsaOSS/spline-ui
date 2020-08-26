@@ -120,6 +120,14 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
             .subscribe()
     }
 
+    selectChildrenNodes(nodeId: string): ExecutionEventLineageNode[] {
+        return EventOverviewStore.selectChildrenNodes(this.state, nodeId)
+    }
+
+    selectParentNodes(nodeId: string): ExecutionEventLineageNode[] {
+        return EventOverviewStore.selectParentNodes(this.state, nodeId)
+    }
+
     private loadData(
         executionEventId: string,
         graphDepth: number,

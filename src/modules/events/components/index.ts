@@ -17,6 +17,7 @@
 import { AttributeLineageInfoComponent } from './attribute-lineage-info/attribute-lineage-info.component'
 import { SplineDateFilterComponent } from './date-filter/date-filter.component'
 import { EventInfoComponent } from './event-info/event-info.component'
+import { EventNodeInfoComponent } from './event-node-info/event-node-info.component'
 import { ExecutionPlanInfoComponent } from './execution-plan-info/execution-plan-info.component'
 import { SgLegendComponent } from './graph-legend/sg-legend.component'
 import { OperationInfoComponent } from './operation-info/operation-info.component'
@@ -33,6 +34,7 @@ export const components: any[] = [
     SplineDateFilterComponent,
     SgHighlightedRelationsActionsComponent,
     SgDepthControlComponent,
+    EventNodeInfoComponent
 ]
 
 export * from './event-info/event-info.component'
@@ -47,3 +49,5 @@ export * from './date-filter/date-filter.models'
 
 export * from './sg-depth-control/sg-depth-control.component'
 export * from './sg-depth-control/sg-depth-control.models'
+
+export * from './event-node-info/event-node-info.component'

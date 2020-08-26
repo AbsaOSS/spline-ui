@@ -1,0 +1,51 @@
+<!--
+  ~ Copyright 2020 ABSA Group Limited
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<ng-container *ngIf="state$ | async as state">
+
+    <!-- SELECTED NODE -->
+    <spline-data-view [dataViewSchema]="state.nodeDvs"></spline-data-view>
+    <!-- ./SELECTED NODE -->
+
+    <mat-tab-group>
+
+        <!-- CHILDREN -->
+        <mat-tab *ngIf="state.childrenNumber > 0">
+
+            <ng-template matTabLabel>
+                {{ 'EVENTS.EVENT_NODE_INFO__TAB__CHILDREN_NODES' | translate}} ({{state.childrenNumber}})
+            </ng-template>
+
+            <spline-data-view [dataViewSchema]="state.childrenDvs"></spline-data-view>
+        </mat-tab>
+        <!-- ./CHILDREN -->
+
+        <!-- PARENTS -->
+        <mat-tab *ngIf="state.parentsNumber > 0">
+
+            <ng-template matTabLabel>
+                {{ 'EVENTS.EVENT_NODE_INFO__TAB__PARENT_NODES' | translate}} ({{state.parentsNumber}})
+            </ng-template>
+
+            <spline-data-view [dataViewSchema]="state.parentsDvs"></spline-data-view>
+        </mat-tab>
+        <!-- ./PARENTS -->
+
+    </mat-tab-group>
+</ng-container>
+
+
+

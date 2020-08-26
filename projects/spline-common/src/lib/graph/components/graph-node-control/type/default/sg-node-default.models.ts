@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
+import { NodeDimension } from '@swimlane/ngx-graph/lib/models/node.model'
+
 import { SgNode, SgNodeNativeOptions, SgNodeSchema } from '../../../../models'
+import { SgNodeViewDefault } from '../../../graph-node-view'
 
 
 export namespace SgNodeDefault {
@@ -25,6 +28,7 @@ export namespace SgNodeDefault {
         color?: string // valid CSS color
         inlineActions?: InlineAction[]
         actions?: Action[]
+        actionsPosition?: SgNodeViewDefault.ActionsPosition
     }
 
     export type Action = {
@@ -41,12 +45,26 @@ export namespace SgNodeDefault {
 
     export type Options = {}
 
-    export const DEFAULT_NATIVE_OPTIONS: Readonly<SgNodeNativeOptions> = Object.freeze({
-        dimension: {
-            width: 320,
-            height: 50,
-        },
-    })
+    export const DIMENSIONS_MAP = new Map<SgNodeViewDefault.ActionsPosition, NodeDimension>([
+        [
+            SgNodeViewDefault.ActionsPosition.right,
+            {
+                width: 320,
+                height: 50,
+            },
+        ],
+        [
+            SgNodeViewDefault.ActionsPosition.bottom,
+            {
+                width: 320,
+                height: 90,
+            },
+        ],
+    ])
+
+    export function getDimensions(actionsPosition?: SgNodeViewDefault.ActionsPosition): NodeDimension {
+        return DIMENSIONS_MAP.get(actionsPosition ?? SgNodeViewDefault.DEFAULT_POSITION)
+    }
 
     export function toNode(id: string, nodeData: Data, nativeOptions: SgNodeNativeOptions = {}): SgNode<Data, Options> {
         return {
@@ -55,7 +73,9 @@ export namespace SgNodeDefault {
                 ...nodeData,
             },
             nativeOptions: {
-                ...DEFAULT_NATIVE_OPTIONS,
+                ...{
+                    dimension: { ...getDimensions(nodeData?.actionsPosition) }
+                },
                 ...nativeOptions,
             },
         }

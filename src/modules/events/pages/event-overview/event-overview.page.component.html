@@ -34,9 +34,19 @@
                     <!-- ./EVENT INFO -->
 
                     <!-- SELECTED NODE INFO -->
-                    <spline-data-view *ngIf="selectedNodeViewSchema$ | async as dataSchema"
-                                      [dataViewSchema]="dataSchema">
-                    </spline-data-view>
+                    <ng-container *ngIf="selectedNodeRelations$ | async as selectedNodeRelations">
+
+                        <h3 class="text-center py-3">
+                            Selected Node
+                        </h3>
+
+                        <event-node-info [nodeRelations]="selectedNodeRelations"
+                                         (focusNode$)="onNodeFocus($event.nodeId)"
+                                         (launchNode$)="onExecutionPlanNodeLaunchAction($event.nodeId)">
+
+                        </event-node-info>
+
+                    </ng-container>
                     <!-- ./SELECTED NODE INFO -->
 
                 </div>

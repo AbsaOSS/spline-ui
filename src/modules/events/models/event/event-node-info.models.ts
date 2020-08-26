@@ -15,7 +15,7 @@
  */
 
 import { ExecutionEventLineageNode, ExecutionEventLineageNodeType } from 'spline-api'
-import { SdWidgetCard, SdWidgetSimpleRecord, SplineCardHeader, SplineDataViewSchema } from 'spline-common'
+import { SdWidgetCard, SdWidgetSchema, SdWidgetSimpleRecord, SplineCardHeader, SplineDataViewSchema } from 'spline-common'
 
 import { SgNodeControl } from '../sg-node-control.models'
 
@@ -32,7 +32,7 @@ export namespace EventNodeInfo {
 
     export function toDataSchema(nodeSource: ExecutionEventLineageNode,
                                  onExecutionPlanLaunchAction: (nodeId: string) => void,
-                                 onNodeFocus: (nodeId: string) => void): SplineDataViewSchema {
+                                 onNodeFocus: (nodeId: string) => void): SdWidgetSchema {
         const nodeStyles = EventNodeControl.getNodeStyles(nodeSource)
         const contentDataSchema: SplineDataViewSchema = nodeSource.type === ExecutionEventLineageNodeType.DataSource
             ? [
@@ -59,17 +59,30 @@ export namespace EventNodeInfo {
                 },
             ]
             : [...defaultActions]
-        return [
-            SdWidgetCard.toSchema(
-                {
-                    color: nodeStyles.color,
-                    icon: nodeStyles.icon,
-                    title: EventNodeControl.extractNodeName(nodeSource),
-                    label: getNodeInfoLabel(nodeSource),
-                    actions
-                },
-                contentDataSchema,
-            ),
-        ]
+        return SdWidgetCard.toSchema(
+            {
+                color: nodeStyles.color,
+                icon: nodeStyles.icon,
+                title: EventNodeControl.extractNodeName(nodeSource),
+                label: getNodeInfoLabel(nodeSource),
+                actions,
+            },
+            contentDataSchema,
+        )
     }
+
+    export type NodeRelationsInfo = {
+        node: ExecutionEventLineageNode
+        parents: ExecutionEventLineageNode[]
+        children: ExecutionEventLineageNode[]
+    }
+
+    export type NodeInfoViewState = {
+        nodeDvs: SplineDataViewSchema
+        parentsDvs: SplineDataViewSchema | null
+        childrenDvs: SplineDataViewSchema | null
+        parentsNumber: number
+        childrenNumber: number
+    }
+
 }

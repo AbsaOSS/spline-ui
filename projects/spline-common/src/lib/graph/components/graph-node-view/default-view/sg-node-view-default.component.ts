@@ -17,6 +17,8 @@
 import { Component, Input } from '@angular/core'
 import { BaseComponent } from 'spline-utils'
 
+import { SgNodeViewDefault } from './sg-node-view-default.models'
+
 
 @Component({
     selector: 'sg-node-view-default',
@@ -26,10 +28,12 @@ export class SgNodeViewDefaultComponent extends BaseComponent {
 
     readonly defaultIcon = 'extension'
     readonly defaultColor = '#7a7a7d'
+    readonly defaultActionsPosition = SgNodeViewDefault.DEFAULT_POSITION
 
     @Input() isSelected: boolean
     @Input() icon: string
     @Input() color: string
     @Input() showActions = false
+    @Input() actionsPosition: SgNodeViewDefault.ActionsPosition = this.defaultActionsPosition
 
 }

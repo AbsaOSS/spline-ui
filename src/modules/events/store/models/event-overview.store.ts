@@ -34,7 +34,7 @@ export namespace EventOverviewStore {
         graphHasMoreDepth: boolean
     }
 
-    export const GRAPH_DEFAULT_DEPTH = 5
+    export const GRAPH_DEFAULT_DEPTH = 2
 
     const DEFAULT_LINEAGE_DEPTH = Object.freeze<ExecutionEventLineageOverviewDepth>({
         depthComputed: GRAPH_DEFAULT_DEPTH,
@@ -89,6 +89,18 @@ export namespace EventOverviewStore {
 
     export function selectNode(state: State, nodeId: string): ExecutionEventLineageNode | undefined {
         return SplineEntityStore.selectOne(nodeId, state.nodes)
+    }
+
+    export function selectChildrenNodes(state: State, nodeId: string): ExecutionEventLineageNode[] {
+        return state.links
+            .filter(link => link.source === nodeId)
+            .map(link => SplineEntityStore.selectOne(link.target, state.nodes))
+    }
+
+    export function selectParentNodes(state: State, nodeId: string): ExecutionEventLineageNode[] {
+        return state.links
+            .filter(link => link.target === nodeId)
+            .map(link => SplineEntityStore.selectOne(link.source, state.nodes))
     }
 
     function calculateHasMoreDepth(lineageDepth: ExecutionEventLineageOverviewDepth): boolean {

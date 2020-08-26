@@ -27,7 +27,7 @@ export const SG_NODE_CONTROL_FACTORY = new InjectionToken<ISgNodeControlFactory<
 @Injectable()
 export class SplineGraphNodeManager extends DynamicComponentManager<ISgNodeControlFactory<any>, ISgNodeControl<any>> {
 
-    readonly defaultCellTypesMap: { [type: string]: Type<ISgNodeControl<any>> } = {}
+    readonly defaultNodeControlsMap: { [type: string]: Type<ISgNodeControl<any>> } = {}
 
     constructor(
         @Optional() @Inject(SG_NODE_CONTROL_FACTORY) protected readonly factoriesProvidersList: Type<ISgNodeControlFactory<any>>[],
@@ -43,8 +43,8 @@ export class SplineGraphNodeManager extends DynamicComponentManager<ISgNodeContr
         }
 
         // default types
-        if (this.defaultCellTypesMap[type]) {
-            return this.defaultCellTypesMap[type]
+        if (this.defaultNodeControlsMap[type]) {
+            return this.defaultNodeControlsMap[type]
         }
 
         return super.getComponentType(type)

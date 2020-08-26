@@ -14,21 +14,22 @@
   ~ limitations under the License.
   -->
 
-<ng-container *ngIf="data$ | async as dataValue">
+<ng-container *ngIf="data$ | async as data">
     <sg-node-view-default [isSelected]="isSelected"
-                          [icon]="dataValue?.icon"
-                          [showActions]="!!dataValue?.inlineActions?.length || !!dataValue?.actions?.length"
-                          [color]="dataValue?.color">
+                          [icon]="data?.icon"
+                          [actionsPosition]="data?.actionsPosition"
+                          [showActions]="!!data?.inlineActions?.length || !!data?.actions?.length"
+                          [color]="data?.color">
 
-        <spline-long-text [tooltip]="dataValue?.label">
-            {{dataValue?.label}}
+        <spline-long-text [tooltip]="data?.label">
+            {{data?.label}}
         </spline-long-text>
 
         <!-- ACTIONS CONTAINER -->
-        <div class="sg-node-view__actions" *ngIf="!!dataValue?.inlineActions || !!dataValue?.actions">
+        <div class="sg-node-view__actions" *ngIf="!!data?.inlineActions || !!data?.actions">
 
             <!-- INLINE ACTIONS -->
-            <button *ngFor="let action of dataValue.inlineActions"
+            <button *ngFor="let action of data.inlineActions"
                     [matTooltip]="action?.tooltip | translate"
                     mat-button
                     mat-icon-button

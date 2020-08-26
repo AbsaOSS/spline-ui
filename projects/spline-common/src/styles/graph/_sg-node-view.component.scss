@@ -39,6 +39,12 @@ $icon-width: 24px;
     top: 0;
     width: 100%;
 
+    &__content-container {
+        align-items: center;
+        display: flex;
+        flex: 1;
+    }
+
     &__icon {
         align-items: center;
         border-radius: $border-radius 0 0 $border-radius;
@@ -81,6 +87,30 @@ $icon-width: 24px;
     }
 
     &__footer {
+    }
+
+    &__actions {
+        text-align: right;
+        width: 100%;
+    }
+
+    &.sg-node-view--actions-position {
+        &-bottom {
+            flex-direction: column;
+
+            #{$self}__content-container {
+                flex: 1;
+                width: 100%;
+            }
+
+            #{$self}__actions-container {
+                border-left-style: none;
+                border-radius: 0 0 $border-radius $border-radius;
+                border-top: 1px solid $color-grey-light;
+                height: auto;
+                width: 100%;
+            }
+        }
     }
 
 }
