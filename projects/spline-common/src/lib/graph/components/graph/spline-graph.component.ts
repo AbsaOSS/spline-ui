@@ -41,7 +41,6 @@ export class SplineGraphComponent implements OnChanges {
     @ViewChild(GraphComponent) ngxGraphComponent: GraphComponent
     @ContentChildren(SgControlPanelSectionDirective) controlPanelExtraSections: QueryList<SgControlPanelSectionDirective>
 
-
     @Input() graphData: SgData
 
     @Output() substrateClick$ = new EventEmitter<{ mouseEvent: MouseEvent }>()

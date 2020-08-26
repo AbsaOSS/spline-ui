@@ -33,12 +33,7 @@
     position: relative;
 
     &.spline-graph__node--selected {
-        background: $color-orange;
 
-        .sg-node-view {
-            left: 5px;
-            top: 5px;
-        }
     }
 }
 

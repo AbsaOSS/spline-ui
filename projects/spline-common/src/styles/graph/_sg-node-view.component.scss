@@ -18,7 +18,7 @@
 @import '../vars';
 
 $border-radius: 8px;
-
+$selected-node--bg-color: $color-platinum;
 $icon-width: 24px;
 
 .sg-node-view {
@@ -110,6 +110,26 @@ $icon-width: 24px;
                 height: auto;
                 width: 100%;
             }
+        }
+    }
+
+    &--selected {
+        background: $selected-node--bg-color;
+        border: 1px solid darken($selected-node--bg-color, 5);
+        color: $color-white;
+
+        #{$self}__actions-container {
+            background: darken($selected-node--bg-color, 5);
+            border-color: darken($selected-node--bg-color, 10);
+            color: $color-grey-light;
+
+            * {
+                color: $color-grey-light;
+            }
+        }
+
+        #{$self}__icon * {
+            color: $color-grey-light !important;
         }
     }
 

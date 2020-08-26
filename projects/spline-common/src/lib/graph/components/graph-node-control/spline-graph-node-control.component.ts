@@ -74,6 +74,7 @@ export class SplineGraphNodeControlComponent<TData extends object, TOptions exte
         instance.schema = !this.schema?.type
             ? decorateDefaultSgNodeSchema(this.schema) as SgNodeSchema<TData, TOptions>
             : this.schema
+        instance.isSelected = this.isSelected
 
         this.eventsSubscriptionRefs.push(
             instance.event$.subscribe((event) => this.event$.emit(event)),

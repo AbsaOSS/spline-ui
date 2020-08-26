@@ -28,7 +28,7 @@
         stroke: $color;
     }
     // NODE
-    .spline-graph__node-container:not(.spline-graph__node--selected) {
+    .spline-graph__node-container {
         background: $color;
 
         .sg-node-view {
@@ -42,15 +42,15 @@ $none-type__opacity: 0.1;
 
 .sg-attribute-lineage {
     &--usage {
-        @include node-edg-styles($color-black);
+        @include node-edg-styles($color-orange);
     }
 
     &--lineage {
-        @include node-edg-styles($color-smile);
+        @include node-edg-styles($color-green-light);
     }
 
     &--impact {
-        @include node-edg-styles($color-green-light);
+        @include node-edg-styles($color-smile);
     }
 
     &--none {
