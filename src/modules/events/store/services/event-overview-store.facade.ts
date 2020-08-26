@@ -96,11 +96,6 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
         graphDepth: number = EventOverviewStore.GRAPH_DEFAULT_DEPTH,
     ): void {
 
-        this.updateState({
-            executionEventId,
-            selectedNodeId,
-        })
-
         this.loadData(
             executionEventId,
             graphDepth,
@@ -110,14 +105,19 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
             }),
             state => ({
                 ...state,
-                loadingProcessing: ProcessingStore.eventProcessingFinish(this.state.loadingProcessing)
+                loadingProcessing: ProcessingStore.eventProcessingFinish(this.state.loadingProcessing),
             }),
             (state, error) => ({
                 ...state,
-                loadingProcessing: ProcessingStore.eventProcessingFinish(this.state.loadingProcessing, error)
-            })
+                loadingProcessing: ProcessingStore.eventProcessingFinish(this.state.loadingProcessing, error),
+            }),
         )
-            .subscribe()
+            .subscribe(() => {
+                this.updateState({
+                    executionEventId,
+                    selectedNodeId,
+                })
+            })
     }
 
     selectChildrenNodes(nodeId: string): ExecutionEventLineageNode[] {

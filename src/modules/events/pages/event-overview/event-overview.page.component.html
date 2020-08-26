@@ -37,7 +37,7 @@
                     <ng-container *ngIf="selectedNodeRelations$ | async as selectedNodeRelations">
 
                         <h3 class="text-center py-3">
-                            Selected Node
+                            {{ 'EVENTS.EVENT_OVERVIEW__SELECTED_NODE_TITLE' | translate }}
                         </h3>
 
                         <event-node-info [nodeRelations]="selectedNodeRelations"

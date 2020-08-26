@@ -17,8 +17,8 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { BehaviorSubject, merge, Observable, Subject } from 'rxjs'
-import { map, shareReplay, takeUntil } from 'rxjs/operators'
-import { ExecutionEventFacade, ExecutionEventLineageNode } from 'spline-api'
+import { filter, map, shareReplay, skip, takeUntil } from 'rxjs/operators'
+import { ExecutionEventFacade } from 'spline-api'
 import { SgData, SgNodeSchema } from 'spline-common'
 import { BaseComponent, RouterHelpers } from 'spline-utils'
 
@@ -95,6 +95,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
                         : null,
                 ),
             )
+
     }
 
     ngOnInit(): void {
@@ -109,10 +110,16 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
         //
         this.store.selectedNode$
             .pipe(
+                skip(1),
                 takeUntil(this.destroyed$),
+                map(selectedNode => selectedNode?.id ?? null),
+                filter(nodeId => {
+                    const currentNodeId = this.activatedRoute.snapshot.queryParamMap.get(this.selectedNodeQueryParamName)
+                    return currentNodeId !== nodeId
+                }),
             )
             .subscribe(
-                selectedNode => this.updateQueryParams(selectedNode),
+                nodeId => this.updateQueryParams(nodeId),
             )
     }
 
@@ -161,12 +168,13 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
         this.highlightedRelationsNodesIds$.next(highlightedRelationsNodesIds)
     }
 
-    private updateQueryParams(selectedNode: ExecutionEventLineageNode | null): void {
+    private updateQueryParams(nodeId: string | null): void {
+
         RouterHelpers.updateCurrentRouterOneQueryParam(
             this.router,
             this.activatedRoute,
             this.selectedNodeQueryParamName,
-            selectedNode?.id ?? null,
+            nodeId,
         )
     }
 }

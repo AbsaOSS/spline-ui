@@ -54,6 +54,7 @@
     "SG__ACTION__SHOW_ALL_RELATIONS": "Show All Relations",
     "SG__ACTION__HIDE_ALL_RELATIONS": "Hide All Relations",
     "EVENT_NODE_INFO__TAB__CHILDREN_NODES": "Children Nodes",
-    "EVENT_NODE_INFO__TAB__PARENT_NODES": "Parent Nodes"
+    "EVENT_NODE_INFO__TAB__PARENT_NODES": "Parent Nodes",
+    "EVENT_OVERVIEW__SELECTED_NODE_TITLE": "Selected Node"
   }
 }
