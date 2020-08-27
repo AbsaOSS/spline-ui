@@ -15,3 +15,4 @@
  */
 
 export * from './control-panel-action/sg-control-panel-section.directive'
+export * from './sg-highlighted-relations/sg-highlighted-relations.directive'

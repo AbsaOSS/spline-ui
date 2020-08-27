@@ -16,13 +16,10 @@
 
 
 import { SgAttributeLineageDirective } from './sg-attrubute-lineage/sg-attribute-lineage.directive'
-import { SgHighlightedRelationsDirective } from './sg-highlighted-relations/sg-highlighted-relations.directive'
 
 
 export const directives: any[] = [
     SgAttributeLineageDirective,
-    SgHighlightedRelationsDirective
 ]
 
 export * from './sg-attrubute-lineage/sg-attribute-lineage.directive'
-export * from './sg-highlighted-relations/sg-highlighted-relations.directive'

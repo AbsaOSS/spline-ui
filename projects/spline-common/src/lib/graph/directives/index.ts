@@ -16,10 +16,12 @@
 
 
 import { SgControlPanelSectionDirective } from './control-panel-action/sg-control-panel-section.directive'
+import { SgHighlightedRelationsDirective } from './sg-highlighted-relations/sg-highlighted-relations.directive'
 
 
 export const splineGraphDirectives: any[] = [
     SgControlPanelSectionDirective,
+    SgHighlightedRelationsDirective
 ]
 
 export * from './public-api'

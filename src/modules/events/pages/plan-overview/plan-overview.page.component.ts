@@ -19,10 +19,10 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
 import { BehaviorSubject, Observable, Subject } from 'rxjs'
 import { filter, map, shareReplay, skip, takeUntil, withLatestFrom } from 'rxjs/operators'
 import { ExecutionPlanFacade } from 'spline-api'
-import { SgData, SgNodeSchema } from 'spline-common'
+import { SgData, SgNodeSchema, SgRelations } from 'spline-common'
 import { BaseComponent, RouterHelpers } from 'spline-utils'
 
-import { ExecutionPlanNodeControl, ExecutionPlanOverview, SgRelations } from '../../models'
+import { ExecutionPlanNodeControl, ExecutionPlanOverview } from '../../models'
 import { ExecutionPlanOverviewStore, ExecutionPlanOverviewStoreFacade } from '../../store'
 import QueryParamAlis = ExecutionPlanOverview.QueryParamAlis
 

@@ -19,10 +19,10 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { BehaviorSubject, merge, Observable, Subject } from 'rxjs'
 import { filter, map, shareReplay, skip, takeUntil } from 'rxjs/operators'
 import { ExecutionEventFacade } from 'spline-api'
-import { SgData, SgNodeSchema } from 'spline-common'
+import { SgData, SgNodeSchema, SgRelations } from 'spline-common'
 import { BaseComponent, RouterHelpers } from 'spline-utils'
 
-import { EventNodeControl, EventNodeInfo, SgRelations } from '../../models'
+import { EventNodeControl, EventNodeInfo } from '../../models'
 import { EventOverviewStore, EventOverviewStoreFacade } from '../../store'
 
 

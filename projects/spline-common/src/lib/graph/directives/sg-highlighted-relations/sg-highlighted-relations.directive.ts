@@ -21,7 +21,7 @@ import { getLinkDomSelector, getNodeDomSelector, SgData, SplineGraphComponent } 
 
 
 @Directive({
-    selector: 'spline-graph[sgHighlightedRelations]',
+    selector: '[sgHighlightedRelations]spline-graph',
 })
 export class SgHighlightedRelationsDirective implements AfterViewInit, OnChanges {
 

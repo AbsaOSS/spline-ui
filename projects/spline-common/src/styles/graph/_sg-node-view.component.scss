@@ -18,8 +18,10 @@
 @import '../vars';
 
 $border-radius: 8px;
-$selected-node--bg-color: $color-platinum;
 $icon-width: 24px;
+
+$node-bg-color--selected: $color-platinum;
+$node-bg-color--focused: $color-human;
 
 .sg-node-view {
 
@@ -114,13 +116,13 @@ $icon-width: 24px;
     }
 
     &--selected {
-        background: $selected-node--bg-color;
-        border: 1px solid darken($selected-node--bg-color, 5);
+        background: $node-bg-color--selected;
+        border: 1px solid darken($node-bg-color--selected, 5);
         color: $color-white;
 
         #{$self}__actions-container {
-            background: darken($selected-node--bg-color, 5);
-            border-color: darken($selected-node--bg-color, 10);
+            background: darken($node-bg-color--selected, 5);
+            border-color: darken($node-bg-color--selected, 10);
             color: $color-grey-light;
 
             * {
@@ -133,4 +135,93 @@ $icon-width: 24px;
         }
     }
 
+}
+
+.sg-node--focused {
+    .sg-node-view {
+        $self: &;
+
+        animation: focus-node-view 2s;
+
+        &__actions-container {
+            animation: focus-actions-container 2s;
+
+            * {
+                animation: focus-text 2s;
+            }
+        }
+
+        &__icon * {
+            animation: focus-text 2s;
+        }
+
+        &--selected {
+
+            animation: none;
+
+            .sg-node-view__actions-container {
+                animation: none;
+
+                * {
+                    animation: none;
+                }
+            }
+
+            .sg-node-view__icon * {
+                animation: none;
+            }
+        }
+    }
+
+
+    @keyframes focus-node-view {
+        0% {
+            background-color: $color-white;
+            border: 1px solid $color-grey-light;
+            color: inherit;
+        }
+        50% {
+            background: $node-bg-color--focused;
+            border: 1px solid darken($node-bg-color--focused, 5);
+            color: $color-white;
+        }
+
+        100% {
+            background-color: $color-white;
+            border: 1px solid $color-grey-light;
+            color: inherit;
+        }
+    }
+
+    @keyframes focus-actions-container {
+        0% {
+            background: $color-grey-light-1;
+            border-color: $color-grey-light;
+            color: $color-grey-dark;
+        }
+        50% {
+            background: darken($node-bg-color--focused, 5);
+            border-color: darken($node-bg-color--focused, 10);
+            color: $color-grey-light;
+        }
+
+        100% {
+            background: $color-grey-light-1;
+            border-color: $color-grey-light;
+            color: $color-grey-dark;
+        }
+    }
+
+    @keyframes focus-text {
+        0% {
+            color: $color-grey-dark;
+        }
+        50% {
+            color: $color-grey-light;
+        }
+
+        100% {
+            color: $color-grey-dark;
+        }
+    }
 }

@@ -18,9 +18,12 @@ import { Component, ContentChildren, EventEmitter, Input, OnChanges, Output, Que
 import { GraphComponent } from '@swimlane/ngx-graph'
 import * as fromD3Shape from 'd3-shape'
 import { Observable } from 'rxjs'
+import { takeUntil } from 'rxjs/operators'
+import { BaseComponent } from 'spline-utils'
 
 import { SgControlPanelSectionDirective } from '../../directives'
 import {
+    getNodeDomSelector,
     SgData,
     SgLayoutSettings,
     SgNativeNode,
@@ -36,7 +39,7 @@ import {
     selector: 'spline-graph',
     templateUrl: './spline-graph.component.html',
 })
-export class SplineGraphComponent implements OnChanges {
+export class SplineGraphComponent extends BaseComponent implements OnChanges {
 
     @ViewChild(GraphComponent) ngxGraphComponent: GraphComponent
     @ContentChildren(SgControlPanelSectionDirective) controlPanelExtraSections: QueryList<SgControlPanelSectionDirective>
@@ -70,6 +73,13 @@ export class SplineGraphComponent implements OnChanges {
         if (changes?.graphData && changes.graphData.currentValue) {
             const currentGraphData: SgData = changes.graphData.currentValue
             this.nativeNodes = currentGraphData.nodes.map(toSgNativeNode)
+        }
+        if (changes?.focusNode$ && changes.focusNode$.currentValue) {
+            changes.focusNode$.currentValue
+                .pipe(
+                    takeUntil(this.destroyed$)
+                )
+                .subscribe((nodeId) => this.onFocusNode(nodeId))
         }
     }
 
@@ -108,5 +118,21 @@ export class SplineGraphComponent implements OnChanges {
     private clearNodeSelection(): void {
         this._selectedNodeId = null
         this.nodeSelectionChange$.emit({ nodeSchema: null })
+    }
+
+    private onFocusNode(nodeId): void {
+        const rootElmRef = this.ngxGraphComponent.chart.nativeElement
+        const selector = getNodeDomSelector(nodeId)
+        const elementRef = rootElmRef.querySelector(selector)
+
+        const refClassName = 'sg-node--focused'
+        elementRef.classList.add(refClassName)
+        const removeClassAfterTimeInMs = 3000
+        setTimeout(
+            () => {
+                elementRef.classList.remove(refClassName)
+            },
+            removeClassAfterTimeInMs
+        )
     }
 }
