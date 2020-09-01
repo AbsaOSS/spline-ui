@@ -21,7 +21,7 @@ import { SplineApiExecutionEventModule } from 'spline-api'
 import { SplineLoaderModule, SplineSearchBoxModule, SplineTranslateModule } from 'spline-common'
 
 import { SplineAttributesModule } from '../attributes'
-import { SplineApiConfigModule } from '../spline-api-config'
+import { SplineApiConfigModule } from '../utils/api-config'
 
 import * as fromComponents from './components'
 

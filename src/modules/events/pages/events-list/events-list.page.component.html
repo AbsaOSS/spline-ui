@@ -59,7 +59,7 @@
                 </mat-header-cell>
                 <mat-cell *matCellDef="let rowData">
                     <div class="max-width-100">
-                        <a [routerLink]="['../event-overview', rowData.executionEventId]">
+                        <a [routerLink]="['../overview', rowData.executionEventId]">
                             {{rowData.applicationName}}
                         </a>
                         <div class="minor-text">
@@ -78,7 +78,7 @@
                 <mat-cell *matCellDef="let rowData">
                     <div class="max-width-100">
                         <div [matTooltip]="rowData.executionPlanId" class="long-text-wrapper">
-                            <a [routerLink]="['../plan-overview', rowData.executionPlanId]"
+                            <a [routerLink]="['../../plans/overview', rowData.executionPlanId]"
                                [queryParams]="{ eventId: rowData.executionEventId }">
                                 {{rowData.executionPlanId}}
                             </a>

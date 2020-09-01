@@ -48,12 +48,12 @@
                                    class="spline-graph__node-container"
                                    [class.spline-graph__node--selected]="node.id === _selectedNodeId">
                     <xhtml:div>
-                        <spline-graph-node-control
+                        <sg-node-control
                                 [schema]="node.schema"
                                 [isSelected]="node.id === _selectedNodeId"
                                 (click)="onNodeClicked(node, $event)"
                                 (event$)="onNodeEvent(node, $event)">
-                        </spline-graph-node-control>
+                        </sg-node-control>
                     </xhtml:div>
                 </svg:foreignObject>
             </svg:g>

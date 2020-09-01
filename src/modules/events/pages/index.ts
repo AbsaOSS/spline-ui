@@ -14,23 +14,14 @@
  * limitations under the License.
  */
 
-import { DataSourcesListPageComponent } from './data-sources-list/data-sources-list.page.component'
 import { EventOverviewPageComponent } from './event-overview/event-overview.page.component'
 import { EventsListPageComponent } from './events-list/events-list.page.component'
-import { PlanOverviewPageComponent } from './plan-overview/plan-overview.page.component'
-import { PlansListPageComponent } from './plans-list/plans-list.page.component'
 
 
 export const pageComponents: any[] = [
     EventsListPageComponent,
     EventOverviewPageComponent,
-    PlanOverviewPageComponent,
-    PlansListPageComponent,
-    DataSourcesListPageComponent,
 ]
 
-export * from './data-sources-list/data-sources-list.page.component'
 export * from './event-overview/event-overview.page.component'
 export * from './events-list/events-list.page.component'
-export * from './plan-overview/plan-overview.page.component'
-export * from './plans-list/plans-list.page.component'

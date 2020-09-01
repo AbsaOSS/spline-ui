@@ -14,15 +14,8 @@
  * limitations under the License.
  */
 
-export * from './attribute'
-export * from './event/event-info.models'
-export * from './event/event-node-control.models'
-export * from './event/event-node-info.models'
-export * from './event/events-list-url-state.models'
-export * from './operation/operation-info.models'
-export * from './execution-plan/execution-plan-overivew.models'
-export * from './execution-plan/execution-plan-node-control.models'
-export * from './execution-plan/execution-plan-info.models'
-export * from './sg-node-control.models'
-export * from './sg-legend.models'
+export * from './event-info.models'
+export * from './event-node-control.models'
+export * from './event-node-info.models'
+export * from './events-list-url-state.models'
 

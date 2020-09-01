@@ -15,4 +15,3 @@
  */
 
 export * from './execution-events.data-source'
-export * from './operation-details.data-source'

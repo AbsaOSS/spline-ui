@@ -14,22 +14,25 @@
  * limitations under the License.
  */
 
+import { SgRelationsControlComponent } from 'spline-common'
+
+import { SgZoomControlComponent } from './control-panel/controls/zoom-control/sg-zoom-control.component'
 import { SgControlPanelComponent } from './control-panel/sg-control-panel.component'
-import { SgNodeDefaultComponent, SplineGraphNodeControlComponent } from './graph-node-control'
-import { SgNodeViewDefaultComponent } from './graph-node-view'
 import { SplineGraphComponent } from './graph/spline-graph.component'
+import { SgNodeControlComponent, SgNodeDefaultComponent } from './node-control'
+import { SgNodeViewDefaultComponent } from './node-view'
 import { SgToolbarComponent } from './toolbar/sg-toolbar.component'
-import { SgZoomControlComponent } from './zoom-control/sg-zoom-control.component'
 
 
 export const splineGraphComponents: any[] = [
     SplineGraphComponent,
-    SplineGraphNodeControlComponent,
+    SgNodeControlComponent,
     SgNodeDefaultComponent,
     SgNodeViewDefaultComponent,
     SgControlPanelComponent,
     SgZoomControlComponent,
     SgToolbarComponent,
+    SgRelationsControlComponent
 ]
 
 export * from './public-api'

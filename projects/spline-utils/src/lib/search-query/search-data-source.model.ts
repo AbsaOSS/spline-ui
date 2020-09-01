@@ -29,7 +29,7 @@ import SearchParams = SearchQuery.SearchParams
 
 
 export abstract class SearchDataSource<TDataRecord,
-    TData extends PageResponse<TDataRecord>,
+    TData extends PageResponse<TDataRecord> = PageResponse<TDataRecord>,
     TFilter extends object = {},
     TSortableFields = string> implements DataSource<TDataRecord> {
 

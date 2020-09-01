@@ -21,7 +21,7 @@ $border-radius: 8px;
 $icon-width: 24px;
 
 $node-bg-color--selected: $color-platinum;
-$node-bg-color--focused: $color-human;
+$node-bg-color--focused: lighten($color-silver, 10);
 
 .sg-node-view {
 
@@ -137,22 +137,24 @@ $node-bg-color--focused: $color-human;
 
 }
 
+$animation-time: 2s;
+
 .sg-node--focused {
     .sg-node-view {
         $self: &;
 
-        animation: focus-node-view 2s;
+        animation: focus-node-view $animation-time;
 
         &__actions-container {
-            animation: focus-actions-container 2s;
+            animation: focus-actions-container $animation-time;
 
             * {
-                animation: focus-text 2s;
+                animation: focus-text $animation-time;
             }
         }
 
         &__icon * {
-            animation: focus-text 2s;
+            animation: focus-text $animation-time;
         }
 
         &--selected {
@@ -180,6 +182,7 @@ $node-bg-color--focused: $color-human;
             border: 1px solid $color-grey-light;
             color: inherit;
         }
+        
         50% {
             background: $node-bg-color--focused;
             border: 1px solid darken($node-bg-color--focused, 5);
@@ -199,6 +202,7 @@ $node-bg-color--focused: $color-human;
             border-color: $color-grey-light;
             color: $color-grey-dark;
         }
+        
         50% {
             background: darken($node-bg-color--focused, 5);
             border-color: darken($node-bg-color--focused, 10);
@@ -216,6 +220,7 @@ $node-bg-color--focused: $color-human;
         0% {
             color: $color-grey-dark;
         }
+
         50% {
             color: $color-grey-light;
         }

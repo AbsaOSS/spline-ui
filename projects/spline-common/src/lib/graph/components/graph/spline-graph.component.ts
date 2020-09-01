@@ -21,7 +21,7 @@ import { Observable } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
 import { BaseComponent } from 'spline-utils'
 
-import { SgControlPanelSectionDirective } from '../../directives'
+import { SgControlPanelSectionDirective } from '../../directives/control-panel-action/sg-control-panel-section.directive'
 import {
     getNodeDomSelector,
     SgData,

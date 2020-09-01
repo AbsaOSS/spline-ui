@@ -22,13 +22,17 @@ import { SplineConfigResolver } from 'spline-shared'
 const routes: Routes = [
     {
         path: 'app',
+        resolve: [
+            SplineConfigResolver
+        ],
         children: [
             {
                 path: 'events',
-                resolve: [
-                    SplineConfigResolver
-                ],
-                loadChildren: () => import('../modules/events/events.module').then(m => m.EventsModule),
+                loadChildren: () => import('../modules/events/spline-events.module').then(m => m.SplineEventsModule),
+            },
+            {
+                path: 'plans',
+                loadChildren: () => import('../modules/plans/spline-plans.module').then(m => m.SplinePlansModule),
             },
             {
                 path: '',

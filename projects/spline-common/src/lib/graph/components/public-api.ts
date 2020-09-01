@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-export * from './graph-node-control/public-api'
-export * from './graph-node-view/public-api'
+export * from './node-control/public-api'
+export * from './node-view/public-api'
 export * from './graph/spline-graph.component'
 export * from './control-panel/sg-control-panel.component'
 export * from './toolbar/sg-toolbar.component'
 export * from './toolbar/sg-toolbar.models'
-export * from './zoom-control/sg-zoom-control.component'
+export * from './control-panel/controls/zoom-control/sg-zoom-control.component'
+export * from './control-panel/controls/relations-control/sg-relations-control.component'

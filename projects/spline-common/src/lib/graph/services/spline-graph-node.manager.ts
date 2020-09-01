@@ -17,7 +17,7 @@
 import { Inject, Injectable, InjectionToken, Injector, Optional, Type } from '@angular/core'
 import { DynamicComponentManager } from 'spline-utils'
 
-import { SgNodeDefaultComponent } from '../components/graph-node-control/type'
+import { SgNodeDefaultComponent } from '../components/node-control/type'
 import { ISgNodeControl, ISgNodeControlFactory } from '../models'
 
 

@@ -14,40 +14,21 @@
  * limitations under the License.
  */
 
-import { AttributeLineageInfoComponent } from './attribute-lineage-info/attribute-lineage-info.component'
 import { SplineDateFilterComponent } from './date-filter/date-filter.component'
 import { EventInfoComponent } from './event-info/event-info.component'
 import { EventNodeInfoComponent } from './event-node-info/event-node-info.component'
-import { ExecutionPlanInfoComponent } from './execution-plan-info/execution-plan-info.component'
-import { SgLegendComponent } from './graph-legend/sg-legend.component'
-import { OperationInfoComponent } from './operation-info/operation-info.component'
-import { SgDepthControlComponent } from './sg-depth-control/sg-depth-control.component'
-import { SgHighlightedRelationsActionsComponent } from './sg-highlighted-relations-actions/sg-highlighted-relations-actions.component'
 
 
 export const components: any[] = [
-    EventInfoComponent,
-    ExecutionPlanInfoComponent,
-    OperationInfoComponent,
-    AttributeLineageInfoComponent,
-    SgLegendComponent,
     SplineDateFilterComponent,
-    SgHighlightedRelationsActionsComponent,
-    SgDepthControlComponent,
-    EventNodeInfoComponent
+    EventInfoComponent,
+    EventNodeInfoComponent,
 ]
 
 export * from './event-info/event-info.component'
-export * from './execution-plan-info/execution-plan-info.component'
-export * from './operation-info/operation-info.component'
-export * from './attribute-lineage-info/attribute-lineage-info.component'
-export * from './graph-legend/sg-legend.component'
 
 export * from './date-filter/date-filter.component'
 export * from './date-filter/date-filter.models'
 export * from './date-filter/date-filter.models'
-
-export * from './sg-depth-control/sg-depth-control.component'
-export * from './sg-depth-control/sg-depth-control.models'
 
 export * from './event-node-info/event-node-info.component'
