@@ -14,4 +14,5 @@
  * limitations under the License.
  */
 
-export * from './operation-details.data-source'
+export * from './api-config/public-api'
+export * from './config/public-api'

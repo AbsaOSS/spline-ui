@@ -42,7 +42,7 @@ export namespace OperationAlias {
             ? [
                 SdWidgetExpansionPanel.toSchema(
                     {
-                        title: 'EVENTS.OPERATION__ALIAS__MAIN_SECTION_TITLE',
+                        title: 'PLANS.OPERATION__ALIAS__MAIN_SECTION_TITLE',
                         icon: nodeStyles.icon,
                         iconColor: nodeStyles.color,
                     },

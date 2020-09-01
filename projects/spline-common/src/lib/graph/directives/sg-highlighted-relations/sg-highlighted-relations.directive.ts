@@ -17,7 +17,9 @@
 
 import { AfterViewInit, Directive, forwardRef, Host, Inject, Input, OnChanges, SimpleChanges } from '@angular/core'
 import { GraphComponent } from '@swimlane/ngx-graph'
-import { getLinkDomSelector, getNodeDomSelector, SgData, SplineGraphComponent } from 'spline-common'
+
+import { SplineGraphComponent } from '../../components'
+import { getLinkDomSelector, getNodeDomSelector, SgData } from '../../models'
 
 
 @Directive({

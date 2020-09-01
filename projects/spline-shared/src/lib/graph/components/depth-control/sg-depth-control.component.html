@@ -31,8 +31,11 @@
 
         <!-- TEXT -->
         <div class="sg-depth-control__text">
-            <h3 class="sg-depth-control__title">Graph Depth</h3>
-            <div class="sg-depth-control__hint">Max depth: {{ maxDepth}}</div>
+            <h3 class="sg-depth-control__title">
+                {{ 'SHARED.SG_DEPTH_CONTROL__TITLE' | translate }}
+            </h3>
+            <div class="sg-depth-control__hint">
+                {{ 'SHARED.SG_DEPTH_CONTROL__MAX_DEPTH_LABEL' | translate }}: {{ maxDepth}}</div>
         </div>
         <!-- ./TEXT -->
 
@@ -41,13 +44,13 @@
             <button mat-button mat-icon-button
                     class="mr-2"
                     (click)="onShowAllBtnClicked()"
-                    [matTooltip]="'Show all levels' | translate">
+                    [matTooltip]="'SHARED.SG_DEPTH_CONTROL__BTN__SHOW_ALL_LEVELS' | translate">
                 <mat-icon>all_inclusive</mat-icon>
             </button>
 
             <button mat-button mat-icon-button
                     (click)="onShowMoreBtnClicked()"
-                    [matTooltip]="'Show One More Level' | translate">
+                    [matTooltip]="'SHARED.SG_DEPTH_CONTROL__BTN__SHOW_ALL_LEVELS' | translate">
                 <mat-icon>add</mat-icon>
             </button>
         </div>

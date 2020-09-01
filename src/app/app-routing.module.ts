@@ -35,6 +35,10 @@ const routes: Routes = [
                 loadChildren: () => import('../modules/plans/spline-plans.module').then(m => m.SplinePlansModule),
             },
             {
+                path: 'data-sources',
+                loadChildren: () => import('../modules/data-sources/spline-data-sources.module').then(m => m.SplineDataSourcesModule),
+            },
+            {
                 path: '',
                 redirectTo: 'events',
                 pathMatch: 'full',

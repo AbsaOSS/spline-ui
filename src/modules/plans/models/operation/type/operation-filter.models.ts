@@ -42,7 +42,7 @@ export namespace OperationFilter {
         return [
             SdWidgetExpansionPanel.toSchema(
                 {
-                    title: 'EVENTS.OPERATION__FILTER__MAIN_SECTION_TITLE',
+                    title: 'PLANS.OPERATION__FILTER__MAIN_SECTION_TITLE',
                     icon: nodeStyles.icon,
                     iconColor: nodeStyles.color,
                 },

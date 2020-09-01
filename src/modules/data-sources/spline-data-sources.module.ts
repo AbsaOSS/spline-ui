@@ -32,28 +32,17 @@ import { MatTreeModule } from '@angular/material/tree'
 import { RouterModule } from '@angular/router'
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material'
 import { SplineApiModule } from 'spline-api'
-import {
-    SplineCommonModule,
-    SplineDataRecordModule,
-    SplineDataViewModule,
-    SplineGraphModule,
-    SplineLayoutModule,
-    SplineTranslateModule,
-} from 'spline-common'
-import { SplineApiConfigModule, SplineAttributesTreeModule, SplineExpressionModule, SplineGraphSharedModule } from 'spline-shared'
+import { SplineCommonModule, SplineLayoutModule, SplineTranslateModule } from 'spline-common'
+import { SplineApiConfigModule } from 'spline-shared'
 
 
-import * as fromComponents from './components'
-import * as fromDirectives from './directives'
 import * as fromPages from './pages'
-import { SplinePlansRoutingModule } from './spline-plans-routing.module'
+import { SplineDataSourcesRoutingModule } from './spline-data-sources-routing.module'
 
 
 @NgModule({
     declarations: [
         ...fromPages.pageComponents,
-        ...fromComponents.components,
-        ...fromDirectives.directives,
     ],
     imports: [
         CommonModule,
@@ -72,23 +61,17 @@ import { SplinePlansRoutingModule } from './spline-plans-routing.module'
         MatInputModule,
         MatMenuModule,
         NgxDaterangepickerMd.forRoot(),
-        SplinePlansRoutingModule,
+        SplineDataSourcesRoutingModule,
         SplineApiConfigModule,
         SplineApiModule,
         SplineLayoutModule,
-        SplineTranslateModule.forChild({ moduleNames: ['plans', 'graph', 'shared'] }),
-        SplineGraphModule,
-        SplineDataRecordModule,
-        SplineAttributesTreeModule,
-        SplineDataViewModule,
-        SplineExpressionModule,
+        SplineTranslateModule.forChild({ moduleNames: ['plans', 'graph'] }),
         SplineCommonModule,
-        SplineGraphSharedModule
     ],
     exports: [
         ...fromPages.pageComponents,
     ],
     providers: [],
 })
-export class SplinePlansModule {
+export class SplineDataSourcesModule {
 }

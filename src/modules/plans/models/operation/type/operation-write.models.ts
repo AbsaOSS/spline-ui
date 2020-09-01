@@ -43,7 +43,7 @@ export namespace OperationWrite {
         return [
             SdWidgetExpansionPanel.toSchema(
                 {
-                    title: 'EVENTS.OPERATION__WRITE__MAIN_SECTION_TITLE',
+                    title: 'PLANS.OPERATION__WRITE__MAIN_SECTION_TITLE',
                     icon: nodeStyles.icon,
                     iconColor: nodeStyles.color,
                 },
@@ -56,7 +56,7 @@ export namespace OperationWrite {
                                 description: properties.outputSource,
                             },
                         ],
-                        'EVENTS.OPERATION__WRITE__OUTPUT_DATA_SOURCE_TITLE',
+                        'PLANS.OPERATION__WRITE__OUTPUT_DATA_SOURCE_TITLE',
                     ),
                     ...EventOperationProperty.primitivePropsToDvs(primitiveProps),
                 ],

@@ -143,7 +143,7 @@ export namespace SgNodeControl {
             onClick: () => {
                 onNodeHighlightRelations()
             },
-            tooltip: 'EVENTS.EVENT_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS',
+            tooltip: 'SHARED.SG_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS',
         }
     }
 
@@ -153,7 +153,7 @@ export namespace SgNodeControl {
             onClick: () => {
                 onNodeFocus()
             },
-            tooltip: 'EVENTS.EVENT_NODE_CONTROL__ACTION__FOCUS',
+            tooltip: 'SHARED.SG_NODE_CONTROL__ACTION__FOCUS',
         }
     }
 

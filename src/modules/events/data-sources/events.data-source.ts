@@ -27,7 +27,7 @@ import { SearchDataSource, SearchQuery } from 'spline-utils'
 import SortDir = QuerySorter.SortDir
 
 
-export class ExecutionEventsDataSource extends SearchDataSource<ExecutionEvent,
+export class EventsDataSource extends SearchDataSource<ExecutionEvent,
     ExecutionEventsPageResponse,
     ExecutionEventsQuery.QueryFilter,
     ExecutionEventField> {

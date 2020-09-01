@@ -13,20 +13,13 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+<div class="container">
+    <h1 class="page-title">
+        {{'Data Sources' | translate}}
+    </h1>
 
-<div class="sg-legend">
-
-    <div [ngStyle]="{background: legend.color}"
-         class="sg-legend__circle">
+    <div class="pt-3">
+        <spline-no-result></spline-no-result>
     </div>
 
-    <div class="px-2 flex-grow-1">
-        {{legend.title | translate}}
-    </div>
-
-    <mat-icon *ngIf="legend?.description"
-              [matTooltip]="legend.description | translate">
-        info
-    </mat-icon>
 </div>
-

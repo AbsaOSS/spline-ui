@@ -33,7 +33,7 @@ import * as fromComponents from './components'
         SplineSearchBoxModule,
         SplineApiConfigModule,
         SplineApiExecutionEventModule,
-        SplineTranslateModule.forChild({ moduleNames: ['events'] }),
+        SplineTranslateModule,
         SplineLoaderModule,
         SplineAttributesModule,
     ],

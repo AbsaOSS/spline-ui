@@ -18,7 +18,7 @@ import { Observable } from 'rxjs'
 import { ExecutionPlan } from 'spline-api'
 import { SplineDataViewSchema } from 'spline-common'
 
-import { attributesSchemaToDataViewSchema, ExecutionPlanInfo } from '../../models'
+import { attributesSchemaToDataViewSchema, PlanInfo } from '../../models'
 
 
 export namespace ExecutionPlanInfoStore {
@@ -35,9 +35,9 @@ export namespace ExecutionPlanInfoStore {
     export function toState(executionPlan: ExecutionPlan, selectedAttributeId$: Observable<string | null>): State {
         return {
             executionPlan: executionPlan,
-            executionPlanVs: ExecutionPlanInfo.toDataViewSchema(executionPlan),
-            inputsVs: ExecutionPlanInfo.getInputsDataViewSchema(executionPlan),
-            outputVs: ExecutionPlanInfo.getOutputDataViewSchema(executionPlan),
+            executionPlanVs: PlanInfo.toDataViewSchema(executionPlan),
+            inputsVs: PlanInfo.getInputsDataViewSchema(executionPlan),
+            outputVs: PlanInfo.getOutputDataViewSchema(executionPlan),
             inputsNumber: executionPlan.inputDataSources.length,
             attributesSchema: attributesSchemaToDataViewSchema(
                 executionPlan.extraInfo.attributes,

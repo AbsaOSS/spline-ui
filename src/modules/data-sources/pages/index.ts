@@ -14,4 +14,11 @@
  * limitations under the License.
  */
 
-export * from './spline-events-shared.module'
+import { DataSourcesListPageComponent } from './data-sources-list/data-sources-list.page.component'
+
+
+export const pageComponents: any[] = [
+    DataSourcesListPageComponent,
+]
+
+export * from './data-sources-list/data-sources-list.page.component'

@@ -23,13 +23,13 @@
     <mat-tab-group>
 
         <!-- ATTR SCHEMA -->
-        <mat-tab [label]="'EVENTS.EXECUTION_PLAN_INFO__TAB__ATTR_SCHEMA' | translate">
+        <mat-tab [label]="'PLANS.PLAN_INFO__TAB__ATTR_SCHEMA' | translate">
             <spline-data-view [dataViewSchema]="state.attributesSchema" (event$)="onDataViewEvent($event)"></spline-data-view>
         </mat-tab>
         <!-- ./ATTR SCHEMA -->
 
         <!-- OUTPUT DS -->
-        <mat-tab [label]="'EVENTS.EXECUTION_PLAN_INFO__TAB__OUTPUT' | translate">
+        <mat-tab [label]="'PLANS.PLAN_INFO__TAB__OUTPUT' | translate">
             <spline-data-view [dataViewSchema]="state.outputVs" (event$)="onDataViewEvent($event)"></spline-data-view>
         </mat-tab>
         <!-- ./OUTPUT DS -->
@@ -37,7 +37,7 @@
         <!-- INPUTS DS -->
         <mat-tab>
             <ng-template matTabLabel>
-                {{'EVENTS.EXECUTION_PLAN_INFO__TAB__INPUTS' | translate}} ({{state.inputsNumber}})
+                {{'PLANS.PLAN_INFO__TAB__INPUTS' | translate}} ({{state.inputsNumber}})
             </ng-template>
 
             <spline-data-view [dataViewSchema]="state.inputsVs" (event$)="onDataViewEvent($event)"></spline-data-view>

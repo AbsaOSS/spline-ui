@@ -16,7 +16,11 @@
 
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
-import { SplineTranslateModule } from 'spline-common'
+import { MatButtonModule } from '@angular/material/button'
+import { MatCardModule } from '@angular/material/card'
+import { MatIconModule } from '@angular/material/icon'
+import { MatTooltipModule } from '@angular/material/tooltip'
+import { SplineLoaderModule, SplineTranslateModule } from 'spline-common'
 
 import { sgSharedComponents } from './components'
 
@@ -24,7 +28,12 @@ import { sgSharedComponents } from './components'
 @NgModule({
     imports: [
         CommonModule,
-        SplineTranslateModule
+        MatButtonModule,
+        MatIconModule,
+        MatTooltipModule,
+        MatCardModule,
+        SplineTranslateModule,
+        SplineLoaderModule
     ],
     declarations: [
         ...sgSharedComponents,

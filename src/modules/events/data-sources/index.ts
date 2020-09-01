@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export * from './execution-events.data-source'
+export * from './events.data-source'

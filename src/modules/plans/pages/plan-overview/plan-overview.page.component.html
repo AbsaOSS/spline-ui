@@ -35,7 +35,7 @@
                             mat-button>
                         <mat-icon class="mr-2">arrow_back</mat-icon>
                         <span class="pr-2">
-                                {{ 'EVENTS.EXECUTION_PLAN__BACK_TO_EVENT_BUTTON' | translate }}
+                                {{ 'PLANS.BACK_TO_EVENT_BUTTON' | translate }}
                             </span>
                     </button>
 
@@ -54,7 +54,7 @@
                             mat-button>
                         <mat-icon class="mr-2">arrow_back</mat-icon>
                         <span class="pr-2">
-                                {{ 'EVENTS.EXECUTION_PLAN__BACK_TO_PLAN_BUTTON' | translate }}
+                                {{ 'PLANS.BACK_TO_PLAN_BUTTON' | translate }}
                             </span>
                     </button>
 
@@ -80,11 +80,11 @@
 
                     <!-- TOOLBAR -->
                     <sg-toolbar *ngIf="store.selectedAttribute$ | async as selectedAttribute">
-                        <event-attribute-lineage-info (close$)="onSelectedAttributeChanged(null)"
-                                                      [loading]="state.attributeLineageLoadingProcessing.processing"
-                                                      [attributeLineage]="state.attributeLineage"
-                                                      [attribute]="selectedAttribute">
-                        </event-attribute-lineage-info>
+                        <spline-attribute-lineage-info (close$)="onSelectedAttributeChanged(null)"
+                                                       [loading]="state.attributeLineageLoadingProcessing.processing"
+                                                       [attributeLineage]="state.attributeLineage"
+                                                       [attribute]="selectedAttribute">
+                        </spline-attribute-lineage-info>
                     </sg-toolbar>
                     <!-- ./TOOLBAR -->
 

@@ -14,4 +14,28 @@
  * limitations under the License.
  */
 
-export * from './operation-details.data-source'
+import { NgModule } from '@angular/core'
+import { RouterModule, Routes } from '@angular/router'
+
+import { DataSourcesListPageComponent } from './pages'
+
+
+const routes: Routes = [
+    {
+        path: 'list',
+        component: DataSourcesListPageComponent,
+    },
+    {
+        path: '**',
+        redirectTo: 'list',
+    },
+]
+
+@NgModule({
+    imports: [
+        RouterModule.forChild(routes),
+    ],
+    exports: [RouterModule],
+})
+export class SplineDataSourcesRoutingModule {
+}

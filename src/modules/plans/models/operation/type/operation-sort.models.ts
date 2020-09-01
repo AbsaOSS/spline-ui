@@ -45,7 +45,7 @@ export namespace OperationSort {
         const sortSchema = [
             SdWidgetExpansionPanel.toSchema(
                 {
-                    title: 'EVENTS.OPERATION__SORT__MAIN_SECTION_TITLE',
+                    title: 'PLANS.OPERATION__SORT__MAIN_SECTION_TITLE',
                     icon: nodeStyles.icon,
                     iconColor: nodeStyles.color,
                 },

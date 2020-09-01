@@ -74,7 +74,7 @@ import { SplineEventsRoutingModule } from './spline-events-routing.module'
         SplineApiConfigModule,
         SplineApiModule,
         SplineLayoutModule,
-        SplineTranslateModule.forChild({ moduleNames: ['events', 'graph'] }),
+        SplineTranslateModule.forChild({ moduleNames: ['events', 'graph', 'shared'] }),
         SplineGraphModule,
         SplineDataRecordModule,
         SplineAttributesTreeModule,

@@ -17,7 +17,6 @@
 export * from './lib/attributes/public-api'
 export * from './lib/attribute-search/public-api'
 export * from './lib/attributes-tree/public-api'
-export * from './lib/events/public-api'
 export * from './lib/expression/public-api'
 export * from './lib/graph/public-api'
 export * from './lib/utils/api-config/public-api'

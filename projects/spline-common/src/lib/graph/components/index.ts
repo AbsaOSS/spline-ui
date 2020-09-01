@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import { SgRelationsControlComponent } from 'spline-common'
-
+import { SgRelationsControlComponent } from './control-panel/controls/relations-control/sg-relations-control.component'
 import { SgZoomControlComponent } from './control-panel/controls/zoom-control/sg-zoom-control.component'
 import { SgControlPanelComponent } from './control-panel/sg-control-panel.component'
 import { SplineGraphComponent } from './graph/spline-graph.component'

@@ -21,7 +21,7 @@ import { MatCardModule } from '@angular/material/card'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatTreeModule } from '@angular/material/tree'
-import { SD_WIDGET_FACTORY } from 'spline-common'
+import { SD_WIDGET_FACTORY, SplineTranslateModule } from 'spline-common'
 
 import { SplineAttributesModule } from '../attributes'
 
@@ -37,7 +37,8 @@ import { SdWidgetAttributesTreeFactory } from './services/sd-widget-attributes-t
         MatIconModule,
         MatButtonModule,
         MatTooltipModule,
-        SplineAttributesModule
+        SplineAttributesModule,
+        SplineTranslateModule,
     ],
     declarations: [
         ...fromComponents.attributesTreeComponents,

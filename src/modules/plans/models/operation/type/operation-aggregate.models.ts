@@ -47,7 +47,7 @@ export namespace OperationAggregate {
             ? [
                 SdWidgetExpansionPanel.toSchema(
                     {
-                        title: 'EVENTS.OPERATION__AGGREGATE__AGGREGATE_SECTION_TITLE',
+                        title: 'PLANS.OPERATION__AGGREGATE__AGGREGATE_SECTION_TITLE',
                         icon: nodeStyles.icon,
                         iconColor: nodeStyles.color,
                     },
@@ -65,7 +65,7 @@ export namespace OperationAggregate {
             ? [
                 SdWidgetExpansionPanel.toSchema(
                     {
-                        title: 'EVENTS.OPERATION__AGGREGATE__GROUPING_SECTION_TITLE',
+                        title: 'PLANS.OPERATION__AGGREGATE__GROUPING_SECTION_TITLE',
                         icon: 'group_work',
                         iconColor: nodeStyles.color,
                     },

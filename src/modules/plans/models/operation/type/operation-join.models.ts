@@ -42,7 +42,7 @@ export namespace OperationJoin {
         return [
             SdWidgetExpansionPanel.toSchema(
                 {
-                    title: 'EVENTS.OPERATION__JOIN__MAIN_SECTION_TITLE',
+                    title: 'PLANS.OPERATION__JOIN__MAIN_SECTION_TITLE',
                     icon: nodeStyles.icon,
                     iconColor: nodeStyles.color,
                 },

@@ -21,7 +21,7 @@ import { SgNodeControl } from 'spline-shared'
 import { OperationInfo } from '../operation'
 
 
-export namespace ExecutionPlanNodeControl {
+export namespace PlanNodeControl {
 
     export function extractNodeName(nodeSource: ExecutionPlanLineageNode): string {
         return nodeSource.name

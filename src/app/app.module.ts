@@ -22,7 +22,13 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { environment } from '@env/environment'
-import { SplineIconModule, SplineLayoutModule, SplineSearchBoxModule, SplineTranslateCoreModule } from 'spline-common'
+import {
+    SplineIconModule,
+    SplineLayoutModule,
+    SplineSearchBoxModule,
+    SplineTranslateCoreModule,
+    SplineTranslateModule,
+} from 'spline-common'
 import { SplineAttributeSearchModule, SplineConfigModule, SplineConfigSettings, SPLINE_CONFIG_SETTINGS } from 'spline-shared'
 
 import { AppRoutingModule } from './app-routing.module'
@@ -42,6 +48,7 @@ import { AppComponent } from './app.component'
         MatTooltipModule,
         MatButtonModule,
         SplineTranslateCoreModule,
+        SplineTranslateModule.forChild({ moduleNames: ['shared', 'app'] }),
         SplineLayoutModule,
         SplineSearchBoxModule,
         SplineConfigModule,

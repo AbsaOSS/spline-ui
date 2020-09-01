@@ -19,7 +19,7 @@ import { SdWidgetCard, SdWidgetSchema, SdWidgetSimpleRecord, SplineColors, Splin
 import { SgNodeControl } from 'spline-shared'
 
 
-export namespace ExecutionPlanInfo {
+export namespace PlanInfo {
 
     import getNodeStyles = SgNodeControl.getNodeStyles
 
@@ -30,17 +30,17 @@ export namespace ExecutionPlanInfo {
                 {
                     color: SplineColors.ORANGE,
                     icon: 'playlist_play',
-                    title: data?.extraInfo?.appName ? data?.extraInfo?.appName : 'EVENTS.EXECUTION_EVENT_INFO__DEFAULT_NAME',
-                    label: 'EVENTS.EXECUTION_EVENT_INFO__LABEL',
+                    title: data?.extraInfo?.appName ? data?.extraInfo?.appName : 'PLANS.PLAN_INFO__DEFAULT_NAME',
+                    label: 'PLANS.PLAN_INFO__LABEL',
                 },
                 [
                     SdWidgetSimpleRecord.toSchema([
                         {
-                            label: 'EVENTS.EXECUTION_EVENT_INFO__DETAILS__SYSTEM_INFO',
+                            label: 'PLANS.PLAN_INFO__DETAILS__SYSTEM_INFO',
                             value: `${data.systemInfo.name} ${data.systemInfo.version}`,
                         },
                         {
-                            label: 'EVENTS.EXECUTION_EVENT_INFO__DETAILS__AGENT_INFO',
+                            label: 'PLANS.PLAN_INFO__DETAILS__AGENT_INFO',
                             value: `${data.agentInfo.name} ${data.agentInfo.version}`,
                         },
                     ]),

@@ -47,8 +47,8 @@ export class AppComponent {
             )
             .subscribe((event: NavigationEnd) => {
                 const urlsFromOtherScopes = [
-                    '/app/events/plans',
-                    '/app/events/data-sources',
+                    '/app/plans/list',
+                    '/app/data-sources/list',
                 ]
                 const isActive = !urlsFromOtherScopes.includes(event.url)
                 this.isEventsLinkActive$.next({ isActive })
@@ -57,7 +57,7 @@ export class AppComponent {
 
     onAttributeSearchSelected(attributeInfo: AttributeSearchRecord): void {
         this.router.navigate(
-            ['/app/events/plan-overview', attributeInfo.executionEventId],
+            ['/app/plans/overview', attributeInfo.executionEventId],
             {
                 queryParams: {
                     attributeId: attributeInfo.id,

@@ -14,14 +14,16 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common'
-import { NgModule } from '@angular/core'
+import { Component } from '@angular/core'
+import { BaseComponent } from 'spline-utils'
 
 
+@Component({
+    selector: 'data-sources-list-page',
+    templateUrl: './data-sources-list.page.component.html',
+    styleUrls: ['./data-sources-list.page.component.scss'],
 
-@NgModule({
-    imports: [
-        CommonModule,
-    ],
 })
-export class SplineEventsSharedModule { }
+export class DataSourcesListPageComponent extends BaseComponent {
+
+}

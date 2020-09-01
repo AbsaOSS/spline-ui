@@ -14,4 +14,23 @@
  * limitations under the License.
  */
 
-export * from './operation-details.data-source'
+module.exports = {
+    'rules': {
+        '@angular-eslint/directive-selector': [
+            'error',
+            {
+                'type': 'attribute',
+                'prefix': ['dataSource', 'dataSources', 'sd', 'sg', 'spline'],
+                'style': 'camelCase'
+            }
+        ],
+        '@angular-eslint/component-selector': [
+            'error',
+            {
+                'type': 'element',
+                'prefix': ['data-source', 'data-sources', 'sd', 'sg', 'spline'],
+                'style': 'kebab-case'
+            }
+        ]
+    }
+};

@@ -43,7 +43,7 @@ export namespace OperationProjection {
             ? [
                 SdWidgetExpansionPanel.toSchema(
                     {
-                        title: 'EVENTS.OPERATION__PROJECTION__MAIN_SECTION_TITLE',
+                        title: 'PLANS.OPERATION__PROJECTION__MAIN_SECTION_TITLE',
                         icon: nodeStyles.icon,
                         iconColor: nodeStyles.color,
                     },
@@ -58,7 +58,7 @@ export namespace OperationProjection {
         const transformationsSchema = [
             SdWidgetExpansionPanel.toSchema(
                 {
-                    title: 'EVENTS.OPERATION__PROJECTION__TRANSFORMATIONS_TITLE',
+                    title: 'PLANS.OPERATION__PROJECTION__TRANSFORMATIONS_TITLE',
                     icon: nodeStyles.icon,
                     iconColor: nodeStyles.color,
                 },
@@ -83,7 +83,7 @@ export namespace OperationProjection {
             ? [
                 SdWidgetExpansionPanel.toSchema(
                     {
-                        title: 'EVENTS.OPERATION__PROJECTION__DROPPED_ATTRIBUTES_TITLE',
+                        title: 'PLANS.OPERATION__PROJECTION__DROPPED_ATTRIBUTES_TITLE',
                         icon: 'label_off',
                         iconColor: SplineColors.PINK,
                     },

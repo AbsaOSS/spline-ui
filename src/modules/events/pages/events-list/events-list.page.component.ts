@@ -25,7 +25,7 @@ import { ExecutionEventFacade, ExecutionEventField, ExecutionEventsPageResponse,
 import { BaseComponent, ProcessingStore, RouterHelpers, SearchQuery } from 'spline-utils'
 
 import { SplineDateFilter } from '../../components'
-import { ExecutionEventsDataSource } from '../../data-sources'
+import { EventsDataSource } from '../../data-sources'
 import { EventsListUrlState } from '../../models'
 
 
@@ -35,9 +35,9 @@ import { EventsListUrlState } from '../../models'
     styleUrls: ['./events-list.page.component.scss'],
     providers: [
         {
-            provide: ExecutionEventsDataSource,
+            provide: EventsDataSource,
             useFactory: (executionEventFacade: ExecutionEventFacade) => {
-                return new ExecutionEventsDataSource(executionEventFacade)
+                return new EventsDataSource(executionEventFacade)
             },
             deps: [ExecutionEventFacade],
         },
@@ -62,7 +62,7 @@ export class EventsListPageComponent extends BaseComponent implements OnInit, Af
 
     readonly ExecutionEventField = ExecutionEventField
 
-    constructor(readonly dataSource: ExecutionEventsDataSource,
+    constructor(readonly dataSource: EventsDataSource,
                 private readonly activatedRoute: ActivatedRoute,
                 private readonly router: Router) {
         super()

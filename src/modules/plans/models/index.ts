@@ -16,7 +16,7 @@
 
 export * from './attribute'
 export * from './operation/operation-info.models'
-export * from './execution-plan/execution-plan-overivew.models'
-export * from './execution-plan/execution-plan-node-control.models'
-export * from './execution-plan/execution-plan-info.models'
+export * from './plan/plan-overivew.models'
+export * from './plan/plan-node-control.models'
+export * from './plan/plan-info.models'
 

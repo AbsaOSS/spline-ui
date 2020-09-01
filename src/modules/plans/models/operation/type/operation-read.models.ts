@@ -42,7 +42,7 @@ export namespace OperationRead {
         return [
             SdWidgetExpansionPanel.toSchema(
                 {
-                    title: 'EVENTS.OPERATION__READ__MAIN_SECTION_TITLE',
+                    title: 'PLANS.OPERATION__READ__MAIN_SECTION_TITLE',
                     icon: nodeStyles.icon,
                     iconColor: nodeStyles.color,
                 },
@@ -54,7 +54,7 @@ export namespace OperationRead {
                                 value: dataSourceUriToName(uri),
                                 description: uri,
                             })),
-                        'EVENTS.OPERATION__READ__INPUT_DATA_SOURCES_TITLE',
+                        'PLANS.OPERATION__READ__INPUT_DATA_SOURCES_TITLE',
                     ),
                     ...EventOperationProperty.primitivePropsToDvs(primitiveProps),
                 ],

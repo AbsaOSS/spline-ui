@@ -24,18 +24,18 @@ import { LINEAGE_TYPE_COLOR_MAP } from './attribute-lineage.models'
 export const LINAGE_TYPE_LEGENDS_MAP: Readonly<Record<AttributeLineageType, SgLegend>>
     = Object.freeze<Record<AttributeLineageType, SgLegend>>({
         [AttributeLineageType.Usage]: {
-            title: 'EVENTS.ATTRIBUTE_LINEAGE__LEGEND__USAGE__TITLE',
-            description: 'EVENTS.ATTRIBUTE_LINEAGE__LEGEND__USAGE__DESCRIPTION',
+            title: 'PLANS.ATTRIBUTE_LINEAGE__LEGEND__USAGE__TITLE',
+            description: 'PLANS.ATTRIBUTE_LINEAGE__LEGEND__USAGE__DESCRIPTION',
             color: LINEAGE_TYPE_COLOR_MAP[AttributeLineageType.Usage],
         },
         [AttributeLineageType.Lineage]: {
-            title: 'EVENTS.ATTRIBUTE_LINEAGE__LEGEND__LINEAGE__TITLE',
-            description: 'EVENTS.ATTRIBUTE_LINEAGE__LEGEND__LINEAGE__DESCRIPTION',
+            title: 'PLANS.ATTRIBUTE_LINEAGE__LEGEND__LINEAGE__TITLE',
+            description: 'PLANS.ATTRIBUTE_LINEAGE__LEGEND__LINEAGE__DESCRIPTION',
             color: LINEAGE_TYPE_COLOR_MAP[AttributeLineageType.Lineage],
         },
         [AttributeLineageType.Impact]: {
-            title: 'EVENTS.ATTRIBUTE_LINEAGE__LEGEND__IMPACT__TITLE',
-            description: 'EVENTS.ATTRIBUTE_LINEAGE__LEGEND__IMPACT__DESCRIPTION',
+            title: 'PLANS.ATTRIBUTE_LINEAGE__LEGEND__IMPACT__TITLE',
+            description: 'PLANS.ATTRIBUTE_LINEAGE__LEGEND__IMPACT__DESCRIPTION',
             color: LINEAGE_TYPE_COLOR_MAP[AttributeLineageType.Impact],
         },
     })

@@ -39,7 +39,7 @@ export namespace OperationGeneric {
             ? [
                 SdWidgetExpansionPanel.toSchema(
                     {
-                        title: 'EVENTS.OPERATION__GENERIC__MAIN_SECTION_TITLE',
+                        title: 'PLANS.OPERATION__GENERIC__MAIN_SECTION_TITLE',
                         icon: 'scatter_plot',
                         iconColor: SplineColors.BLUE,
                     },

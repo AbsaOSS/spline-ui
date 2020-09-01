@@ -36,34 +36,40 @@
                        [matTooltipPosition]="'right'"
                        mat-list-item
                        *ngIf="isEventsLinkActive$ | async as isEventsLinkActive"
-                       matTooltip="Execution Events"
+                       [matTooltip]="'APP.MENU__EVENTS' | translate"
                        routerLink="/app/events/list">
 
                         <mat-icon>play_arrow</mat-icon>
-                        <span *ngIf="isExpanded">Execution Events</span>
+                        <span *ngIf="isExpanded">
+                            {{ 'APP.MENU__EVENTS' | translate }}
+                        </span>
 
                     </a>
                     <a [matTooltipDisabled]="isExpanded"
                        [matTooltipPosition]="'right'"
                        mat-list-item
-                       matTooltip="Execution Plans"
-                       routerLink="/app/events/plans"
+                       [matTooltip]="'APP.MENU__PLANS' | translate"
+                       routerLink="/app/plans/list"
                        routerLinkActive="active">
 
                         <mat-icon>playlist_play</mat-icon>
-                        <span *ngIf="isExpanded">Execution Plans</span>
+                        <span *ngIf="isExpanded">
+                            {{ 'APP.MENU__PLANS' | translate }}
+                        </span>
 
                     </a>
 
                     <a [matTooltipDisabled]="isExpanded"
                        [matTooltipPosition]="'right'"
                        mat-list-item
-                       matTooltip="Data Sources"
-                       routerLink="/app/events/data-sources"
+                       [matTooltip]="'APP.MENU__DATA_SOURCES' | translate"
+                       routerLink="/app/data-sources/list"
                        routerLinkActive="active">
 
                         <mat-icon>description</mat-icon>
-                        <span *ngIf="isExpanded">Data Sources</span>
+                        <span *ngIf="isExpanded">
+                            {{ 'APP.MENU__DATA_SOURCES' | translate }}
+                        </span>
 
                     </a>
                 </mat-nav-list>

@@ -20,7 +20,7 @@ import _ from 'lodash'
 import { ExecutionEventsQuery } from 'spline-api'
 
 
-export namespace ExecutionPlanOverview {
+export namespace PlanOverview {
 
     import QueryParams = ExecutionEventsQuery.QueryParams
 

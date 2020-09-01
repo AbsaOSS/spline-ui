@@ -16,7 +16,7 @@
 
 <button mat-button [matMenuTriggerFor]="popover">
     <mat-icon class="mr-2">schedule</mat-icon>
-    <span>{{ valueString?.length ? valueString : 'Everything' }}</span>
+    <span>{{ valueString?.length ? valueString : ('EVENTS.EVENTS_LIST__FILTER__DATE__EMPTY_VALUE_LABEL' | translate) }}</span>
 </button>
 
 <mat-menu #popover="matMenu">

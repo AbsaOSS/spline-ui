@@ -1,0 +1,14 @@
+{
+  "SHARED": {
+    "ATTR_SEARCH__PLACEHOLDER": "Search for an attribute ...",
+    "ATTR_TREE__HIGHLIGHT_BTN__TOOLTIP": "Highlight",
+    "EXPRESSION__ACTION__TREE_VIEW__TOOLTIP": "Tree View",
+    "EXPRESSION__TITLE": "Expression",
+    "SG_DEPTH_CONTROL__TITLE": "Graph Depth",
+    "SG_DEPTH_CONTROL__MAX_DEPTH_LABEL": "Max depth",
+    "SG_DEPTH_CONTROL__BTN__SHOW_ALL_LEVELS": "Show all levels",
+    "SG_DEPTH_CONTROL__BTN_SHOW_ONE_MORE_LEVEL": "Show One More Level",
+    "SG_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS": "Highlight Relations",
+    "SG_NODE_CONTROL__ACTION__FOCUS": "Focus on Graph"
+  }
+}
