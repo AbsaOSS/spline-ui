@@ -19,7 +19,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { BehaviorSubject, merge, Observable, Subject } from 'rxjs'
 import { filter, map, shareReplay, skip, takeUntil } from 'rxjs/operators'
 import { ExecutionEventFacade } from 'spline-api'
-import { SgData, SgNodeSchema, SgRelations } from 'spline-common'
+import { SdWidgetSchema, SgData, SgNodeSchema, SgRelations, SplineColors } from 'spline-common'
 import { BaseComponent, RouterHelpers } from 'spline-utils'
 
 import { EventNodeControl, EventNodeInfo } from '../../models'
@@ -47,6 +47,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
     readonly graphData$: Observable<SgData>
 
     readonly selectedNodeRelations$: Observable<EventNodeInfo.NodeRelationsInfo>
+    readonly targetNodeDvs$: Observable<SdWidgetSchema | null>
 
     readonly focusNode$ = new Subject<string>()
     readonly highlightedRelationsNodesIds$ = new BehaviorSubject<string[] | null>(null)
@@ -94,6 +95,22 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
                         }
                         : null,
                 ),
+            )
+
+        this.targetNodeDvs$ = this.store.targetNode$
+            .pipe(
+                map(node => {
+                    if (node === null) {
+                        return null
+                    }
+
+                    return EventNodeInfo.toDataSchema(
+                        node,
+                        (nodeId) => this.onExecutionPlanNodeLaunchAction(nodeId),
+                        (nodeId) => this.onNodeFocus(nodeId),
+                        (nodeId) => this.onNodeHighlightRelations(nodeId),
+                    )
+                }),
             )
 
     }
@@ -154,11 +171,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
         this.focusNode$.next(nodeId)
     }
 
-    private resetNodeHighlightRelations(): void {
-        this.highlightedRelationsNodesIds$.next(null)
-    }
-
-    private onNodeHighlightRelations(nodeId: string): void {
+    onNodeHighlightRelations(nodeId: string): void {
         const highlightedRelationsNodesIds = SgRelations.toggleSelection(
             this.highlightedRelationsNodesIds$.getValue() ?? [],
             nodeId,
@@ -166,6 +179,14 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
         )
 
         this.highlightedRelationsNodesIds$.next(highlightedRelationsNodesIds)
+    }
+
+    onShowDetailsBtnCLicked(): void {
+        this.store.setSelectedNode(null)
+    }
+
+    private resetNodeHighlightRelations(): void {
+        this.highlightedRelationsNodesIds$.next(null)
     }
 
     private updateQueryParams(nodeId: string | null): void {

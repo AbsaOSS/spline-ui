@@ -19,6 +19,7 @@ export namespace SplineColors {
     export const SILVER = '#736464'
     export const PLATINUM = '#5a4b4b'
     export const HUMAN = '#aa052d'
+    export const LUXURY = '#640032'
     export const PASSION = '#dc0032'
     export const CARE = '#f05a78'
     export const SMILE = '#f0325a'

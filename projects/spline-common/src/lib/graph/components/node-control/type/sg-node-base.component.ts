@@ -27,6 +27,8 @@ export abstract class SgNodeBaseComponent<TData extends object, TOptions extends
 
     @Input() schema: SgNodeSchema<TData, TOptions>
     @Input() isSelected: boolean
+    @Input() isFocused: boolean
+    @Input() isTarget: boolean
 
     @Output() event$ = new EventEmitter<SgNodeControlEvent<TData>>()
 

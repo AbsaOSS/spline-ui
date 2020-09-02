@@ -15,7 +15,9 @@
   -->
 
 <div class="sg-node-view sg-node-view--actions-position-{{actionsPosition ? actionsPosition : defaultActionsPosition}}"
-     [class.sg-node-view--selected]="isSelected">
+     [class.sg-node-view--selected]="isSelected"
+     [class.sg-node-view--focused]="isFocused"
+     [class.sg-node-view--target]="isTarget">
 
     <div class="sg-node-view__content-container">
         <!-- ICON -->

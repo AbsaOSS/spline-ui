@@ -43,6 +43,8 @@ export class SgNodeControlComponent<TData extends object, TOptions extends objec
 
     @Input() schema: SgNodeSchema<TData, TOptions>
     @Input() isSelected: boolean
+    @Input() isFocused: boolean
+    @Input() isTarget: boolean
 
     @Output() event$ = new EventEmitter<SgNodeControlEvent<TData>>()
 
@@ -56,16 +58,24 @@ export class SgNodeControlComponent<TData extends object, TOptions extends objec
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        const schemaChange = changes['schema']
-        if (schemaChange) {
+        const { schema } = changes
+
+        if (schema) {
             this.rebuildComponent()
         }
 
-        // synchronize selection info
-        if (changes.isSelected && !changes.isSelected.isFirstChange() && this.componentRef) {
-            this.componentRef.instance.isSelected = changes.isSelected.currentValue
-            this.componentRef.changeDetectorRef.detectChanges()
-        }
+        // synchronize mirror Input() params
+        const mirrorInputParams = [
+            'isSelected',
+            'isFocused',
+            'isTarget',
+        ]
+
+        mirrorInputParams.filter(fieldName => changes[fieldName] && !changes[fieldName].isFirstChange() && this.componentRef)
+            .forEach(fieldName => {
+                this.componentRef.instance[fieldName] = changes[fieldName].currentValue
+                this.componentRef.changeDetectorRef.detectChanges()
+            })
     }
 
     protected initCreatedComponent(componentRef: ComponentRef<ISgNodeControl<TData, TOptions>>): void {
@@ -74,7 +84,10 @@ export class SgNodeControlComponent<TData extends object, TOptions extends objec
         instance.schema = !this.schema?.type
             ? decorateDefaultSgNodeSchema(this.schema) as SgNodeSchema<TData, TOptions>
             : this.schema
+
         instance.isSelected = this.isSelected
+        instance.isFocused = this.isFocused
+        instance.isTarget = this.isTarget
 
         this.eventsSubscriptionRefs.push(
             instance.event$.subscribe((event) => this.event$.emit(event)),

@@ -34,6 +34,7 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
 
     @Output() focusNode$ = new EventEmitter<{ nodeId: string }>()
     @Output() launchNode$ = new EventEmitter<{ nodeId: string }>()
+    @Output() highlightNodeRelations$ = new EventEmitter<{ nodeId: string }>()
 
     constructor() {
         super()
@@ -57,11 +58,16 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
             node,
             (nodeId) => this.onNodeLaunch(nodeId),
             (nodeId) => this.onNodeFocus(nodeId),
+            (nodeId) => this.onNodeHighlightRelations(nodeId),
         )
     }
 
     private onNodeFocus(nodeId: string): void {
         this.focusNode$.next({ nodeId })
+    }
+
+    private onNodeHighlightRelations(nodeId: string): void {
+        this.highlightNodeRelations$.next({ nodeId })
     }
 
     private onNodeLaunch(nodeId: string): void {

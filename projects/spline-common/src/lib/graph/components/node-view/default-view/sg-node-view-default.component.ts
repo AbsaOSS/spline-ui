@@ -31,6 +31,8 @@ export class SgNodeViewDefaultComponent extends BaseComponent {
     readonly defaultActionsPosition = SgNodeViewDefault.DEFAULT_POSITION
 
     @Input() isSelected: boolean
+    @Input() isFocused: boolean
+    @Input() isTarget: boolean
     @Input() icon: string
     @Input() color: string
     @Input() showActions = false

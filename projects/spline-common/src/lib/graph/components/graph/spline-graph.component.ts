@@ -23,7 +23,6 @@ import { BaseComponent } from 'spline-utils'
 
 import { SgControlPanelSectionDirective } from '../../directives/control-panel-action/sg-control-panel-section.directive'
 import {
-    getNodeElementRef,
     SgData,
     SgLayoutSettings,
     SgNativeNode,
@@ -45,15 +44,8 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges {
     @ContentChildren(SgControlPanelSectionDirective) controlPanelExtraSections: QueryList<SgControlPanelSectionDirective>
 
     @Input() graphData: SgData
-
-    @Output() substrateClick$ = new EventEmitter<{ mouseEvent: MouseEvent }>()
-    @Output() nodeClick$ = new EventEmitter<{ nodeSchema: SgNodeSchema; mouseEvent: MouseEvent }>()
-    @Output() nodeEvent$ = new EventEmitter<SgNodeEvent>()
-    @Output() nodeSelectionChange$ = new EventEmitter<{ nodeSchema: SgNodeSchema | null }>()
-
     @Input() curve: fromD3Shape.CurveFactoryLineOnly | fromD3Shape.CurveFactory = fromD3Shape.curveBasis
     @Input() layoutSettings: SgLayoutSettings = SG_DEFAULT_LAYOUT_SETTINGS
-
     @Input() focusNode$: Observable<string>
 
     @Input() set selectedNodeId(nodeId: string) {
@@ -62,14 +54,27 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges {
         }
     }
 
+    @Input() set targetNodeId(nodeId: string) {
+        if (nodeId !== this._targetNodeId) {
+            this._targetNodeId = nodeId
+        }
+    }
+
+    @Output() substrateClick$ = new EventEmitter<{ mouseEvent: MouseEvent }>()
+    @Output() nodeClick$ = new EventEmitter<{ nodeSchema: SgNodeSchema; mouseEvent: MouseEvent }>()
+    @Output() nodeEvent$ = new EventEmitter<SgNodeEvent>()
+    @Output() nodeSelectionChange$ = new EventEmitter<{ nodeSchema: SgNodeSchema | null }>()
+
+
     _selectedNodeId: string
+    _focusedNodeId: string
+    _targetNodeId: string
 
     readonly defaultNodeWidth = 350
     readonly defaultNodeHeight = 50
 
     nativeNodes: SgNativeNode[] = []
 
-    private focusedNodeId: string
     private focusedNodeTimer: number
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -124,32 +129,22 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges {
     }
 
     private onFocusNode(nodeId): void {
-        const refClassName = 'sg-node--focused'
-        const rootElmRef = this.ngxGraphComponent.chart.nativeElement
+
+        this._focusedNodeId = nodeId
 
         // first remove class from currently focused node
-        if (this.focusedNodeId) {
-            const focusedElement = getNodeElementRef(rootElmRef, this.focusedNodeId)
-            focusedElement.classList.remove(refClassName)
-            if (this.focusedNodeTimer) {
-                clearInterval(this.focusedNodeTimer)
-                this.focusedNodeTimer = null
-            }
+        if (this.focusedNodeTimer) {
+            clearInterval(this.focusedNodeTimer)
+            this.focusedNodeTimer = null
         }
-
-        this.focusedNodeId = nodeId
-
-        const elementRef = getNodeElementRef(rootElmRef, nodeId)
-        elementRef.classList.add(refClassName)
 
         // remove focus marker after
         const removeClassAfterTimeInMs = 4000
 
         this.focusedNodeTimer = setInterval(
             () => {
-                if (this.focusedNodeId) {
-                    elementRef.classList.remove(refClassName)
-                    this.focusedNodeId = null
+                if (this._focusedNodeId) {
+                    this._focusedNodeId = null
                     clearInterval(this.focusedNodeTimer)
                     this.focusedNodeTimer = null
                 }

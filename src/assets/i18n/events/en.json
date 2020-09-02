@@ -17,6 +17,8 @@
     "EVENT_NODE_INFO__TAB__CHILDREN_NODES": "Children Nodes",
     "EVENT_NODE_INFO__TAB__PARENT_NODES": "Parent Nodes",
     "EVENT_OVERVIEW__SELECTED_NODE_TITLE": "Selected Node",
+    "EVENT_OVERVIEW__TARGET_NODE_TITLE": "Target Data Source",
+    "EVENT_OVERVIEW__BACK_TO_EVENT_BUTTON": "Execution Event",
     "EVENTS_LIST__FILTER__DATE__EMPTY_VALUE_LABEL": "Everything"
   }
 }

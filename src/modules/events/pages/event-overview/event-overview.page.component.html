@@ -29,20 +29,38 @@
             <div *ngIf="store.state$ | async as state" class="end-to-end-container flex-row">
                 <div class="spline-content-details-section">
 
-                    <!-- EVENT INFO -->
-                    <event-info [data]="state.eventInfo"></event-info>
-                    <!-- ./EVENT INFO -->
+                    <div [hidden]="state.selectedNodeId">
+                        <!-- EVENT INFO -->
+                        <event-info [data]="state.eventInfo"></event-info>
+                        <!-- ./EVENT INFO -->
+
+                        <!-- TARGET NODE -->
+                        <ng-container *ngIf="targetNodeDvs$ | async as targetNodeDvs">
+                            <h3 class="text-center py-3">
+                                {{ 'EVENTS.EVENT_OVERVIEW__TARGET_NODE_TITLE' | translate }}
+                            </h3>
+
+                            <spline-data-view [dataViewSchema]="targetNodeDvs"></spline-data-view>
+                        </ng-container>
+                        <!-- ./TARGET NODE -->
+                    </div>
 
                     <!-- SELECTED NODE INFO -->
                     <ng-container *ngIf="selectedNodeRelations$ | async as selectedNodeRelations">
 
-                        <h3 class="text-center py-3">
-                            {{ 'EVENTS.EVENT_OVERVIEW__SELECTED_NODE_TITLE' | translate }}
-                        </h3>
+                        <button (click)="onShowDetailsBtnCLicked()"
+                                class="mb-3"
+                                mat-button>
+                            <mat-icon class="mr-2">arrow_back</mat-icon>
+                            <span class="pr-2">
+                                {{ 'EVENTS.EVENT_OVERVIEW__BACK_TO_EVENT_BUTTON' | translate }}
+                            </span>
+                        </button>
 
                         <event-node-info [nodeRelations]="selectedNodeRelations"
                                          (focusNode$)="onNodeFocus($event.nodeId)"
-                                         (launchNode$)="onExecutionPlanNodeLaunchAction($event.nodeId)">
+                                         (launchNode$)="onExecutionPlanNodeLaunchAction($event.nodeId)"
+                                         (highlightNodeRelations$)="onNodeHighlightRelations($event.nodeId)">
 
                         </event-node-info>
 
@@ -56,6 +74,7 @@
                             (nodeSelectionChange$)="onNodeSelected($event)"
                             [graphData]="graphData"
                             [focusNode$]="focusNode$"
+                            [targetNodeId]="state.targetNodeId"
                             [sgHighlightedRelations]="highlightedRelationsNodesIds$ | async"
                             [selectedNodeId]="state.selectedNodeId">
 

@@ -21,8 +21,29 @@ $border-radius: 8px;
 $icon-width: 24px;
 
 $node-bg-color--selected: $color-platinum;
+$node-bg-color--target: $color-luxury;
 $node-bg-color--focused: $color-human;
-$animation-time: 3s;
+$focus-animation-time: 3s;
+
+@mixin node-view-colors($node-view-host, $bg-color, $color, $bg-color-actions, $color-actions) {
+    background: $bg-color;
+    border: 1px solid darken($bg-color, 5);
+    color: $color;
+
+    #{$node-view-host}__actions-container {
+        background: $bg-color-actions;
+        border-color: darken($bg-color-actions, 5);
+        color: $color-actions;
+
+        * {
+            color: $color-actions;
+        }
+    }
+
+    #{$node-view-host}__icon * {
+        color: $color-actions !important;
+    }
+}
 
 .sg-node-view {
 
@@ -117,131 +138,97 @@ $animation-time: 3s;
     }
 
     &--selected {
-        background: $node-bg-color--selected;
-        border: 1px solid darken($node-bg-color--selected, 5);
-        color: $color-white;
+        @include node-view-colors($self, $node-bg-color--selected, $color-white, darken($node-bg-color--selected, 5), $color-grey-light);
+    }
+
+    &--target:not(&--selected) {
+        @include node-view-colors($self, $node-bg-color--target, $color-white, darken($node-bg-color--target, 5), $color-grey-light);
+    }
+
+    &--focused:not(&--selected):not(&--target) {
+        animation: focus-node-view $focus-animation-time;
 
         #{$self}__actions-container {
-            background: darken($node-bg-color--selected, 5);
-            border-color: darken($node-bg-color--selected, 10);
-            color: $color-grey-light;
+            animation: focus-actions-container $focus-animation-time;
 
             * {
-                color: $color-grey-light;
+                animation: focus-text $focus-animation-time;
             }
         }
 
         #{$self}__icon * {
-            color: $color-grey-light !important;
+            animation: focus-text $focus-animation-time;
         }
     }
 
 }
 
-.sg-node--focused {
-    .sg-node-view {
-        $self: &;
-
-        animation: focus-node-view $animation-time;
-
-        &__actions-container {
-            animation: focus-actions-container $animation-time;
-
-            * {
-                animation: focus-text $animation-time;
-            }
-        }
-
-        &__icon * {
-            animation: focus-text $animation-time;
-        }
-
-        &--selected {
-
-            animation: none;
-
-            .sg-node-view__actions-container {
-                animation: none;
-
-                * {
-                    animation: none;
-                }
-            }
-
-            .sg-node-view__icon * {
-                animation: none;
-            }
-        }
+@keyframes focus-node-view {
+    0% {
+        background-color: $color-white;
+        border: 1px solid $color-grey-light;
+        color: inherit;
     }
 
-
-    @keyframes focus-node-view {
-        0% {
-            background-color: $color-white;
-            border: 1px solid $color-grey-light;
-            color: inherit;
-        }
-
-        20% {
-            background: $node-bg-color--focused;
-            border: 1px solid darken($node-bg-color--focused, 5);
-            color: $color-white;
-        }
-
-        80% {
-            background: $node-bg-color--focused;
-            border: 1px solid darken($node-bg-color--focused, 5);
-            color: $color-white;
-        }
-
-        100% {
-            background-color: $color-white;
-            border: 1px solid $color-grey-light;
-            color: inherit;
-        }
+    20% {
+        background: $node-bg-color--focused;
+        border: 1px solid darken($node-bg-color--focused, 5);
+        color: $color-white;
     }
 
-    @keyframes focus-actions-container {
-        0% {
-            background: $color-grey-light-1;
-            border-color: $color-grey-light;
-            color: $color-grey-dark;
-        }
-
-        20% {
-            background: darken($node-bg-color--focused, 5);
-            border-color: darken($node-bg-color--focused, 10);
-            color: $color-grey-light;
-        }
-
-        80% {
-            background: darken($node-bg-color--focused, 5);
-            border-color: darken($node-bg-color--focused, 10);
-            color: $color-grey-light;
-        }
-
-        100% {
-            background: $color-grey-light-1;
-            border-color: $color-grey-light;
-            color: $color-grey-dark;
-        }
+    80% {
+        background: $node-bg-color--focused;
+        border: 1px solid darken($node-bg-color--focused, 5);
+        color: $color-white;
     }
 
-    @keyframes focus-text {
-        0% {
-            color: $color-grey-dark;
-        }
+    100% {
+        background-color: $color-white;
+        border: 1px solid $color-grey-light;
+        color: inherit;
+    }
+}
 
-        20% {
-            color: $color-grey-light;
-        }
+@keyframes focus-actions-container {
+    0% {
+        background: $color-grey-light-1;
+        border-color: $color-grey-light;
+        color: $color-grey-dark;
+    }
 
-        80% {
-            color: $color-grey-light;
-        }
+    20% {
+        background: darken($node-bg-color--focused, 5);
+        border-color: darken($node-bg-color--focused, 10);
+        color: $color-grey-light;
+    }
 
-        100% {
-            color: $color-grey-dark;
-        }
+    80% {
+        background: darken($node-bg-color--focused, 5);
+        border-color: darken($node-bg-color--focused, 10);
+        color: $color-grey-light;
+    }
+
+    100% {
+        background: $color-grey-light-1;
+        border-color: $color-grey-light;
+        color: $color-grey-dark;
+    }
+}
+
+@keyframes focus-text {
+    0% {
+        color: $color-grey-dark;
+    }
+
+    20% {
+        color: $color-grey-light;
+    }
+
+    80% {
+        color: $color-grey-light;
+    }
+
+    100% {
+        color: $color-grey-dark;
     }
 }

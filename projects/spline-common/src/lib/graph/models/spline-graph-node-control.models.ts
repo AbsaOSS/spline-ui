@@ -28,6 +28,8 @@ export type SgNodeControlEvent<TData extends {} = {}> = {
 export interface ISgNodeControl<TData extends object, TOptions extends object = {}> {
     schema: SgNodeSchema<TData, TOptions>
     isSelected: boolean
+    isFocused: boolean
+    isTarget: boolean
     event$: EventEmitter<SgNodeControlEvent>
 }
 

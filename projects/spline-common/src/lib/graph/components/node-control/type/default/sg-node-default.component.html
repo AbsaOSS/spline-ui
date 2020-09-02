@@ -16,6 +16,8 @@
 
 <ng-container *ngIf="data$ | async as data">
     <sg-node-view-default [isSelected]="isSelected"
+                          [isFocused]="isFocused"
+                          [isTarget]="isTarget"
                           [icon]="data?.icon"
                           [actionsPosition]="data?.actionsPosition"
                           [showActions]="!!data?.inlineActions?.length || !!data?.actions?.length"

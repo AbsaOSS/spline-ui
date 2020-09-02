@@ -33,6 +33,7 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
     readonly graphLoadingProcessing$: Observable<ProcessingStore.EventProcessingState>
 
     selectedNode$: Observable<ExecutionEventLineageNode | null>
+    targetNode$: Observable<ExecutionEventLineageNode | null>
 
     constructor(private readonly executionEventFacade: ExecutionEventFacade) {
         super(EventOverviewStore.getDefaultState())
@@ -49,17 +50,8 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
 
         this.graphLoadingProcessing$ = this.state$.pipe(map(data => data.graphLoadingProcessing))
 
-        this.selectedNode$ = this.state$
-            .pipe(
-                distinctUntilChanged((stateX, stateY) => stateX.selectedNodeId === stateY.selectedNodeId),
-                map(state => {
-                    if (state.selectedNodeId === null) {
-                        return null
-                    }
-                    return SplineEntityStore.selectOne<ExecutionEventLineageNode>(state.selectedNodeId, state.nodes)
-                }),
-                shareReplay(1),
-            )
+        this.selectedNode$ = this.getNodeSelector(state => state.selectedNodeId)
+        this.targetNode$ = this.getNodeSelector(state => state.targetNodeId)
     }
 
     setSelectedNode(nodeId: string | null): void {
@@ -161,6 +153,21 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
                     }
                 }),
                 take(1),
+            )
+    }
+
+    private getNodeSelector(nodeIdSelector: (state: EventOverviewStore.State) => string): Observable<ExecutionEventLineageNode | null> {
+        return this.state$
+            .pipe(
+                distinctUntilChanged((stateX, stateY) => nodeIdSelector(stateX) === nodeIdSelector(stateY)),
+                map(state => {
+                    const nodeId = nodeIdSelector(state)
+                    if (nodeId === null) {
+                        return null
+                    }
+                    return SplineEntityStore.selectOne<ExecutionEventLineageNode>(nodeId, state.nodes)
+                }),
+                shareReplay(1),
             )
     }
 

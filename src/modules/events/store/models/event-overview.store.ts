@@ -30,6 +30,7 @@ export namespace EventOverviewStore {
         loadingProcessing: ProcessingStore.EventProcessingState
         graphLoadingProcessing: ProcessingStore.EventProcessingState
         selectedNodeId: string | null
+        targetNodeId: string | null
         lineageDepth: ExecutionEventLineageOverviewDepth
         graphHasMoreDepth: boolean
     }
@@ -50,6 +51,7 @@ export namespace EventOverviewStore {
             loadingProcessing: ProcessingStore.getDefaultProcessingState(),
             graphLoadingProcessing: ProcessingStore.getDefaultProcessingState(),
             selectedNodeId: null,
+            targetNodeId: null,
             lineageDepth: {...DEFAULT_LINEAGE_DEPTH},
             graphHasMoreDepth: calculateHasMoreDepth(DEFAULT_LINEAGE_DEPTH)
         }
@@ -67,10 +69,11 @@ export namespace EventOverviewStore {
             ? lineageOverview.lineage.nodes.find(x => x.id === targetEdge.source)
             : undefined
 
+        const nodesState = SplineEntityStore.addAll(lineageOverview.lineage.nodes, state.nodes)
 
         return {
             ...state,
-            nodes: SplineEntityStore.addAll(lineageOverview.lineage.nodes, state.nodes),
+            nodes: nodesState,
             links: lineageOverview.lineage.links,
             eventInfo: {
                 id: executionEventId,
@@ -79,7 +82,8 @@ export namespace EventOverviewStore {
                 executedAt: new Date(lineageOverview.executionEventInfo.timestamp),
             },
             lineageDepth: lineageOverview.executionEventInfo.lineageDepth,
-            graphHasMoreDepth: calculateHasMoreDepth(lineageOverview.executionEventInfo.lineageDepth)
+            graphHasMoreDepth: calculateHasMoreDepth(lineageOverview.executionEventInfo.lineageDepth),
+            targetNodeId: lineageOverview.executionEventInfo.targetDataSourceId
         }
     }
 

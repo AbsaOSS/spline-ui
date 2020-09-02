@@ -46,11 +46,14 @@
                 <svg:foreignObject [attr.width]="node?.dimension?.width ? node.dimension.width : defaultNodeWidth"
                                    [attr.height]="node?.dimension?.height ? node.dimension.height : defaultNodeHeight"
                                    class="spline-graph__node-container"
-                                   [class.spline-graph__node--selected]="node.id === _selectedNodeId">
+                                   [class.spline-graph__node--selected]="node.id === _selectedNodeId"
+                                   [class.spline-graph__node--focused]="node.id === _focusedNodeId">
                     <xhtml:div>
                         <sg-node-control
                                 [schema]="node.schema"
                                 [isSelected]="node.id === _selectedNodeId"
+                                [isFocused]="node.id === _focusedNodeId"
+                                [isTarget]="node.id === _targetNodeId"
                                 (click)="onNodeClicked(node, $event)"
                                 (event$)="onNodeEvent(node, $event)">
                         </sg-node-control>
