@@ -74,3 +74,8 @@ export function getNodeDomSelector(nodeId: string): string {
 export function getLinkDomSelector(linkId: string): string {
     return `#${linkId}.link-group`
 }
+
+export function getNodeElementRef(rootElm: HTMLElement, nodeId: string): HTMLElement {
+    const selector = getNodeDomSelector(nodeId)
+    return rootElm.querySelector(selector)
+}

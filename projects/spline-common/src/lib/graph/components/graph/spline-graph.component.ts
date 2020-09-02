@@ -23,7 +23,7 @@ import { BaseComponent } from 'spline-utils'
 
 import { SgControlPanelSectionDirective } from '../../directives/control-panel-action/sg-control-panel-section.directive'
 import {
-    getNodeDomSelector,
+    getNodeElementRef,
     SgData,
     SgLayoutSettings,
     SgNativeNode,
@@ -69,6 +69,9 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges {
 
     nativeNodes: SgNativeNode[] = []
 
+    private focusedNodeId: string
+    private focusedNodeTimer: number
+
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.graphData && changes.graphData.currentValue) {
             const currentGraphData: SgData = changes.graphData.currentValue
@@ -77,7 +80,7 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges {
         if (changes?.focusNode$ && changes.focusNode$.currentValue) {
             changes.focusNode$.currentValue
                 .pipe(
-                    takeUntil(this.destroyed$)
+                    takeUntil(this.destroyed$),
                 )
                 .subscribe((nodeId) => this.onFocusNode(nodeId))
         }
@@ -121,18 +124,37 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges {
     }
 
     private onFocusNode(nodeId): void {
-        const rootElmRef = this.ngxGraphComponent.chart.nativeElement
-        const selector = getNodeDomSelector(nodeId)
-        const elementRef = rootElmRef.querySelector(selector)
-
         const refClassName = 'sg-node--focused'
+        const rootElmRef = this.ngxGraphComponent.chart.nativeElement
+
+        // first remove class from currently focused node
+        if (this.focusedNodeId) {
+            const focusedElement = getNodeElementRef(rootElmRef, this.focusedNodeId)
+            focusedElement.classList.remove(refClassName)
+            if (this.focusedNodeTimer) {
+                clearInterval(this.focusedNodeTimer)
+                this.focusedNodeTimer = null
+            }
+        }
+
+        this.focusedNodeId = nodeId
+
+        const elementRef = getNodeElementRef(rootElmRef, nodeId)
         elementRef.classList.add(refClassName)
-        const removeClassAfterTimeInMs = 3000
-        setTimeout(
+
+        // remove focus marker after
+        const removeClassAfterTimeInMs = 4000
+
+        this.focusedNodeTimer = setInterval(
             () => {
-                elementRef.classList.remove(refClassName)
+                if (this.focusedNodeId) {
+                    elementRef.classList.remove(refClassName)
+                    this.focusedNodeId = null
+                    clearInterval(this.focusedNodeTimer)
+                    this.focusedNodeTimer = null
+                }
             },
-            removeClassAfterTimeInMs
+            removeClassAfterTimeInMs,
         )
     }
 }
