@@ -32,7 +32,7 @@ if (!fs.existsSync(TARGET_DIR)) {
 }
 
 
-// copy package.json template && sync version= require(the main package.json
+// copy package.json template && sync version from the main package.json
 const packageJsonSourcePath = path.resolve(SOURCE_DIR, 'package.json')
 const packageJsonTargetPath = path.resolve(TARGET_DIR, 'package.json')
 fs.copyFileSync(packageJsonSourcePath, packageJsonTargetPath)

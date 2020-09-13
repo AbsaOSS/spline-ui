@@ -22,6 +22,6 @@ export namespace SgNodeViewDefault {
         bottom: 'bottom' as ActionsPosition,
     }
 
-    export const DEFAULT_POSITION = ActionsPosition.right
+    export const DEFAULT_POSITION = ActionsPosition.bottom
 
 }

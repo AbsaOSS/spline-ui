@@ -40,7 +40,25 @@ export namespace PlanNodeControl {
             {
                 label: extractNodeName(nodeSource),
                 ...nodeStyles,
-                inlineActions: defaultActions
+                inlineActions: defaultActions,
+                actions: [
+                    {
+                        icon: 'eye-outline',
+                        label: 'Parent',
+                        onClick: () => {
+                            onNodeHighlightRelations(nodeSource.id)
+                        },
+                        tooltip: 'SHARED.SG_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS',
+                    },
+                    {
+                        icon: 'eye-outline',
+                        label: 'Child',
+                        onClick: () => {
+                            onNodeHighlightRelations(nodeSource.id)
+                        },
+                        tooltip: 'SHARED.SG_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS',
+                    }
+                ]
             },
         )
     }

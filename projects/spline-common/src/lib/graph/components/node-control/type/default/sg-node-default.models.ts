@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import { ThemePalette } from '@angular/material/core'
 import { NodeDimension } from '@swimlane/ngx-graph/lib/models/node.model'
 
 import { SgNode, SgNodeNativeOptions, SgNodeSchema } from '../../../../models'
@@ -33,13 +34,17 @@ export namespace SgNodeDefault {
 
     export type Action = {
         label: string
-        icon: string
+        icon?: string
+        color?: string
+        tooltip?: string
+        theme?: ThemePalette
         onClick: () => void
     }
 
     export type InlineAction = {
         icon: string
         tooltip?: string
+        theme?: ThemePalette
         onClick: () => void
     }
 

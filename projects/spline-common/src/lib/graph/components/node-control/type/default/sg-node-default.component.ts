@@ -20,6 +20,7 @@ import { SgNodeBaseComponent } from '../sg-node-base.component'
 
 import { SgNodeDefault } from './sg-node-default.models'
 import InlineAction = SgNodeDefault.InlineAction
+import Action = SgNodeDefault.Action;
 
 
 @Component({
@@ -28,7 +29,7 @@ import InlineAction = SgNodeDefault.InlineAction
 })
 export class SgNodeDefaultComponent extends SgNodeBaseComponent<SgNodeDefault.Data, SgNodeDefault.Options> {
 
-    onInlineActionClicked($event: MouseEvent, action: InlineAction): void {
+    onActionClicked($event: MouseEvent, action: InlineAction | Action): void {
         $event.stopPropagation()
         action.onClick()
     }

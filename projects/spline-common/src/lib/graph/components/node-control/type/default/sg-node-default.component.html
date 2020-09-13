@@ -35,10 +35,30 @@
                     [matTooltip]="action?.tooltip | translate"
                     mat-button
                     mat-icon-button
+                    [color]="action?.theme"
                     [style.color]="action?.color"
-                    (click)="onInlineActionClicked($event, action)">
+                    (click)="onActionClicked($event, action)">
 
                 <spline-icon [icon]="action.icon"></spline-icon>
+
+            </button>
+            <!-- ./INLINE ACTIONS -->
+
+            <!-- INLINE ACTIONS -->
+            <button *ngFor="let action of data.actions"
+                    [matTooltip]="action?.tooltip | translate"
+                    mat-button
+                    [color]="action?.theme"
+                    [style.color]="action?.color"
+                    (click)="onActionClicked($event, action)">
+
+                <span class="d-flex align-items-center">
+                    <spline-icon *ngIf="action.icon"
+                                 [icon]="action.icon"
+                                 class="mr-2">
+                    </spline-icon>
+                    <span>{{ action.label | translate }}</span>
+                </span>
 
             </button>
             <!-- ./INLINE ACTIONS -->

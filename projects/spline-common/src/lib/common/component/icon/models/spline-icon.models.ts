@@ -32,4 +32,5 @@ export const SPLINE_ICONS_COLLECTION: Set<string> = new Set<string>([
     'chevron-double-left',
     'chevron-triple-left',
     'chevron-triple-right',
+    'eye-off-outline',
 ])

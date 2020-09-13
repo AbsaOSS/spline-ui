@@ -15,19 +15,19 @@
   -->
 
 <div class="d-flex flex-column">
-    <!-- CENTER GRAPH -->
+    <!-- SHOW ALL -->
     <button mat-button mat-icon-button
             [matTooltip]="'SG.ACTION__SHOW_ALL_RELATIONS' | translate"
             (click)="onShowAllRelationsBtnClicked()">
-        <mat-icon>visibility</mat-icon>
+        <spline-icon icon="eye-outline"></spline-icon>
     </button>
-    <!-- ./CENTER GRAPH -->
+    <!-- ./SHOW ALL -->
 
-    <!-- CENTER GRAPH -->
+    <!-- HIDE ALL -->
     <button mat-button mat-icon-button
             [matTooltip]="'SG.ACTION__HIDE_ALL_RELATIONS' | translate"
             (click)="onHideAllRelationsBtnClicked()">
-        <mat-icon>visibility_off</mat-icon>
+        <spline-icon icon="eye-off-outline"></spline-icon>
     </button>
-    <!-- ./CENTER GRAPH -->
+    <!-- ./HIDE ALL -->
 </div>
