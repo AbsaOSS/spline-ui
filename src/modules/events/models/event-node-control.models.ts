@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import { dataSourceUriToName, ExecutionEventLineageNode, ExecutionEventLineageNodeType } from 'spline-api';
-import { SgNode, SgNodeDefault } from 'spline-common';
-import { SgNodeControl } from 'spline-shared';
+import { dataSourceUriToName, ExecutionEventLineageNode, ExecutionEventLineageNodeType } from 'spline-api'
+import { SgNode, SgNodeDefault } from 'spline-common'
+import { SgNodeControl } from 'spline-shared'
 import NodeType = SgNodeControl.NodeType;
 
 
@@ -26,7 +26,7 @@ export namespace EventNodeControl {
 
 
     export function extractNodeName(nodeSource: ExecutionEventLineageNode): string {
-        return dataSourceUriToName(nodeSource.name);
+        return dataSourceUriToName(nodeSource.name)
     }
 
     export function getNodeStyles(nodeSource: ExecutionEventLineageNode): NodeStyles {

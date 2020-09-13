@@ -16,7 +16,7 @@
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
 import { ExecutionEventLineageNode } from 'spline-api'
-import { SdWidgetSchema, SgRelations } from 'spline-common';
+import { SdWidgetSchema } from 'spline-common'
 import { BaseLocalStateComponent } from 'spline-utils'
 
 import { EventNodeInfo } from '../../models'

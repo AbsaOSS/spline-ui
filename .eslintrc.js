@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 ABSA Group Limited
+ * Copyright 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,6 +70,7 @@ module.exports = {
                     }
                 ],
                 '@typescript-eslint/no-namespace': 0,
+                '@typescript-eslint/explicit-function-return-type': 0,
                 'no-inner-declarations': 0,
                 'max-lines': 0,
                 'brace-style': [

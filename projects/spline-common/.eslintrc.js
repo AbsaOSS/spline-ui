@@ -14,5 +14,9 @@
  * limitations under the License.
  */
 
+
 module.exports = {
+    'extends': [
+        '../../.eslintrc.js'
+    ]
 };

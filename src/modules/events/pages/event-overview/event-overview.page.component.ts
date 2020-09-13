@@ -199,6 +199,10 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
         this.processNodeHighlightAction(nodeId, SgRelations.toggleChildrenSelection)
     }
 
+    onShowDetailsBtnCLicked(): void {
+        this.store.setSelectedNode(null)
+    }
+
     private processNodeHighlightAction(nodeId: string, highlightFn: SgRelations.NodeHighlightFn) {
         const highlightedRelationsNodesIds = highlightFn(
             this.highlightedRelationsNodesIds$.getValue() ?? [],
@@ -207,10 +211,6 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
         )
 
         this.highlightedRelationsNodesIds$.next(highlightedRelationsNodesIds)
-    }
-
-    onShowDetailsBtnCLicked(): void {
-        this.store.setSelectedNode(null)
     }
 
     private resetNodeHighlightRelations(): void {

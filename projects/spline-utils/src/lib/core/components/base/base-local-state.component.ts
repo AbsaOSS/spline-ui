@@ -15,7 +15,7 @@
  */
 
 import { OnDestroy } from '@angular/core'
-import { BehaviorSubject, Observable } from 'rxjs'
+import { BehaviorSubject } from 'rxjs'
 
 import { BaseComponent } from './base.component'
 

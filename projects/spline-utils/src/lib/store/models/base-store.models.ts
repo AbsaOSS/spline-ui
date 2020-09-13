@@ -35,7 +35,7 @@ export abstract class BaseStore<TState> {
         return this._state$.getValue()
     }
 
-    resetState() {
+    resetState(): void {
         this.updateState(this._defaultState)
     }
 

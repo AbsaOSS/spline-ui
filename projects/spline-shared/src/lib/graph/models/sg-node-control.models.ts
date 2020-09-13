@@ -15,7 +15,7 @@
  */
 
 
-import { SgNodeDefault, SplineColors } from 'spline-common';
+import { SgNodeDefault, SplineColors } from 'spline-common'
 
 
 export namespace SgNodeControl {
@@ -134,37 +134,37 @@ export namespace SgNodeControl {
         ])
 
     export function getNodeStyles(type: NodeType): NodeStyles {
-        return NODE_STYLES_MAP.get(type) ?? { ...DEFAULT_NODE_STYLES };
+        return NODE_STYLES_MAP.get(type) ?? { ...DEFAULT_NODE_STYLES }
     }
 
     export function getNodeRelationsHighlightParentAction(onNodeHighlightRelations: () => void): SgNodeDefault.InlineAction {
         return {
             icon: 'arrow_upward',
             onClick: () => {
-                onNodeHighlightRelations();
+                onNodeHighlightRelations()
             },
             tooltip: 'SHARED.SG_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS__PARENT',
-        };
+        }
     }
 
     export function getNodeRelationsHighlightChildAction(onNodeHighlightRelations: () => void): SgNodeDefault.InlineAction {
         return {
             icon: 'arrow_downward',
             onClick: () => {
-                onNodeHighlightRelations();
+                onNodeHighlightRelations()
             },
             tooltip: 'SHARED.SG_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS__CHILD',
-        };
+        }
     }
 
     export function getNodeRelationsHighlightToggleActions(onNodeHighlightRelations: () => void): SgNodeDefault.InlineAction {
         return {
             icon: 'swap_vert',
             onClick: () => {
-                onNodeHighlightRelations();
+                onNodeHighlightRelations()
             },
             tooltip: 'SHARED.SG_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS__TOGGLE',
-        };
+        }
     }
 
     export function getNodeRelationsHighlightActions(onNodeHighlightParentRelations: () => void,
@@ -174,17 +174,17 @@ export namespace SgNodeControl {
             getNodeRelationsHighlightParentAction(onNodeHighlightParentRelations),
             getNodeRelationsHighlightChildAction(onNodeHighlightChildRelations),
             getNodeRelationsHighlightToggleActions(onNodeHighlightToggleRelations),
-        ];
+        ]
     }
 
     export function getNodeFocusAction(onNodeFocus: () => void): SgNodeDefault.InlineAction {
         return {
             icon: 'target',
             onClick: () => {
-                onNodeFocus();
+                onNodeFocus()
             },
             tooltip: 'SHARED.SG_NODE_CONTROL__ACTION__FOCUS',
-        };
+        }
     }
 
 }
