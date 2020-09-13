@@ -51,9 +51,9 @@
                 </div>
                 <div class="sl-sidenav__footer">
                     <div class="sl-sidenav__version" [hidden]="!isSideNavExpanded">
-                        <span *ngIf="appVersion?.length">
+                        <spline-long-text [tooltip]="appVersion" *ngIf="appVersion?.length">
                             {{ 'COMMON.LAYOUT__APP_VERSION' | translate }} {{ appVersion }}
-                        </span>
+                        </spline-long-text>
                     </div>
                     <button mat-button mat-icon-button
                             class="sl-sidenav__expand-btn"

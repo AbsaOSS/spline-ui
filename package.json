@@ -19,7 +19,7 @@
     "publish": "node ./publish/publish.js",
     "preversion": "npm run test && npm run lint",
     "postversion": "git push && git push --tags",
-    "new-snapshot": "npm version prepatch --preid=SNAPSHOT"
+    "new-snapshot": "npm version prerelease --preid=SNAPSHOT"
   },
   "private": false,
   "dependencies": {
