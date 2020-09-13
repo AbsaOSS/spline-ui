@@ -14,20 +14,19 @@
  * limitations under the License.
  */
 
-import { dataSourceUriToName, ExecutionEventLineageNode, ExecutionEventLineageNodeType } from 'spline-api'
-import { SgNode, SgNodeDefault } from 'spline-common'
-import { SgNodeControl } from 'spline-shared'
-
-import NodeType = SgNodeControl.NodeType
+import { dataSourceUriToName, ExecutionEventLineageNode, ExecutionEventLineageNodeType } from 'spline-api';
+import { SgNode, SgNodeDefault } from 'spline-common';
+import { SgNodeControl } from 'spline-shared';
+import NodeType = SgNodeControl.NodeType;
 
 
 export namespace EventNodeControl {
 
-    import NodeStyles = SgNodeControl.NodeStyles
+    import NodeStyles = SgNodeControl.NodeStyles;
 
 
     export function extractNodeName(nodeSource: ExecutionEventLineageNode): string {
-        return dataSourceUriToName(nodeSource.name)
+        return dataSourceUriToName(nodeSource.name);
     }
 
     export function getNodeStyles(nodeSource: ExecutionEventLineageNode): NodeStyles {
@@ -43,11 +42,18 @@ export namespace EventNodeControl {
 
     export function toSgNode(nodeSource: ExecutionEventLineageNode,
                              onExecutionPlanLaunchAction: (nodeId: string) => void,
-                             onNodeHighlightRelations: (nodeId: string) => void): SgNode {
+                             onNodeHighlightParentRelations: (nodeId: string) => void,
+                             onNodeHighlightChildRelations: (nodeId: string) => void,
+                             onNodeHighlightToggleRelations: (nodeId: string) => void): SgNode {
+
         const nodeStyles = getNodeStyles(nodeSource)
 
         const defaultActions = [
-            SgNodeControl.getNodeRelationsHighlightAction(() => onNodeHighlightRelations(nodeSource.id)),
+            ...SgNodeControl.getNodeRelationsHighlightActions(
+                () => onNodeHighlightParentRelations(nodeSource.id),
+                () => onNodeHighlightChildRelations(nodeSource.id),
+                () => onNodeHighlightToggleRelations(nodeSource.id)
+            ),
         ]
 
         return SgNodeDefault.toNode(

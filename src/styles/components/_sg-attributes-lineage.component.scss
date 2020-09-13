@@ -32,8 +32,8 @@
         background: $color;
 
         .sg-node-view {
-            left: 5px;
-            top: 5px;
+            left: 10px;
+            top: 10px;
         }
     }
 }
@@ -42,7 +42,7 @@ $none-type__opacity: 0.1;
 
 .sg-attribute-lineage {
     &--usage {
-        @include node-edg-styles($color-orange);
+        @include node-edg-styles($color-black);
     }
 
     &--lineage {

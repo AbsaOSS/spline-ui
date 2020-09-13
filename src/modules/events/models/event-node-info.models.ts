@@ -32,7 +32,9 @@ export namespace EventNodeInfo {
     export function toDataSchema(nodeSource: ExecutionEventLineageNode,
                                  onExecutionPlanLaunchAction: (nodeId: string) => void,
                                  onNodeFocus: (nodeId: string) => void,
-                                 onNodeHighlightRelations: (nodeId: string) => void,
+                                 onNodeHighlightParentRelations: (nodeId: string) => void,
+                                 onNodeHighlightChildRelations: (nodeId: string) => void,
+                                 onNodeHighlightToggleRelations: (nodeId: string) => void,
                                  specialColor?: string): SdWidgetSchema {
         const nodeStyles = EventNodeControl.getNodeStyles(nodeSource)
         const contentDataSchema: SplineDataViewSchema = nodeSource.type === ExecutionEventLineageNodeType.DataSource
@@ -45,7 +47,11 @@ export namespace EventNodeInfo {
             : []
 
         const defaultActions = [
-            SgNodeControl.getNodeRelationsHighlightAction(() => onNodeHighlightRelations(nodeSource.id)),
+            ...SgNodeControl.getNodeRelationsHighlightActions(
+                () => onNodeHighlightParentRelations(nodeSource.id),
+                () => onNodeHighlightChildRelations(nodeSource.id),
+                () => onNodeHighlightToggleRelations(nodeSource.id)
+            ),
             SgNodeControl.getNodeFocusAction(() => onNodeFocus(nodeSource.id)),
         ]
 

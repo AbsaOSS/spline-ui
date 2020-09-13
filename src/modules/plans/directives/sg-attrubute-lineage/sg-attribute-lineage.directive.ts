@@ -36,8 +36,16 @@ export class SgAttributeLineageDirective implements AfterViewInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes.sgAttributeLineage && !changes.sgAttributeLineage.isFirstChange()) {
-            this.applyLineageStyles(changes.sgAttributeLineage.currentValue, this.splineGraph.ngxGraphComponent)
+
+        const { sgAttributeLineage } = changes
+
+        if (sgAttributeLineage && !sgAttributeLineage.isFirstChange()) {
+            const domRelationDelayInMs = 500 // give some time to DOM to init all items
+            setTimeout(
+                () => this.applyLineageStyles(changes.sgAttributeLineage.currentValue, this.splineGraph.ngxGraphComponent),
+                domRelationDelayInMs
+            )
+
         }
     }
 

@@ -4,7 +4,6 @@
     "ZOOM_OUT": "Zoom Out",
     "RESET_LAYOUT": "Reset Layout",
     "CHANGE_GRAPH_DIRECTION": "Change Graph Direction",
-    "ACTION__SHOW_ALL_RELATIONS": "Show All Relations",
-    "ACTION__HIDE_ALL_RELATIONS": "Hide All Relations"
+    "ACTION__HIGHLIGHT_RELATIONS__TOGGLE": "Highlight All Relations Toggle"
   }
 }

@@ -28,11 +28,17 @@ export namespace PlanNodeControl {
     }
 
     export function toSgNode(nodeSource: ExecutionPlanLineageNode,
-                             onNodeHighlightRelations: (nodeId: string) => void): SgNode {
+                             onNodeHighlightParentRelations: (nodeId: string) => void,
+                             onNodeHighlightChildRelations: (nodeId: string) => void,
+                             onNodeHighlightToggleRelations: (nodeId: string) => void): SgNode {
         const nodeStyles = OperationInfo.getNodeStyles(nodeSource.type, nodeSource.name)
 
         const defaultActions = [
-            SgNodeControl.getNodeRelationsHighlightAction(() => onNodeHighlightRelations(nodeSource.id)),
+            ...SgNodeControl.getNodeRelationsHighlightActions(
+                () => onNodeHighlightParentRelations(nodeSource.id),
+                () => onNodeHighlightChildRelations(nodeSource.id),
+                () => onNodeHighlightToggleRelations(nodeSource.id)
+            ),
         ]
 
         return SgNodeDefault.toNode(
@@ -41,24 +47,24 @@ export namespace PlanNodeControl {
                 label: extractNodeName(nodeSource),
                 ...nodeStyles,
                 inlineActions: defaultActions,
-                actions: [
-                    {
-                        icon: 'eye-outline',
-                        label: 'Parent',
-                        onClick: () => {
-                            onNodeHighlightRelations(nodeSource.id)
-                        },
-                        tooltip: 'SHARED.SG_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS',
-                    },
-                    {
-                        icon: 'eye-outline',
-                        label: 'Child',
-                        onClick: () => {
-                            onNodeHighlightRelations(nodeSource.id)
-                        },
-                        tooltip: 'SHARED.SG_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS',
-                    }
-                ]
+                // actions: [
+                //     {
+                //         icon: 'eye-outline',
+                //         label: 'Parent',
+                //         onClick: () => {
+                //             onNodeHighlightRelations(nodeSource.id)
+                //         },
+                //         tooltip: 'SHARED.SG_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS',
+                //     },
+                //     {
+                //         icon: 'eye-outline',
+                //         label: 'Child',
+                //         onClick: () => {
+                //             onNodeHighlightRelations(nodeSource.id)
+                //         },
+                //         tooltip: 'SHARED.SG_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS',
+                //     }
+                // ]
             },
         )
     }

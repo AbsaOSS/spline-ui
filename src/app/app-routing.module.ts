@@ -21,7 +21,7 @@ import { SplineConfigResolver } from 'spline-shared'
 
 const routes: Routes = [
     {
-        path: 'app',
+        path: '',
         resolve: [
             SplineConfigResolver
         ],
@@ -51,7 +51,7 @@ const routes: Routes = [
     },
     {
         path: '**',
-        redirectTo: 'app',
+        redirectTo: '',
     },
 ]
 

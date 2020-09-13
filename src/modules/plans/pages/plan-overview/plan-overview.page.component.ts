@@ -67,7 +67,9 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
                             .map(
                                 nodeSource => PlanNodeControl.toSgNode(
                                     nodeSource,
-                                    (nodeId) => this.onNodeHighlightRelations(nodeId),
+                                    (nodeId) => this.onNodeHighlightParentRelations(nodeId),
+                                    (nodeId) => this.onNodeHighlightChildRelations(nodeId),
+                                    (nodeId) => this.onNodeHighlightToggleRelations(nodeId),
                                 ),
                             ),
                     }
@@ -137,20 +139,30 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         this.focusNode$.next(nodeId)
     }
 
-    onShowAllRelationsBtnClicked(): void {
-        this.resetNodeHighlightRelations()
-    }
-
-    onHideAllRelationsBtnClicked(): void {
-        this.highlightedRelationsNodesIds$.next([])
+    onToggleAllRelationsBtnClicked(): void {
+        this.highlightedRelationsNodesIds$.next(
+            this.highlightedRelationsNodesIds$.getValue() ? null : []
+        )
     }
 
     private resetNodeHighlightRelations(): void {
         this.highlightedRelationsNodesIds$.next(null)
     }
 
-    private onNodeHighlightRelations(nodeId: string): void {
-        const highlightedRelationsNodesIds = SgRelations.toggleSelection(
+    private onNodeHighlightToggleRelations(nodeId: string): void {
+        this.processNodeHighlightAction(nodeId, SgRelations.toggleSelection)
+    }
+
+    private onNodeHighlightParentRelations(nodeId: string): void {
+        this.processNodeHighlightAction(nodeId, SgRelations.toggleParentsSelection)
+    }
+
+    private onNodeHighlightChildRelations(nodeId: string): void {
+        this.processNodeHighlightAction(nodeId, SgRelations.toggleChildrenSelection)
+    }
+
+    private processNodeHighlightAction(nodeId: string, highlightFn: SgRelations.NodeHighlightFn) {
+        const highlightedRelationsNodesIds = highlightFn(
             this.highlightedRelationsNodesIds$.getValue() ?? [],
             nodeId,
             this.store.state.links,

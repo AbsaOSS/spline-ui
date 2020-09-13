@@ -31,7 +31,9 @@ import { SplineConfig, SplineConfigService } from 'spline-shared'
 export class AppComponent {
 
     readonly splineConfig$: Observable<SplineConfig>
+    // TODO: remove that after menu component will be implemented
     readonly isEventsLinkActive$ = new BehaviorSubject<{ isActive: boolean }>({ isActive: false })
+    readonly isPlansLinkActive$ = new BehaviorSubject<{ isActive: boolean }>({ isActive: false })
 
     readonly appVersion = environment.version
     isSideNavExpanded = false
@@ -40,24 +42,20 @@ export class AppComponent {
 
         this.splineConfig$ = this.splineConfigService.config$
 
-        // TODO: replace that logic with some directive.
+        // TODO: replace that after menu component will be implemented
         this.router.events
             .pipe(
                 filter(event => event instanceof NavigationEnd),
             )
             .subscribe((event: NavigationEnd) => {
-                const urlsFromOtherScopes = [
-                    '/app/plans/list',
-                    '/app/data-sources/list',
-                ]
-                const isActive = !urlsFromOtherScopes.includes(event.url)
-                this.isEventsLinkActive$.next({ isActive })
+                this.isEventsLinkActive$.next({ isActive: event.url.startsWith('/events/') })
+                this.isPlansLinkActive$.next({ isActive: event.url.startsWith('/plans/') })
             })
     }
 
     onAttributeSearchSelected(attributeInfo: AttributeSearchRecord): void {
         this.router.navigate(
-            ['/app/plans/overview', attributeInfo.executionEventId],
+            ['/plans/overview', attributeInfo.executionEventId],
             {
                 queryParams: {
                     attributeId: attributeInfo.id,

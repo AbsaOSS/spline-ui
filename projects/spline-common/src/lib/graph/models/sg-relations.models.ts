@@ -19,12 +19,39 @@ import { LineageNodeLink } from 'spline-api'
 
 export namespace SgRelations {
 
+    export type NodeHighlightFn = (highlightedRelations: string[], nodeId: string, links: LineageNodeLink[]) => string[]
+
     export function toggleSelection(highlightedRelations: string[], nodeId: string, links: LineageNodeLink[]): string[] {
 
         const relatedNodesIds = links
             .filter(link => nodeId === link.source || nodeId === link.target)
             .reduce((acc, currentLink) => [...acc, currentLink.source, currentLink.target], [])
 
+        return toggleRelations(relatedNodesIds, highlightedRelations)
+
+    }
+
+    export function toggleChildrenSelection(highlightedRelations: string[], nodeId: string, links: LineageNodeLink[]): string[] {
+
+        const relatedNodesIds = links
+            .filter(link => nodeId === link.source)
+            .reduce((acc, currentLink) => [...acc, currentLink.target], [nodeId])
+
+        return toggleRelations(relatedNodesIds, highlightedRelations)
+
+    }
+
+    export function toggleParentsSelection(highlightedRelations: string[], nodeId: string, links: LineageNodeLink[]): string[] {
+
+        const relatedNodesIds = links
+            .filter(link => nodeId === link.target)
+            .reduce((acc, currentLink) => [...acc, currentLink.source], [nodeId])
+
+        return toggleRelations(relatedNodesIds, highlightedRelations)
+
+    }
+
+    function toggleRelations(relatedNodesIds: string[], highlightedRelations: string[]): string[] {
         const notHighlightedNodesIds = relatedNodesIds
             .filter(id => !highlightedRelations.includes(id))
 
@@ -39,7 +66,6 @@ export namespace SgRelations {
             ...highlightedRelations,
             ...notHighlightedNodesIds,
         ]
-
     }
 
 }

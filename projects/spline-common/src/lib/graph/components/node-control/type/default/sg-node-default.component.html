@@ -33,6 +33,7 @@
             <!-- INLINE ACTIONS -->
             <button *ngFor="let action of data.inlineActions"
                     [matTooltip]="action?.tooltip | translate"
+                    class="sg-node-view__action sg-node-view__action--icon"
                     mat-button
                     mat-icon-button
                     [color]="action?.theme"
@@ -44,11 +45,12 @@
             </button>
             <!-- ./INLINE ACTIONS -->
 
-            <!-- INLINE ACTIONS -->
+            <!-- ACTIONS -->
             <button *ngFor="let action of data.actions"
                     [matTooltip]="action?.tooltip | translate"
                     mat-button
                     [color]="action?.theme"
+                    class="sg-node-view__action sg-node-view__action--text"
                     [style.color]="action?.color"
                     (click)="onActionClicked($event, action)">
 
@@ -61,7 +63,7 @@
                 </span>
 
             </button>
-            <!-- ./INLINE ACTIONS -->
+            <!-- ./ACTIONS -->
 
         </div>
         <!-- ./ACTIONS CONTAINER -->

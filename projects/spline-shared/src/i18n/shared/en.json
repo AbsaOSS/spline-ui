@@ -8,7 +8,9 @@
     "SG_DEPTH_CONTROL__MAX_DEPTH_LABEL": "Max depth",
     "SG_DEPTH_CONTROL__BTN__SHOW_ALL_LEVELS": "Show all levels",
     "SG_DEPTH_CONTROL__BTN_SHOW_ONE_MORE_LEVEL": "Show One More Level",
-    "SG_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS": "Highlight Relations",
+    "SG_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS__TOGGLE": "Highlight All Relations",
+    "SG_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS__PARENT": "Highlight Parent Relations",
+    "SG_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS__CHILD": "Highlight Child Relations",
     "SG_NODE_CONTROL__ACTION__FOCUS": "Focus on Graph"
   }
 }

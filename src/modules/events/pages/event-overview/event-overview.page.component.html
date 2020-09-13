@@ -60,7 +60,9 @@
                         <event-node-info [nodeRelations]="selectedNodeRelations"
                                          (focusNode$)="onNodeFocus($event.nodeId)"
                                          (launchNode$)="onExecutionPlanNodeLaunchAction($event.nodeId)"
-                                         (highlightNodeRelations$)="onNodeHighlightRelations($event.nodeId)">
+                                         (highlightToggleRelations$)="onNodeHighlightRelations($event.nodeId)"
+                                         (highlightParentRelations$)="onNodeHighlightParentRelations($event.nodeId)"
+                                         (highlightChildRelations$)="onNodeHighlightChildRelations($event.nodeId)">
 
                         </event-node-info>
 
@@ -94,9 +96,7 @@
                         <!-- CONTROL PANEL :: ACTIONS -->
                         <ng-template sgControlPanelSection>
 
-                            <sg-relations-control (showAll$)="onShowAllRelationsBtnClicked()"
-                                                  (hideAll$)="onHideAllRelationsBtnClicked()">
-                            </sg-relations-control>
+                            <sg-relations-control (toggle$)="onToggleAllRelationsBtnClicked()"></sg-relations-control>
 
                         </ng-template>
                         <!-- ./CONTROL PANEL :: ACTIONS -->

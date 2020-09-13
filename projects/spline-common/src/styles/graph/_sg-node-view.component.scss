@@ -20,17 +20,19 @@
 $border-radius: 8px;
 $icon-width: 24px;
 
-$node-bg-color--selected: $color-platinum;
-$node-bg-color--target: $color-luxury;
-$node-bg-color--focused: $color-human;
-$focus-animation-time: 3s;
+$node-bg-color--selected: $color-human;
+$node-bg-color--target: $color-platinum;
+$node-bg-color--focused: $color-energy;
+$action-icon-color: $color-grey-dark-75;
+$focus-animation-time: 4s;
 
 @mixin node-view-colors($node-view-host, $bg-color, $color, $bg-color-actions, $color-actions) {
     background: $bg-color;
     border: 1px solid darken($bg-color, 5);
     color: $color;
 
-    #{$node-view-host}__actions-container {
+    #{$node-view-host}__actions-container,
+    &.sg-node-view--actions-position-bottom #{$node-view-host}__actions-container {
         background: $bg-color-actions;
         border-color: darken($bg-color-actions, 5);
         color: $color-actions;
@@ -104,7 +106,7 @@ $focus-animation-time: 3s;
         background: $color-grey-light-1;
         border-left: 1px solid $color-grey-light;
         border-radius: 0 $border-radius $border-radius 0;
-        color: $color-grey-dark;
+        color: $action-icon-color;
         display: flex;
         height: 100%;
         padding: 0 8px;
@@ -116,6 +118,16 @@ $focus-animation-time: 3s;
     &__actions {
         text-align: right;
         width: 100%;
+    }
+
+    &__action {
+        &--icon.mat-button {
+
+        }
+
+        &--text.mat-button {
+            padding: 0 8px;
+        }
     }
 
     &.sg-node-view--actions-position {
@@ -145,7 +157,7 @@ $focus-animation-time: 3s;
         @include node-view-colors($self, $node-bg-color--target, $color-white, darken($node-bg-color--target, 5), $color-grey-light);
     }
 
-    &--focused:not(&--selected):not(&--target) {
+    &--focused {
         animation: focus-node-view $focus-animation-time;
 
         #{$self}__actions-container {
@@ -170,13 +182,31 @@ $focus-animation-time: 3s;
         color: inherit;
     }
 
-    20% {
+    15% {
         background: $node-bg-color--focused;
         border: 1px solid darken($node-bg-color--focused, 5);
         color: $color-white;
     }
 
-    80% {
+    30% {
+        background-color: $color-white;
+        border: 1px solid $color-grey-light;
+        color: inherit;
+    }
+
+    45% {
+        background: $node-bg-color--focused;
+        border: 1px solid darken($node-bg-color--focused, 5);
+        color: $color-white;
+    }
+
+    60% {
+        background-color: $color-white;
+        border: 1px solid $color-grey-light;
+        color: inherit;
+    }
+
+    75% {
         background: $node-bg-color--focused;
         border: 1px solid darken($node-bg-color--focused, 5);
         color: $color-white;
@@ -193,16 +223,34 @@ $focus-animation-time: 3s;
     0% {
         background: $color-grey-light-1;
         border-color: $color-grey-light;
-        color: $color-grey-dark;
+        color: $action-icon-color;
     }
 
-    20% {
+    15% {
         background: darken($node-bg-color--focused, 5);
         border-color: darken($node-bg-color--focused, 10);
         color: $color-grey-light;
     }
 
-    80% {
+    30% {
+        background: $color-grey-light-1;
+        border-color: $color-grey-light;
+        color: $action-icon-color;
+    }
+
+    45% {
+        background: darken($node-bg-color--focused, 5);
+        border-color: darken($node-bg-color--focused, 10);
+        color: $color-grey-light;
+    }
+
+    60% {
+        background: $color-grey-light-1;
+        border-color: $color-grey-light;
+        color: $action-icon-color;
+    }
+
+    75% {
         background: darken($node-bg-color--focused, 5);
         border-color: darken($node-bg-color--focused, 10);
         color: $color-grey-light;
@@ -211,24 +259,36 @@ $focus-animation-time: 3s;
     100% {
         background: $color-grey-light-1;
         border-color: $color-grey-light;
-        color: $color-grey-dark;
+        color: $action-icon-color;
     }
 }
 
 @keyframes focus-text {
     0% {
-        color: $color-grey-dark;
+        color: $action-icon-color;
     }
 
-    20% {
+    15% {
         color: $color-grey-light;
     }
 
-    80% {
+    30% {
+        color: $action-icon-color;
+    }
+
+    45% {
+        color: $color-grey-light;
+    }
+
+    60% {
+        color: $action-icon-color;
+    }
+
+    75% {
         color: $color-grey-light;
     }
 
     100% {
-        color: $color-grey-dark;
+        color: $action-icon-color;
     }
 }

@@ -30,19 +30,19 @@
             <div class="spline-content-details-section">
 
                 <div [hidden]="state.selectedNodeId">
-                    <button *ngIf="eventId" [routerLink]="['/app/events/overview', eventId]"
+                    <button *ngIf="eventId" [routerLink]="['/events/overview', eventId]"
                             class="mb-3"
                             mat-button>
                         <mat-icon class="mr-2">arrow_back</mat-icon>
                         <span class="pr-2">
-                                {{ 'PLANS.BACK_TO_EVENT_BUTTON' | translate }}
-                            </span>
+                            {{ 'PLANS.BACK_TO_EVENT_BUTTON' | translate }}
+                        </span>
                     </button>
 
                     <!-- EXECUTION PLAN INFO -->
                     <plan-info (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"
                                [executionPlan]="state.executionPlan"
-                               [selectedAttributeId]="state.selectedAttributeId">
+                               [selectedAttributeId]="(store.selectedAttribute$ | async)?.id">
                     </plan-info>
                     <!-- ./EXECUTION PLAN INFO -->
                 </div>
@@ -91,9 +91,7 @@
                     <!-- CONTROL PANEL :: ACTIONS -->
                     <ng-template sgControlPanelSection>
 
-                        <sg-relations-control (showAll$)="onShowAllRelationsBtnClicked()"
-                                              (hideAll$)="onHideAllRelationsBtnClicked()">
-                        </sg-relations-control>
+                        <sg-relations-control (toggle$)="onToggleAllRelationsBtnClicked()"></sg-relations-control>
 
                     </ng-template>
                     <!-- ./CONTROL PANEL :: ACTIONS -->

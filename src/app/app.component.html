@@ -37,7 +37,7 @@
                        mat-list-item
                        *ngIf="isEventsLinkActive$ | async as isEventsLinkActive"
                        [matTooltip]="'APP.MENU__EVENTS' | translate"
-                       routerLink="/app/events/list">
+                       routerLink="/events/list">
 
                         <mat-icon>play_arrow</mat-icon>
                         <span *ngIf="isExpanded">
@@ -45,12 +45,13 @@
                         </span>
 
                     </a>
-                    <a [matTooltipDisabled]="isExpanded"
+                    <a [class.active]="isPlansLinkActive.isActive"
+                       [matTooltipDisabled]="isExpanded"
                        [matTooltipPosition]="'right'"
                        mat-list-item
+                       *ngIf="isPlansLinkActive$ | async as isPlansLinkActive"
                        [matTooltip]="'APP.MENU__PLANS' | translate"
-                       routerLink="/app/plans/list"
-                       routerLinkActive="active">
+                       routerLink="/plans/list">
 
                         <mat-icon>playlist_play</mat-icon>
                         <span *ngIf="isExpanded">
@@ -63,7 +64,7 @@
                        [matTooltipPosition]="'right'"
                        mat-list-item
                        [matTooltip]="'APP.MENU__DATA_SOURCES' | translate"
-                       routerLink="/app/data-sources/list"
+                       routerLink="/data-sources/list"
                        routerLinkActive="active">
 
                         <mat-icon>description</mat-icon>

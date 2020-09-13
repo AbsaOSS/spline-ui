@@ -33,4 +33,13 @@ export const SPLINE_ICONS_COLLECTION: Set<string> = new Set<string>([
     'chevron-triple-left',
     'chevron-triple-right',
     'eye-off-outline',
+    'ray-start-arrow',
+    'ray-end-arrow',
+    'arrow-expand-down',
+    'arrow-expand-up',
+    'arrow-split-horizontal',
+    'swap-vertical-bold',
+    'arrow-expand-vertical',
+    'arrow-expand',
+    'arrow-collapse',
 ])

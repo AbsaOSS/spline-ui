@@ -15,19 +15,11 @@
   -->
 
 <div class="d-flex flex-column">
-    <!-- SHOW ALL -->
+    <!-- TOGGLE -->
     <button mat-button mat-icon-button
-            [matTooltip]="'SG.ACTION__SHOW_ALL_RELATIONS' | translate"
-            (click)="onShowAllRelationsBtnClicked()">
-        <spline-icon icon="eye-outline"></spline-icon>
+            [matTooltip]="'SG.ACTION__HIGHLIGHT_RELATIONS__TOGGLE' | translate"
+            (click)="onToggleRelationsBtnClicked()">
+        <spline-icon icon="swap_vert"></spline-icon>
     </button>
-    <!-- ./SHOW ALL -->
-
-    <!-- HIDE ALL -->
-    <button mat-button mat-icon-button
-            [matTooltip]="'SG.ACTION__HIDE_ALL_RELATIONS' | translate"
-            (click)="onHideAllRelationsBtnClicked()">
-        <spline-icon icon="eye-off-outline"></spline-icon>
-    </button>
-    <!-- ./HIDE ALL -->
+    <!-- ./TOGGLE -->
 </div>

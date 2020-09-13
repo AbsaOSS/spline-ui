@@ -76,7 +76,9 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
                                 nodeSource => EventNodeControl.toSgNode(
                                     nodeSource,
                                     (nodeId) => this.onExecutionPlanNodeLaunchAction(nodeId),
-                                    (nodeId) => this.onNodeHighlightRelations(nodeId),
+                                    (nodeId) => this.onNodeHighlightParentRelations(nodeId),
+                                    (nodeId) => this.onNodeHighlightChildRelations(nodeId),
+                                    (nodeId) => this.onNodeHighlightToggleRelations(nodeId),
                                 ),
                             ),
                     }
@@ -108,7 +110,9 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
                         node,
                         (nodeId) => this.onExecutionPlanNodeLaunchAction(nodeId),
                         (nodeId) => this.onNodeFocus(nodeId),
-                        (nodeId) => this.onNodeHighlightRelations(nodeId),
+                        (nodeId) => this.onNodeHighlightParentRelations(nodeId),
+                        (nodeId) => this.onNodeHighlightChildRelations(nodeId),
+                        (nodeId) => this.onNodeHighlightToggleRelations(nodeId),
                     )
                 }),
             )
@@ -148,8 +152,10 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
         this.resetNodeHighlightRelations()
     }
 
-    onHideAllRelationsBtnClicked(): void {
-        this.highlightedRelationsNodesIds$.next([])
+    onToggleAllRelationsBtnClicked(): void {
+        this.highlightedRelationsNodesIds$.next(
+            this.highlightedRelationsNodesIds$.getValue() ? null : []
+        )
     }
 
     onChangeGraphDepth(depth): void {
@@ -158,7 +164,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
 
     onExecutionPlanNodeLaunchAction(nodeId: string): void {
         this.router.navigate(
-            ['/app/plans/overview', nodeId],
+            ['/plans/overview', nodeId],
             {
                 queryParams: {
                     eventId: this.executionEventId,
@@ -173,6 +179,28 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
 
     onNodeHighlightRelations(nodeId: string): void {
         const highlightedRelationsNodesIds = SgRelations.toggleSelection(
+            this.highlightedRelationsNodesIds$.getValue() ?? [],
+            nodeId,
+            this.store.state.links,
+        )
+
+        this.highlightedRelationsNodesIds$.next(highlightedRelationsNodesIds)
+    }
+
+    onNodeHighlightToggleRelations(nodeId: string): void {
+        this.processNodeHighlightAction(nodeId, SgRelations.toggleSelection)
+    }
+
+    onNodeHighlightParentRelations(nodeId: string): void {
+        this.processNodeHighlightAction(nodeId, SgRelations.toggleParentsSelection)
+    }
+
+    onNodeHighlightChildRelations(nodeId: string): void {
+        this.processNodeHighlightAction(nodeId, SgRelations.toggleChildrenSelection)
+    }
+
+    private processNodeHighlightAction(nodeId: string, highlightFn: SgRelations.NodeHighlightFn) {
+        const highlightedRelationsNodesIds = highlightFn(
             this.highlightedRelationsNodesIds$.getValue() ?? [],
             nodeId,
             this.store.state.links,

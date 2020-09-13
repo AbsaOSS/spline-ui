@@ -54,15 +54,15 @@ export namespace SgNodeDefault {
         [
             SgNodeViewDefault.ActionsPosition.right,
             {
-                width: 320,
+                width: 360,
                 height: 50,
             },
         ],
         [
             SgNodeViewDefault.ActionsPosition.bottom,
             {
-                width: 320,
-                height: 90,
+                width: 360,
+                height: 94,
             },
         ],
     ])
