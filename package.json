@@ -16,7 +16,10 @@
     "lint:styles:fix": "stylelint src/**/*.scss --fix",
     "e2e": "ng e2e",
     "ngcc": "ngcc --properties es2015 browser module main --async false",
-    "publish": "node ./publish/publish.js"
+    "publish": "node ./publish/publish.js",
+    "preversion": "npm run test && npm run lint",
+    "postversion": "npm run build:prod && npm run publish",
+    "new-snapshot": "npm version prepatch --preid=SNAPSHOT"
   },
   "private": false,
   "dependencies": {
