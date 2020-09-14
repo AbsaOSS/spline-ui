@@ -31,16 +31,18 @@ if (!fs.existsSync(TARGET_DIR)) {
     throw new Error('Source directory does not exist.')
 }
 
+const filesNamesToCopy = [
+    'package.json',
+    'README.md',
+    '.npmrc',
+]
 
-// copy package.json template && sync version from the main package.json
-const packageJsonSourcePath = path.resolve(SOURCE_DIR, 'package.json')
-const packageJsonTargetPath = path.resolve(TARGET_DIR, 'package.json')
-fs.copyFileSync(packageJsonSourcePath, packageJsonTargetPath)
-
-// copy README
-const readmeSourcePath = path.resolve(SOURCE_DIR, 'README.md')
-const readmeTargetPath = path.resolve(TARGET_DIR, 'README.md')
-fs.copyFileSync(readmeSourcePath, readmeTargetPath)
+filesNamesToCopy.forEach(fileName => {
+    fs.copyFileSync(
+        path.resolve(SOURCE_DIR, fileName),
+        path.resolve(TARGET_DIR, fileName)
+    )
+})
 
 const replaceVersionConfig = {
     files: TARGET_DIR + '/package.json',
@@ -67,6 +69,7 @@ publishCmd.stdout.on('data', (chunk) => {
 
 // clean up after publish finished
 publishCmd.on('exit', (code) => {
-    fs.unlinkSync(packageJsonTargetPath)
-    fs.unlinkSync(readmeTargetPath)
+    filesNamesToCopy.forEach(fileName => {
+        fs.unlinkSync(path.resolve(TARGET_DIR, fileName))
+    })
 });
