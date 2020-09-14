@@ -19,7 +19,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { BehaviorSubject, merge, Observable, Subject } from 'rxjs'
 import { filter, map, shareReplay, skip, takeUntil } from 'rxjs/operators'
 import { ExecutionEventFacade } from 'spline-api'
-import { SdWidgetSchema, SgData, SgNodeSchema, SgRelations, SplineColors } from 'spline-common'
+import { SdWidgetSchema, SgData, SgNodeSchema, SgRelations } from 'spline-common'
 import { BaseComponent, RouterHelpers } from 'spline-utils'
 
 import { EventNodeControl, EventNodeInfo } from '../../models'

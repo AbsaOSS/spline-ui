@@ -23,17 +23,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core'
 })
 export class SgDepthControlComponent {
 
-    @Input() depth = 15
-    @Input() maxDepth = 3
-    @Input() loading = false
+    @Input() depth
 
     @Output() depthChanged$ = new EventEmitter<{ depth: number }>()
 
-    onShowAllBtnClicked(): void {
-        this.depthChanged$.emit({ depth: this.maxDepth })
-    }
-
     onShowMoreBtnClicked(): void {
-        this.depthChanged$.emit({ depth: this.depth + 1 })
+        this.depthChanged$.emit({ depth: this.depth * 2 })
     }
 }

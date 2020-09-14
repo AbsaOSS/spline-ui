@@ -59,6 +59,27 @@
     background: $color-white-90;
 }
 
+.bg-white-75 {
+    background: $color-white-75;
+}
+
 .color-grey-dark {
     color: $color-grey-dark;
+}
+
+.color-orange {
+    color: $color-orange !important;
+}
+
+a.dashed-link {
+    border-bottom: 1px dashed $color-grey-dark;
+    cursor: pointer;
+
+    &.color-orange {
+        border-color: $color-orange;
+    }
+
+    &:hover {
+        border-bottom-color: transparent;
+    }
 }

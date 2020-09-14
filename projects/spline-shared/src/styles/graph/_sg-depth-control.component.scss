@@ -25,9 +25,14 @@ $icon-color: $color-orange;
 .sg-depth-control {
     align-items: center;
     display: flex;
+    justify-content: center;
 
     &__value {
-        color: $color-pink;
+        color: $icon-color;
+
+        .mat-icon {
+            @include icon-size(48px);
+        }
     }
 
     &__value-container {
@@ -44,12 +49,12 @@ $icon-color: $color-orange;
 
     &__text {
         color: $color-grey-dark;
-        padding: 0 2rem;
+        padding: 0 1rem;
     }
 
     &__title {
         line-height: 1rem;
-        margin-bottom: .25rem;
+        margin-bottom: .5rem;
     }
 
     &__hint {

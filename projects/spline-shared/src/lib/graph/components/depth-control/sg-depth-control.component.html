@@ -14,47 +14,32 @@
   ~ limitations under the License.
   -->
 
-<mat-card class="bg-white-90">
-
-    <!-- LOADER -->
-    <spline-loader *ngIf="loading" size="md" mode="cover"></spline-loader>
-    <!-- ./LOADER -->
+<mat-card class="bg-white-75 mat-card--border-4">
 
     <div class="sg-depth-control">
+
         <!-- DEPTH VALUE -->
         <div class="sg-depth-control__value">
-            <div class="sg-depth-control__value-container">
-                {{ depth }}
-            </div>
+            <mat-icon>error_outline</mat-icon>
         </div>
         <!-- ./DEPTH VALUE -->
 
         <!-- TEXT -->
         <div class="sg-depth-control__text">
-            <h3 class="sg-depth-control__title">
+            <h4 class="sg-depth-control__title">
                 {{ 'SHARED.SG_DEPTH_CONTROL__TITLE' | translate }}
-            </h3>
+            </h4>
             <div class="sg-depth-control__hint">
-                {{ 'SHARED.SG_DEPTH_CONTROL__MAX_DEPTH_LABEL' | translate }}: {{ maxDepth}}</div>
+                {{ 'SHARED.SG_DEPTH_CONTROL__CURRENT_DEPTH_TEXT' | translate: {depth: depth} }}.
+                <a class="dashed-link color-orange"
+                   [matTooltip]="'SHARED.SG_DEPTH_CONTROL__LOAD_MORE_LINK_TOOLTIP' | translate "
+                   (click)="onShowMoreBtnClicked()">
+                    {{ 'SHARED.SG_DEPTH_CONTROL__LOAD_MORE_LINK_TEXT' | translate }}
+                </a>
+                {{ 'SHARED.SG_DEPTH_CONTROL__LOAD_MORE_TEXT' | translate }}
+            </div>
         </div>
         <!-- ./TEXT -->
-
-        <!-- ACTIONS -->
-        <div class="sg-depth-control__actions color-grey-dark">
-            <button mat-button mat-icon-button
-                    class="mr-2"
-                    (click)="onShowAllBtnClicked()"
-                    [matTooltip]="'SHARED.SG_DEPTH_CONTROL__BTN__SHOW_ALL_LEVELS' | translate">
-                <mat-icon>all_inclusive</mat-icon>
-            </button>
-
-            <button mat-button mat-icon-button
-                    (click)="onShowMoreBtnClicked()"
-                    [matTooltip]="'SHARED.SG_DEPTH_CONTROL__BTN__SHOW_ALL_LEVELS' | translate">
-                <mat-icon>add</mat-icon>
-            </button>
-        </div>
-        <!-- ./ACTIONS -->
     </div>
 
 

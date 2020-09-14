@@ -18,4 +18,8 @@
 
 .mat-card {
     border-radius: $container-border-radius !important;
+
+    &.mat-card--border-4 {
+        border-radius: 4px !important;
+    }
 }
