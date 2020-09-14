@@ -16,7 +16,7 @@
 
 const { chdir } = require('process')
 const { replaceInFileSync } = require('replace-in-file')
-const { spawn } = require('child_process')
+const { spawn, spawnSync } = require('child_process')
 const fs = require('fs')
 const path = require('path')
 const os = require('os')
@@ -55,6 +55,8 @@ chdir(TARGET_DIR)
 const npmCmd = os.type().toLowerCase().includes('win')
     ? 'npm.cmd'
     : 'npm'
+
+spawnSync(npmCmd, ['publish', '--access', 'public'])
 
 const publishCmd = spawn(npmCmd, ['publish'])
 
