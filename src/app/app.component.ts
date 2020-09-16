@@ -48,15 +48,14 @@ export class AppComponent {
                 filter(event => event instanceof NavigationEnd),
             )
             .subscribe((event: NavigationEnd) => {
-                const isEventsActive = !event.url.startsWith('/app/plans') && !event.url.startsWith('/app/data-sources')
-                this.isEventsLinkActive$.next({ isActive: isEventsActive })
-                this.isPlansLinkActive$.next({ isActive: event.url.startsWith('/app/plans') })
+                this.isEventsLinkActive$.next({ isActive: event.url === '' || event.url.startsWith('/events') })
+                this.isPlansLinkActive$.next({ isActive: event.url.startsWith('/plans') })
             })
     }
 
     onAttributeSearchSelected(attributeInfo: AttributeSearchRecord): void {
         this.router.navigate(
-            ['/app/plans/overview', attributeInfo.executionEventId],
+            ['/plans/overview', attributeInfo.executionEventId],
             {
                 queryParams: {
                     attributeId: attributeInfo.id,

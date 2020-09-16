@@ -14,33 +14,14 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core'
-import { RouterModule, Routes } from '@angular/router'
-
-import { DataSourcesListPageComponent } from './pages'
+import { Component } from '@angular/core'
 
 
-const routes: Routes = [
-    {
-        path: 'list',
-        component: DataSourcesListPageComponent,
-    },
-    {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'list',
-    },
-    {
-        path: '**',
-        redirectTo: '/404',
-    },
-]
-
-@NgModule({
-    imports: [
-        RouterModule.forChild(routes),
-    ],
-    exports: [RouterModule],
+@Component({
+    selector: 'spline-not-found',
+    templateUrl: './not-found.component.html',
+    styleUrls: ['./not-found.component.scss'],
 })
-export class SplineDataSourcesRoutingModule {
+export class AppNotFoundComponent {
+
 }

@@ -30,8 +30,13 @@ const routes: Routes = [
         component: EventOverviewPageComponent,
     },
     {
-        path: '**',
+        path: '',
+        pathMatch: 'full',
         redirectTo: 'list',
+    },
+    {
+        path: '**',
+        redirectTo: '/404',
     },
 ]
 

@@ -30,8 +30,13 @@ const routes: Routes = [
         component: PlansListPageComponent,
     },
     {
-        path: '**',
+        path: '',
+        pathMatch: 'full',
         redirectTo: 'list',
+    },
+    {
+        path: '**',
+        redirectTo: '/404',
     },
 ]
 

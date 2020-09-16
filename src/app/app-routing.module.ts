@@ -18,10 +18,12 @@ import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { SplineConfigResolver } from 'spline-shared'
 
+import { AppNotFoundComponent } from './pages/not-found/not-found.component'
+
 
 const routes: Routes = [
     {
-        path: 'app',
+        path: '',
         resolve: [
             SplineConfigResolver
         ],
@@ -45,13 +47,17 @@ const routes: Routes = [
             },
             {
                 path: '**',
-                redirectTo: 'events',
+                redirectTo: '404',
+            },
+            {
+                path: '404',
+                component: AppNotFoundComponent,
             },
         ]
     },
     {
         path: '**',
-        redirectTo: 'app',
+        redirectTo: '404',
     },
 ]
 
