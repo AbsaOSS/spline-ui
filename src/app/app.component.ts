@@ -48,7 +48,7 @@ export class AppComponent {
                 filter(event => event instanceof NavigationEnd),
             )
             .subscribe((event: NavigationEnd) => {
-                this.isEventsLinkActive$.next({ isActive: event.url === '' || event.url.startsWith('/events') })
+                this.isEventsLinkActive$.next({ isActive: event.url === '' || event.url === '/' || event.url.startsWith('/events') })
                 this.isPlansLinkActive$.next({ isActive: event.url.startsWith('/plans') })
             })
     }
