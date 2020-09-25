@@ -108,7 +108,7 @@ export namespace EventOverviewStore {
     }
 
     function calculateHasMoreDepth(lineageDepth: ExecutionEventLineageOverviewDepth): boolean {
-        return lineageDepth.depthRequested >= lineageDepth.depthComputed
+        return lineageDepth.depthRequested === lineageDepth.depthComputed
     }
 
 }
