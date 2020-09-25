@@ -139,7 +139,7 @@ export namespace SgNodeControl {
 
     export function getNodeRelationsHighlightParentAction(onNodeHighlightRelations: () => void): SgNodeDefault.InlineAction {
         return {
-            icon: 'arrow_upward',
+            icon: 'parent-nodes',
             onClick: () => {
                 onNodeHighlightRelations()
             },
@@ -149,7 +149,7 @@ export namespace SgNodeControl {
 
     export function getNodeRelationsHighlightChildAction(onNodeHighlightRelations: () => void): SgNodeDefault.InlineAction {
         return {
-            icon: 'arrow_downward',
+            icon: 'children-nodes',
             onClick: () => {
                 onNodeHighlightRelations()
             },
