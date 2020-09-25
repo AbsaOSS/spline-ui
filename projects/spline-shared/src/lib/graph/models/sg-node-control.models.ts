@@ -159,7 +159,7 @@ export namespace SgNodeControl {
 
     export function getNodeRelationsHighlightToggleActions(onNodeHighlightRelations: () => void): SgNodeDefault.InlineAction {
         return {
-            icon: 'swap_vert',
+            icon: 'transit-connection',
             onClick: () => {
                 onNodeHighlightRelations()
             },
