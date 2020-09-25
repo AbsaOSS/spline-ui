@@ -42,4 +42,6 @@ export const SPLINE_ICONS_COLLECTION: Set<string> = new Set<string>([
     'arrow-expand-vertical',
     'arrow-expand',
     'arrow-collapse',
+    'parent-nodes',
+    'children-nodes',
 ])
