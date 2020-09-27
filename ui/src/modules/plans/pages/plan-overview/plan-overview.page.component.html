@@ -14,112 +14,91 @@
   ~ limitations under the License.
   -->
 
-<div *ngIf="(store.loadingProcessing$ | async) as loadingProcessing">
+<ng-container *ngIf="store.state$ | async as state">
 
     <!-- LOADER -->
-    <spline-loader *ngIf="loadingProcessing.processing"></spline-loader>
+    <spline-loader *ngIf="state.loadingProcessing.processing"></spline-loader>
     <!-- ./LOADER -->
 
     <!-- ERROR -->
-    <spline-content-error *ngIf="loadingProcessing.processingError"></spline-content-error>
+    <spline-content-error *ngIf="state.loadingProcessing.processingError"></spline-content-error>
     <!-- ./ERROR -->
 
-    <ng-container *ngIf="graphData$ | async as graphData">
-        <div *ngIf="store.state$ | async as state" class="end-to-end-container flex-row">
+    <div *ngIf="!!state.graphData" class="e2e-container">
 
-            <div class="spline-content-details-section">
-
-                <div [hidden]="state.selectedNodeId">
-                    <!-- HEADER -->
-                    <div class="spline-content-details-section__header">
-                        <div class="spline-content-details-section__back-btn">
-                            <button *ngIf="eventId" [routerLink]="['/events/overview', eventId]"
-                                    [matTooltip]="'PLANS.BACK_TO_EVENT_BUTTON' | translate"
-                                    mat-button mat-icon-button>
-                                <mat-icon>arrow_back</mat-icon>
-                            </button>
-                        </div>
-
-                        <h2 class="text-center">
-                            {{ 'PLANS.PLAN_OVERVIEW__EXECUTION_PLAN_TITLE' | translate }}
-                        </h2>
-                    </div>
-                    <!-- ./HEADER -->
-
-                    <!-- EXECUTION PLAN INFO -->
-                    <plan-info (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"
-                               [executionPlan]="state.executionPlan"
-                               [selectedAttributeId]="(store.selectedAttribute$ | async)?.id">
-                    </plan-info>
-                    <!-- ./EXECUTION PLAN INFO -->
-                </div>
-
-                <!--  SELECTED NODE INFO -->
-                <div class="spline-content-details-section__dialog"
-                     *ngIf="state.selectedNodeId"
-                     [@slideXInOut]>
-
-                    <div class="spline-content-details-section__header">
-                        <h2 class="text-center">
-                            {{ 'PLANS.PLAN_OVERVIEW__SELECTED_NODE_TITLE' | translate }}
-                        </h2>
-
-                        <div class="spline-content-details-section__dialog-close">
-                            <button (click)="onCloseContentDetailsDialogBtnClicked()"
-                                    mat-button mat-icon-button
-                                    [matTooltip]="'COMMON.CLOSE' | translate">
-                                <mat-icon>close</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-
-                    <plan-operation-info (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"
-                                         [node]="store.selectedNode$ | async"
-                                         (focusNode$)="onNodeFocus($event.nodeId)"
-                                         [selectedAttributeId]="state.selectedAttributeId"></plan-operation-info>
-
-                </div>
-                <!-- ./SELECTED NODE INFO -->
-            </div>
-
-            <div class="end-to-end-container__body">
-
-                <!-- GRAPH -->
-                <spline-graph
-                        (nodeSelectionChange$)="onNodeSelected($event)"
-                        [graphData]="graphData"
-                        [focusNode$]="focusNode$"
-                        [sgHighlightedRelations]="highlightedRelationsNodesIds$ | async"
-                        [sgAttributeLineage]="state.attributeLineage"
-                        [selectedNodeId]="state.selectedNodeId">
-
-                    <!-- TOOLBAR -->
-                    <sg-toolbar *ngIf="store.selectedAttribute$ | async as selectedAttribute"
-                                position="top-right">
-                        <spline-attribute-lineage-info (close$)="onSelectedAttributeChanged(null)"
-                                                       [loading]="state.attributeLineageLoadingProcessing.processing"
-                                                       [attributeLineage]="state.attributeLineage"
-                                                       [attribute]="selectedAttribute">
-                        </spline-attribute-lineage-info>
-                    </sg-toolbar>
-                    <!-- ./TOOLBAR -->
-
-                    <!-- CONTROL PANEL :: ACTIONS -->
-                    <ng-template sgControlPanelSection>
-                        <sg-relations-control (showAll$)="onShowAllRelationsBtnClicked()"></sg-relations-control>
-                    </ng-template>
-
-                    <ng-template sgControlPanelSection>
-                        <sg-node-view-control [nodeView]="graphNodeView$ | async" (viewChanged$)="onGraphNodeViewChanged($event)"></sg-node-view-control>
-                    </ng-template>
-                    <!-- ./CONTROL PANEL :: ACTIONS -->
-                </spline-graph>
-                <!-- ./GRAPH -->
-
+        <!-- HEADER -->
+        <div class="content-header">
+            <div class="container">
+                <plan-header *ngIf="state.executionPlan"
+                             [executionPlan]="state.executionPlan"
+                             [navTabs]="headerNavTabs">
+                </plan-header>
             </div>
         </div>
-    </ng-container>
-</div>
+        <!-- ./HEADER -->
+
+
+        <div class="e2e-container__body">
+            <div class="e2e-container flex-row">
+
+                <div class="sl-content-sidebar">
+
+                    <div [hidden]="state.selectedNodeId">
+
+                        <!-- EXECUTION PLAN INFO -->
+                        <plan-info (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"
+                                   [executionPlan]="state.executionPlan"
+                                   [selectedAttributeId]="(store.selectedAttribute$ | async)?.id">
+                        </plan-info>
+                        <!-- ./EXECUTION PLAN INFO -->
+                    </div>
+
+                    <!-- SELECTED NODE INFO -->
+                    <sl-content-sidebar-dialog (close$)="onContentSidebarDialogClosed()"
+                                               [dialogTitle]="'PLANS.PLAN_OVERVIEW__SELECTED_NODE_TITLE'"
+                                               [visible]="!!state.selectedNodeId">
+
+                        <plan-operation-info (focusNode$)="onNodeFocus($event.nodeId)"
+                                             (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"
+                                             [node]="store.selectedNode$ | async"
+                                             [selectedAttributeId]="state.selectedAttributeId">
+                        </plan-operation-info>
+
+                    </sl-content-sidebar-dialog>
+                    <!-- ./SELECTED NODE INFO -->
+                </div>
+
+                <div class="e2e-container__body">
+
+                    <sg-container (nodeSelectionChange$)="onNodeSelected($event.nodeId)"
+                                  [sgAttributeLineage]="state.attributeLineage"
+                                  (highlightedRelationsNodesIdsChange$)="onHighlightedRelationsNodesIdsChange($event.nodeIds)"
+                                  [graphData]="state.graphData"
+                                  [selectedNodeId]="state.selectedNodeId">
+
+                        <!-- TOOLBAR -->
+                        <sg-toolbar *ngIf="store.selectedAttribute$ | async as selectedAttribute"
+                                    position="top-right">
+                            <spline-attribute-lineage-info (close$)="onSelectedAttributeChanged(null)"
+                                                           [attributeLineage]="state.attributeLineage"
+                                                           [attribute]="selectedAttribute"
+                                                           [loading]="state.attributeLineageLoadingProcessing.processing">
+                            </spline-attribute-lineage-info>
+                        </sg-toolbar>
+                        <!-- ./TOOLBAR -->
+
+                        <ng-template sgControlPanelSection>
+                            <sg-node-view-control (viewChanged$)="onGraphNodeViewChanged($event)"
+                                                  [nodeView]="state.graphNodeView"></sg-node-view-control>
+                        </ng-template>
+                        <!-- ./CONTROL PANEL :: ACTIONS -->
+                    </sg-container>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
 
 
 

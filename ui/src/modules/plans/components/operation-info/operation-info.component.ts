@@ -14,25 +14,28 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
+import {
+    ChangeDetectionStrategy,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    SimpleChanges
+} from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
 import { filter, takeUntil } from 'rxjs/operators'
 import { ExecutionPlanFacade, ExecutionPlanLineageNode } from 'spline-api'
-import { SplineDataViewSchema, SplineDataWidgetEvent } from 'spline-common'
-import { SdWidgetAttributesTree } from 'spline-shared'
-import { BaseLocalStateComponent } from 'spline-utils'
+import { SplineDataWidgetEvent } from 'spline-common/data-view'
+import { SdWidgetAttributesTree } from 'spline-shared/attributes'
+import { SgNodeCardDataView } from 'spline-shared/data-view'
+import NodeEventData = SgNodeCardDataView.NodeEventData
+import { SgNodeControl } from 'spline-shared/graph'
+import { BaseLocalStateComponent, GenericEventInfo } from 'spline-utils'
 
 import { OperationDetailsDataSource } from '../../data-sources'
 import { OperationInfo } from '../../models'
 
-
-export type ExecutionPlanNodeInfoState = {
-    operationDvs: SplineDataViewSchema
-    inputsDvs: SplineDataViewSchema | null
-    outputDvs: SplineDataViewSchema | null
-    detailsDvs: SplineDataViewSchema | null
-    inputsNumber: number
-}
 
 @Component({
     selector: 'plan-operation-info',
@@ -49,7 +52,7 @@ export type ExecutionPlanNodeInfoState = {
         },
     ],
 })
-export class OperationInfoComponent extends BaseLocalStateComponent<ExecutionPlanNodeInfoState> implements OnChanges {
+export class OperationInfoComponent extends BaseLocalStateComponent<OperationInfo.State> implements OnChanges {
 
     @Input() node: ExecutionPlanLineageNode
 
@@ -72,7 +75,7 @@ export class OperationInfoComponent extends BaseLocalStateComponent<ExecutionPla
             )
             .subscribe(data =>
                 this.updateState({
-                    operationDvs: OperationInfo.toDataViewSchema(data.operation, () => this.onNodeFocus()),
+                    operationDvs: OperationInfo.toDataViewSchema(data.operation),
                     inputsDvs: OperationInfo.toInputsDvs(data, this.selectedAttributeId$.asObservable()),
                     outputDvs: OperationInfo.toOutputsDvs(data, this.selectedAttributeId$.asObservable()),
                     detailsDvs: OperationInfo.toDetailsDvs(data),
@@ -90,12 +93,17 @@ export class OperationInfoComponent extends BaseLocalStateComponent<ExecutionPla
     }
 
     onDataViewEvent($event: SplineDataWidgetEvent): void {
+        console.log($event.type)
         switch ($event.type) {
             // SELECTED ATTR CHANGED
             case SdWidgetAttributesTree.EVENT_TYPE__SELECTED_ATTR_CHANGED:
 
                 this.onSelectedAttributeChanged(($event as SdWidgetAttributesTree.EventSelectedAttrChanged).data.attributeId)
 
+                break
+
+            case SgNodeCardDataView.WidgetEvent.FocusNode:
+                this.focusNode$.next({ nodeId: ($event as GenericEventInfo<NodeEventData>).data.nodeId })
                 break
 
             default:
@@ -108,7 +116,4 @@ export class OperationInfoComponent extends BaseLocalStateComponent<ExecutionPla
         this.selectedAttributeChanged$.emit({ attributeId })
     }
 
-    private onNodeFocus(): void {
-        this.focusNode$.next({ nodeId: this.node.id })
-    }
 }

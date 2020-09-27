@@ -16,14 +16,10 @@
 
 
 import { ActivatedRoute } from '@angular/router'
-import _ from 'lodash'
-import { ExecutionEventsQuery } from 'spline-api'
+import { RouterNavigation } from 'spline-utils'
 
 
 export namespace PlanOverview {
-
-    import QueryParams = ExecutionEventsQuery.QueryParams
-
 
     export enum QueryParamAlis {
         ExecutionPlanId = 'planId',
@@ -41,31 +37,18 @@ export namespace PlanOverview {
 
     export function extractRouterState(activatedRoute: ActivatedRoute): RouterState {
         return {
-            [QueryParamAlis.ExecutionPlanId]: activatedRoute.snapshot.params['planId'],
-            [QueryParamAlis.ExecutionEventId]: extractQueryParam(activatedRoute, QueryParamAlis.ExecutionEventId),
-            [QueryParamAlis.SelectedNodeId]: extractQueryParam(activatedRoute, QueryParamAlis.SelectedNodeId),
-            [QueryParamAlis.SelectedAttributeId]: extractQueryParam(activatedRoute, QueryParamAlis.SelectedAttributeId),
+            [QueryParamAlis.ExecutionPlanId]: activatedRoute.snapshot.params[QueryParamAlis.ExecutionPlanId],
+            [QueryParamAlis.ExecutionEventId]: RouterNavigation.extractQueryParam(activatedRoute, QueryParamAlis.ExecutionEventId),
+            [QueryParamAlis.SelectedNodeId]: RouterNavigation.extractQueryParam(activatedRoute, QueryParamAlis.SelectedNodeId),
+            [QueryParamAlis.SelectedAttributeId]: RouterNavigation.extractQueryParam(activatedRoute, QueryParamAlis.SelectedAttributeId),
         }
     }
 
     export function getSelectedNodeId(activatedRoute: ActivatedRoute): string {
-        return extractQueryParam(activatedRoute, QueryParamAlis.SelectedNodeId)
+        return RouterNavigation.extractQueryParam(activatedRoute, QueryParamAlis.SelectedNodeId)
     }
 
     export function getSelectedAttributeId(activatedRoute: ActivatedRoute): string {
-        return extractQueryParam(activatedRoute, QueryParamAlis.SelectedAttributeId)
-    }
-
-    export function extractQueryParam(activatedRoute: ActivatedRoute, queryParamName: string): string | null {
-        return activatedRoute.snapshot.queryParamMap.get(queryParamName)
-    }
-
-    export function updateQueryParams(activatedRoute: ActivatedRoute, alias: string, value: string | null): QueryParams {
-        return value
-            ? {
-                ...activatedRoute.snapshot.queryParams,
-                [alias]: value,
-            }
-            : _.omit(this.activatedRoute.snapshot.queryParams, alias)
+        return RouterNavigation.extractQueryParam(activatedRoute, QueryParamAlis.SelectedAttributeId)
     }
 }

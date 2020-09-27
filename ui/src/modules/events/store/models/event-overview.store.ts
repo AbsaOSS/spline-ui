@@ -15,9 +15,12 @@
  */
 
 import { ExecutionEventLineageNode, ExecutionEventLineageOverview, ExecutionEventLineageOverviewDepth, LineageNodeLink } from 'spline-api'
+import { SdWidgetSchema } from 'spline-common/data-view'
+import { SgData } from 'spline-common/graph'
+import { SgNodeControl } from 'spline-shared/graph'
 import { ProcessingStore, SplineEntityStore } from 'spline-utils'
 
-import { EventInfo } from '../../models'
+import { EventInfo, EventNodeControl, EventNodeInfo } from '../../models'
 
 
 export namespace EventOverviewStore {
@@ -34,6 +37,11 @@ export namespace EventOverviewStore {
         targetExecutionPlanNodeId: string | null
         lineageDepth: ExecutionEventLineageOverviewDepth
         graphHasMoreDepth: boolean
+        selectedNodeRelations: EventNodeInfo.NodeRelationsInfo | null
+        targetNodeDvs: SdWidgetSchema | null
+        targetExecutionPlanNodeDvs: SdWidgetSchema | null
+        graphNodeView: SgNodeControl.NodeView
+        graphData: SgData | null
     }
 
     export const GRAPH_DEFAULT_DEPTH = 2
@@ -53,9 +61,14 @@ export namespace EventOverviewStore {
             graphLoadingProcessing: ProcessingStore.getDefaultProcessingState(),
             selectedNodeId: null,
             targetNodeId: null,
+            targetNodeDvs: null,
+            selectedNodeRelations: null,
             targetExecutionPlanNodeId: null,
-            lineageDepth: {...DEFAULT_LINEAGE_DEPTH},
-            graphHasMoreDepth: calculateHasMoreDepth(DEFAULT_LINEAGE_DEPTH)
+            targetExecutionPlanNodeDvs: null,
+            lineageDepth: { ...DEFAULT_LINEAGE_DEPTH },
+            graphHasMoreDepth: calculateHasMoreDepth(DEFAULT_LINEAGE_DEPTH),
+            graphNodeView: SgNodeControl.NodeView.Detailed,
+            graphData: null
         }
     }
 
@@ -73,7 +86,7 @@ export namespace EventOverviewStore {
 
         const nodesState = SplineEntityStore.addAll(lineageOverview.lineage.nodes, state.nodes)
 
-        return {
+        const newState = {
             ...state,
             nodes: nodesState,
             links: lineageOverview.lineage.links,
@@ -82,11 +95,67 @@ export namespace EventOverviewStore {
                 name: eventNode ? eventNode.name : 'NaN',
                 applicationId: lineageOverview.executionEventInfo.applicationId,
                 executedAt: new Date(lineageOverview.executionEventInfo.timestamp),
+                executionPlan: eventNode
+                    ? {
+                        id: eventNode.id,
+                        name: eventNode.name
+                    }
+                    : undefined
             },
             lineageDepth: lineageOverview.executionEventInfo.lineageDepth,
             graphHasMoreDepth: calculateHasMoreDepth(lineageOverview.executionEventInfo.lineageDepth),
             targetNodeId: lineageOverview.executionEventInfo.targetDataSourceId,
-            targetExecutionPlanNodeId: eventNode.id
+            targetNodeDvs: EventNodeInfo.toDataSchema(
+                SplineEntityStore.selectOne(lineageOverview.executionEventInfo.targetDataSourceId, nodesState)
+            ),
+            targetExecutionPlanNodeId: eventNode.id,
+            targetExecutionPlanNodeDvs: EventNodeInfo.toDataSchema(
+                SplineEntityStore.selectOne(eventNode.id, nodesState)
+            ),
+        }
+
+        return calculateGraphDataMiddleware(newState)
+    }
+
+    export function reduceGraphNodeView(state: State, graphNodeView: SgNodeControl.NodeView): State {
+        return calculateGraphDataMiddleware({
+            ...state,
+            graphNodeView
+        })
+    }
+
+    export function calculateGraphDataMiddleware(state: State): State {
+        return {
+            ...state,
+            graphData: calculateGraphData(state)
+        }
+    }
+
+    export function calculateGraphData(state: State): SgData {
+        const nodesList = EventOverviewStore.selectAllNodes(state)
+        return {
+            links: state.links,
+            nodes: nodesList
+                // map node source data to the SgNode schema
+                .map(
+                    nodeSource => EventNodeControl.toSgNode(nodeSource, state.graphNodeView),
+                ),
+        }
+    }
+
+    export function reduceSelectedNodeId(nodeId: string | null, state: State): State {
+        const selectedNode = nodeId ? selectNode(state, nodeId) : null
+
+        return {
+            ...state,
+            selectedNodeId: nodeId,
+            selectedNodeRelations: selectedNode
+                ? {
+                    node: selectedNode,
+                    children: selectChildrenNodes(state, selectedNode.id),
+                    parents: selectParentNodes(state, selectedNode.id),
+                }
+                : null
         }
     }
 

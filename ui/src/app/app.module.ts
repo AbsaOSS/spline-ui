@@ -22,14 +22,11 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { environment } from '@env/environment'
-import {
-    SplineIconModule,
-    SplineLayoutModule,
-    SplineSearchBoxModule,
-    SplineTranslateCoreModule,
-    SplineTranslateModule,
-} from 'spline-common'
-import { SplineAttributeSearchModule, SplineConfigModule, SplineConfigSettings, SPLINE_CONFIG_SETTINGS } from 'spline-shared'
+import { SplineIconModule, SplineSearchBoxModule } from 'spline-common'
+import { SplineLayoutModule } from 'spline-common/layout'
+import { SplineConfigModule, SplineConfigSettings, SPLINE_CONFIG_SETTINGS } from 'spline-shared'
+import { SplineAttributesSharedModule } from 'spline-shared/attributes'
+import { SplineTranslateCoreModule, SplineTranslateModule } from 'spline-utils/translate'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -50,11 +47,11 @@ import { AppNotFoundComponent } from './pages/not-found/not-found.component'
         MatTooltipModule,
         MatButtonModule,
         SplineTranslateCoreModule,
-        SplineTranslateModule.forChild({ moduleNames: ['shared', 'app'] }),
+        SplineTranslateModule.forChild({ moduleNames: ['shared', 'shared-attributes', 'app'] }),
         SplineLayoutModule,
         SplineSearchBoxModule,
         SplineConfigModule,
-        SplineAttributeSearchModule,
+        SplineAttributesSharedModule,
         SplineIconModule
     ],
     providers: [

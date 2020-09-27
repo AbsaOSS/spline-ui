@@ -15,7 +15,15 @@
  */
 
 @import 'spline-common';
+@import 'spline-common-data-view';
+@import 'spline-common-graph';
+@import 'spline-common-layout';
+
 @import 'spline-shared';
+@import 'spline-shared-attributes';
+@import 'spline-shared-expression';
+@import 'spline-shared-graph';
+
 @import './components/index';
 @import './helpers/index';
 

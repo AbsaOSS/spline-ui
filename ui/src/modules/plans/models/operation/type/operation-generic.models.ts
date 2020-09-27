@@ -15,7 +15,8 @@
  */
 
 import { OperationDetails } from 'spline-api'
-import { SdWidgetExpansionPanel, SdWidgetSchema, SplineColors, SplineDataViewSchema } from 'spline-common'
+import { SplineColors } from 'spline-common'
+import { SdWidgetExpansionPanel, SdWidgetSchema, SplineDataViewSchema } from 'spline-common/data-view'
 
 import { EventOperationProperty } from '../operation-property.models'
 

@@ -16,8 +16,9 @@
 
 import { Observable } from 'rxjs'
 import { Operation, OperationDetails, OperationType } from 'spline-api'
-import { SdWidgetCard, SplineDataViewSchema } from 'spline-common'
-import { SgNodeControl } from 'spline-shared'
+import { SdWidgetCard, SplineDataViewSchema } from 'spline-common/data-view'
+import { SgNodeCardDataView } from 'spline-shared/data-view'
+import { SgNodeControl } from 'spline-shared/graph'
 
 import { attributesSchemaToDataViewSchema } from '../attribute'
 
@@ -38,6 +39,14 @@ export namespace OperationInfo {
 
     import NodeStyles = SgNodeControl.NodeStyles
 
+
+    export type State = {
+        operationDvs: SplineDataViewSchema
+        inputsDvs: SplineDataViewSchema | null
+        outputDvs: SplineDataViewSchema | null
+        detailsDvs: SplineDataViewSchema | null
+        inputsNumber: number
+    }
 
     export function extractLabel(operation: Operation): string {
         return operation.type
@@ -67,7 +76,7 @@ export namespace OperationInfo {
         return SgNodeControl.getNodeStyles(nodeType)
     }
 
-    export function toDataViewSchema(operation: Operation, onNodeFocus: (nodeId: string) => void): SplineDataViewSchema {
+    export function toDataViewSchema(operation: Operation): SplineDataViewSchema {
         const nodeStyles = getNodeStyles(operation.type, operation.name)
 
         return [
@@ -78,7 +87,7 @@ export namespace OperationInfo {
                     title: operation.name,
                     iconTooltip: extractLabel(operation),
                     actions: [
-                        SgNodeControl.getNodeFocusAction(() => onNodeFocus(operation.id))
+                        SgNodeCardDataView.getNodeFocusAction(operation.id)
                     ]
                 },
             ),

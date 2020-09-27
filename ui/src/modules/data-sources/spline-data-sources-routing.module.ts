@@ -17,13 +17,17 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 
-import { DataSourcesListPageComponent } from './pages'
+import { DataSourcesListPageComponent, DataSourcesOverviewPageComponent } from './pages'
 
 
 const routes: Routes = [
     {
         path: 'list',
         component: DataSourcesListPageComponent,
+    },
+    {
+        path: 'overview',
+        component: DataSourcesOverviewPageComponent,
     },
     {
         path: '',

@@ -15,8 +15,16 @@
  */
 
 import { DataSourceInfo, ExecutionPlan } from 'spline-api'
-import { SdWidgetCard, SdWidgetSchema, SdWidgetSimpleRecord, SplineColors, SplineDataViewSchema } from 'spline-common'
-import { SgNodeControl } from 'spline-shared'
+import { SplineColors } from 'spline-common'
+import {
+    SdWidgetCard,
+    SdWidgetExpansionPanel,
+    SdWidgetRecordsList,
+    SdWidgetSchema,
+    SdWidgetSimpleRecord,
+    SplineDataViewSchema
+} from 'spline-common/data-view'
+import { SgNodeControl } from 'spline-shared/graph'
 
 
 export namespace PlanInfo {
@@ -47,6 +55,39 @@ export namespace PlanInfo {
                 ],
             ),
         ]
+    }
+
+    export function getOutputAndInputsDvs(data: ExecutionPlan): SplineDataViewSchema {
+        const nodeStyles = SgNodeControl.getNodeStyles(SgNodeControl.NodeType.DataSource)
+        return SdWidgetExpansionPanel.toSchema(
+            {
+                title: 'PLANS.PLAN_INFO__INPUT_OUTPUT_EX_PANEL__TITLE',
+                icon: nodeStyles.icon,
+                iconColor: nodeStyles.color,
+            },
+            [
+                SdWidgetRecordsList.toSchema(
+                    [
+                        {
+                            value: data.outputDataSource.name,
+                            description: data.outputDataSource.uri,
+                        }
+                    ],
+                    'PLANS.PLAN_INFO__INPUT_OUTPUT_EX_PANEL__SECTION__OUTPUT',
+                ),
+                SdWidgetRecordsList.toSchema(
+                    data.inputDataSources
+                        .map(dataSourceInfo => ({
+                            value: dataSourceInfo.name,
+                            description: dataSourceInfo.uri,
+                        })),
+                    'PLANS.PLAN_INFO__INPUT_OUTPUT_EX_PANEL__SECTION__INPUTS',
+                )
+            ],
+            {
+                expanded: false
+            }
+        )
     }
 
     export function getInputsDataViewSchema(data: ExecutionPlan): SplineDataViewSchema {

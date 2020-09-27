@@ -70,7 +70,12 @@ module.exports = {
                     }
                 ],
                 '@typescript-eslint/no-namespace': 0,
-                '@typescript-eslint/explicit-function-return-type': 0,
+                '@typescript-eslint/explicit-function-return-type': [
+                    'warn',
+                    {
+                        "allowExpressions": true
+                    }
+                ],
                 'no-inner-declarations': 0,
                 'max-lines': 0,
                 'brace-style': [
@@ -181,6 +186,7 @@ module.exports = {
                 '@angular-eslint/no-outputs-metadata-property': 'error',
                 '@angular-eslint/use-lifecycle-interface': 'warn',
                 '@angular-eslint/use-pipe-transform-interface': 'error',
+                '@typescript-eslint/prefer-regexp-exec': 0,
             }
         },
         {

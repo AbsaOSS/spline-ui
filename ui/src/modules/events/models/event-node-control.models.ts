@@ -15,8 +15,8 @@
  */
 
 import { dataSourceUriToName, ExecutionEventLineageNode, ExecutionEventLineageNodeType } from 'spline-api'
-import { SgNode, SgNodeCircle, SgNodeDefault } from 'spline-common'
-import { SgNodeControl } from 'spline-shared'
+import { SgNode, SgNodeCircle, SgNodeDefault } from 'spline-common/graph'
+import { SgNodeControl } from 'spline-shared/graph'
 import NodeType = SgNodeControl.NodeType
 import NodeView = SgNodeControl.NodeView
 
@@ -25,6 +25,10 @@ export namespace EventNodeControl {
 
     import NodeStyles = SgNodeControl.NodeStyles
 
+
+    export enum NodeControlEvent {
+        LaunchExecutionEvent = 'LaunchExecutionEvent'
+    }
 
     export function extractNodeName(nodeSource: ExecutionEventLineageNode): string {
         return dataSourceUriToName(nodeSource.name)
@@ -42,16 +46,12 @@ export namespace EventNodeControl {
     }
 
     export function toSgNode(nodeSource: ExecutionEventLineageNode,
-                             onExecutionPlanLaunchAction: (nodeId: string) => void,
-                             onNodeHighlightToggleRelations: (nodeId: string) => void,
                              nodeView: NodeView = NodeView.Detailed): SgNode {
 
         const nodeStyles = getNodeStyles(nodeSource)
 
         const defaultActions = [
-            ...SgNodeControl.getNodeRelationsHighlightActions(
-                () => onNodeHighlightToggleRelations(nodeSource.id)
-            ),
+            ...SgNodeControl.getNodeRelationsHighlightActions(),
         ]
 
         switch (nodeView) {
@@ -77,10 +77,10 @@ export namespace EventNodeControl {
                             : [
                                 {
                                     icon: 'launch',
-                                    onClick: () => {
-                                        onExecutionPlanLaunchAction(nodeSource.id)
-                                    },
                                     tooltip: 'EVENTS.EVENT_NODE_CONTROL__ACTION__LAUNCH',
+                                    event: {
+                                        type: NodeControlEvent.LaunchExecutionEvent
+                                    }
                                 },
                                 ...defaultActions
                             ],

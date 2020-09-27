@@ -15,13 +15,18 @@
  */
 
 import { ExecutionEventLineageNode, ExecutionEventLineageNodeType } from 'spline-api'
-import { SdWidgetCard, SdWidgetSchema, SdWidgetSimpleRecord, SplineCardHeader, SplineDataViewSchema } from 'spline-common'
-import { SgNodeControl } from 'spline-shared'
+import { SplineCardHeader } from 'spline-common'
+import { SdWidgetCard, SdWidgetSchema, SdWidgetSimpleRecord, SplineDataViewSchema } from 'spline-common/data-view'
+import { SgNodeCardDataView } from 'spline-shared/data-view'
 
 import { EventNodeControl } from './event-node-control.models'
 
 
 export namespace EventNodeInfo {
+
+    export enum WidgetEvent {
+        LaunchExecutionEvent = 'LaunchExecutionEvent'
+    }
 
     export function getNodeInfoTooltip(nodeSource: ExecutionEventLineageNode): string {
         return nodeSource.type === ExecutionEventLineageNodeType.DataSource
@@ -29,11 +34,7 @@ export namespace EventNodeInfo {
             : 'EVENTS.EVENT_NODE_INFO__TOOLTIP__EXECUTION_PLAN'
     }
 
-    export function toDataSchema(nodeSource: ExecutionEventLineageNode,
-                                 onExecutionPlanLaunchAction: (nodeId: string) => void,
-                                 onNodeFocus: (nodeId: string) => void,
-                                 onNodeHighlightToggleRelations: (nodeId: string) => void,
-                                 specialColor?: string): SdWidgetSchema<SdWidgetCard.Data> {
+    export function toDataSchema(nodeSource: ExecutionEventLineageNode): SdWidgetSchema<SdWidgetCard.Data> {
         const nodeStyles = EventNodeControl.getNodeStyles(nodeSource)
         const contentDataSchema: SplineDataViewSchema = nodeSource.type === ExecutionEventLineageNodeType.DataSource
             ? [
@@ -45,10 +46,8 @@ export namespace EventNodeInfo {
             : []
 
         const defaultActions = [
-            ...SgNodeControl.getNodeRelationsHighlightActions(
-                () => onNodeHighlightToggleRelations(nodeSource.id)
-            ),
-            SgNodeControl.getNodeFocusAction(() => onNodeFocus(nodeSource.id)),
+            SgNodeCardDataView.getNodeRelationsHighlightToggleAction(nodeSource.id),
+            SgNodeCardDataView.getNodeFocusAction(nodeSource.id),
         ]
 
         const actions: SplineCardHeader.Action[] = nodeSource.type === ExecutionEventLineageNodeType.Execution
@@ -56,16 +55,14 @@ export namespace EventNodeInfo {
                 ...defaultActions,
                 {
                     icon: 'launch',
-                    onClick: () => {
-                        onExecutionPlanLaunchAction(nodeSource.id)
-                    },
                     tooltip: 'EVENTS.EVENT_NODE_CONTROL__ACTION__LAUNCH',
+                    event: SgNodeCardDataView.toNodeWidgetEventInfo(WidgetEvent.LaunchExecutionEvent, nodeSource.id)
                 },
             ]
             : [...defaultActions]
         return SdWidgetCard.toSchema(
             {
-                color: specialColor ?? nodeStyles.color,
+                color: nodeStyles.color,
                 icon: nodeStyles.icon,
                 title: EventNodeControl.extractNodeName(nodeSource),
                 iconTooltip: getNodeInfoTooltip(nodeSource),

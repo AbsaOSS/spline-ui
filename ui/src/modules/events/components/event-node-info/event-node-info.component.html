@@ -17,7 +17,9 @@
 <ng-container *ngIf="state$ | async as state">
 
     <!-- SELECTED NODE -->
-    <spline-data-view [dataViewSchema]="state.nodeDvs"></spline-data-view>
+    <spline-data-view [dataViewSchema]="state.nodeDvs"
+                      (event$)="onDataViewEvent($event)">
+    </spline-data-view>
     <!-- ./SELECTED NODE -->
 
     <mat-tab-group>
@@ -29,7 +31,9 @@
                 {{ 'EVENTS.EVENT_NODE_INFO__TAB__CHILDREN_NODES' | translate}} ({{state.childrenNumber}})
             </ng-template>
 
-            <spline-data-view [dataViewSchema]="state.childrenDvs"></spline-data-view>
+            <spline-data-view [dataViewSchema]="state.childrenDvs"
+                              (event$)="onDataViewEvent($event)">
+            </spline-data-view>
         </mat-tab>
         <!-- ./CHILDREN -->
 
@@ -40,7 +44,9 @@
                 {{ 'EVENTS.EVENT_NODE_INFO__TAB__PARENT_NODES' | translate}} ({{state.parentsNumber}})
             </ng-template>
 
-            <spline-data-view [dataViewSchema]="state.parentsDvs"></spline-data-view>
+            <spline-data-view [dataViewSchema]="state.parentsDvs"
+                              (event$)="onDataViewEvent($event)">
+            </spline-data-view>
         </mat-tab>
         <!-- ./PARENTS -->
 

@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-import { DataSourcesListPageComponent } from './data-sources-list/data-sources-list.page.component'
+import { DataSourcesListPageComponent } from './list/data-sources-list.page.component'
+import { DataSourcesOverviewPageComponent } from './overview/data-sources-overview.page.component'
 
 
 export const pageComponents: any[] = [
     DataSourcesListPageComponent,
+    DataSourcesOverviewPageComponent
 ]
 
-export * from './data-sources-list/data-sources-list.page.component'
+export * from './list/data-sources-list.page.component'
+export * from './overview/data-sources-overview.page.component'

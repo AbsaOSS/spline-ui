@@ -17,7 +17,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core'
 import { AttributeLineage, AttributeSchema, evaluateAttributeLineageTypes } from 'spline-api'
 import { SplineColors } from 'spline-common'
-import { SgLegend } from 'spline-shared'
+import { SgLegend } from 'spline-shared/graph'
 
 import { getAttributeLineageTypeLegend } from '../../models'
 

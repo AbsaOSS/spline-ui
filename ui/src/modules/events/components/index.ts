@@ -15,20 +15,19 @@
  */
 
 import { SplineDateFilterComponent } from './date-filter/date-filter.component'
-import { EventInfoComponent } from './event-info/event-info.component'
+import { EventHeaderComponent } from './event-header/event-header.component'
 import { EventNodeInfoComponent } from './event-node-info/event-node-info.component'
 
 
 export const components: any[] = [
     SplineDateFilterComponent,
-    EventInfoComponent,
     EventNodeInfoComponent,
+    EventHeaderComponent,
 ]
-
-export * from './event-info/event-info.component'
 
 export * from './date-filter/date-filter.component'
 export * from './date-filter/date-filter.models'
 export * from './date-filter/date-filter.models'
 
 export * from './event-node-info/event-node-info.component'
+export * from './event-header/event-header.component'

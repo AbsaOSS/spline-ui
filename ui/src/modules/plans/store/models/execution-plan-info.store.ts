@@ -16,7 +16,7 @@
 
 import { Observable } from 'rxjs'
 import { ExecutionPlan } from 'spline-api'
-import { SplineDataViewSchema } from 'spline-common'
+import { SplineDataViewSchema } from 'spline-common/data-view'
 
 import { attributesSchemaToDataViewSchema, PlanInfo } from '../../models'
 
@@ -28,6 +28,7 @@ export namespace ExecutionPlanInfoStore {
         executionPlanVs: SplineDataViewSchema
         inputsVs: SplineDataViewSchema
         outputVs: SplineDataViewSchema
+        outputAndInputsVs: SplineDataViewSchema
         attributesSchema: SplineDataViewSchema
         inputsNumber: number
     }
@@ -38,6 +39,7 @@ export namespace ExecutionPlanInfoStore {
             executionPlanVs: PlanInfo.toDataViewSchema(executionPlan),
             inputsVs: PlanInfo.getInputsDataViewSchema(executionPlan),
             outputVs: PlanInfo.getOutputDataViewSchema(executionPlan),
+            outputAndInputsVs: PlanInfo.getOutputAndInputsDvs(executionPlan),
             inputsNumber: executionPlan.inputDataSources.length,
             attributesSchema: attributesSchemaToDataViewSchema(
                 executionPlan.extraInfo.attributes,

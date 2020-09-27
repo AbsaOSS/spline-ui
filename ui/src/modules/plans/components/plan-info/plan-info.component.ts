@@ -17,8 +17,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
 import { ExecutionPlan } from 'spline-api'
-import { SplineDataWidgetEvent } from 'spline-common'
-import { SdWidgetAttributesTree } from 'spline-shared'
+import { SplineDataWidgetEvent } from 'spline-common/data-view'
+import { SdWidgetAttributesTree } from 'spline-shared/attributes'
 import { BaseLocalStateComponent } from 'spline-utils'
 
 import { ExecutionPlanInfoStore } from '../../store'
@@ -33,7 +33,6 @@ import { ExecutionPlanInfoStore } from '../../store'
 export class PlanInfoComponent extends BaseLocalStateComponent<ExecutionPlanInfoStore.State> implements OnChanges {
 
     @Input() executionPlan: ExecutionPlan
-
     @Input() set selectedAttributeId(attributeId: string | null) {
         this.selectedAttributeId$.next(attributeId)
     }
@@ -59,13 +58,11 @@ export class PlanInfoComponent extends BaseLocalStateComponent<ExecutionPlanInfo
         switch ($event.type) {
             // SELECTED ATTR CHANGED
             case SdWidgetAttributesTree.EVENT_TYPE__SELECTED_ATTR_CHANGED:
-
                 this.onSelectedAttributeChanged(($event as SdWidgetAttributesTree.EventSelectedAttrChanged).data.attributeId)
-
                 break
 
             default:
-            // DO NOTHING
+                // DO NOTHING
         }
     }
 

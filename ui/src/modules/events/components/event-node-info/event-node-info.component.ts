@@ -15,11 +15,12 @@
  */
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
-import { ExecutionEventLineageNode } from 'spline-api'
-import { SdWidgetCard, SdWidgetSchema } from 'spline-common'
-import { BaseLocalStateComponent } from 'spline-utils'
+import { SplineDataWidgetEvent } from 'spline-common/data-view'
+import { SgNodeCardDataView } from 'spline-shared/data-view'
+import { BaseLocalStateComponent, GenericEventInfo } from 'spline-utils'
 
 import { EventNodeInfo } from '../../models'
+import NodeEventData = SgNodeCardDataView.NodeEventData
 
 
 @Component({
@@ -35,6 +36,7 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
     @Output() focusNode$ = new EventEmitter<{ nodeId: string }>()
     @Output() launchNode$ = new EventEmitter<{ nodeId: string }>()
     @Output() highlightToggleRelations$ = new EventEmitter<{ nodeId: string }>()
+    @Output() dataViewEvent$ = new EventEmitter<SplineDataWidgetEvent>()
 
     constructor() {
         super()
@@ -44,33 +46,30 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
         if (changes?.nodeRelations && !!changes.nodeRelations.currentValue) {
             const nodeRelations: EventNodeInfo.NodeRelationsInfo = changes.nodeRelations.currentValue
             this.updateState({
-                nodeDvs: this.toNodeDvs(nodeRelations.node),
-                childrenDvs: nodeRelations.children.map((node) => this.toNodeDvs(node)),
-                parentsDvs: nodeRelations.parents.map((node) => this.toNodeDvs(node)),
+                nodeDvs: EventNodeInfo.toDataSchema(nodeRelations.node),
+                childrenDvs: nodeRelations.children.map((node) => EventNodeInfo.toDataSchema(node)),
+                parentsDvs: nodeRelations.parents.map((node) => EventNodeInfo.toDataSchema(node)),
                 parentsNumber: nodeRelations?.parents?.length ?? 0,
                 childrenNumber: nodeRelations?.children?.length ?? 0,
             })
         }
     }
 
-    private toNodeDvs(node: ExecutionEventLineageNode): SdWidgetSchema<SdWidgetCard.Data> {
-        return EventNodeInfo.toDataSchema(
-            node,
-            (nodeId) => this.onNodeLaunch(nodeId),
-            (nodeId) => this.onNodeFocus(nodeId),
-            (nodeId) => this.onNodeHighlightToggleRelations(nodeId),
-        )
-    }
+    onDataViewEvent($event: SplineDataWidgetEvent): void {
+        switch ($event.type) {
+            case EventNodeInfo.WidgetEvent.LaunchExecutionEvent:
+                this.launchNode$.next({ nodeId: ($event as GenericEventInfo<NodeEventData>).data.nodeId })
+                break
 
-    private onNodeFocus(nodeId: string): void {
-        this.focusNode$.next({ nodeId })
-    }
+            case SgNodeCardDataView.WidgetEvent.FocusNode:
+                this.focusNode$.next({ nodeId: ($event as GenericEventInfo<NodeEventData>).data.nodeId })
+                break
 
-    private onNodeHighlightToggleRelations(nodeId: string): void {
-        this.highlightToggleRelations$.next({ nodeId })
-    }
+            case SgNodeCardDataView.WidgetEvent.HighlightNodeRelations:
+                this.highlightToggleRelations$.next({ nodeId: ($event as GenericEventInfo<NodeEventData>).data.nodeId })
+                break
+        }
 
-    private onNodeLaunch(nodeId: string): void {
-        this.launchNode$.next({ nodeId })
+        this.dataViewEvent$.next($event)
     }
 }

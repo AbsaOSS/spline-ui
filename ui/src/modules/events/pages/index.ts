@@ -15,13 +15,16 @@
  */
 
 import { EventOverviewPageComponent } from './event-overview/event-overview.page.component'
+import { EventOverviewGraphPageComponent } from './event-overview/graph/event-overview-graph.page.component'
 import { EventsListPageComponent } from './events-list/events-list.page.component'
 
 
 export const pageComponents: any[] = [
     EventsListPageComponent,
     EventOverviewPageComponent,
+    EventOverviewGraphPageComponent,
 ]
 
 export * from './event-overview/event-overview.page.component'
+export * from './event-overview/graph/event-overview-graph.page.component'
 export * from './events-list/events-list.page.component'

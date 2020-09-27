@@ -15,6 +15,7 @@
  */
 
 @import 'vars';
+@import 'mixins';
 
 $section-width: 600px;
 
@@ -56,4 +57,12 @@ $section-width: 600px;
         position: absolute;
         top: 0.25rem;
     }
+}
+
+.content-header {
+    @include shadow-light();
+    background: $color-white;
+    border-top-left-radius: 32px;
+    padding: 32px 32px 0;
+    z-index: 100;
 }

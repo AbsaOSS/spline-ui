@@ -16,9 +16,10 @@
 
 import { Injectable } from '@angular/core'
 import { Observable, of } from 'rxjs'
-import { catchError, distinctUntilChanged, map, shareReplay, take, tap } from 'rxjs/operators'
+import { catchError, map, take, tap } from 'rxjs/operators'
 import { ExecutionEventFacade, ExecutionEventLineageNode, ExecutionEventLineageOverview } from 'spline-api'
-import { BaseStore, ProcessingStore, SplineEntityStore } from 'spline-utils'
+import { SgNodeControl } from 'spline-shared/graph'
+import { BaseStore, ProcessingStore } from 'spline-utils'
 
 import { EventOverviewStore } from '../models'
 
@@ -31,10 +32,6 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
 
     readonly graphLoadingProcessingEvents: ProcessingStore.ProcessingEvents<EventOverviewStore.State>
     readonly graphLoadingProcessing$: Observable<ProcessingStore.EventProcessingState>
-
-    selectedNode$: Observable<ExecutionEventLineageNode | null>
-    targetNode$: Observable<ExecutionEventLineageNode | null>
-    targetExecutionPlanNode$: Observable<ExecutionEventLineageNode | null>
 
     constructor(private readonly executionEventFacade: ExecutionEventFacade) {
         super(EventOverviewStore.getDefaultState())
@@ -50,19 +47,20 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
         )
 
         this.graphLoadingProcessing$ = this.state$.pipe(map(data => data.graphLoadingProcessing))
-
-        this.selectedNode$ = this.getNodeSelector(state => state.selectedNodeId)
-
-        this.targetNode$ = this.getNodeSelector(state => state.targetNodeId)
-        this.targetExecutionPlanNode$ = this.getNodeSelector(state => state.targetExecutionPlanNodeId)
     }
 
     setSelectedNode(nodeId: string | null): void {
         if (this.state.selectedNodeId !== nodeId) {
-            this.updateState({
-                selectedNodeId: nodeId,
-            })
+            this.updateState(
+                EventOverviewStore.reduceSelectedNodeId(nodeId, this.state)
+            )
         }
+    }
+
+    setGraphNodeView(graphNodeView: SgNodeControl.NodeView): void {
+        this.updateState(
+            EventOverviewStore.reduceGraphNodeView(this.state, graphNodeView)
+        )
     }
 
     setGraphDepth(graphDepth: number): void {
@@ -87,7 +85,6 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
 
     init(
         executionEventId: string,
-        selectedNodeId: string | null = null,
         graphDepth: number = EventOverviewStore.GRAPH_DEFAULT_DEPTH,
     ): void {
 
@@ -110,7 +107,6 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
             .subscribe(() => {
                 this.updateState({
                     executionEventId,
-                    selectedNodeId,
                 })
             })
     }
@@ -160,21 +156,6 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
                     }
                 }),
                 take(1),
-            )
-    }
-
-    private getNodeSelector(nodeIdSelector: (state: EventOverviewStore.State) => string): Observable<ExecutionEventLineageNode | null> {
-        return this.state$
-            .pipe(
-                distinctUntilChanged((stateX, stateY) => nodeIdSelector(stateX) === nodeIdSelector(stateY)),
-                map(state => {
-                    const nodeId = nodeIdSelector(state)
-                    if (nodeId === null) {
-                        return null
-                    }
-                    return SplineEntityStore.selectOne<ExecutionEventLineageNode>(nodeId, state.nodes)
-                }),
-                shareReplay(1),
             )
     }
 

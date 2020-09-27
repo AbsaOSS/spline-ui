@@ -15,7 +15,7 @@
  */
 
 import { AttributeLineageType } from 'spline-api'
-import { SgLegend } from 'spline-shared'
+import { SgLegend } from 'spline-shared/graph'
 
 
 import { LINEAGE_TYPE_COLOR_MAP } from './attribute-lineage.models'

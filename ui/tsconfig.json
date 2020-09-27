@@ -32,23 +32,83 @@
             "spline-api/*": [
                 "projects/spline-api/src/public-api/*"
             ],
+            "spline-common/graph": [
+                "projects/spline-common/graph/src/public-api"
+            ],
+            "spline-common/graph/*": [
+                "projects/spline-common/graph/src/public-api/*"
+            ],
+            "spline-common/data-view": [
+                "projects/spline-common/data-view/src/public-api"
+            ],
+            "spline-common/data-view/*": [
+                "projects/spline-common/data-view/src/public-api/*"
+            ],
+            "spline-common/layout": [
+                "projects/spline-common/layout/src/public-api"
+            ],
+            "spline-common/layout/*": [
+                "projects/spline-common/layout/src/public-api/*"
+            ],
             "spline-common": [
-                "projects/spline-common/src/public-api"
+                "projects/spline-common/main/src/public-api"
             ],
             "spline-common/*": [
-                "projects/spline-common/src/public-api/*"
+                "projects/spline-common/main/src/public-api/*"
+            ],
+            "spline-shared/attributes": [
+                "projects/spline-shared/attributes/src/public-api"
+            ],
+            "spline-shared/attributes/*": [
+                "projects/spline-shared/attributes/src/public-api/*"
+            ],
+            "spline-shared/expression": [
+                "projects/spline-shared/expression/src/public-api"
+            ],
+            "spline-shared/expression/*": [
+                "projects/spline-shared/expression/src/public-api/*"
+            ],
+            "spline-shared/data-view": [
+                "projects/spline-shared/data-view/src/public-api"
+            ],
+            "spline-shared/data-view/*": [
+                "projects/spline-shared/data-view/src/public-api/*"
+            ],
+            "spline-shared/graph": [
+                "projects/spline-shared/graph/src/public-api"
+            ],
+            "spline-shared/graph/*": [
+                "projects/spline-shared/graph/src/public-api/*"
+            ],
+            "spline-shared/plans": [
+                "projects/spline-shared/plans/src/public-api"
+            ],
+            "spline-shared/plans/*": [
+                "projects/spline-shared/plans/src/public-api/*"
+            ],
+            "spline-shared/events": [
+                "projects/spline-shared/events/src/public-api"
+            ],
+            "spline-shared/events/*": [
+                "projects/spline-shared/events/src/public-api/*"
             ],
             "spline-shared": [
-                "projects/spline-shared/src/public-api"
+                "projects/spline-shared/main/src/public-api"
             ],
             "spline-shared/*": [
-                "projects/spline-shared/src/public-api/*"
+                "projects/spline-shared/main/src/public-api/*"
+            ],
+            "spline-utils/translate": [
+                "projects/spline-utils/translate/src/public-api"
+            ],
+            "spline-utils/translate/*": [
+                "projects/spline-utils/translate/src/public-api/*"
             ],
             "spline-utils": [
-                "projects/spline-utils/src/public-api"
+                "projects/spline-utils/main/src/public-api"
             ],
             "spline-utils/*": [
-                "projects/spline-utils/src/public-api/*"
+                "projects/spline-utils/main/src/public-api/*"
             ]
         }
     },

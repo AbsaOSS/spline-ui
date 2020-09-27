@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import _ from 'lodash'
+import omit from 'lodash/omit'
 
 import { AttributeDataType, AttributeDataTypeDto, toAttributeDataType } from './attribute-data-type.models'
 
@@ -37,7 +37,7 @@ export type AttributeSearchRecordDto = {
 
 export function toAttributeSearchRecord(entity: AttributeSearchRecordDto): AttributeSearchRecord {
     return {
-        ..._.omit(entity, ['attributeType']),
+        ...omit(entity, ['attributeType']),
         attributeType: toAttributeDataType(entity.attributeType)
     }
 }

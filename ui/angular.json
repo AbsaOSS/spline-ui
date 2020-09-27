@@ -53,23 +53,38 @@
                             },
                             {
                                 "glob": "**/*",
-                                "input": "projects/spline-common/src/assets",
-                                "output": "/assets/spline-common"
+                                "input": "projects/spline-common/main/assets",
+                                "output": "/assets"
                             },
                             {
                                 "glob": "**/*",
-                                "input": "projects/spline-shared/src/assets",
-                                "output": "/assets/spline-shared"
+                                "input": "projects/spline-common/graph/assets",
+                                "output": "/assets"
                             },
                             {
                                 "glob": "**/*",
-                                "input": "projects/spline-shared/src/i18n",
-                                "output": "/assets/i18n"
+                                "input": "projects/spline-shared/main/assets",
+                                "output": "/assets"
                             },
                             {
                                 "glob": "**/*",
-                                "input": "projects/spline-common/src/i18n",
-                                "output": "/assets/i18n"
+                                "input": "projects/spline-shared/attributes/assets",
+                                "output": "/assets"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "projects/spline-shared/expression/assets",
+                                "output": "/assets"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "projects/spline-shared/graph/assets",
+                                "output": "/assets"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "projects/spline-shared/data-view/assets",
+                                "output": "/assets"
                             }
                         ],
                         "styles": [
@@ -78,8 +93,14 @@
                         "stylePreprocessorOptions": {
                             "includePaths": [
                                 "src/styles",
-                                "projects/spline-common/src/styles",
-                                "projects/spline-shared/src/styles"
+                                "projects/spline-common/main/styles",
+                                "projects/spline-common/data-view/styles",
+                                "projects/spline-common/graph/styles",
+                                "projects/spline-common/layout/styles",
+                                "projects/spline-shared/main/styles",
+                                "projects/spline-shared/attributes/styles",
+                                "projects/spline-shared/expression/styles",
+                                "projects/spline-shared/graph/styles"
                             ]
                         },
                         "scripts": [
@@ -236,8 +257,10 @@
                         "project": "projects/spline-common/ng-package.json",
                         "stylePreprocessorOptions": {
                             "includePaths": [
-                                "projects/spline-common/src/styles",
-                                "projects/spline-shared/src/styles"
+                                "projects/spline-common/main/styles",
+                                "projects/spline-common/data-view/styles",
+                                "projects/spline-common/graph/styles",
+                                "projects/spline-common/layout/styles"
                             ]
                         }
                     },
@@ -284,7 +307,11 @@
                         "project": "projects/spline-shared/ng-package.json",
                         "stylePreprocessorOptions": {
                             "includePaths": [
-                                "projects/spline-shared/src/styles"
+                                "projects/spline-common/main/styles",
+                                "projects/spline-shared/main/styles",
+                                "projects/spline-shared/attributes/styles",
+                                "projects/spline-shared/expression/styles",
+                                "projects/spline-shared/graph/styles"
                             ]
                         }
                     },
@@ -331,7 +358,7 @@
                         "project": "projects/spline-utils/ng-package.json",
                         "stylePreprocessorOptions": {
                             "includePaths": [
-                                "projects/spline-utils/src/styles"
+                                "projects/spline-common/main/styles"
                             ]
                         }
                     },

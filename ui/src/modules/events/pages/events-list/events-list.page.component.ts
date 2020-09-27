@@ -18,11 +18,11 @@ import { AfterContentInit, Component, OnDestroy, OnInit, ViewChild } from '@angu
 import { PageEvent } from '@angular/material/paginator'
 import { MatSort } from '@angular/material/sort'
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
-import _ from 'lodash'
+import isEqual from 'lodash/isEqual'
 import { Observable } from 'rxjs'
 import { distinctUntilChanged, filter, map, skip, takeUntil } from 'rxjs/operators'
 import { ExecutionEventFacade, ExecutionEventField, ExecutionEventsPageResponse, QuerySorter } from 'spline-api'
-import { BaseComponent, ProcessingStore, RouterHelpers, SearchQuery } from 'spline-utils'
+import { BaseComponent, ProcessingStore, RouterNavigation, SearchQuery } from 'spline-utils'
 
 import { SplineDateFilter } from '../../components'
 import { EventsDataSource } from '../../data-sources'
@@ -131,7 +131,7 @@ export class EventsListPageComponent extends BaseComponent implements OnInit, Af
         //
         this.dataSource.searchParams$
             .pipe(
-                distinctUntilChanged((a, b) => _.isEqual(a, b)),
+                distinctUntilChanged((a, b) => isEqual(a, b)),
                 skip(1),
             )
             .subscribe(searchParams => {
@@ -152,7 +152,7 @@ export class EventsListPageComponent extends BaseComponent implements OnInit, Af
                 takeUntil(this.destroyed$),
                 // extract pagerState
                 map(() => EventsListUrlState.extractSearchParams(this.activatedRoute.snapshot.queryParams)),
-                filter((newSearchParams) => !_.isEqual(newSearchParams, this.dataSource.searchParams)),
+                filter((newSearchParams) => !isEqual(newSearchParams, this.dataSource.searchParams)),
             )
             .subscribe((newSearchParams) => {
                 this.dataSource.updateSearchParams(
@@ -178,7 +178,7 @@ export class EventsListPageComponent extends BaseComponent implements OnInit, Af
                             SearchQuery.matSortToFiledSorter(sort),
                         ]
                 }),
-                filter(sortBy => !_.isEqual(sortBy, this.dataSource.searchParams.sortBy)),
+                filter(sortBy => !isEqual(sortBy, this.dataSource.searchParams.sortBy)),
             )
             .subscribe((sortBy: QuerySorter.FieldSorter<ExecutionEventField>[]) => {
                 this.dataSource.sort(sortBy)
@@ -197,7 +197,7 @@ export class EventsListPageComponent extends BaseComponent implements OnInit, Af
                         direction: this.sortControl.direction,
                     }
                     const currentSortBy = [SearchQuery.matSortToFiledSorter(sort)]
-                    return !_.isEqual(sortBy, currentSortBy)
+                    return !isEqual(sortBy, currentSortBy)
                 }),
             )
             .subscribe(
@@ -206,7 +206,7 @@ export class EventsListPageComponent extends BaseComponent implements OnInit, Af
     }
 
     private updateRouterState(queryParams, replaceUrl: boolean = true): void {
-        RouterHelpers.updateCurrentRouterQueryParams(
+        RouterNavigation.updateCurrentRouterQueryParams(
             this.router,
             this.activatedRoute,
             queryParams,

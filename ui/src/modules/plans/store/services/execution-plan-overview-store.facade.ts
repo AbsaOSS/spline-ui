@@ -25,6 +25,7 @@ import {
     ExecutionPlanLineageNode,
     ExecutionPlanLineageOverview,
 } from 'spline-api'
+import { SgNodeControl } from 'spline-shared/graph'
 import { BaseStore, ProcessingStore, SplineEntityStore } from 'spline-utils'
 
 import { ExecutionPlanOverviewStore } from '../models'
@@ -93,6 +94,12 @@ export class ExecutionPlanOverviewStoreFacade extends BaseStore<ExecutionPlanOve
                 }),
                 shareReplay(1),
             )
+    }
+
+    setGraphNodeView(graphNodeView: SgNodeControl.NodeView): void {
+        this.updateState(
+            ExecutionPlanOverviewStore.reduceGraphNodeView(this.state, graphNodeView)
+        )
     }
 
     setSelectedNode(nodeId: string | null): void {

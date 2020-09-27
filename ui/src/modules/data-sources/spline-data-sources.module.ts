@@ -32,8 +32,10 @@ import { MatTreeModule } from '@angular/material/tree'
 import { RouterModule } from '@angular/router'
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material'
 import { SplineApiModule } from 'spline-api'
-import { SplineCommonModule, SplineLayoutModule, SplineTranslateModule } from 'spline-common'
+import { SplineCommonModule } from 'spline-common'
+import { SplineLayoutModule } from 'spline-common/layout'
 import { SplineApiConfigModule } from 'spline-shared'
+import { SplineTranslateModule } from 'spline-utils/translate'
 
 
 import * as fromPages from './pages'
@@ -65,7 +67,7 @@ import { SplineDataSourcesRoutingModule } from './spline-data-sources-routing.mo
         SplineApiConfigModule,
         SplineApiModule,
         SplineLayoutModule,
-        SplineTranslateModule.forChild({ moduleNames: ['plans', 'graph'] }),
+        SplineTranslateModule.forChild({ moduleNames: ['plans', 'common-graph'] }),
         SplineCommonModule,
     ],
     exports: [

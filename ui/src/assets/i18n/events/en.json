@@ -8,6 +8,7 @@
         "EVENTS_LIST__COL__TYPE": "Type",
         "EVENTS_LIST__COL__WRITE_MODE": "Write Mode",
         "EVENT_INFO__TOOLTIP": "Execution Event",
+        "EVENT_INFO__DETAILS__EXECUTION_PLAN": "Execution Plan",
         "EVENT_INFO__DETAILS__EXECUTED_AT": "Executed At",
         "EVENT_INFO__DETAILS__EVENT_ID": "Event Id",
         "EVENT_INFO__DETAILS__APPLICATION_ID": "Application Id",
@@ -22,6 +23,7 @@
         "EVENT_OVERVIEW__TARGET_EXECUTION_PLAN_TITLE": "Execution Plan",
         "EVENT_OVERVIEW__EXECUTION_EVENT_TITLE": "Execution Event",
         "EVENT_OVERVIEW__BACK_TO_EVENT_BUTTON": "Execution Event",
+        "EVENT_OVERVIEW__NAV_TAB__GRAPH_VIEW": "Graph View",
         "EVENTS_LIST__FILTER__DATE__EMPTY_VALUE_LABEL": "Everything"
     }
 }

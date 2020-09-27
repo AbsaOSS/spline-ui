@@ -16,33 +16,20 @@
 
 <ng-container *ngIf="state$ | async as state">
 
-    <!-- EXECUTION PLAN INFO -->
-    <spline-data-view [dataViewSchema]="state.executionPlanVs"></spline-data-view>
-    <!-- ./EXECUTION PLAN INFO -->
+    <h3 class="text-center py-3">
+        {{ 'PLANS.PLAN_INFO__TITLE__INPUT_OUTPUT' | translate }}
+    </h3>
 
-    <mat-tab-group>
+    <spline-data-view (event$)="onDataViewEvent($event)"
+                      [dataViewSchema]="state.outputAndInputsVs">
+    </spline-data-view>
 
-        <!-- ATTR SCHEMA -->
-        <mat-tab [label]="'PLANS.PLAN_INFO__TAB__ATTR_SCHEMA' | translate">
-            <spline-data-view [dataViewSchema]="state.attributesSchema" (event$)="onDataViewEvent($event)"></spline-data-view>
-        </mat-tab>
-        <!-- ./ATTR SCHEMA -->
+    <h3 class="text-center py-3">
+        {{ 'PLANS.PLAN_INFO__TITLE__ATTRIBUTES' | translate }}
+    </h3>
 
-        <!-- OUTPUT DS -->
-        <mat-tab [label]="'PLANS.PLAN_INFO__TAB__OUTPUT' | translate">
-            <spline-data-view [dataViewSchema]="state.outputVs" (event$)="onDataViewEvent($event)"></spline-data-view>
-        </mat-tab>
-        <!-- ./OUTPUT DS -->
+    <spline-data-view (event$)="onDataViewEvent($event)"
+                      [dataViewSchema]="state.attributesSchema">
+    </spline-data-view>
 
-        <!-- INPUTS DS -->
-        <mat-tab>
-            <ng-template matTabLabel>
-                {{'PLANS.PLAN_INFO__TAB__INPUTS' | translate}} ({{state.inputsNumber}})
-            </ng-template>
-
-            <spline-data-view [dataViewSchema]="state.inputsVs" (event$)="onDataViewEvent($event)"></spline-data-view>
-        </mat-tab>
-        <!-- ./INPUTS DS -->
-
-    </mat-tab-group>
 </ng-container>

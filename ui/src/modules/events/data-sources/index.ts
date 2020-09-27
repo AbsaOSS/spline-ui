@@ -15,3 +15,4 @@
  */
 
 export * from './events.data-source'
+export * from './event-lineage-list.data-source'
