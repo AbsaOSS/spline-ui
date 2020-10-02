@@ -1,7 +1,7 @@
 {
   "EVENTS": {
     "EVENTS_LIST_PAGE__TITLE": "Execution Events",
-    "EVENTS_LIST__COL__APPLICATION": "Application",
+    "EVENTS_LIST__COL__APPLICATION": "Execution",
     "EVENTS_LIST__COL__EXECUTION_PLAN": "Execution Plan",
     "EVENTS_LIST__COL__TIMESTAMP": "Executed At",
     "EVENTS_LIST__COL__DESTINATION": "Destination",

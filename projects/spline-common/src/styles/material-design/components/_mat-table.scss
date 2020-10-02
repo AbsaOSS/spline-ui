@@ -25,10 +25,18 @@ mat-row.mat-row {
     @include shadow-light();
     background: $color-white-smoked;
     border-bottom-style: none;
+    border-left: 5px solid $color-white-smoked;
     border-radius: 25px;
+    border-right: 5px solid $color-white-smoked;
     font-size: 14px;
     margin-bottom: 0.5rem;
     min-height: 50px;
+
+    &:hover {
+        background: darken($color-white-smoked, 3);
+        border-left-color: $color-orange;
+        border-right-color: $color-orange;
+    }
 }
 
 mat-header-row.mat-header-row {

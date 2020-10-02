@@ -30,23 +30,26 @@
 
 
 .write-mode {
-    border: 2px solid $color-grey-dark;
+    background: $color-grey-dark;
     border-radius: 1.5rem;
-    color: $color-grey-dark;
+    color: $color-white;
     display: inline-block;
-    font-size: 12px;
+    font-size: 9px;
     font-weight: 500;
-    line-height: 1.5rem;
-    padding: 0 1rem;
+    line-height: 1.1rem;
+    padding: 0 0.5rem;
 
     &--pink {
-        border-color: $color-pink;
-        color: $color-pink;
+        background: $color-pink;
     }
 }
 
-.mat-column-applicationId {
-    max-width: 200px;
+.mat-column-applicationName {
+    a {
+        color: $color-black;
+        font-size: 16px;
+        font-weight: 500;
+    }
 }
 
 .mat-column-timestamp {
