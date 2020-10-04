@@ -14,7 +14,44 @@
   ~ limitations under the License.
   -->
 
-<mat-card class="bg-white-75 mat-card--border-4">
+
+<div class="attr-lineage-preview">
+
+    <div class="attr-lineage-preview__header">
+        <div class="attr-lineage-preview__icon">
+            <mat-icon [matTooltip]="'PLANS.ATTRIBUTE_LINEAGE__TOOLTIP' | translate">local_offer</mat-icon>
+        </div>
+
+        <div class="attr-lineage-preview__text">
+            {{ attribute.name }}
+        </div>
+
+        <button mat-button
+                mat-icon-button
+                [matTooltip]="'COMMON.CLOSE' | translate"
+                (click)="onCloseIconClicked()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <div class="attr-lineage-preview__content" *ngIf="loading || legendsList?.length">
+        <div class="py-3">
+            <!-- LOADER -->
+            <spline-loader *ngIf="loading" size="md" mode="block"></spline-loader>
+            <!-- ./LOADER -->
+
+            <!-- LEGENDS -->
+            <sg-legend *ngFor="let legend of legendsList"
+                       [legend]="legend">
+            </sg-legend>
+            <!-- ./LEGENDS -->
+        </div>
+
+    </div>
+
+</div>
+
+<mat-card class="bg-white-75 mat-card--border-4" [hidden]="true">
 
     <spline-card-header [headerTitle]="attribute.name"
                         icon="local_offer"
@@ -39,7 +76,7 @@
 
         <!-- LEGENDS -->
         <sg-legend *ngFor="let legend of legendsList"
-                         [legend]="legend">
+                   [legend]="legend">
         </sg-legend>
         <!-- ./LEGENDS -->
 
