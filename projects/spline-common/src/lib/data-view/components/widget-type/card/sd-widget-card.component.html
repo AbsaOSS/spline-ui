@@ -23,8 +23,7 @@
                         [headerTitle]="data.header.title"
                         [icon]="data.header?.icon"
                         [iconTooltip]="data.header?.iconTooltip"
-                        [actions]="data.header?.actions"
-                        [label]="data.header?.label | translate">
+                        [actions]="data.header?.actions">
     </spline-card-header>
 
     <spline-card-content *ngIf="data?.content?.dataSchema?.length > 0"
