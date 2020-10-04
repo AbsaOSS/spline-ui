@@ -137,29 +137,9 @@ export namespace SgNodeControl {
         return NODE_STYLES_MAP.get(type) ?? { ...DEFAULT_NODE_STYLES }
     }
 
-    export function getNodeRelationsHighlightParentAction(onNodeHighlightRelations: () => void): SgNodeDefault.InlineAction {
-        return {
-            icon: 'arrow_upward',
-            onClick: () => {
-                onNodeHighlightRelations()
-            },
-            tooltip: 'SHARED.SG_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS__PARENT',
-        }
-    }
-
-    export function getNodeRelationsHighlightChildAction(onNodeHighlightRelations: () => void): SgNodeDefault.InlineAction {
-        return {
-            icon: 'arrow_downward',
-            onClick: () => {
-                onNodeHighlightRelations()
-            },
-            tooltip: 'SHARED.SG_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS__CHILD',
-        }
-    }
-
     export function getNodeRelationsHighlightToggleActions(onNodeHighlightRelations: () => void): SgNodeDefault.InlineAction {
         return {
-            icon: 'swap_vert',
+            icon: 'eye-outline',
             onClick: () => {
                 onNodeHighlightRelations()
             },
@@ -167,12 +147,8 @@ export namespace SgNodeControl {
         }
     }
 
-    export function getNodeRelationsHighlightActions(onNodeHighlightParentRelations: () => void,
-                                                     onNodeHighlightChildRelations: () => void,
-                                                     onNodeHighlightToggleRelations: () => void): SgNodeDefault.InlineAction[] {
+    export function getNodeRelationsHighlightActions(onNodeHighlightToggleRelations: () => void): SgNodeDefault.InlineAction[] {
         return [
-            getNodeRelationsHighlightParentAction(onNodeHighlightParentRelations),
-            getNodeRelationsHighlightChildAction(onNodeHighlightChildRelations),
             getNodeRelationsHighlightToggleActions(onNodeHighlightToggleRelations),
         ]
     }

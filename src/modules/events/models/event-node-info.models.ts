@@ -32,8 +32,6 @@ export namespace EventNodeInfo {
     export function toDataSchema(nodeSource: ExecutionEventLineageNode,
                                  onExecutionPlanLaunchAction: (nodeId: string) => void,
                                  onNodeFocus: (nodeId: string) => void,
-                                 onNodeHighlightParentRelations: (nodeId: string) => void,
-                                 onNodeHighlightChildRelations: (nodeId: string) => void,
                                  onNodeHighlightToggleRelations: (nodeId: string) => void,
                                  specialColor?: string): SdWidgetSchema<SdWidgetCard.Data> {
         const nodeStyles = EventNodeControl.getNodeStyles(nodeSource)
@@ -48,8 +46,6 @@ export namespace EventNodeInfo {
 
         const defaultActions = [
             ...SgNodeControl.getNodeRelationsHighlightActions(
-                () => onNodeHighlightParentRelations(nodeSource.id),
-                () => onNodeHighlightChildRelations(nodeSource.id),
                 () => onNodeHighlightToggleRelations(nodeSource.id)
             ),
             SgNodeControl.getNodeFocusAction(() => onNodeFocus(nodeSource.id)),
