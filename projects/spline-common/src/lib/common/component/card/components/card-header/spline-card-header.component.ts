@@ -30,6 +30,7 @@ export class SplineCardHeaderComponent {
     @Input() headerTitle: string
     @Input() color = SplineColors.PINK // valid CSS color
     @Input() icon: string
+    @Input() iconTooltip: string
     @Input() label: string
     @Input() actions: SplineCardHeader.Action[]
 

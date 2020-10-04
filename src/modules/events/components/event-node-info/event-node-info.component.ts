@@ -16,7 +16,7 @@
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
 import { ExecutionEventLineageNode } from 'spline-api'
-import { SdWidgetSchema } from 'spline-common'
+import { SdWidgetCard, SdWidgetSchema } from 'spline-common'
 import { BaseLocalStateComponent } from 'spline-utils'
 
 import { EventNodeInfo } from '../../models'
@@ -46,7 +46,7 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
         if (changes?.nodeRelations && !!changes.nodeRelations.currentValue) {
             const nodeRelations: EventNodeInfo.NodeRelationsInfo = changes.nodeRelations.currentValue
             this.updateState({
-                nodeDvs: this.toNodeDvs(nodeRelations.node),
+                nodeDvs: this.toNodeDvs(nodeRelations.node, true),
                 childrenDvs: nodeRelations.children.map((node) => this.toNodeDvs(node)),
                 parentsDvs: nodeRelations.parents.map((node) => this.toNodeDvs(node)),
                 parentsNumber: nodeRelations?.parents?.length ?? 0,
@@ -55,8 +55,8 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
         }
     }
 
-    private toNodeDvs(node: ExecutionEventLineageNode): SdWidgetSchema {
-        return EventNodeInfo.toDataSchema(
+    private toNodeDvs(node: ExecutionEventLineageNode, isSelectedNode: boolean = false): SdWidgetSchema<SdWidgetCard.Data> {
+        const nodeDvs = EventNodeInfo.toDataSchema(
             node,
             (nodeId) => this.onNodeLaunch(nodeId),
             (nodeId) => this.onNodeFocus(nodeId),
@@ -64,6 +64,18 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
             (nodeId) => this.onNodeHighlightChildRelations(nodeId),
             (nodeId) => this.onNodeHighlightToggleRelations(nodeId),
         )
+
+        if (isSelectedNode) {
+            return {
+                ...nodeDvs,
+                data: {
+                    ...nodeDvs.data,
+                    cardCssClassList: 'mat-card__top-border--human' // TODO: used just for PoC for now, use enum in the future.
+                }
+            }
+        }
+
+        return nodeDvs
     }
 
     private onNodeFocus(nodeId: string): void {

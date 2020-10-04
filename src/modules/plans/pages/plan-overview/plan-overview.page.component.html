@@ -39,6 +39,10 @@
                         </span>
                     </button>
 
+                    <h2 class="text-center pb-3">
+                        {{ 'PLANS.PLAN_OVERVIEW__EXECUTION_PLAN_TITLE' | translate }}
+                    </h2>
+
                     <!-- EXECUTION PLAN INFO -->
                     <plan-info (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"
                                [executionPlan]="state.executionPlan"
@@ -57,6 +61,10 @@
                                 {{ 'PLANS.BACK_TO_PLAN_BUTTON' | translate }}
                             </span>
                     </button>
+
+                    <h2 class="text-center pb-3">
+                        {{ 'PLANS.PLAN_OVERVIEW__SELECTED_NODE_TITLE' | translate }}
+                    </h2>
 
                     <plan-operation-info (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"
                                          [node]="store.selectedNode$ | async"

@@ -32,7 +32,7 @@ export function toEventInfoDataViewSchema(eventInfo: EventInfo): SplineDataViewS
                 color: SplineColors.PINK,
                 icon: 'play_arrow',
                 title: eventInfo.name,
-                label: 'EVENTS.EVENT_INFO__LABEL',
+                iconTooltip: 'EVENTS.EVENT_INFO__TOOLTIP',
             },
             [
                 SdWidgetSimpleRecord.toSchema([

@@ -25,10 +25,10 @@ export namespace SdWidgetCard {
     export const TYPE = 'Card'
 
     export type HeaderData = {
-        color?: string
-        icon: string
-        label: string
         title: string
+        icon: string
+        iconTooltip?: string
+        color?: string
         actions?: SplineCardHeader.Action[]
     }
 
@@ -37,6 +37,7 @@ export namespace SdWidgetCard {
     }
 
     export type Data = {
+        cardCssClassList?: string | string[]
         header?: HeaderData
         content?: ContentData
     }

@@ -31,7 +31,7 @@ export namespace PlanInfo {
                     color: SplineColors.ORANGE,
                     icon: 'playlist_play',
                     title: data?.extraInfo?.appName ? data?.extraInfo?.appName : 'PLANS.PLAN_INFO__DEFAULT_NAME',
-                    label: 'PLANS.PLAN_INFO__LABEL',
+                    iconTooltip: 'PLANS.PLAN_INFO__LABEL',
                 },
                 [
                     SdWidgetSimpleRecord.toSchema([
@@ -63,7 +63,7 @@ export namespace PlanInfo {
             {
                 ...getNodeStyles(SgNodeControl.NodeType.DataSource),
                 title: dataSourceInfo.name,
-                label: dataSourceInfo.type
+                iconTooltip: dataSourceInfo.type
             },
             [
                 SdWidgetSimpleRecord.toSchema([

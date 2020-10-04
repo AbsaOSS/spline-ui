@@ -16,13 +16,19 @@
 
 @import '../vars';
 
-$label-color: $color-black;
-
 .spline-label {
-    border: 2px solid $label-color;
-    border-radius: 16px;
-    color: $label-color;
+    border-radius: 0.5rem;
+    color: $color-white;
     display: inline-block;
-    font-size: 10px;
-    padding: 2px 8px;
+    font-size: 9px;
+    line-height: 1rem;
+    padding: 0 0.5rem;
+}
+
+.spline-label[color='platinum'] {
+    background: $color-platinum;
+}
+
+.spline-label[color='human'] {
+    background: $color-human;
 }

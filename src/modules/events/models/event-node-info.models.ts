@@ -23,10 +23,10 @@ import { EventNodeControl } from './event-node-control.models'
 
 export namespace EventNodeInfo {
 
-    export function getNodeInfoLabel(nodeSource: ExecutionEventLineageNode): string {
+    export function getNodeInfoTooltip(nodeSource: ExecutionEventLineageNode): string {
         return nodeSource.type === ExecutionEventLineageNodeType.DataSource
-            ? 'EVENTS.EVENT_NODE_INFO__LABEL__DATA_SOURCE'
-            : 'EVENTS.EVENT_NODE_INFO__LABEL__EXECUTION_PLAN'
+            ? 'EVENTS.EVENT_NODE_INFO__TOOLTIP__DATA_SOURCE'
+            : 'EVENTS.EVENT_NODE_INFO__TOOLTIP__EXECUTION_PLAN'
     }
 
     export function toDataSchema(nodeSource: ExecutionEventLineageNode,
@@ -35,7 +35,7 @@ export namespace EventNodeInfo {
                                  onNodeHighlightParentRelations: (nodeId: string) => void,
                                  onNodeHighlightChildRelations: (nodeId: string) => void,
                                  onNodeHighlightToggleRelations: (nodeId: string) => void,
-                                 specialColor?: string): SdWidgetSchema {
+                                 specialColor?: string): SdWidgetSchema<SdWidgetCard.Data> {
         const nodeStyles = EventNodeControl.getNodeStyles(nodeSource)
         const contentDataSchema: SplineDataViewSchema = nodeSource.type === ExecutionEventLineageNodeType.DataSource
             ? [
@@ -72,7 +72,7 @@ export namespace EventNodeInfo {
                 color: specialColor ?? nodeStyles.color,
                 icon: nodeStyles.icon,
                 title: EventNodeControl.extractNodeName(nodeSource),
-                label: getNodeInfoLabel(nodeSource),
+                iconTooltip: getNodeInfoTooltip(nodeSource),
                 actions,
             },
             contentDataSchema,

@@ -22,4 +22,12 @@
     &.mat-card--border-4 {
         border-radius: 4px !important;
     }
+
+    &__top-border--platinum {
+        border-top: 5px solid $color-platinum;
+    }
+
+    &__top-border--human {
+        border-top: 5px solid $color-human;
+    }
 }
