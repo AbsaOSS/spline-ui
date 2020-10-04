@@ -49,7 +49,9 @@ export class SplineAttributesTreeComponent extends BaseComponent implements OnCh
         }
     }
 
-    onHighlightBtnClicked(nodeId: string): void {
+    onHighlightBtnClicked($event: MouseEvent, nodeId: string): void {
+        $event.stopPropagation()
+
         this.selectedAttributeId = nodeId
         this.selectedAttributeChanged$.emit({
             attributeId: nodeId

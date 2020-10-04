@@ -25,7 +25,7 @@ export namespace SplineAttributesTree {
         dataType: AttributeDataType
         id?: string
         children?: TreeNode[]
-        canBeHighlighted?: boolean
+        rootAttributeId?: string
     }
 
     export type Tree = TreeNode[]
@@ -38,17 +38,20 @@ export namespace SplineAttributesTree {
                 return {
                     id: attrSchema.id,
                     name: attrSchema.name,
-                    canBeHighlighted: true,
                     dataType,
-                    children: getDataTypeChildren(dataType, dataTypesMap)
+                    children: getDataTypeChildren(dataType, dataTypesMap, attrSchema.id),
                 }
             })
     }
 
-    function getDataTypeChildren(dataType: AttributeDataType, dataTypesMap: Record<string, AttributeDataType>): TreeNode[] {
+    function getDataTypeChildren(dataType: AttributeDataType,
+                                 dataTypesMap: Record<string, AttributeDataType>,
+                                 rootAttributeId: string): TreeNode[] {
         switch (dataType.type) {
             case AttributeDtType.Array:
-                return getDataTypeChildren(dataTypesMap[(dataType as AttributeDataTypeArray).elementDataTypeId], dataTypesMap)
+                return getDataTypeChildren(
+                    dataTypesMap[(dataType as AttributeDataTypeArray).elementDataTypeId], dataTypesMap, rootAttributeId
+                )
 
             case AttributeDtType.Struct:
                 return (dataType as AttributeDataTypeStruct).fields
@@ -57,7 +60,8 @@ export namespace SplineAttributesTree {
                         return {
                             name: field.name,
                             dataType: currentDataType,
-                            children: getDataTypeChildren(currentDataType, dataTypesMap)
+                            children: getDataTypeChildren(currentDataType, dataTypesMap, rootAttributeId),
+                            rootAttributeId
                         }
                     })
             default:

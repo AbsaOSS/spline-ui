@@ -35,6 +35,17 @@
     .mat-tree-node--active {
         color: $color-orange;
         font-weight: bold;
+
+        .mat-tree-node {
+            color: $color-orange;
+            font-weight: bold;
+        }
+    }
+
+    > .cdk-tree-node:hover > li {
+        background: $color-grey-light-1;
+        border-radius: 24px;
+        cursor: pointer;
     }
 
 }

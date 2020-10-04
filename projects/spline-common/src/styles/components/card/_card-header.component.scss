@@ -48,5 +48,9 @@ $label-color: $color-black;
         color: $color-grey-dark;
         display: flex;
         padding-right: 0.5rem;
+
+        &:last-child {
+            padding-right: 0;
+        }
     }
 }
