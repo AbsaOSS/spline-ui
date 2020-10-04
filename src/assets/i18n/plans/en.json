@@ -14,7 +14,7 @@
     "OPERATION_INFO__TAB__DETAILS": "Details",
     "OPERATION_INFO__TAB__OUTPUT": "Output Schema",
     "OPERATION_INFO__TAB__INPUTS": "Input Schemas",
-    "ATTRIBUTE_LINEAGE__LABEL": "Attribute",
+    "ATTRIBUTE_LINEAGE__TOOLTIP": "Highlighted Attribute",
     "ATTRIBUTE_LINEAGE__LEGEND__USAGE__TITLE": "Usage",
     "ATTRIBUTE_LINEAGE__LEGEND__USAGE__DESCRIPTION": "Usage - consists of operations that have the selected attribute in their output. I.e operations that either create the attribute or propagate through.",
     "ATTRIBUTE_LINEAGE__LEGEND__LINEAGE__TITLE": "Lineage",
