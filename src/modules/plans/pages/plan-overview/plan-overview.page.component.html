@@ -87,7 +87,8 @@
                         [selectedNodeId]="state.selectedNodeId">
 
                     <!-- TOOLBAR -->
-                    <sg-toolbar *ngIf="store.selectedAttribute$ | async as selectedAttribute">
+                    <sg-toolbar *ngIf="store.selectedAttribute$ | async as selectedAttribute"
+                                position="top-right">
                         <spline-attribute-lineage-info (close$)="onSelectedAttributeChanged(null)"
                                                        [loading]="state.attributeLineageLoadingProcessing.processing"
                                                        [attributeLineage]="state.attributeLineage"
