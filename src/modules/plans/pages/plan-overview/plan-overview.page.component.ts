@@ -67,8 +67,6 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
                             .map(
                                 nodeSource => PlanNodeControl.toSgNode(
                                     nodeSource,
-                                    (nodeId) => this.onNodeHighlightParentRelations(nodeId),
-                                    (nodeId) => this.onNodeHighlightChildRelations(nodeId),
                                     (nodeId) => this.onNodeHighlightToggleRelations(nodeId),
                                 ),
                             ),
@@ -151,14 +149,6 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
 
     private onNodeHighlightToggleRelations(nodeId: string): void {
         this.processNodeHighlightAction(nodeId, SgRelations.toggleSelection)
-    }
-
-    private onNodeHighlightParentRelations(nodeId: string): void {
-        this.processNodeHighlightAction(nodeId, SgRelations.toggleParentsSelection)
-    }
-
-    private onNodeHighlightChildRelations(nodeId: string): void {
-        this.processNodeHighlightAction(nodeId, SgRelations.toggleChildrenSelection)
     }
 
     private processNodeHighlightAction(nodeId: string, highlightFn: SgRelations.NodeHighlightFn) {

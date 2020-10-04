@@ -35,8 +35,6 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
     @Output() focusNode$ = new EventEmitter<{ nodeId: string }>()
     @Output() launchNode$ = new EventEmitter<{ nodeId: string }>()
     @Output() highlightToggleRelations$ = new EventEmitter<{ nodeId: string }>()
-    @Output() highlightParentRelations$ = new EventEmitter<{ nodeId: string }>()
-    @Output() highlightChildRelations$ = new EventEmitter<{ nodeId: string }>()
 
     constructor() {
         super()
@@ -60,8 +58,6 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
             node,
             (nodeId) => this.onNodeLaunch(nodeId),
             (nodeId) => this.onNodeFocus(nodeId),
-            (nodeId) => this.onNodeHighlightParentRelations(nodeId),
-            (nodeId) => this.onNodeHighlightChildRelations(nodeId),
             (nodeId) => this.onNodeHighlightToggleRelations(nodeId),
         )
     }
@@ -73,15 +69,6 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
     private onNodeHighlightToggleRelations(nodeId: string): void {
         this.highlightToggleRelations$.next({ nodeId })
     }
-
-    private onNodeHighlightParentRelations(nodeId: string): void {
-        this.highlightParentRelations$.next({ nodeId })
-    }
-
-    private onNodeHighlightChildRelations(nodeId: string): void {
-        this.highlightChildRelations$.next({ nodeId })
-    }
-
 
     private onNodeLaunch(nodeId: string): void {
         this.launchNode$.next({ nodeId })

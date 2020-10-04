@@ -42,16 +42,12 @@ export namespace EventNodeControl {
 
     export function toSgNode(nodeSource: ExecutionEventLineageNode,
                              onExecutionPlanLaunchAction: (nodeId: string) => void,
-                             onNodeHighlightParentRelations: (nodeId: string) => void,
-                             onNodeHighlightChildRelations: (nodeId: string) => void,
                              onNodeHighlightToggleRelations: (nodeId: string) => void): SgNode {
 
         const nodeStyles = getNodeStyles(nodeSource)
 
         const defaultActions = [
             ...SgNodeControl.getNodeRelationsHighlightActions(
-                () => onNodeHighlightParentRelations(nodeSource.id),
-                () => onNodeHighlightChildRelations(nodeSource.id),
                 () => onNodeHighlightToggleRelations(nodeSource.id)
             ),
         ]

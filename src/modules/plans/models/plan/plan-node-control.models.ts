@@ -28,15 +28,11 @@ export namespace PlanNodeControl {
     }
 
     export function toSgNode(nodeSource: ExecutionPlanLineageNode,
-                             onNodeHighlightParentRelations: (nodeId: string) => void,
-                             onNodeHighlightChildRelations: (nodeId: string) => void,
                              onNodeHighlightToggleRelations: (nodeId: string) => void): SgNode {
         const nodeStyles = OperationInfo.getNodeStyles(nodeSource.type, nodeSource.name)
 
         const defaultActions = [
             ...SgNodeControl.getNodeRelationsHighlightActions(
-                () => onNodeHighlightParentRelations(nodeSource.id),
-                () => onNodeHighlightChildRelations(nodeSource.id),
                 () => onNodeHighlightToggleRelations(nodeSource.id)
             ),
         ]

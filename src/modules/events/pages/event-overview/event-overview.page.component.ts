@@ -76,8 +76,6 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
                                 nodeSource => EventNodeControl.toSgNode(
                                     nodeSource,
                                     (nodeId) => this.onExecutionPlanNodeLaunchAction(nodeId),
-                                    (nodeId) => this.onNodeHighlightParentRelations(nodeId),
-                                    (nodeId) => this.onNodeHighlightChildRelations(nodeId),
                                     (nodeId) => this.onNodeHighlightToggleRelations(nodeId),
                                 ),
                             ),
@@ -110,8 +108,6 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
                         node,
                         (nodeId) => this.onExecutionPlanNodeLaunchAction(nodeId),
                         (nodeId) => this.onNodeFocus(nodeId),
-                        (nodeId) => this.onNodeHighlightParentRelations(nodeId),
-                        (nodeId) => this.onNodeHighlightChildRelations(nodeId),
                         (nodeId) => this.onNodeHighlightToggleRelations(nodeId),
                     )
                 }),
@@ -146,10 +142,6 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
 
     onNodeSelected($event: { nodeSchema: SgNodeSchema | null }): void {
         this.store.setSelectedNode($event.nodeSchema ? $event.nodeSchema.id : null)
-    }
-
-    onShowAllRelationsBtnClicked(): void {
-        this.resetNodeHighlightRelations()
     }
 
     onToggleAllRelationsBtnClicked(): void {
@@ -191,14 +183,6 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
         this.processNodeHighlightAction(nodeId, SgRelations.toggleSelection)
     }
 
-    onNodeHighlightParentRelations(nodeId: string): void {
-        this.processNodeHighlightAction(nodeId, SgRelations.toggleParentsSelection)
-    }
-
-    onNodeHighlightChildRelations(nodeId: string): void {
-        this.processNodeHighlightAction(nodeId, SgRelations.toggleChildrenSelection)
-    }
-
     onShowDetailsBtnCLicked(): void {
         this.store.setSelectedNode(null)
     }
@@ -211,10 +195,6 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
         )
 
         this.highlightedRelationsNodesIds$.next(highlightedRelationsNodesIds)
-    }
-
-    private resetNodeHighlightRelations(): void {
-        this.highlightedRelationsNodesIds$.next(null)
     }
 
     private updateQueryParams(nodeId: string | null): void {

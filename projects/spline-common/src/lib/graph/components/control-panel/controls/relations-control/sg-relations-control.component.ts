@@ -31,12 +31,4 @@ export class SgRelationsControlComponent {
     onToggleRelationsBtnClicked(): void {
         this.toggle$.next()
     }
-
-    onShowAllRelationsBtnClicked(): void {
-        this.showAll$.next()
-    }
-
-    onHideAllRelationsBtnClicked(): void {
-        this.hideAll$.next()
-    }
 }
