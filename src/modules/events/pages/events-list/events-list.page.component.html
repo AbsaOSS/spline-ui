@@ -137,9 +137,9 @@
                     {{ 'EVENTS.EVENTS_LIST__COL__WRITE_MODE' | translate }}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let rowData">
-                    <div [class.write-mode--pink]="!rowData.append" class="write-mode">
+                    <spline-label [color]="rowData.append ? 'platinum' : 'human'">
                         {{rowData.append && 'Append' || 'Override'}}
-                    </div>
+                    </spline-label>
                 </mat-cell>
             </ng-container>
             <!-- ./dataSourceType -->

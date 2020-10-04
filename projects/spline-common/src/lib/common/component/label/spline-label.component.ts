@@ -16,8 +16,6 @@
 
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
-import { SplineColors } from '../../models'
-
 
 @Component({
     selector: 'spline-label',
@@ -26,7 +24,5 @@ import { SplineColors } from '../../models'
 })
 export class SplineLabelComponent {
 
-    readonly defaultColor = SplineColors.BLACK
-
-    @Input() color
+    @Input() color: 'platinum' | 'human' | string
 }

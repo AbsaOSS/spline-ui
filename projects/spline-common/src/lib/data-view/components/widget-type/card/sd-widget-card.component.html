@@ -14,12 +14,15 @@
   ~ limitations under the License.
   -->
 
-<mat-card class="mb-3" *ngIf="data$ | async as data">
+<mat-card class="mb-3"
+          *ngIf="data$ | async as data"
+          [ngClass]="data?.cardCssClassList">
 
     <spline-card-header *ngIf="data?.header"
                         [color]="data.header.color"
                         [headerTitle]="data.header.title"
                         [icon]="data.header?.icon"
+                        [iconTooltip]="data.header?.iconTooltip"
                         [actions]="data.header?.actions"
                         [label]="data.header?.label | translate">
     </spline-card-header>

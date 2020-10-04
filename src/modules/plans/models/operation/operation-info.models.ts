@@ -76,7 +76,7 @@ export namespace OperationInfo {
                     color: nodeStyles.color,
                     icon: nodeStyles.icon,
                     title: operation.name,
-                    label: extractLabel(operation),
+                    iconTooltip: extractLabel(operation),
                     actions: [
                         SgNodeControl.getNodeFocusAction(() => onNodeFocus(operation.id))
                     ]

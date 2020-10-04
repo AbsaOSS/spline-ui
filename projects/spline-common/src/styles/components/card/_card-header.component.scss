@@ -21,6 +21,7 @@ $label-color: $color-black;
 
 
 .spline-card-header {
+    align-items: center;
     display: flex;
 
     &__icon-container {
@@ -31,7 +32,7 @@ $label-color: $color-black;
     }
 
     &__icon .mat-icon {
-        @include icon-size(42px);
+        @include icon-size(32px);
     }
 
     &__title-container {
@@ -40,15 +41,6 @@ $label-color: $color-black;
 
     &__title {
         font-size: 18px;
-    }
-
-    &__label {
-        border: 2px solid $label-color;
-        border-radius: 16px;
-        color: $label-color;
-        display: inline-block;
-        font-size: 10px;
-        padding: 2px 8px;
     }
 
     &__actions {

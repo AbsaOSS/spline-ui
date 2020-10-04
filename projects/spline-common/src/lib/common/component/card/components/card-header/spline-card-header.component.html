@@ -20,7 +20,10 @@
          class="spline-card-header__icon-container"
          [ngStyle]="{color: color}">
 
-        <spline-icon class="spline-card-header__icon" [icon]="icon"></spline-icon>
+        <spline-icon class="spline-card-header__icon"
+                     [icon]="icon"
+                     [matTooltip]="iconTooltip | translate"
+                     [matTooltipDisabled]="!iconTooltip?.length"></spline-icon>
 
     </div>
     <!-- ./ICON -->
@@ -32,12 +35,6 @@
                 {{headerTitle | translate}}
             </div>
             <!-- ./TITLE -->
-
-            <!-- LABEL -->
-            <spline-label [color]="color" *ngIf="label">
-                {{label | translate}}
-            </spline-label>
-            <!-- ./LABEL -->
         </div>
     </div>
     <div class="spline-card-header__actions">
