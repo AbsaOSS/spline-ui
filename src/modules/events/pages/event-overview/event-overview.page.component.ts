@@ -106,7 +106,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
                         return null
                     }
 
-                    const nodeDvs = EventNodeInfo.toDataSchema(
+                    return EventNodeInfo.toDataSchema(
                         node,
                         (nodeId) => this.onExecutionPlanNodeLaunchAction(nodeId),
                         (nodeId) => this.onNodeFocus(nodeId),
@@ -114,14 +114,6 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
                         (nodeId) => this.onNodeHighlightChildRelations(nodeId),
                         (nodeId) => this.onNodeHighlightToggleRelations(nodeId),
                     )
-
-                    return {
-                        ...nodeDvs,
-                        data: {
-                            ...nodeDvs.data,
-                            cardCssClassList: 'mat-card__top-border--platinum' // TODO: used just for PoC for now, use enum in the future.
-                        }
-                    }
                 }),
             )
 
