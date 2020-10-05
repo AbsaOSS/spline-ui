@@ -14,59 +14,28 @@
   ~ limitations under the License.
   -->
 
+<mat-card class="bg-white-75 mat-card--border-4">
 
-<div class="attr-lineage-preview">
+    <!-- TITLE -->
+    <h2 class="attr-lineage-info__title">
+        {{ 'PLANS.ATTRIBUTE_LINEAGE__TITLE' | translate }}
+    </h2>
+    <!-- ./TITLE -->
 
-    <div class="attr-lineage-preview__header">
-        <div class="attr-lineage-preview__icon">
-            <mat-icon [matTooltip]="'PLANS.ATTRIBUTE_LINEAGE__TOOLTIP' | translate">local_offer</mat-icon>
-        </div>
+    <!-- ATTR NAME -->
+    <mat-chip-list>
+        <mat-chip (removed)="onRemoveIconClicked()">
 
-        <div class="attr-lineage-preview__text">
-            {{ attribute.name }}
-        </div>
+            {{attribute.name}}
 
-        <button mat-button
-                mat-icon-button
-                [matTooltip]="'COMMON.CLOSE' | translate"
-                (click)="onCloseIconClicked()">
-            <mat-icon>close</mat-icon>
-        </button>
-    </div>
+            <mat-icon matChipRemove
+                      [matTooltip]="'COMMON.REMOVE' | translate">
+                close
+            </mat-icon>
 
-    <div class="attr-lineage-preview__content" *ngIf="loading || legendsList?.length">
-        <div class="py-3">
-            <!-- LOADER -->
-            <spline-loader *ngIf="loading" size="md" mode="block"></spline-loader>
-            <!-- ./LOADER -->
-
-            <!-- LEGENDS -->
-            <sg-legend *ngFor="let legend of legendsList"
-                       [legend]="legend">
-            </sg-legend>
-            <!-- ./LEGENDS -->
-        </div>
-
-    </div>
-
-</div>
-
-<mat-card class="bg-white-75 mat-card--border-4" [hidden]="true">
-
-    <spline-card-header [headerTitle]="attribute.name"
-                        icon="local_offer"
-                        [color]="color"
-                        [iconTooltip]="'PLANS.ATTRIBUTE_LINEAGE__TOOLTIP'">
-
-
-        <button mat-button
-                mat-icon-button
-                [matTooltip]="'COMMON.CLOSE' | translate"
-                (click)="onCloseIconClicked()">
-            <mat-icon>close</mat-icon>
-        </button>
-
-    </spline-card-header>
+        </mat-chip>
+    </mat-chip-list>
+    <!-- ./ATTR NAME -->
 
     <spline-card-content *ngIf="loading || legendsList?.length">
 
@@ -81,5 +50,6 @@
         <!-- ./LEGENDS -->
 
     </spline-card-content>
+
 </mat-card>
 

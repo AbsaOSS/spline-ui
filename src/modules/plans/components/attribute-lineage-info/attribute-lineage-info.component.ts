@@ -50,7 +50,7 @@ export class AttributeLineageInfoComponent {
 
     legendsList: SgLegend[]
 
-    onCloseIconClicked(): void {
+    onRemoveIconClicked(): void {
         this.close$.emit()
     }
 }
