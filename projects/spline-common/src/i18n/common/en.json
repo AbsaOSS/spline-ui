@@ -13,6 +13,7 @@
     "CANCEL": "Cancel",
     "SUBMIT": "Submit",
     "SEARCH": "Search",
+    "REMOVE": "Remove",
     "ADD": "Add",
     "LOADING": "Loading ...",
     "SERVER_COMMUNICATION_ERROR_MESSAGE": "Error has been occurred during communication with a server.",

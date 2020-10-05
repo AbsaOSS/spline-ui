@@ -14,47 +14,10 @@
  * limitations under the License.
  */
 
-@import 'vars';
-@import 'mixins';
-
-.attr-lineage-preview {
-
-    $self: &;
-
-    @include shadow-level-1();
-    background: $color-white-75;
-    border-radius: 20px;
-    color: $color-grey-dark;
-    cursor: pointer;
-    padding: 0 16px;
-
-    &__header {
-        align-items: center;
-        display: flex;
+.attr-lineage-info {
+    &__title {
+        font-size: 10px;
+        text-transform: uppercase;
     }
 
-    &__content {
-        background: $color-grey-light-2;
-        border-radius: 0 0 20px 20px;
-        display: none;
-        margin: 0 -16px;
-        padding: 0 16px;
-    }
-
-    &:hover {
-        #{$self}__content {
-            display: block;
-        }
-    }
-
-    &__icon {
-        align-items: center;
-        color: $color-orange;
-        display: flex;
-    }
-
-    &__text {
-        flex: 1;
-        padding: 0 16px;
-    }
 }
