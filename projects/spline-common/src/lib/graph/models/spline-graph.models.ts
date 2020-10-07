@@ -21,11 +21,12 @@ import { DynamicValueProvider } from 'spline-utils'
 
 
 
-export type SgNodeSchema<TData extends object = {}, TOptions extends object = {}> = {
+export type SgNodeSchema<TData extends object = {}, TOptions extends object = {}, TMetadata extends object = {}> = {
     id: string
     type?: string
     data?: DynamicValueProvider<TData>
     options?: DynamicValueProvider<TOptions>
+    metadata?: TMetadata
 }
 
 export type SgNodeNativeOptions = Omit<Node, 'id'>

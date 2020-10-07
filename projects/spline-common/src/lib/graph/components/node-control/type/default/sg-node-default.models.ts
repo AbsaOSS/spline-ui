@@ -71,12 +71,13 @@ export namespace SgNodeDefault {
         return DIMENSIONS_MAP.get(actionsPosition ?? SgNodeViewDefault.DEFAULT_POSITION)
     }
 
-    export function toNode(id: string, nodeData: Data, nativeOptions: SgNodeNativeOptions = {}): SgNode<Data, Options> {
+    export function toNode(id: string, nodeData: Data, nativeOptions: SgNodeNativeOptions = {}, metadata = {}): SgNode<Data, Options> {
         return {
             id,
             data: {
                 ...nodeData,
             },
+            metadata,
             nativeOptions: {
                 ...{
                     dimension: { ...getDimensions(nodeData?.actionsPosition) }

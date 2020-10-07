@@ -17,8 +17,8 @@
 import { Component, ContentChildren, EventEmitter, Input, OnChanges, Output, QueryList, SimpleChanges, ViewChild } from '@angular/core'
 import { GraphComponent } from '@swimlane/ngx-graph'
 import * as fromD3Shape from 'd3-shape'
-import { Observable } from 'rxjs'
-import { takeUntil } from 'rxjs/operators'
+import { Observable, Subject } from 'rxjs'
+import { buffer, debounceTime, takeUntil } from 'rxjs/operators'
 import { BaseComponent } from 'spline-utils'
 
 import { SgControlPanelSectionDirective } from '../../directives/control-panel-action/sg-control-panel-section.directive'
@@ -62,6 +62,7 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges {
 
     @Output() substrateClick$ = new EventEmitter<{ mouseEvent: MouseEvent }>()
     @Output() nodeClick$ = new EventEmitter<{ nodeSchema: SgNodeSchema; mouseEvent: MouseEvent }>()
+    @Output() nodeDoubleClick$ = new EventEmitter<{ nodeSchema: SgNodeSchema; mouseEvent: MouseEvent }>()
     @Output() nodeEvent$ = new EventEmitter<SgNodeEvent>()
     @Output() nodeSelectionChange$ = new EventEmitter<{ nodeSchema: SgNodeSchema | null }>()
 
@@ -76,6 +77,12 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges {
     nativeNodes: SgNativeNode[] = []
 
     private focusedNodeTimer: number
+    private nodeClicksStream$ = new Subject<{ node: SgNativeNode; mouseEvent: MouseEvent }>()
+
+    constructor() {
+        super()
+        this.initNodeClicksEvents()
+    }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.graphData && changes.graphData.currentValue) {
@@ -101,16 +108,42 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges {
     onNodeClicked(node: SgNativeNode, mouseEvent: MouseEvent): void {
         mouseEvent.stopPropagation()
 
-        this.selectNode(node)
-
-        this.nodeClick$.emit({
-            nodeSchema: node.schema,
+        this.nodeClicksStream$.next({
+            node,
             mouseEvent,
         })
     }
 
     onGraphClicked($event: MouseEvent): void {
         this.substrateClick$.emit({ mouseEvent: $event })
+    }
+
+    private initNodeClicksEvents(): void {
+        const doubleClickDelayInMs = 200
+        const buff$ = this.nodeClicksStream$.pipe(
+            debounceTime(doubleClickDelayInMs),
+        )
+
+        this.nodeClicksStream$
+            .pipe(
+                buffer(buff$),
+            )
+            .subscribe((bufferValue: Array<{ node: SgNativeNode; mouseEvent: MouseEvent }>) => {
+
+                const refNode = bufferValue[0].node
+                const refMouseEvent = bufferValue[0].mouseEvent
+
+                if (bufferValue.length === 1) {
+                    this.nodeClick$.emit({ nodeSchema: refNode.schema, mouseEvent: refMouseEvent })
+                    this.selectNode(refNode)
+                }
+                else if (bufferValue.length > 1) {
+                    this.nodeDoubleClick$.emit({ nodeSchema: refNode.schema, mouseEvent: refMouseEvent })
+                    if (this._selectedNodeId !== refNode.id) {
+                        this.selectNode(refNode)
+                    }
+                }
+            })
     }
 
     private selectNode(node: SgNativeNode): void {

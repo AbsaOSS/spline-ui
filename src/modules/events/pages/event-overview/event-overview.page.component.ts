@@ -18,7 +18,7 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { BehaviorSubject, merge, Observable, Subject } from 'rxjs'
 import { filter, map, shareReplay, skip, takeUntil } from 'rxjs/operators'
-import { ExecutionEventFacade } from 'spline-api'
+import { ExecutionEventFacade, ExecutionEventLineageNodeType } from 'spline-api'
 import { SdWidgetSchema, SgData, SgNodeSchema, SgRelations } from 'spline-common'
 import { BaseComponent, RouterHelpers } from 'spline-utils'
 
@@ -90,8 +90,8 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
                     selectedNode => selectedNode
                         ? {
                             node: selectedNode,
-                            children: this.store.selectChildrenNodes(selectedNode.id),
-                            parents: this.store.selectParentNodes(selectedNode.id),
+                            children: this.store.findChildrenNodes(selectedNode.id),
+                            parents: this.store.findParentNodes(selectedNode.id),
                         }
                         : null,
                 ),
@@ -144,6 +144,13 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
         this.store.setSelectedNode($event.nodeSchema ? $event.nodeSchema.id : null)
     }
 
+    onNodeDoubleClick(nodeSchema: SgNodeSchema): void {
+        const node = this.store.findNode(nodeSchema.id)
+        if (node.type === ExecutionEventLineageNodeType.Execution) {
+            this.navigateToExecutionPlanPage(node.id)
+        }
+    }
+
     onToggleAllRelationsBtnClicked(): void {
         this.highlightedRelationsNodesIds$.next(
             this.highlightedRelationsNodesIds$.getValue() ? null : []
@@ -155,14 +162,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
     }
 
     onExecutionPlanNodeLaunchAction(nodeId: string): void {
-        this.router.navigate(
-            ['/plans/overview', nodeId],
-            {
-                queryParams: {
-                    eventId: this.executionEventId,
-                },
-            },
-        )
+        this.navigateToExecutionPlanPage(nodeId)
     }
 
     onNodeFocus(nodeId: string): void {
@@ -185,6 +185,17 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
 
     onShowDetailsBtnCLicked(): void {
         this.store.setSelectedNode(null)
+    }
+
+    private navigateToExecutionPlanPage(executionPlanId: string): void {
+        this.router.navigate(
+            ['/plans/overview', executionPlanId],
+            {
+                queryParams: {
+                    eventId: this.executionEventId,
+                },
+            },
+        )
     }
 
     private processNodeHighlightAction(nodeId: string, highlightFn: SgRelations.NodeHighlightFn) {

@@ -30,6 +30,7 @@ export class SgNodeViewDefaultComponent extends BaseComponent {
 
     readonly defaultIcon = 'extension'
     readonly defaultColor = SplineColors.SILVER
+    readonly defaultActionsPosition = SgNodeViewDefault.DEFAULT_POSITION
 
     @Input() isSelected: boolean
     @Input() isFocused: boolean
