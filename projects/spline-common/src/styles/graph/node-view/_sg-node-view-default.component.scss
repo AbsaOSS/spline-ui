@@ -26,7 +26,7 @@ $node-bg-color--target: $node-color--target;
 $node-bg-color--focused: $node-color--focused;
 
 $action-icon-color: $color-grey-dark-75;
-$focus-animation-time: 4s;
+
 
 @mixin node-view-colors($node-view-host, $bg-color, $color, $bg-color-actions, $color-actions) {
     background: $bg-color;
@@ -160,18 +160,18 @@ $focus-animation-time: 4s;
     }
 
     &--focused {
-        animation: focus-node-view $focus-animation-time;
+        animation: focus-node-view $node-focus-animation-time;
 
         #{$self}__actions-container {
-            animation: focus-actions-container $focus-animation-time;
+            animation: focus-actions-container $node-focus-animation-time;
 
             * {
-                animation: focus-text $focus-animation-time;
+                animation: focus-text $node-focus-animation-time;
             }
         }
 
         #{$self}__icon * {
-            animation: focus-text $focus-animation-time;
+            animation: focus-text $node-focus-animation-time;
         }
     }
 

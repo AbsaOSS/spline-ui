@@ -19,8 +19,6 @@ import { BaseComponent } from 'spline-utils'
 
 import { SplineColors } from '../../../../common/models'
 
-import { SgNodeViewCircle } from './sg-node-view-circle.models'
-
 
 @Component({
     selector: 'sg-node-view-circle',

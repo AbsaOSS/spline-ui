@@ -27,13 +27,19 @@
     .edge path {
         stroke: $color;
     }
-    // NODE
-    .spline-graph__node-container {
-        background: $color;
 
+    .arrow path {
+        fill: $color;
+    }
+
+    // NODE
+    .spline-graph__node-container:not(.spline-graph__node--selected) {
         .sg-node-view {
-            left: 10px;
-            top: 10px;
+            border: 4px solid $color;
+        }
+
+        .sg-node-view-circle {
+            border: 4px solid $color;
         }
     }
 }
