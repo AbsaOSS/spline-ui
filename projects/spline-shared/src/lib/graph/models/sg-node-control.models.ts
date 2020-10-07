@@ -57,7 +57,7 @@ export namespace SgNodeControl {
             [
                 NodeType.ExecutionPlan,
                 {
-                    icon: 'playlist_play',
+                    icon: 'cog-transfer-outline',
                     color: SplineColors.ORANGE,
                 },
             ],

@@ -15,14 +15,14 @@
  */
 
 import { dataSourceUriToName, ExecutionEventLineageNode, ExecutionEventLineageNodeType } from 'spline-api'
-import { SgNode, SgNodeDefault } from 'spline-common'
+import { SgNode, SgNodeCircle, SgNodeDefault } from 'spline-common'
 import { SgNodeControl } from 'spline-shared'
-import NodeType = SgNodeControl.NodeType;
+import NodeType = SgNodeControl.NodeType
 
 
 export namespace EventNodeControl {
 
-    import NodeStyles = SgNodeControl.NodeStyles;
+    import NodeStyles = SgNodeControl.NodeStyles
 
 
     export function extractNodeName(nodeSource: ExecutionEventLineageNode): string {
@@ -42,7 +42,8 @@ export namespace EventNodeControl {
 
     export function toSgNode(nodeSource: ExecutionEventLineageNode,
                              onExecutionPlanLaunchAction: (nodeId: string) => void,
-                             onNodeHighlightToggleRelations: (nodeId: string) => void): SgNode {
+                             onNodeHighlightToggleRelations: (nodeId: string) => void,
+                             view: 'square' | 'circle' = 'circle'): SgNode {
 
         const nodeStyles = getNodeStyles(nodeSource)
 
@@ -52,27 +53,35 @@ export namespace EventNodeControl {
             ),
         ]
 
-        return SgNodeDefault.toNode(
-            nodeSource.id,
-            {
-                label: extractNodeName(nodeSource),
-                ...nodeStyles,
-                inlineActions: nodeSource.type === ExecutionEventLineageNodeType.DataSource
-                    ? [
-                        ...defaultActions
-                    ]
-                    : [
-                        {
-                            icon: 'launch',
-                            onClick: () => {
-                                onExecutionPlanLaunchAction(nodeSource.id)
+        return view === 'square'
+            ? SgNodeDefault.toNode(
+                nodeSource.id,
+                {
+                    label: extractNodeName(nodeSource),
+                    ...nodeStyles,
+                    inlineActions: nodeSource.type === ExecutionEventLineageNodeType.DataSource
+                        ? [
+                            ...defaultActions
+                        ]
+                        : [
+                            {
+                                icon: 'launch',
+                                onClick: () => {
+                                    onExecutionPlanLaunchAction(nodeSource.id)
+                                },
+                                tooltip: 'EVENTS.EVENT_NODE_CONTROL__ACTION__LAUNCH',
                             },
-                            tooltip: 'EVENTS.EVENT_NODE_CONTROL__ACTION__LAUNCH',
-                        },
-                        ...defaultActions
-                    ],
-            },
-        )
+                            ...defaultActions
+                        ],
+                },
+            )
+            : SgNodeCircle.toNode(
+                nodeSource.id,
+                {
+                    tooltip: extractNodeName(nodeSource),
+                    ...nodeStyles,
+                },
+            )
     }
 }
 

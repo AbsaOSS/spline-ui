@@ -45,4 +45,5 @@ export const SPLINE_ICONS_COLLECTION: Set<string> = new Set<string>([
     'parent-nodes',
     'children-nodes',
     'transit-connection',
+    'cog-transfer-outline',
 ])

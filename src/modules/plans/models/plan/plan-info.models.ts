@@ -29,7 +29,7 @@ export namespace PlanInfo {
             SdWidgetCard.toSchema(
                 {
                     color: SplineColors.ORANGE,
-                    icon: 'playlist_play',
+                    icon: 'cog-transfer-outline',
                     title: data?.extraInfo?.appName ? data?.extraInfo?.appName : 'PLANS.PLAN_INFO__DEFAULT_NAME',
                     iconTooltip: 'PLANS.PLAN_INFO__LABEL',
                 },

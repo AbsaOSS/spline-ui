@@ -16,3 +16,6 @@
 
 export * from './default-view/sg-node-view-default.component'
 export * from './default-view/sg-node-view-default.models'
+
+export * from './circle-view/sg-node-view-circle.component'
+export * from './circle-view/sg-node-view-circle.models'

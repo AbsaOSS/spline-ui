@@ -17,3 +17,6 @@
 export * from './sg-node-base.component'
 export * from './default/sg-node-default.component'
 export * from './default/sg-node-default.models'
+
+export * from './circle/sg-node-circle.component'
+export * from './circle/sg-node-circle.models'

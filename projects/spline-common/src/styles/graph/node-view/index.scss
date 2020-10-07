@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 
-@import './node-view/index';
-@import './graph.component';
-@import './sg-control-panel.component';
-@import './sg-relations-control.component';
-@import './sg-toolbar.component';
-@import './sg-zoom-control';
+@import './sg-node-view-default.component';
+@import './sg-node-view-circle.component';
+@import './sg-node-view-shared.component';

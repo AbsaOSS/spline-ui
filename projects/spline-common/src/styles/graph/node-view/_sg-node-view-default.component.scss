@@ -14,15 +14,17 @@
  * limitations under the License.
  */
 
-@import '../mixins';
-@import '../vars';
+@import '../../mixins';
+@import '../../vars';
+@import './sg-node-view-shared.component';
 
 $border-radius: 8px;
 $icon-width: 24px;
 
-$node-bg-color--selected: $color-human;
-$node-bg-color--target: $color-platinum;
-$node-bg-color--focused: $color-energy;
+$node-bg-color--selected: $node-color--selected;
+$node-bg-color--target: $node-color--target;
+$node-bg-color--focused: $node-color--focused;
+
 $action-icon-color: $color-grey-dark-75;
 $focus-animation-time: 4s;
 

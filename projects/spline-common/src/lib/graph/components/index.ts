@@ -18,8 +18,8 @@ import { SgRelationsControlComponent } from './control-panel/controls/relations-
 import { SgZoomControlComponent } from './control-panel/controls/zoom-control/sg-zoom-control.component'
 import { SgControlPanelComponent } from './control-panel/sg-control-panel.component'
 import { SplineGraphComponent } from './graph/spline-graph.component'
-import { SgNodeControlComponent, SgNodeDefaultComponent } from './node-control'
-import { SgNodeViewDefaultComponent } from './node-view'
+import { SgNodeCircleComponent, SgNodeControlComponent, SgNodeDefaultComponent } from './node-control'
+import { SgNodeViewCircleComponent, SgNodeViewDefaultComponent } from './node-view'
 import { SgToolbarComponent } from './toolbar/sg-toolbar.component'
 
 
@@ -28,10 +28,12 @@ export const splineGraphComponents: any[] = [
     SgNodeControlComponent,
     SgNodeDefaultComponent,
     SgNodeViewDefaultComponent,
+    SgNodeViewCircleComponent,
     SgControlPanelComponent,
     SgZoomControlComponent,
     SgToolbarComponent,
-    SgRelationsControlComponent
+    SgRelationsControlComponent,
+    SgNodeCircleComponent
 ]
 
 export * from './public-api'

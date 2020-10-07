@@ -15,7 +15,7 @@
  */
 
 import { ExecutionPlanLineageNode } from 'spline-api'
-import { SgNode, SgNodeDefault } from 'spline-common'
+import { SgNode, SgNodeCircle, SgNodeDefault } from 'spline-common'
 import { SgNodeControl } from 'spline-shared'
 
 import { OperationInfo } from '../operation'
@@ -28,7 +28,8 @@ export namespace PlanNodeControl {
     }
 
     export function toSgNode(nodeSource: ExecutionPlanLineageNode,
-                             onNodeHighlightToggleRelations: (nodeId: string) => void): SgNode {
+                             onNodeHighlightToggleRelations: (nodeId: string) => void,
+                             view: 'square' | 'circle' = 'circle'): SgNode {
         const nodeStyles = OperationInfo.getNodeStyles(nodeSource.type, nodeSource.name)
 
         const defaultActions = [
@@ -37,14 +38,23 @@ export namespace PlanNodeControl {
             ),
         ]
 
-        return SgNodeDefault.toNode(
-            nodeSource.id,
-            {
-                label: extractNodeName(nodeSource),
-                ...nodeStyles,
-                inlineActions: defaultActions,
-            },
-        )
+        return view === 'square'
+            ? SgNodeDefault.toNode(
+                nodeSource.id,
+                {
+                    label: extractNodeName(nodeSource),
+                    ...nodeStyles,
+                    inlineActions: defaultActions,
+                },
+            )
+
+            : SgNodeCircle.toNode(
+                nodeSource.id,
+                {
+                    tooltip: extractNodeName(nodeSource),
+                    ...nodeStyles,
+                },
+            )
     }
 }
 

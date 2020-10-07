@@ -19,14 +19,14 @@ import { BaseComponent } from 'spline-utils'
 
 import { SplineColors } from '../../../../common/models'
 
-import { SgNodeViewDefault } from './sg-node-view-default.models'
+import { SgNodeViewCircle } from './sg-node-view-circle.models'
 
 
 @Component({
-    selector: 'sg-node-view-default',
-    templateUrl: './sg-node-view-default.component.html',
+    selector: 'sg-node-view-circle',
+    templateUrl: './sg-node-view-circle.component.html',
 })
-export class SgNodeViewDefaultComponent extends BaseComponent {
+export class SgNodeViewCircleComponent extends BaseComponent {
 
     readonly defaultIcon = 'extension'
     readonly defaultColor = SplineColors.SILVER
@@ -34,9 +34,9 @@ export class SgNodeViewDefaultComponent extends BaseComponent {
     @Input() isSelected: boolean
     @Input() isFocused: boolean
     @Input() isTarget: boolean
-    @Input() icon: string
+
     @Input() color: string
-    @Input() showActions = false
-    @Input() actionsPosition: SgNodeViewDefault.ActionsPosition = this.defaultActionsPosition
+    @Input() icon: string
+    @Input() tooltip: string
 
 }
