@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-@import './node-view/index';
-@import './graph.component';
-@import './sg-control-panel.component';
-@import './sg-relations-control.component';
-@import './sg-toolbar.component';
-@import './sg-zoom-control';
+@import '../../vars';
+
+$node-color--selected: $color-orange;
+$node-color--target: $color-platinum;
+$node-color--focused: $color-energy;

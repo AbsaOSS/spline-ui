@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 
-@import './node-view/index';
-@import './graph.component';
-@import './sg-control-panel.component';
-@import './sg-relations-control.component';
-@import './sg-toolbar.component';
-@import './sg-zoom-control';
+export namespace SgNodeViewCircle {
+
+}

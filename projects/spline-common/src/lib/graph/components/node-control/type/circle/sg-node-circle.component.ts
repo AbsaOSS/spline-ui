@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright 2020 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,9 +14,17 @@
  * limitations under the License.
  */
 
-@import './node-view/index';
-@import './graph.component';
-@import './sg-control-panel.component';
-@import './sg-relations-control.component';
-@import './sg-toolbar.component';
-@import './sg-zoom-control';
+import { Component } from '@angular/core'
+
+import { SgNodeBaseComponent } from '../sg-node-base.component'
+
+import { SgNodeCircle } from './sg-node-circle.models'
+
+
+@Component({
+    selector: 'sg-node-circle',
+    templateUrl: './sg-node-circle.component.html',
+})
+export class SgNodeCircleComponent extends SgNodeBaseComponent<SgNodeCircle.Data, SgNodeCircle.Options> {
+
+}

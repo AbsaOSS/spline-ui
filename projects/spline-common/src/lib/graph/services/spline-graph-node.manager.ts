@@ -17,7 +17,7 @@
 import { Inject, Injectable, InjectionToken, Injector, Optional, Type } from '@angular/core'
 import { DynamicComponentManager } from 'spline-utils'
 
-import { SgNodeDefaultComponent } from '../components/node-control/type'
+import { SgNodeCircle, SgNodeCircleComponent, SgNodeDefaultComponent } from '../components/node-control/type'
 import { ISgNodeControl, ISgNodeControlFactory } from '../models'
 
 
@@ -27,7 +27,9 @@ export const SG_NODE_CONTROL_FACTORY = new InjectionToken<ISgNodeControlFactory<
 @Injectable()
 export class SplineGraphNodeManager extends DynamicComponentManager<ISgNodeControlFactory<any>, ISgNodeControl<any>> {
 
-    readonly defaultNodeControlsMap: { [type: string]: Type<ISgNodeControl<any>> } = {}
+    readonly defaultNodeControlsMap: { [type: string]: Type<ISgNodeControl<any>> } = {
+        [SgNodeCircle.TYPE]: SgNodeCircleComponent
+    }
 
     constructor(
         @Optional() @Inject(SG_NODE_CONTROL_FACTORY) protected readonly factoriesProvidersList: Type<ISgNodeControlFactory<any>>[],
