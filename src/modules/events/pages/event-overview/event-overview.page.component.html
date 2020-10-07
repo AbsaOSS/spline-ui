@@ -81,6 +81,7 @@
                     <!-- GRAPH -->
                     <spline-graph
                             (nodeSelectionChange$)="onNodeSelected($event)"
+                            (nodeDoubleClick$)="onNodeDoubleClick($event.nodeSchema)"
                             [graphData]="graphData"
                             [focusNode$]="focusNode$"
                             [targetNodeId]="state.targetNodeId"

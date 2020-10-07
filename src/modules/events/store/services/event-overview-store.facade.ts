@@ -112,11 +112,15 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
             })
     }
 
-    selectChildrenNodes(nodeId: string): ExecutionEventLineageNode[] {
+    findNode(nodeId: string): ExecutionEventLineageNode {
+        return EventOverviewStore.selectNode(this.state, nodeId)
+    }
+
+    findChildrenNodes(nodeId: string): ExecutionEventLineageNode[] {
         return EventOverviewStore.selectChildrenNodes(this.state, nodeId)
     }
 
-    selectParentNodes(nodeId: string): ExecutionEventLineageNode[] {
+    findParentNodes(nodeId: string): ExecutionEventLineageNode[] {
         return EventOverviewStore.selectParentNodes(this.state, nodeId)
     }
 
