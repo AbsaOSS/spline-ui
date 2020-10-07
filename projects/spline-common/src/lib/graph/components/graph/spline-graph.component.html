@@ -27,14 +27,11 @@
                [enableZoom]="true">
 
         <ng-template #linkTemplate let-link>
-            <svg:g class="edge">
-                <svg:path class="line" stroke-width="3" marker-end="url(#arrow)"></svg:path>
+            <svg:g class=" edge">
+                <svg:path class="line" stroke-width="3" [attr.marker-end]="'url(#arrow-' + link.id + ')'"></svg:path>
             </svg:g>
-        </ng-template>
-
-        <ng-template #defsTemplate>
-            <svg:marker id="arrow" viewBox="0 -5 12 12" refX="10" refY="0" markerWidth="6" markerHeight="6" orient="auto">
-                <svg:path d="M0,-5L12,0L0,5" class="arrow-head" fill="#7a7a7d"/>
+            <svg:marker [id]="'arrow-' + link.id" class="arrow" viewBox="0 -5 12 12" refX="10" refY="0" markerWidth="6" markerHeight="6" orient="auto">
+                <svg:path d="M0,-5L12,0L0,5" class="arrow-head"/>
             </svg:marker>
         </ng-template>
 

@@ -24,6 +24,15 @@
     position: absolute;
     top: 0;
     width: 100%;
+
+    .edge path {
+        stroke: $color-grey-2;
+    }
+
+    .arrow path {
+        fill: $color-grey-2;
+    }
+
 }
 
 .spline-graph__node-container {

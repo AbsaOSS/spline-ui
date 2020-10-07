@@ -23,7 +23,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { NgxGraphModule } from '@swimlane/ngx-graph'
 
-import { SplineDividerModule, SplineIconModule, SplineLongTextModule } from '../common'
+import { SplineCommonModule, SplineDividerModule, SplineIconModule, SplineLongTextModule } from '../common'
 import { SplineTranslateModule } from '../translate'
 
 import * as fromComponents from './components'
@@ -48,6 +48,7 @@ import * as fromServices from './services'
         SplineIconModule,
         MatCardModule,
         SplineDividerModule,
+        SplineCommonModule,
     ],
     exports: [
         ...fromComponents.splineGraphComponents,
