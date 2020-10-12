@@ -16,11 +16,13 @@
 
 import { SgDepthControlComponent } from './depth-control/sg-depth-control.component'
 import { SgLegendComponent } from './legend/sg-legend.component'
+import { SgNodeViewControlComponent } from './node-view-control/sg-node-view-control.component'
 
 
 export const sgSharedComponents: any[] = [
     SgDepthControlComponent,
     SgLegendComponent,
+    SgNodeViewControlComponent
 ]
 
 export * from './public-api'
