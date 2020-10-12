@@ -16,10 +16,11 @@
 
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
-import { BehaviorSubject, Observable, Subject } from 'rxjs'
+import { BehaviorSubject, merge, Observable, Subject } from 'rxjs'
 import { filter, map, shareReplay, skip, takeUntil, withLatestFrom } from 'rxjs/operators'
 import { ExecutionPlanFacade } from 'spline-api'
 import { SgData, SgNodeSchema, SgRelations } from 'spline-common'
+import { SgNodeControl } from 'spline-shared'
 import { BaseComponent, RouterHelpers } from 'spline-utils'
 
 import { PlanNodeControl, PlanOverview } from '../../models'
@@ -46,6 +47,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
     readonly graphData$: Observable<SgData>
     readonly focusNode$ = new Subject<string>()
     readonly highlightedRelationsNodesIds$ = new BehaviorSubject<string[] | null>(null)
+    readonly graphNodeView$ = new BehaviorSubject<SgNodeControl.NodeView>(SgNodeControl.NodeView.Detailed)
 
     eventId: string
 
@@ -54,10 +56,15 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
                 readonly store: ExecutionPlanOverviewStoreFacade) {
         super()
 
-        this.graphData$ = this.store.loadingProcessingEvents.success$
+        this.graphData$ = merge(
+            this.store.loadingProcessingEvents.success$,
+            this.graphNodeView$
+        )
             .pipe(
                 takeUntil(this.destroyed$),
-                map(state => {
+                withLatestFrom(this.graphNodeView$),
+                map(([x, graphNodeView]) => {
+                    const state = this.store.state
                     // select all nodes list from the store
                     const nodesList = ExecutionPlanOverviewStore.selectAllNodes(state)
                     return {
@@ -68,6 +75,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
                                 nodeSource => PlanNodeControl.toSgNode(
                                     nodeSource,
                                     (nodeId) => this.onNodeHighlightToggleRelations(nodeId),
+                                    graphNodeView,
                                 ),
                             ),
                     }
@@ -141,6 +149,10 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         this.highlightedRelationsNodesIds$.next(
             this.highlightedRelationsNodesIds$.getValue() ? null : []
         )
+    }
+
+    onGraphNodeViewChanged(nodeView: SgNodeControl.NodeView) {
+        this.graphNodeView$.next(nodeView)
     }
 
     private resetNodeHighlightRelations(): void {

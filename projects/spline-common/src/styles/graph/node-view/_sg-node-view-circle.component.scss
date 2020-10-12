@@ -18,8 +18,6 @@
 @import '../../vars';
 @import './sg-node-view-shared.component';
 
-$node-border-width--highlighted: 8px;
-$selected-node-shift: $node-border-width--highlighted;
 $icon-size: 44px;
 
 .sg-node-view-circle {

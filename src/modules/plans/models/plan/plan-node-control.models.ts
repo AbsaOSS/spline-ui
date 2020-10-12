@@ -23,13 +23,16 @@ import { OperationInfo } from '../operation'
 
 export namespace PlanNodeControl {
 
+    import NodeView = SgNodeControl.NodeView
+
+
     export function extractNodeName(nodeSource: ExecutionPlanLineageNode): string {
         return nodeSource.name
     }
 
     export function toSgNode(nodeSource: ExecutionPlanLineageNode,
                              onNodeHighlightToggleRelations: (nodeId: string) => void,
-                             view: 'square' | 'circle' = 'circle'): SgNode {
+                             nodeView: NodeView = NodeView.Detailed): SgNode {
         const nodeStyles = OperationInfo.getNodeStyles(nodeSource.type, nodeSource.name)
 
         const defaultActions = [
@@ -38,23 +41,26 @@ export namespace PlanNodeControl {
             ),
         ]
 
-        return view === 'square'
-            ? SgNodeDefault.toNode(
-                nodeSource.id,
-                {
-                    label: extractNodeName(nodeSource),
-                    ...nodeStyles,
-                    inlineActions: defaultActions,
-                },
-            )
-
-            : SgNodeCircle.toNode(
-                nodeSource.id,
-                {
-                    tooltip: extractNodeName(nodeSource),
-                    ...nodeStyles,
-                },
-            )
+        switch (nodeView) {
+            case NodeView.Compact:
+                return SgNodeCircle.toNode(
+                    nodeSource.id,
+                    {
+                        tooltip: extractNodeName(nodeSource),
+                        ...nodeStyles,
+                    },
+                )
+            case NodeView.Detailed:
+            default:
+                return SgNodeDefault.toNode(
+                    nodeSource.id,
+                    {
+                        label: extractNodeName(nodeSource),
+                        ...nodeStyles,
+                        inlineActions: defaultActions,
+                    },
+                )
+        }
     }
 }
 
