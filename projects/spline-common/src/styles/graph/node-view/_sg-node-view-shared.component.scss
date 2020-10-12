@@ -21,3 +21,6 @@ $node-color--target: $color-platinum;
 $node-color--focused: $color-human;
 
 $node-focus-animation-time: 4s;
+
+$node-border-width--highlighted: 8px;
+$selected-node-shift: $node-border-width--highlighted;

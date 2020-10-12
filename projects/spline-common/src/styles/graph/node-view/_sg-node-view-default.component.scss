@@ -151,12 +151,16 @@ $action-icon-color: $color-grey-dark-75;
         }
     }
 
-    &--selected {
-        @include node-view-colors($self, $node-bg-color--selected, $color-white, darken($node-bg-color--selected, 5), $color-grey-light);
+    &--target {
+        @include node-view-colors($self, $node-bg-color--target, $color-white, darken($node-bg-color--target, 5), $color-grey-light);
     }
 
-    &--target:not(&--selected) {
-        @include node-view-colors($self, $node-bg-color--target, $color-white, darken($node-bg-color--target, 5), $color-grey-light);
+    &--selected {
+        height: calc(100% + #{$selected-node-shift * 2});
+        left: -($selected-node-shift);
+        top: -($selected-node-shift);
+        width: calc(100% + #{$selected-node-shift * 2});
+        border: $node-border-width--highlighted solid $node-color--selected;
     }
 
     &--focused {
