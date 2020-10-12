@@ -40,6 +40,11 @@ export namespace SgNodeControl {
         Sort = 'Sort',
     }
 
+    export enum NodeView {
+        Detailed = 'Detailed',
+        Compact = 'Compact',
+    }
+
     export const DEFAULT_NODE_STYLES: NodeStyles = Object.freeze<NodeStyles>({
         icon: 'extension',
         color: SplineColors.GREY,

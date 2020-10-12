@@ -115,6 +115,14 @@
                         </ng-template>
                         <!-- ./CONTROL PANEL :: ACTIONS -->
 
+                        <!-- CONTROL PANEL :: ACTIONS -->
+                        <ng-template sgControlPanelSection>
+
+                            <sg-node-view-control [nodeView]="graphNodeView$ | async" (viewChanged$)="onGraphNodeViewChanged($event)"></sg-node-view-control>
+
+                        </ng-template>
+                        <!-- ./CONTROL PANEL :: ACTIONS -->
+
                     </spline-graph>
                     <!-- ./GRAPH -->
                 </div>

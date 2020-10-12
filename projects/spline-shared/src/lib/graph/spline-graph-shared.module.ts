@@ -20,7 +20,7 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
-import { SplineLoaderModule, SplineTranslateModule } from 'spline-common'
+import { SplineIconModule, SplineLoaderModule, SplineTranslateModule } from 'spline-common'
 
 import { sgSharedComponents } from './components'
 
@@ -33,7 +33,8 @@ import { sgSharedComponents } from './components'
         MatTooltipModule,
         MatCardModule,
         SplineTranslateModule,
-        SplineLoaderModule
+        SplineLoaderModule,
+        SplineIconModule
     ],
     declarations: [
         ...sgSharedComponents,

@@ -17,13 +17,15 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { BehaviorSubject, merge, Observable, Subject } from 'rxjs'
-import { filter, map, shareReplay, skip, takeUntil } from 'rxjs/operators'
+import { filter, map, shareReplay, skip, takeUntil, withLatestFrom } from 'rxjs/operators'
 import { ExecutionEventFacade, ExecutionEventLineageNodeType } from 'spline-api'
 import { SdWidgetSchema, SgData, SgNodeSchema, SgRelations } from 'spline-common'
+import { SgNodeControl } from 'spline-shared'
 import { BaseComponent, RouterHelpers } from 'spline-utils'
 
 import { EventNodeControl, EventNodeInfo } from '../../models'
 import { EventOverviewStore, EventOverviewStoreFacade } from '../../store'
+import NodeView = SgNodeControl.NodeView
 
 
 @Component({
@@ -51,6 +53,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
 
     readonly focusNode$ = new Subject<string>()
     readonly highlightedRelationsNodesIds$ = new BehaviorSubject<string[] | null>(null)
+    readonly graphNodeView$ = new BehaviorSubject<SgNodeControl.NodeView>(SgNodeControl.NodeView.Detailed)
 
     executionEventId: string
 
@@ -61,11 +64,14 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
 
         this.graphData$ = merge(
             this.store.loadingProcessingEvents.success$,
-            this.store.graphLoadingProcessingEvents.success$
+            this.store.graphLoadingProcessingEvents.success$,
+            this.graphNodeView$
         )
             .pipe(
                 takeUntil(this.destroyed$),
-                map((state: EventOverviewStore.State) => {
+                withLatestFrom(this.graphNodeView$),
+                map(([x, graphNodeView]) => {
+                    const state = this.store.state
                     // select all nodes list from the store
                     const nodesList = EventOverviewStore.selectAllNodes(state)
                     return {
@@ -77,6 +83,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
                                     nodeSource,
                                     (nodeId) => this.onExecutionPlanNodeLaunchAction(nodeId),
                                     (nodeId) => this.onNodeHighlightToggleRelations(nodeId),
+                                    graphNodeView
                                 ),
                             ),
                     }
@@ -120,7 +127,6 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
         const selectedNodeId = this.activatedRoute.snapshot.queryParamMap.get(this.selectedNodeQueryParamName)
 
         this.store.init(this.executionEventId, selectedNodeId)
-
         //
         // [ACTION] :: SELECTED NODE CHANGE
         //      => update query params
@@ -185,6 +191,10 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
 
     onShowDetailsBtnCLicked(): void {
         this.store.setSelectedNode(null)
+    }
+
+    onGraphNodeViewChanged(nodeView: SgNodeControl.NodeView) {
+        this.graphNodeView$.next(nodeView)
     }
 
     private navigateToExecutionPlanPage(executionPlanId: string): void {

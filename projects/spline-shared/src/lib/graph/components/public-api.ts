@@ -18,3 +18,5 @@ export * from './depth-control/sg-depth-control.component'
 export * from './depth-control/sg-depth-control.models'
 
 export * from './legend/sg-legend.component'
+
+export * from './node-view-control/sg-node-view-control.component'
