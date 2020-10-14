@@ -12,6 +12,8 @@
     "SG_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS__TOGGLE": "Highlight All Relations",
     "SG_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS__PARENT": "Highlight Parent Relations",
     "SG_NODE_CONTROL__ACTION__HIGHLIGHT_RELATIONS__CHILD": "Highlight Child Relations",
-    "SG_NODE_CONTROL__ACTION__FOCUS": "Focus on Graph"
+    "SG_NODE_CONTROL__ACTION__FOCUS": "Focus on Graph",
+    "SG_NODE_VIEW_CONTROL__TOOLTIP__DETAILED_VIEW": "Switch to Detailed View",
+    "SG_NODE_VIEW_CONTROL__TOOLTIP__COMPACT_VIEW": "Switch to Compact View"
   }
 }
