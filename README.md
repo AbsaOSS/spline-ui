@@ -8,6 +8,12 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
+
+## Docker
+
+- Build the docker image: `docker build -t spline-ui .`
+- Run the docker image: `docker run -d --name spline-ui -p 7070:7070 spline-ui` 
+
 ---
 
     Copyright 2020 ABSA Group Limited
