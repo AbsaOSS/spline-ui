@@ -25,10 +25,8 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angul
 export class SgRelationsControlComponent {
 
     @Output() showAll$ = new EventEmitter<void>()
-    @Output() hideAll$ = new EventEmitter<void>()
-    @Output() toggle$ = new EventEmitter<void>()
 
-    onToggleRelationsBtnClicked(): void {
-        this.toggle$.next()
+    onShowAllRelationsBtnClicked(): void {
+        this.showAll$.next()
     }
 }

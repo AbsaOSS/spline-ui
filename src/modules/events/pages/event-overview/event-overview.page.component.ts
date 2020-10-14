@@ -158,9 +158,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
     }
 
     onToggleAllRelationsBtnClicked(): void {
-        this.highlightedRelationsNodesIds$.next(
-            this.highlightedRelationsNodesIds$.getValue() ? null : []
-        )
+        this.highlightedRelationsNodesIds$.next(null)
     }
 
     onChangeGraphDepth(depth): void {
@@ -176,13 +174,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
     }
 
     onNodeHighlightRelations(nodeId: string): void {
-        const highlightedRelationsNodesIds = SgRelations.toggleSelection(
-            this.highlightedRelationsNodesIds$.getValue() ?? [],
-            nodeId,
-            this.store.state.links,
-        )
-
-        this.highlightedRelationsNodesIds$.next(highlightedRelationsNodesIds)
+        this.processNodeHighlightAction(nodeId, SgRelations.toggleSelection)
     }
 
     onNodeHighlightToggleRelations(nodeId: string): void {
@@ -215,7 +207,9 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
             this.store.state.links,
         )
 
-        this.highlightedRelationsNodesIds$.next(highlightedRelationsNodesIds)
+        this.highlightedRelationsNodesIds$.next(
+            highlightedRelationsNodesIds.length > 0 ? highlightedRelationsNodesIds : null
+        )
     }
 
     private updateQueryParams(nodeId: string | null): void {

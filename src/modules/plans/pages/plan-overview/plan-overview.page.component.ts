@@ -145,10 +145,8 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         this.focusNode$.next(nodeId)
     }
 
-    onToggleAllRelationsBtnClicked(): void {
-        this.highlightedRelationsNodesIds$.next(
-            this.highlightedRelationsNodesIds$.getValue() ? null : []
-        )
+    onShowAllRelationsBtnClicked(): void {
+        this.highlightedRelationsNodesIds$.next(null)
     }
 
     onGraphNodeViewChanged(nodeView: SgNodeControl.NodeView) {
@@ -170,7 +168,9 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
             this.store.state.links,
         )
 
-        this.highlightedRelationsNodesIds$.next(highlightedRelationsNodesIds)
+        this.highlightedRelationsNodesIds$.next(
+            highlightedRelationsNodesIds.length > 0 ? highlightedRelationsNodesIds : null
+        )
     }
 
     // Watch Store State changes => update Router State if needed
