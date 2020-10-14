@@ -17,9 +17,9 @@
 <div class="d-flex flex-column">
     <!-- TOGGLE -->
     <button mat-button mat-icon-button
-            [matTooltip]="(nodeView === NodeView.Compact ? 'Detailed View' : 'Compact View') | translate"
+            [matTooltip]="(nodeView === NodeView.Compact ? 'SHARED.SG_NODE_VIEW_CONTROL__TOOLTIP__DETAILED_VIEW' : 'SHARED.SG_NODE_VIEW_CONTROL__TOOLTIP__COMPACT_VIEW') | translate"
             (click)="onToggleViewBtnClicked()">
-        <spline-icon [icon]="nodeView === NodeView.Compact ? 'crop_5_4' : 'circle'"></spline-icon>
+        <spline-icon [icon]="nodeView === NodeView.Compact ? 'crop_5_4' : 'trip_origin'"></spline-icon>
     </button>
     <!-- ./TOGGLE -->
 </div>
