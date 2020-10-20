@@ -1,0 +1,20 @@
+{
+  "name": "spline-ui-server",
+  "version": "0.5.2-SNAPSHOT.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "compression": "^1.7.4",
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^1.0.5",
+    "path": "^0.12.7",
+    "yargs": "^15.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node server.js",
+    "new-snapshot": "npm version prerelease --preid=SNAPSHOT"
+  },
+  "author": "ABSA Group Limited Developers Team",
+  "license": "Apache 2.0"
+}

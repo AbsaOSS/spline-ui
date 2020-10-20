@@ -2,17 +2,26 @@
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4300/`. The app will automatically reload if you change any of the source files.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `npm run build:prod` to build the project. The build artifacts will be stored in the `dist/spline-ui` directory.
 
+## Deployment
 
-## Docker
+### Docker
 
-- Build the docker image: `docker build -t spline-ui .`
-- Run the docker image: `docker run -d --name spline-ui -p 7070:7070 spline-ui` 
+- Build a Docker image: `docker build -t spline-ui -f deployment/docker/Dockerfile .`
+- Run the Docker image: `docker run -d --name spline-ui -p 7070:7070 spline-ui`  
+
+### Express
+
+- First build the app if it is not already done: `npm run build:prod`
+- Go to the Express deployment directory: `cd deployment/express` 
+- Install dependencies (that step needed before the very first run): `npm install` 
+- Start the server: `npm start` 
+- For more details see `/deployment/docker/README.md`
 
 ---
 
