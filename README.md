@@ -17,11 +17,14 @@ Run `npm run build:prod` to build the project. The build artifacts will be store
 
 ### Express
 
+That server can be used to serve the app artifacts at a specific port.
+The default port and build artifacts directory path can be rewritten.
+More details about Express server CLI can be found here `/deployment/express/README.md`.
+
 - First build the app if it is not already done: `npm run build:prod`
 - Go to the Express deployment directory: `cd deployment/express` 
-- Install dependencies (that step needed before the very first run): `npm install` 
+- Install server dependencies (that step needed before the very first run): `npm install` 
 - Start the server: `npm start` 
-- For more details see `/deployment/docker/README.md`
 
 ---
 
