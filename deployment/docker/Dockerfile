@@ -14,29 +14,26 @@
 # limitations under the License.
 #
 
-#LABEL \
-#    vendor="ABSA" \
-#    copyright="2019 ABSA Group Limited" \
-#    license="Apache License, version 2.0" \
-#    name="Spline UI"
-
-# STEP 1 :: build the app
 FROM node:12-alpine as builder
+
+LABEL \
+    vendor="ABSA" \
+    copyright="2019 ABSA Group Limited" \
+    license="Apache License, version 2.0" \
+    name="Spline UI"
+
 # Create app directory
 WORKDIR /app
-# Install app dependencies
+# Copy all files to the working dir.
 COPY ./  /app
+# Install the app dependencies
 RUN cd /app && npm set progress=false && npm install
-# Copy project files into the docker image
+# Build the app
 RUN npm run ng build -- --prod
 
-# STEP 2 :: build a small nginx image with static website
-FROM nginx:alpine
-## Remove default nginx website
-RUN rm -rf /usr/share/nginx/html/*
-## From 'builder' copy website to default nginx public folder
-COPY --from=builder /app/dist/spline-ui /usr/share/nginx/html
-RUN mv /usr/share/nginx/html/assets/config.localhost.json /usr/share/nginx/html/assets/config.json
-COPY  ./deployment/nginx/nginx.conf /etc/nginx/nginx.conf
+# Install dependecies for the server
+RUN cd /app/deployment/express && npm set progress=false && npm install
+
 EXPOSE 7070
-CMD ["nginx", "-g", "daemon off;"]
+# Run the server
+CMD [ "node", "/app/deployment/express/server.js"]

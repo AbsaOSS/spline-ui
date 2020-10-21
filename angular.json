@@ -83,7 +83,7 @@
               ]
             },
             "scripts": [
-              "./node_modules/hammerjs/hammer.min.js",
+              "./node_modules/hammerjs/hammer.min.js"
             ]
           },
           "configurations": {
@@ -367,5 +367,8 @@
       }
     }
   },
-  "defaultProject": "spline-ui"
+  "defaultProject": "spline-ui",
+  "cli": {
+    "analytics": "0813ba40-5264-4248-a453-393bba4de37c"
+  }
 }

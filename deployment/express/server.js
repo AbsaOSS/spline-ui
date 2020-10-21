@@ -17,7 +17,7 @@
 const compression = require('compression')
 const express = require('express')
 const yargs = require('yargs')
-const {createProxyMiddleware} = require('http-proxy-middleware')
+const { createProxyMiddleware } = require('http-proxy-middleware')
 const fs = require('fs')
 const path = require('path')
 
