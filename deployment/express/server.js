@@ -14,57 +14,20 @@
  * limitations under the License.
  */
 
-const compression = require('compression')
 const express = require('express')
-const yargs = require('yargs')
-const { createProxyMiddleware } = require('http-proxy-middleware')
 const fs = require('fs')
 const path = require('path')
 
-const argv = yargs
-    .option(
-        'port',
-        {
-            alias: 'p',
-            description: 'Port',
-            type: 'number'
-        },
-    )
-    .option(
-        'sources',
-        {
-            alias: 's',
-            description: 'App sources directory',
-            type: 'string'
-        },
-    )
-    .option(
-        'consumerApi',
-        {
-            alias: 'api',
-            description: 'Consumer API path',
-            type: 'string'
-        },
-    )
-    .option(
-        'compression',
-        {
-            alias: 'c',
-            description: 'Consumer API path',
-            type: 'boolean'
-        },
-    )
-    .argv
 
 // default params
 const DEFAULT_PORT = 7070
 const DEFAULT_SOURCES_DIR = __dirname + '/../../dist/spline-ui'
 const DEFAULT_CONSUMER_API_URL = 'http://localhost:8080/consumer'
 
-const PORT = argv.port ? argv.port : DEFAULT_PORT
-const SOURCES_DIR = argv.sources ? argv.sources : DEFAULT_SOURCES_DIR
-const API_PATH = argv.consumerApi ? argv.consumerApi : DEFAULT_CONSUMER_API_URL
-const useCompression = argv.compression !== undefined ? argv.compression : true
+const PORT = process.env.PORT ? process.env.PORT : DEFAULT_PORT
+const API_PATH = process.env.CONSUMER_API ? process.env.CONSUMER_API : DEFAULT_CONSUMER_API_URL
+const SOURCES_DIR = process.env.SOURCES ? process.env.SOURCES : DEFAULT_SOURCES_DIR
+
 
 // validation
 if (!fs.existsSync(SOURCES_DIR)) {
@@ -72,20 +35,6 @@ if (!fs.existsSync(SOURCES_DIR)) {
 }
 
 let app = express()
-
-if (useCompression) {
-    app.use(compression())
-}
-
-// API proxy settings
-const apiProxy = createProxyMiddleware({
-    target: API_PATH,
-    pathRewrite: {
-        '^/rest/consumer': ''
-    },
-    changeOrigin: true
-})
-app.use('/rest/consumer', apiProxy)
 
 const baseOptions = {
     dotfiles: 'ignore',
@@ -111,6 +60,18 @@ const staticOptions = {
     fallthrough: false
 }
 
+// rewrite config response according to the env settings.
+app.use('/assets/config.json', (req, res) => {
+    const configFilePath = path.join(DEFAULT_SOURCES_DIR, 'assets', 'config.json')
+    // read default settings from file
+    const config = JSON.parse(fs.readFileSync(configFilePath))
+    // rewrite API path
+    config.splineConsumerApiUrl = API_PATH
+    // return new config with env settings
+    res.setHeader('Content-type', 'application/json')
+    res.end(JSON.stringify(config))
+})
+
 app.use('/', express.static(SOURCES_DIR, routingOptions))
 app.use('/assets', express.static(path.join(SOURCES_DIR, 'assets'), staticOptions))
 app.use('*', express.static(SOURCES_DIR, routingOptions))
@@ -118,3 +79,4 @@ app.use('*', express.static(SOURCES_DIR, routingOptions))
 app.listen(PORT)
 
 console.info(`The app is running on port: http://localhost:${PORT}`)
+console.info(`Consumer API URI: ${API_PATH}`)

@@ -14,21 +14,20 @@ Express server for a production deploying of Spline UI.
 After that you can find the app running at the next address: http://localhost:7070. 
 
 
-## server.js CLI arguments
+## server.js Environment variables
 
 | Name        | Description           | Default value  |
 | ------------- |-------------| -----:|
-| `--port`      | The port on which server will be running. | `7070` |
-| `--sources`      | The path to the root app directory.      |  `../../dist/spline-ui`  |
-| `--consumerApi` | API URI.      |    `http://localhost:8080/consumer` |
-| `--compression` | Enable gzip compression      |    `true` |
+| `PORT`      | The port on which server will be running. | `7070` |
+| `SOURCES`      | The path to the root app directory.      |  `../../dist/spline-ui`  |
+| `CONSUMER_API` | Spline Consumer API URI.      |    `http://localhost:8080/consumer` |
 
 
 #### Example
 
 Serving the app at the custom port `9090`, from the custom directory `/path/to/the/splin-ui/` and consumer API running at the custom uri `http://my-spline-instance.com/consumer`:
 
-`node server.js --port=9090 --sources=/path/to/the/splin-ui/ --consumerApi=http://my-spline-instance.com/consumer`
+`set PORT=9090 && set CONSUMER_API=http://my-spline-instance.com/consumer&& set SOURCES=/path/to/the/splin-ui/&& node server.js`
 
 ---
 

@@ -22,6 +22,8 @@ LABEL \
     license="Apache License, version 2.0" \
     name="Spline UI"
 
+ENV PORT=7070
+
 # Create app directory
 WORKDIR /app
 # Copy all files to the working dir.
@@ -34,6 +36,6 @@ RUN npm run ng build -- --prod
 # Install dependecies for the server
 RUN cd /app/deployment/express && npm set progress=false && npm install
 
-EXPOSE 7070
+EXPOSE $PORT
 # Run the server
 CMD [ "node", "/app/deployment/express/server.js"]

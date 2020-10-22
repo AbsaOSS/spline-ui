@@ -4,15 +4,12 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
-    "compression": "^1.7.4",
     "express": "^4.17.1",
-    "http-proxy-middleware": "^1.0.5",
-    "path": "^0.12.7",
-    "yargs": "^15.4.1"
+    "path": "^0.12.7"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node server.js",
+    "start": "set PORT=9090 && set CONSUMER_API=https://opensource.bigusdatus.com/spline/rest/consumer&& node server.js",
     "new-snapshot": "npm version prerelease --preid=SNAPSHOT"
   },
   "author": "ABSA Group Limited Developers Team",
