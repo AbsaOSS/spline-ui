@@ -24,9 +24,9 @@ const DEFAULT_PORT = 7070
 const DEFAULT_SOURCES_DIR = __dirname + '/../../dist/spline-ui'
 const DEFAULT_CONSUMER_API_URL = 'http://localhost:8080/consumer'
 
-const PORT = process.env.PORT ? process.env.PORT : DEFAULT_PORT
-const API_PATH = process.env.CONSUMER_API ? process.env.CONSUMER_API : DEFAULT_CONSUMER_API_URL
-const SOURCES_DIR = process.env.SOURCES ? process.env.SOURCES : DEFAULT_SOURCES_DIR
+const PORT = process.env.PORT || DEFAULT_PORT
+const API_PATH = process.env.CONSUMER_API || DEFAULT_CONSUMER_API_URL
+const SOURCES_DIR = process.env.SOURCES || DEFAULT_SOURCES_DIR
 
 
 // validation
