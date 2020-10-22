@@ -9,7 +9,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "set PORT=9090 && set CONSUMER_API=https://opensource.bigusdatus.com/spline/rest/consumer&& node server.js",
+    "start": "node server.js",
     "new-snapshot": "npm version prerelease --preid=SNAPSHOT"
   },
   "author": "ABSA Group Limited Developers Team",
