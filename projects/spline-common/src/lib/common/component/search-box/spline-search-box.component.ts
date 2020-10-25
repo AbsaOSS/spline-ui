@@ -67,6 +67,7 @@ export class SplineSearchBoxComponent extends BaseComponent {
     onSearchChanged(searchTerm: string): void {
         this.inputValue = searchTerm
         this.searchValueChanged$.next(searchTerm)
+        this.isFocused = true
     }
 
     onClearBtnClicked(): void {

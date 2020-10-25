@@ -17,6 +17,8 @@
 import { NestedTreeControl } from '@angular/cdk/tree'
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
 import { MatTreeNestedDataSource } from '@angular/material/tree'
+import { BehaviorSubject } from 'rxjs'
+import { skip, takeUntil } from 'rxjs/operators'
 import { BaseComponent } from 'spline-utils'
 
 import { SplineAttributesTree } from '../../models'
@@ -32,13 +34,29 @@ export class SplineAttributesTreeComponent extends BaseComponent implements OnCh
     @Input() attributesTree: SplineAttributesTree.Tree
     @Input() selectedAttributeId: string
 
+    @Input() set searchTerm(value: string) {
+        this.searchTerm$.next(value)
+    }
+
     @Output() selectedAttributeChanged$ = new EventEmitter<{ attributeId: string }>()
 
-    treeControl = new NestedTreeControl<SplineAttributesTree.TreeNode>(node => node.children)
-    treeDataSource = new MatTreeNestedDataSource<SplineAttributesTree.TreeNode>()
+    readonly treeControl = new NestedTreeControl<SplineAttributesTree.TreeNode>(node => node.children)
+    readonly treeDataSource = new MatTreeNestedDataSource<SplineAttributesTree.TreeNode>()
+
+    readonly searchTerm$ = new BehaviorSubject<string>('')
 
     constructor() {
         super()
+        this.searchTerm$
+            .pipe(
+                skip(1),
+                takeUntil(this.destroyed$)
+            )
+            .subscribe((searchTerm) => {
+                this.treeDataSource.data = searchTerm?.length > 0
+                    ? this.attributesTree.filter(treeNode => treeNode.name.includes(searchTerm))
+                    : this.attributesTree
+            })
     }
 
     hasChild = (_: number, node: SplineAttributesTree.TreeNode) => !!node.children && node.children.length > 0
@@ -56,5 +74,9 @@ export class SplineAttributesTreeComponent extends BaseComponent implements OnCh
         this.selectedAttributeChanged$.emit({
             attributeId: nodeId
         })
+    }
+
+    onSearch(searchTerm: string): void {
+        this.searchTerm$.next(searchTerm)
     }
 }

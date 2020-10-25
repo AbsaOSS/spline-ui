@@ -13,6 +13,13 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
+<div class="mb-3">
+    <spline-search-box (search$)="onSearch($event)"
+                       [searchTerm]="searchTerm$ | async">
+    </spline-search-box>
+</div>
+
 <mat-tree [dataSource]="treeDataSource"
           [treeControl]="treeControl"
           class="spline-attributes-tree">

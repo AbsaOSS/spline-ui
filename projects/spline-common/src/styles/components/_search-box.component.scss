@@ -18,16 +18,18 @@
 @import '../mixins';
 
 // TODO: adjust colors and use it from palette.
-$input-bg: rgba(255, 255, 255, .25);
-$input-text-color: rgba(255, 255, 255, .55);
+$input-bg: $color-grey-light-2;
+$input-text-color: $color-grey-dark-75;
 
 $input-bg--active: $color-grey-light-2;
-$input-text-color--active: inherit;
+$input-text-color--active: $color-grey-dark;
 
 $height: 40px;
 $border-radius: $height / 2;
 
 .spline-search-box {
+    $self: &;
+
     align-items: center;
     // CONTAINER
     background: $input-bg;
@@ -40,22 +42,22 @@ $border-radius: $height / 2;
 
     // ICONS
 
-    .spline-search-box__search-icon,
-    .spline-search-box__clear-icon {
+    &__search-icon,
+    &__clear-icon {
         @include icon-size(22px);
         color: $input-text-color;
         position: absolute;
     }
 
-    .spline-search-box__clear-icon {
+    &__clear-icon {
         right: 1rem;
     }
 
-    .spline-search-box__search-icon {
+    &__search-icon {
         left: 1rem;
     }
 
-    .spline-search-box__clear-icon {
+    &__clear-icon {
         cursor: pointer;
         margin-left: 0.75rem;
     }
@@ -81,8 +83,8 @@ $border-radius: $height / 2;
     &--focused {
         background: $input-bg--active;
 
-        .spline-search-box__search-icon,
-        .spline-search-box__clear-icon {
+        #{$self}__search-icon,
+        #{$self}__clear-icon {
             color: $input-text-color--active;
         }
 
@@ -96,3 +98,48 @@ $border-radius: $height / 2;
     }
 }
 
+@mixin spline-search-box($bg-color, $text-color, $text-color--active: inherit, $bg-color--active: $bg-color) {
+
+    $self: &;
+
+    background: $bg-color;
+
+    &__search-icon,
+    &__clear-icon {
+        color: $text-color;
+    }
+
+    input {
+        color: $text-color;
+
+        &::placeholder {
+            color: $text-color;
+        }
+    }
+
+    &--focused {
+
+        background: $bg-color--active;
+
+        .spline-search-box__search-icon,
+        .spline-search-box__clear-icon {
+            color: $text-color--active;
+        }
+
+        input {
+            color: $text-color--active;
+
+            &::placeholder {
+                color: $text-color--active;
+            }
+        }
+    }
+}
+
+spline-search-box[theme='grey'] .spline-search-box {
+    @include spline-search-box($color-grey-light, $color-grey-dark-50, $color-grey-dark);
+}
+
+spline-search-box[theme='white-transparent'] .spline-search-box {
+    @include spline-search-box($color-white-25, $color-white-55, $color-grey-dark, $color-grey-light-2);
+}

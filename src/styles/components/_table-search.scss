@@ -15,36 +15,8 @@
  */
 
 @import 'vars';
+@import 'components/search-box.component';
 
 .table-search .spline-search-box {
-    background: $color-grey-light;
     max-width: 350px;
-
-    .spline-search-box__search-icon,
-    .spline-search-box__clear-icon {
-        color: $color-grey-dark-50;
-    }
-
-    input {
-        color: $color-grey-dark-50;
-
-        &::placeholder {
-            color: $color-grey-dark-50;
-        }
-    }
-
-    &--focused {
-        .spline-search-box__search-icon,
-        .spline-search-box__clear-icon {
-            color: $color-grey-dark;
-        }
-
-        input {
-            color: $color-grey-dark;
-
-            &::placeholder {
-                color: $color-grey-dark;
-            }
-        }
-    }
 }

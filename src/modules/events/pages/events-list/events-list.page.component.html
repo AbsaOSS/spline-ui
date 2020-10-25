@@ -34,6 +34,7 @@
             <div class="d-flex w-100">
                 <div class="flex-grow-1">
                     <spline-search-box class="table-search"
+                                       theme="grey"
                                        [searchTerm]="(dataSource.searchParams$ | async).searchTerm"
                                        (search$)="onSearch($event)">
                     </spline-search-box>

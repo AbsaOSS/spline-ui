@@ -15,17 +15,19 @@
  */
 
 @import 'vars';
+@import 'components/search-box.component';
 
 $text-color: $color-black;
 $dropdown-item-bg-color--active: $color-grey-light-2;
 $dropdown-item-border-color: $color-grey-light;
 $execution-event-name-color: $color-grey-dark;
 
-$type-border-color: #eaeaea;
-$type-border-color--hover: #ddd;
-$type-bg-color: #fff;
+$type-border-color: $color-grey-light;
+$type-border-color--hover: $color-grey;
+$type-bg-color: $color-white;
 
 .spline-search-attribute {
+
     &__option {
         align-items: center;
         display: flex;

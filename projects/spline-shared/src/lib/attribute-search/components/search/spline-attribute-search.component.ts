@@ -44,7 +44,7 @@ export class SplineAttributeSearchComponent {
 
     @Output() attributeSelected$ = new EventEmitter<{ attributeInfo: AttributeSearchRecord }>()
 
-    searchTerm$ = new BehaviorSubject<string>('')
+    readonly searchTerm$ = new BehaviorSubject<string>('')
 
     noOptionsFound$: Observable<boolean>
 
