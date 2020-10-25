@@ -16,12 +16,44 @@
 
 @import 'vars';
 
+$section-width: 600px;
+
 .spline-content-details-section {
     background: $color-grey-light;
     box-shadow: 0 0 4px $color-shadow;
     overflow: auto;
     padding: 1rem;
     position: relative;
-    width: 600px;
+    width: $section-width;
     z-index: 2;
+
+    &__dialog {
+        background: $color-grey-light;
+        bottom: 0;
+        left: 0;
+        overflow: auto;
+        padding: 1rem;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 3;
+    }
+
+    &__header {
+        position: relative;
+        padding-top: 0.5rem;
+        padding-bottom: 1rem;
+    }
+
+    &__dialog-close {
+        position: absolute;
+        right: 0;
+        top: 0.25rem;
+    }
+
+    &__back-btn {
+        position: absolute;
+        left: 0;
+        top: 0.25rem;
+    }
 }

@@ -19,13 +19,12 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { BehaviorSubject, merge, Observable, Subject } from 'rxjs'
 import { filter, map, shareReplay, skip, takeUntil, withLatestFrom } from 'rxjs/operators'
 import { ExecutionEventFacade, ExecutionEventLineageNodeType } from 'spline-api'
-import { SdWidgetSchema, SgData, SgNodeSchema, SgRelations } from 'spline-common'
+import { SdWidgetSchema, SgData, SgNodeSchema, SgRelations, SplineAnimationSlideXInOut } from 'spline-common'
 import { SgNodeControl } from 'spline-shared'
 import { BaseComponent, RouterHelpers } from 'spline-utils'
 
 import { EventNodeControl, EventNodeInfo } from '../../models'
 import { EventOverviewStore, EventOverviewStoreFacade } from '../../store'
-import NodeView = SgNodeControl.NodeView
 
 
 @Component({
@@ -41,6 +40,10 @@ import NodeView = SgNodeControl.NodeView
             deps: [ExecutionEventFacade],
         },
     ],
+    animations: [
+        SplineAnimationSlideXInOut.getAnimation()
+    ]
+
 })
 export class EventOverviewPageComponent extends BaseComponent implements OnInit {
 
@@ -65,7 +68,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
         this.graphData$ = merge(
             this.store.loadingProcessingEvents.success$,
             this.store.graphLoadingProcessingEvents.success$,
-            this.graphNodeView$
+            this.graphNodeView$.pipe(skip(1))
         )
             .pipe(
                 takeUntil(this.destroyed$),

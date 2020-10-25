@@ -31,9 +31,11 @@
 
                     <div [hidden]="state.selectedNodeId">
 
-                        <h2 class="text-center py-3">
-                            {{ 'EVENTS.EVENT_OVERVIEW__EXECUTION_EVENT_TITLE' | translate }}
-                        </h2>
+                        <div class="spline-content-details-section__header">
+                            <h2 class="text-center">
+                                {{ 'EVENTS.EVENT_OVERVIEW__EXECUTION_EVENT_TITLE' | translate }}
+                            </h2>
+                        </div>
 
                         <!-- EVENT INFO -->
                         <event-info [data]="state.eventInfo"></event-info>
@@ -51,20 +53,24 @@
                     </div>
 
                     <!-- SELECTED NODE INFO -->
-                    <ng-container *ngIf="selectedNodeRelations$ | async as selectedNodeRelations">
+                    <div class="spline-content-details-section__dialog"
+                         *ngIf="selectedNodeRelations$ | async as selectedNodeRelations"
+                         [@slideXInOut]>
 
-                        <button (click)="onShowDetailsBtnCLicked()"
-                                class="mb-3"
-                                mat-button>
-                            <mat-icon class="mr-2">arrow_back</mat-icon>
-                            <span class="pr-2">
-                                {{ 'EVENTS.EVENT_OVERVIEW__BACK_TO_EVENT_BUTTON' | translate }}
-                            </span>
-                        </button>
+                        <div class="spline-content-details-section__header">
 
-                        <h2 class="text-center pb-3">
-                            {{ 'EVENTS.EVENT_OVERVIEW__SELECTED_NODE_TITLE' | translate }}
-                        </h2>
+                            <h2 class="text-center">
+                                {{ 'EVENTS.EVENT_OVERVIEW__SELECTED_NODE_TITLE' | translate }}
+                            </h2>
+
+                            <div class="spline-content-details-section__dialog-close">
+                                <button (click)="onShowDetailsBtnCLicked()"
+                                        mat-button mat-icon-button
+                                        [matTooltip]="'COMMON.CLOSE' | translate">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </div>
+                        </div>
 
                         <event-node-info [nodeRelations]="selectedNodeRelations"
                                          (focusNode$)="onNodeFocus($event.nodeId)"
@@ -73,7 +79,7 @@
 
                         </event-node-info>
 
-                    </ng-container>
+                    </div>
                     <!-- ./SELECTED NODE INFO -->
 
                 </div>

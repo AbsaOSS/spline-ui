@@ -19,7 +19,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
 import { BehaviorSubject, merge, Observable, Subject } from 'rxjs'
 import { filter, map, shareReplay, skip, takeUntil, withLatestFrom } from 'rxjs/operators'
 import { ExecutionPlanFacade } from 'spline-api'
-import { SgData, SgNodeSchema, SgRelations } from 'spline-common'
+import { SgData, SgNodeSchema, SgRelations, SplineAnimationSlideXInOut } from 'spline-common'
 import { SgNodeControl } from 'spline-shared'
 import { BaseComponent, RouterHelpers } from 'spline-utils'
 
@@ -41,6 +41,9 @@ import QueryParamAlis = PlanOverview.QueryParamAlis
             deps: [ExecutionPlanFacade],
         },
     ],
+    animations: [
+        SplineAnimationSlideXInOut.getAnimation()
+    ]
 })
 export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
 
@@ -58,7 +61,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
 
         this.graphData$ = merge(
             this.store.loadingProcessingEvents.success$,
-            this.graphNodeView$
+            this.graphNodeView$.pipe(skip(1))
         )
             .pipe(
                 takeUntil(this.destroyed$),
@@ -133,7 +136,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         this.store.setSelectedNode($event.nodeSchema ? $event.nodeSchema.id : null)
     }
 
-    onShowEpDetailsBtnCLicked(): void {
+    onCloseContentDetailsDialogBtnClicked(): void {
         this.store.setSelectedNode(null)
     }
 

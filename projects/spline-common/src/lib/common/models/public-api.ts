@@ -15,3 +15,4 @@
  */
 
 export * from './spline-colors.models'
+export * from './animations/slide-x-in-out.animation.models'
