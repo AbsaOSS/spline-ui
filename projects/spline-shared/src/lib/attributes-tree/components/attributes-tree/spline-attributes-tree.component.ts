@@ -54,7 +54,7 @@ export class SplineAttributesTreeComponent extends BaseComponent implements OnCh
             )
             .subscribe((searchTerm) => {
                 this.treeDataSource.data = searchTerm?.length > 0
-                    ? this.attributesTree.filter(treeNode => treeNode.name.includes(searchTerm))
+                    ? this.attributesTree.filter(treeNode => treeNode.name.toLowerCase().includes(searchTerm))
                     : this.attributesTree
             })
     }
