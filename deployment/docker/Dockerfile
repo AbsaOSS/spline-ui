@@ -22,7 +22,9 @@ LABEL \
     license="Apache License, version 2.0" \
     name="Spline UI"
 
+ARG PREFIX="app"
 ENV PORT=7070
+ENV SPLINE_UI_PREFIX=$PREFIX
 
 # Create app directory
 WORKDIR /app
@@ -30,8 +32,9 @@ WORKDIR /app
 COPY ./  /app
 # Install the app dependencies
 RUN cd /app && npm set progress=false && npm install
+
 # Build the app
-RUN npm run ng build -- --prod
+RUN npm run ng build -- --prod --base-href=/$PREFIX/ --deploy-url=../
 
 # Install dependecies for the server
 RUN cd /app/deployment/express && npm set progress=false && npm install
