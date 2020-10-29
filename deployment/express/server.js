@@ -73,7 +73,7 @@ app.use('/assets/config.json', (req, res) => {
 })
 
 app.use('/', express.static(SOURCES_DIR, routingOptions))
-app.use('**/*.*', express.static(SOURCES_DIR, staticOptions))
+app.use('/*.*.(js|ttf|css|html)', express.static(SOURCES_DIR, staticOptions))
 app.use('*', express.static(SOURCES_DIR, routingOptions))
 
 app.listen(PORT)
