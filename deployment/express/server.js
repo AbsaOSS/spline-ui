@@ -64,9 +64,14 @@ const staticOptions = {
 
 // rewrite config response according to the env settings.
 app.use(`/${PREFIX}/assets/config.json`, (req, res) => {
+
     const configFilePath = path.join(DEFAULT_SOURCES_DIR, 'assets', 'config.json')
+    const configExampleFilePath = path.join(DEFAULT_SOURCES_DIR, 'assets', 'config.example.json')
+
+    const defaultConfigPath = fs.existsSync(configFilePath) ? configFilePath : configExampleFilePath
+
     // read default settings from file
-    const config = JSON.parse(fs.readFileSync(configFilePath))
+    const config = JSON.parse(fs.readFileSync(defaultConfigPath))
     // rewrite API path
     config.splineConsumerApiUrl = API_PATH
     // return new config with env settings

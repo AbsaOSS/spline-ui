@@ -53,3 +53,5 @@ Thumbs.db
 node_modules/
 
 ./server/node_modules/
+
+/src/assets/config.json

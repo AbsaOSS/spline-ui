@@ -16,10 +16,10 @@
 
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Inject, Injectable, Optional } from '@angular/core'
-import { BehaviorSubject, Observable, of } from 'rxjs'
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs'
 import { catchError, filter, tap } from 'rxjs/operators'
 
-import { DEFAULT_SPLINE_CONFIG, SplineConfig, SplineConfigSettings, SPLINE_CONFIG_SETTINGS } from './spline-config.models'
+import { SplineConfig, SplineConfigSettings, SPLINE_CONFIG_SETTINGS } from './spline-config.models'
 
 
 @Injectable({
@@ -42,6 +42,10 @@ export class SplineConfigService {
             .pipe(
                 filter(x => !!x),
             )
+
+        if (!this.settings) {
+            throw new Error('SPLINE_CONFIG_SETTINGS is required.')
+        }
     }
 
     getConfig(force = false): Observable<SplineConfig> {
@@ -54,18 +58,23 @@ export class SplineConfigService {
     }
 
     private fetchConfig(): Observable<SplineConfig> {
-        return !this.settings
-            ? of(DEFAULT_SPLINE_CONFIG)
-            : this.http.get<SplineConfig>(
-                this.settings.configFileUri,
-                {
-                    headers: new HttpHeaders({
-                        'Cache-Control': 'no-cache, no-store, must-revalidate',
-                    }),
-                },
+        return this.http.get<SplineConfig>(
+            this.settings.configFileUri,
+            {
+                headers: new HttpHeaders({
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                }),
+            },
+        )
+            .pipe(
+                catchError((error) => {
+                    console.error(`
+                        The Spline App Config file cannot be found.
+                        Please make sure the file exists: ${this.settings.configFileUri}.
+                    `)
+                    return throwError(error)
+                }),
             )
-                .pipe(
-                    catchError(() => of(DEFAULT_SPLINE_CONFIG)),
-                )
+
     }
 }
