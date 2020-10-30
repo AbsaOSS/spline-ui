@@ -40,7 +40,7 @@ export interface SplineTranslateChildConfig {
 }
 
 // TODO: move base href calculation to some shared helper
-const BASE_HREF = document.getElementsByTagName('base')[0].attributes['href'].value
+const BASE_HREF = document?.getElementsByTagName('base')[0]?.attributes['href']?.value || '/'
 export const ASSETS_BASE_PATH = `${BASE_HREF}assets/i18n`
 
 export function toAssetsFilePath(moduleNames: string | string[]): string[] {

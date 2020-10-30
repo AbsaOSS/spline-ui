@@ -48,7 +48,7 @@ export class SplineIconModule {
 
     private addIcon(iconName: string): void {
         // TODO: move base href calculation to some shared helper
-        const BASE_HREF = document.getElementsByTagName('base')[0].attributes['href'].value
+        const BASE_HREF = document?.getElementsByTagName('base')[0]?.attributes['href']?.value || '/'
         const iconsBasePath = `${BASE_HREF}assets/spline-common/images/icons`
 
         this.matIconRegistry.addSvgIcon(
