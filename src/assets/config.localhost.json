@@ -1,4 +1,4 @@
 {
   "isEmbeddedMode": false,
-  "splineConsumerApiUrl": "/consumer-localhost"
+  "splineConsumerApiUrl": "http://localhost:8080/consumer"
 }

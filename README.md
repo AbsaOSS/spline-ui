@@ -1,12 +1,45 @@
 # Spline UI
 
+## Config 
+
+**The app config file required!** Config file should be placed in the directory: 
+ - after build in the dist folder `/dist/spline-ui/assets/config.json` 
+ - or before build `/src/assets/config.json` (that option also applies for the development)
+ 
+ The example of the config can be found here: `/src/assets/example.json`
+
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4300/`. The app will automatically reload if you change any of the source files.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `npm run build` to build the project. The build artifacts will be stored in the `dist/spline-ui` directory.
+
+## Deployment
+
+### Docker
+
+- Build a Docker image: `docker build -t spline-ui -f deployment/docker/Dockerfile .`
+- Run the Docker image: `docker run -d --name spline-ui -p 7070:7070 spline-ui`  
+
+---
+
+### Express
+
+That server can be used to serve the app artifacts at a specific port.
+The default port and build artifacts directory path can be rewritten.
+More details about Express server can be found here `/deployment/express/README.md`.
+
+- First build the app if it is not already done: `npm run build`
+- Go to the Express deployment directory: `cd deployment/express` 
+- Install server dependencies (that step needed before the very first run): `npm install` 
+- Start the server: `npm start` 
+
+**Note:** 
+
+- Environment variables rewrites the app config file values.
+- The app config file not required in that case. If config not provided the default config and environment vars will be used for the app configuration.
 
 ---
 

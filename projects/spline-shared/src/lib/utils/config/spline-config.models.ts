@@ -18,14 +18,9 @@ import { InjectionToken } from '@angular/core'
 
 
 export type SplineConfig = {
-    isEmbeddedMode: boolean
+    isEmbeddedMode?: boolean
     splineConsumerApiUrl: string
 }
-
-export const DEFAULT_SPLINE_CONFIG: Readonly<SplineConfig> = Object.freeze<SplineConfig>({
-    isEmbeddedMode: false,
-    splineConsumerApiUrl: '../rest/consumer'
-})
 
 export type SplineConfigSettings = {
     configFileUri: string

@@ -28,8 +28,11 @@ module.exports = {
         'cobertura'
     ],
     'moduleNameMapper': {
-        "/spline-api/": "../spline-api/src/public-api",
-        "^spline-api$": "../spline-api/src/public-api",
+        '/spline-api/': __dirname + '/../spline-api/src/public-api',
+        '^spline-api$': __dirname + '/../spline-api/src/public-api',
+        '/spline-utils/': __dirname + '/../spline-utils/src/public-api',
+        '^spline-utils$': __dirname + '/../spline-utils/src/public-api',
+
     },
     'resolver': null,
     'globals': {
