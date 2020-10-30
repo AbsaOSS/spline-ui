@@ -53,6 +53,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
 
     readonly selectedNodeRelations$: Observable<EventNodeInfo.NodeRelationsInfo>
     readonly targetNodeDvs$: Observable<SdWidgetSchema | null>
+    readonly targetExecutionPlanNodeDvs$: Observable<SdWidgetSchema | null>
 
     readonly focusNode$ = new Subject<string>()
     readonly highlightedRelationsNodesIds$ = new BehaviorSubject<string[] | null>(null)
@@ -108,6 +109,23 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit 
             )
 
         this.targetNodeDvs$ = this.store.targetNode$
+            .pipe(
+                map(node => {
+                    if (node === null) {
+                        return null
+                    }
+
+                    return EventNodeInfo.toDataSchema(
+                        node,
+                        (nodeId) => this.onExecutionPlanNodeLaunchAction(nodeId),
+                        (nodeId) => this.onNodeFocus(nodeId),
+                        (nodeId) => this.onNodeHighlightToggleRelations(nodeId),
+                    )
+                }),
+            )
+
+        // TODO: optimize code duplication after PoC approve.
+        this.targetExecutionPlanNodeDvs$ = this.store.targetExecutionPlanNode$
             .pipe(
                 map(node => {
                     if (node === null) {

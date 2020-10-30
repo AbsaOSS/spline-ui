@@ -52,7 +52,7 @@ export namespace EventsListUrlState {
             filter: {
                 ...pagerState.filter,
                 executedAtFrom: pagerState.filter.executedAtFrom ? new Date(pagerState.filter.executedAtFrom) : undefined,
-                executedAtTo: pagerState.filter.executedAtTo ? new Date(pagerState.filter.executedAtFrom) : undefined,
+                executedAtTo: pagerState.filter.executedAtTo ? new Date(pagerState.filter.executedAtTo) : undefined,
             },
         } as State
     }

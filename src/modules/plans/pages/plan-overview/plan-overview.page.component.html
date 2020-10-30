@@ -30,6 +30,7 @@
             <div class="spline-content-details-section">
 
                 <div [hidden]="state.selectedNodeId">
+                    <!-- HEADER -->
                     <div class="spline-content-details-section__header">
                         <div class="spline-content-details-section__back-btn">
                             <button *ngIf="eventId" [routerLink]="['/events/overview', eventId]"
@@ -43,6 +44,7 @@
                             {{ 'PLANS.PLAN_OVERVIEW__EXECUTION_PLAN_TITLE' | translate }}
                         </h2>
                     </div>
+                    <!-- ./HEADER -->
 
                     <!-- EXECUTION PLAN INFO -->
                     <plan-info (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"

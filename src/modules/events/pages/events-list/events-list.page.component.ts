@@ -74,7 +74,6 @@ export class EventsListPageComponent extends BaseComponent implements OnInit, Af
             .pipe(
                 map(searchParams => {
                     if (searchParams.filter?.executedAtFrom && searchParams.filter?.executedAtTo) {
-
                         return {
                             dateFrom: searchParams.filter?.executedAtFrom,
                             dateTo: searchParams.filter?.executedAtTo,

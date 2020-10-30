@@ -34,6 +34,7 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
 
     selectedNode$: Observable<ExecutionEventLineageNode | null>
     targetNode$: Observable<ExecutionEventLineageNode | null>
+    targetExecutionPlanNode$: Observable<ExecutionEventLineageNode | null>
 
     constructor(private readonly executionEventFacade: ExecutionEventFacade) {
         super(EventOverviewStore.getDefaultState())
@@ -51,7 +52,9 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
         this.graphLoadingProcessing$ = this.state$.pipe(map(data => data.graphLoadingProcessing))
 
         this.selectedNode$ = this.getNodeSelector(state => state.selectedNodeId)
+
         this.targetNode$ = this.getNodeSelector(state => state.targetNodeId)
+        this.targetExecutionPlanNode$ = this.getNodeSelector(state => state.targetExecutionPlanNodeId)
     }
 
     setSelectedNode(nodeId: string | null): void {

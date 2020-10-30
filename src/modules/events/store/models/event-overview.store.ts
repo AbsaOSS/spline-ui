@@ -31,6 +31,7 @@ export namespace EventOverviewStore {
         graphLoadingProcessing: ProcessingStore.EventProcessingState
         selectedNodeId: string | null
         targetNodeId: string | null
+        targetExecutionPlanNodeId: string | null
         lineageDepth: ExecutionEventLineageOverviewDepth
         graphHasMoreDepth: boolean
     }
@@ -52,6 +53,7 @@ export namespace EventOverviewStore {
             graphLoadingProcessing: ProcessingStore.getDefaultProcessingState(),
             selectedNodeId: null,
             targetNodeId: null,
+            targetExecutionPlanNodeId: null,
             lineageDepth: {...DEFAULT_LINEAGE_DEPTH},
             graphHasMoreDepth: calculateHasMoreDepth(DEFAULT_LINEAGE_DEPTH)
         }
@@ -83,7 +85,8 @@ export namespace EventOverviewStore {
             },
             lineageDepth: lineageOverview.executionEventInfo.lineageDepth,
             graphHasMoreDepth: calculateHasMoreDepth(lineageOverview.executionEventInfo.lineageDepth),
-            targetNodeId: lineageOverview.executionEventInfo.targetDataSourceId
+            targetNodeId: lineageOverview.executionEventInfo.targetDataSourceId,
+            targetExecutionPlanNodeId: eventNode.id
         }
     }
 
