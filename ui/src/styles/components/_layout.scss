@@ -40,9 +40,9 @@ $section-width: 600px;
     }
 
     &__header {
-        position: relative;
-        padding-top: 0.5rem;
         padding-bottom: 1rem;
+        padding-top: 0.5rem;
+        position: relative;
     }
 
     &__dialog-close {
@@ -52,8 +52,8 @@ $section-width: 600px;
     }
 
     &__back-btn {
-        position: absolute;
         left: 0;
+        position: absolute;
         top: 0.25rem;
     }
 }

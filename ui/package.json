@@ -13,7 +13,7 @@
         "test": "jest --passWithNoTests --coverage",
         "lint": "npm run lint:ts && npm run lint:styles",
         "lint:ts": "eslint src/**/*.ts projects/**/*.ts",
-        "lint:styles": "stylelint src/**/*.scss",
+        "lint:styles": "stylelint \"src/**/*.scss\"",
         "lint:styles:fix": "stylelint src/**/*.scss --fix",
         "e2e": "ng e2e",
         "ngcc": "ngcc --properties es2015 browser module main --async false"
