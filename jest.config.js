@@ -22,10 +22,12 @@ module.exports = {
     'transformIgnorePatterns': [
         'node_modules/(?!@ngrx)'
     ],
+    "testResultsProcessor": "jest-teamcity-reporter",
     'coverageReporters': [
         'text',
         'html',
-        'cobertura'
+        'cobertura',
+        'teamcity'
     ],
     'moduleNameMapper': {
         "/spline-api/": "<rootDir>/projects/spline-api/src/public-api",
