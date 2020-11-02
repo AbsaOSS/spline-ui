@@ -19,8 +19,6 @@ package za.co.absa.spline.web.filter
 import javax.servlet._
 import javax.servlet.http.{HttpServletRequest, HttpServletResponse}
 import org.apache.commons.lang.StringUtils.substringBefore
-import org.json4s.DefaultFormats
-import org.json4s.Extraction.decompose
 import za.co.absa.commons.config.ConfigurationImplicits.ConfigurationRequiredWrapper
 import za.co.absa.spline.common.config.DefaultConfigurationStack
 import za.co.absa.spline.common.io.OutputCapturingHttpResponseWrapper
@@ -29,38 +27,13 @@ import za.co.absa.spline.web.filter.SPAFilter._
 import scala.collection.JavaConverters._
 
 
-object SPAFilter {
-    val ConsumerUrlUIConfKey = "splineConsumerApiUrl"
-    val HeaderAccept = "Accept"
-    val MimeTextHtml = "text/html"
-
-    object Param {
-        val BaseHrefPlaceholder = "baseHrefPlaceholder"
-        val AppPrefix = "appPrefix"
-        val IndexPath = "indexPath"
-        val AssetsPath = "assetsPath"
-        val ConfigPath = "configPath"
-    }
-
-    private def isTextHtmlAccepted(acceptHeaderValues: Seq[String]) = {
-        val acceptMimes = acceptHeaderValues.flatMap(parseAcceptHeader)
-        acceptMimes.isEmpty || acceptMimes.contains(MimeTextHtml)
-    }
-
-    private def parseAcceptHeader(accept: String) =
-        for {
-            s <- accept.split("\\s*,\\s*")
-            if s.nonEmpty
-        } yield substringBefore(s, ";").toLowerCase
-}
-
 class SPAFilter extends Filter {
 
-    import org.json4s.native.JsonMethods._
-
-    implicit val formats: DefaultFormats = DefaultFormats
-
-    private val consumerUrl = (new DefaultConfigurationStack).getRequiredString("spline.consumer.url")
+    private val uiConfigJson = {
+        val webAppConf = new DefaultConfigurationStack
+        val consumerUrl = webAppConf.getRequiredString(WebAppConfKey.ConsumerUrl)
+        s"""{"${UIConfKey.ConsumerUrl}": "$consumerUrl"}"""
+    }
 
     private var baseHrefPlaceholder: String = _
     private var appBase: String = _
@@ -81,45 +54,73 @@ class SPAFilter extends Filter {
     override def doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain): Unit = {
         val httpReq = request.asInstanceOf[HttpServletRequest]
         val httpRes = response.asInstanceOf[HttpServletResponse]
-        if (isSAPConfig(httpReq)) handleSPAConfig(httpReq, httpRes, chain)
-        else if (isSAPRouting(httpReq)) handleSPARouting(httpReq, httpRes)
-        else chain.doFilter(request, response)
-    }
 
-    private def isSAPConfig(req: HttpServletRequest) = req.getServletPath == configPath
+        if (httpReq.getServletPath == configPath) {
+            httpRes.getWriter.write(uiConfigJson)
+        } else if (isSAPRouting(httpReq)) {
+            handleSPARouting(httpReq, httpRes)
+        } else {
+            chain.doFilter(request, response)
+        }
+    }
 
     private def isSAPRouting(req: HttpServletRequest) = {
         val reqPath = req.getServletPath
         (reqPath.startsWith(appBase)
             && !reqPath.startsWith(assetsPath)
-            && isTextHtmlAccepted(req.getHeaders(HeaderAccept).asScala.toSeq))
-    }
-
-    private def handleSPAConfig(req: HttpServletRequest, res: HttpServletResponse, chain: FilterChain): Unit = {
-        val responseWrapper = new OutputCapturingHttpResponseWrapper(res)
-        chain.doFilter(req, responseWrapper)
-
-        val originalJsonString = responseWrapper.getContentAsString
-        val updatedJsonString =
-            if (responseWrapper.getStatus == 200 && originalJsonString.nonEmpty)
-                compact(render(decompose(
-                    parse(originalJsonString)
-                        .extract[Map[String, Any]]
-                        .updated(ConsumerUrlUIConfKey, consumerUrl)
-                )))
-            else originalJsonString
-
-        res.setContentLength(updatedJsonString.length)
-        res.getWriter.write(updatedJsonString)
+            && isTextHtmlAccepted(req.getHeaders(Header.Accept).asScala.toSeq))
     }
 
     private def handleSPARouting(req: HttpServletRequest, res: HttpServletResponse): Unit = {
         val responseWrapper = new OutputCapturingHttpResponseWrapper(res)
         val dispatcher = req.getRequestDispatcher(indexPath)
+
         dispatcher.include(req, responseWrapper)
+
         val baseHref = s"${req.getContextPath}$appBase"
         val rawHtml = responseWrapper.getContentAsString
         val fixedHtml = rawHtml.replace(baseHrefPlaceholder, baseHref)
+
+        res.setHeader(Header.ContentType, MimeType.TextHtml)
         res.getWriter.write(fixedHtml)
     }
+}
+
+object SPAFilter {
+
+    object WebAppConfKey {
+        val ConsumerUrl = "spline.consumer.url"
+    }
+
+    object UIConfKey {
+        val ConsumerUrl = "splineConsumerApiUrl"
+    }
+
+    object Header {
+        val Accept = "Accept"
+        val ContentType = "Content-Type"
+    }
+
+    object MimeType {
+        val TextHtml = "text/html"
+    }
+
+    object Param {
+        val BaseHrefPlaceholder = "baseHrefPlaceholder"
+        val AppPrefix = "appPrefix"
+        val IndexPath = "indexPath"
+        val AssetsPath = "assetsPath"
+        val ConfigPath = "configPath"
+    }
+
+    private def isTextHtmlAccepted(acceptHeaderValues: Seq[String]) = {
+        val acceptMimes = acceptHeaderValues.flatMap(parseAcceptHeader)
+        acceptMimes.isEmpty || acceptMimes.contains(MimeType.TextHtml)
+    }
+
+    private def parseAcceptHeader(accept: String) =
+        for {
+            s <- accept.split("\\s*,\\s*")
+            if s.nonEmpty
+        } yield substringBefore(s, ";").toLowerCase
 }
