@@ -1,16 +1,19 @@
 {
   "name": "spline-ui-server",
-  "version": "0.5.2-SNAPSHOT.0",
+  "version": "12.3.42-SNAPSHOT",
   "description": "",
   "main": "server.js",
   "dependencies": {
     "express": "^4.17.1",
     "path": "^0.12.7"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "sync-pom-version-to-package": "^1.6.0"
+  },
   "scripts": {
     "start": "node server.js",
-    "new-snapshot": "npm version prerelease --preid=SNAPSHOT"
+    "new-snapshot": "npm version prerelease --preid=SNAPSHOT",
+    "postinstall": "sync-pom-version"
   },
   "author": "ABSA Group Limited Developers Team",
   "license": "Apache 2.0"
