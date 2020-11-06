@@ -31,13 +31,13 @@ WORKDIR /app
 # Copy all files to the working dir.
 COPY ./  /app
 # Install the app dependencies
-RUN cd /app && npm set progress=false && npm install
+RUN cd /app && npm set progress=false && npm ci
 
 # Build the app
 RUN npm run ng build -- --prod --base-href=/$PREFIX/ --deploy-url=../
 
 # Install dependecies for the server
-RUN cd /app/deployment/express && npm set progress=false && npm install
+RUN cd /app/deployment/express && npm set progress=false && npm ci
 
 EXPOSE $PORT
 # Run the server

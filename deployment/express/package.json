@@ -13,7 +13,7 @@
     },
     "scripts": {
         "clean": "rimraf dist coverage && npm prune",
-        "initialize": "npm install",
+        "initialize": "npm ci",
         "postinstall": "sync-pom-version",
         "start": "node server.js",
         "new-snapshot": "npm version prerelease --preid=SNAPSHOT"

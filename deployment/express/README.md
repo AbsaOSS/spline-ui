@@ -5,7 +5,7 @@ Express server for a production deploying of Spline UI.
 
 ## The very first setup
 
-- `npm install`
+- `npm ci`
 
 ## Start the express server 
 

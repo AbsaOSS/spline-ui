@@ -39,7 +39,7 @@ More details about Express server can be found here `/deployment/express/README.
 
 - First build the app if it is not already done: `npm run build`
 - Go to the Express deployment directory: `cd deployment/express` 
-- Install server dependencies (that step needed before the very first run): `npm install` 
+- Install server dependencies (that step needed before the very first run): `npm ci` 
 - Start the server: `npm start` 
 
 **Note:** 

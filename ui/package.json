@@ -5,7 +5,7 @@
     "license": "Apache 2.0",
     "scripts": {
         "clean": "rimraf dist coverage && npm prune",
-        "initialize": "npm install",
+        "initialize": "npm ci",
         "package": "npm run build",
         "ng": "ng",
         "start": "ng serve --open --port 4300",
