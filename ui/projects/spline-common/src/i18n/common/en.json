@@ -1,24 +1,24 @@
 {
-  "COMMON": {
-    "APPLY": "Apply",
-    "YES": "Yes",
-    "NO": "No",
-    "SAVE": "Save",
-    "CREATE": "Create",
-    "CLOSE": "Close",
-    "CLEAR": "Clear",
-    "EDIT": "Edit",
-    "DETAILS": "Details",
-    "DELETE": "Delete",
-    "CANCEL": "Cancel",
-    "SUBMIT": "Submit",
-    "SEARCH": "Search",
-    "REMOVE": "Remove",
-    "ADD": "Add",
-    "LOADING": "Loading ...",
-    "SERVER_COMMUNICATION_ERROR_MESSAGE": "Error has been occurred during communication with a server.",
-    "NO_RESULTS_MESSAGE": "No data found.",
-    "NO_OPTIONS_FOUND": "No options found.",
-    "LAYOUT__APP_VERSION": "Version"
-  }
+    "COMMON": {
+        "APPLY": "Apply",
+        "YES": "Yes",
+        "NO": "No",
+        "SAVE": "Save",
+        "CREATE": "Create",
+        "CLOSE": "Close",
+        "CLEAR": "Clear",
+        "EDIT": "Edit",
+        "DETAILS": "Details",
+        "DELETE": "Delete",
+        "CANCEL": "Cancel",
+        "SUBMIT": "Submit",
+        "SEARCH": "Search",
+        "REMOVE": "Remove",
+        "ADD": "Add",
+        "LOADING": "Loading ...",
+        "SERVER_COMMUNICATION_ERROR_MESSAGE": "Error has been occurred during communication with a server.",
+        "NO_RESULTS_MESSAGE": "No data found.",
+        "NO_OPTIONS_FOUND": "No options found.",
+        "LAYOUT__APP_VERSION": "Version"
+    }
 }

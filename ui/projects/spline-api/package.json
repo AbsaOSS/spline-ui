@@ -1,8 +1,8 @@
 {
-  "name": "spline-api",
-  "peerDependencies": {
-    "@angular/common": "^9.1.1",
-    "@angular/core": "^9.1.1",
-    "tslib": "^1.10.0"
-  }
+    "name": "spline-api",
+    "peerDependencies": {
+        "@angular/common": "^9.1.1",
+        "@angular/core": "^9.1.1",
+        "tslib": "^1.10.0"
+    }
 }

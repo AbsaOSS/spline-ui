@@ -1,53 +1,56 @@
 {
-  "rulesDirectory": [
-    "codelyzer"
-  ],
-  "extends": [
-    "tslint-angular"
-  ],
-  "rules": {
-    "one-line": [
-      true,
-      "check-open-brace",
-      "check-whitespace"
+    "rulesDirectory": [
+        "codelyzer"
     ],
-    "member-access": [
-      true,
-      "no-public"
+    "extends": [
+        "tslint-angular"
     ],
-    "member-ordering": [
-      true,
-      {
-        "order": [
-          "public-static-field",
-          "public-instance-field",
-          "private-static-field",
-          "private-instance-field",
-          "public-constructor",
-          "private-constructor",
-          "public-instance-method",
-          "protected-instance-method",
-          "private-instance-method"
-        ]
-      }
-    ],
-    "max-classes-per-file": false,
-    "no-namespace": false,
-    "ordered-imports": [
-      true,
-      {
-        "import-sources-order": "case-insensitive",
-        "named-imports-order": "case-insensitive",
-        "grouped-imports": true
-      }
-    ],
-    "no-duplicate-imports": true,
-    "no-unbound-method": [
-      true,
-      "ignore-static"
-    ],
-    "semicolon": false,
-    "whitespace": [true, "check-module"],
-    "interface-over-type-literal": false
-  }
+    "rules": {
+        "one-line": [
+            true,
+            "check-open-brace",
+            "check-whitespace"
+        ],
+        "member-access": [
+            true,
+            "no-public"
+        ],
+        "member-ordering": [
+            true,
+            {
+                "order": [
+                    "public-static-field",
+                    "public-instance-field",
+                    "private-static-field",
+                    "private-instance-field",
+                    "public-constructor",
+                    "private-constructor",
+                    "public-instance-method",
+                    "protected-instance-method",
+                    "private-instance-method"
+                ]
+            }
+        ],
+        "max-classes-per-file": false,
+        "no-namespace": false,
+        "ordered-imports": [
+            true,
+            {
+                "import-sources-order": "case-insensitive",
+                "named-imports-order": "case-insensitive",
+                "grouped-imports": true
+            }
+        ],
+        "no-duplicate-imports": true,
+        "no-unbound-method": [
+            true,
+            "ignore-static"
+        ],
+        "semicolon": false,
+        "whitespace": [
+            true,
+            "check-module"
+        ],
+        "interface-over-type-literal": false
+    }
 }
