@@ -26,8 +26,9 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>webui.docker</artifactId>
-    <name>${project.artifactId}</name>
+    <groupId>za.co.absa.spline.ui.docker</groupId>
+    <artifactId>spline-webui</artifactId>
+    <name>build.docker</name>
 
     <packaging>pom</packaging>
 

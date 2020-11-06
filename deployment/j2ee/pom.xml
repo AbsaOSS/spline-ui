@@ -27,9 +27,9 @@
 
     <version>0.5.6-SNAPSHOT</version>
 
-    <groupId>za.co.absa.spline.ui</groupId>
-    <artifactId>webui.j2ee</artifactId>
-    <name>${project.artifactId}</name>
+    <groupId>za.co.absa.spline.ui.j2ee</groupId>
+    <artifactId>spline-webui</artifactId>
+    <name>build.war</name>
 
     <packaging>war</packaging>
 
@@ -68,7 +68,6 @@
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
-
                     <webResources>
                         <resource>
                             <directory>src/main/webapp</directory>

@@ -26,8 +26,9 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>webui.express</artifactId>
-    <name>${project.artifactId}</name>
+    <groupId>za.co.absa.spline.ui.express</groupId>
+    <artifactId>spline-webui</artifactId>
+    <name>build.express</name>
 
     <packaging>npm</packaging>
 
