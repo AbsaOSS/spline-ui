@@ -34,7 +34,7 @@
     <packaging>war</packaging>
 
     <properties>
-        <ui.base.href.placeholder>SPLINE_UI_BASE_HREF_PLACEHOLDER</ui.base.href.placeholder>
+        <ui.context.placeholder>SPLINE_UI_DEPLOY_CONTEXT</ui.context.placeholder>
         <ui.app.prefix>app</ui.app.prefix>
         <ui.app.index.html>index.html</ui.app.index.html>
         <ui.app.assets>assets</ui.app.assets>
@@ -75,19 +75,6 @@
                         </resource>
                         <resource>
                             <directory>${ui.core.basedir}/dist/spline-ui</directory>
-                            <includes>
-                                <include>${ui.app.assets}/</include>
-                                <include>${ui.app.index.html}</include>
-                            </includes>
-                            <targetPath>${ui.app.prefix}</targetPath>
-                            <filtering>false</filtering>
-                        </resource>
-                        <resource>
-                            <directory>${ui.core.basedir}/dist/spline-ui</directory>
-                            <excludes>
-                                <exclude>${ui.app.assets}/</exclude>
-                                <exclude>${ui.app.index.html}</exclude>
-                            </excludes>
                             <filtering>false</filtering>
                         </resource>
                     </webResources>

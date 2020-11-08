@@ -35,7 +35,7 @@ class SPAFilter extends Filter {
         s"""{"${UIConfKey.ConsumerUrl}": "$consumerUrl"}"""
     }
 
-    private var baseHrefPlaceholder: String = _
+    private var deploymentContextPlaceholder: String = _
     private var appBase: String = _
     private var indexPath: String = _
     private var assetsPath: String = _
@@ -44,7 +44,7 @@ class SPAFilter extends Filter {
     override def destroy(): Unit = {}
 
     override def init(filterConfig: FilterConfig): Unit = {
-        baseHrefPlaceholder = filterConfig.getInitParameter(Param.BaseHrefPlaceholder)
+        deploymentContextPlaceholder = filterConfig.getInitParameter(Param.BaseHrefPlaceholder)
         appBase = filterConfig.getInitParameter(Param.AppPrefix)
         indexPath = filterConfig.getInitParameter(Param.IndexPath)
         assetsPath = filterConfig.getInitParameter(Param.AssetsPath)
@@ -77,9 +77,8 @@ class SPAFilter extends Filter {
 
         dispatcher.include(req, responseWrapper)
 
-        val baseHref = s"${req.getContextPath}$appBase"
         val rawHtml = responseWrapper.getContentAsString
-        val fixedHtml = rawHtml.replace(baseHrefPlaceholder, baseHref)
+        val fixedHtml = rawHtml.replace(deploymentContextPlaceholder, req.getContextPath)
 
         res.setHeader(Header.ContentType, MimeType.TextHtml)
         res.getWriter.write(fixedHtml)
@@ -106,7 +105,7 @@ object SPAFilter {
     }
 
     object Param {
-        val BaseHrefPlaceholder = "baseHrefPlaceholder"
+        val BaseHrefPlaceholder = "deploymentContextPlaceholder"
         val AppPrefix = "appPrefix"
         val IndexPath = "indexPath"
         val AssetsPath = "assetsPath"
