@@ -4,18 +4,21 @@
     "description": "",
     "main": "server.js",
     "dependencies": {
+        "buffer-replace": "^1.0.0",
         "express": "^4.17.1",
         "path": "^0.12.7"
     },
     "devDependencies": {
         "rimraf": "^3.0.2",
+        "shx": "^0.3.3",
         "sync-pom-version-to-package": "^1.6.0"
     },
     "scripts": {
         "clean": "rimraf dist coverage && npm prune",
         "initialize": "npm ci",
+        "prepare-package": "shx mkdir -p dist && shx cp -r ../../ui/dist/spline-ui dist/ && shx cp server.js dist/index.js",
         "postinstall": "sync-pom-version",
-        "start": "node server.js",
+        "start": "node dist/index.js",
         "new-snapshot": "npm version prerelease --preid=SNAPSHOT"
     },
     "author": "ABSA Group Limited Developers Team",
