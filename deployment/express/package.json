@@ -2,23 +2,30 @@
     "name": "spline-ui-server",
     "version": "0.5.6-SNAPSHOT",
     "description": "",
-    "main": "server.js",
+    "main": "src/server.js",
     "dependencies": {
         "buffer-replace": "^1.0.0",
         "express": "^4.17.1",
         "path": "^0.12.7"
     },
     "devDependencies": {
+        "@babel/core": "^7.12.3",
+        "@babel/preset-env": "^7.12.1",
+        "babel-loader": "^8.1.0",
         "rimraf": "^3.0.2",
         "shx": "^0.3.3",
-        "sync-pom-version-to-package": "^1.6.0"
+        "sync-pom-version-to-package": "^1.6.0",
+        "webpack": "^5.4.0",
+        "webpack-cli": "^4.2.0",
+        "webpack-node-externals": "^2.5.2"
     },
     "scripts": {
         "clean": "rimraf dist coverage && npm prune",
         "initialize": "npm ci",
         "prepare-package": "shx mkdir -p dist && shx cp -r ../../ui/dist/spline-ui dist/ && shx cp server.js dist/index.js",
         "postinstall": "sync-pom-version",
-        "start": "node dist/index.js",
+        "start": "node dist/server.js",
+        "build": "rimraf dist && webpack",
         "new-snapshot": "npm version prerelease --preid=SNAPSHOT"
     },
     "author": "ABSA Group Limited Developers Team",
