@@ -22,7 +22,7 @@
     "scripts": {
         "clean": "rimraf dist coverage && npm prune",
         "initialize": "npm ci",
-        "prepare-package": "shx mkdir -p dist && shx cp -r ../../ui/dist/spline-ui dist/ && shx cp server.js dist/index.js",
+        "prepare-package": "npm run build && shx cp -r ../../ui/dist/spline-ui dist/ ",
         "postinstall": "sync-pom-version",
         "start": "node dist/server.js",
         "build": "rimraf dist && webpack",
