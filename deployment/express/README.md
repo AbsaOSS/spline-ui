@@ -20,8 +20,7 @@ After that you can find the app running at the next address: http://localhost:70
 | ------------- |-------------| -----:|
 | `SPLINE_UI_PREFIX`      | The deployment URI prefix. | `app` |
 | `SPLINE_UI_PORT`      | The port on which server will be running. | `7070` |
-| `SPLINE_UI_SOURCES`      | The path to the root app directory.      |  `../../dist/spline-ui`  |
-| `SPLINE_UI_CONSUMER_API` | Spline Consumer API URI.      |    `http://localhost:8080/consumer` |
+| `SPLINE_UI_SOURCES`      | The path to the root app directory.      |  `./spline-ui`  |
 
 
 #### Example

@@ -10,7 +10,6 @@
     },
     "devDependencies": {
         "@babel/core": "^7.12.3",
-        "@babel/preset-env": "^7.12.1",
         "babel-loader": "^8.1.0",
         "rimraf": "^3.0.2",
         "shx": "^0.3.3",
@@ -24,7 +23,7 @@
         "initialize": "npm ci",
         "prepare-package": "npm run build && shx cp -r ../../ui/dist/spline-ui dist/ ",
         "postinstall": "sync-pom-version",
-        "start": "node src/server.js",
+        "start": "node dist/server.js",
         "build": "rimraf dist && webpack",
         "new-snapshot": "npm version prerelease --preid=SNAPSHOT"
     },

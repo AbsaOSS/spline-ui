@@ -22,14 +22,12 @@ const replace = require('buffer-replace')
 const DEFAULT_PREFIX = 'app' // no slashes in the beginning or in the end
 const DEFAULT_PORT = 7070
 const DEFAULT_SOURCES_DIR = __dirname + '/spline-ui'
-const DEPLOY_CONTEXT_PLACEHOLDER = "SPLINE_UI_DEPLOY_CONTEXT"
-const DEPLOY_CONTEXT = ""
+const DEPLOY_CONTEXT_PLACEHOLDER = 'SPLINE_UI_DEPLOY_CONTEXT'
+const DEPLOY_CONTEXT = ''
 
 const appPrefix = process.env.SPLINE_UI_PREFIX || DEFAULT_PREFIX
 const serverPort = process.env.SPLINE_UI_PORT || DEFAULT_PORT
 const contentRoot = process.env.SPLINE_UI_SOURCES || DEFAULT_SOURCES_DIR
-
-const configJson = {splineConsumerApiUrl: "https://opensource.bigusdatus.com/spline/rest/consumer"}
 
 // validation
 if (!fs.existsSync(contentRoot)) {
@@ -38,7 +36,7 @@ if (!fs.existsSync(contentRoot)) {
 
 function serveIndexHtml(req, res) {
     fs.readFile(`${contentRoot}/${appPrefix}/index.html`, (err, data) => {
-        res.contentType("text/html")
+        res.contentType('text/html')
         res.send(replace(data, DEPLOY_CONTEXT_PLACEHOLDER, DEPLOY_CONTEXT))
     })
 }
@@ -46,7 +44,6 @@ function serveIndexHtml(req, res) {
 const app = express()
 
 app.use(`/${appPrefix}/assets`, express.static(`${contentRoot}/${appPrefix}/assets`))
-app.use(`/${appPrefix}/assets/config.json`, (req, res) => res.send(configJson))
 app.use(`/${appPrefix}`, serveIndexHtml)
 app.use(`/${appPrefix}/*`, serveIndexHtml)
 app.use(express.static(contentRoot))
