@@ -29,16 +29,9 @@ ENV SPLINE_UI_PREFIX=$PREFIX
 # Create app directory
 WORKDIR /app
 # Copy all files to the working dir.
-COPY ./  /app
-# Install the app dependencies
-RUN cd /app && npm set progress=false && npm ci
-
-# Build the app
-RUN npm run ng build -- --prod --base-href=/$PREFIX/ --deploy-url=../
-
-# Install dependecies for the server
-RUN cd /app/deployment/express && npm set progress=false && npm ci
+COPY ./deployment/express/dist/*  /app/
 
 EXPOSE $PORT
+
 # Run the server
-CMD [ "node", "/app/deployment/express/server.js"]
+CMD [ "node", "/app/server.js"]
