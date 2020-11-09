@@ -30,7 +30,7 @@ ENV SPLINE_UI_PREFIX=$PREFIX
 # Create app directory
 WORKDIR /app
 # Copy all files to the working dir.
-COPY ./deployment/express/dist/*  /app/
+COPY ./deployment/express/dist/  /app/
 
 EXPOSE $PORT
 

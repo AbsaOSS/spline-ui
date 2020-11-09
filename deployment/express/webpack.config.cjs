@@ -49,9 +49,6 @@ module.exports = {
         new webpack.ContextReplacementPlugin(
             /express\/lib/,
             path.resolve('node_modules'),
-            {
-                'ejs': 'ejs'
-            }
         )
     ]
 }
