@@ -57,14 +57,14 @@ class SPAFilter extends Filter {
 
         if (httpReq.getServletPath == configPath) {
             httpRes.getWriter.write(uiConfigJson)
-        } else if (isSAPRouting(httpReq)) {
+        } else if (isSPARouting(httpReq)) {
             handleSPARouting(httpReq, httpRes)
         } else {
             chain.doFilter(request, response)
         }
     }
 
-    private def isSAPRouting(req: HttpServletRequest) = {
+    private def isSPARouting(req: HttpServletRequest) = {
         val reqPath = req.getServletPath
         (reqPath.startsWith(appBase)
             && !reqPath.startsWith(assetsPath)

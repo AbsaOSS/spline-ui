@@ -74,7 +74,7 @@
                             <filtering>true</filtering>
                         </resource>
                         <resource>
-                            <directory>${ui.core.basedir}/dist/spline-ui</directory>
+                            <directory>${ui.core.basedir}/dist</directory>
                             <filtering>false</filtering>
                         </resource>
                     </webResources>

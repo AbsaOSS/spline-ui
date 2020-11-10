@@ -30,7 +30,7 @@ Serving the app with custom settings
  - custom directory `/path/to/the/splin-ui/` 
  - consumer API running at the custom uri `http://my-spline-instance.com/consumer`:
 
-`set SPLINE_UI_PORT=9090 && set SPLINE_UI_CONSUMER_API=http://my-spline-instance.com/consumer&& set SPLINE_UI_SOURCES=/path/to/the/splin-ui/&& node server.js`
+`set SPLINE_UI_PORT=9090 && set SPLINE_CONSUMER_URL=http://my-spline-instance.com/consumer&& set SPLINE_UI_SOURCES=/path/to/the/splin-ui/&& node server.js`
 
 ---
 

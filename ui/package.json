@@ -11,7 +11,7 @@
         "start": "ng serve --open --port 4300",
         "start:localhost": "ng serve -c localhost --open --port 4300",
         "build": "ng build --prod --deploy-url=../ --base-href=SPLINE_UI_DEPLOY_CONTEXT/app/",
-        "postbuild": "shx rm -f dist/spline-ui/assets/config.json && shx mkdir dist/spline-ui/app/ && shx mv dist/spline-ui/index.html dist/spline-ui/app/ && shx mv dist/spline-ui/assets dist/spline-ui/app/",
+        "postbuild": "shx rm -f dist/assets/config.json && shx mkdir dist/app/ && shx mv dist/index.html dist/app/ && shx mv dist/assets dist/app/",
         "test": "jest --passWithNoTests --coverage",
         "lint": "npm run lint:ts && npm run lint:styles",
         "lint:ts": "eslint src/**/*.ts projects/**/*.ts",
@@ -19,7 +19,6 @@
         "lint:styles:fix": "stylelint src/**/*.scss --fix",
         "e2e": "ng e2e",
         "ngcc": "ngcc --properties es2015 browser module main --async false",
-        "new-snapshot": "npm version prerelease --preid=SNAPSHOT",
         "postinstall": "sync-pom-version"
     },
     "private": false,

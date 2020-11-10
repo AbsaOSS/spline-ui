@@ -22,10 +22,8 @@ LABEL \
     license="Apache License, version 2.0" \
     name="Spline UI"
 
-ARG PREFIX="app"
 ENV PORT=7070
 ENV SPLINE_UI_PORT=$PORT
-ENV SPLINE_UI_PREFIX=$PREFIX
 
 # Create app directory
 WORKDIR /app

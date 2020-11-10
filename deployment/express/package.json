@@ -21,11 +21,10 @@
     "scripts": {
         "clean": "rimraf dist coverage && npm prune",
         "initialize": "npm ci",
-        "prepare-package": "npm run build && shx cp -r ../../ui/dist/spline-ui dist/ ",
+        "prepare-package": "npm run build && shx cp -r ../../ui/dist dist/ui ",
         "postinstall": "sync-pom-version",
-        "start": "node dist/server.js",
-        "build": "rimraf dist && webpack",
-        "new-snapshot": "npm version prerelease --preid=SNAPSHOT"
+        "start": "webpack && node dist/server.js",
+        "build": "rimraf dist && webpack"
     },
     "author": "ABSA Group Limited Developers Team",
     "license": "Apache 2.0"

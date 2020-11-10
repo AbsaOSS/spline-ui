@@ -18,24 +18,27 @@ const express = require('express')
 const fs = require('fs')
 const replace = require('buffer-replace')
 
-// default params
-const DEFAULT_PREFIX = 'app' // no slashes in the beginning or in the end
 const DEFAULT_PORT = 7070
-const DEFAULT_SOURCES_DIR = __dirname + '/spline-ui'
+
+const SPA_PREFIX = 'app' // no slashes in the beginning or in the end
 const DEPLOY_CONTEXT_PLACEHOLDER = 'SPLINE_UI_DEPLOY_CONTEXT'
 const DEPLOY_CONTEXT = ''
 
-const appPrefix = process.env.SPLINE_UI_PREFIX || DEFAULT_PREFIX
-const serverPort = process.env.SPLINE_UI_PORT || DEFAULT_PORT
-const contentRoot = process.env.SPLINE_UI_SOURCES || DEFAULT_SOURCES_DIR
+const serverPort = +(process.env.SPLINE_UI_PORT || DEFAULT_PORT)
+const apiUrl = process.env.SPLINE_CONSUMER_URL
+const uiConfigJson = {splineConsumerApiUrl: apiUrl}
+const uiContentRoot = `${__dirname}/ui`
 
 // validation
-if (!fs.existsSync(contentRoot)) {
-    throw new Error(`Destination folder does not exist: ${contentRoot}`)
+if (!apiUrl || /^\s*$/.test(apiUrl)) {
+    throw new Error(`SPLINE_CONSUMER_URL should be specified`)
+}
+if (!(0 < serverPort && serverPort < 65535)) {
+    throw new Error(`SPLINE_UI_PORT port should be in range [1-65535]: ${serverPort}`)
 }
 
 function serveIndexHtml(req, res) {
-    fs.readFile(`${contentRoot}/${appPrefix}/index.html`, (err, data) => {
+    fs.readFile(`${uiContentRoot}/${SPA_PREFIX}/index.html`, (err, data) => {
         res.contentType('text/html')
         res.send(replace(data, DEPLOY_CONTEXT_PLACEHOLDER, DEPLOY_CONTEXT))
     })
@@ -43,9 +46,13 @@ function serveIndexHtml(req, res) {
 
 const app = express()
 
-app.use(`/${appPrefix}/assets`, express.static(`${contentRoot}/${appPrefix}/assets`))
-app.use(`/${appPrefix}`, serveIndexHtml)
-app.use(`/${appPrefix}/*`, serveIndexHtml)
-app.use(express.static(contentRoot))
+app.get(`/`, (_, res) => res.redirect(302, `/${SPA_PREFIX}`))
+app.get(`/${SPA_PREFIX}/assets/config.json`, (_, res) => res.send(uiConfigJson))
+app.use(`/${SPA_PREFIX}/assets`, express.static(`${uiContentRoot}/${SPA_PREFIX}/assets`))
+app.use(`/${SPA_PREFIX}`, serveIndexHtml)
+app.use(express.static(uiContentRoot))
 
 app.listen(serverPort)
+
+console.info(`Spline UI is running on http://localhost:${serverPort}`)
+console.info(`Spline Consumer API URL: ${apiUrl}`)
