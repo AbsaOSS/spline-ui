@@ -26,11 +26,11 @@ ENV PORT=7070
 ENV SPLINE_UI_PORT=$PORT
 
 # Create app directory
-WORKDIR /app
+WORKDIR /spline-ui
 # Copy all files to the working dir.
-COPY ./deployment/express/dist/  /app/
+COPY ../express/dist/  /spline-ui/
 
 EXPOSE $PORT
 
 # Run the server
-CMD [ "node", "/app/server.js"]
+CMD [ "node", "/spline-ui/server.js"]
