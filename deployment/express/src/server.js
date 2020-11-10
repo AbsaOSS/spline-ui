@@ -16,6 +16,7 @@
 
 const express = require('express')
 const fs = require('fs')
+const path = require('path')
 const replace = require('buffer-replace')
 
 const DEFAULT_PORT = 7070
@@ -27,7 +28,7 @@ const DEPLOY_CONTEXT = ''
 const serverPort = +(process.env.SPLINE_UI_PORT || DEFAULT_PORT)
 const apiUrl = process.env.SPLINE_CONSUMER_URL
 const uiConfigJson = {splineConsumerApiUrl: apiUrl}
-const uiContentRoot = `${__dirname}/ui`
+const uiContentRoot = path.resolve(__dirname, process.env.UI_CONTENT_ROOT)
 
 // validation
 if (!apiUrl || /^\s*$/.test(apiUrl)) {

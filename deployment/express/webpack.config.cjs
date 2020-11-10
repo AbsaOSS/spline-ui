@@ -49,6 +49,9 @@ module.exports = {
         new webpack.ContextReplacementPlugin(
             /express\/lib/,
             path.resolve('node_modules'),
-        )
+        ),
+        new webpack.EnvironmentPlugin([
+            'UI_CONTENT_ROOT'
+        ])
     ]
 }

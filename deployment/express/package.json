@@ -11,6 +11,7 @@
     "devDependencies": {
         "@babel/core": "^7.12.3",
         "babel-loader": "^8.1.0",
+        "babel-watch": "^7.0.0",
         "rimraf": "^3.0.2",
         "shx": "^0.3.3",
         "sync-pom-version-to-package": "^1.6.0",
@@ -21,10 +22,10 @@
     "scripts": {
         "clean": "rimraf dist coverage && npm prune",
         "initialize": "npm ci",
-        "prepare-package": "npm run build && shx cp -r ../../ui/dist dist/ui ",
+        "prepare-package": "npm run build",
         "postinstall": "sync-pom-version",
-        "start": "webpack && node dist/server.js",
-        "build": "rimraf dist && webpack"
+        "start": "UI_CONTENT_ROOT=../../../ui/dist SPLINE_CONSUMER_URL=http://localhost:8080/consumer babel-watch src/server.js",
+        "build": "rimraf dist && UI_CONTENT_ROOT=ui webpack && shx cp -r ../../ui/dist dist/ui"
     },
     "author": "ABSA Group Limited Developers Team",
     "license": "Apache 2.0"
