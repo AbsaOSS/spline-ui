@@ -37,4 +37,16 @@
         <module>ui</module>
         <module>deployment/web</module>
     </modules>
+
+    <profiles>
+        <profile>
+            <id>deploy</id>
+            <!-- defined in build/package-pom/pom.xml -->
+        </profile>
+
+        <profile>
+            <id>license-check</id>
+            <!-- defined in build/package-pom/pom.xml -->
+        </profile>
+    </profiles>
 </project>
