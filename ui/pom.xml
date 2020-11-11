@@ -125,6 +125,22 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.rat</groupId>
+                <artifactId>apache-rat-plugin</artifactId>
+                <configuration>
+                    <excludes combine.children="append">
+                        <exclude>dist/**</exclude>
+                        <exclude>node_modules/**</exclude>
+                        <exclude>.stylelintignore</exclude>
+                        <exclude>.eslintignore</exclude>
+                        <exclude>browserslist</exclude>
+                        <exclude>assembly.xml</exclude>
+                        <exclude>**/src/assets/images/**</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
