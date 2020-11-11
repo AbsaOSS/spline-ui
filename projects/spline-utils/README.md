@@ -1,3 +1,0 @@
-# SplineUtil Library
-
-Shared utils.

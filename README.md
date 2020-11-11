@@ -1,3 +1,4 @@
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/za.co.absa.spline.ui/project/badge.svg)](https://search.maven.org/search?q=g:za.co.absa.spline.ui)
 [![TeamCity build (develop)](https://teamcity.jetbrains.com/app/rest/builds/aggregated/strob:%28locator:%28buildType:%28id:OpenSourceProjects_AbsaOSS_SplineUi_AutomaticBuilds%29,branch:develop%29%29/statusIcon.svg)](https://teamcity.jetbrains.com/viewType.html?buildTypeId=OpenSourceProjects_AbsaOSS_SplineUi_AutomaticBuilds&branch=develop&tab=buildTypeStatusDiv)
 [![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=AbsaOSS_spline-ui&metric=alert_status)](https://sonarcloud.io/dashboard?id=AbsaOSS_spline-ui)
 [![SonarCloud Maintainability](https://sonarcloud.io/api/project_badges/measure?project=AbsaOSS_spline-ui&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=AbsaOSS_spline-ui)
@@ -5,47 +6,88 @@
 [![SonarCloud Security](https://sonarcloud.io/api/project_badges/measure?project=AbsaOSS_spline-ui&metric=security_rating)](https://sonarcloud.io/dashboard?id=AbsaOSS_spline-ui)
 
 # Spline UI
+Spline UI is a new user-interface application for Spline, currently available as an alternative to Spline 0.5 Web Client,
+but is going to replace it starting from Spline 0.6 version.  
 
-## Config 
+Spline UI is implemented as a _single-page application (SPA)_, available alone as well as packed as a Docker image or a WAR-file.
+Choose at your deployment preferences.
 
-**The app config file required!** Config file should be placed in the directory: 
- - after build in the dist folder `/dist/spline-ui/assets/config.json` 
- - or before build `/src/assets/config.json` (that option also applies for the development)
+## Download
+
+- [WAR-file](https://search.maven.org/search?q=g:za.co.absa.spline.ui%20AND%20p:war)
+- [Docker](https://hub.docker.com/r/absaoss/spline-web-ui)
+
+## Usage
+Spline UI needs to know where Spline Consumer API sits.
+Whether you run a WAR-file or a Docker container you need to set a `SPLINE_CONSUMER_URL` property.
+
+### Running a Docker
+```shell script
+docker container run \
+      -e SPLINE_CONSUMER_URL=http://localhost:8080/consumer \
+      -p 9090:8080 \
+      absaoss/spline-web-ui:latest
+```
+
+Open Spline UI in a browser - http://localhost:9090
+
+### Running a WAR-file
+Download a WAR-file using the link above, and deploy it into any J2EE-compatible Web Container,
+e.g. Tomcat, Jetty, JBoss etc.
+
+A WAR-file provides several alternative ways how to set configuration parameters:
+- JNDI
+
+    (for example in a `context.xml` in the Tomcat server)
+    ```xml
+    <Environment name="spline/consumer/url" value="..." type="java.lang.String"/>
+    ```
+
+- JVM property
+    ```shell script
+    $JAVA_OPTS -Dspline.consumer.url=...
+    ```
+
+- System environment variable
+    ```shell script
+    export SPLINE_CONSUMER_URL=...
+    ```
+
+
+## Building from sources
+
+### TL;DR
+
+```shell script
+mvn clean install
+```
+
+### Building a Docker
+
+```shell script
+cd deployment/web
+mvn dockerfile:build
+```
+
+### Building UI-core (SPA) alone
+
+#### Config 
+
+Config file should be placed in the directory: 
+ - after build in the dist folder `/dist/assets/config.json` 
+ - or before build `/src/assets/config.json` (this option applies for development)
  
  The example of the config can be found here: `/src/assets/example.json`
 
-## Development server
+#### Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4300/`. The app will automatically reload if you change any of the source files.
+Run `npm start` for a dev server. Navigate to `http://localhost:4300/`. The app will automatically reload if you change any of the source files.
 
-## Build
+#### Build
 
-Run `npm run build` to build the project. The build artifacts will be stored in the `dist/spline-ui` directory.
-
-## Deployment
-
-### Docker
-
-- Build a Docker image: `docker build -t spline-ui -f deployment/docker/Dockerfile .`
-- Run the Docker image: `docker run -d --name spline-ui -p 7070:7070 spline-ui`  
-
----
-
-### Express
-
-That server can be used to serve the app artifacts at a specific port.
-The default port and build artifacts directory path can be rewritten.
-More details about Express server can be found here `/deployment/express/README.md`.
-
-- First build the app if it is not already done: `npm run build`
-- Go to the Express deployment directory: `cd deployment/express` 
-- Install server dependencies (that step needed before the very first run): `npm install` 
-- Start the server: `npm start` 
-
-**Note:** 
-
-- Environment variables rewrites the app config file values.
-- The app config file not required in that case. If config not provided the default config and environment vars will be used for the app configuration.
+Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory.
+When build completes replace `SPLINE_UI_DEPLOY_CONTEXT` in the `dist/app/index.html` accordingly to your deployment schema,
+and verify/create `dist/app/assets/config.json` as described above.
 
 ---
 
