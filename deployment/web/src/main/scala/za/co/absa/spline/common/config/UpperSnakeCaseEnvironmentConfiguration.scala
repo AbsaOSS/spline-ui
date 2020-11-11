@@ -22,17 +22,17 @@ import za.co.absa.spline.common.config.UpperSnakeCaseEnvironmentConfiguration.to
 
 class UpperSnakeCaseEnvironmentConfiguration extends EnvironmentConfiguration {
 
-    override def getProperty(key: String): AnyRef = super.getProperty(toUpperSnake(key))
+  override def getProperty(key: String): AnyRef = super.getProperty(toUpperSnake(key))
 
-    override def containsKey(key: String): Boolean = super.containsKey(toUpperSnake(key))
+  override def containsKey(key: String): Boolean = super.containsKey(toUpperSnake(key))
 }
 
 object UpperSnakeCaseEnvironmentConfiguration {
-    private def toUpperSnake(key: String) = {
-        key
-            .split("[\\W_]")
-            .flatMap(StringUtils.splitByCharacterTypeCamelCase)
-            .map(_.toUpperCase)
-            .mkString("_")
-    }
+  private def toUpperSnake(key: String) = {
+    key
+      .split("[\\W_]")
+      .flatMap(StringUtils.splitByCharacterTypeCamelCase)
+      .map(_.toUpperCase)
+      .mkString("_")
+  }
 }

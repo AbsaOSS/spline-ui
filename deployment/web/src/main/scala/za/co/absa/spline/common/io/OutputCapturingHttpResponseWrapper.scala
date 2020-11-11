@@ -25,16 +25,16 @@ import javax.servlet.http.{HttpServletResponse, HttpServletResponseWrapper}
 
 class OutputCapturingHttpResponseWrapper(val response: HttpServletResponse) extends HttpServletResponseWrapper(response) {
 
-    private val baos = new ByteArrayOutputStream
+  private val baos = new ByteArrayOutputStream
 
-    override def getWriter: PrintWriter = new PrintWriter(new OutputStreamWriter(baos, UTF_8))
+  override def getWriter: PrintWriter = new PrintWriter(new OutputStreamWriter(baos, UTF_8))
 
-    override def getOutputStream: ServletOutputStream = new ChainingServletOutputStream(baos)
+  override def getOutputStream: ServletOutputStream = new ChainingServletOutputStream(baos)
 
-    override def setContentLength(len: Int): Unit = {}
+  override def setContentLength(len: Int): Unit = {}
 
-    override def setContentLengthLong(len: Long): Unit = {}
+  override def setContentLengthLong(len: Long): Unit = {}
 
-    def getContentAsString: String = baos.toString("UTF-8")
+  def getContentAsString: String = baos.toString("UTF-8")
 }
 

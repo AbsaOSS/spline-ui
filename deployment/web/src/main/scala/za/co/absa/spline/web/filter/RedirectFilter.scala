@@ -22,23 +22,23 @@ import javax.servlet.http.{HttpServletRequest, HttpServletResponse}
 
 object RedirectFilter {
 
-    object Param {
-        val Location = "location"
-    }
+  object Param {
+    val Location = "location"
+  }
 
 }
 
 class RedirectFilter extends Filter {
-    private var location: String = _
+  private var location: String = _
 
-    override def init(config: FilterConfig): Unit = {
-        location = config.getInitParameter(RedirectFilter.Param.Location)
-    }
+  override def init(config: FilterConfig): Unit = {
+    location = config.getInitParameter(RedirectFilter.Param.Location)
+  }
 
-    override def doFilter(req: ServletRequest, resp: ServletResponse, chain: FilterChain): Unit = {
-        val contextPath = req.asInstanceOf[HttpServletRequest].getContextPath
-        resp.asInstanceOf[HttpServletResponse].sendRedirect(s"$contextPath$location")
-    }
+  override def doFilter(req: ServletRequest, resp: ServletResponse, chain: FilterChain): Unit = {
+    val contextPath = req.asInstanceOf[HttpServletRequest].getContextPath
+    resp.asInstanceOf[HttpServletResponse].sendRedirect(s"$contextPath$location")
+  }
 
-    override def destroy(): Unit = {}
+  override def destroy(): Unit = {}
 }

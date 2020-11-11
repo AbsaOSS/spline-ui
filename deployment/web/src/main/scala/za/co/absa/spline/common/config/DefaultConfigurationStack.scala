@@ -25,15 +25,15 @@ import za.co.absa.spline.common.config.DefaultConfigurationStack.jndiConfigurati
 import scala.util.Try
 
 class DefaultConfigurationStack extends CompositeConfiguration(util.Arrays.asList(
-    jndiConfigurationIfAvailable.toSeq ++ Seq(
-        new SystemConfiguration,
-        new UpperSnakeCaseEnvironmentConfiguration,
-        new EnvironmentConfiguration
-    ): _*))
+  jndiConfigurationIfAvailable.toSeq ++ Seq(
+    new SystemConfiguration,
+    new UpperSnakeCaseEnvironmentConfiguration,
+    new EnvironmentConfiguration
+  ): _*))
 
 object DefaultConfigurationStack {
-    def jndiConfigurationIfAvailable: Option[JNDIConfiguration] = Try({
-        new InitialContext().getEnvironment
-        new JNDIConfiguration("java:comp/env")
-    }).toOption
+  def jndiConfigurationIfAvailable: Option[JNDIConfiguration] = Try({
+    new InitialContext().getEnvironment
+    new JNDIConfiguration("java:comp/env")
+  }).toOption
 }

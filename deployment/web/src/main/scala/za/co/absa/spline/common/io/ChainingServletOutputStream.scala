@@ -23,10 +23,10 @@ import javax.servlet.{ServletOutputStream, WriteListener}
 
 class ChainingServletOutputStream(val underlying: OutputStream) extends ServletOutputStream {
 
-    override def write(b: Int): Unit = underlying.write(b)
+  override def write(b: Int): Unit = underlying.write(b)
 
-    override def isReady = true
+  override def isReady = true
 
-    override def setWriteListener(writeListener: WriteListener): Unit =
-        throw new UnsupportedOperationException
+  override def setWriteListener(writeListener: WriteListener): Unit =
+    throw new UnsupportedOperationException
 }
