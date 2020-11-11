@@ -73,10 +73,13 @@
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-release-plugin</artifactId>
-                        <version>2.5.3</version>
+                        <version>3.0.0-M1</version>
                         <configuration>
                             <tagNameFormat>release/@{project.version}</tagNameFormat>
+                            <preparationGoals>clean verify scm:add -Dincludes=**/package*.json</preparationGoals>
+                            <completionGoals>generate-resources scm:add -Dincludes=**/package*.json</completionGoals>
                             <providerImplementations>
                                 <git>jgit</git>
                             </providerImplementations>
@@ -84,9 +87,27 @@
                         <dependencies>
                             <dependency>
                                 <groupId>org.apache.maven.scm</groupId>
-                                <artifactId>maven-scm-api</artifactId>
+                                <artifactId>maven-scm-provider-jgit</artifactId>
                                 <version>1.11.2</version>
                             </dependency>
+                            <dependency>
+                                <groupId>org.eclipse.jgit</groupId>
+                                <artifactId>org.eclipse.jgit</artifactId>
+                                <version>5.5.1.201910021850-r</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-scm-plugin</artifactId>
+                        <version>1.11.2</version>
+                        <configuration>
+                            <providerImplementations>
+                                <git>jgit</git>
+                            </providerImplementations>
+                        </configuration>
+                        <dependencies>
                             <dependency>
                                 <groupId>org.apache.maven.scm</groupId>
                                 <artifactId>maven-scm-provider-jgit</artifactId>
