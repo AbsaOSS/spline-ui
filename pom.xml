@@ -35,8 +35,6 @@
 
     <modules>
         <module>ui</module>
-        <module>deployment/express</module>
-        <module>deployment/j2ee</module>
-        <module>deployment/docker</module>
+        <module>deployment/web</module>
     </modules>
 </project>

@@ -4,22 +4,19 @@
     "author": "ABSA Group Limited Developers Team",
     "license": "Apache 2.0",
     "scripts": {
-        "clean": "rimraf dist coverage && npm prune",
-        "initialize": "npm ci",
-        "package": "npm run build",
+        "postinstall": "sync-pom-version",
         "ng": "ng",
         "start": "ng serve --open --port 4300",
         "start:localhost": "ng serve -c localhost --open --port 4300",
         "build": "ng build --prod --deploy-url=../ --base-href=SPLINE_UI_DEPLOY_CONTEXT/app/",
-        "postbuild": "shx rm -f dist/assets/config.json && shx mkdir dist/app/ && shx mv dist/index.html dist/app/ && shx mv dist/assets dist/app/",
+        "postbuild": "shx mkdir dist/app/ && shx mv dist/index.html dist/app/ && shx mv dist/assets dist/app/",
         "test": "jest --passWithNoTests --coverage",
         "lint": "npm run lint:ts && npm run lint:styles",
         "lint:ts": "eslint src/**/*.ts projects/**/*.ts",
         "lint:styles": "stylelint src/**/*.scss",
         "lint:styles:fix": "stylelint src/**/*.scss --fix",
         "e2e": "ng e2e",
-        "ngcc": "ngcc --properties es2015 browser module main --async false",
-        "postinstall": "sync-pom-version"
+        "ngcc": "ngcc --properties es2015 browser module main --async false"
     },
     "private": false,
     "dependencies": {
@@ -80,7 +77,6 @@
         "ng-packagr": "^9.0.0",
         "protractor": "~5.4.3",
         "replace-in-file": "^6.1.0",
-        "rimraf": "^3.0.2",
         "shx": "^0.3.3",
         "stylelint": "^13.3.1",
         "stylelint-config-sass-guidelines": "^7.0.0",

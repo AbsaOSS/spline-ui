@@ -27,9 +27,9 @@
 
     <version>0.5.6-SNAPSHOT</version>
 
-    <groupId>za.co.absa.spline.ui.j2ee</groupId>
-    <artifactId>spline-webui</artifactId>
-    <name>build.war</name>
+    <groupId>za.co.absa.spline.ui</groupId>
+    <artifactId>spline-web-ui</artifactId>
+    <name>Spline Web UI</name>
 
     <packaging>war</packaging>
 
@@ -38,13 +38,12 @@
         <ui.app.prefix>app</ui.app.prefix>
         <ui.app.index.html>index.html</ui.app.index.html>
         <ui.app.assets>assets</ui.app.assets>
-        <ui.core.basedir>../../ui</ui.core.basedir>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>za.co.absa.spline.ui</groupId>
-            <artifactId>ui.core</artifactId>
+            <artifactId>ui-core</artifactId>
             <version>${project.version}</version>
             <type>pom</type>
         </dependency>
@@ -66,6 +65,31 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.2</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>za.co.absa.spline.ui</groupId>
+                                    <artifactId>ui-core</artifactId>
+                                    <type>zip</type>
+                                    <classifier>dist</classifier>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
                     <webResources>
@@ -74,10 +98,19 @@
                             <filtering>true</filtering>
                         </resource>
                         <resource>
-                            <directory>${ui.core.basedir}/dist</directory>
+                            <directory>${project.build.directory}/dependency/ui-core-${project.version}</directory>
                             <filtering>false</filtering>
                         </resource>
                     </webResources>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <configuration>
+                    <skip>false</skip>
+                    <repository>docker.io/absaoss/spline-web-ui</repository>
                 </configuration>
             </plugin>
         </plugins>

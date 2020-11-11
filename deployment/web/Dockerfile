@@ -1,7 +1,7 @@
 #
 # Copyright 2020 ABSA Group Limited
 #
-# Licensed under the Apache License, Version 2.0 (the "License")
+# Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
@@ -14,23 +14,16 @@
 # limitations under the License.
 #
 
-FROM node:12-alpine as builder
+FROM tomcat:9.0.27-jdk8-corretto
 
 LABEL \
     vendor="ABSA" \
-    copyright="2019 ABSA Group Limited" \
+    copyright="2020 ABSA Group Limited" \
     license="Apache License, version 2.0" \
-    name="Spline UI"
+    name="Spline Web UI"
 
-ENV PORT=7070
-ENV SPLINE_UI_PORT=$PORT
+EXPOSE 8080
+EXPOSE 8009
 
-# Create app directory
-WORKDIR /spline-ui
-# Copy all files to the working dir.
-COPY ../express/dist/  /spline-ui/
-
-EXPOSE $PORT
-
-# Run the server
-CMD [ "node", "/spline-ui/server.js"]
+RUN rm -rf /usr/local/tomcat/webapps/*
+COPY target/*.war /usr/local/tomcat/webapps/ROOT.war
