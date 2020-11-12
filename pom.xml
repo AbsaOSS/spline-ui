@@ -32,6 +32,19 @@
 
     <packaging>pom</packaging>
 
+    <properties>
+        <scm.url><!-- defined outside the pom --></scm.url>
+        <scm.connection><!-- defined outside the pom --></scm.connection>
+        <scm.developerConnection><!-- defined outside the pom --></scm.developerConnection>
+    </properties>
+
+    <scm>
+        <url>${scm.url}</url>
+        <connection>${scm.connection}</connection>
+        <developerConnection>${scm.developerConnection}</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
     <modules>
         <module>ui</module>
         <module>deployment/web</module>
@@ -56,12 +69,23 @@
     <profiles>
         <profile>
             <id>deploy</id>
-            <!-- defined in build/package-pom/pom.xml -->
-        </profile>
-
-        <profile>
-            <id>license-check</id>
-            <!-- defined in build/package-pom/pom.xml -->
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-gpg-plugin</artifactId>
+                            <configuration>
+                                <!-- Prevent `gpg` from using pinentry programs -->
+                                <gpgArguments>
+                                    <arg>--pinentry-mode</arg>
+                                    <arg>loopback</arg>
+                                </gpgArguments>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
         </profile>
 
         <profile>
@@ -77,8 +101,20 @@
                         <version>3.0.0-M1</version>
                         <configuration>
                             <tagNameFormat>release/@{project.version}</tagNameFormat>
-                            <preparationGoals>clean verify scm:add -Dincludes=**/package*.json</preparationGoals>
-                            <completionGoals>generate-resources scm:add -Dincludes=**/package*.json</completionGoals>
+                            <preparationGoals>
+                                clean verify
+                                scm:add -Dincludes=**/package*.json
+                                -Dscm.url=${project.scm.url}
+                                -Dscm.connection=${project.scm.connection}
+                                -Dscm.developerConnection=${project.scm.developerConnection}
+                            </preparationGoals>
+                            <completionGoals>
+                                generate-resources
+                                scm:add -Dincludes=**/package*.json
+                                -Dscm.url=${project.scm.url}
+                                -Dscm.connection=${project.scm.connection}
+                                -Dscm.developerConnection=${project.scm.developerConnection}
+                            </completionGoals>
                             <providerImplementations>
                                 <git>jgit</git>
                             </providerImplementations>
