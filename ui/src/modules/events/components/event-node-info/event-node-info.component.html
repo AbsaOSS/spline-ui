@@ -16,41 +16,70 @@
 
 <ng-container *ngIf="state$ | async as state">
 
-    <!-- SELECTED NODE -->
-    <spline-data-view [dataViewSchema]="state.nodeDvs"
-                      (event$)="onDataViewEvent($event)">
-    </spline-data-view>
-    <!-- ./SELECTED NODE -->
+    <!-- LOADER -->
+    <spline-loader *ngIf="state.loadingProcessing.processing"></spline-loader>
+    <!-- ./LOADER -->
 
-    <mat-tab-group>
+    <!-- ERROR -->
+    <spline-content-error *ngIf="state.loadingProcessing.processingError"></spline-content-error>
+    <!-- ./ERROR -->
 
-        <!-- CHILDREN -->
-        <mat-tab *ngIf="state.childrenNumber > 0">
+    <ng-container *ngIf="!state.loadingProcessing.processing">
 
-            <ng-template matTabLabel>
-                {{ 'EVENTS.EVENT_NODE_INFO__TAB__CHILDREN_NODES' | translate}} ({{state.childrenNumber}})
-            </ng-template>
-
-            <spline-data-view [dataViewSchema]="state.childrenDvs"
-                              (event$)="onDataViewEvent($event)">
+            <!-- SELECTED NODE -->
+            <spline-data-view *ngIf="state?.nodeDvs"
+                              (event$)="onDataViewEvent($event)"
+                              [dataViewSchema]="state?.nodeDvs">
             </spline-data-view>
-        </mat-tab>
-        <!-- ./CHILDREN -->
+            <!-- ./SELECTED NODE -->
 
-        <!-- PARENTS -->
-        <mat-tab *ngIf="state.parentsNumber > 0">
+            <mat-tab-group>
 
-            <ng-template matTabLabel>
-                {{ 'EVENTS.EVENT_NODE_INFO__TAB__PARENT_NODES' | translate}} ({{state.parentsNumber}})
-            </ng-template>
+                <!-- ATTR SCHEMA -->
+                <mat-tab *ngIf="state.dataSourceSchemaDetailsList.length > 0">
 
-            <spline-data-view [dataViewSchema]="state.parentsDvs"
-                              (event$)="onDataViewEvent($event)">
-            </spline-data-view>
-        </mat-tab>
-        <!-- ./PARENTS -->
+                    <ng-template matTabLabel>
+                        {{ 'EVENTS.EVENT_NODE_INFO__TAB__ATTR_SCHEMA' | translate}}
+                    </ng-template>
 
-    </mat-tab-group>
+
+                    <spline-data-view *ngFor="let dsDetails of state.dataSourceSchemaDetailsList"
+                                      (event$)="onDataSourceDvsEvent($event, dsDetails.executionPlansIds)"
+                                      [dataViewSchema]="dsDetails.dataViewSchema">
+                    </spline-data-view>
+
+                </mat-tab>
+                <!-- ./ATTR SCHEMA -->
+
+                <!-- CHILDREN -->
+                <mat-tab *ngIf="state.childrenNumber > 0">
+
+                    <ng-template matTabLabel>
+                        {{ 'EVENTS.EVENT_NODE_INFO__TAB__CHILDREN_NODES' | translate}} ({{state.childrenNumber}})
+                    </ng-template>
+
+                    <spline-data-view (event$)="onDataViewEvent($event)"
+                                      [dataViewSchema]="state.childrenDvs">
+                    </spline-data-view>
+                </mat-tab>
+                <!-- ./CHILDREN -->
+
+                <!-- PARENTS -->
+                <mat-tab *ngIf="state.parentsNumber > 0">
+
+                    <ng-template matTabLabel>
+                        {{ 'EVENTS.EVENT_NODE_INFO__TAB__PARENT_NODES' | translate}} ({{state.parentsNumber}})
+                    </ng-template>
+
+                    <spline-data-view (event$)="onDataViewEvent($event)"
+                                      [dataViewSchema]="state.parentsDvs">
+                    </spline-data-view>
+                </mat-tab>
+                <!-- ./PARENTS -->
+
+            </mat-tab-group>
+    </ng-container>
+
 </ng-container>
 
 

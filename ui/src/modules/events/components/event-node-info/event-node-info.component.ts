@@ -15,10 +15,15 @@
  */
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
+import isEqual from 'lodash/isEqual'
+import { delay, distinctUntilChanged, filter, takeUntil } from 'rxjs/operators'
+import { ExecutionEventLineageNodeType, ExecutionPlanFacade, executionPlanIdToWriteOperationId } from 'spline-api'
 import { SplineDataWidgetEvent } from 'spline-common/data-view'
+import { SdWidgetAttributesTree } from 'spline-shared/attributes'
 import { SgNodeCardDataView } from 'spline-shared/data-view'
-import { BaseLocalStateComponent, GenericEventInfo } from 'spline-utils'
+import { BaseLocalStateComponent, GenericEventInfo, ProcessingStore } from 'spline-utils'
 
+import { OperationDetailsListDataSource } from '../../data-sources'
 import { EventNodeInfo } from '../../models'
 import NodeEventData = SgNodeCardDataView.NodeEventData
 
@@ -28,6 +33,15 @@ import NodeEventData = SgNodeCardDataView.NodeEventData
     templateUrl: './event-node-info.component.html',
     styleUrls: ['./event-node-info.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: OperationDetailsListDataSource,
+            useFactory: (executionPlanFacade: ExecutionPlanFacade) => {
+                return new OperationDetailsListDataSource(executionPlanFacade)
+            },
+            deps: [ExecutionPlanFacade],
+        },
+    ],
 })
 export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInfo.NodeInfoViewState> implements OnChanges {
 
@@ -36,21 +50,71 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
     @Output() focusNode$ = new EventEmitter<{ nodeId: string }>()
     @Output() launchNode$ = new EventEmitter<{ nodeId: string }>()
     @Output() highlightToggleRelations$ = new EventEmitter<{ nodeId: string }>()
+    @Output() highlightSpecificRelations$ = new EventEmitter<{ nodeIds: string[] }>()
     @Output() dataViewEvent$ = new EventEmitter<SplineDataWidgetEvent>()
 
-    constructor() {
+    constructor(readonly dataSource: OperationDetailsListDataSource) {
         super()
+
+        this.updateState(
+            EventNodeInfo.getDefaultState()
+        )
+
+        const domRelaxationTime = 250
+
+        // calculate state after new data arrived
+        this.dataSource.data$
+            .pipe(
+                filter(state => !!state),
+                takeUntil(this.destroyed$),
+            )
+            .subscribe(operationDetailsList => {
+                this.updateState({
+                    ...EventNodeInfo.reduceNodeRelationsState(
+                        this.state,
+                        this.nodeRelations,
+                        operationDetailsList
+                    ),
+                })
+
+                setTimeout(
+                    () => {
+                        this.updateState({
+                            loadingProcessing: ProcessingStore.eventProcessingFinish(this.state.loadingProcessing)
+                        })
+                    },
+                    domRelaxationTime
+                )
+            })
+
+        this.dataSource.loadingProcessingEvents.error$
+            .pipe(
+                distinctUntilChanged((left, right) => isEqual(left, right)),
+                delay(domRelaxationTime)
+            )
+            .subscribe(state =>
+                this.updateState({
+                    loadingProcessing:
+                        ProcessingStore.eventProcessingFinish(this.state.loadingProcessing, state.loadingProcessing.processingError)
+                })
+            )
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.nodeRelations && !!changes.nodeRelations.currentValue) {
             const nodeRelations: EventNodeInfo.NodeRelationsInfo = changes.nodeRelations.currentValue
+
+            const operationIds = nodeRelations.node.type === ExecutionEventLineageNodeType.DataSource && nodeRelations?.parents?.length > 0
+                ? nodeRelations.parents.map(node => executionPlanIdToWriteOperationId(node.id))
+                : []
+
             this.updateState({
-                nodeDvs: EventNodeInfo.toDataSchema(nodeRelations.node),
-                childrenDvs: nodeRelations.children.map((node) => EventNodeInfo.toDataSchema(node)),
-                parentsDvs: nodeRelations.parents.map((node) => EventNodeInfo.toDataSchema(node)),
-                parentsNumber: nodeRelations?.parents?.length ?? 0,
-                childrenNumber: nodeRelations?.children?.length ?? 0,
+                loadingProcessing: ProcessingStore.eventProcessingStart(this.state.loadingProcessing)
+            })
+
+            // set filter and trigger data fetching
+            this.dataSource.setFilter({
+                operationIds
             })
         }
     }
@@ -71,5 +135,15 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
         }
 
         this.dataViewEvent$.next($event)
+    }
+
+    onDataSourceDvsEvent($event: SplineDataWidgetEvent, executionPlansIds: string[]): void {
+
+        if ($event.type === SdWidgetAttributesTree.EVENT_TYPE__SELECTED_ATTR_CHANGED) {
+            // executionPlansIds === nodeId
+            this.highlightSpecificRelations$.next({
+                nodeIds: [this.nodeRelations.node.id, ...executionPlansIds]
+            })
+        }
     }
 }

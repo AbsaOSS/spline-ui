@@ -15,6 +15,7 @@
  */
 
 import keyBy from 'lodash/keyBy'
+import omit from 'lodash/omit'
 import { AttributeDataType, AttributeDataTypeArray, AttributeDataTypeStruct, AttributeDtType, AttributeSchema } from 'spline-api'
 
 
@@ -30,7 +31,7 @@ export namespace SplineAttributesTree {
 
     export type Tree = TreeNode[]
 
-    export function toData(attributesSchema: AttributeSchema[], dataTypes: AttributeDataType[]): Tree {
+    export function toTree(attributesSchema: AttributeSchema[], dataTypes: AttributeDataType[]): Tree {
         const dataTypesMap = keyBy(dataTypes, 'id')
         return attributesSchema
             .map(attrSchema => {
@@ -42,6 +43,19 @@ export namespace SplineAttributesTree {
                     children: getDataTypeChildren(dataType, dataTypesMap, attrSchema.id),
                 }
             })
+    }
+
+    export function calculateTreeHash(tree: Tree): string {
+        const treeNoIds = tree
+            .map(node => ({
+                ...omit<TreeNode>(node, 'id'),
+                dataType: omit<AttributeDataType>(node.dataType, 'id'),
+                children: node?.children
+                    ? calculateTreeHash(node?.children)
+                    : undefined
+            }))
+
+        return JSON.stringify(treeNoIds)
     }
 
     function getDataTypeChildren(dataType: AttributeDataType,

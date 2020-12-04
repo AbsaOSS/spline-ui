@@ -13,18 +13,19 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<div *ngIf="store.state$ | async as state">
-
-    <!-- LOADER -->
-    <spline-loader *ngIf="state.loadingProcessing.processing"></spline-loader>
-    <!-- ./LOADER -->
-
-    <!-- ERROR -->
-    <spline-content-error *ngIf="state.loadingProcessing.processingError"></spline-content-error>
-    <!-- ./ERROR -->
 
 
-    <div class="e2e-container">
+<div class="e2e-container">
+
+    <div *ngIf="state$ | async as state">
+
+        <!-- LOADER -->
+        <spline-loader *ngIf="state.loadingProcessing.processing"></spline-loader>
+        <!-- ./LOADER -->
+
+        <!-- ERROR -->
+        <spline-content-error *ngIf="state.loadingProcessing.processingError"></spline-content-error>
+        <!-- ./ERROR -->
 
         <!-- HEADER -->
         <ng-container *ngIf="!state.loadingProcessing.processingError && !state.loadingProcessing.processing">
@@ -37,15 +38,15 @@
             </div>
         </ng-container>
         <!-- ./HEADER -->
-
-        <!-- BODY -->
-        <div class="e2e-container__body">
-
-            <router-outlet></router-outlet>
-
-        </div>
-        <!-- ./BODY -->
     </div>
+
+    <!-- BODY -->
+    <div class="e2e-container__body">
+
+        <router-outlet></router-outlet>
+
+    </div>
+    <!-- ./BODY -->
 </div>
 
 

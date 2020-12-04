@@ -25,7 +25,7 @@ export function attributesSchemaToDataViewSchema(attributesSchema: AttributeSche
                                                  dataTypes: AttributeDataType[],
                                                  selectedAttributeId$: Observable<string | null>): SdWidgetSchema {
 
-    const treeData = SplineAttributesTree.toData(
+    const treeData = SplineAttributesTree.toTree(
         attributesSchema, dataTypes,
     )
 

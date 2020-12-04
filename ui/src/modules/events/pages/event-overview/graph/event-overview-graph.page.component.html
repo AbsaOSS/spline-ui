@@ -14,7 +14,7 @@
   ~ limitations under the License.
   -->
 
-<ng-container *ngIf="store.state$ | async as state" >
+<ng-container *ngIf="state$ | async as state" >
     <div *ngIf="!state.loadingProcessing.processingError && !state.loadingProcessing.processing" class="e2e-container">
 
         <div class="e2e-container flex-row">
@@ -49,6 +49,7 @@
                                            [visible]="!!state.selectedNodeId">
 
                     <event-node-info (dataViewEvent$)="onDataViewEvent($event)"
+                                     (highlightSpecificRelations$)="onHighlightSpecificRelations($event.nodeIds)"
                                      [nodeRelations]="state.selectedNodeRelations">
                     </event-node-info>
 

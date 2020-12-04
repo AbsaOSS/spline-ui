@@ -13,13 +13,14 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-
-<spline-attributes-tree *ngIf="attributesTree$ | async as attributesTree"
-                        [attributesTree]="attributesTree"
-                        [selectedAttributeId]="(selectedAttributeId$ | async)"
-                        (selectedAttributeChanged$)="onSelectedAttrChanged($event)">
-</spline-attributes-tree>
-
-
+<ng-container *ngIf="options$ | async as options">
+    <spline-attributes-tree (selectedAttributeChanged$)="onSelectedAttrChanged($event)"
+                            *ngIf="attributesTree$ | async as attributesTree"
+                            [allowAttrSelection]="options?.allowAttrSelection !== false"
+                            [actionIcon]="options?.actionIcon"
+                            [attributesTree]="attributesTree"
+                            [selectedAttributeId]="(selectedAttributeId$ | async)">
+    </spline-attributes-tree>
+</ng-container>
 
 

@@ -93,7 +93,6 @@ export class OperationInfoComponent extends BaseLocalStateComponent<OperationInf
     }
 
     onDataViewEvent($event: SplineDataWidgetEvent): void {
-        console.log($event.type)
         switch ($event.type) {
             // SELECTED ATTR CHANGED
             case SdWidgetAttributesTree.EVENT_TYPE__SELECTED_ATTR_CHANGED:

@@ -16,6 +16,7 @@
         "EVENT_NODE_INFO__TOOLTIP__EXECUTION_PLAN": "Execution Plan",
         "EVENT_NODE_CONTROL__ACTION__LAUNCH": "Execution Details",
         "EVENT_NODE_INFO__TAB__CHILDREN_NODES": "Children Nodes",
+        "EVENT_NODE_INFO__TAB__ATTR_SCHEMA": "Attributes Schema",
         "EVENT_NODE_INFO__TAB__PARENT_NODES": "Parent Nodes",
         "EVENT_OVERVIEW__BACK_TO_EVENTS_LIST_BUTTON": "Events List",
         "EVENT_OVERVIEW__SELECTED_NODE_TITLE": "Selected Node",

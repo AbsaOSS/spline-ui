@@ -15,7 +15,6 @@
  */
 
 import {
-    ChangeDetectorRef,
     Component,
     ContentChildren,
     EventEmitter,

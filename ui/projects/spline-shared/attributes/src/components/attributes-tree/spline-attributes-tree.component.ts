@@ -31,12 +31,18 @@ import { SplineAttributesTree } from '../../models'
 })
 export class SplineAttributesTreeComponent extends BaseComponent implements OnChanges {
 
+    readonly defaultActionIcon = 'local_offer'
+
     @Input() attributesTree: SplineAttributesTree.Tree
     @Input() selectedAttributeId: string
+    @Input() allowAttrSelection = false
+    @Input() actionIcon = this.defaultActionIcon
 
     @Input() set searchTerm(value: string) {
         this.searchTerm$.next(value)
     }
+
+
 
     @Output() selectedAttributeChanged$ = new EventEmitter<{ attributeId: string }>()
 
@@ -69,8 +75,12 @@ export class SplineAttributesTreeComponent extends BaseComponent implements OnCh
 
     onHighlightBtnClicked($event: MouseEvent, nodeId: string): void {
         $event.stopPropagation()
+        console.log('OPA', this.allowAttrSelection)
+        if (this.allowAttrSelection) {
+            this.selectedAttributeId = nodeId
+        }
 
-        this.selectedAttributeId = nodeId
+        // emit event anyway
         this.selectedAttributeChanged$.emit({
             attributeId: nodeId
         })

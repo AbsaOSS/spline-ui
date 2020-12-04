@@ -14,7 +14,13 @@
  * limitations under the License.
  */
 
-import { ExecutionEventLineageNode, ExecutionEventLineageOverview, ExecutionEventLineageOverviewDepth, LineageNodeLink } from 'spline-api'
+import {
+    ExecutionEventLineageNode,
+    ExecutionEventLineageOverview,
+    ExecutionEventLineageOverviewDepth,
+    LineageNodeLink,
+    OperationDetails
+} from 'spline-api'
 import { SdWidgetSchema } from 'spline-common/data-view'
 import { SgData } from 'spline-common/graph'
 import { SgNodeControl } from 'spline-shared/graph'
@@ -44,6 +50,7 @@ export namespace EventOverviewStore {
         graphData: SgData | null
     }
 
+
     export const GRAPH_DEFAULT_DEPTH = 2
 
     const DEFAULT_LINEAGE_DEPTH = Object.freeze<ExecutionEventLineageOverviewDepth>({
@@ -68,7 +75,7 @@ export namespace EventOverviewStore {
             lineageDepth: { ...DEFAULT_LINEAGE_DEPTH },
             graphHasMoreDepth: calculateHasMoreDepth(DEFAULT_LINEAGE_DEPTH),
             graphNodeView: SgNodeControl.NodeView.Detailed,
-            graphData: null
+            graphData: null,
         }
     }
 

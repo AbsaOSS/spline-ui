@@ -16,6 +16,7 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
+import { Observable } from 'rxjs'
 import { filter, map, skip, takeUntil } from 'rxjs/operators'
 import { ExecutionEventLineageNodeType } from 'spline-api'
 import { SplineDataWidgetEvent } from 'spline-common/data-view'
@@ -25,7 +26,7 @@ import { SgContainerComponent, SgNodeControl } from 'spline-shared/graph'
 import { BaseComponent, GenericEventInfo, RouterNavigation } from 'spline-utils'
 
 import { EventNodeControl, EventNodeInfo } from '../../../models'
-import { EventOverviewStoreFacade } from '../../../store'
+import { EventOverviewStore, EventOverviewStoreFacade } from '../../../store'
 import NodeEventData = SgNodeCardDataView.NodeEventData
 
 
@@ -38,18 +39,22 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
 
     @ViewChild(SgContainerComponent) readonly sgContainer: SgContainerComponent
 
+    readonly state$: Observable<EventOverviewStore.State>
+
     readonly selectedNodeQueryParamName: string = 'selectedNodeId'
 
     constructor(private readonly activatedRoute: ActivatedRoute,
                 private readonly router: Router,
                 readonly store: EventOverviewStoreFacade) {
         super()
+
+        this.state$ = store.state$
     }
 
     ngOnInit(): void {
         const selectedNodeId = this.activatedRoute.snapshot.queryParamMap.get(this.selectedNodeQueryParamName)
-        console.log(selectedNodeId)
         this.store.setSelectedNode(selectedNodeId)
+
         //
         // [ACTION] :: SELECTED NODE CHANGE
         //      => update query params
@@ -113,6 +118,10 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
 
     onGraphNodeViewChanged(graphNodeView: SgNodeControl.NodeView): void {
         this.store.setGraphNodeView(graphNodeView)
+    }
+
+    onHighlightSpecificRelations(nodeIds: string[]): void {
+        this.sgContainer.highlightSpecificRelations(nodeIds)
     }
 
     private onExecutionPlanNodeLaunchAction(nodeId: string): void {

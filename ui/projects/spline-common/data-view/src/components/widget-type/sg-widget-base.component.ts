@@ -22,7 +22,7 @@ import { BaseComponent } from 'spline-utils'
 import { ISplineDataWidget, SdWidgetSchema, SplineDataWidgetEvent } from '../../models'
 
 
-export abstract class SgWidgetBaseComponent<TData extends object, TOptions extends object = {}>
+export abstract class SgWidgetBaseComponent<TData extends Record<string, any>, TOptions extends Record<string, any> = Record<string, any>>
     extends BaseComponent implements ISplineDataWidget<TData, TOptions>, OnInit {
 
     @Input() schema: SdWidgetSchema<TData, TOptions>
@@ -31,7 +31,7 @@ export abstract class SgWidgetBaseComponent<TData extends object, TOptions exten
     @Output() event$ = new EventEmitter<SplineDataWidgetEvent>()
 
     readonly data$ = new BehaviorSubject<TData | null>(null)
-    readonly options$ = new BehaviorSubject<TOptions | null>(null)
+    readonly options$ = new BehaviorSubject<TOptions>({} as TOptions)
 
     get options(): TOptions {
         return this.options$.getValue()

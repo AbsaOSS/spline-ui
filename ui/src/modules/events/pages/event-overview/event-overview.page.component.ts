@@ -15,11 +15,11 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
+import { Observable } from 'rxjs'
 import { SplineTabsNavBar } from 'spline-common'
 import { BaseComponent } from 'spline-utils'
 
-import { EventOverviewStoreFacade } from '../../store'
+import { EventOverviewStore, EventOverviewStoreFacade } from '../../store'
 import NavTabInfo = SplineTabsNavBar.NavTabInfo
 
 
@@ -38,14 +38,14 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit,
         }
     ]
 
-    constructor(private readonly activatedRoute: ActivatedRoute,
-                readonly store: EventOverviewStoreFacade) {
+    readonly state$: Observable<EventOverviewStore.State>
+
+    constructor(readonly store: EventOverviewStoreFacade) {
         super()
+        this.state$ = store.state$
     }
 
     ngOnInit(): void {
-        const executionEventId = this.activatedRoute.snapshot.params['id']
-        this.store.init(executionEventId)
     }
 
     ngOnDestroy(): void {

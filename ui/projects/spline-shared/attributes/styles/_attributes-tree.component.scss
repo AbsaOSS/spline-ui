@@ -24,12 +24,23 @@
         margin-top: 0;
     }
 
+    &__details {
+        align-items: center;
+        display: flex;
+        flex-grow: 1;
+        justify-content: flex-end;
+    }
+
     &__highlight-btn {
         color: $color-grey-dark;
 
         &--active {
             color: $color-orange;
         }
+    }
+
+    .mat-tree-node {
+        display: flex;
     }
 
     .mat-tree-node--active {
@@ -46,6 +57,12 @@
         background: $color-grey-light-1;
         border-radius: 24px;
         cursor: pointer;
+    }
+
+    &--disallow-attr-selection {
+        > .cdk-tree-node:hover > li {
+            cursor: inherit;
+        }
     }
 
 }

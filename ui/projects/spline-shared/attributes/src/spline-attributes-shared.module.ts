@@ -23,7 +23,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatTreeModule } from '@angular/material/tree'
 import { SplineApiExecutionEventModule } from 'spline-api'
-import { SplineDividerModule, SplineLoaderModule, SplineSearchBoxModule } from 'spline-common'
+import { SplineDividerModule, SplineIconModule, SplineLoaderModule, SplineSearchBoxModule } from 'spline-common'
 import { SD_WIDGET_FACTORY } from 'spline-common/data-view'
 import { SplineApiConfigModule } from 'spline-shared'
 import { SplineTranslateModule } from 'spline-utils/translate'
@@ -48,6 +48,7 @@ import { SdWidgetAttributesTreeFactory } from './services/sd-widget-attributes-t
         SplineLoaderModule,
         SplineApiConfigModule,
         SplineApiExecutionEventModule,
+        SplineIconModule
     ],
     declarations: [
         ...fromComponents.attributesComponents,

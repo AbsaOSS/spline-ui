@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-import { ExecutionEventLineageNode, ExecutionEventLineageNodeType } from 'spline-api'
+import { ExecutionEventLineageNode, ExecutionEventLineageNodeType, OperationDetails, operationIdToExecutionPlanId } from 'spline-api'
 import { SplineCardHeader } from 'spline-common'
 import { SdWidgetCard, SdWidgetSchema, SdWidgetSimpleRecord, SplineDataViewSchema } from 'spline-common/data-view'
+import { SdWidgetAttributesTree, SplineAttributesTree } from 'spline-shared/attributes'
 import { SgNodeCardDataView } from 'spline-shared/data-view'
+import { ProcessingStore } from 'spline-utils'
 
 import { EventNodeControl } from './event-node-control.models'
 
@@ -78,12 +80,88 @@ export namespace EventNodeInfo {
         children: ExecutionEventLineageNode[]
     }
 
+    export type DataSourceSchemaDetails = {
+        executionPlansIds: string[]
+        dataViewSchema: SplineDataViewSchema
+    }
+
     export type NodeInfoViewState = {
-        nodeDvs: SplineDataViewSchema
+        nodeDvs: SplineDataViewSchema | null
         parentsDvs: SplineDataViewSchema | null
         childrenDvs: SplineDataViewSchema | null
         parentsNumber: number
         childrenNumber: number
+        dataSourceSchemaDetailsList: DataSourceSchemaDetails[]
+        loadingProcessing: ProcessingStore.EventProcessingState
+    }
+
+    export function getDefaultState(): NodeInfoViewState {
+        return {
+            nodeDvs: null,
+            parentsDvs: null,
+            childrenDvs: null,
+            parentsNumber: 0,
+            childrenNumber: 0,
+            dataSourceSchemaDetailsList: [],
+            loadingProcessing: ProcessingStore.getDefaultProcessingState(true)
+        }
+    }
+
+    export function getOperationsDataSourceSchemasDvs(operationsInfoList: OperationDetails[]): DataSourceSchemaDetails[] {
+
+        const operationsMap: Record<string, { operationInfo: OperationDetails; attrTree: SplineAttributesTree.Tree }[]> =
+            operationsInfoList.reduce(
+                (acc, operationInfo) => {
+                    const attrTree = SplineAttributesTree.toTree(
+                        operationInfo.schemas[operationInfo.output], operationInfo.dataTypes,
+                    )
+                    const treeHash = SplineAttributesTree.calculateTreeHash(attrTree)
+                    return {
+                        ...acc,
+                        [treeHash]: [...(acc[treeHash] ? acc[treeHash] as any[] : []), { operationInfo, attrTree }]
+                    }
+                },
+                {}
+            )
+
+        return Object.values(operationsMap)
+            .map(currentOperationsInfoList => {
+
+                // as all schemas are the same we can take just the first operation as a reference to build schema.
+                const treeData = currentOperationsInfoList[0].attrTree
+
+                const executionPlansIds = currentOperationsInfoList
+                    .map(
+                        ({ operationInfo }) => operationIdToExecutionPlanId(operationInfo.operation.id)
+                    )
+
+                return {
+                    executionPlansIds,
+                    dataViewSchema: SdWidgetCard.toContentOnlySchema(
+                        SdWidgetAttributesTree.toSchema(
+                            treeData,
+                            {
+                                allowAttrSelection: false,
+                                actionIcon: 'eye-outline'
+                            }
+                        ),
+                    )
+                }
+            })
+    }
+
+    export function reduceNodeRelationsState(state: NodeInfoViewState,
+                                             nodeRelations: EventNodeInfo.NodeRelationsInfo,
+                                             operationsInfoList: OperationDetails[] = []): NodeInfoViewState {
+        return {
+            ...state,
+            nodeDvs: toDataSchema(nodeRelations.node),
+            childrenDvs: nodeRelations.children.map((node) => toDataSchema(node)),
+            parentsDvs: nodeRelations.parents.map((node) => toDataSchema(node)),
+            parentsNumber: nodeRelations?.parents?.length ?? 0,
+            childrenNumber: nodeRelations?.children?.length ?? 0,
+            dataSourceSchemaDetailsList: operationsInfoList.length > 0 ? getOperationsDataSourceSchemasDvs(operationsInfoList) : [],
+        }
     }
 
 }

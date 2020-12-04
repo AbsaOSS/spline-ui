@@ -32,9 +32,9 @@ export namespace ProcessingStore {
         processingError: null | any
     }
 
-    export function getDefaultProcessingState(): EventProcessingState {
+    export function getDefaultProcessingState(defaultProcessingState = false): EventProcessingState {
         return {
-            processing: false,
+            processing: defaultProcessingState,
             processingError: null,
         }
     }

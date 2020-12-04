@@ -125,6 +125,12 @@ export class SgContainerComponent extends BaseLocalStateComponent<SgContainer.St
         }
     }
 
+    highlightSpecificRelations(nodeIds): void {
+        this.updateState({
+            highlightedRelationsNodesIds: nodeIds
+        })
+    }
+
     onNodeSelected(nodeSchema: SgNodeSchema | null): void {
         this.nodeSelectionChange$.emit({ nodeId: nodeSchema ? nodeSchema.id : null })
     }

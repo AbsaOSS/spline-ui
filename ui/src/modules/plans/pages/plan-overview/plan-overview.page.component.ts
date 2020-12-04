@@ -108,7 +108,6 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
     }
 
     onNodeFocus(nodeId: string): void {
-        console.log('onNodeFocus', nodeId)
         this.sgContainer.focusNode(nodeId)
     }
 

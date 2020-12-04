@@ -30,6 +30,8 @@ export namespace SdWidgetAttributesTree {
 
     export type Options = {
         selectedAttributeId?: string
+        allowAttrSelection?: boolean // true by default
+        actionIcon?: string
     }
 
     export function toSchema(attributesTree: SplineAttributesTree.Tree, options?: DynamicValueProvider<Options>): SdWidgetSchema<Data> {
