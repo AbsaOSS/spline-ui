@@ -16,7 +16,7 @@
 
 <div class="sd-widget-expansion-panel" *ngIf="data$ | async as data">
 
-    <mat-expansion-panel [expanded]="options?.expanded !== null ? options?.expanded : true"
+    <mat-expansion-panel [expanded]="options?.expanded !== undefined ? options?.expanded : true"
                          [disabled]="options?.disabled"
                          [hideToggle]="options?.hideToggle"
                          [togglePosition]="options?.togglePosition">
