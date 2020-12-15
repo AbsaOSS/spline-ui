@@ -24,7 +24,7 @@
         <version>0.5.5</version>
     </parent>
 
-    <version>0.5.7-SNAPSHOT</version>
+    <version>0.5.7</version>
 
     <groupId>za.co.absa.spline.ui</groupId>
     <artifactId>spline-web-ui</artifactId>
@@ -47,7 +47,7 @@
         <url>${scm.url}</url>
         <connection>${scm.connection}</connection>
         <developerConnection>${scm.developerConnection}</developerConnection>
-        <tag>HEAD</tag>
+        <tag>release/0.5.7</tag>
     </scm>
 
     <dependencies>

@@ -21,7 +21,7 @@
     <parent>
         <groupId>za.co.absa.spline.ui</groupId>
         <artifactId>project</artifactId>
-        <version>0.5.7-SNAPSHOT</version>
+        <version>0.5.7</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
