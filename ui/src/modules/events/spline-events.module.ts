@@ -32,20 +32,22 @@ import { MatTreeModule } from '@angular/material/tree'
 import { RouterModule } from '@angular/router'
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material'
 import { SplineApiModule } from 'spline-api'
-import {
-    SplineCommonModule,
-    SplineDataRecordModule,
-    SplineDataViewModule,
-    SplineGraphModule,
-    SplineLayoutModule,
-    SplineTranslateModule,
-} from 'spline-common'
-import { SplineApiConfigModule, SplineAttributesTreeModule, SplineExpressionModule, SplineGraphSharedModule } from 'spline-shared'
+import { SplineCommonModule } from 'spline-common'
+import { SplineDataViewModule } from 'spline-common/data-view'
+import { SplineGraphModule } from 'spline-common/graph'
+import { SplineLayoutModule } from 'spline-common/layout'
+import { SplineApiConfigModule } from 'spline-shared'
+import { SplineAttributesSharedModule } from 'spline-shared/attributes'
+import { SplineExpressionSharedModule } from 'spline-shared/expression'
+import { SplineGraphSharedModule } from 'spline-shared/graph'
+import { SplineTranslateModule } from 'spline-utils/translate'
 
 
 import * as fromComponents from './components'
 import * as fromPages from './pages'
+import { EventInfoResolver } from './services'
 import { SplineEventsRoutingModule } from './spline-events-routing.module'
+import { EventOverviewStoreFacade } from './store'
 
 
 @NgModule({
@@ -74,19 +76,23 @@ import { SplineEventsRoutingModule } from './spline-events-routing.module'
         SplineApiConfigModule,
         SplineApiModule,
         SplineLayoutModule,
-        SplineTranslateModule.forChild({ moduleNames: ['events', 'graph', 'shared'] }),
+        SplineTranslateModule.forChild({
+            moduleNames: ['events', 'common-graph', 'shared', 'shared-graph', 'shared-attributes', 'shared-graph', 'shared-data-view']
+        }),
         SplineGraphModule,
-        SplineDataRecordModule,
-        SplineAttributesTreeModule,
+        SplineAttributesSharedModule,
         SplineDataViewModule,
-        SplineExpressionModule,
+        SplineExpressionSharedModule,
         SplineCommonModule,
         SplineGraphSharedModule
     ],
     exports: [
         ...fromPages.pageComponents,
     ],
-    providers: [],
+    providers: [
+        EventOverviewStoreFacade,
+        EventInfoResolver
+    ],
 })
 export class SplineEventsModule {
 }

@@ -39,3 +39,8 @@ export function toDataSourceInfo(entity: DataSourceInfoDto): DataSourceInfo {
 export function dataSourceUriToName(uri: string): string {
     return uri.split('/').slice(-1)[0]
 }
+
+export enum DataSourceWriteMode {
+    Append = 'append',
+    Overwrite = 'overwrite',
+}

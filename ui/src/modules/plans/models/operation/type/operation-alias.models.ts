@@ -15,8 +15,8 @@
  */
 
 import { OperationDetails } from 'spline-api'
-import { SdWidgetExpansionPanel, SdWidgetSchema, SplineDataViewSchema } from 'spline-common'
-import { SgNodeControl } from 'spline-shared'
+import { SdWidgetExpansionPanel, SdWidgetSchema, SplineDataViewSchema } from 'spline-common/data-view'
+import { SgNodeControl } from 'spline-shared/graph'
 
 import { EventOperationProperty } from '../operation-property.models'
 

@@ -16,15 +16,18 @@
 
 import { AttributeLineageInfoComponent } from './attribute-lineage-info/attribute-lineage-info.component'
 import { OperationInfoComponent } from './operation-info/operation-info.component'
+import { PlanHeaderComponent } from './plan-header/plan-header.component'
 import { PlanInfoComponent } from './plan-info/plan-info.component'
 
 
 export const components: any[] = [
     PlanInfoComponent,
+    PlanHeaderComponent,
     OperationInfoComponent,
     AttributeLineageInfoComponent,
 ]
 
 export * from './plan-info/plan-info.component'
 export * from './operation-info/operation-info.component'
+export * from './plan-header/plan-header.component'
 export * from './attribute-lineage-info/attribute-lineage-info.component'

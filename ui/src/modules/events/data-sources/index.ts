@@ -15,3 +15,5 @@
  */
 
 export * from './events.data-source'
+export * from './event-lineage-list.data-source'
+export * from './operation-details-list-data.source'

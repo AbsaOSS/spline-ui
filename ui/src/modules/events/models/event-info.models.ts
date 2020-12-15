@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-import { SdWidgetCard, SdWidgetSimpleRecord, SplineColors, SplineDataViewSchema } from 'spline-common'
+import { SplineColors } from 'spline-common'
+import { SdWidgetCard, SdWidgetSimpleRecord, SplineDataViewSchema } from 'spline-common/data-view'
 import { DateTimeHelpers } from 'spline-utils'
 
 
@@ -23,6 +24,10 @@ export type EventInfo = {
     name: string
     executedAt: Date
     applicationId: string
+    executionPlan?: {
+        id: string
+        name: string
+    }
 }
 
 export function toEventInfoDataViewSchema(eventInfo: EventInfo): SplineDataViewSchema {

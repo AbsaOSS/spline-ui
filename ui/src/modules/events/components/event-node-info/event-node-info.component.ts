@@ -15,11 +15,17 @@
  */
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
-import { ExecutionEventLineageNode } from 'spline-api'
-import { SdWidgetCard, SdWidgetSchema } from 'spline-common'
-import { BaseLocalStateComponent } from 'spline-utils'
+import isEqual from 'lodash/isEqual'
+import { delay, distinctUntilChanged, filter, takeUntil } from 'rxjs/operators'
+import { ExecutionEventLineageNodeType, ExecutionPlanFacade, executionPlanIdToWriteOperationId } from 'spline-api'
+import { SplineDataWidgetEvent } from 'spline-common/data-view'
+import { SdWidgetAttributesTree } from 'spline-shared/attributes'
+import { SgNodeCardDataView } from 'spline-shared/data-view'
+import { BaseLocalStateComponent, GenericEventInfo, ProcessingStore } from 'spline-utils'
 
+import { OperationDetailsListDataSource } from '../../data-sources'
 import { EventNodeInfo } from '../../models'
+import NodeEventData = SgNodeCardDataView.NodeEventData
 
 
 @Component({
@@ -27,6 +33,15 @@ import { EventNodeInfo } from '../../models'
     templateUrl: './event-node-info.component.html',
     styleUrls: ['./event-node-info.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: OperationDetailsListDataSource,
+            useFactory: (executionPlanFacade: ExecutionPlanFacade) => {
+                return new OperationDetailsListDataSource(executionPlanFacade)
+            },
+            deps: [ExecutionPlanFacade],
+        },
+    ],
 })
 export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInfo.NodeInfoViewState> implements OnChanges {
 
@@ -35,42 +50,100 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
     @Output() focusNode$ = new EventEmitter<{ nodeId: string }>()
     @Output() launchNode$ = new EventEmitter<{ nodeId: string }>()
     @Output() highlightToggleRelations$ = new EventEmitter<{ nodeId: string }>()
+    @Output() highlightSpecificRelations$ = new EventEmitter<{ nodeIds: string[] }>()
+    @Output() dataViewEvent$ = new EventEmitter<SplineDataWidgetEvent>()
 
-    constructor() {
+    constructor(readonly dataSource: OperationDetailsListDataSource) {
         super()
+
+        this.updateState(
+            EventNodeInfo.getDefaultState()
+        )
+
+        const domRelaxationTime = 250
+
+        // calculate state after new data arrived
+        this.dataSource.data$
+            .pipe(
+                filter(state => !!state),
+                takeUntil(this.destroyed$),
+            )
+            .subscribe(operationDetailsList => {
+                this.updateState({
+                    ...EventNodeInfo.reduceNodeRelationsState(
+                        this.state,
+                        this.nodeRelations,
+                        operationDetailsList
+                    ),
+                })
+
+                setTimeout(
+                    () => {
+                        this.updateState({
+                            loadingProcessing: ProcessingStore.eventProcessingFinish(this.state.loadingProcessing)
+                        })
+                    },
+                    domRelaxationTime
+                )
+            })
+
+        this.dataSource.loadingProcessingEvents.error$
+            .pipe(
+                distinctUntilChanged((left, right) => isEqual(left, right)),
+                delay(domRelaxationTime)
+            )
+            .subscribe(state =>
+                this.updateState({
+                    loadingProcessing:
+                        ProcessingStore.eventProcessingFinish(this.state.loadingProcessing, state.loadingProcessing.processingError)
+                })
+            )
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.nodeRelations && !!changes.nodeRelations.currentValue) {
             const nodeRelations: EventNodeInfo.NodeRelationsInfo = changes.nodeRelations.currentValue
+
+            const operationIds = nodeRelations.node.type === ExecutionEventLineageNodeType.DataSource && nodeRelations?.parents?.length > 0
+                ? nodeRelations.parents.map(node => executionPlanIdToWriteOperationId(node.id))
+                : []
+
             this.updateState({
-                nodeDvs: this.toNodeDvs(nodeRelations.node),
-                childrenDvs: nodeRelations.children.map((node) => this.toNodeDvs(node)),
-                parentsDvs: nodeRelations.parents.map((node) => this.toNodeDvs(node)),
-                parentsNumber: nodeRelations?.parents?.length ?? 0,
-                childrenNumber: nodeRelations?.children?.length ?? 0,
+                loadingProcessing: ProcessingStore.eventProcessingStart(this.state.loadingProcessing)
+            })
+
+            // set filter and trigger data fetching
+            this.dataSource.setFilter({
+                operationIds
             })
         }
     }
 
-    private toNodeDvs(node: ExecutionEventLineageNode): SdWidgetSchema<SdWidgetCard.Data> {
-        return EventNodeInfo.toDataSchema(
-            node,
-            (nodeId) => this.onNodeLaunch(nodeId),
-            (nodeId) => this.onNodeFocus(nodeId),
-            (nodeId) => this.onNodeHighlightToggleRelations(nodeId),
-        )
+    onDataViewEvent($event: SplineDataWidgetEvent): void {
+        switch ($event.type) {
+            case EventNodeInfo.WidgetEvent.LaunchExecutionEvent:
+                this.launchNode$.next({ nodeId: ($event as GenericEventInfo<NodeEventData>).data.nodeId })
+                break
+
+            case SgNodeCardDataView.WidgetEvent.FocusNode:
+                this.focusNode$.next({ nodeId: ($event as GenericEventInfo<NodeEventData>).data.nodeId })
+                break
+
+            case SgNodeCardDataView.WidgetEvent.HighlightNodeRelations:
+                this.highlightToggleRelations$.next({ nodeId: ($event as GenericEventInfo<NodeEventData>).data.nodeId })
+                break
+        }
+
+        this.dataViewEvent$.next($event)
     }
 
-    private onNodeFocus(nodeId: string): void {
-        this.focusNode$.next({ nodeId })
-    }
+    onDataSourceDvsEvent($event: SplineDataWidgetEvent, executionPlansIds: string[]): void {
 
-    private onNodeHighlightToggleRelations(nodeId: string): void {
-        this.highlightToggleRelations$.next({ nodeId })
-    }
-
-    private onNodeLaunch(nodeId: string): void {
-        this.launchNode$.next({ nodeId })
+        if ($event.type === SdWidgetAttributesTree.EVENT_TYPE__SELECTED_ATTR_CHANGED) {
+            // executionPlansIds === nodeId
+            this.highlightSpecificRelations$.next({
+                nodeIds: [this.nodeRelations.node.id, ...executionPlansIds]
+            })
+        }
     }
 }

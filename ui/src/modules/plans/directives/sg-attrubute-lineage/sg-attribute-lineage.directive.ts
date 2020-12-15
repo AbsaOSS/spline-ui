@@ -15,42 +15,51 @@
  */
 
 
-import { AfterViewInit, Directive, forwardRef, Host, Inject, Input, OnChanges, SimpleChanges } from '@angular/core'
+import { AfterContentInit, Directive, forwardRef, Host, Inject, Input, OnChanges, SimpleChanges } from '@angular/core'
 import { GraphComponent } from '@swimlane/ngx-graph'
 import { AttributeLineage, AttributeLineageType } from 'spline-api'
-import { getLinkDomSelector, getNodeDomSelector, SplineGraphComponent } from 'spline-common'
+import { getLinkDomSelector, getNodeDomSelector, SplineGraphComponent } from 'spline-common/graph'
+import { SgContainerComponent } from 'spline-shared/graph'
 
 import { extractAttributeLineageNodesMap } from '../../models/attribute'
 
 
 @Directive({
-    selector: 'spline-graph[sgAttributeLineage]',
+    selector: 'sg-container[sgAttributeLineage]',
 })
-export class SgAttributeLineageDirective implements AfterViewInit, OnChanges {
+export class SgAttributeLineageDirective implements AfterContentInit, OnChanges {
+
+    readonly domRelationDelayInMs = 500
 
     @Input() sgAttributeLineage: AttributeLineage | null
 
+    get splineGraph(): SplineGraphComponent {
+        return this.sgContainerComponent.splineGraph
+    }
+
     constructor(
-        @Host() @Inject(forwardRef(() => SplineGraphComponent)) private splineGraph: SplineGraphComponent,
+        @Host() @Inject(forwardRef(() => SgContainerComponent)) private sgContainerComponent: SgContainerComponent,
     ) {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
 
-        const { sgAttributeLineage } = changes
+        const {sgAttributeLineage} = changes
 
         if (sgAttributeLineage && !sgAttributeLineage.isFirstChange()) {
-            const domRelationDelayInMs = 500 // give some time to DOM to init all items
             setTimeout(
                 () => this.applyLineageStyles(changes.sgAttributeLineage.currentValue, this.splineGraph.ngxGraphComponent),
-                domRelationDelayInMs
+                this.domRelationDelayInMs
             )
 
         }
     }
 
-    ngAfterViewInit(): void {
-        this.applyLineageStyles(this.sgAttributeLineage, this.splineGraph.ngxGraphComponent)
+    ngAfterContentInit(): void {
+        setTimeout(
+            () => this.applyLineageStyles(this.sgAttributeLineage, this.splineGraph.ngxGraphComponent),
+            this.domRelationDelayInMs
+        )
     }
 
     private applyLineageStyles(attributeLineage: AttributeLineage | null, ngxGraphComponent: GraphComponent): void {

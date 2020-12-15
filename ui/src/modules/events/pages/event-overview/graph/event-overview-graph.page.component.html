@@ -1,0 +1,111 @@
+<!--
+  ~ Copyright 2020 ABSA Group Limited
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<ng-container *ngIf="state$ | async as state" >
+    <div *ngIf="!state.loadingProcessing.processingError && !state.loadingProcessing.processing" class="e2e-container">
+
+        <div class="e2e-container flex-row">
+            <div class="sl-content-sidebar">
+
+                <div [hidden]="state.selectedNodeId">
+
+                    <!-- TARGET EXECUTION PLAN NODE -->
+                    <h3 class="text-center py-3">
+                        {{ 'EVENTS.EVENT_OVERVIEW__TARGET_EXECUTION_PLAN_TITLE' | translate }}
+                    </h3>
+
+                    <spline-data-view (event$)="onDataViewEvent($event)"
+                                      [dataViewSchema]="state.targetExecutionPlanNodeDvs">
+                    </spline-data-view>
+                    <!-- ./TARGET EXECUTION PLAN NODE -->
+
+                    <!-- TARGET NODE -->
+                    <h3 class="text-center py-3">
+                        {{ 'EVENTS.EVENT_OVERVIEW__TARGET_NODE_TITLE' | translate }}
+                    </h3>
+
+                    <spline-data-view (event$)="onDataViewEvent($event)"
+                                      [dataViewSchema]="state.targetNodeDvs">
+                    </spline-data-view>
+                    <!-- ./TARGET NODE -->
+                </div>
+
+                <!-- SELECTED NODE INFO -->
+                <sl-content-sidebar-dialog (close$)="onContentSidebarDialogClosed()"
+                                           [dialogTitle]="'EVENTS.EVENT_OVERVIEW__SELECTED_NODE_TITLE'"
+                                           [visible]="!!state.selectedNodeId">
+
+                    <event-node-info (dataViewEvent$)="onDataViewEvent($event)"
+                                     (highlightSpecificRelations$)="onHighlightSpecificRelations($event.nodeIds)"
+                                     [nodeRelations]="state.selectedNodeRelations">
+                    </event-node-info>
+
+                </sl-content-sidebar-dialog>
+                <!-- ./SELECTED NODE INFO -->
+
+            </div>
+            <div class="e2e-container__body">
+
+                <sg-container (nodeDoubleClick$)="onNodeDoubleClick($event.nodeSchema)"
+                              (nodeEvent$)="onGraphNodeEvent($event)"
+                              (nodeSelectionChange$)="onNodeSelected($event.nodeId)"
+                              [graphData]="state.graphData"
+                              [selectedNodeId]="state.selectedNodeId"
+                              [targetNodeId]="state.targetNodeId">
+
+                    <!-- TOOLBAR -->
+                    <sg-toolbar *ngIf="state.graphHasMoreDepth" position="top-right">
+
+                        <div class="position-relative">
+
+                            <!-- LOADER -->
+                            <spline-loader *ngIf="state.graphLoadingProcessing.processing"
+                                           mode="cover"
+                                           size="md">
+                            </spline-loader>
+                            <!-- ./LOADER -->
+
+                            <!-- DEPTH CONTROL -->
+                            <sg-depth-control
+                                    (depthChanged$)="onChangeGraphDepth($event.depth)"
+                                    [depth]="state?.lineageDepth?.depthComputed">
+                            </sg-depth-control>
+                            <!-- ./DEPTH CONTROL -->
+                        </div>
+
+                    </sg-toolbar>
+                    <!-- ./TOOLBAR -->
+
+                    <!-- CONTROL PANEL :: ACTIONS -->
+                    <ng-template sgControlPanelSection>
+
+                        <sg-node-view-control (viewChanged$)="onGraphNodeViewChanged($event)"
+                                              [nodeView]="state.graphNodeView">
+                        </sg-node-view-control>
+
+                    </ng-template>
+                    <!-- ./CONTROL PANEL :: ACTIONS -->
+
+                </sg-container>
+
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+
+
+

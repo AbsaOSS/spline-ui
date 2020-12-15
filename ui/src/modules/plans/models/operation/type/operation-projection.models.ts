@@ -15,8 +15,10 @@
  */
 
 import { AttributeSchema, OperationDetails, OperationPropertiesProjection } from 'spline-api'
-import { SdWidgetExpansionPanel, SdWidgetRecordsList, SdWidgetSchema, SplineColors, SplineDataViewSchema } from 'spline-common'
-import { SdWidgetExpression, SgNodeControl } from 'spline-shared'
+import { SplineColors } from 'spline-common'
+import { SdWidgetExpansionPanel, SdWidgetRecordsList, SdWidgetSchema, SplineDataViewSchema } from 'spline-common/data-view'
+import { SdWidgetExpression } from 'spline-shared/expression'
+import { SgNodeControl } from 'spline-shared/graph'
 
 import { EventOperationProperty } from '../operation-property.models'
 

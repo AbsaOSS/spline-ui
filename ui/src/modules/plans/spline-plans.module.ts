@@ -33,15 +33,15 @@ import { MatTreeModule } from '@angular/material/tree'
 import { RouterModule } from '@angular/router'
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material'
 import { SplineApiModule } from 'spline-api'
-import {
-    SplineCommonModule,
-    SplineDataRecordModule,
-    SplineDataViewModule,
-    SplineGraphModule,
-    SplineLayoutModule,
-    SplineTranslateModule,
-} from 'spline-common'
-import { SplineApiConfigModule, SplineAttributesTreeModule, SplineExpressionModule, SplineGraphSharedModule } from 'spline-shared'
+import { SplineCommonModule } from 'spline-common'
+import { SplineDataViewModule } from 'spline-common/data-view'
+import { SplineGraphModule } from 'spline-common/graph'
+import { SplineLayoutModule } from 'spline-common/layout'
+import { SplineApiConfigModule } from 'spline-shared'
+import { SplineAttributesSharedModule } from 'spline-shared/attributes'
+import { SplineExpressionSharedModule } from 'spline-shared/expression'
+import { SplineGraphSharedModule } from 'spline-shared/graph'
+import { SplineTranslateModule } from 'spline-utils/translate'
 
 
 import * as fromComponents from './components'
@@ -78,12 +78,22 @@ import { SplinePlansRoutingModule } from './spline-plans-routing.module'
         SplineApiConfigModule,
         SplineApiModule,
         SplineLayoutModule,
-        SplineTranslateModule.forChild({ moduleNames: ['plans', 'graph', 'shared'] }),
+        SplineTranslateModule.forChild({
+            moduleNames: [
+                'plans',
+                'common-graph',
+                'shared',
+                'shared-graph',
+                'shared-attributes',
+                'shared-expression',
+                'shared-graph',
+                'shared-data-view'
+            ]
+        }),
         SplineGraphModule,
-        SplineDataRecordModule,
-        SplineAttributesTreeModule,
+        SplineAttributesSharedModule,
         SplineDataViewModule,
-        SplineExpressionModule,
+        SplineExpressionSharedModule,
         SplineCommonModule,
         SplineGraphSharedModule
     ],

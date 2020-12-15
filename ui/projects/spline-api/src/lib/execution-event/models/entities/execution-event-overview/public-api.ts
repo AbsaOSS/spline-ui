@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+export * from './execution-event-lineage-list.models'
 export * from './execution-event-lineage-overview.models'
 export * from './execution-event-lineage-node.models'
 export * from './execution-event-lineage-node-type.models'

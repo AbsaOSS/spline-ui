@@ -14,148 +14,39 @@
   ~ limitations under the License.
   -->
 
-<div *ngIf="(store.loadingProcessing$ | async) as loadingProcessing">
 
-    <!-- LOADER -->
-    <spline-loader *ngIf="loadingProcessing.processing"></spline-loader>
-    <!-- ./LOADER -->
+<div class="e2e-container">
 
-    <!-- ERROR -->
-    <spline-content-error *ngIf="loadingProcessing.processingError"></spline-content-error>
-    <!-- ./ERROR -->
+    <div *ngIf="state$ | async as state">
 
-    <ng-container *ngIf="graphData$ | async as graphData">
-        <ng-container *ngIf="!loadingProcessing.processingError && !loadingProcessing.processing">
-            <div *ngIf="store.state$ | async as state" class="end-to-end-container flex-row">
-                <div class="spline-content-details-section">
+        <!-- LOADER -->
+        <spline-loader *ngIf="state.loadingProcessing.processing"></spline-loader>
+        <!-- ./LOADER -->
 
-                    <div [hidden]="state.selectedNodeId">
+        <!-- ERROR -->
+        <spline-content-error *ngIf="state.loadingProcessing.processingError"></spline-content-error>
+        <!-- ./ERROR -->
 
-                        <!-- HEADER -->
-                        <div class="spline-content-details-section__header">
-                            <div class="spline-content-details-section__back-btn">
-                                <button [matTooltip]="'EVENTS.EVENT_OVERVIEW__BACK_TO_EVENTS_LIST_BUTTON' | translate"
-                                        [routerLink]="'/events/list'"
-                                        mat-button mat-icon-button>
-                                    <mat-icon>arrow_back</mat-icon>
-                                </button>
-                            </div>
-
-                            <h2 class="text-center">
-                                {{ 'EVENTS.EVENT_OVERVIEW__EXECUTION_EVENT_TITLE' | translate }}
-                            </h2>
-                        </div>
-                        <!-- ./HEADER -->
-
-                        <!-- EVENT INFO -->
-                        <event-info [data]="state.eventInfo"></event-info>
-                        <!-- ./EVENT INFO -->
-
-                        <!-- TARGET EXECUTION PLAN NODE -->
-                        <ng-container *ngIf="targetExecutionPlanNodeDvs$ | async as targetExecutionPlanNodeDvs">
-                            <h3 class="text-center py-3">
-                                {{ 'EVENTS.EVENT_OVERVIEW__TARGET_EXECUTION_PLAN_TITLE' | translate }}
-                            </h3>
-
-                            <spline-data-view [dataViewSchema]="targetExecutionPlanNodeDvs"></spline-data-view>
-                        </ng-container>
-                        <!-- ./TARGET EXECUTION PLAN NODE -->
-
-                        <!-- TARGET NODE -->
-                        <ng-container *ngIf="targetNodeDvs$ | async as targetNodeDvs">
-                            <h3 class="text-center py-3">
-                                {{ 'EVENTS.EVENT_OVERVIEW__TARGET_NODE_TITLE' | translate }}
-                            </h3>
-
-                            <spline-data-view [dataViewSchema]="targetNodeDvs"></spline-data-view>
-                        </ng-container>
-                        <!-- ./TARGET NODE -->
-                    </div>
-
-                    <!-- SELECTED NODE INFO -->
-                    <div *ngIf="selectedNodeRelations$ | async as selectedNodeRelations"
-                         [@slideXInOut]
-                         class="spline-content-details-section__dialog">
-
-                        <div class="spline-content-details-section__header">
-
-                            <h2 class="text-center">
-                                {{ 'EVENTS.EVENT_OVERVIEW__SELECTED_NODE_TITLE' | translate }}
-                            </h2>
-
-                            <div class="spline-content-details-section__dialog-close">
-                                <button (click)="onShowDetailsBtnCLicked()"
-                                        [matTooltip]="'COMMON.CLOSE' | translate" mat-button
-                                        mat-icon-button>
-                                    <mat-icon>close</mat-icon>
-                                </button>
-                            </div>
-                        </div>
-
-                        <event-node-info (focusNode$)="onNodeFocus($event.nodeId)"
-                                         (highlightToggleRelations$)="onNodeHighlightRelations($event.nodeId)"
-                                         (launchNode$)="onExecutionPlanNodeLaunchAction($event.nodeId)"
-                                         [nodeRelations]="selectedNodeRelations">
-
-                        </event-node-info>
-
-                    </div>
-                    <!-- ./SELECTED NODE INFO -->
-
-                </div>
-                <div class="end-to-end-container__body">
-                    <!-- GRAPH -->
-                    <spline-graph
-                            (nodeDoubleClick$)="onNodeDoubleClick($event.nodeSchema)"
-                            (nodeSelectionChange$)="onNodeSelected($event)"
-                            [focusNode$]="focusNode$"
-                            [graphData]="graphData"
-                            [selectedNodeId]="state.selectedNodeId"
-                            [sgHighlightedRelations]="highlightedRelationsNodesIds$ | async"
-                            [targetNodeId]="state.targetNodeId">
-
-                        <!-- TOOLBAR -->
-                        <sg-toolbar *ngIf="state.graphHasMoreDepth" position="top-right">
-
-                            <div class="position-relative">
-
-                                <!-- LOADER -->
-                                <spline-loader *ngIf="state.graphLoadingProcessing.processing" mode="cover" size="md"></spline-loader>
-                                <!-- ./LOADER -->
-
-                                <!-- DEPTH CONTROL -->
-                                <sg-depth-control
-                                        (depthChanged$)="onChangeGraphDepth($event.depth)"
-                                        [depth]="state?.lineageDepth?.depthComputed">
-                                </sg-depth-control>
-                                <!-- ./DEPTH CONTROL -->
-                            </div>
-                        </sg-toolbar>
-                        <!-- ./TOOLBAR -->
-
-                        <!-- CONTROL PANEL :: ACTIONS -->
-                        <ng-template sgControlPanelSection>
-
-                            <sg-relations-control (showAll$)="onToggleAllRelationsBtnClicked()"></sg-relations-control>
-
-                        </ng-template>
-                        <!-- ./CONTROL PANEL :: ACTIONS -->
-
-                        <!-- CONTROL PANEL :: ACTIONS -->
-                        <ng-template sgControlPanelSection>
-
-                            <sg-node-view-control (viewChanged$)="onGraphNodeViewChanged($event)"
-                                                  [nodeView]="graphNodeView$ | async"></sg-node-view-control>
-
-                        </ng-template>
-                        <!-- ./CONTROL PANEL :: ACTIONS -->
-
-                    </spline-graph>
-                    <!-- ./GRAPH -->
+        <!-- HEADER -->
+        <ng-container *ngIf="!state.loadingProcessing.processingError && !state.loadingProcessing.processing">
+            <div class="content-header">
+                <div class="container">
+                    <event-header [eventInfo]="state.eventInfo"
+                                  [navTabs]="headerNavTabs">
+                    </event-header>
                 </div>
             </div>
         </ng-container>
-    </ng-container>
+        <!-- ./HEADER -->
+    </div>
+
+    <!-- BODY -->
+    <div class="e2e-container__body">
+
+        <router-outlet></router-outlet>
+
+    </div>
+    <!-- ./BODY -->
 </div>
 
 

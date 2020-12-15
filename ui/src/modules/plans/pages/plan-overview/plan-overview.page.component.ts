@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
-import { BehaviorSubject, merge, Observable, Subject } from 'rxjs'
-import { filter, map, shareReplay, skip, takeUntil, withLatestFrom } from 'rxjs/operators'
+import { filter, map, skip, takeUntil } from 'rxjs/operators'
 import { ExecutionPlanFacade } from 'spline-api'
-import { SgData, SgNodeSchema, SgRelations, SplineAnimationSlideXInOut } from 'spline-common'
-import { SgNodeControl } from 'spline-shared'
-import { BaseComponent, RouterHelpers } from 'spline-utils'
+import { SplineTabsNavBar } from 'spline-common'
+import { SgContainerComponent, SgNodeControl } from 'spline-shared/graph'
+import { BaseComponent, RouterNavigation } from 'spline-utils'
 
-import { PlanNodeControl, PlanOverview } from '../../models'
-import { ExecutionPlanOverviewStore, ExecutionPlanOverviewStoreFacade } from '../../store'
+import { PlanOverview } from '../../models'
+import { ExecutionPlanOverviewStoreFacade } from '../../store'
 import QueryParamAlis = PlanOverview.QueryParamAlis
+import NavTabInfo = SplineTabsNavBar.NavTabInfo
 
 
 @Component({
@@ -40,17 +40,19 @@ import QueryParamAlis = PlanOverview.QueryParamAlis
             },
             deps: [ExecutionPlanFacade],
         },
-    ],
-    animations: [
-        SplineAnimationSlideXInOut.getAnimation()
     ]
 })
 export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
 
-    readonly graphData$: Observable<SgData>
-    readonly focusNode$ = new Subject<string>()
-    readonly highlightedRelationsNodesIds$ = new BehaviorSubject<string[] | null>(null)
-    readonly graphNodeView$ = new BehaviorSubject<SgNodeControl.NodeView>(SgNodeControl.NodeView.Detailed)
+    @ViewChild(SgContainerComponent) readonly sgContainer: SgContainerComponent
+
+    readonly headerNavTabs: NavTabInfo[] = [
+        {
+            label: 'PLANS.PLAN_OVERVIEW__NAV_TAB__GRAPH_VIEW',
+            routeLink: '.',
+            icon: 'graph-outline'
+        }
+    ]
 
     eventId: string
 
@@ -59,61 +61,18 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
                 readonly store: ExecutionPlanOverviewStoreFacade) {
         super()
 
-        this.graphData$ = merge(
-            this.store.loadingProcessingEvents.success$,
-            this.graphNodeView$.pipe(skip(1))
-        )
-            .pipe(
-                takeUntil(this.destroyed$),
-                withLatestFrom(this.graphNodeView$),
-                map(([x, graphNodeView]) => {
-                    const state = this.store.state
-                    // select all nodes list from the store
-                    const nodesList = ExecutionPlanOverviewStore.selectAllNodes(state)
-                    return {
-                        links: state.links,
-                        nodes: nodesList
-                            // map node source data to the SgNode schema
-                            .map(
-                                nodeSource => PlanNodeControl.toSgNode(
-                                    nodeSource,
-                                    (nodeId) => this.onNodeHighlightToggleRelations(nodeId),
-                                    graphNodeView,
-                                ),
-                            ),
-                    }
-                }),
-                shareReplay(1),
-            )
-
         //
         // [ACTION] :: ATTRIBUTE SELECTED
         //      => reset node highlights
         //
         this.store.selectedAttribute$
             .pipe(
+                skip(2),
                 takeUntil(this.destroyed$),
-                filter(attribute => !!attribute && this.highlightedRelationsNodesIds$.getValue()?.length !== undefined),
             )
             .subscribe(
                 () => this.resetNodeHighlightRelations(),
             )
-
-        //
-        // [ACTION] :: HIGHLIGHTED RELATION CHANGE
-        //      => reset selected attribute
-        //
-        this.highlightedRelationsNodesIds$
-            .pipe(
-                takeUntil(this.destroyed$),
-                filter(highlightedRelationsNodesIds => highlightedRelationsNodesIds?.length !== undefined),
-                withLatestFrom(this.store.selectedAttribute$),
-                filter(([highlightedRelationsNodesIds, selectedAttribute]) => !!selectedAttribute),
-            )
-            .subscribe(
-                () => this.onSelectedAttributeChanged(null),
-            )
-
     }
 
     ngOnInit(): void {
@@ -132,48 +91,34 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         this.watchUrlChanges()
     }
 
-    onNodeSelected($event: { nodeSchema: SgNodeSchema | null }): void {
-        this.store.setSelectedNode($event.nodeSchema ? $event.nodeSchema.id : null)
-    }
-
-    onCloseContentDetailsDialogBtnClicked(): void {
-        this.store.setSelectedNode(null)
+    onNodeSelected(nodeId: string | null): void {
+        this.store.setSelectedNode(nodeId)
     }
 
     onSelectedAttributeChanged(attributeId: string | null): void {
         this.store.setSelectedAttribute(attributeId)
     }
 
+    onGraphNodeViewChanged(graphNodeView: SgNodeControl.NodeView): void {
+        this.store.setGraphNodeView(graphNodeView)
+    }
+
+    onContentSidebarDialogClosed(): void {
+        this.onNodeSelected(null)
+    }
+
     onNodeFocus(nodeId: string): void {
-        this.focusNode$.next(nodeId)
+        this.sgContainer.focusNode(nodeId)
     }
 
-    onShowAllRelationsBtnClicked(): void {
-        this.highlightedRelationsNodesIds$.next(null)
-    }
-
-    onGraphNodeViewChanged(nodeView: SgNodeControl.NodeView) {
-        this.graphNodeView$.next(nodeView)
+    onHighlightedRelationsNodesIdsChange(nodeIds: string[] | null): void {
+        if (nodeIds?.length !== undefined && !!this.store.state.selectedAttributeId) {
+            this.store.setSelectedAttribute(null)
+        }
     }
 
     private resetNodeHighlightRelations(): void {
-        this.highlightedRelationsNodesIds$.next(null)
-    }
-
-    private onNodeHighlightToggleRelations(nodeId: string): void {
-        this.processNodeHighlightAction(nodeId, SgRelations.toggleSelection)
-    }
-
-    private processNodeHighlightAction(nodeId: string, highlightFn: SgRelations.NodeHighlightFn) {
-        const highlightedRelationsNodesIds = highlightFn(
-            this.highlightedRelationsNodesIds$.getValue() ?? [],
-            nodeId,
-            this.store.state.links,
-        )
-
-        this.highlightedRelationsNodesIds$.next(
-            highlightedRelationsNodesIds.length > 0 ? highlightedRelationsNodesIds : null
-        )
+        this.sgContainer.highlightNodeRelations(null)
     }
 
     // Watch Store State changes => update Router State if needed
@@ -243,7 +188,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
     }
 
     private updateQueryParams(paramName: string, value: string | null, replaceUrl: boolean = true): void {
-        RouterHelpers.updateCurrentRouterOneQueryParam(
+        RouterNavigation.updateCurrentRouterOneQueryParam(
             this.router,
             this.activatedRoute,
             paramName,

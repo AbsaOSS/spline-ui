@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import _ from 'lodash'
+import keyBy from 'lodash/keyBy'
 import { AttributeLineage, AttributeLineageNode, AttributeLineageType } from 'spline-api'
 import { SplineColors } from 'spline-common'
 
@@ -28,7 +28,7 @@ export const LINEAGE_TYPE_COLOR_MAP: Readonly<Record<AttributeLineageType, strin
 
 // TODO: write some tests
 export function extractImpactRootAttributeNode(graph: AttributeLineage): AttributeLineageNode {
-    const impactedAttrIds = _.keyBy(graph.impact.links, item => item.source)
+    const impactedAttrIds = keyBy(graph.impact.links, item => item.source)
     return graph.impact.nodes.find(node => !impactedAttrIds[node.id])
 }
 

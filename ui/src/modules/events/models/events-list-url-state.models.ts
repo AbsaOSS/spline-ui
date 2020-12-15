@@ -17,7 +17,7 @@
 
 import { Params } from '@angular/router'
 import { ExecutionEventField, ExecutionEventsQuery } from 'spline-api'
-import { RouterHelpers, SearchQuery } from 'spline-utils'
+import { RouterNavigation, SearchQuery } from 'spline-utils'
 
 
 export namespace EventsListUrlState {
@@ -34,7 +34,7 @@ export namespace EventsListUrlState {
     }
 
     export function applySearchParams(queryParams: Params, state: State | null): Params {
-        return RouterHelpers.setQueryParam(
+        return RouterNavigation.setQueryParam(
             queryParams,
             URL_QUERY_PARAM__SEARCH_PARAMS,
             state !== null ? encodeSearchParams(state) : null,

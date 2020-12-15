@@ -17,7 +17,8 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 
-import { EventOverviewPageComponent, EventsListPageComponent } from './pages'
+import { EventOverviewGraphPageComponent, EventOverviewPageComponent, EventsListPageComponent } from './pages'
+import { EventInfoResolver } from './services'
 
 
 const routes: Routes = [
@@ -28,6 +29,24 @@ const routes: Routes = [
     {
         path: 'overview/:id',
         component: EventOverviewPageComponent,
+        resolve: {
+            eventInfo: EventInfoResolver
+        },
+        children: [
+            {
+                path: 'graph',
+                component: EventOverviewGraphPageComponent,
+            },
+            {
+                path: '',
+                redirectTo: 'graph',
+                pathMatch: 'full',
+            },
+            {
+                path: '**',
+                redirectTo: '/404',
+            },
+        ]
     },
     {
         path: '',

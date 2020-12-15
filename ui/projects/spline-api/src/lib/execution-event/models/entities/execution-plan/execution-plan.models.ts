@@ -88,4 +88,20 @@ export function toExecutionPlanExtraInfo(entity: ExecutionPlanExtraInfoDto): Exe
     }
 }
 
+export function executionPlanIdToWriteOperationId(executionPlanId: string): string {
+    return `${executionPlanId}:0`
+}
+
+export function operationIdToExecutionPlanId(operationId: string): string {
+    const idArray = operationId.split(':')
+
+    if (idArray.length < 2) {
+        throw new Error(`Invalid OperationId: ${operationId}`)
+    }
+
+    return idArray
+        .slice(0, idArray.length - 1)
+        .join(':')
+}
+
 

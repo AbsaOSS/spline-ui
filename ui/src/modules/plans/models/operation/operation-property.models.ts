@@ -16,8 +16,9 @@
 
 
 import { AttrSchemasCollection, OpExpression } from 'spline-api'
-import { SdWidgetExpansionPanel, SdWidgetJson, SdWidgetSchema, SdWidgetSimpleRecord, SplineColors } from 'spline-common'
-import { SdWidgetExpression } from 'spline-shared'
+import { SplineColors } from 'spline-common'
+import { SdWidgetExpansionPanel, SdWidgetJson, SdWidgetSchema, SdWidgetSimpleRecord } from 'spline-common/data-view'
+import { SdWidgetExpression } from 'spline-shared/expression'
 import { PrimitiveNotEmpty } from 'spline-utils'
 
 

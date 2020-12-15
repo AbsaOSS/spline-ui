@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import _ from 'lodash'
+import omit from 'lodash/omit'
 import { OperationDetails } from 'spline-api'
-import { SdWidgetSchema } from 'spline-common'
+import { SdWidgetSchema } from 'spline-common/data-view'
 
 import { EventOperationProperty } from '../operation-property.models'
 
@@ -31,7 +31,7 @@ export function getBaseOperationDetailsSchema(operationDetails: OperationDetails
                                               extraDefaultProps: string[] = []): SdWidgetSchema[] {
 
     const properties = operationDetails.operation.properties
-    const extraPropsNative = _.omit(properties, [...OPERATION_DEFAULT_PROPS, ...extraDefaultProps])
+    const extraPropsNative = omit(properties, [...OPERATION_DEFAULT_PROPS, ...extraDefaultProps])
     const extraProps = EventOperationProperty.parseExtraOptions(extraPropsNative)
 
     const mainSection = mainSectionResolver(operationDetails, extraProps.primitive)

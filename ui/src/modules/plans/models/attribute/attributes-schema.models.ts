@@ -17,15 +17,15 @@
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { AttributeDataType, AttributeSchema } from 'spline-api'
-import { SdWidgetCard, SdWidgetSchema } from 'spline-common'
-import { SdWidgetAttributesTree, SplineAttributesTree } from 'spline-shared'
+import { SdWidgetCard, SdWidgetSchema } from 'spline-common/data-view'
+import { SdWidgetAttributesTree, SplineAttributesTree } from 'spline-shared/attributes'
 
 
 export function attributesSchemaToDataViewSchema(attributesSchema: AttributeSchema[],
                                                  dataTypes: AttributeDataType[],
                                                  selectedAttributeId$: Observable<string | null>): SdWidgetSchema {
 
-    const treeData = SplineAttributesTree.toData(
+    const treeData = SplineAttributesTree.toTree(
         attributesSchema, dataTypes,
     )
 

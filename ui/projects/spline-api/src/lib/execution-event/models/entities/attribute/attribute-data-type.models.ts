@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import _ from 'lodash'
+import omit from 'lodash/omit'
 
 import { AttributeDtType } from './attribute-dt-type.models'
 
@@ -71,7 +71,7 @@ export type AttributeDataTypeField = {
 
 export function toAttributeDataType(entity: AttributeDataTypeDto): AttributeDataType {
     return {
-        ...(_.omit<AttributeDataTypeDto, '_type' | '_typeHint'>(entity, ['_type'], '_typeHint')),
+        ...(omit<AttributeDataTypeDto, '_type' | '_typeHint'>(entity, ['_type'], '_typeHint')),
         type: extractAttributeDtType(entity),
     } as AttributeDataType
 }

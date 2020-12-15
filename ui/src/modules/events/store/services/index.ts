@@ -15,4 +15,3 @@
  */
 
 export * from './event-overview-store.facade'
-

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import _ from 'lodash'
+import keyBy from 'lodash/keyBy'
 
 import { AttributeDataType, AttributeDataTypeDto, AttributeSchema, AttrSchemasCollection, toAttributeDataType } from '../attribute'
 
@@ -42,7 +42,7 @@ export function toOperationDetails(entity: OperationDetailsDto): OperationDetail
     return {
         operation: toOperation(entity.operation),
         schemas: entity.schemas,
-        schemasCollection: _.keyBy(entity.schemas.reduce((acc, curr) => [...acc, ...curr], []), 'id'),
+        schemasCollection: keyBy(entity.schemas.reduce((acc, curr) => [...acc, ...curr], []), 'id'),
         output: entity.output,
         inputs: entity.inputs,
         dataTypes: entity.dataTypes.map(item => toAttributeDataType(item)),
