@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2020 ABSA Group Limited
+  ~ Copyright 2021 ABSA Group Limited
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -46,6 +46,13 @@
         <!-- LEGENDS -->
         <sg-legend *ngFor="let legend of legendsList"
                    [legend]="legend">
+            <button *ngIf="legend.id !== OperationAttributeLineageType.Usage"
+                    mat-button size="sm"
+                    color="accent"
+                    mat-flat-button
+                    (click)="onLineageLegendDetailsBtnClicked(legend)">
+                {{'COMMON.DETAILS' | translate}}
+            </button>
         </sg-legend>
         <!-- ./LEGENDS -->
 

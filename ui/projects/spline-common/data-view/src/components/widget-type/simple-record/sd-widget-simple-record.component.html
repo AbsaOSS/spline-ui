@@ -20,7 +20,16 @@
                         [label]="record?.label"
                         [description]="record?.description">
 
-        {{record.value}}
+        <a *ngIf="record?.routerLink"
+           [routerLink]="record.routerLink"
+           [queryParams]="record?.routerQueryParams">
+            {{record.value}}
+        </a>
+
+        <span *ngIf="!record?.routerLink">
+            {{record.value}}
+        </span>
+
 
     </spline-data-record>
 

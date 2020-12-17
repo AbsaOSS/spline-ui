@@ -59,6 +59,12 @@
         cursor: pointer;
     }
 
+    &--dissallow-selection {
+        > .cdk-tree-node:hover > li {
+            cursor: default;
+        }
+    }
+
     &--disallow-attr-selection {
         > .cdk-tree-node:hover > li {
             cursor: inherit;

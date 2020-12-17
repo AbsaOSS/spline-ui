@@ -14,7 +14,13 @@
  * limitations under the License.
  */
 
-import { AttributeLineage, ExecutionPlan, ExecutionPlanLineageNode, ExecutionPlanLineageOverview, LineageNodeLink } from 'spline-api'
+import {
+    ExecutionPlan,
+    ExecutionPlanLineageNode,
+    ExecutionPlanLineageOverview,
+    LineageNodeLink,
+    OperationAttributeLineage
+} from 'spline-api'
 import { SgData } from 'spline-common/graph'
 import { SgNodeControl } from 'spline-shared/graph'
 import { ProcessingStore, SplineEntityStore } from 'spline-utils'
@@ -34,7 +40,7 @@ export namespace ExecutionPlanOverviewStore {
         selectedNodeId: string | null
         selectedAttributeId: string | null
 
-        attributeLineage: AttributeLineage | null
+        attributeLineage: OperationAttributeLineage | null
         attributeLineageLoadingProcessing: ProcessingStore.EventProcessingState
 
         graphNodeView: SgNodeControl.NodeView

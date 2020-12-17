@@ -18,12 +18,12 @@ import { Injectable } from '@angular/core'
 import { forkJoin, Observable, of } from 'rxjs'
 import { catchError, distinctUntilChanged, map, shareReplay, take, tap } from 'rxjs/operators'
 import {
-    AttributeLineage,
     AttributeSchema,
     ExecutionPlan,
     ExecutionPlanFacade,
     ExecutionPlanLineageNode,
     ExecutionPlanLineageOverview,
+    OperationAttributeLineage,
 } from 'spline-api'
 import { SgNodeControl } from 'spline-shared/graph'
 import { BaseStore, ProcessingStore, SplineEntityStore } from 'spline-utils'
@@ -142,7 +142,7 @@ export class ExecutionPlanOverviewStoreFacade extends BaseStore<ExecutionPlanOve
                             return of(null)
                         }),
                         // update data state
-                        tap((attributeLineage: AttributeLineage) => {
+                        tap((attributeLineage: OperationAttributeLineage) => {
                             if (attributeLineage !== null) {
                                 this.updateState({
                                     attributeLineageLoadingProcessing: ProcessingStore.eventProcessingFinish(
@@ -165,13 +165,13 @@ export class ExecutionPlanOverviewStoreFacade extends BaseStore<ExecutionPlanOve
             loadingProcessing: ProcessingStore.eventProcessingStart(this.state.loadingProcessing),
         })
 
-        const operationObserver: Observable<AttributeLineage | null> = selectedAttributeId
+        const operationObserver: Observable<OperationAttributeLineage | null> = selectedAttributeId
             ? this.executionPlanFacade.fetchAttributeLinage(executionPlanId, selectedAttributeId)
             : of(null)
 
         type CombinedData = {
             executionPlanLinage: ExecutionPlanLineageOverview
-            attributeLineage: AttributeLineage | null
+            attributeLineage: OperationAttributeLineage | null
         }
 
         const observer: Observable<CombinedData> = forkJoin([

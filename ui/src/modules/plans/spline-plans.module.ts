@@ -21,6 +21,7 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatButtonToggleModule } from '@angular/material/button-toggle'
 import { MatCardModule } from '@angular/material/card'
 import { MatChipsModule } from '@angular/material/chips'
+import { MatDialogModule } from '@angular/material/dialog'
 import { MatDividerModule } from '@angular/material/divider'
 import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
@@ -99,7 +100,8 @@ import { SplinePlansRoutingModule } from './spline-plans-routing.module'
         SplineCommonModule,
         SplineGraphSharedModule,
         MatButtonToggleModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatDialogModule
     ],
     exports: [
         ...fromPages.pageComponents,

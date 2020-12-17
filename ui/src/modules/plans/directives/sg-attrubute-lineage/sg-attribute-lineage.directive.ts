@@ -17,7 +17,7 @@
 
 import { AfterContentInit, Directive, forwardRef, Host, Inject, Input, OnChanges, SimpleChanges } from '@angular/core'
 import { GraphComponent } from '@swimlane/ngx-graph'
-import { AttributeLineage, AttributeLineageType } from 'spline-api'
+import { OperationAttributeLineage, OperationAttributeLineageType } from 'spline-api'
 import { getLinkDomSelector, getNodeDomSelector, SplineGraphComponent } from 'spline-common/graph'
 import { SgContainerComponent } from 'spline-shared/graph'
 
@@ -31,7 +31,7 @@ export class SgAttributeLineageDirective implements AfterContentInit, OnChanges 
 
     readonly domRelationDelayInMs = 500
 
-    @Input() sgAttributeLineage: AttributeLineage | null
+    @Input() sgAttributeLineage: OperationAttributeLineage | null
 
     get splineGraph(): SplineGraphComponent {
         return this.sgContainerComponent.splineGraph
@@ -62,21 +62,21 @@ export class SgAttributeLineageDirective implements AfterContentInit, OnChanges 
         )
     }
 
-    private applyLineageStyles(attributeLineage: AttributeLineage | null, ngxGraphComponent: GraphComponent): void {
+    private applyLineageStyles(attributeLineage: OperationAttributeLineage | null, ngxGraphComponent: GraphComponent): void {
         const attributesLineageNodesMap = extractAttributeLineageNodesMap(attributeLineage)
 
         const cssClassesMap = {
-            [AttributeLineageType.Usage]: 'sg-attribute-lineage--usage',
-            [AttributeLineageType.Lineage]: 'sg-attribute-lineage--lineage',
-            [AttributeLineageType.Impact]: 'sg-attribute-lineage--impact',
+            [OperationAttributeLineageType.Usage]: 'sg-attribute-lineage--usage',
+            [OperationAttributeLineageType.Lineage]: 'sg-attribute-lineage--lineage',
+            [OperationAttributeLineageType.Impact]: 'sg-attribute-lineage--impact',
             none: 'sg-attribute-lineage--none',
         }
 
-        const lineageTypesList = Object.values(AttributeLineageType)
+        const lineageTypesList = Object.values(OperationAttributeLineageType)
 
         function applyStylesToDomElm(selector: string,
                                      rootElmRef: HTMLElement,
-                                     evaluationFn: (lineageType: AttributeLineageType) => boolean,
+                                     evaluationFn: (lineageType: OperationAttributeLineageType) => boolean,
         ): void {
             const elementRef = rootElmRef.querySelector(selector)
             if (elementRef) {
@@ -119,18 +119,18 @@ export class SgAttributeLineageDirective implements AfterContentInit, OnChanges 
                     ngxGraphComponent.chart.nativeElement,
                     (lineageType) => {
                         switch (lineageType) {
-                            case AttributeLineageType.Lineage:
+                            case OperationAttributeLineageType.Lineage:
                                 return attributesLineageNodesMap[lineageType].has(item.source)
                                     && (
                                         attributesLineageNodesMap[lineageType].has(item.target)
-                                        || attributesLineageNodesMap[AttributeLineageType.Usage].has(item.target)
+                                        || attributesLineageNodesMap[OperationAttributeLineageType.Usage].has(item.target)
                                     )
 
-                            case AttributeLineageType.Impact:
+                            case OperationAttributeLineageType.Impact:
                                 return attributesLineageNodesMap[lineageType].has(item.target)
                                     && (
                                         attributesLineageNodesMap[lineageType].has(item.source)
-                                        || attributesLineageNodesMap[AttributeLineageType.Usage].has(item.source)
+                                        || attributesLineageNodesMap[OperationAttributeLineageType.Usage].has(item.source)
                                     )
 
                             default:

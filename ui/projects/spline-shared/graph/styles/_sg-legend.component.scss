@@ -1,5 +1,5 @@
 /*!
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 .sg-legend {
     align-items: center;
     display: flex;
-    font-size: 12px;
+    font-size: 14px;
     margin-bottom: 0.25rem;
 
     &__circle {
@@ -29,10 +29,13 @@
         height: 1rem;
         width: 1rem;
     }
+
+    &__actions {
+        flex-grow: 0;
+    }
 }
 
 .sg-legend mat-icon.mat-icon {
-    @include icon-size(1.25rem);
     color: $color-grey-dark-50;
     cursor: pointer;
 }

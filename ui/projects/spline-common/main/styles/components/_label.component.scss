@@ -1,5 +1,5 @@
 /*!
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,19 +17,23 @@
 @import '../vars';
 
 .spline-label {
-    background: $color-platinum;
-    border-radius: 0.5rem;
-    color: $color-white;
+    border: 2px solid $color-platinum;
+    border-radius: 1rem;
+    color: $color-platinum;
     display: inline-block;
     font-size: 9px;
+    font-weight: bold;
     line-height: 1rem;
     padding: 0 0.5rem;
+    text-transform: uppercase;
 }
 
 .spline-label[color='platinum'] {
-    background: $color-platinum;
+    border-color: $color-platinum;
+    color: $color-platinum;
 }
 
 .spline-label[color='human'] {
-    background: $color-human;
+    border-color: $color-human;
+    color: $color-human;
 }

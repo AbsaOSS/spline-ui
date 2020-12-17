@@ -19,5 +19,6 @@
  */
 
 export * from './components/icon/spline-icon.component'
+export * from './components/icon-with-text/spline-icon-with-text.component'
 export * from './models/spline-icon.models'
 export * from './spline-icon.module'

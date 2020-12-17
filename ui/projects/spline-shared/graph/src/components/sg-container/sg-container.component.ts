@@ -58,6 +58,7 @@ export class SgContainerComponent extends BaseLocalStateComponent<SgContainer.St
     @Input() selectedNodeId: string | null
     @Input() targetNodeId: string | null
     @Input() graphNodeView: NodeView = NodeView.Detailed
+    @Input() showGraphNodeView = true
 
     @Output() nodeEvent$ = new EventEmitter<SgNodeEvent>()
     @Output() nodeDoubleClick$ = new EventEmitter<{ nodeSchema: SgNodeSchema }>()

@@ -15,6 +15,5 @@
  */
 
 export * from './attribute-lineage.models'
-export * from './attribute-lineage-type.models'
 export * from './attribute-linieage-node.models'
 

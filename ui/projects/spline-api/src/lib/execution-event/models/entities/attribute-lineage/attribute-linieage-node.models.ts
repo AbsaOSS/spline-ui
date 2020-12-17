@@ -17,21 +17,13 @@
 
 export type AttributeLineageNode = {
     id: string
-    originOpId: string
-    transOpIds: string[]
+    name: string
+    type: AttributeLineageNodeType
+    operationId: string
+    executionPlanId: string
 }
 
-export type AttributeLineageNodeDto = {
-    _id: string
-    originOpId: string
-    transOpIds: string[]
+export enum AttributeLineageNodeType {
+    Attribute = 'Attribute',
+    Expression = 'Expression',
 }
-
-export function toAttributeLineageNode(entity: AttributeLineageNodeDto): AttributeLineageNode {
-    return {
-        id: entity._id,
-        originOpId: entity.originOpId,
-        transOpIds: entity.transOpIds,
-    }
-}
-

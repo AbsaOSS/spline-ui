@@ -15,21 +15,21 @@
  */
 
 
-import { AttributeLineage } from './attribute-lineage.models'
+import { OperationAttributeLineage } from './operation-attribute-lineage.models'
 
 
-export enum AttributeLineageType {
+export enum OperationAttributeLineageType {
     Usage = 'Usage',
     Lineage = 'Lineage',
     Impact = 'Impact'
 }
 
-export function evaluateAttributeLineageTypes(attributeLineage: AttributeLineage): AttributeLineageType[] {
+export function evaluateAttributeLineageTypes(attributeLineage: OperationAttributeLineage): OperationAttributeLineageType[] {
     const lineageNonEmpty = attributeLineage.lineage && attributeLineage.lineage.links.length > 0
     const impactNonEmpty = attributeLineage.impact.links.length > 0
     return [
-        AttributeLineageType.Usage,
-        ...(lineageNonEmpty ? [AttributeLineageType.Lineage] : []),
-        ...(impactNonEmpty ? [AttributeLineageType.Impact] : []),
+        OperationAttributeLineageType.Usage,
+        ...(lineageNonEmpty ? [OperationAttributeLineageType.Lineage] : []),
+        ...(impactNonEmpty ? [OperationAttributeLineageType.Impact] : []),
     ]
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,17 +15,22 @@
  */
 
 import { Component, OnInit, ViewChild } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
+import keyBy from 'lodash/keyBy'
 import { filter, map, skip, takeUntil } from 'rxjs/operators'
-import { ExecutionPlanFacade } from 'spline-api'
+import { AttributeSchema, ExecutionPlanFacade, OperationAttributeLineageType, toAttributeLineage } from 'spline-api'
 import { SplineTabsNavBar } from 'spline-common'
+import { SplineAttributesTree } from 'spline-shared/attributes'
 import { SgContainerComponent, SgNodeControl } from 'spline-shared/graph'
 import { BaseComponent, RouterNavigation } from 'spline-utils'
 
+import { AttributeLineageDialogComponent } from '../../components'
+import { AttributeLineageDialog } from '../../components/attribute-lineage/attribute-lineage-dialog/attribute-lineage-dialog.models'
 import { PlanOverview } from '../../models'
 import { ExecutionPlanOverviewStoreFacade } from '../../store'
-import QueryParamAlis = PlanOverview.QueryParamAlis
 import NavTabInfo = SplineTabsNavBar.NavTabInfo
+import QueryParamAlis = PlanOverview.QueryParamAlis
 
 
 @Component({
@@ -58,6 +63,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
 
     constructor(private readonly activatedRoute: ActivatedRoute,
                 private readonly router: Router,
+                private readonly matDialog: MatDialog,
                 readonly store: ExecutionPlanOverviewStoreFacade) {
         super()
 
@@ -115,6 +121,33 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         if (nodeIds?.length !== undefined && !!this.store.state.selectedAttributeId) {
             this.store.setSelectedAttribute(null)
         }
+    }
+
+    onShowAttrLineage(selectedAttribute: AttributeSchema, lineageType: OperationAttributeLineageType): void {
+        // TODO: move that logic to hte store
+        const attrSchemaCollection = keyBy(this.store.state.executionPlan.extraInfo.attributes, 'id')
+        const attributeTreeSchema = SplineAttributesTree.toTree([selectedAttribute], this.store.state.executionPlan.extraInfo.dataTypes)
+
+        this.matDialog.open<AttributeLineageDialogComponent, AttributeLineageDialog.Data>(
+            AttributeLineageDialogComponent,
+            {
+                width: '95vw',
+                maxWidth: '95vw',
+                height: '95vh',
+                autoFocus: false,
+                closeOnNavigation: true,
+                data: AttributeLineageDialog.toData(
+                    toAttributeLineage(
+                        this.store.state.attributeLineage,
+                        attrSchemaCollection,
+                        this.store.state.executionPlanId,
+                        lineageType
+                    ),
+                    attributeTreeSchema,
+                    lineageType
+                )
+            }
+        )
     }
 
     private resetNodeHighlightRelations(): void {

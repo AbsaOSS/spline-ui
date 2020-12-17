@@ -15,6 +15,9 @@
  */
 
 spline-icon {
-    display: flex;
-    justify-content: center;
+    display: inline-block;
+}
+
+.mat-button spline-icon.mat-button-inline-icon {
+    padding-right: 8px;
 }

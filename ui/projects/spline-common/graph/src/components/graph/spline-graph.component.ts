@@ -157,6 +157,11 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges {
     }
 
     private selectNode(node: SgNativeNode): void {
+        // do nothing if selection is disallowed
+        if (node.schema?.allowSelection === false) {
+            return
+        }
+
         if (this._selectedNodeId !== node.id) {
             this._selectedNodeId = node.id
             this.nodeSelectionChange$.emit({ nodeSchema: node.schema })

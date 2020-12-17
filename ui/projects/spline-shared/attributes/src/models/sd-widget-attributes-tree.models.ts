@@ -31,6 +31,8 @@ export namespace SdWidgetAttributesTree {
     export type Options = {
         selectedAttributeId?: string
         allowAttrSelection?: boolean // true by default
+        allowSearch?: boolean // true by default
+        expandAll?: boolean // false by default
         actionIcon?: string
     }
 

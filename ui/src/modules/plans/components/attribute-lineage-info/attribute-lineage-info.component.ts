@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,12 @@
  */
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core'
-import { AttributeLineage, AttributeSchema, evaluateAttributeLineageTypes } from 'spline-api'
+import {
+    AttributeSchema,
+    evaluateAttributeLineageTypes,
+    OperationAttributeLineage,
+    OperationAttributeLineageType
+} from 'spline-api'
 import { SplineColors } from 'spline-common'
 import { SgLegend } from 'spline-shared/graph'
 
@@ -36,10 +41,10 @@ export class AttributeLineageInfoComponent {
 
     @Input() loading = false
 
-    @Input() set attributeLineage(value: AttributeLineage | null) {
+    @Input() set attributeLineage(value: OperationAttributeLineage | null) {
         if (value) {
             const lineageTypes = evaluateAttributeLineageTypes(value)
-            this.legendsList = lineageTypes.map(getAttributeLineageTypeLegend)
+            this.legendsList = lineageTypes.map(item => getAttributeLineageTypeLegend(item))
         }
         else {
             this.legendsList = []
@@ -47,10 +52,23 @@ export class AttributeLineageInfoComponent {
     }
 
     @Output() close$ = new EventEmitter<void>()
+    @Output() showAttrLineage$ = new EventEmitter<{ lineageType: OperationAttributeLineageType }>()
 
     legendsList: SgLegend[]
 
+    readonly OperationAttributeLineageType = OperationAttributeLineageType
+
     onRemoveIconClicked(): void {
         this.close$.emit()
+    }
+
+    onShowLineageBtnClicked(): void {
+        this.showAttrLineage$.emit()
+    }
+
+    onLineageLegendDetailsBtnClicked(legend: SgLegend): void {
+        this.showAttrLineage$.emit({
+            lineageType: legend.id as OperationAttributeLineageType
+        })
     }
 }

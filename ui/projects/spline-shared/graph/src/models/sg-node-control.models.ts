@@ -39,6 +39,7 @@ export namespace SgNodeControl {
         Projection = 'Project',
         Aggregate = 'Aggregate',
         Sort = 'Sort',
+        Attribute = 'Attribute',
     }
 
     export type NodeView = 'Detailed' | 'Compact'
@@ -136,6 +137,13 @@ export namespace SgNodeControl {
                 {
                     icon: 'sort_by_alpha',
                     color: SplineColors.GREEN,
+                },
+            ],
+            [
+                NodeType.Attribute,
+                {
+                    icon: 'local_offer',
+                    color: SplineColors.ORANGE,
                 },
             ],
         ])

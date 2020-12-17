@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,32 +14,47 @@
  * limitations under the License.
  */
 
-import { Lineage, LineageDto } from '../lineage'
+import { AttrSchemasCollection } from '../attribute'
+import { Lineage } from '../lineage'
+import {
+    OperationAttributeLineage,
+    OperationAttributeLineageNode,
+    OperationAttributeLineageType
+} from '../operation-attribute-lineage'
 
-import { AttributeLineageNode, AttributeLineageNodeDto, toAttributeLineageNode } from './attribute-linieage-node.models'
+import { AttributeLineageNode, AttributeLineageNodeType } from './attribute-linieage-node.models'
 
 
 export type AttributeLineage = {
-    impact: Lineage<AttributeLineageNode>
     lineage: Lineage<AttributeLineageNode>
 }
 
+export function toAttributeLineage(entity: OperationAttributeLineage,
+                                   attrSchemaCollection: AttrSchemasCollection,
+                                   executionPlanId: string,
+                                   lineageType: OperationAttributeLineageType = OperationAttributeLineageType.Lineage): AttributeLineage {
+    const refLineageSource = lineageType === OperationAttributeLineageType.Lineage
+        ? entity.lineage
+        : entity.impact
 
-export type AttributeLineageDto = {
-    impact: LineageDto<AttributeLineageNodeDto>
-    lineage: LineageDto<AttributeLineageNodeDto>
+    return {
+        lineage: {
+            links: refLineageSource.links,
+            nodes: refLineageSource.nodes.map(node => toAttributeLineageNode(node, attrSchemaCollection, executionPlanId))
+        },
+    }
 }
 
-export function toAttributeLineage(entity: AttributeLineageDto): AttributeLineage {
+
+export function toAttributeLineageNode(node: OperationAttributeLineageNode,
+                                       attrSchemaCollection: AttrSchemasCollection,
+                                       executionPlanId: string): AttributeLineageNode {
     return {
-        impact: {
-            links: entity.impact.edges,
-            nodes: entity.impact.nodes.map(toAttributeLineageNode)
-        },
-        lineage: {
-            links: entity.lineage.edges,
-            nodes: entity.lineage.nodes.map(toAttributeLineageNode)
-        }
+        id: node.id,
+        name: attrSchemaCollection[node.id].name,
+        type: AttributeLineageNodeType.Attribute,
+        operationId: node.originOpId,
+        executionPlanId
     }
 }
 

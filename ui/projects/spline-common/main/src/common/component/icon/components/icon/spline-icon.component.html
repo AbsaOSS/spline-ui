@@ -15,13 +15,14 @@
   -->
 
 <ng-container [ngSwitch]="isCustomIcon">
+ <div class="d-flex justify-content-center">
+  <!-- CUSTOM SVG ICON -->
+  <mat-icon *ngSwitchCase="true" [svgIcon]="icon" [ngStyle]="styles"></mat-icon>
+  <!-- ./CUSTOM SVG ICON -->
 
- <!-- CUSTOM SVG ICON -->
- <mat-icon *ngSwitchCase="true" [svgIcon]="icon" [ngStyle]="styles"></mat-icon>
- <!-- ./CUSTOM SVG ICON -->
-
- <!-- MATERIAL ICON -->
- <mat-icon *ngSwitchCase="false" [ngStyle]="styles">{{ icon }}</mat-icon>
- <!-- ./MATERIAL ICON -->
+  <!-- MATERIAL ICON -->
+  <mat-icon *ngSwitchCase="false" [ngStyle]="styles">{{ icon }}</mat-icon>
+  <!-- ./MATERIAL ICON -->
+ </div>
 
 </ng-container>

@@ -1,5 +1,5 @@
 /*!
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,5 +27,17 @@ $section-width: 600px;
     position: relative;
     width: $section-width;
     z-index: 2;
+
+    &__header {
+        line-height: 40px;
+        margin-bottom: 1rem;
+        position: relative;
+
+        h2 {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+    }
 
 }

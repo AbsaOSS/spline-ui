@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2020 ABSA Group Limited
+  ~ Copyright 2021 ABSA Group Limited
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -16,17 +16,25 @@
 
 <div class="sg-legend">
 
-    <div [ngStyle]="{background: legend.color}"
-         class="sg-legend__circle">
-    </div>
-
-    <div class="px-2 flex-grow-1">
-        {{legend.title | translate}}
-    </div>
-
     <mat-icon *ngIf="legend?.description"
+              [ngStyle]="{color: legend.color}"
               [matTooltip]="legend.description | translate">
         info
     </mat-icon>
+
+    <div class="flex-grow-1 px-2">
+        {{legend.title | translate}}
+    </div>
+
+
+
+<!--    <mat-icon *ngIf="legend?.description"-->
+<!--              [matTooltip]="legend.description | translate">-->
+<!--        info-->
+<!--    </mat-icon>-->
+
+    <div class="sg-legend__actions">
+        <ng-content></ng-content>
+    </div>
 </div>
 

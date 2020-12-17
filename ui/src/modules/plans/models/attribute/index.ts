@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
+export * from './attribute-info.models'
 export * from './attribute-lineage.models'
 export * from './attribute-lineage-legend.models'
+export * from './attribute-node-control.models'
 export * from './attributes-schema.models'
 

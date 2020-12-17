@@ -17,7 +17,9 @@
     <spline-attributes-tree (selectedAttributeChanged$)="onSelectedAttrChanged($event)"
                             *ngIf="attributesTree$ | async as attributesTree"
                             [allowAttrSelection]="options?.allowAttrSelection !== false"
+                            [allowSearch]="options?.allowAttrSelection !== false"
                             [actionIcon]="options?.actionIcon"
+                            [expandAll]="options?.expandAll"
                             [attributesTree]="attributesTree"
                             [selectedAttributeId]="(selectedAttributeId$ | async)">
     </spline-attributes-tree>

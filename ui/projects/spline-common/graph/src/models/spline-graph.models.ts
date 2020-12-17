@@ -23,6 +23,7 @@ import { DynamicValueProvider } from 'spline-utils'
 export type SgNodeSchema<TData extends object = {}, TOptions extends object = {}, TMetadata extends object = {}> = {
     id: string
     type?: string
+    allowSelection?: boolean // true by default
     data?: DynamicValueProvider<TData>
     options?: DynamicValueProvider<TOptions>
     metadata?: TMetadata

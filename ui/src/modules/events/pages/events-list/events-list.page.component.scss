@@ -1,5 +1,5 @@
 /*!
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,22 +26,6 @@
     color: $color-grey-dark;
     display: block;
     font-size: 10px;
-}
-
-
-.write-mode {
-    background: $color-grey-dark;
-    border-radius: 1.5rem;
-    color: $color-white;
-    display: inline-block;
-    font-size: 9px;
-    font-weight: 500;
-    line-height: 1.1rem;
-    padding: 0 0.5rem;
-
-    &--pink {
-        background: $color-pink;
-    }
 }
 
 .mat-column-applicationName {

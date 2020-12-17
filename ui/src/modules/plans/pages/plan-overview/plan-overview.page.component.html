@@ -79,6 +79,7 @@
                         <sg-toolbar *ngIf="store.selectedAttribute$ | async as selectedAttribute"
                                     position="top-right">
                             <spline-attribute-lineage-info (close$)="onSelectedAttributeChanged(null)"
+                                                           (showAttrLineage$)="onShowAttrLineage(selectedAttribute, $event.lineageType)"
                                                            [attributeLineage]="state.attributeLineage"
                                                            [attribute]="selectedAttribute"
                                                            [loading]="state.attributeLineageLoadingProcessing.processing">
@@ -91,6 +92,7 @@
         </div>
     </div>
 </ng-container>
+
 
 
 

@@ -19,6 +19,7 @@ import { NgModule } from '@angular/core'
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon'
 import { DomSanitizer } from '@angular/platform-browser'
 
+import { SplineIconWithTextComponent } from './components/icon-with-text/spline-icon-with-text.component'
 import { SplineIconComponent } from './components/icon/spline-icon.component'
 import { SPLINE_ICONS_COLLECTION } from './models/spline-icon.models'
 
@@ -28,12 +29,14 @@ import { SPLINE_ICONS_COLLECTION } from './models/spline-icon.models'
         CommonModule,
         MatIconModule,
     ],
+    declarations: [
+        SplineIconComponent,
+        SplineIconWithTextComponent
+    ],
     exports: [
         MatIconModule,
         SplineIconComponent,
-    ],
-    declarations: [
-        SplineIconComponent,
+        SplineIconWithTextComponent
     ],
 })
 export class SplineIconModule {

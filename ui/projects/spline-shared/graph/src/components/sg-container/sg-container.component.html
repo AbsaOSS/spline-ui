@@ -27,15 +27,19 @@
 
     <ng-content></ng-content>
 
-    <sg-toolbar position="top-left">
+    <!-- NODE VIEW CONTROL -->
+    <sg-toolbar position="top-left" *ngIf="showGraphNodeView">
         <div class="sg-container__graph-view-control">
             <mat-slide-toggle color="primary"
                               [checked]="graphNodeView === 'Compact'"
                               (change)="onGraphNodeViewChanged($event.checked)">
-                Compact view
+
+                {{ 'SHARED.SG_NODE_VIEW_CONTROL__COMPACT_VIEW_TITLE' | translate }}
+
             </mat-slide-toggle>
         </div>
     </sg-toolbar>
+    <!-- ./NODE VIEW CONTROL -->
 
     <!-- CONTROL PANEL :: ACTIONS -->
     <ng-template sgControlPanelSection>

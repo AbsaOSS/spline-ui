@@ -21,14 +21,14 @@ import { map } from 'rxjs/operators'
 
 import { Cacheable } from '../../core'
 import {
-    AttributeLineage,
-    AttributeLineageDto,
     ExecutionPlanLineageOverview,
     ExecutionPlanLineageOverviewDto,
+    OperationAttributeLineage,
+    OperationAttributeLineageDto,
     OperationDetails,
     OperationDetailsDto,
-    toAttributeLineage,
     toExecutionPlanLineageOverview,
+    toOperationAttributeLineage,
     toOperationDetails,
 } from '../models'
 
@@ -64,16 +64,16 @@ export class ExecutionPlanFacade extends BaseFacade {
     }
 
     @Cacheable
-    fetchAttributeLinage(executionPlanId: string, attributeId: string): Observable<AttributeLineage> {
+    fetchAttributeLinage(executionPlanId: string, attributeId: string): Observable<OperationAttributeLineage> {
         let params = new HttpParams()
         params = params.append('execId', executionPlanId)
         params = params.append('attributeId', attributeId)
 
         const url = this.toUrl('attribute-lineage-and-impact')
 
-        return this.http.get<AttributeLineageDto>(url, { params })
+        return this.http.get<OperationAttributeLineageDto>(url, { params })
             .pipe(
-                map(toAttributeLineage),
+                map(toOperationAttributeLineage),
             )
     }
 }

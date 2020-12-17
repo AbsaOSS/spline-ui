@@ -35,8 +35,10 @@ export class SplineAttributesTreeComponent extends BaseComponent implements OnCh
 
     @Input() attributesTree: SplineAttributesTree.Tree
     @Input() selectedAttributeId: string
-    @Input() allowAttrSelection = false
+    @Input() allowAttrSelection = true
+    @Input() allowSearch = true
     @Input() actionIcon = this.defaultActionIcon
+    @Input() expandAll = false
 
     @Input() set searchTerm(value: string) {
         this.searchTerm$.next(value)
@@ -70,12 +72,16 @@ export class SplineAttributesTreeComponent extends BaseComponent implements OnCh
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.attributesTree?.currentValue) {
             this.treeDataSource.data = changes.attributesTree.currentValue
+            this.treeControl.dataNodes = changes.attributesTree.currentValue
+        }
+
+        if (changes?.expandAll && changes.expandAll.currentValue) {
+            this.treeControl.expandAll()
         }
     }
 
     onHighlightBtnClicked($event: MouseEvent, nodeId: string): void {
         $event.stopPropagation()
-        console.log('OPA', this.allowAttrSelection)
         if (this.allowAttrSelection) {
             this.selectedAttributeId = nodeId
         }

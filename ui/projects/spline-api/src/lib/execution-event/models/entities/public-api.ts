@@ -16,6 +16,7 @@
 
 export * from './attribute/public-api'
 export * from './attribute-lineage/public-api'
+export * from './operation-attribute-lineage/public-api'
 export * from './data-source/public-api'
 export * from './execution-event/public-api'
 export * from './execution-event-overview/public-api'

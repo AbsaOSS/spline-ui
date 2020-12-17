@@ -15,25 +15,25 @@
  */
 
 import keyBy from 'lodash/keyBy'
-import { AttributeLineage, AttributeLineageNode, AttributeLineageType } from 'spline-api'
+import { OperationAttributeLineage, OperationAttributeLineageNode, OperationAttributeLineageType } from 'spline-api'
 import { SplineColors } from 'spline-common'
 
 
-export const LINEAGE_TYPE_COLOR_MAP: Readonly<Record<AttributeLineageType, string>>
-    = Object.freeze<Record<AttributeLineageType, string>>({
-        [AttributeLineageType.Usage]: SplineColors.BLACK,
-        [AttributeLineageType.Lineage]: SplineColors.GREEN_LIGHT,
-        [AttributeLineageType.Impact]: SplineColors.SMILE,
+export const LINEAGE_TYPE_COLOR_MAP: Readonly<Record<OperationAttributeLineageType, string>>
+    = Object.freeze<Record<OperationAttributeLineageType, string>>({
+        [OperationAttributeLineageType.Usage]: SplineColors.BLACK,
+        [OperationAttributeLineageType.Lineage]: SplineColors.GREEN_LIGHT,
+        [OperationAttributeLineageType.Impact]: SplineColors.SMILE,
     })
 
 // TODO: write some tests
-export function extractImpactRootAttributeNode(graph: AttributeLineage): AttributeLineageNode {
+export function extractImpactRootAttributeNode(graph: OperationAttributeLineage): OperationAttributeLineageNode {
     const impactedAttrIds = keyBy(graph.impact.links, item => item.source)
     return graph.impact.nodes.find(node => !impactedAttrIds[node.id])
 }
 
 // TODO: write some tests
-export function getLineageAttributesNodes(graph: AttributeLineage): AttributeLineageNode[] {
+export function getLineageAttributesNodes(graph: OperationAttributeLineage): OperationAttributeLineageNode[] {
     const primaryAttribute = extractImpactRootAttributeNode(graph)
     return graph?.lineage?.nodes?.length
         ? graph.lineage.nodes.filter(node => node.id !== primaryAttribute.id)
@@ -41,23 +41,23 @@ export function getLineageAttributesNodes(graph: AttributeLineage): AttributeLin
 }
 
 // TODO: write some tests
-export function getImpactAttributesNodes(graph: AttributeLineage): AttributeLineageNode[] {
+export function getImpactAttributesNodes(graph: OperationAttributeLineage): OperationAttributeLineageNode[] {
     const primaryAttribute = extractImpactRootAttributeNode(graph)
     return graph?.impact?.nodes?.length
         ? graph.impact.nodes.filter(node => node.id !== primaryAttribute.id)
         : []
 }
 
-export type AttributeLineageNodesMap = Record<AttributeLineageType, Set<string>>
+export type AttributeLineageNodesMap = Record<OperationAttributeLineageType, Set<string>>
 
 // TODO: write some tests
-export function extractAttributeLineageNodesMap(graph: AttributeLineage | null): AttributeLineageNodesMap {
+export function extractAttributeLineageNodesMap(graph: OperationAttributeLineage | null): AttributeLineageNodesMap {
 
     if (graph === null) {
         return {
-            [AttributeLineageType.Usage]: new Set(),
-            [AttributeLineageType.Lineage]: new Set(),
-            [AttributeLineageType.Impact]: new Set(),
+            [OperationAttributeLineageType.Usage]: new Set(),
+            [OperationAttributeLineageType.Lineage]: new Set(),
+            [OperationAttributeLineageType.Impact]: new Set(),
         }
     }
 
@@ -81,8 +81,8 @@ export function extractAttributeLineageNodesMap(graph: AttributeLineage | null):
         ], [])
 
     return {
-        [AttributeLineageType.Usage]: new Set(primaryNodeIds),
-        [AttributeLineageType.Lineage]: new Set(lineageNodesIds),
-        [AttributeLineageType.Impact]: new Set(impactNodesIds),
+        [OperationAttributeLineageType.Usage]: new Set(primaryNodeIds),
+        [OperationAttributeLineageType.Lineage]: new Set(lineageNodesIds),
+        [OperationAttributeLineageType.Impact]: new Set(impactNodesIds),
     }
 }

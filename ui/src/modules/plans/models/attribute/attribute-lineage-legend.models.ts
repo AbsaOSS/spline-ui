@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,32 +14,35 @@
  * limitations under the License.
  */
 
-import { AttributeLineageType } from 'spline-api'
+import { OperationAttributeLineageType } from 'spline-api'
 import { SgLegend } from 'spline-shared/graph'
 
 
 import { LINEAGE_TYPE_COLOR_MAP } from './attribute-lineage.models'
 
 
-export const LINAGE_TYPE_LEGENDS_MAP: Readonly<Record<AttributeLineageType, SgLegend>>
-    = Object.freeze<Record<AttributeLineageType, SgLegend>>({
-        [AttributeLineageType.Usage]: {
+export const LINAGE_TYPE_LEGENDS_MAP: Readonly<Record<OperationAttributeLineageType, SgLegend>>
+    = Object.freeze<Record<OperationAttributeLineageType, SgLegend>>({
+        [OperationAttributeLineageType.Usage]: {
+            id: OperationAttributeLineageType.Usage,
             title: 'PLANS.ATTRIBUTE_LINEAGE__LEGEND__USAGE__TITLE',
             description: 'PLANS.ATTRIBUTE_LINEAGE__LEGEND__USAGE__DESCRIPTION',
-            color: LINEAGE_TYPE_COLOR_MAP[AttributeLineageType.Usage],
+            color: LINEAGE_TYPE_COLOR_MAP[OperationAttributeLineageType.Usage],
         },
-        [AttributeLineageType.Lineage]: {
+        [OperationAttributeLineageType.Lineage]: {
+            id: OperationAttributeLineageType.Lineage,
             title: 'PLANS.ATTRIBUTE_LINEAGE__LEGEND__LINEAGE__TITLE',
             description: 'PLANS.ATTRIBUTE_LINEAGE__LEGEND__LINEAGE__DESCRIPTION',
-            color: LINEAGE_TYPE_COLOR_MAP[AttributeLineageType.Lineage],
+            color: LINEAGE_TYPE_COLOR_MAP[OperationAttributeLineageType.Lineage],
         },
-        [AttributeLineageType.Impact]: {
+        [OperationAttributeLineageType.Impact]: {
+            id: OperationAttributeLineageType.Impact,
             title: 'PLANS.ATTRIBUTE_LINEAGE__LEGEND__IMPACT__TITLE',
             description: 'PLANS.ATTRIBUTE_LINEAGE__LEGEND__IMPACT__DESCRIPTION',
-            color: LINEAGE_TYPE_COLOR_MAP[AttributeLineageType.Impact],
+            color: LINEAGE_TYPE_COLOR_MAP[OperationAttributeLineageType.Impact],
         },
     })
 
-export function getAttributeLineageTypeLegend(type: AttributeLineageType): SgLegend {
+export function getAttributeLineageTypeLegend(type: OperationAttributeLineageType): SgLegend {
     return LINAGE_TYPE_LEGENDS_MAP[type]
 }

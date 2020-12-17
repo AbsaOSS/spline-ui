@@ -30,7 +30,6 @@ import { SplineDataWidgetEvent } from 'spline-common/data-view'
 import { SdWidgetAttributesTree } from 'spline-shared/attributes'
 import { SgNodeCardDataView } from 'spline-shared/data-view'
 import NodeEventData = SgNodeCardDataView.NodeEventData
-import { SgNodeControl } from 'spline-shared/graph'
 import { BaseLocalStateComponent, GenericEventInfo } from 'spline-utils'
 
 import { OperationDetailsDataSource } from '../../data-sources'

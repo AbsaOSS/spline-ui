@@ -26,7 +26,13 @@ import { SplineIconModule, SplineSearchBoxModule } from 'spline-common'
 import { SplineLayoutModule } from 'spline-common/layout'
 import { SplineConfigModule, SplineConfigSettings, SPLINE_CONFIG_SETTINGS } from 'spline-shared'
 import { SplineAttributesSharedModule } from 'spline-shared/attributes'
-import { SplineTranslateCoreModule, SplineTranslateModule } from 'spline-utils/translate'
+import {
+    COMMON_ASSETS,
+    SplineTranslateCoreModule,
+    SplineTranslateModule,
+    SPLINE_TRANSLATE_COMMON_ASSETS,
+    toAssetsFilePath
+} from 'spline-utils/translate'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -47,7 +53,7 @@ import { AppNotFoundComponent } from './pages/not-found/not-found.component'
         MatTooltipModule,
         MatButtonModule,
         SplineTranslateCoreModule,
-        SplineTranslateModule.forChild({ moduleNames: ['shared', 'shared-attributes', 'app'] }),
+        SplineTranslateModule.forChild({ moduleNames: ['app'] }),
         SplineLayoutModule,
         SplineSearchBoxModule,
         SplineConfigModule,
@@ -62,6 +68,15 @@ import { AppNotFoundComponent } from './pages/not-found/not-found.component'
                     configFileUri: environment.splineConfigUri,
                 }
             },
+        },
+        {
+            provide: SPLINE_TRANSLATE_COMMON_ASSETS,
+            useValue: [
+                ...COMMON_ASSETS,
+                toAssetsFilePath('shared'),
+                toAssetsFilePath('shared-graph'),
+                toAssetsFilePath('shared-attributes'),
+            ]
         },
     ],
     bootstrap: [AppComponent],
