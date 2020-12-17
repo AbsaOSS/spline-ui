@@ -42,6 +42,7 @@ import { BaseLocalStateComponent } from 'spline-utils'
 import { SgNodeControl } from '../../models'
 
 import { SgContainer } from './sg-container.models'
+import NodeView = SgNodeControl.NodeView
 
 
 @Component({
@@ -56,11 +57,13 @@ export class SgContainerComponent extends BaseLocalStateComponent<SgContainer.St
     @Input() graphData: SgData
     @Input() selectedNodeId: string | null
     @Input() targetNodeId: string | null
+    @Input() graphNodeView: NodeView = NodeView.Detailed
 
     @Output() nodeEvent$ = new EventEmitter<SgNodeEvent>()
     @Output() nodeDoubleClick$ = new EventEmitter<{ nodeSchema: SgNodeSchema }>()
     @Output() nodeSelectionChange$ = new EventEmitter<{ nodeId: string | null }>()
     @Output() highlightedRelationsNodesIdsChange$ = new EventEmitter<{ nodeIds: string[] | null }>()
+    @Output() graphNodeViewChange$ = new EventEmitter<{ nodeView: NodeView }>()
 
     readonly focusNode$ = new Subject<string>()
 
@@ -164,6 +167,12 @@ export class SgContainerComponent extends BaseLocalStateComponent<SgContainer.St
 
     onNodeDoubleClick(nodeSchema: SgNodeSchema): void {
         this.nodeDoubleClick$.emit({ nodeSchema })
+    }
+
+    onGraphNodeViewChanged(checked: boolean): void {
+        this.graphNodeViewChange$.emit({
+            nodeView: checked ? NodeView.Compact : NodeView.Detailed
+        })
     }
 
     private onNodeHighlightToggleRelations(nodeId: string): void {

@@ -14,6 +14,14 @@
  * limitations under the License.
  */
 
-@import './sg-depth-control.component';
-@import './sg-legend.component';
-@import './sg-container';
+@import 'vars';
+
+.sg-container {
+    &__graph-view-control {
+        background: $color-grey-light;
+        border-radius: 20px;
+        display: inline-block;
+        line-height: 40px;
+        padding: 0 16px;
+    }
+}

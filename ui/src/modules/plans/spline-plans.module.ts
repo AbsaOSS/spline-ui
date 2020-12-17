@@ -18,6 +18,7 @@ import { CommonModule } from '@angular/common'
 import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { MatButtonModule } from '@angular/material/button'
+import { MatButtonToggleModule } from '@angular/material/button-toggle'
 import { MatCardModule } from '@angular/material/card'
 import { MatChipsModule } from '@angular/material/chips'
 import { MatDividerModule } from '@angular/material/divider'
@@ -25,6 +26,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
 import { MatMenuModule } from '@angular/material/menu'
 import { MatPaginatorModule } from '@angular/material/paginator'
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
 import { MatTabsModule } from '@angular/material/tabs'
@@ -95,7 +97,9 @@ import { SplinePlansRoutingModule } from './spline-plans-routing.module'
         SplineDataViewModule,
         SplineExpressionSharedModule,
         SplineCommonModule,
-        SplineGraphSharedModule
+        SplineGraphSharedModule,
+        MatButtonToggleModule,
+        MatSlideToggleModule
     ],
     exports: [
         ...fromPages.pageComponents,

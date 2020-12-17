@@ -137,6 +137,7 @@
                         <exclude>browserslist</exclude>
                         <exclude>assembly.xml</exclude>
                         <exclude>**/src/assets/images/**</exclude>
+                        <exclude>**/projects/**/assets/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>

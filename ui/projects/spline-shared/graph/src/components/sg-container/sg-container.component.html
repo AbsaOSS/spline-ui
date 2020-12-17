@@ -27,6 +27,16 @@
 
     <ng-content></ng-content>
 
+    <sg-toolbar position="top-left">
+        <div class="sg-container__graph-view-control">
+            <mat-slide-toggle color="primary"
+                              [checked]="graphNodeView === 'Compact'"
+                              (change)="onGraphNodeViewChanged($event.checked)">
+                Compact view
+            </mat-slide-toggle>
+        </div>
+    </sg-toolbar>
+
     <!-- CONTROL PANEL :: ACTIONS -->
     <ng-template sgControlPanelSection>
         <sg-relations-control (showAll$)="onToggleAllRelationsBtnClicked()"></sg-relations-control>

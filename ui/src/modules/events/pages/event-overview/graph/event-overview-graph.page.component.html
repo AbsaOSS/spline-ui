@@ -62,8 +62,10 @@
                 <sg-container (nodeDoubleClick$)="onNodeDoubleClick($event.nodeSchema)"
                               (nodeEvent$)="onGraphNodeEvent($event)"
                               (nodeSelectionChange$)="onNodeSelected($event.nodeId)"
+                              (graphNodeViewChange$)="onGraphNodeViewChanged($event.nodeView)"
                               [graphData]="state.graphData"
                               [selectedNodeId]="state.selectedNodeId"
+                              [graphNodeView]="state.graphNodeView"
                               [targetNodeId]="state.targetNodeId">
 
                     <!-- TOOLBAR -->
@@ -88,16 +90,6 @@
 
                     </sg-toolbar>
                     <!-- ./TOOLBAR -->
-
-                    <!-- CONTROL PANEL :: ACTIONS -->
-                    <ng-template sgControlPanelSection>
-
-                        <sg-node-view-control (viewChanged$)="onGraphNodeViewChanged($event)"
-                                              [nodeView]="state.graphNodeView">
-                        </sg-node-view-control>
-
-                    </ng-template>
-                    <!-- ./CONTROL PANEL :: ACTIONS -->
 
                 </sg-container>
 

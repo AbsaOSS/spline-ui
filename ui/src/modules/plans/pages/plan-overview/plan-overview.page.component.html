@@ -67,9 +67,10 @@
                 </div>
 
                 <div class="e2e-container__body">
-
                     <sg-container (nodeSelectionChange$)="onNodeSelected($event.nodeId)"
+                                  (graphNodeViewChange$)="onGraphNodeViewChanged($event.nodeView)"
                                   [sgAttributeLineage]="state.attributeLineage"
+                                  [graphNodeView]="state.graphNodeView"
                                   (highlightedRelationsNodesIdsChange$)="onHighlightedRelationsNodesIdsChange($event.nodeIds)"
                                   [graphData]="state.graphData"
                                   [selectedNodeId]="state.selectedNodeId">
@@ -84,14 +85,7 @@
                             </spline-attribute-lineage-info>
                         </sg-toolbar>
                         <!-- ./TOOLBAR -->
-
-                        <ng-template sgControlPanelSection>
-                            <sg-node-view-control (viewChanged$)="onGraphNodeViewChanged($event)"
-                                                  [nodeView]="state.graphNodeView"></sg-node-view-control>
-                        </ng-template>
-                        <!-- ./CONTROL PANEL :: ACTIONS -->
                     </sg-container>
-
                 </div>
             </div>
         </div>

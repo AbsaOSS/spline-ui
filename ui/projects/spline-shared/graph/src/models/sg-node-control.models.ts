@@ -41,9 +41,10 @@ export namespace SgNodeControl {
         Sort = 'Sort',
     }
 
-    export enum NodeView {
-        Detailed = 'Detailed',
-        Compact = 'Compact',
+    export type NodeView = 'Detailed' | 'Compact'
+    export const NodeView = {
+        Detailed: 'Detailed' as NodeView,
+        Compact: 'Compact' as NodeView,
     }
 
     export const DEFAULT_NODE_STYLES: NodeStyles = Object.freeze<NodeStyles>({

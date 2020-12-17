@@ -24,6 +24,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
 import { MatMenuModule } from '@angular/material/menu'
 import { MatPaginatorModule } from '@angular/material/paginator'
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
 import { MatTabsModule } from '@angular/material/tabs'
@@ -84,7 +85,8 @@ import { EventOverviewStoreFacade } from './store'
         SplineDataViewModule,
         SplineExpressionSharedModule,
         SplineCommonModule,
-        SplineGraphSharedModule
+        SplineGraphSharedModule,
+        MatSlideToggleModule
     ],
     exports: [
         ...fromPages.pageComponents,
