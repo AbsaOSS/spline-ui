@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,8 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
-import { switchMap, take } from 'rxjs/operators'
 
-import { SplineConfigService } from '../../spline-config'
+import { SplineConfigService } from '../../spline-config/spline-config.service'
 import { SplineApiConfig } from '../models/spline-api-config.models'
 
 
@@ -32,17 +31,12 @@ export class SplineApiConfigInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         if (SplineApiConfig.hasUrlAnyApiAlias(request.url)) {
+            const splineConfig = this.splineConfigService.config
+            request = request.clone({
+                url: SplineApiConfig.decorateUrl(request.url, splineConfig),
+            })
+            return next.handle(request)
 
-            return this.splineConfigService.getConfig()
-                .pipe(
-                    take(1),
-                    switchMap(splineConfig => {
-                        request = request.clone({
-                            url: SplineApiConfig.decorateUrl(request.url, splineConfig),
-                        })
-                        return next.handle(request)
-                    }),
-                )
         }
         else {
             return next.handle(request)

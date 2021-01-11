@@ -12,7 +12,7 @@
         "postbuild": "shx mkdir dist/app/ && shx mv dist/index.html dist/app/ && shx mv dist/assets dist/app/",
         "test": "jest --passWithNoTests --coverage",
         "lint": "npm run lint:ts && npm run lint:styles",
-        "lint:ts": "eslint src/**/*.ts projects/**/*.ts",
+        "lint:ts": "eslint src/**/*.ts projects/**/*.ts --quiet",
         "lint:styles": "stylelint \"src/**/*.scss\"",
         "lint:styles:fix": "stylelint src/**/*.scss --fix",
         "e2e": "ng e2e",

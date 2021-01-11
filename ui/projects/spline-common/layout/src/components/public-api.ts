@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 
 export * from './content-sidebar-dialog/sl-content-sidebar-dialog.component'
+export * from './content-header/sl-content-header.component'
 export * from './entity-header/sl-entity-header.component'
 export * from './layout/spline-layout-common.component'
 export * from './header-logo/spline-layout-header-logo.component'

@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2020 ABSA Group Limited
+  ~ Copyright 2021 ABSA Group Limited
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -13,9 +13,9 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<sl-content-header icon="play_arrow"
-                   [navTabs]="navTabs"
-                   [title]="eventInfo.name">
+<sl-entity-header icon="play_arrow"
+                  [navTabs]="navTabs"
+                  [title]="eventInfo.name">
 
     <spline-data-record [label]="'EVENTS.EVENT_INFO__DETAILS__EXECUTION_PLAN' | translate">
         <a [routerLink]="['/plans/overview', eventInfo.executionPlan.id]"
@@ -35,4 +35,4 @@
     <spline-data-record [label]="'EVENTS.EVENT_INFO__DETAILS__EVENT_ID' | translate">
         {{ eventInfo.id }}
     </spline-data-record>
-</sl-content-header>
+</sl-entity-header>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,9 @@
  */
 
 import { Injectable } from '@angular/core'
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router'
+import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router'
 import { Observable } from 'rxjs'
+import { tap } from 'rxjs/internal/operators'
 
 import { SplineConfig } from './spline-config.models'
 import { SplineConfigService } from './spline-config.service'
@@ -27,11 +28,21 @@ import { SplineConfigService } from './spline-config.service'
 })
 export class SplineConfigResolver implements Resolve<SplineConfig> {
 
-    constructor(private readonly splineConfigService: SplineConfigService) {
+    constructor(private readonly splineConfigService: SplineConfigService,
+                private readonly router: Router) {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<SplineConfig> {
-        return this.splineConfigService.getConfig()
+
+
+        return this.splineConfigService.initConfig(route.queryParamMap)
+            .pipe(
+                tap(config => {
+                    if (config?.targetUrl) {
+                        this.router.navigateByUrl(config.targetUrl)
+                    }
+                })
+            )
     }
 
 }

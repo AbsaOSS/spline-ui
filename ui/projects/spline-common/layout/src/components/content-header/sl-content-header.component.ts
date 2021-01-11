@@ -14,19 +14,13 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core'
-import { SplineTabsNavBar } from 'spline-common'
-import NavTabInfo = SplineTabsNavBar.NavTabInfo
+import { Component } from '@angular/core'
 
 
 @Component({
-    selector: 'sl-entity-header',
-    templateUrl: './sl-entity-header.component.html',
+    selector: 'sl-content-header',
+    templateUrl: './sl-content-header.component.html',
 })
-export class SlEntityHeaderComponent {
-
-    @Input() icon: string
-    @Input() title: string
-    @Input() navTabs: NavTabInfo[]
+export class SlContentHeaderComponent {
 
 }

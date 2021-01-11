@@ -1,4 +1,4 @@
-/*
+/*!
  * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,19 +14,14 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core'
-import { SplineTabsNavBar } from 'spline-common'
-import NavTabInfo = SplineTabsNavBar.NavTabInfo
+@import 'vars';
 
-
-@Component({
-    selector: 'sl-entity-header',
-    templateUrl: './sl-entity-header.component.html',
-})
-export class SlEntityHeaderComponent {
-
-    @Input() icon: string
-    @Input() title: string
-    @Input() navTabs: NavTabInfo[]
-
+.sl-content-header {
+    background: $color-white;
+    border-bottom: 1px solid $color-grey;
+    border-top-left-radius: 32px;
+    display: block;
+    padding: 32px 32px 0;
+    position: relative;
+    z-index: 100;
 }

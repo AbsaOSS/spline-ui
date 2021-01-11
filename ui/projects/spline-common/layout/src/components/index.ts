@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import { SlContentHeaderComponent } from './content-header/sl-content-header.component'
 import { SlContentSidebarDialogComponent } from './content-sidebar-dialog/sl-content-sidebar-dialog.component'
 import { SlEntityHeaderComponent } from './entity-header/sl-entity-header.component'
 import { SplineFakePageContentComponent } from './fake-page-content/spline-fake-page-content.component'
@@ -26,7 +27,8 @@ export const layoutComponents: any[] = [
     SplineLayoutHeaderLogoComponent,
     SlEntityHeaderComponent,
     SlContentSidebarDialogComponent,
-    SplineFakePageContentComponent
+    SplineFakePageContentComponent,
+    SlContentHeaderComponent
 ]
 
 export * from './public-api'

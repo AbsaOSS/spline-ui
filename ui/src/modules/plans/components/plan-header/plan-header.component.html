@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2020 ABSA Group Limited
+  ~ Copyright 2021 ABSA Group Limited
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,9 +14,9 @@
   ~ limitations under the License.
   -->
 
-<sl-content-header icon="cog-transfer-outline"
-                   [title]="executionPlan?.extraInfo?.appName ? executionPlan?.extraInfo?.appName : 'PLANS.PLAN_INFO__DEFAULT_NAME'"
-                   [navTabs]="navTabs">
+<sl-entity-header icon="cog-transfer-outline"
+                  [title]="executionPlan?.extraInfo?.appName ? executionPlan?.extraInfo?.appName : 'PLANS.PLAN_INFO__DEFAULT_NAME'"
+                  [navTabs]="navTabs">
 
     <spline-data-record [label]="'PLANS.PLAN_INFO__DETAILS__SYSTEM_INFO' | translate">
         {{ executionPlan.systemInfo.name }} {{ executionPlan.systemInfo.version }}
@@ -30,4 +30,4 @@
         <span [matTooltip]="executionPlan.outputDataSource.uri">{{ executionPlan.outputDataSource.name }}</span>
     </spline-data-record>
 
-</sl-content-header>
+</sl-entity-header>

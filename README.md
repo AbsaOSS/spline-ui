@@ -53,6 +53,23 @@ A WAR-file provides several alternative ways how to set configuration parameters
     export SPLINE_CONSUMER_URL=...
     ```
 
+### Running as embedded CDN resource
+
+It is possible to use compiled UI sources placed at some CDN server.
+In that the application can be configured with query parameters like so:
+
+`<iframe src="https://cdn.jsdelivr.net/path-to-compiled-app-assets/index.html?_splineConsumerApi=ENCODED_CONSUMER_API_PATH&_targetUrl=ENCODED_APP_PATH&_isEmbeddedMode=true"></iframe>`
+
+All available config query parameters list:
+
+| Name        | Description           | Default value  | Required  |
+| ------------- |-------------| -------------|-----:|
+| `_splineConsumerApi` | Spline Consumer API URI.      |    `` | true
+| `_isEmbeddedMode`      | Embedded mode settings      |  `false`  | false
+| `_targetUrl`      | App will be redirected to that url right after initialization. The path should start with `/`. | `/` | false
+
+`splineConsumerApi` is a required query parameter.
+
 
 ## Building from sources
 

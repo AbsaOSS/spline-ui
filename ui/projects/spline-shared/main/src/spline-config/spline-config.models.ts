@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,13 @@
  */
 
 import { InjectionToken } from '@angular/core'
+import { ParamMap } from '@angular/router'
 
 
 export type SplineConfig = {
-    isEmbeddedMode?: boolean
     splineConsumerApiUrl: string
+    isEmbeddedMode?: boolean
+    targetUrl?: string
 }
 
 export type SplineConfigSettings = {
@@ -27,3 +29,30 @@ export type SplineConfigSettings = {
 }
 
 export const SPLINE_CONFIG_SETTINGS = new InjectionToken<SplineConfigSettings>('SPLINE_CONFIG_SETTINGS')
+
+export enum SplineConfigQueryParam {
+    splineConsumerApiUrl = '_splineConsumerApiUrl', // required
+    isEmbeddedMode = '_isEmbeddedMode',
+    targetUrl = '_targetUrl'
+}
+
+export function hasQueryParamsSplineConfig(paramsMap: ParamMap): boolean {
+    return paramsMap.has(SplineConfigQueryParam.splineConsumerApiUrl)
+}
+
+export function initSplineConfigFromQueryParams(paramsMap: ParamMap): SplineConfig {
+    return Object.keys(SplineConfigQueryParam)
+        .reduce(
+            (acc, key) => {
+                const queryParamName = SplineConfigQueryParam[key]
+
+                if (paramsMap.has(queryParamName)) {
+                    return {...acc, [key]: paramsMap.get(queryParamName)}
+                }
+
+                return {...acc}
+
+            },
+            {} as SplineConfig
+        )
+}

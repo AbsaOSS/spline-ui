@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2020 ABSA Group Limited
+  ~ Copyright 2021 ABSA Group Limited
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -29,13 +29,11 @@
 
         <!-- HEADER -->
         <ng-container *ngIf="!state.loadingProcessing.processingError && !state.loadingProcessing.processing">
-            <div class="content-header">
-                <div class="container">
-                    <event-header [eventInfo]="state.eventInfo"
-                                  [navTabs]="headerNavTabs">
-                    </event-header>
-                </div>
-            </div>
+            <sl-content-header>
+                <event-header [eventInfo]="state.eventInfo"
+                              [navTabs]="headerNavTabs">
+                </event-header>
+            </sl-content-header>
         </ng-container>
         <!-- ./HEADER -->
     </div>
