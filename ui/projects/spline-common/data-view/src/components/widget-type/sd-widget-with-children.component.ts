@@ -1,5 +1,5 @@
-/*!
- * Copyright 2020 ABSA Group Limited
+/*
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,27 +14,22 @@
  * limitations under the License.
  */
 
-.md-drppicker {
-    .buttons button {
-        margin-top: 1rem;
+import { Component } from '@angular/core'
+
+import { SplineDataWidgetEvent } from '../../models'
+
+import { SdWidgetBaseComponent } from './sd-widget-base.component'
+
+
+@Component({
+    selector: 'sd-widget-with-children-base',
+    template: ''
+})
+export abstract class SdWidgetWithChildrenComponent<TData extends object, TOptions extends object = {}>
+    extends SdWidgetBaseComponent<TData, TOptions> {
+
+    onChildWidgetEvent($event: SplineDataWidgetEvent): void {
+        this.event$.emit($event)
     }
 
-    .navigation-button {
-        display: flex;
-    }
-
-    .table-condensed thead tr {
-        height: 2rem;
-    }
-
-    .clear-icon {
-        display: none;
-    }
-}
-
-.mat-menu-panel {
-    .md-drppicker {
-        box-shadow: none;
-        margin-top: 0;
-    }
 }

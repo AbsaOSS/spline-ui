@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ export * from './simple-record/sd-widget-simple-record.models'
 export * from './title/sd-widget-title.component'
 export * from './title/sd-widget-title.models'
 
-export * from './sg-widget-base.component'
-export * from './sg-widget-with-children.component'
+export * from './sd-widget-base.component'
+export * from './sd-widget-with-children.component'
 
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { BehaviorSubject, isObservable, Observable, Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
 import { BaseComponent } from 'spline-utils'
@@ -22,7 +22,11 @@ import { BaseComponent } from 'spline-utils'
 import { ISplineDataWidget, SdWidgetSchema, SplineDataWidgetEvent } from '../../models'
 
 
-export abstract class SgWidgetBaseComponent<TData extends Record<string, any>, TOptions extends Record<string, any> = Record<string, any>>
+@Component({
+    selector: 'sd-widget-base',
+    template: ''
+})
+export abstract class SdWidgetBaseComponent<TData extends Record<string, any>, TOptions extends Record<string, any> = Record<string, any>>
     extends BaseComponent implements ISplineDataWidget<TData, TOptions>, OnInit {
 
     @Input() schema: SdWidgetSchema<TData, TOptions>

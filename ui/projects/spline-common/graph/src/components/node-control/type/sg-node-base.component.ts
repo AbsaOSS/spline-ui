@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { BehaviorSubject, isObservable, Observable, Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
 import { BaseComponent } from 'spline-utils'
@@ -22,6 +22,10 @@ import { BaseComponent } from 'spline-utils'
 import { ISgNodeControl, SgNodeControlEvent, SgNodeSchema } from '../../../models'
 
 
+@Component({
+    selector: 'sg-node-base',
+    template: ''
+})
 export abstract class SgNodeBaseComponent<TData extends object, TOptions extends object = {}>
     extends BaseComponent implements ISgNodeControl<TData, TOptions>, OnInit {
 

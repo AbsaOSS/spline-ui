@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,8 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core'
 import { MatMenuTrigger } from '@angular/material/menu'
 import moment from 'moment'
-import { DaterangepickerDirective } from 'ngx-daterangepicker-material'
+import { DaterangepickerComponent } from 'ngx-daterangepicker-material'
+import { BehaviorSubject } from 'rxjs'
 
 import { SplineDateFilter } from './date-filter.models'
 
@@ -39,7 +40,7 @@ export class SplineDateFilterComponent {
         'Last 3 Month': [moment().subtract(3, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
     }
 
-    @ViewChild(DaterangepickerDirective, { static: true }) datePicker: DaterangepickerDirective
+    @ViewChild(DaterangepickerComponent, { static: false }) datePicker: DaterangepickerComponent
     @ViewChild(MatMenuTrigger, { static: true }) matMenuTrigger: MatMenuTrigger
 
     @Input() set maxDate(value: Date) {
@@ -60,7 +61,8 @@ export class SplineDateFilterComponent {
 
     _maxDateMoment: moment.Moment
     _minDateMoment: moment.Moment
-    _valueMoment: SplineDateFilter.ValueMoment
+
+    _valueMoment$ = new BehaviorSubject<{ dateFrom: moment.Moment | null; dateTo: moment.Moment | null }>({ dateFrom: null, dateTo: null })
 
     onDateChosen($event: { chosenLabel: string; startDate: moment.Moment; endDate: moment.Moment }): void {
         const newValue = $event.startDate && $event.endDate
@@ -73,21 +75,18 @@ export class SplineDateFilterComponent {
         this.valueChanged$.emit(newValue)
     }
 
-    onCloneDatePicker(): void {
+    onCloseDatePicker(): void {
+        this.datePicker.updateView()
         this.matMenuTrigger.closeMenu()
     }
 
     private setValue(value: SplineDateFilter.Value): void {
-
         this.valueString = value
             ? SplineDateFilter.valueToString(value)
             : ''
-
-        this._valueMoment = value
-            ? {
-                dateFrom: moment(value.dateFrom),
-                dateTo: moment(value.dateTo),
-            }
-            : null
+        this._valueMoment$.next({
+            dateFrom: value ? moment(value.dateFrom) : this._minDateMoment,
+            dateTo: value ? moment(value.dateTo) : this._maxDateMoment,
+        })
     }
 }

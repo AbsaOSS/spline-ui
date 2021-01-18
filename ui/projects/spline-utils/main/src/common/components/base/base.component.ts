@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,14 @@
  * limitations under the License.
  */
 
-import { OnDestroy } from '@angular/core'
+import { Component, OnDestroy } from '@angular/core'
 import { Subject } from 'rxjs'
 
 
+@Component({
+    selector: 'spline-utils-base',
+    template: ''
+})
 export abstract class BaseComponent implements OnDestroy {
 
     destroyed$ = new Subject<void>();

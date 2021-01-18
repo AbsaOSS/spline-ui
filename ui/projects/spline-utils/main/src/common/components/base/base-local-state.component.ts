@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,21 @@
  * limitations under the License.
  */
 
-import { OnDestroy } from '@angular/core'
+import { Component, OnDestroy } from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
 
 import { BaseComponent } from './base.component'
 
-
+@Component({
+    selector: 'spline-utils-base-local-state',
+    template: ''
+})
 export abstract class BaseLocalStateComponent<TState> extends BaseComponent implements OnDestroy {
-    readonly state$: BehaviorSubject<TState | null>
 
-    constructor(defaultState: TState = null) {
+    readonly state$ = new BehaviorSubject<TState | null>(null)
+
+    constructor() {
         super()
-        this.state$ = new BehaviorSubject<TState | null>(defaultState)
     }
 
     get state(): TState {

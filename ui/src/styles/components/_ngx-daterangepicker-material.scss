@@ -1,4 +1,4 @@
-/*
+/*!
  * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,19 +14,32 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+@import 'material-design/spline-theme';
+@import '~ngx-daterangepicker-material/daterangepicker-theme';
 
-import { SdWidgetWithChildrenComponent } from '../sd-widget-with-children.component'
+@include date-range-picker-theme($spline-theme);
 
-import { SdWidgetExpansionPanel } from './sd-widget-expansion-panel.models'
+.md-drppicker {
+    .buttons button {
+        margin-top: 1rem;
+    }
 
+    .navigation-button {
+        display: flex;
+    }
 
-@Component({
-    selector: 'sd-widget-expansion-panel',
-    templateUrl: './sd-widget-expansion-panel.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
-})
-export class SdWidgetExpansionPanelComponent
-    extends SdWidgetWithChildrenComponent<SdWidgetExpansionPanel.Data, SdWidgetExpansionPanel.Options> {
+    .table-condensed thead tr {
+        height: 2rem;
+    }
 
+    .clear-icon {
+        display: none;
+    }
+}
+
+.mat-menu-panel {
+    .md-drppicker {
+        box-shadow: none;
+        margin-top: 0;
+    }
 }

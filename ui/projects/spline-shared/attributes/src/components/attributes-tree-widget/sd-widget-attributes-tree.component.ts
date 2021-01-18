@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 import { Component, EventEmitter, Output } from '@angular/core'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { SgWidgetBaseComponent } from 'spline-common/data-view'
+import { SdWidgetBaseComponent } from 'spline-common/data-view'
 
 import { SdWidgetAttributesTree, SplineAttributesTree } from '../../models'
 
@@ -26,7 +26,7 @@ import { SdWidgetAttributesTree, SplineAttributesTree } from '../../models'
     selector: 'sd-widget-attributes-tree',
     templateUrl: './sd-widget-attributes-tree.component.html',
 })
-export class SdWidgetAttributesTreeComponent extends SgWidgetBaseComponent<SdWidgetAttributesTree.Data, SdWidgetAttributesTree.Options> {
+export class SdWidgetAttributesTreeComponent extends SdWidgetBaseComponent<SdWidgetAttributesTree.Data, SdWidgetAttributesTree.Options> {
 
     selectedAttributeId$: Observable<string | null>
     attributesTree$: Observable<SplineAttributesTree.Tree | null>

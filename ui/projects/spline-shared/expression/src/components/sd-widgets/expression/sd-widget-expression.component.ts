@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 import { Component } from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
-import { SgWidgetBaseComponent } from 'spline-common/data-view'
+import { SdWidgetBaseComponent } from 'spline-common/data-view'
 
 import { SdWidgetExpression } from '../../../models'
 
@@ -25,6 +25,6 @@ import { SdWidgetExpression } from '../../../models'
     selector: 'sd-widget-expression',
     templateUrl: './sd-widget-expression.component.html',
 })
-export class SdWidgetExpressionComponent extends SgWidgetBaseComponent<SdWidgetExpression.Data, SdWidgetExpression.Options> {
+export class SdWidgetExpressionComponent extends SdWidgetBaseComponent<SdWidgetExpression.Data, SdWidgetExpression.Options> {
     readonly data$ = new BehaviorSubject<SdWidgetExpression.Data>(null)
 }

@@ -6,6 +6,9 @@
         "tslint-angular"
     ],
     "rules": {
+      "deprecation": {
+        "severity": "warning"
+      },
         "one-line": [
             true,
             "check-open-brace",

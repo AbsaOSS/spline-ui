@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { GenericEventInfo } from 'spline-utils'
 
 import { SplineDataWidgetEvent } from '../../../models'
-import { SgWidgetBaseComponent } from '../sg-widget-base.component'
+import { SdWidgetBaseComponent } from '../sd-widget-base.component'
 
 import { SdWidgetCard } from './sd-widget-card.models'
 
@@ -28,7 +28,7 @@ import { SdWidgetCard } from './sd-widget-card.models'
     templateUrl: './sd-widget-card.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SdWidgetCardComponent extends SgWidgetBaseComponent<SdWidgetCard.Data> {
+export class SdWidgetCardComponent extends SdWidgetBaseComponent<SdWidgetCard.Data> {
 
     onWidgetEvent($event: SplineDataWidgetEvent): void {
         this.event$.emit($event)

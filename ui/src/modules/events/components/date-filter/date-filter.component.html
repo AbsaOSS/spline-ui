@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2020 ABSA Group Limited
+  ~ Copyright 2021 ABSA Group Limited
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,31 +14,35 @@
   ~ limitations under the License.
   -->
 
+
 <button mat-button [matMenuTriggerFor]="popover">
     <mat-icon class="mr-2">schedule</mat-icon>
     <span>{{ valueString?.length ? valueString : ('EVENTS.EVENTS_LIST__FILTER__DATE__EMPTY_VALUE_LABEL' | translate) }}</span>
 </button>
 
 <mat-menu #popover="matMenu">
-    <ngx-daterangepicker-material
-            [startDate]="_valueMoment?.dateFrom ? _valueMoment?.dateFrom : _minDateMoment"
-            [endDate]="_valueMoment?.dateTo ? _valueMoment?.dateTo : _maxDateMoment"
-            [maxDate]="_maxDateMoment"
-            [minDate]="_minDateMoment"
-            [showDropdowns]="true"
-            [ranges]="customDateRanges"
-            [autoApply]="false"
-            [showCustomRangeLabel]="false"
-            [alwaysShowCalendars]="true"
-            [showClearButton]="true"
-            [showCancel]="true"
-            [linkedCalendars]="false"
-            [keepCalendarOpeningWithRange]="true"
-            [showRangeLabelOnInput]="true"
-            (closeDateRangePicker)="onCloneDatePicker()"
-            (chosenDate)="onDateChosen($event)"
-    >
-    </ngx-daterangepicker-material>
+    <ng-container *ngIf="_valueMoment$ | async as valueMoment">
+        <ngx-daterangepicker-material
+                *ngIf="matMenuTrigger.menuOpen"
+                [startDate]="valueMoment.dateFrom ? valueMoment.dateFrom : _minDateMoment"
+                [endDate]="valueMoment.dateTo ? valueMoment.dateTo : _maxDateMoment"
+                [maxDate]="_maxDateMoment"
+                [minDate]="_minDateMoment"
+                [showDropdowns]="true"
+                [ranges]="customDateRanges"
+                [autoApply]="false"
+                [showCustomRangeLabel]="false"
+                [alwaysShowCalendars]="true"
+                [showClearButton]="true"
+                [showCancel]="true"
+                [linkedCalendars]="false"
+                [keepCalendarOpeningWithRange]="true"
+                [showRangeLabelOnInput]="true"
+                (closeDateRangePicker)="onCloseDatePicker()"
+                (chosenDate)="onDateChosen($event)"
+        >
+        </ngx-daterangepicker-material>
+    </ng-container>
 </mat-menu>
 
 

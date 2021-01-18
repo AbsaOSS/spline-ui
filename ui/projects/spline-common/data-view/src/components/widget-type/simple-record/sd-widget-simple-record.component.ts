@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 
-import { SgWidgetBaseComponent } from '../sg-widget-base.component'
+import { SdWidgetBaseComponent } from '../sd-widget-base.component'
 
 import { SdWidgetSimpleRecord } from './sd-widget-simple-record.models'
 
@@ -26,6 +26,6 @@ import { SdWidgetSimpleRecord } from './sd-widget-simple-record.models'
     templateUrl: './sd-widget-simple-record.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SdWidgetSimpleRecordComponent extends SgWidgetBaseComponent<SdWidgetSimpleRecord.Data> {
+export class SdWidgetSimpleRecordComponent extends SdWidgetBaseComponent<SdWidgetSimpleRecord.Data> {
 
 }
