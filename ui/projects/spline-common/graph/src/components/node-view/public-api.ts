@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,3 +19,6 @@ export * from './default-view/sg-node-view-default.models'
 
 export * from './circle-view/sg-node-view-circle.component'
 export * from './circle-view/sg-node-view-circle.models'
+
+export * from './circle-button-view/sg-node-view-circle-button.component'
+export * from './circle-button-view/sg-node-view-circle-button.models'

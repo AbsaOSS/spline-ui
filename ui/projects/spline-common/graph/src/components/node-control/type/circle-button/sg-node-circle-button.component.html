@@ -15,12 +15,12 @@
   -->
 
 <ng-container *ngIf="data$ | async as data">
-    <sg-node-view-circle [isSelected]="isSelected"
-                         [isFocused]="isFocused"
-                         [isTarget]="isTarget"
-                         [disallowSelection]="schema?.disallowSelection"
-                         [icon]="data?.icon"
-                         [tooltip]="data?.tooltip"
-                         [color]="data?.color">
-    </sg-node-view-circle>
+    <sg-node-view-circle-button [isSelected]="isSelected"
+                                [isFocused]="isFocused"
+                                [isTarget]="isTarget"
+                                [icon]="data?.icon"
+                                [tooltip]="data?.tooltip"
+                                [color]="data?.theme"
+                                (buttonClicked$)="onButtonClicked()">
+    </sg-node-view-circle-button>
 </ng-container>

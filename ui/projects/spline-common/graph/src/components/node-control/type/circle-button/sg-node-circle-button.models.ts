@@ -14,26 +14,28 @@
  * limitations under the License.
  */
 
+import { ThemePalette } from '@angular/material/core/common-behaviors/color'
 import { NodeDimension } from '@swimlane/ngx-graph/lib/models/node.model'
 
 import { SgNode, SgNodeNativeOptions } from '../../../../models'
 
 
-export namespace SgNodeCircle {
+export namespace SgNodeCircleButton {
 
-    export const TYPE = 'circle'
+    export const TYPE = 'circle_button'
 
     export type Data = {
-        icon: string
-        tooltip: string
-        color?: string // valid CSS color
+        eventName: string
+        icon?: string
+        tooltip?: string
+        theme?: ThemePalette
     }
 
     export type Options = {}
 
     export const DEFAULT_DIMENSIONS: Readonly<NodeDimension> = Object.freeze({
-        width: 90,
-        height: 90,
+        width: 40,
+        height: 40,
     })
 
     export function toNode(id: string, nodeData: Data, nativeOptions: SgNodeNativeOptions = {}): SgNode<Data, Options> {
@@ -47,6 +49,7 @@ export namespace SgNodeCircle {
                 dimension: {...DEFAULT_DIMENSIONS},
                 ...nativeOptions,
             },
+            disallowSelection: true
         }
     }
 }

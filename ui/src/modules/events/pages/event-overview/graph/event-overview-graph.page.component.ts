@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -108,6 +108,16 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
         switch ($event.event.type) {
             case EventNodeControl.NodeControlEvent.LaunchExecutionEvent:
                 this.onExecutionPlanNodeLaunchAction($event.nodeSchema.id)
+                break
+            case EventNodeControl.NodeControlEvent.LoadHistory:
+                this.store.loadNodeHistory(
+                    EventNodeControl.loadMoreNodeToNativeNodeId($event.nodeSchema.id)
+                )
+                break
+            case EventNodeControl.NodeControlEvent.LoadFuture:
+                this.store.loadNodeFuture(
+                    EventNodeControl.loadMoreNodeToNativeNodeId($event.nodeSchema.id)
+                )
                 break
         }
     }

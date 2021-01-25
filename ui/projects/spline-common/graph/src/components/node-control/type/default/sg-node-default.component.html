@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2020 ABSA Group Limited
+  ~ Copyright 2021 ABSA Group Limited
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
     <sg-node-view-default [isSelected]="isSelected"
                           [isFocused]="isFocused"
                           [isTarget]="isTarget"
+                          [disallowSelection]="schema?.disallowSelection"
                           [icon]="data?.icon"
                           [actionsPosition]="data?.actionsPosition"
                           [showActions]="!!data?.inlineActions?.length || !!data?.actions?.length"
@@ -37,7 +38,6 @@
                     mat-button
                     mat-icon-button
                     [color]="action?.theme"
-                    [style.color]="action?.color"
                     (click)="onActionClicked($event, action)">
 
                 <spline-icon [icon]="action.icon"></spline-icon>

@@ -1,5 +1,5 @@
 /*!
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,6 +66,10 @@ $action-icon-color: $color-grey-dark-75;
     position: absolute;
     top: 0;
     width: 100%;
+
+    &--disallowSelection {
+        cursor: default;
+    }
 
     &__content-container {
         align-items: center;

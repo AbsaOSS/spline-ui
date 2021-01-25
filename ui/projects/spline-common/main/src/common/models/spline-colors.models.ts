@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ export namespace SplineColors {
     export const ENERGY = '#f47721'
 
 
+    export const WHITE = '#fff'
     export const BLACK = '#2d2323'
     export const BLUE = '#337AB7'
     export const GREY = '#efefef'

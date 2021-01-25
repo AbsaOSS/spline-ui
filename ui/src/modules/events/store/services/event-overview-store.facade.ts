@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -121,6 +121,36 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
 
     findParentNodes(nodeId: string): ExecutionEventLineageNode[] {
         return EventOverviewStore.selectParentNodes(this.state, nodeId)
+    }
+
+    // TODO: remove it after BE will support it.
+    loadNodeHistory(nodeId: string): void {
+
+        this.updateState({
+            graphLoadingProcessing: ProcessingStore.eventProcessingStart(this.state.graphLoadingProcessing)
+        })
+
+        setTimeout(() => {
+            this.updateState({
+                ...EventOverviewStore.__reduceFakeHistoryNode(this.state, nodeId),
+                graphLoadingProcessing: ProcessingStore.eventProcessingFinish(this.state.graphLoadingProcessing)
+            })
+        }, 500)
+    }
+
+    // TODO: remove it after BE will support it.
+    loadNodeFuture(nodeId: string): void {
+
+        this.updateState({
+            graphLoadingProcessing: ProcessingStore.eventProcessingStart(this.state.graphLoadingProcessing)
+        })
+
+        setTimeout(() => {
+            this.updateState({
+                ...EventOverviewStore.__reduceFakeFutureNode(this.state, nodeId),
+                graphLoadingProcessing: ProcessingStore.eventProcessingFinish(this.state.graphLoadingProcessing)
+            })
+        }, 500)
     }
 
     private loadData(

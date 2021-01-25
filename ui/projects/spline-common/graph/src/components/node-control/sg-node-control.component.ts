@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,6 +48,12 @@ export class SgNodeControlComponent<TData extends object, TOptions extends objec
 
     @Output() event$ = new EventEmitter<SgNodeControlEvent<TData>>()
 
+    private readonly mirrorInputParams: ReadonlyArray<string> = [
+        'isSelected',
+        'isFocused',
+        'isTarget',
+    ]
+
     constructor(protected readonly componentFactoryResolver: ComponentFactoryResolver,
                 protected readonly splineGraphNodeManager: SplineGraphNodeManager) {
         super(componentFactoryResolver)
@@ -61,17 +67,13 @@ export class SgNodeControlComponent<TData extends object, TOptions extends objec
         const { schema } = changes
 
         if (schema) {
-            this.rebuildComponent()
+            const domRelaxationTime = 200
+            setTimeout(() => this.rebuildComponent(), domRelaxationTime)
         }
 
         // synchronize mirror Input() params
-        const mirrorInputParams = [
-            'isSelected',
-            'isFocused',
-            'isTarget',
-        ]
 
-        mirrorInputParams.filter(fieldName => changes[fieldName] && !changes[fieldName].isFirstChange() && this.componentRef)
+        this.mirrorInputParams.filter(fieldName => changes[fieldName] && !changes[fieldName].isFirstChange() && this.componentRef)
             .forEach(fieldName => {
                 this.componentRef.instance[fieldName] = changes[fieldName].currentValue
                 this.componentRef.changeDetectorRef.detectChanges()
@@ -85,9 +87,10 @@ export class SgNodeControlComponent<TData extends object, TOptions extends objec
             ? decorateDefaultSgNodeSchema(this.schema) as SgNodeSchema<TData, TOptions>
             : this.schema
 
-        instance.isSelected = this.isSelected
-        instance.isFocused = this.isFocused
-        instance.isTarget = this.isTarget
+        this.mirrorInputParams
+            .forEach(paramName => {
+                instance[paramName] = this[paramName]
+            })
 
         this.eventsSubscriptionRefs.push(
             instance.event$.subscribe((event) => this.event$.emit(event)),

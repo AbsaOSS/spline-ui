@@ -11,13 +11,16 @@
     "build": "ng build --prod --deploy-url=../ --base-href=SPLINE_UI_DEPLOY_CONTEXT/app/",
     "postbuild": "shx mkdir dist/app/ && shx mv dist/index.html dist/app/ && shx mv dist/assets dist/app/",
     "test": "jest --passWithNoTests --coverage",
+    "test:no-covarege": "jest --passWithNoTests",
     "lint": "npm run lint:ts && npm run lint:styles",
     "lint:ts": "eslint src/**/*.ts projects/**/*.ts --quiet",
     "lint:ts:fix": "eslint src/**/*.ts projects/**/*.ts --fix",
     "lint:styles": "stylelint \"src/**/*.scss\"",
     "lint:styles:fix": "stylelint src/**/*.scss --fix",
     "e2e": "ng e2e",
-    "ngcc": "ngcc --properties es2015 browser module main --async false"
+    "ngcc": "ngcc --properties es2015 browser module main --async false",
+    "license-check": "cd ../ && mvn validate -Plicense-check",
+    "pre-pull-request": "npm run lint && npm run test:no-covarege && npm run license-check"
   },
   "private": false,
   "dependencies": {

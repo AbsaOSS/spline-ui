@@ -14,28 +14,22 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core'
-import { SplineColors } from 'spline-common'
-import { BaseComponent } from 'spline-utils'
+import { Component } from '@angular/core'
 
+import { SgNodeBaseComponent } from '../sg-node-base.component'
+
+import { SgNodeCircleButton } from './sg-node-circle-button.models'
 
 
 @Component({
-    selector: 'sg-node-view-circle',
-    templateUrl: './sg-node-view-circle.component.html',
+    selector: 'sg-node-circle-button',
+    templateUrl: './sg-node-circle-button.component.html',
 })
-export class SgNodeViewCircleComponent extends BaseComponent {
+export class SgNodeCircleButtonComponent extends SgNodeBaseComponent<SgNodeCircleButton.Data, SgNodeCircleButton.Options> {
 
-    readonly defaultIcon = 'extension'
-    readonly defaultColor = SplineColors.SILVER
-
-    @Input() disallowSelection: boolean
-    @Input() isSelected: boolean
-    @Input() isFocused: boolean
-    @Input() isTarget: boolean
-
-    @Input() color: string
-    @Input() icon: string
-    @Input() tooltip: string
-
+    onButtonClicked(): void {
+        this.event$.emit({
+            type: this.data.eventName
+        })
+    }
 }

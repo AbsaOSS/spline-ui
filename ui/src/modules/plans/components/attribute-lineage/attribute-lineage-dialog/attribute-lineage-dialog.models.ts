@@ -39,7 +39,7 @@ export namespace AttributeLineageDialog {
                     .map(
                         node => ({
                             ...AttributeNodeControl.toSgNode(node),
-                            allowSelection: false
+                            disallowSelection: true
                         })
                     )
             },

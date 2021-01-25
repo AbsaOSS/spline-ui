@@ -14,9 +14,22 @@
   ~ limitations under the License.
   -->
 
-<div class="spline-loader spline-loader-size--{{size ? size : defaultSize}} spline-loader--mode-{{mode ? mode : defaultMode}}"
-    [class.spline-loader--blurBackgroud]="blurBackground">
-    <mat-spinner class="d-inline-block"
-                 [diameter]="SPINNER_DIAMETER_MAP[size ? size : defaultSize]">
-    </mat-spinner>
+<div class="sg-node-view-circle-button"
+     [matTooltip]="tooltip"
+     [class.sg-node-view-circle--selected]="isSelected"
+     [class.sg-node-view-circle--focused]="isFocused"
+     [class.sg-node-view-circle--target]="isTarget">
+
+    <button mat-button
+            mat-icon-button
+            mat-raised-button
+            (click)="onButtonClicked($event)"
+            [color]="color ? color : defaultColor">
+        <!-- ICON -->
+        <spline-icon [icon]="icon ? icon : defaultIcon"
+                     [ngStyle]="{color: color ? color : defaultColor }">
+        </spline-icon>
+        <!-- ./ICON -->
+    </button>
+
 </div>

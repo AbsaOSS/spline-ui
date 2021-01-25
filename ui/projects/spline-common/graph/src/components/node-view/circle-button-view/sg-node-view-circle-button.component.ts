@@ -14,28 +14,33 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core'
-import { SplineColors } from 'spline-common'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { ThemePalette } from '@angular/material/core/common-behaviors/color'
 import { BaseComponent } from 'spline-utils'
 
 
-
 @Component({
-    selector: 'sg-node-view-circle',
-    templateUrl: './sg-node-view-circle.component.html',
+    selector: 'sg-node-view-circle-button',
+    templateUrl: './sg-node-view-circle-button.component.html',
 })
-export class SgNodeViewCircleComponent extends BaseComponent {
+export class SgNodeViewCircleButtonComponent extends BaseComponent {
 
-    readonly defaultIcon = 'extension'
-    readonly defaultColor = SplineColors.SILVER
+    readonly defaultIcon = 'history'
+    readonly defaultColor = 'accent'
 
-    @Input() disallowSelection: boolean
     @Input() isSelected: boolean
     @Input() isFocused: boolean
     @Input() isTarget: boolean
 
-    @Input() color: string
+    @Input() color: ThemePalette
     @Input() icon: string
     @Input() tooltip: string
 
+    @Output() buttonClicked$ = new EventEmitter<void>()
+
+    onButtonClicked($event: MouseEvent): void {
+        $event.preventDefault()
+        $event.stopPropagation()
+        this.buttonClicked$.emit()
+    }
 }

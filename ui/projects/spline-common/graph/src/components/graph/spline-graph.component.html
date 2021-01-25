@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2020 ABSA Group Limited
+  ~ Copyright 2021 ABSA Group Limited
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,13 +14,15 @@
   ~ limitations under the License.
   -->
 
-<div class="spline-graph__container" xmlns:svg="http://www.w3.org/1999/XSL/Transform" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <ngx-graph [links]="graphData.links"
-               [nodes]="nativeNodes"
+<div class="spline-graph__container" xmlns:svg="http://www.w3.org/1999/XSL/Transform"
+     xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <ngx-graph *ngIf="(nativeGraphData$ | async) as nativeGraphData"
+               [links]="nativeGraphData.links"
+               [nodes]="nativeGraphData.nodes"
                [curve]="curve"
                [autoZoom]="true"
                [autoCenter]="true"
-               [draggingEnabled]="false"
+               [draggingEnabled]="true"
                [panToNode$]="focusNode$"
                [layoutSettings]="layoutSettings"
                (clickHandler)="onGraphClicked($event)"
@@ -30,7 +32,14 @@
             <svg:g class=" edge">
                 <svg:path class="line" stroke-width="3" [attr.marker-end]="'url(#arrow-' + link.id + ')'"></svg:path>
             </svg:g>
-            <svg:marker [id]="'arrow-' + link.id" class="arrow" viewBox="0 -5 12 12" refX="10" refY="0" markerWidth="6" markerHeight="6" orient="auto">
+            <svg:marker [id]="'arrow-' + link.id"
+                        class="arrow"
+                        viewBox="0 -5 12 12"
+                        refX="10"
+                        refY="0"
+                        markerWidth="6"
+                        markerHeight="6"
+                        orient="auto">
                 <svg:path d="M0,-5L12,0L0,5" class="arrow-head"/>
             </svg:marker>
         </ng-template>

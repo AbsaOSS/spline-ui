@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,13 @@ import { SgRelationsControlComponent } from './control-panel/controls/relations-
 import { SgZoomControlComponent } from './control-panel/controls/zoom-control/sg-zoom-control.component'
 import { SgControlPanelComponent } from './control-panel/sg-control-panel.component'
 import { SplineGraphComponent } from './graph/spline-graph.component'
-import { SgNodeCircleComponent, SgNodeControlComponent, SgNodeDefaultComponent } from './node-control'
-import { SgNodeViewCircleComponent, SgNodeViewDefaultComponent } from './node-view'
+import {
+    SgNodeCircleButtonComponent,
+    SgNodeCircleComponent,
+    SgNodeControlComponent,
+    SgNodeDefaultComponent
+} from './node-control'
+import { SgNodeViewCircleButtonComponent, SgNodeViewCircleComponent, SgNodeViewDefaultComponent } from './node-view'
 import { SgToolbarComponent } from './toolbar/sg-toolbar.component'
 
 
@@ -33,7 +38,9 @@ export const splineGraphComponents: any[] = [
     SgZoomControlComponent,
     SgToolbarComponent,
     SgRelationsControlComponent,
-    SgNodeCircleComponent
+    SgNodeCircleComponent,
+    SgNodeCircleButtonComponent,
+    SgNodeViewCircleButtonComponent
 ]
 
 export * from './public-api'

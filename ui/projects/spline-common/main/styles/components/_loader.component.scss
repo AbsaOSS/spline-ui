@@ -1,5 +1,5 @@
 /*!
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,15 @@
  * limitations under the License.
  */
 
+@import 'vars';
+
 .spline-loader {
 
     text-align: center;
+
+    &--blurBackgroud {
+        background: $color-white-75;
+    }
 
     &--mode {
         &-block {
@@ -29,7 +35,7 @@
             position: absolute;
             right: 0;
             width: 100%;
-            z-index: 100;
+            z-index: 100000;
         }
 
         &-cover {
@@ -44,7 +50,7 @@
             right: 0;
             top: 0;
             width: 100%;
-            z-index: 100;
+            z-index: 100000;
         }
 
         &-inline {

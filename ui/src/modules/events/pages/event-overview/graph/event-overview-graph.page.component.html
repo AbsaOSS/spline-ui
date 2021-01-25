@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2020 ABSA Group Limited
+  ~ Copyright 2021 ABSA Group Limited
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -58,6 +58,13 @@
 
             </div>
             <div class="e2e-container__body">
+
+                <!-- LOADER -->
+                <spline-loader *ngIf="state.graphLoadingProcessing.processing"
+                               mode="cover"
+                               [blurBackground]="true">
+                </spline-loader>
+                <!-- ./LOADER -->
 
                 <sg-container (nodeDoubleClick$)="onNodeDoubleClick($event.nodeSchema)"
                               (nodeEvent$)="onGraphNodeEvent($event)"

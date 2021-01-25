@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 import { dataSourceUriToName, ExecutionEventLineageNode, ExecutionEventLineageNodeType } from 'spline-api'
-import { SgNode, SgNodeCircle, SgNodeDefault } from 'spline-common/graph'
+import { SgNode, SgNodeCircle, SgNodeCircleButton, SgNodeDefault } from 'spline-common/graph'
 import { SgNodeControl } from 'spline-shared/graph'
 import NodeType = SgNodeControl.NodeType
 import NodeView = SgNodeControl.NodeView
@@ -26,8 +26,12 @@ export namespace EventNodeControl {
     import NodeStyles = SgNodeControl.NodeStyles
 
 
+    const LOAD_MORE_NODE_ID_PREFIX = '__loadMore__'
+
     export enum NodeControlEvent {
-        LaunchExecutionEvent = 'LaunchExecutionEvent'
+        LaunchExecutionEvent = 'LaunchExecutionEvent',
+        LoadHistory = 'LoadHistory',
+        LoadFuture = 'LoadFuture'
     }
 
     export function extractNodeName(nodeSource: ExecutionEventLineageNode): string {
@@ -87,6 +91,36 @@ export namespace EventNodeControl {
                     },
                 )
         }
+    }
+
+    export function toLoadHistorySgNode(nodeId: string): SgNode {
+        return SgNodeCircleButton.toNode(
+            toLoadMoreNodeId(nodeId),
+            {
+                eventName: NodeControlEvent.LoadHistory,
+                icon: 'history',
+                tooltip: 'Load More',
+            },
+        )
+    }
+
+    export function toLoadMoreNodeId(nodeId: string): string {
+        return `${LOAD_MORE_NODE_ID_PREFIX}${nodeId}`
+    }
+
+    export function loadMoreNodeToNativeNodeId(loadMoreNodeId: string): string {
+        return loadMoreNodeId.replace(LOAD_MORE_NODE_ID_PREFIX, '')
+    }
+
+    export function toLoadFutureSgNode(nodeId: string): SgNode {
+        return SgNodeCircleButton.toNode(
+            toLoadMoreNodeId(nodeId),
+            {
+                eventName: NodeControlEvent.LoadFuture,
+                icon: 'more_time',
+                tooltip: 'Load More',
+            },
+        )
     }
 }
 

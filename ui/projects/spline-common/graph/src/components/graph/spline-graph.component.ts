@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +26,9 @@ import {
     ViewChild
 } from '@angular/core'
 import { GraphComponent } from '@swimlane/ngx-graph'
+import { Edge } from '@swimlane/ngx-graph/lib/models/edge.model'
 import * as fromD3Shape from 'd3-shape'
-import { Observable, Subject } from 'rxjs'
+import { BehaviorSubject, Observable, Subject } from 'rxjs'
 import { buffer, debounceTime, takeUntil } from 'rxjs/operators'
 import { BaseComponent } from 'spline-utils'
 
@@ -84,7 +85,7 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges {
     readonly defaultNodeWidth = 350
     readonly defaultNodeHeight = 50
 
-    nativeNodes: SgNativeNode[] = []
+    readonly nativeGraphData$ = new BehaviorSubject<{nodes: SgNativeNode[]; links: Edge[]}>(null)
 
     private focusedNodeTimer: any
     private nodeClicksStream$ = new Subject<{ node: SgNativeNode; mouseEvent: MouseEvent }>()
@@ -97,7 +98,10 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.graphData && changes.graphData.currentValue) {
             const currentGraphData: SgData = changes.graphData.currentValue
-            this.nativeNodes = currentGraphData.nodes.map(toSgNativeNode)
+            this.nativeGraphData$.next({
+                nodes: currentGraphData.nodes.map(toSgNativeNode),
+                links: changes.graphData.currentValue.links
+            })
         }
         if (changes?.focusNode$ && changes.focusNode$.currentValue) {
             changes.focusNode$.currentValue
@@ -158,7 +162,7 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges {
 
     private selectNode(node: SgNativeNode): void {
         // do nothing if selection is disallowed
-        if (node.schema?.allowSelection === false) {
+        if (node.schema?.disallowSelection === true) {
             return
         }
 

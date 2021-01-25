@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import { DynamicValueProvider } from 'spline-utils'
 export type SgNodeSchema<TData extends object = {}, TOptions extends object = {}, TMetadata extends object = {}> = {
     id: string
     type?: string
-    allowSelection?: boolean // true by default
+    disallowSelection?: boolean // true by default
     data?: DynamicValueProvider<TData>
     options?: DynamicValueProvider<TOptions>
     metadata?: TMetadata

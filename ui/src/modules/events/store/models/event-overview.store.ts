@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,19 @@
  * limitations under the License.
  */
 
+import differenceWith from 'lodash/differenceWith'
 import {
     ExecutionEventLineageNode,
+    ExecutionEventLineageNodeType,
     ExecutionEventLineageOverview,
     ExecutionEventLineageOverviewDepth,
-    LineageNodeLink,
-    OperationDetails
+    Lineage,
+    LineageNodeLink
 } from 'spline-api'
 import { SdWidgetSchema } from 'spline-common/data-view'
 import { SgData } from 'spline-common/graph'
 import { SgNodeControl } from 'spline-shared/graph'
-import { ProcessingStore, SplineEntityStore } from 'spline-utils'
+import { ProcessingStore, SplineEntityStore, StringHelpers } from 'spline-utils'
 
 import { EventInfo, EventNodeControl, EventNodeInfo } from '../../models'
 
@@ -124,6 +126,68 @@ export namespace EventOverviewStore {
         return calculateGraphDataMiddleware(newState)
     }
 
+    export function __reduceFakeHistoryNode(state: State, nodeId: string): State {
+        const fakeNodeJob: ExecutionEventLineageNode = {
+            id: `__fakeJob${StringHelpers.guid()}`,
+            name: 'Some Fake Job',
+            type: ExecutionEventLineageNodeType.Execution
+        }
+
+        const fakeNodeDs: ExecutionEventLineageNode = {
+            id: `__fakeDataSource${StringHelpers.guid()}`,
+            name: 'Some Fake Data Source',
+            type: ExecutionEventLineageNodeType.DataSource
+        }
+
+        const newState = {
+            ...state,
+            nodes: SplineEntityStore.addMany([fakeNodeJob, fakeNodeDs], state.nodes),
+            links: [
+                {
+                    source: fakeNodeDs.id,
+                    target: fakeNodeJob.id
+                },
+                {
+                    source: fakeNodeJob.id,
+                    target: nodeId
+                },
+                ...state.links
+            ],
+        }
+        return calculateGraphDataMiddleware(newState)
+    }
+
+    export function __reduceFakeFutureNode(state: State, nodeId: string): State {
+        const fakeNodeJob: ExecutionEventLineageNode = {
+            id: `__fakeJob${StringHelpers.guid()}`,
+            name: 'Some Fake Job',
+            type: ExecutionEventLineageNodeType.Execution
+        }
+
+        const fakeNodeDs: ExecutionEventLineageNode = {
+            id: `__fakeDataSource${StringHelpers.guid()}`,
+            name: 'Some Fake Data Source',
+            type: ExecutionEventLineageNodeType.DataSource
+        }
+
+        const newState = {
+            ...state,
+            nodes: SplineEntityStore.addMany([fakeNodeJob, fakeNodeDs], state.nodes),
+            links: [
+                {
+                    target: fakeNodeDs.id,
+                    source: fakeNodeJob.id
+                },
+                {
+                    target: fakeNodeJob.id,
+                    source: nodeId
+                },
+                ...state.links
+            ]
+        }
+        return calculateGraphDataMiddleware(newState)
+    }
+
     export function reduceGraphNodeView(state: State, graphNodeView: SgNodeControl.NodeView): State {
         return calculateGraphDataMiddleware({
             ...state,
@@ -140,7 +204,8 @@ export namespace EventOverviewStore {
 
     export function calculateGraphData(state: State): SgData {
         const nodesList = EventOverviewStore.selectAllNodes(state)
-        return {
+
+        const graphData = {
             links: state.links,
             nodes: nodesList
                 // map node source data to the SgNode schema
@@ -148,6 +213,22 @@ export namespace EventOverviewStore {
                     nodeSource => EventNodeControl.toSgNode(nodeSource, state.graphNodeView),
                 ),
         }
+
+        return graphData
+
+        // TODO: implement that logic after BE related part will be ready
+        // const lineageData = {
+        //     nodes: nodesList,
+        //     links: state.links
+        // }
+        //
+        // const loadHistoryGraph = getLoadHistoryGraphData(lineageData)
+        // const loadFutureGraph = getLoadFutureGraphData(lineageData)
+        //
+        // return {
+        //     links: [...loadHistoryGraph.links, ...graphData.links, ...loadFutureGraph.links],
+        //     nodes: [...loadHistoryGraph.nodes, ...graphData.nodes, ...loadFutureGraph.nodes],
+        // }
     }
 
     export function reduceSelectedNodeId(nodeId: string | null, state: State): State {
@@ -189,5 +270,61 @@ export namespace EventOverviewStore {
     function calculateHasMoreDepth(lineageDepth: ExecutionEventLineageOverviewDepth): boolean {
         return lineageDepth.depthRequested === lineageDepth.depthComputed
     }
+
+    export function getLoadHistoryGraphData(lineageData: Lineage<ExecutionEventLineageNode>): SgData {
+        // select DS nodes with no parents
+        const dsNodesIds = lineageData.nodes
+            .filter(item => item.type === ExecutionEventLineageNodeType.DataSource)
+            .map(item => item.id)
+
+        const dsNodesIdsWithParent = lineageData.links
+            .filter(item => dsNodesIds.includes(item.target))
+            .map(item => item.target)
+
+        const dsNodesIdsNoParent = differenceWith(dsNodesIds, dsNodesIdsWithParent)
+
+        // add new add button to the node with no parent
+
+        return {
+            links: dsNodesIdsNoParent.map(
+                nodeId => ({
+                    source: EventNodeControl.toLoadMoreNodeId(nodeId),
+                    target: nodeId
+                })
+            ),
+            nodes: dsNodesIdsNoParent.map(
+                nodeId => EventNodeControl.toLoadHistorySgNode(nodeId)
+            )
+        }
+    }
+
+    export function getLoadFutureGraphData(lineageData: Lineage<ExecutionEventLineageNode>): SgData {
+        // select DS nodes with no parents
+        const dsNodesIds = lineageData.nodes
+            .filter(item => item.type === ExecutionEventLineageNodeType.DataSource)
+            .map(item => item.id)
+
+        const dsNodesIdsWithChildren = lineageData.links
+            .filter(item => dsNodesIds.includes(item.source))
+            .map(item => item.source)
+
+        const dsNodesIdsNoChildren = differenceWith(dsNodesIds, dsNodesIdsWithChildren)
+
+        // add new add button to the node with no parent
+
+        return {
+            links: dsNodesIdsNoChildren.map(
+                nodeId => ({
+                    target: EventNodeControl.toLoadMoreNodeId(nodeId),
+                    source: nodeId
+                })
+            ),
+            nodes: dsNodesIdsNoChildren.map(
+                nodeId => EventNodeControl.toLoadFutureSgNode(nodeId)
+            )
+        }
+    }
+
+
 
 }

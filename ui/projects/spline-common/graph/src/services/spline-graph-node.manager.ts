@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,13 @@
 import { Inject, Injectable, InjectionToken, Injector, Optional, Type } from '@angular/core'
 import { DynamicComponentManager } from 'spline-utils'
 
-import { SgNodeCircle, SgNodeCircleComponent, SgNodeDefaultComponent } from '../components/node-control/type'
+import {
+    SgNodeCircle,
+    SgNodeCircleButton,
+    SgNodeCircleButtonComponent,
+    SgNodeCircleComponent,
+    SgNodeDefaultComponent
+} from '../components/node-control/type'
 import { ISgNodeControl, ISgNodeControlFactory } from '../models'
 
 
@@ -28,7 +34,8 @@ export const SG_NODE_CONTROL_FACTORY = new InjectionToken<ISgNodeControlFactory<
 export class SplineGraphNodeManager extends DynamicComponentManager<ISgNodeControlFactory<any>, ISgNodeControl<any>> {
 
     readonly defaultNodeControlsMap: { [type: string]: Type<ISgNodeControl<any>> } = {
-        [SgNodeCircle.TYPE]: SgNodeCircleComponent
+        [SgNodeCircle.TYPE]: SgNodeCircleComponent,
+        [SgNodeCircleButton.TYPE]: SgNodeCircleButtonComponent
     }
 
     constructor(

@@ -13,3 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+@import 'mixins';
+@import 'vars';
+@import './sg-node-view-shared.component';
+
+$icon-size: 24px;
+
+.sg-node-view-circle-button {
+
+}
