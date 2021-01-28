@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,13 +17,19 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 
+import { splineUtilsDirectives } from './directives'
+
 
 @NgModule({
     imports: [
         CommonModule,
     ],
-    declarations: [],
-    exports: [],
+    declarations: [
+        ...splineUtilsDirectives
+    ],
+    exports: [
+        ...splineUtilsDirectives
+    ],
     providers: []
 })
 export class SplineUtilsCommonModule {

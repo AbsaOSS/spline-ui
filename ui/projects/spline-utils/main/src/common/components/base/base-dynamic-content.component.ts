@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Component, ComponentFactoryResolver, ComponentRef, Directive, Type, ViewChild, ViewContainerRef } from '@angular/core'
+import { Component, ComponentFactoryResolver, ComponentRef, Type, ViewChild, ViewContainerRef } from '@angular/core'
 import { Subscription } from 'rxjs'
 
 import { BaseComponent } from './base.component'

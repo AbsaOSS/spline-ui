@@ -67,8 +67,7 @@ export class SgNodeControlComponent<TData extends object, TOptions extends objec
         const { schema } = changes
 
         if (schema) {
-            const domRelaxationTime = 200
-            setTimeout(() => this.rebuildComponent(), domRelaxationTime)
+            this.rebuildComponent()
         }
 
         // synchronize mirror Input() params

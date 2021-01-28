@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs'
 import { catchError, map, switchMap, take, takeUntil, tap } from 'rxjs/internal/operators'
 
-import { ProcessingStore } from '../store'
+import { ProcessingStore } from '../../../store'
 
 import { SearchQuery } from './search-query.models'
 import DataState = SearchQuery.DataState

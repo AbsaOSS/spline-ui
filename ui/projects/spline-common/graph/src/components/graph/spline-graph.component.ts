@@ -133,7 +133,7 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges {
     }
 
     private initNodeClicksEvents(): void {
-        const doubleClickDelayInMs = 250
+        const doubleClickDelayInMs = 150
         const buff$ = this.nodeClicksStream$.pipe(
             debounceTime(doubleClickDelayInMs),
         )

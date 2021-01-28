@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,9 +32,6 @@ export namespace StringHelpers {
             : snackCaseStr.toLowerCase()
     }
 
-    /**
-     * Generate unique string ID
-     */
     export function guid(): string {
         function s4(): string {
             return Math.floor((1 + Math.random()) * 0x10000)
@@ -80,6 +77,22 @@ export namespace StringHelpers {
                 .replace('-', '')
                 .replace('_', '')
         })
+    }
+
+    export function encodeObjToUrlString(obj: Record<string, any>): string {
+        return encodeBase64(JSON.stringify(obj))
+    }
+
+    export function decodeObjFromUrlString<T extends Record<string, any> = Record<string, any>>(str: string): T {
+        return JSON.parse(decodeBase64(str)) as T
+    }
+
+    export function encodeBase64(str: string): string {
+        return window.btoa(str)
+    }
+
+    export function decodeBase64(str: string): string {
+        return window.atob(str)
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,11 @@
 
 
 
+import { StringHelpers } from 'spline-utils'
+
+
 export type DataSourceInfo = {
+    id: string
     name: string
     uri: string
     type: string
@@ -30,6 +34,7 @@ export type DataSourceInfoDto = {
 
 export function toDataSourceInfo(entity: DataSourceInfoDto): DataSourceInfo {
     return {
+        id: StringHelpers.encodeBase64(entity.source),
         name: dataSourceUriToName(entity.source),
         uri: entity.source,
         type: entity.sourceType

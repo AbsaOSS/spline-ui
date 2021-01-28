@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,13 +35,13 @@ export namespace ExecutionPlanOverviewStore {
         executionPlanId: string | null
         links: LineageNodeLink[]
         executionPlan: ExecutionPlan | null
-        loadingProcessing: ProcessingStore.EventProcessingState
+        loading: ProcessingStore.EventProcessingState
 
         selectedNodeId: string | null
         selectedAttributeId: string | null
 
         attributeLineage: OperationAttributeLineage | null
-        attributeLineageLoadingProcessing: ProcessingStore.EventProcessingState
+        attributeLineageLoading: ProcessingStore.EventProcessingState
 
         graphNodeView: SgNodeControl.NodeView
         graphData: SgData | null
@@ -53,13 +53,13 @@ export namespace ExecutionPlanOverviewStore {
             executionPlanId: null,
             links: [],
             executionPlan: null,
-            loadingProcessing: ProcessingStore.getDefaultProcessingState(),
+            loading: ProcessingStore.getDefaultProcessingState(),
 
             selectedNodeId: null,
             selectedAttributeId: null,
 
             attributeLineage: null,
-            attributeLineageLoadingProcessing: ProcessingStore.getDefaultProcessingState(),
+            attributeLineageLoading: ProcessingStore.getDefaultProcessingState(),
 
             graphNodeView: SgNodeControl.NodeView.Detailed,
             graphData: null

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,5 @@
  * limitations under the License.
  */
 
-export type QueryPager = {
-    offset: number
-    limit: number
-}
-
-export const DEFAULT_PAGE_LIMIT = 10
-
-export const DEFAULT_PAGER: QueryPager =  Object.freeze<QueryPager>({
-    offset: 0,
-    limit: DEFAULT_PAGE_LIMIT,
-})
+export * from './sidebar-menu/spline-sidebar-menu.component'
+export * from './sidebar-menu/spline-sidebar-menu.models'

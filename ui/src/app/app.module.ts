@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import { SplineIconModule, SplineSearchBoxModule } from 'spline-common'
 import { SplineLayoutModule } from 'spline-common/layout'
 import { SplineConfigModule, SplineConfigSettings, SPLINE_CONFIG_SETTINGS } from 'spline-shared'
 import { SplineAttributesSharedModule } from 'spline-shared/attributes'
+import { SplineUtilsCommonModule } from 'spline-utils'
 import {
     COMMON_ASSETS,
     SplineTranslateCoreModule,
@@ -36,13 +37,15 @@ import {
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
+import { SplineSidebarMenuComponent } from './components'
 import { AppNotFoundComponent } from './pages/not-found/not-found.component'
 
 
 @NgModule({
     declarations: [
         AppComponent,
-        AppNotFoundComponent
+        AppNotFoundComponent,
+        SplineSidebarMenuComponent
     ],
     imports: [
         BrowserModule,
@@ -58,7 +61,8 @@ import { AppNotFoundComponent } from './pages/not-found/not-found.component'
         SplineSearchBoxModule,
         SplineConfigModule,
         SplineAttributesSharedModule,
-        SplineIconModule
+        SplineIconModule,
+        SplineUtilsCommonModule
     ],
     providers: [
         {

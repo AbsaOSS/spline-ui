@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,7 @@
  */
 
 import { HttpParams } from '@angular/common/http'
-
-import { DEFAULT_PAGE_LIMIT, PageQueryParams, QueryPager, QuerySorter } from '../../../../core'
+import { DEFAULT_PAGE_LIMIT, PageQueryParams, QueryPager, QuerySorter } from 'spline-utils'
 
 import { ExecutionEventField } from './execution-event.models'
 

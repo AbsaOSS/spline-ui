@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,4 +14,22 @@
  * limitations under the License.
  */
 
-export * from './public-api'
+
+export namespace SplineSidebarMenu {
+
+    export type MenuItem = {
+        label: string
+        routerLink: string | any[]
+        id?: string
+        icon: string
+        isActive?: boolean
+        disabled?: boolean
+        color?: string
+        routerLinkActivePattern?: string
+    }
+
+    export function evaluateRexPattern(url, regexPattern: string): boolean {
+        return new RegExp(regexPattern).test(url)
+    }
+}
+

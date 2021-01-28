@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,41 +15,34 @@
  */
 
 import { Component } from '@angular/core'
-import { NavigationEnd, Router } from '@angular/router'
-import { environment } from '@env/environment'
-import { BehaviorSubject, Observable } from 'rxjs'
-import { filter } from 'rxjs/operators'
+import { Router } from '@angular/router'
+import { take } from 'rxjs/operators'
 import { AttributeSearchRecord } from 'spline-api'
 import { SplineConfig, SplineConfigService } from 'spline-shared'
+import { BaseLocalStateComponent } from 'spline-utils'
+
+import { AppStore } from './store'
 
 
 @Component({
-    selector: 'spline-app-root',
+    selector: 'spline-app',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-
-    readonly splineConfig$: Observable<SplineConfig>
-    // TODO: remove that after menu component will be implemented
-    readonly isEventsLinkActive$ = new BehaviorSubject<{ isActive: boolean }>({ isActive: false })
-    readonly isPlansLinkActive$ = new BehaviorSubject<{ isActive: boolean }>({ isActive: false })
-
-    readonly appVersion = environment.version
-    isSideNavExpanded = false
+export class AppComponent extends BaseLocalStateComponent<AppStore.State> {
 
     constructor(private readonly router: Router, private readonly splineConfigService: SplineConfigService) {
+        super()
+        this.updateState(
+            AppStore.getDefaultState()
+        )
 
-        this.splineConfig$ = this.splineConfigService.config$
-
-        // TODO: replace that after menu component will be implemented
-        this.router.events
+        this.splineConfigService.config$
             .pipe(
-                filter(event => event instanceof NavigationEnd),
+                take(1)
             )
-            .subscribe((event: NavigationEnd) => {
-                this.isEventsLinkActive$.next({ isActive: event.url === '' || event.url === '/' || event.url.startsWith('/events') })
-                this.isPlansLinkActive$.next({ isActive: event.url.startsWith('/plans') })
+            .subscribe((splineConfig) => {
+                this.init(splineConfig)
             })
     }
 
@@ -64,7 +57,17 @@ export class AppComponent {
         )
     }
 
-    onExpandedToggleBtnClicked(): void {
-        this.isSideNavExpanded = !this.isSideNavExpanded
+    onSideNavExpanded(isExpanded: boolean): void {
+        this.updateState(
+            AppStore.reduceSideNavExpanded(this.state, isExpanded)
+        )
     }
+
+    private init(splineConfig: SplineConfig): void {
+        this.updateState({
+            isInitialized: true,
+            isEmbeddedMode: !!splineConfig?.isEmbeddedMode,
+        })
+    }
+
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,17 @@
  * limitations under the License.
  */
 
-import { AfterContentInit, ChangeDetectorRef, Component, ContentChildren, Input, QueryList, TemplateRef } from '@angular/core'
+import {
+    AfterContentInit,
+    ChangeDetectorRef,
+    Component,
+    ContentChildren,
+    EventEmitter,
+    Input,
+    Output,
+    QueryList,
+    TemplateRef
+} from '@angular/core'
 
 import { SplineLayoutSectionDirective } from '../../directives'
 import { SplineLayoutSection } from '../../models'
@@ -31,6 +41,8 @@ export class SplineLayoutCommonComponent implements AfterContentInit {
     @Input() isEmbeddedMode = false
     @Input() isSideNavExpanded = false
     @Input() appVersion: string
+
+    @Output() sidenavExpanded$ = new EventEmitter<{ isExpanded: boolean }>()
 
     sectionsTemplatesCollection: Partial<{ [K in SplineLayoutSection.SectionName]: TemplateRef<any> }> = {}
 
@@ -54,5 +66,8 @@ export class SplineLayoutCommonComponent implements AfterContentInit {
 
     onExpandedToggleBtnClicked(): void {
         this.isSideNavExpanded = !this.isSideNavExpanded
+        this.sidenavExpanded$.emit({
+            isExpanded: this.isSideNavExpanded
+        })
     }
 }

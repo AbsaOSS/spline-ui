@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,7 +67,7 @@ import { SplineDataSourcesRoutingModule } from './spline-data-sources-routing.mo
         SplineApiConfigModule,
         SplineApiModule,
         SplineLayoutModule,
-        SplineTranslateModule.forChild({ moduleNames: ['plans', 'common-graph'] }),
+        SplineTranslateModule.forChild({ moduleNames: ['data-sources', 'common-graph'] }),
         SplineCommonModule,
     ],
     exports: [

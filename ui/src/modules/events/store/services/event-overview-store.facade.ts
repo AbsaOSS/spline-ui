@@ -16,7 +16,7 @@
 
 import { Injectable } from '@angular/core'
 import { Observable, of } from 'rxjs'
-import { catchError, map, take, tap } from 'rxjs/operators'
+import { catchError, take, tap } from 'rxjs/operators'
 import { ExecutionEventFacade, ExecutionEventLineageNode, ExecutionEventLineageOverview } from 'spline-api'
 import { SgNodeControl } from 'spline-shared/graph'
 import { BaseStore, ProcessingStore } from 'spline-utils'
@@ -27,26 +27,8 @@ import { EventOverviewStore } from '../models'
 @Injectable()
 export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State> {
 
-    readonly loadingProcessingEvents: ProcessingStore.ProcessingEvents<EventOverviewStore.State>
-    readonly loadingProcessing$: Observable<ProcessingStore.EventProcessingState>
-
-    readonly graphLoadingProcessingEvents: ProcessingStore.ProcessingEvents<EventOverviewStore.State>
-    readonly graphLoadingProcessing$: Observable<ProcessingStore.EventProcessingState>
-
     constructor(private readonly executionEventFacade: ExecutionEventFacade) {
         super(EventOverviewStore.getDefaultState())
-
-        this.loadingProcessingEvents = ProcessingStore.createProcessingEvents(
-            this.state$, (state) => state.loadingProcessing,
-        )
-
-        this.loadingProcessing$ = this.state$.pipe(map(data => data.loadingProcessing))
-
-        this.graphLoadingProcessingEvents = ProcessingStore.createProcessingEvents(
-            this.state$, (state) => state.graphLoadingProcessing,
-        )
-
-        this.graphLoadingProcessing$ = this.state$.pipe(map(data => data.graphLoadingProcessing))
     }
 
     setSelectedNode(nodeId: string | null): void {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,8 @@
  * limitations under the License.
  */
 
-
-import { QueryPager } from './query-pager.models'
-import { QuerySorter } from './query-sorter.models'
-
-
-export interface PageQueryParams<TFilter extends object, TSortableFiled = string> {
-    pager?: Partial<QueryPager>
-    filter?: TFilter
-    sortBy?: QuerySorter.FieldSorter<TSortableFiled>[]
-}
+export * from './cachable.models'
+export * from './page-response.models'
+export * from './query-pager.models'
+export * from './query-params.models'
+export * from './query-sorter.models'

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-
 import { MatSortable } from '@angular/material/sort'
 import { Sort } from '@angular/material/sort/sort'
-import { DEFAULT_PAGER, QueryPager, QuerySorter } from 'spline-api'
 
-import { ProcessingStore } from '../store'
+import { ProcessingStore } from '../../../store'
+import { DEFAULT_PAGER, QueryPager, QuerySorter } from '../query'
 
 
 export namespace SearchQuery {

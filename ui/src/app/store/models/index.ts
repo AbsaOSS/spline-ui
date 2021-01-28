@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,4 @@
  * limitations under the License.
  */
 
-export * from './search-data-source.model'
-export * from './search-query.models'
-export * from './simple-data-source.model'
+export * from './app.store'

@@ -17,11 +17,11 @@
 <ng-container *ngIf="store.state$ | async as state">
 
     <!-- LOADER -->
-    <spline-loader *ngIf="state.loadingProcessing.processing"></spline-loader>
+    <spline-loader *ngIf="state.loading.processing"></spline-loader>
     <!-- ./LOADER -->
 
     <!-- ERROR -->
-    <spline-content-error *ngIf="state.loadingProcessing.processingError"></spline-content-error>
+    <spline-content-error *ngIf="state.loading.processingError"></spline-content-error>
     <!-- ./ERROR -->
 
     <div *ngIf="!!state.graphData" class="e2e-container">
@@ -46,7 +46,7 @@
                         <!-- EXECUTION PLAN INFO -->
                         <plan-info (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"
                                    [executionPlan]="state.executionPlan"
-                                   [selectedAttributeId]="(store.selectedAttribute$ | async)?.id">
+                                   [selectedAttributeId]="state.selectedAttributeId">
                         </plan-info>
                         <!-- ./EXECUTION PLAN INFO -->
                     </div>
@@ -82,7 +82,7 @@
                                                            (showAttrLineage$)="onShowAttrLineage(selectedAttribute, $event.lineageType)"
                                                            [attributeLineage]="state.attributeLineage"
                                                            [attribute]="selectedAttribute"
-                                                           [loading]="state.attributeLineageLoadingProcessing.processing">
+                                                           [loading]="state.attributeLineageLoading.processing">
                             </spline-attribute-lineage-info>
                         </sg-toolbar>
                         <!-- ./TOOLBAR -->

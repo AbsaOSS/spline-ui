@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,4 +14,16 @@
  * limitations under the License.
  */
 
-export * from './public-api'
+export namespace QuerySorter {
+
+    export enum SortDir {
+        ASC = 'ASC',
+        DESC = 'DESC'
+    }
+
+    export interface FieldSorter<TFiled = string> {
+        field: TFiled
+        dir: SortDir
+    }
+
+}

@@ -27,7 +27,9 @@
     </spline-data-record>
 
     <spline-data-record [label]="'Output' | translate">
-        <span [matTooltip]="executionPlan.outputDataSource.uri">{{ executionPlan.outputDataSource.name }}</span>
+        <a [routerLink]="['/data-sources/overview', executionPlan.outputDataSource.id]">
+            {{ executionPlan.outputDataSource.name }}
+        </a>
     </spline-data-record>
 
 </sl-entity-header>

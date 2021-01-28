@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2020 ABSA Group Limited
+  ~ Copyright 2021 ABSA Group Limited
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,11 +14,12 @@
   ~ limitations under the License.
   -->
 
-<ng-container *ngIf="splineConfig$ | async as splineConfig">
+<ng-container *ngIf="state$ | async as state">
 
-    <spline-layout-common [isEmbeddedMode]="splineConfig.isEmbeddedMode"
-                          [appVersion]="appVersion">
-
+    <spline-layout-common [isEmbeddedMode]="state.isEmbeddedMode"
+                          (sidenavExpanded$)="onSideNavExpanded($event.isExpanded)"
+                          [appVersion]="state.appVersion"
+                          [isSideNavExpanded]="state.isSideNavExpanded">
 
         <!-- HEADER -->
         <ng-template splineLayoutSection="header">
@@ -28,53 +29,9 @@
 
         <!-- SIDEBAR -->
         <ng-template let-isExpanded="isExpanded" splineLayoutSection="sidebar">
-            <div class="spline-sidebar-menu">
-
-                <mat-nav-list>
-                    <a [class.active]="isEventsLinkActive.isActive"
-                       [matTooltipDisabled]="isExpanded"
-                       [matTooltipPosition]="'right'"
-                       mat-list-item
-                       *ngIf="isEventsLinkActive$ | async as isEventsLinkActive"
-                       [matTooltip]="'APP.MENU__EVENTS' | translate"
-                       routerLink="/events/list">
-
-                        <mat-icon>play_arrow</mat-icon>
-                        <span *ngIf="isExpanded">
-                            {{ 'APP.MENU__EVENTS' | translate }}
-                        </span>
-
-                    </a>
-                    <a [class.active]="isPlansLinkActive.isActive"
-                       [matTooltipDisabled]="isExpanded"
-                       [matTooltipPosition]="'right'"
-                       mat-list-item
-                       *ngIf="isPlansLinkActive$ | async as isPlansLinkActive"
-                       [matTooltip]="'APP.MENU__PLANS' | translate"
-                       routerLink="/plans/list">
-
-                        <spline-icon icon="cog-transfer-outline"></spline-icon>
-                        <span *ngIf="isExpanded">
-                            {{ 'APP.MENU__PLANS' | translate }}
-                        </span>
-
-                    </a>
-
-                    <a [matTooltipDisabled]="isExpanded"
-                       [matTooltipPosition]="'right'"
-                       mat-list-item
-                       [matTooltip]="'APP.MENU__DATA_SOURCES' | translate"
-                       routerLink="/data-sources/list"
-                       routerLinkActive="active">
-
-                        <mat-icon>description</mat-icon>
-                        <span *ngIf="isExpanded">
-                            {{ 'APP.MENU__DATA_SOURCES' | translate }}
-                        </span>
-
-                    </a>
-                </mat-nav-list>
-            </div>
+            <spline-sidebar-menu [menuItems]="state.sidebarMenuItems"
+                                 [showOnlyIcons]="!isExpanded">
+            </spline-sidebar-menu>
         </ng-template>
         <!-- ./SIDEBAR -->
 

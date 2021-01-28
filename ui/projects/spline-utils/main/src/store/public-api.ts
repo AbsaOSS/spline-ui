@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,5 +15,6 @@
  */
 
 export * from './models/base-store.models'
+export * from './models/base-store-with-loading.models'
 export * from './models/processing-store.models'
 export * from './models/entity-store.models'

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,19 +26,13 @@ import {
     OperationAttributeLineage,
 } from 'spline-api'
 import { SgNodeControl } from 'spline-shared/graph'
-import { BaseStore, ProcessingStore, SplineEntityStore } from 'spline-utils'
+import { BaseStoreWithLoading, ProcessingStore, SplineEntityStore } from 'spline-utils'
 
 import { ExecutionPlanOverviewStore } from '../models'
 
 
 @Injectable()
-export class ExecutionPlanOverviewStoreFacade extends BaseStore<ExecutionPlanOverviewStore.State> {
-
-    readonly loadingProcessingEvents: ProcessingStore.ProcessingEvents<ExecutionPlanOverviewStore.State>
-    readonly loadingProcessing$: Observable<ProcessingStore.EventProcessingState>
-
-    readonly attributeLineageLoadingProcessingEvents: ProcessingStore.ProcessingEvents<ExecutionPlanOverviewStore.State>
-    readonly attributeLineageLoadingProcessing$: Observable<ProcessingStore.EventProcessingState>
+export class ExecutionPlanOverviewStoreFacade extends BaseStoreWithLoading<ExecutionPlanOverviewStore.State> {
 
     selectedNode$: Observable<ExecutionPlanLineageNode | null>
     selectedAttribute$: Observable<AttributeSchema | null>
@@ -46,18 +40,6 @@ export class ExecutionPlanOverviewStoreFacade extends BaseStore<ExecutionPlanOve
 
     constructor(private readonly executionPlanFacade: ExecutionPlanFacade) {
         super(ExecutionPlanOverviewStore.getDefaultState())
-
-        this.loadingProcessingEvents = ProcessingStore.createProcessingEvents(
-            this.state$, (state) => state.loadingProcessing,
-        )
-
-        this.loadingProcessing$ = this.state$.pipe(map(data => data.loadingProcessing))
-
-        this.attributeLineageLoadingProcessingEvents = ProcessingStore.createProcessingEvents(
-            this.state$, (state) => state.attributeLineageLoadingProcessing,
-        )
-
-        this.attributeLineageLoadingProcessing$ = this.state$.pipe(map(data => data.attributeLineageLoadingProcessing))
 
         this.selectedNode$ = this.state$
             .pipe(
@@ -116,8 +98,8 @@ export class ExecutionPlanOverviewStoreFacade extends BaseStore<ExecutionPlanOve
                 this.updateState({
                     selectedAttributeId: attrId,
                     attributeLineage: null,
-                    attributeLineageLoadingProcessing: ProcessingStore.eventProcessingFinish(
-                        this.state.attributeLineageLoadingProcessing,
+                    attributeLineageLoading: ProcessingStore.eventProcessingFinish(
+                        this.state.attributeLineageLoading,
                     ),
                 })
             }
@@ -126,8 +108,8 @@ export class ExecutionPlanOverviewStoreFacade extends BaseStore<ExecutionPlanOve
                 this.updateState({
                     selectedAttributeId: attrId,
                     attributeLineage: null,
-                    attributeLineageLoadingProcessing: ProcessingStore.eventProcessingStart(
-                        this.state.attributeLineageLoadingProcessing,
+                    attributeLineageLoading: ProcessingStore.eventProcessingStart(
+                        this.state.attributeLineageLoading,
                     ),
                 })
 
@@ -135,8 +117,8 @@ export class ExecutionPlanOverviewStoreFacade extends BaseStore<ExecutionPlanOve
                     .pipe(
                         catchError((error) => {
                             this.updateState({
-                                attributeLineageLoadingProcessing: ProcessingStore.eventProcessingFinish(
-                                    this.state.attributeLineageLoadingProcessing, error,
+                                attributeLineageLoading: ProcessingStore.eventProcessingFinish(
+                                    this.state.attributeLineageLoading, error,
                                 ),
                             })
                             return of(null)
@@ -145,8 +127,8 @@ export class ExecutionPlanOverviewStoreFacade extends BaseStore<ExecutionPlanOve
                         tap((attributeLineage: OperationAttributeLineage) => {
                             if (attributeLineage !== null) {
                                 this.updateState({
-                                    attributeLineageLoadingProcessing: ProcessingStore.eventProcessingFinish(
-                                        this.state.attributeLineageLoadingProcessing,
+                                    attributeLineageLoading: ProcessingStore.eventProcessingFinish(
+                                        this.state.attributeLineageLoading,
                                     ),
                                     attributeLineage,
                                 })
@@ -162,7 +144,7 @@ export class ExecutionPlanOverviewStoreFacade extends BaseStore<ExecutionPlanOve
 
     init(executionPlanId: string, selectedNodeId: string | null = null, selectedAttributeId: string | null = null): void {
         this.updateState({
-            loadingProcessing: ProcessingStore.eventProcessingStart(this.state.loadingProcessing),
+            loading: ProcessingStore.eventProcessingStart(this.state.loading),
         })
 
         const operationObserver: Observable<OperationAttributeLineage | null> = selectedAttributeId
@@ -189,7 +171,7 @@ export class ExecutionPlanOverviewStoreFacade extends BaseStore<ExecutionPlanOve
             .pipe(
                 catchError((error) => {
                     this.updateState({
-                        loadingProcessing: ProcessingStore.eventProcessingFinish(this.state.loadingProcessing, error),
+                        loading: ProcessingStore.eventProcessingFinish(this.state.loading, error),
                     })
                     return of(null)
                 }),
@@ -198,7 +180,7 @@ export class ExecutionPlanOverviewStoreFacade extends BaseStore<ExecutionPlanOve
                     if (data !== null) {
                         this.updateState({
                             ...ExecutionPlanOverviewStore.reduceLineageOverviewData(this.state, executionPlanId, data.executionPlanLinage),
-                            loadingProcessing: ProcessingStore.eventProcessingFinish(this.state.loadingProcessing),
+                            loading: ProcessingStore.eventProcessingFinish(this.state.loading),
                             selectedNodeId,
                             executionPlanId,
                             selectedAttributeId,

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +21,8 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
 import isEqual from 'lodash/isEqual'
 import { Observable } from 'rxjs'
 import { distinctUntilChanged, filter, map, skip, takeUntil } from 'rxjs/operators'
-import { ExecutionEventFacade, ExecutionEventField, ExecutionEventsPageResponse, QuerySorter } from 'spline-api'
-import { BaseComponent, ProcessingStore, RouterNavigation, SearchQuery } from 'spline-utils'
+import { ExecutionEventFacade, ExecutionEventField, ExecutionEventsPageResponse } from 'spline-api'
+import { BaseComponent, ProcessingStore, QuerySorter, RouterNavigation, SearchQuery } from 'spline-utils'
 
 import { SplineDateFilter } from '../../components'
 import { EventsDataSource } from '../../data-sources'

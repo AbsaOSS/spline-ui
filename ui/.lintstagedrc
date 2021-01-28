@@ -1,0 +1,10 @@
+{
+    "*.scss": [
+        "stylelint --syntax=scss --fix",
+        "git add"
+    ],
+    "*.ts": [
+        "eslint --fix",
+        "git add"
+    ]
+}

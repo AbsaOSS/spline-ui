@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,4 @@
  * limitations under the License.
  */
 
-export * from './cachable.models'
-export * from './page-response.models'
-export * from './query-pager.models'
-export * from './query-params.models'
-export * from './query-sorter.models'
+export * from './app-sidebar-menu.models'

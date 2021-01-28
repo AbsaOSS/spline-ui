@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,12 @@
 
 export * from './dynamic-rendering/dynamic-component.manager'
 export * from './dynamic-rendering/dynamic-components.models'
+
 export * from './heplers/date-time-helpers'
 export * from './generic-event-info.models'
 export * from './heplers/generic-types.models'
 export * from './router-navigation.models'
 export * from './heplers/string-helpers'
 export * from './heplers/type-helpers'
+export * from './query/public-api'
+export * from './search-query/public-api'

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+
+import { StringHelpers } from 'spline-utils'
 
 import { DataSourceInfo, dataSourceUriToName, DataSourceWriteMode } from '../data-source'
 
@@ -67,6 +69,7 @@ export namespace ExecutionEventLineageList {
         return {
             id: node.id,
             dataSource: {
+                id: StringHelpers.encodeBase64(node.name),
                 name: dataSourceUriToName(node.name),
                 uri: node.name,
                 type: node.name.toLowerCase().endsWith('.csv') ? 'CSV' : 'Parquet' // just an example, we need to get that data from BE.

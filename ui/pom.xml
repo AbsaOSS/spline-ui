@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright 2020 ABSA Group Limited
+  ~ Copyright 2021 ABSA Group Limited
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -134,9 +134,12 @@
                         <exclude>node_modules/**</exclude>
                         <exclude>.stylelintignore</exclude>
                         <exclude>.eslintignore</exclude>
-                        <exclude>browserslist</exclude>
+                        <exclude>.browserslistrc</exclude>
+                        <exclude>.huskyrc</exclude>
+                        <exclude>.lintstagedrc</exclude>
                         <exclude>assembly.xml</exclude>
                         <exclude>**/src/assets/images/**</exclude>
+                        <exclude>**/projects/**/assets/**</exclude>
                         <exclude>**/projects/**/assets/**</exclude>
                     </excludes>
                 </configuration>
