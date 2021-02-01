@@ -17,7 +17,7 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 
-import { DataSourcesListPageComponent, DataSourcesOverviewPageComponent } from './pages'
+import { DataSourceOverviewPageComponent, DataSourcesListPageComponent, DsOverviewHistoryPageComponent } from './pages'
 
 
 const routes: Routes = [
@@ -27,8 +27,24 @@ const routes: Routes = [
     },
     {
         path: 'overview/:dataSourceId',
-        component: DataSourcesOverviewPageComponent,
+        component: DataSourceOverviewPageComponent,
+        children: [
+            {
+                path: 'history',
+                component: DsOverviewHistoryPageComponent,
+            },
+            {
+                path: '',
+                redirectTo: 'history',
+                pathMatch: 'full',
+            },
+            {
+                path: '**',
+                redirectTo: '/404',
+            },
+        ]
     },
+
     {
         path: '',
         pathMatch: 'full',

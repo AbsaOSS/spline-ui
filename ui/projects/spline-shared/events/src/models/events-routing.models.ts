@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 export namespace EventsRouting {
 
-    export const BASE_PATH = 'events'
+    export const BASE_PATH = '/events'
 
     export function getEventsListPageUrl(): any[] {
         return [BASE_PATH, 'list']

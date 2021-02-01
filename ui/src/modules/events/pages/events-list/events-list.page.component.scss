@@ -21,19 +21,19 @@
     min-height: 300px;
 }
 
-.minor-text {
-    @include long-text-wrapper();
-    color: $color-grey-dark;
-    display: block;
-    font-size: 10px;
-}
-
 .mat-column-applicationName {
     a {
         color: $color-black;
         font-size: 16px;
         font-weight: 500;
     }
+}
+
+.minor-text {
+    @include long-text-wrapper();
+    color: $color-grey-dark;
+    display: block;
+    font-size: 10px;
 }
 
 .mat-column-timestamp {

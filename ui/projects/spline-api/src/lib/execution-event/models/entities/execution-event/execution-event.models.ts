@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,13 @@
  */
 
 
+import { DataSourceWriteMode, SplineDataSourceInfo, uriToDatasourceInfo } from '../data-source'
+
+
 export enum ExecutionEventField {
     append = 'append',
     applicationName = 'applicationName',
+    applicationId = 'applicationId',
     dataSourceType = 'dataSourceType',
     dataSourceUri = 'dataSourceUri',
     executionEventId = 'executionEventId',
@@ -29,6 +33,7 @@ export enum ExecutionEventField {
 export type ExecutionEventDto = {
     [ExecutionEventField.append]: boolean
     [ExecutionEventField.applicationName]: string
+    [ExecutionEventField.applicationId]: string
     [ExecutionEventField.dataSourceType]: string
     [ExecutionEventField.dataSourceUri]: string
     [ExecutionEventField.executionEventId]: string
@@ -42,11 +47,15 @@ export type ExecutionEvent =
     &
     {
         executedAt: Date
+        dataSourceInfo: SplineDataSourceInfo
+        writeMode: DataSourceWriteMode
     }
 
 export function toExecutionEvent(entity: ExecutionEventDto): ExecutionEvent {
     return {
         ...entity,
         executedAt: new Date(entity.timestamp),
+        dataSourceInfo: uriToDatasourceInfo(entity[ExecutionEventField.dataSourceUri]),
+        writeMode: entity[ExecutionEventField.append] ? DataSourceWriteMode.Append : DataSourceWriteMode.Overwrite
     }
 }

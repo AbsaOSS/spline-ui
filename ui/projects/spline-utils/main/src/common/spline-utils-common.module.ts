@@ -18,6 +18,7 @@ import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 
 import { splineUtilsDirectives } from './directives'
+import { splineUtilsPipes } from './pipes'
 
 
 @NgModule({
@@ -25,10 +26,12 @@ import { splineUtilsDirectives } from './directives'
         CommonModule,
     ],
     declarations: [
-        ...splineUtilsDirectives
+        ...splineUtilsDirectives,
+        ...splineUtilsPipes
     ],
     exports: [
-        ...splineUtilsDirectives
+        ...splineUtilsDirectives,
+        ...splineUtilsPipes
     ],
     providers: []
 })

@@ -14,14 +14,10 @@
  * limitations under the License.
  */
 
-export * from './dynamic-rendering/dynamic-component.manager'
-export * from './dynamic-rendering/dynamic-components.models'
-
-export * from './heplers/date-time-helpers'
-export * from './generic-event-info.models'
-export * from './heplers/generic-types.models'
-export * from './router-navigation.models'
-export * from './heplers/string-helpers'
-export * from './heplers/type-helpers'
+export * from './dynamic-rendering/public-api'
+export * from './heplers/public-api'
 export * from './query/public-api'
 export * from './search-query/public-api'
+
+export * from './generic-event-info.models'
+export * from './router-navigation.models'

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,4 +17,5 @@
 export * from './attribute.facade'
 export * from './base.facade'
 export * from './execution-event.facade'
+export * from './spline-data-source-facade.service'
 export * from './execution-plan.facade'

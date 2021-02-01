@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
+import { SplineLabel } from './spline-label.models'
+
 
 @Component({
     selector: 'spline-label',
@@ -24,5 +26,5 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 })
 export class SplineLabelComponent {
 
-    @Input() color: 'platinum' | 'human' | string
+    @Input() color: SplineLabel.Color
 }

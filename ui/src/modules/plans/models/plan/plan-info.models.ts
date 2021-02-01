@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { DataSourceInfo, ExecutionPlan } from 'spline-api'
+import { ExecutionPlan, SplineDataSourceInfo } from 'spline-api'
 import { SplineColors } from 'spline-common'
 import {
     SdWidgetCard,
@@ -99,7 +99,7 @@ export namespace PlanInfo {
         return dataSourceInfoToDataViewSchema(dataSourceInfo)
     }
 
-    function dataSourceInfoToDataViewSchema(dataSourceInfo: DataSourceInfo): SdWidgetSchema {
+    function dataSourceInfoToDataViewSchema(dataSourceInfo: SplineDataSourceInfo): SdWidgetSchema {
         return SdWidgetCard.toSchema(
             {
                 ...getNodeStyles(SgNodeControl.NodeType.DataSource),

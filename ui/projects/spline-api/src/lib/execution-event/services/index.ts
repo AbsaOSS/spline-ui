@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,14 @@
 import { AttributeFacade } from './attribute.facade'
 import { ExecutionEventFacade } from './execution-event.facade'
 import { ExecutionPlanFacade } from './execution-plan.facade'
+import { SplineDataSourceFacade } from './spline-data-source-facade.service'
 
 
 export const executionEventServices: any[] = [
     ExecutionEventFacade,
     ExecutionPlanFacade,
     AttributeFacade,
+    SplineDataSourceFacade
 ]
 
 export * from './public-api'

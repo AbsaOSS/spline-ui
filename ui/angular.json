@@ -63,6 +63,11 @@
                             },
                             {
                                 "glob": "**/*",
+                                "input": "projects/spline-common/dynamic-table/assets",
+                                "output": "/assets"
+                            },
+                            {
+                                "glob": "**/*",
                                 "input": "projects/spline-shared/main/assets",
                                 "output": "/assets"
                             },
@@ -83,7 +88,17 @@
                             },
                             {
                                 "glob": "**/*",
+                                "input": "projects/spline-shared/dynamic-table/main/assets",
+                                "output": "/assets"
+                            },
+                            {
+                                "glob": "**/*",
                                 "input": "projects/spline-shared/data-view/assets",
+                                "output": "/assets"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "projects/spline-shared/events/assets",
                                 "output": "/assets"
                             }
                         ],
@@ -95,12 +110,14 @@
                                 "src/styles",
                                 "projects/spline-common/main/styles",
                                 "projects/spline-common/data-view/styles",
+                                "projects/spline-common/dynamic-table/styles",
                                 "projects/spline-common/graph/styles",
                                 "projects/spline-common/layout/styles",
                                 "projects/spline-shared/main/styles",
                                 "projects/spline-shared/attributes/styles",
                                 "projects/spline-shared/expression/styles",
-                                "projects/spline-shared/graph/styles"
+                                "projects/spline-shared/graph/styles",
+                                "projects/spline-shared/dynamic-table/main/styles"
                             ]
                         },
                         "scripts": [

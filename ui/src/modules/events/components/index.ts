@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,14 @@
  * limitations under the License.
  */
 
-import { SplineDateFilterComponent } from './date-filter/date-filter.component'
 import { EventHeaderComponent } from './event-header/event-header.component'
 import { EventNodeInfoComponent } from './event-node-info/event-node-info.component'
 
 
 export const components: any[] = [
-    SplineDateFilterComponent,
     EventNodeInfoComponent,
     EventHeaderComponent,
 ]
-
-export * from './date-filter/date-filter.component'
-export * from './date-filter/date-filter.models'
-export * from './date-filter/date-filter.models'
 
 export * from './event-node-info/event-node-info.component'
 export * from './event-header/event-header.component'

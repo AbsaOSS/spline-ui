@@ -18,6 +18,7 @@ import { MatSortable } from '@angular/material/sort'
 import { Sort } from '@angular/material/sort/sort'
 
 import { ProcessingStore } from '../../../store'
+import { SplineRecord } from '../heplers'
 import { DEFAULT_PAGER, QueryPager, QuerySorter } from '../query'
 
 
@@ -27,7 +28,7 @@ export namespace SearchQuery {
     import SortDir = QuerySorter.SortDir
 
 
-    export interface SearchParams<TFilter extends object = {}, TSortableField = string> {
+    export interface SearchParams<TFilter extends SplineRecord = {}, TSortableField = string> {
         pager: QueryPager
         filter: TFilter
         staticFilter: TFilter // filter which will be always applied
@@ -36,7 +37,7 @@ export namespace SearchQuery {
     }
 
     export const DEFAULT_SEARCH_PARAMS: SearchParams<any, any> = Object.freeze({
-        pager: DEFAULT_PAGER,
+        pager: { ...DEFAULT_PAGER },
         filter: {},
         staticFilter: {},
         sortBy: [],

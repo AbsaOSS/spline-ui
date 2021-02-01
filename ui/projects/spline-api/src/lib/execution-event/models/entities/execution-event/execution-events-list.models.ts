@@ -15,7 +15,7 @@
  */
 
 
-import { PageResponse } from 'spline-utils'
+import { PageResponse, SplineDateRangeValue } from 'spline-utils'
 
 import { ExecutionEvent, ExecutionEventDto, toExecutionEvent } from './execution-event.models'
 
@@ -31,19 +31,16 @@ export type ExecutionEventsPageResponse =
     & PageResponse<ExecutionEvent>
     &
     {
-        totalDateRange: {
-            from: Date
-            to: Date
-        }
+        dateRangeBounds: SplineDateRangeValue
     }
 
 export function toExecutionEventsPageResponse(entity: ExecutionEventsPageResponseDto): ExecutionEventsPageResponse {
     return {
-        ...entity,
         items: entity.items.map(toExecutionEvent),
-        totalDateRange: {
-            from: new Date(entity.totalDateRange[0]),
-            to: new Date(entity.totalDateRange[1]),
+        totalCount: entity.totalCount,
+        dateRangeBounds: {
+            dateFrom: new Date(entity.totalDateRange[0]),
+            dateTo: new Date(entity.totalDateRange[1]),
         },
     }
 }

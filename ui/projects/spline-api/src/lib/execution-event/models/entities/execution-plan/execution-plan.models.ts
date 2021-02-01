@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,13 @@
 
 
 import { AttributeDataType, AttributeDataTypeDto, AttributeSchema, toAttributeDataType } from '../attribute'
-import { DataSourceInfo, DataSourceInfoDto, toDataSourceInfo } from '../data-source'
+import { SplineDataSourceInfo, SplineDataSourceInfoDto, toDataSourceInfo } from '../data-source'
 
 
 export type ExecutionPlan = {
     id: string
-    inputDataSources?: DataSourceInfo[]
-    outputDataSource?: DataSourceInfo
+    inputDataSources?: SplineDataSourceInfo[]
+    outputDataSource?: SplineDataSourceInfo
     agentInfo?: ExecutionPlanAgentInfo
     systemInfo?: ExecutionPlanSystemInfo
     extraInfo?: ExecutionPlanExtraInfo
@@ -44,8 +44,8 @@ export type ExecutionPlanSystemInfo =
 
 export type ExecutionPlanDto = {
     _id: string
-    inputs?: DataSourceInfoDto[]
-    output?: DataSourceInfoDto
+    inputs?: SplineDataSourceInfoDto[]
+    output?: SplineDataSourceInfoDto
     agentInfo?: ExecutionPlanAgentInfo
     systemInfo?: ExecutionPlanSystemInfo
     extra?: ExecutionPlanExtraInfoDto

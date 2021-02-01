@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,3 +27,4 @@ export * from './search-box/public-api'
 export * from './side-panel/public-api'
 export * from './sort-header/public-api'
 export * from './tabs-nav-bar/public-api'
+export * from './date-range-filter/public-api'

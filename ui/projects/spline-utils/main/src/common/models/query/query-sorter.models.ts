@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+import { MatSortable } from '@angular/material/sort'
+import { Sort } from '@angular/material/sort/sort'
+
+
 export namespace QuerySorter {
 
     export enum SortDir {
@@ -21,9 +25,24 @@ export namespace QuerySorter {
         DESC = 'DESC'
     }
 
-    export interface FieldSorter<TFiled = string> {
+    export type FieldSorter<TFiled = string> = {
         field: TFiled
         dir: SortDir
+    }
+
+    export function toMatSort<TFiled>(filedSorter: FieldSorter<TFiled>): MatSortable {
+        return {
+            id: filedSorter.field as unknown as string,
+            start: filedSorter.dir === SortDir.ASC ? 'asc' : 'desc',
+            disableClear: false
+        }
+    }
+
+    export function fromMatSort(matSort: Sort): FieldSorter {
+        return {
+            dir: matSort.direction === 'asc' ? SortDir.ASC : SortDir.DESC,
+            field: matSort.active
+        }
     }
 
 }

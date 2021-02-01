@@ -30,21 +30,30 @@ import { MatTabsModule } from '@angular/material/tabs'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatTreeModule } from '@angular/material/tree'
 import { RouterModule } from '@angular/router'
+import { EffectsModule } from '@ngrx/effects'
+import { StoreModule } from '@ngrx/store'
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material'
 import { SplineApiModule } from 'spline-api'
 import { SplineCommonModule } from 'spline-common'
+import { DynamicTableCommonCellsModule, DynamicTableModule } from 'spline-common/dynamic-table'
 import { SplineLayoutModule } from 'spline-common/layout'
 import { SplineApiConfigModule } from 'spline-shared'
+import { SplineDynamicTableSharedModule } from 'spline-shared/dynamic-table'
+import { SplineEventsSharedModule } from 'spline-shared/events'
 import { SplineTranslateModule } from 'spline-utils/translate'
 
-
+import { components } from './components'
 import * as fromPages from './pages'
+import { services } from './services'
 import { SplineDataSourcesRoutingModule } from './spline-data-sources-routing.module'
+import { effects } from './store'
+import { SplineDataSourceStore } from './store/reducers/base'
 
 
 @NgModule({
     declarations: [
         ...fromPages.pageComponents,
+        ...components,
     ],
     imports: [
         CommonModule,
@@ -63,17 +72,25 @@ import { SplineDataSourcesRoutingModule } from './spline-data-sources-routing.mo
         MatInputModule,
         MatMenuModule,
         NgxDaterangepickerMd.forRoot(),
+        StoreModule.forFeature(SplineDataSourceStore.STORE_FEATURE_NAME, SplineDataSourceStore.reducers),
+        EffectsModule.forFeature(effects),
         SplineDataSourcesRoutingModule,
         SplineApiConfigModule,
         SplineApiModule,
         SplineLayoutModule,
-        SplineTranslateModule.forChild({ moduleNames: ['data-sources', 'common-graph'] }),
+        SplineTranslateModule.forChild({ moduleNames: ['data-sources'] }),
         SplineCommonModule,
+        SplineEventsSharedModule,
+        DynamicTableModule,
+        DynamicTableCommonCellsModule,
+        SplineDynamicTableSharedModule
     ],
     exports: [
         ...fromPages.pageComponents,
     ],
-    providers: [],
+    providers: [
+        ...services
+    ],
 })
 export class SplineDataSourcesModule {
 }

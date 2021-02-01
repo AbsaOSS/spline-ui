@@ -15,10 +15,12 @@
  */
 
 import { CollectionViewer, DataSource } from '@angular/cdk/collections'
+import isEqual from 'lodash/isEqual'
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs'
 import { catchError, filter, map, switchMap, take, takeUntil, tap } from 'rxjs/internal/operators'
 
 import { ProcessingStore } from '../../../store'
+import { SplineRecord, StringHelpers } from '../heplers'
 import { PageResponse, QuerySorter } from '../query'
 
 import { SearchQuery } from './search-query.models'
@@ -28,9 +30,9 @@ import DEFAULT_SEARCH_PARAMS = SearchQuery.DEFAULT_SEARCH_PARAMS
 import SearchParams = SearchQuery.SearchParams
 
 
-export abstract class SearchDataSource<TDataRecord,
+export abstract class SearchDataSource<TDataRecord = unknown,
     TData extends PageResponse<TDataRecord> = PageResponse<TDataRecord>,
-    TFilter extends object = {},
+    TFilter extends SplineRecord = {},
     TSortableFields = string> implements DataSource<TDataRecord> {
 
     readonly dataState$: Observable<DataState<TData>>
@@ -93,10 +95,10 @@ export abstract class SearchDataSource<TDataRecord,
     updateAndApplyDefaultSearchParams(
         value: Partial<SearchParams<TFilter, TSortableFields>>,
         apply: boolean = false,
-        forceApply: boolean = false): void {
+        forceApply: boolean = false): SearchParams<TFilter, TSortableFields> {
 
         this.updateDefaultSearchParams(value)
-        this.updateSearchParams(this.defaultSearchParams, apply, forceApply)
+        return this.updateSearchParams(this.defaultSearchParams, apply, forceApply)
     }
 
     load(force: boolean = false): void {
@@ -127,8 +129,8 @@ export abstract class SearchDataSource<TDataRecord,
         this.updateSearchParams(newSearchParams, true, true)
     }
 
-    resetSearchParams(fetchData: boolean = false, force: boolean = false): void {
-        this.updateSearchParams({
+    resetSearchParams(fetchData: boolean = false, force: boolean = false): SearchParams<TFilter, TSortableFields> {
+        return this.updateSearchParams({
             ...this.defaultSearchParams,
             staticFilter: this.searchParams.staticFilter,
         }, fetchData, force)
@@ -176,7 +178,7 @@ export abstract class SearchDataSource<TDataRecord,
     updateSearchParams(
         searchParams: Partial<SearchParams<TFilter, TSortableFields>>,
         apply: boolean = true,
-        forceApply: boolean = false): void {
+        forceApply: boolean = false): SearchParams<TFilter, TSortableFields> {
 
         const newValue = {
             ...this.searchParams,
@@ -188,12 +190,14 @@ export abstract class SearchDataSource<TDataRecord,
             apply,
             forceApply,
         })
+
+        return newValue
     }
 
     connect(collectionViewer: CollectionViewer): Observable<TDataRecord[]> {
         return this._dataState$.asObservable()
             .pipe(
-                map(x => x.data.items),
+                map(x => x.data?.items ?? []),
             )
     }
 
@@ -204,6 +208,14 @@ export abstract class SearchDataSource<TDataRecord,
 
         this.disconnected$.next()
         this.disconnected$.complete()
+    }
+
+    searchParamsToUrlString(searchParams: SearchParams<TFilter, TSortableFields>): string {
+        return StringHelpers.encodeObjToUrlString(searchParams)
+    }
+
+    searchParamsFromUrlString(searchParamsUrlString: string): SearchParams<TFilter, TSortableFields> {
+        return StringHelpers.decodeObjFromUrlString(searchParamsUrlString)
     }
 
     protected init(): void {
@@ -219,6 +231,7 @@ export abstract class SearchDataSource<TDataRecord,
                 }),
             )
 
+        // TODO: Do we really need that step?
         // Last emitted SearchParams are the same as previous
         //      => emit prev data
         updateSearchParams$
@@ -280,7 +293,7 @@ export abstract class SearchDataSource<TDataRecord,
         searchParams: SearchParams<TFilter, TSortableFields>,
         newSearchParams: SearchParams<TFilter, TSortableFields>): boolean {
 
-        return JSON.stringify(searchParams) === JSON.stringify(newSearchParams)
+        return isEqual(searchParams, newSearchParams)
     }
 
     protected processOnSearchEvent(searchTerm: string, apply: boolean = true, force: boolean = false): void {
@@ -346,7 +359,6 @@ export abstract class SearchDataSource<TDataRecord,
                 take(1),
             )
     }
-
 
     protected updateDataState(dataState: Partial<DataState<TData>>): void {
         this._dataState$.next({

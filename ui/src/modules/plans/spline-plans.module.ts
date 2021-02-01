@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -84,13 +84,6 @@ import { SplinePlansRoutingModule } from './spline-plans-routing.module'
         SplineTranslateModule.forChild({
             moduleNames: [
                 'plans',
-                'common-graph',
-                'shared',
-                'shared-graph',
-                'shared-attributes',
-                'shared-expression',
-                'shared-graph',
-                'shared-data-view'
             ]
         }),
         SplineGraphModule,

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,6 +40,8 @@ module.exports = {
         '^spline-common\/graph$': __dirname + '/projects/spline-common/graph/src/public-api',
         '/spline-common\/layout/': __dirname + '/projects/spline-common/layout/src/public-api',
         '^spline-common\/layout$': __dirname + '/projects/spline-common/layout/src/public-api',
+        '/spline-common\/dynamic-table/': __dirname + '/projects/spline-common/dynamic-table/src/public-api',
+        '^spline-common\/dynamic-table$': __dirname + '/projects/spline-common/dynamic-table/src/public-api',
         '/spline-shared/': __dirname + '/projects/spline-shared/main/src/public-api',
         '^spline-shared$': __dirname + '/projects/spline-shared/main/src/public-api',
         '/spline-shared\/attributes/': __dirname + '/projects/spline-shared/attributes/src/public-api',
@@ -52,6 +54,8 @@ module.exports = {
         '^spline-shared\/events$': __dirname + '/projects/spline-shared/events/src/public-api',
         '/spline-shared\/plans/': __dirname + '/projects/spline-shared/plans/src/public-api',
         '^spline-shared\/plans$': __dirname + '/projects/spline-shared/plans/src/public-api',
+        '/spline-shared\/dynamic-table/': __dirname + '/projects/spline-shared/dynamic-table/main/src/public-api',
+        '^spline-shared\/dynamic-table$': __dirname + '/projects/spline-shared/dynamic-table/main/src/public-api',
         '/spline-utils/': __dirname + '/projects/spline-utils/main/src/public-api',
         '^spline-utils$': __dirname + '/projects/spline-utils/main/src/public-api',
         '/spline-utils\/translate/': __dirname + '/projects/spline-utils/translate/src/public-api',

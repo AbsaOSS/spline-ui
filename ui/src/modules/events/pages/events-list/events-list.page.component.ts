@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-import { AfterContentInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core'
-import { PageEvent } from '@angular/material/paginator'
-import { MatSort } from '@angular/material/sort'
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
+import { Component } from '@angular/core'
 import isEqual from 'lodash/isEqual'
-import { Observable } from 'rxjs'
 import { distinctUntilChanged, filter, map, skip, takeUntil } from 'rxjs/operators'
-import { ExecutionEventFacade, ExecutionEventField, ExecutionEventsPageResponse } from 'spline-api'
-import { BaseComponent, ProcessingStore, QuerySorter, RouterNavigation, SearchQuery } from 'spline-utils'
+import { ExecutionEventFacade, ExecutionEventField, ExecutionEventsQuery } from 'spline-api'
+import { SplineDateRangeFilter } from 'spline-common'
+import { EventsDataSource } from 'spline-shared/events'
+import { BaseLocalStateComponent, SearchQuery, SplineDateRangeValue } from 'spline-utils'
 
-import { SplineDateFilter } from '../../components'
-import { EventsDataSource } from '../../data-sources'
-import { EventsListUrlState } from '../../models'
+import { EventsListDtSchema } from '../../dynamic-table'
+
+import { EventsListPage } from './events-list.page.models'
+import SearchParams = SearchQuery.SearchParams
 
 
 @Component({
@@ -43,179 +42,105 @@ import { EventsListUrlState } from '../../models'
         },
     ],
 })
-export class EventsListPageComponent extends BaseComponent implements OnInit, AfterContentInit, OnDestroy {
+export class EventsListPageComponent extends BaseLocalStateComponent<EventsListPage.State> {
 
-    @ViewChild(MatSort, { static: true }) sortControl: MatSort
+    readonly dataMap = EventsListDtSchema.getSchema()
 
-    readonly loadingProcessing$: Observable<ProcessingStore.EventProcessingState>
-    readonly data$: Observable<ExecutionEventsPageResponse>
-    readonly dateFilter$: Observable<SplineDateFilter.Value | null>
-
-    readonly visibleColumns = [
-        ExecutionEventField.applicationName,
-        ExecutionEventField.executionPlanId,
-        ExecutionEventField.dataSourceUri,
-        ExecutionEventField.dataSourceType,
-        ExecutionEventField.append,
-        ExecutionEventField.timestamp,
-    ]
-
-    readonly ExecutionEventField = ExecutionEventField
-
-    constructor(readonly dataSource: EventsDataSource,
-                private readonly activatedRoute: ActivatedRoute,
-                private readonly router: Router) {
+    constructor(readonly dataSource: EventsDataSource) {
         super()
 
-        this.loadingProcessing$ = this.dataSource.loadingProcessing$
-        this.data$ = this.dataSource.dataState$.pipe(map(dataState => dataState.data))
+        this.updateState(
+            EventsListPage.getDefaultState()
+        )
 
-        this.dateFilter$ = this.dataSource.searchParams$
-            .pipe(
-                map(searchParams => {
-                    if (searchParams.filter?.executedAtFrom && searchParams.filter?.executedAtTo) {
-                        return {
-                            dateFrom: searchParams.filter?.executedAtFrom,
-                            dateTo: searchParams.filter?.executedAtTo,
-                        }
-                    }
-                    else {
-                        return null
-                    }
-                }),
+        this.initDateRangeFilter()
+
+    }
+
+    onDateFilterChanged(value: SplineDateRangeFilter.Value): void {
+        this.updateDateRangeFilterValue(value)
+    }
+
+    private updateDateRangeFilterValue(value: SplineDateRangeFilter.Value): void {
+        this.updateState(
+            EventsListPage.reduceDateRangeFilterChanged(
+                this.state, value
             )
-    }
-
-    ngOnInit(): void {
-        // init DataSource & load data
-        this.initDataSource()
-        this.dataSource.load()
-    }
-
-    ngAfterContentInit(): void {
-        // init view layer Table sorting logic
-        this.initTableSortingState()
-    }
-
-    ngOnDestroy(): void {
-        super.ngOnDestroy()
-        this.dataSource.disconnect()
-    }
-
-    onPaginationChanged(pageEvent: PageEvent): void {
-        this.dataSource.goToPage(pageEvent.pageIndex)
-    }
-
-    onSearch(searchTerm: string): void {
-        this.dataSource.search(searchTerm)
-    }
-
-    onDateFilterChanged(value: SplineDateFilter.Value): void {
-        this.dataSource.setFilter({
-            ...this.dataSource.searchParams.filter,
-            executedAtFrom: value?.dateFrom ?? undefined,
-            executedAtTo: value?.dateTo ?? undefined,
-        })
-    }
-
-    private initDataSource(): void {
-        // init from URL
-        const searchParamsFromUrl = EventsListUrlState.extractSearchParams(this.activatedRoute.snapshot.queryParams)
-        if (searchParamsFromUrl !== null) {
-            this.dataSource.updateSearchParams(searchParamsFromUrl, false)
-        }
-
-        //
-        // [ACTION] :: SEARCH PARAMS CHANGED
-        //      => update URL
-        //
-        this.dataSource.searchParams$
-            .pipe(
-                distinctUntilChanged((a, b) => isEqual(a, b)),
-                skip(1),
-            )
-            .subscribe(searchParams => {
-                const queryParams = EventsListUrlState.applySearchParams(
-                    this.activatedRoute.snapshot.queryParams,
-                    searchParams,
-                )
-                this.updateRouterState(queryParams)
-            })
-
-        //
-        // [ACTION] :: URL QUERY PARAMS CHANGED
-        //      => update DataSource state
-        //
-        this.router.events
-            .pipe(
-                filter(event => event instanceof NavigationEnd),
-                takeUntil(this.destroyed$),
-                // extract pagerState
-                map(() => EventsListUrlState.extractSearchParams(this.activatedRoute.snapshot.queryParams)),
-                filter((newSearchParams) => !isEqual(newSearchParams, this.dataSource.searchParams)),
-            )
-            .subscribe((newSearchParams) => {
-                this.dataSource.updateSearchParams(
-                    newSearchParams ?? this.dataSource.defaultSearchParams,
-                )
-            })
-    }
-
-    private initTableSortingState(): void {
-        // setup default value
-        this.setTableSorting(this.dataSource.searchParams.sortBy)
-        //
-        // [ACTION] :: UI TABLE SORTING CHANGED
-        //      => update DataSource Search Params
-        //
-        this.sortControl.sortChange
-            .pipe(
-                takeUntil(this.destroyed$),
-                map(sort => {
-                    return sort.direction.length === 0
-                        ? []
-                        : [
-                            SearchQuery.matSortToFiledSorter(sort),
-                        ]
-                }),
-                filter(sortBy => !isEqual(sortBy, this.dataSource.searchParams.sortBy)),
-            )
-            .subscribe((sortBy: QuerySorter.FieldSorter<ExecutionEventField>[]) => {
-                this.dataSource.sort(sortBy)
-            })
-
-        //
-        // [ACTION] :: DATA SOURCE SORTING CHANGED
-        //      => update UI Table sort state
-        //
-        this.dataSource.searchParams$
-            .pipe(
-                map(searchParams => searchParams.sortBy),
-                filter(sortBy => {
-                    const sort = {
-                        active: this.sortControl.active,
-                        direction: this.sortControl.direction,
-                    }
-                    const currentSortBy = [SearchQuery.matSortToFiledSorter(sort)]
-                    return !isEqual(sortBy, currentSortBy)
-                }),
-            )
-            .subscribe(
-                sortBy => this.setTableSorting(sortBy),
-            )
-    }
-
-    private updateRouterState(queryParams, replaceUrl: boolean = true): void {
-        RouterNavigation.updateCurrentRouterQueryParams(
-            this.router,
-            this.activatedRoute,
-            queryParams,
-            replaceUrl,
         )
     }
 
-    private setTableSorting(sortBy: QuerySorter.FieldSorter[]): void {
-        const initSorting = SearchQuery.toMatSortable(sortBy[0])
-        this.sortControl.sort(initSorting)
+    private initDateRangeFilter(): void {
+        //
+        // [ACTION] :: FilterValue changed
+        //      => fetch data
+        //
+        this.state$
+            .pipe(
+                map(state => state.dateRangeFilter.value),
+                skip(1),
+                takeUntil(this.destroyed$),
+                distinctUntilChanged((left, right) => isEqual(left, right)),
+                filter(filterValue => {
+                    const searchParams = this.dataSource.searchParams
+                    const currentDsFilterValue: SplineDateRangeValue = searchParams.filter.executedAtFrom
+                        ? {
+                            dateFrom: searchParams.filter.executedAtFrom,
+                            dateTo: searchParams.filter.executedAtTo,
+                        }
+                        : null
+
+                    return !isEqual(filterValue, currentDsFilterValue)
+                })
+            )
+            .subscribe(filterValue => {
+                this.dataSource.setFilter({
+                    ...this.dataSource.searchParams.filter,
+                    executedAtFrom: filterValue?.dateFrom ?? undefined,
+                    executedAtTo: filterValue?.dateTo ?? undefined,
+                })
+            })
+
+        //
+        // [ACTION] :: SearchParams changed
+        //      => update current date range filter value
+        //
+        this.dataSource.searchParams$
+            .pipe(
+                takeUntil(this.destroyed$),
+                map((searchParams: SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>) => {
+
+                    if (!searchParams.filter?.executedAtFrom || !searchParams.filter?.executedAtTo) {
+                        return null
+                    }
+
+                    return {
+                        dateFrom: searchParams.filter.executedAtFrom,
+                        dateTo: searchParams.filter.executedAtTo,
+                    }
+                }),
+                filter(filterValue => !isEqual(filterValue, this.state.dateRangeFilter.value)),
+            )
+            .subscribe(
+                filterValue => this.updateDateRangeFilterValue(filterValue),
+            )
+
+        //
+        // [ACTION] :: DateRange Bounds changed (from the fetched data)
+        //      => update current date range filter bounds value
+        //
+        this.dataSource.dataState$
+            .pipe(
+                takeUntil(this.destroyed$),
+                map(dataState => dataState?.data?.dateRangeBounds),
+                distinctUntilChanged((left, right) => isEqual(left, right)),
+                filter(dateRangeBounds => !isEqual(dateRangeBounds, this.state.dateRangeFilter.bounds))
+            )
+            .subscribe(dateRangeBounds => {
+                this.updateState(
+                    EventsListPage.reduceDateRangeFilterBoundsChanged(
+                        this.state, dateRangeBounds
+                    )
+                )
+            })
     }
 }

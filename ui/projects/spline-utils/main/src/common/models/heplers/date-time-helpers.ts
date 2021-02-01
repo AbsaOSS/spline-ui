@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ export namespace DateTimeHelpers {
 
     export const FULL_DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss'
     export const FULL_DATE = 'YYYY-MM-DD'
+    export const FULL_TIME = 'HH:mm:ss'
 
     export function toString(date: Date, format: string = FULL_DATE_TIME_FORMAT): string {
         return moment(date).format(format)

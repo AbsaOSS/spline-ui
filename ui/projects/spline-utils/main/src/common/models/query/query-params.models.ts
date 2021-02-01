@@ -15,11 +15,13 @@
  */
 
 
+import { SplineRecord } from '../heplers'
+
 import { QueryPager } from './query-pager.models'
 import { QuerySorter } from './query-sorter.models'
 
 
-export interface PageQueryParams<TFilter extends object, TSortableFiled = string> {
+export interface PageQueryParams<TFilter extends SplineRecord, TSortableFiled = string> {
     pager?: Partial<QueryPager>
     filter?: TFilter
     sortBy?: QuerySorter.FieldSorter<TSortableFiled>[]

@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2020 ABSA Group Limited
+  ~ Copyright 2021 ABSA Group Limited
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -13,157 +13,24 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<div class="container">
+<div class="container" *ngIf="state$ | async as state">
+
     <h1 class="page-title">
         {{'EVENTS.EVENTS_LIST_PAGE__TITLE' | translate}}
     </h1>
 
-    <div class="table-container">
+    <spline-search-dynamic-table
+            [dataMap]="dataMap"
+            [dataSource]="dataSource">
 
-        <ng-container *ngIf="(loadingProcessing$ | async) as loadingProcessing">
-            <!-- LOADER -->
-            <spline-loader *ngIf="loadingProcessing.processing"></spline-loader>
-            <!-- ./LOADER -->
+        <spline-date-filter *ngIf="!!state.dateRangeFilter?.bounds"
+                            [maxDate]="state.dateRangeFilter.bounds?.dateTo"
+                            [minDate]="state.dateRangeFilter.bounds?.dateFrom"
+                            [value]="state.dateRangeFilter?.value"
+                            (valueChanged$)="onDateFilterChanged($event)">
 
-            <!-- ERROR -->
-            <spline-content-error *ngIf="loadingProcessing.processingError"></spline-content-error>
-            <!-- ./ERROR -->
-        </ng-container>
+        </spline-date-filter>
 
-        <div class="pb-3">
-            <div class="d-flex w-100">
-                <div class="flex-grow-1">
-                    <spline-search-box class="table-search"
-                                       theme="grey"
-                                       [searchTerm]="(dataSource.searchParams$ | async).searchTerm"
-                                       (search$)="onSearch($event)">
-                    </spline-search-box>
-                </div>
 
-                <spline-date-filter *ngIf="(data$ | async)?.totalDateRange as totalDateRange"
-                                    [maxDate]="totalDateRange?.to"
-                                    [minDate]="totalDateRange?.from"
-                                    [value]="dateFilter$ | async"
-                                    (valueChanged$)="onDateFilterChanged($event)">
-
-                </spline-date-filter>
-
-            </div>
-        </div>
-
-        <mat-table [dataSource]="(data$ | async)?.items" matSort [matSortDisableClear]="true">
-
-            <!-- applicationName -->
-            <ng-container [matColumnDef]="ExecutionEventField.applicationName">
-                <mat-header-cell *matHeaderCellDef spline-sort-header>
-                    {{ 'EVENTS.EVENTS_LIST__COL__APPLICATION' | translate }}
-                </mat-header-cell>
-                <mat-cell *matCellDef="let rowData">
-                    <div class="max-width-100">
-                        <a [routerLink]="['../overview', rowData.executionEventId]">
-                            {{rowData.applicationName}}
-                        </a>
-                        <div class="minor-text">
-                            {{rowData.applicationId}}
-                        </div>
-                    </div>
-                </mat-cell>
-            </ng-container>
-            <!-- ./applicationName -->
-
-            <!-- Execution Plan -->
-            <ng-container [matColumnDef]="ExecutionEventField.executionPlanId">
-                <mat-header-cell *matHeaderCellDef spline-sort-header>
-                    {{ 'EVENTS.EVENTS_LIST__COL__EXECUTION_PLAN' | translate }}
-                </mat-header-cell>
-                <mat-cell *matCellDef="let rowData">
-                    <div class="max-width-100">
-                        <div [matTooltip]="rowData.executionPlanId" class="long-text-wrapper">
-                            <a [routerLink]="['../../plans/overview', rowData.executionPlanId]"
-                               [queryParams]="{ eventId: rowData.executionEventId }">
-                                {{rowData.executionPlanId}}
-                            </a>
-                        </div>
-                    </div>
-                </mat-cell>
-            </ng-container>
-            <!-- ./Execution Plan -->
-
-            <!-- timestamp -->
-            <ng-container [matColumnDef]="ExecutionEventField.timestamp">
-                <mat-header-cell *matHeaderCellDef spline-sort-header>
-                    {{ 'EVENTS.EVENTS_LIST__COL__TIMESTAMP' | translate }}
-                </mat-header-cell>
-                <mat-cell *matCellDef="let rowData">
-                    <div class="max-width-100 text-center">
-                        {{rowData.timestamp | date : 'yyyy-MM-dd'}}
-                        <div class="minor-text">
-                            {{rowData.timestamp | date : 'HH:mm:ss'}}
-                        </div>
-                    </div>
-                </mat-cell>
-            </ng-container>
-            <!-- ./timestamp -->
-
-            <!-- dataSource -->
-            <ng-container [matColumnDef]="ExecutionEventField.dataSourceUri">
-                <mat-header-cell *matHeaderCellDef spline-sort-header>
-                    {{ 'EVENTS.EVENTS_LIST__COL__DESTINATION' | translate }}
-                </mat-header-cell>
-                <mat-cell *matCellDef="let rowData">
-                    <div class="max-width-100">
-                        {{rowData.dataSourceUri.split('/').slice(-1)[0]}}
-                        <div class="minor-text">
-                            {{rowData.dataSourceUri}}
-                        </div>
-                    </div>
-                </mat-cell>
-            </ng-container>
-            <!-- ./dataSource -->
-
-            <!-- dataSourceType -->
-            <ng-container [matColumnDef]="ExecutionEventField.dataSourceType">
-                <mat-header-cell *matHeaderCellDef spline-sort-header>
-                    {{ 'EVENTS.EVENTS_LIST__COL__TYPE' | translate }}
-                </mat-header-cell>
-                <mat-cell *matCellDef="let rowData">
-                    {{rowData.dataSourceType}}
-                </mat-cell>
-            </ng-container>
-            <!-- ./dataSourceType -->
-
-            <!-- append -->
-            <ng-container [matColumnDef]="ExecutionEventField.append">
-                <mat-header-cell *matHeaderCellDef spline-sort-header>
-                    {{ 'EVENTS.EVENTS_LIST__COL__WRITE_MODE' | translate }}
-                </mat-header-cell>
-                <mat-cell *matCellDef="let rowData">
-                    <spline-label [color]="rowData.append ? 'platinum' : 'human'">
-                        {{rowData.append && 'Append' || 'Override'}}
-                    </spline-label>
-                </mat-cell>
-            </ng-container>
-            <!-- ./dataSourceType -->
-
-            <mat-header-row *matHeaderRowDef="visibleColumns"></mat-header-row>
-
-            <mat-row *matRowDef="let row; columns: visibleColumns;"></mat-row>
-
-        </mat-table>
-
-        <div class="pt-2" *ngIf="(data$ | async)?.totalCount === 0">
-            <spline-no-result></spline-no-result>
-        </div>
-
-        <mat-paginator
-                (page)="onPaginationChanged($event)"
-                [hidePageSize]="true"
-                [length]="(data$ | async)?.totalCount"
-                [pageSize]="dataSource.searchParams?.pager?.limit"
-                [pageIndex]="dataSource.searchParams?.pager?.offset / dataSource.searchParams?.pager?.limit"
-                [showFirstLastButtons]="true"
-                class="mat-paginator--no-bg">
-
-        </mat-paginator>
-    </div>
+    </spline-search-dynamic-table>
 </div>

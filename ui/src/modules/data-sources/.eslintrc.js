@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ module.exports = {
             'error',
             {
                 'type': 'attribute',
-                'prefix': ['dataSource', 'dataSources', 'sd', 'sg', 'spline'],
+                'prefix': ['dataSource', 'dataSources', 'ds', 'sd', 'sg', 'spline'],
                 'style': 'camelCase'
             }
         ],
@@ -28,7 +28,7 @@ module.exports = {
             'error',
             {
                 'type': 'element',
-                'prefix': ['data-source', 'data-sources', 'sd', 'sg', 'spline'],
+                'prefix': ['data-source', 'data-sources', 'ds', 'sd', 'sg', 'spline'],
                 'style': 'kebab-case'
             }
         ]

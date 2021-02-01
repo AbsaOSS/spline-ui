@@ -1,5 +1,15 @@
 {
     "DATA_SOURCES": {
-
+        "DS_OVERVIEW__NAV_TAB__HISTORY": "History",
+        "DS_HEADER__URI": "URI",
+        "DS_HEADER__TYPE": "type",
+        "HISTORY__TITLE": "Data Source State History",
+        "EVENTS_LIST_PAGE__TITLE": "Execution Events",
+        "DS_STATE_HISTORY__COL__APPLICATION": "Execution",
+        "DS_STATE_HISTORY__COL__EXECUTION_PLAN": "Execution Plan",
+        "DS_STATE_HISTORY__COL__TIMESTAMP": "Executed At",
+        "DS_STATE_HISTORY__COL__DESTINATION": "Destination",
+        "DS_STATE_HISTORY__COL__TYPE": "Type",
+        "DS_STATE_HISTORY__COL__WRITE_MODE": "Write Mode"
     }
 }

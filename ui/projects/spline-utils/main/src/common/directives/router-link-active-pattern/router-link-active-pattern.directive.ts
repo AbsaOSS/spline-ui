@@ -31,6 +31,7 @@ import { RouterLinkActivePattern } from './router-link-active-pattern.models'
 export class RouterLinkActivePatternDirective extends BaseDirective implements OnChanges, OnDestroy {
 
     @Input() splineRouterLinkActivePattern: string
+
     private isActive = false
     private cssClassesList: string[] = ['active']
     private readonly exactRouteComparison = true

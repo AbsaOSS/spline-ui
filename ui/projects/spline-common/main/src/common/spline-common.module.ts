@@ -21,6 +21,7 @@ import {
     SplineCardModule,
     SplineContentErrorModule,
     SplineDataRecordModule,
+    SplineDateRangeFilterModule,
     SplineDividerModule,
     SplineIconModule,
     SplineLabelModule,
@@ -66,6 +67,7 @@ import {
         SplineSidePanelModule,
         SplineSortHeaderModule,
         SplineTabsNavBarModule,
+        SplineDateRangeFilterModule,
     ],
 })
 export class SplineCommonModule {

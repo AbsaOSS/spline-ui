@@ -19,7 +19,7 @@
 import { StringHelpers } from 'spline-utils'
 
 
-export type DataSourceInfo = {
+export type SplineDataSourceInfo = {
     id: string
     name: string
     uri: string
@@ -27,14 +27,14 @@ export type DataSourceInfo = {
 }
 
 
-export type DataSourceInfoDto = {
+export type SplineDataSourceInfoDto = {
     source: string
     sourceType: string
 }
 
-export function toDataSourceInfo(entity: DataSourceInfoDto): DataSourceInfo {
+export function toDataSourceInfo(entity: SplineDataSourceInfoDto): SplineDataSourceInfo {
     return {
-        id: StringHelpers.encodeBase64(entity.source),
+        id: uriToDatsSourceId(entity.source),
         name: dataSourceUriToName(entity.source),
         uri: entity.source,
         type: entity.sourceType
@@ -45,7 +45,30 @@ export function dataSourceUriToName(uri: string): string {
     return uri.split('/').slice(-1)[0]
 }
 
+export function dataSourceUriToType(uri: string): string {
+    return uri.toLowerCase().endsWith('.csv') ? 'CSV' : 'Parquet'
+}
+
 export enum DataSourceWriteMode {
     Append = 'append',
     Overwrite = 'overwrite',
+}
+
+// dummy data helper
+export function uriToDatsSourceId(uri: string): string {
+    return StringHelpers.encodeBase64(uri)
+}
+
+export function idToDataSourceInfo(id: string): SplineDataSourceInfo {
+    const uri = StringHelpers.decodeBase64(id)
+    return uriToDatasourceInfo(uri)
+}
+
+export function uriToDatasourceInfo(uri: string): SplineDataSourceInfo {
+    return {
+        id: uriToDatsSourceId(uri),
+        name: dataSourceUriToName(uri),
+        uri,
+        type: dataSourceUriToType(uri)
+    }
 }

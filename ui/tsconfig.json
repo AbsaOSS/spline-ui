@@ -50,6 +50,12 @@
             "spline-common/layout/*": [
                 "projects/spline-common/layout/src/public-api/*"
             ],
+            "spline-common/dynamic-table": [
+                "projects/spline-common/dynamic-table/src/public-api"
+            ],
+            "spline-common/dynamic-table/*": [
+                "projects/spline-common/dynamic-table/src/public-api/*"
+            ],
             "spline-common": [
                 "projects/spline-common/main/src/public-api"
             ],
@@ -91,6 +97,12 @@
             ],
             "spline-shared/events/*": [
                 "projects/spline-shared/events/src/public-api/*"
+            ],
+            "spline-shared/dynamic-table": [
+                "projects/spline-shared/dynamic-table/main/src/public-api"
+            ],
+            "spline-shared/data-sources/*": [
+                "projects/spline-shared/dynamic-table/main/src/public-api/*"
             ],
             "spline-shared": [
                 "projects/spline-shared/main/src/public-api"

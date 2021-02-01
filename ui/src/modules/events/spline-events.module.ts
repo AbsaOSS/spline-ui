@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,18 +31,18 @@ import { MatTabsModule } from '@angular/material/tabs'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatTreeModule } from '@angular/material/tree'
 import { RouterModule } from '@angular/router'
-import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material'
 import { SplineApiModule } from 'spline-api'
 import { SplineCommonModule } from 'spline-common'
 import { SplineDataViewModule } from 'spline-common/data-view'
+import { DynamicTableCommonCellsModule, DynamicTableModule } from 'spline-common/dynamic-table'
 import { SplineGraphModule } from 'spline-common/graph'
 import { SplineLayoutModule } from 'spline-common/layout'
 import { SplineApiConfigModule } from 'spline-shared'
 import { SplineAttributesSharedModule } from 'spline-shared/attributes'
+import { SplineDynamicTableSharedModule } from 'spline-shared/dynamic-table'
 import { SplineExpressionSharedModule } from 'spline-shared/expression'
 import { SplineGraphSharedModule } from 'spline-shared/graph'
 import { SplineTranslateModule } from 'spline-utils/translate'
-
 
 import * as fromComponents from './components'
 import * as fromPages from './pages'
@@ -72,13 +72,13 @@ import { EventOverviewStoreFacade } from './store'
         MatTabsModule,
         MatInputModule,
         MatMenuModule,
-        NgxDaterangepickerMd.forRoot(),
+        MatSlideToggleModule,
         SplineEventsRoutingModule,
         SplineApiConfigModule,
         SplineApiModule,
         SplineLayoutModule,
         SplineTranslateModule.forChild({
-            moduleNames: ['events', 'common-graph', 'shared', 'shared-graph', 'shared-attributes', 'shared-graph', 'shared-data-view']
+            moduleNames: ['events']
         }),
         SplineGraphModule,
         SplineAttributesSharedModule,
@@ -86,7 +86,9 @@ import { EventOverviewStoreFacade } from './store'
         SplineExpressionSharedModule,
         SplineCommonModule,
         SplineGraphSharedModule,
-        MatSlideToggleModule
+        DynamicTableModule,
+        DynamicTableCommonCellsModule,
+        SplineDynamicTableSharedModule
     ],
     exports: [
         ...fromPages.pageComponents,

@@ -21,7 +21,7 @@ export type QueryPager = {
 
 export const DEFAULT_PAGE_LIMIT = 10
 
-export const DEFAULT_PAGER: QueryPager =  Object.freeze<QueryPager>({
+export const DEFAULT_PAGER: Readonly<QueryPager> =  Object.freeze<QueryPager>({
     offset: 0,
     limit: DEFAULT_PAGE_LIMIT,
 })

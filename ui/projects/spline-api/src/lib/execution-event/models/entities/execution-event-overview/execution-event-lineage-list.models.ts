@@ -15,9 +15,7 @@
  */
 
 
-import { StringHelpers } from 'spline-utils'
-
-import { DataSourceInfo, dataSourceUriToName, DataSourceWriteMode } from '../data-source'
+import { DataSourceWriteMode, SplineDataSourceInfo, uriToDatasourceInfo } from '../data-source'
 
 import { ExecutionEventLineageNodeType } from './execution-event-lineage-node-type.models'
 import { ExecutionEventLineageNode } from './execution-event-lineage-node.models'
@@ -38,7 +36,7 @@ export namespace ExecutionEventLineageList {
 
     export type BaseRecord = {
         [LineageRecordField.id]: string
-        [LineageRecordField.dataSource]: DataSourceInfo
+        [LineageRecordField.dataSource]: SplineDataSourceInfo
     }
 
     export type DataSourceRecord = BaseRecord
@@ -68,12 +66,7 @@ export namespace ExecutionEventLineageList {
     export function toDataSourceRecord(node: ExecutionEventLineageNode): DataSourceRecord {
         return {
             id: node.id,
-            dataSource: {
-                id: StringHelpers.encodeBase64(node.name),
-                name: dataSourceUriToName(node.name),
-                uri: node.name,
-                type: node.name.toLowerCase().endsWith('.csv') ? 'CSV' : 'Parquet' // just an example, we need to get that data from BE.
-            }
+            dataSource: uriToDatasourceInfo(node.name)
         }
     }
 

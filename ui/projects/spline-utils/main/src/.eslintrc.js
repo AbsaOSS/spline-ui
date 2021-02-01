@@ -20,7 +20,7 @@ module.exports = {
             'error',
             {
                 'type': 'attribute',
-                'prefix': ['spline'],
+                'prefix': ['spline', ''],
                 'style': 'camelCase'
             }
         ],
@@ -28,7 +28,7 @@ module.exports = {
             'error',
             {
                 'type': 'element',
-                'prefix': ['spline'],
+                'prefix': ['spline', ''],
                 'style': 'kebab-case'
             }
         ]

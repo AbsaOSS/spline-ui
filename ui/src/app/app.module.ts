@@ -22,6 +22,12 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { environment } from '@env/environment'
+import { EffectsModule } from '@ngrx/effects'
+import { StoreRouterConnectingModule } from '@ngrx/router-store'
+import { MetaReducer, StoreModule } from '@ngrx/store'
+import { StoreDevtoolsModule } from '@ngrx/store-devtools'
+import { storeFreeze } from 'ngrx-store-freeze'
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material'
 import { SplineIconModule, SplineSearchBoxModule } from 'spline-common'
 import { SplineLayoutModule } from 'spline-common/layout'
 import { SplineConfigModule, SplineConfigSettings, SPLINE_CONFIG_SETTINGS } from 'spline-shared'
@@ -41,6 +47,11 @@ import { SplineSidebarMenuComponent } from './components'
 import { AppNotFoundComponent } from './pages/not-found/not-found.component'
 
 
+export const metaReducers: MetaReducer<any>[] =
+    !environment.production
+        ? [storeFreeze]
+        : []
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -55,6 +66,12 @@ import { AppNotFoundComponent } from './pages/not-found/not-found.component'
         MatIconModule,
         MatTooltipModule,
         MatButtonModule,
+        StoreModule.forRoot({}, { metaReducers }),
+        !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : [],
+        EffectsModule.forRoot([]),
+        StoreRouterConnectingModule.forRoot({
+            stateKey: 'router'
+        }),
         SplineTranslateCoreModule,
         SplineTranslateModule.forChild({ moduleNames: ['app'] }),
         SplineLayoutModule,
@@ -62,7 +79,8 @@ import { AppNotFoundComponent } from './pages/not-found/not-found.component'
         SplineConfigModule,
         SplineAttributesSharedModule,
         SplineIconModule,
-        SplineUtilsCommonModule
+        SplineUtilsCommonModule,
+        NgxDaterangepickerMd.forRoot(),
     ],
     providers: [
         {
@@ -80,6 +98,10 @@ import { AppNotFoundComponent } from './pages/not-found/not-found.component'
                 toAssetsFilePath('shared'),
                 toAssetsFilePath('shared-graph'),
                 toAssetsFilePath('shared-attributes'),
+                toAssetsFilePath('shared-data-view'),
+                toAssetsFilePath('shared-dynamic-table'),
+                toAssetsFilePath('shared-expression'),
+                toAssetsFilePath('common-graph'),
             ]
         },
     ],

@@ -18,13 +18,14 @@ import { BehaviorSubject, Observable, of, Subject } from 'rxjs'
 import { catchError, map, switchMap, take, takeUntil, tap } from 'rxjs/internal/operators'
 
 import { ProcessingStore } from '../../../store'
+import { SplineRecord } from '../heplers'
 
 import { SearchQuery } from './search-query.models'
 import DataState = SearchQuery.DataState
 import DEFAULT_RENDER_DATA = SearchQuery.DEFAULT_RENDER_DATA
 
 
-export abstract class SimpleDataSource<TData, TFilter extends object = {}> {
+export abstract class SimpleDataSource<TData, TFilter extends SplineRecord = {}> {
 
     readonly dataState$: Observable<DataState<TData>>
     readonly data$: Observable<TData>

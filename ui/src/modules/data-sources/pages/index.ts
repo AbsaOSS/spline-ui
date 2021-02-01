@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,16 @@
  */
 
 import { DataSourcesListPageComponent } from './list/data-sources-list.page.component'
-import { DataSourcesOverviewPageComponent } from './overview/data-sources-overview.page.component'
+import { DataSourceOverviewPageComponent } from './overview/data-source-overview.page.component'
+import { DsOverviewHistoryPageComponent } from './overview/history/ds-overview-history.page.component'
 
 
 export const pageComponents: any[] = [
     DataSourcesListPageComponent,
-    DataSourcesOverviewPageComponent
+    DataSourceOverviewPageComponent,
+    DsOverviewHistoryPageComponent
 ]
 
 export * from './list/data-sources-list.page.component'
-export * from './overview/data-sources-overview.page.component'
+export * from './overview/data-source-overview.page.component'
+export * from './overview/history/ds-overview-history.page.component'
