@@ -17,7 +17,7 @@
 
 <div class="e2e-container">
 
-    <div *ngIf="state$ | async as state">
+    <ng-container *ngIf="state$ | async as state">
 
         <!-- LOADER -->
         <spline-loader *ngIf="state.loadingProcessing.processing"></spline-loader>
@@ -27,24 +27,29 @@
         <spline-content-error *ngIf="state.loadingProcessing.processingError"></spline-content-error>
         <!-- ./ERROR -->
 
-        <!-- HEADER -->
-        <ng-container *ngIf="!state.loadingProcessing.processingError && !state.loadingProcessing.processing">
+
+        <ng-container *ngIf="!!state?.eventInfo">
+
+            <!-- HEADER -->
             <sl-content-header>
                 <event-header [eventInfo]="state.eventInfo"
                               [navTabs]="headerNavTabs">
                 </event-header>
             </sl-content-header>
+            <!-- ./HEADER -->
+
+            <!-- BODY -->
+            <div class="e2e-container__body">
+
+                <router-outlet></router-outlet>
+
+            </div>
+            <!-- ./BODY -->
+
         </ng-container>
-        <!-- ./HEADER -->
-    </div>
 
-    <!-- BODY -->
-    <div class="e2e-container__body">
+    </ng-container>
 
-        <router-outlet></router-outlet>
-
-    </div>
-    <!-- ./BODY -->
 </div>
 
 

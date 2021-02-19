@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Observable } from 'rxjs'
 import { takeUntil, withLatestFrom } from 'rxjs/internal/operators'
-import { filter } from 'rxjs/operators'
+import { filter, map } from 'rxjs/operators'
 import { ExecutionEventFacade, SplineDataSourceInfo } from 'spline-api'
+import { DtCellCustomEvent } from 'spline-common/dynamic-table'
 import { BaseComponent } from 'spline-utils'
 
 import { DsStateHistoryDataSource } from '../../../data-sources'
@@ -42,10 +43,12 @@ import { DsOverviewStoreFacade } from '../../../services'
     ],
 
 })
-export class DsOverviewHistoryPageComponent extends BaseComponent {
+export class DsOverviewHistoryPageComponent extends BaseComponent implements OnInit {
 
     readonly dataMap = DsStateHistoryDtSchema.getSchema()
     readonly dataSourceInfo$: Observable<SplineDataSourceInfo>
+
+    isVisible = false
 
     constructor(readonly dataSource: DsStateHistoryDataSource,
                 private readonly activatedRoute: ActivatedRoute,
@@ -53,20 +56,36 @@ export class DsOverviewHistoryPageComponent extends BaseComponent {
                 private readonly store: DsOverviewStoreFacade) {
         super()
 
-        this.dataSourceInfo$ = this.store.dataSourceInfo$
-
-        this.store.isInitialized$
+        this.dataSourceInfo$ = this.store.isInitialized$
             .pipe(
-                takeUntil(this.destroyed$),
                 withLatestFrom(this.store.dataSourceInfo$),
                 filter(([isInitialized, dataSourceInfo]) => isInitialized && !!dataSourceInfo),
+                map(([isInitialized, dataSourceInfo]) => dataSourceInfo),
             )
-            .subscribe(([isInitialized, dataSourceInfo]) => {
+
+        this.dataSourceInfo$
+            .pipe(
+                takeUntil(this.destroyed$),
+            )
+            .subscribe((dataSourceInfo) => {
                 this.dataSource.updateAndApplyDefaultSearchParams({
                     filter: {
                         dataSourceUri: dataSourceInfo.uri
                     }
                 })
             })
+    }
+
+    ngOnInit(): void {
+    }
+
+    onCellEvent($event: DtCellCustomEvent): void {
+        if ($event.event instanceof DsStateHistoryDtSchema.OpenDsStateDetailsEvent) {
+            this.isVisible = true
+        }
+    }
+
+    onSideDialogClosed() {
+        this.isVisible = false
     }
 }

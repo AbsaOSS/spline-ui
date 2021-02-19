@@ -30,9 +30,16 @@ export class DtCellLinkComponent extends DtCellBaseComponent<DtCellLink.Value, D
 
     readonly defaultLinkStyle = DtCellLink.DEFAULT_LINK_STYLE
 
-    onLinkClicked($event): void {
+    onLinkClicked(mouseEvent: MouseEvent): void {
+        mouseEvent.preventDefault()
+        mouseEvent.stopPropagation()
+
         if (this.value?.onClick) {
             this.value.onClick(this.rowData)
+        }
+        if (this.value?.emitCellEvent) {
+            const event = this.value.emitCellEvent(this.rowData)
+            this.event$.emit(event)
         }
     }
 

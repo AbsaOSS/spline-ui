@@ -20,5 +20,5 @@ import { SplineSearchDynamicTableComponent } from './search-dynamic-table/spline
 export * from './public-api'
 
 export const splineDtSharedComponents = [
-    SplineSearchDynamicTableComponent
+    SplineSearchDynamicTableComponent,
 ]

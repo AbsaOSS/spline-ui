@@ -18,31 +18,25 @@ import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
-import { MatMenuModule } from '@angular/material/menu'
-import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material'
-import { SplineTranslateModule } from 'spline-utils/translate'
 
-import { SplineInlineFilterModule } from '../inline-fitler'
+import { SplineIconModule } from '../icon'
 
-import { SplineDateRangeFilterComponent } from './spline-date-range-filter.component'
+import { SplineInlineFilterComponent } from './spline-inline-filter.component'
 
 
 @NgModule({
     declarations: [
-        SplineDateRangeFilterComponent,
+        SplineInlineFilterComponent,
     ],
     imports: [
         CommonModule,
-        MatMenuModule,
         MatIconModule,
         MatButtonModule,
-        NgxDaterangepickerMd,
-        SplineTranslateModule.forChild({}),
-        SplineInlineFilterModule
+        SplineIconModule,
     ],
     exports: [
-        SplineDateRangeFilterComponent
+        SplineInlineFilterComponent
     ],
 })
-export class SplineDateRangeFilterModule {
+export class SplineInlineFilterModule {
 }

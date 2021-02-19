@@ -23,8 +23,89 @@
     <div class="pb-3">
         <spline-search-dynamic-table
                 *ngIf="(dataSourceInfo$ | async)"
+                (cellEvent$)="onCellEvent($event)"
                 [dataMap]="dataMap"
                 [dataSource]="dataSource">
+
+            <div class="d-flex">
+                <spline-inline-filter icon="history" label="Modified A">
+                    Modified At
+                </spline-inline-filter>
+
+                <spline-inline-filter icon="save" label="Write Mode">
+                    Any
+                </spline-inline-filter>
+            </div>
+
         </spline-search-dynamic-table>
+
+<!--        <div class="d-flex justify-content-center mb-4">-->
+<!--            <ng-container *ngTemplateOutlet="inlineFilter; context: { icon: 'history', label: 'Modified At', placeholder: 'Everything'  }"> </ng-container>-->
+        <!--            <ng-container *ngTemplateOutlet="inlineFilter; context: { icon: 'save', label: 'Write Mode', placeholder: 'Any'  }"> </ng-container>-->
+        <!--            <ng-container *ngTemplateOutlet="inlineFilter; context: { icon: 'data_usage', label: 'Usage', placeholder: 'All'  }"> </ng-container>-->
+        <!--        </div>-->
+
+        <!--        <ng-container *ngFor="let event of (dataSource.dataState$ | async)?.data?.items">-->
+        <!--            <ng-container *ngTemplateOutlet="timelineRecord; context: { event: event }"></ng-container>-->
+        <!--        </ng-container>-->
+
     </div>
 </div>
+
+<spline-side-dialog-container
+        [visible]="isVisible"
+        (closed$)="onSideDialogClosed()">
+    <div class="spline-side-panel__header-content">
+        <h3 class="text-center">Data Source State Details</h3>
+    </div>
+
+    <spline-fake-page-content></spline-fake-page-content>
+
+</spline-side-dialog-container>
+
+<ng-template #timelineRecord let-event="event">
+    <div class="ds-state-timeline-record">
+        <div class="ds-state-timeline-record__inner">
+            <div class="ds-state-timeline-record__time">
+                <div class="d-flex justify-content-end">
+                    <div class="max-width-100 text-center">
+                        {{event.timestamp | date : 'yyyy-MM-dd'}}
+                        <div class="minor-text">
+                            {{event.timestamp | date : 'HH:mm:ss'}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ds-state-timeline-record__data-source-info">
+                <div class="ds-state-timeline-record__delimiter-circle"></div>
+                <ng-container *ngTemplateOutlet="dsInfo; context: { event: event }"></ng-container>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template let-event="event" #dsInfo>
+    <div class="ds-timeline-info">
+        <div class="ds-timeline-info__inner">
+            <div class="ds-timeline-info__icon">
+                <spline-icon icon="description"></spline-icon>
+            </div>
+            <div class="ds-timeline-info__execution">
+                <div class="max-width-100">
+                    <a [routerLink]="['/events/overview', event.executionEventId]">
+                        {{event.applicationName}}
+                    </a>
+                    <div class="minor-text">
+                        {{event.applicationId}}
+                    </div>
+                </div>
+            </div>
+            <div class="ds-timeline-info__write-mode">
+                <spline-label [color]="event.append ? 'platinum' : 'human'">
+                    {{event.append && 'Append' || 'Override'}}
+                </spline-label>
+            </div>
+        </div>
+    </div>
+</ng-template>

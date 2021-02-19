@@ -15,11 +15,86 @@
  */
 
 @import 'vars';
+@import 'mixins';
 
 .mat-column-applicationName {
     a {
         color: $color-black;
         font-size: 16px;
         font-weight: 500;
+    }
+}
+
+$height: 40px;
+$border-radius: $height / 2;
+
+
+
+.ds-state-timeline-record {
+
+    $circle-size: 16px;
+
+    &__inner {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    &__time {
+        font-size: 14px;
+        padding-right: 3rem;
+        width: 50%;
+    }
+
+
+    &__data-source-info {
+        border-left: 1px solid $color-grey-dark-50;
+        padding-left: 3rem;
+        position: relative;
+        width: 50%;
+    }
+
+    &__delimiter-circle {
+        background: $color-pink;
+        border-radius: 50%;
+        height: $circle-size;
+        left: -($circle-size/2);
+        position: absolute;
+        top: calc(50% - #{$circle-size/2});
+        width: $circle-size;
+    }
+
+}
+
+.ds-timeline-info {
+    display: flex;
+    margin: 0.25rem 0;
+
+
+    &__inner {
+        @include shadow-light();
+        align-items: center;
+        background: $color-white-smoked;
+        border-radius: 25px;
+        display: flex;
+        font-size: 14px;
+        min-height: 50px;
+        min-width: 380px;
+        padding: 0 1rem;
+    }
+
+    &__icon {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+
+        spline-icon {
+            color: $color-luxury;
+        }
+    }
+
+    &__execution {
+        flex-grow: 1;
+        padding: 0 1rem;
     }
 }

@@ -24,6 +24,8 @@
             [dataSource]="dataSource">
 
         <spline-date-filter *ngIf="!!state.dateRangeFilter?.bounds"
+                            label="Executed At"
+                            [showIcon]="false"
                             [maxDate]="state.dateRangeFilter.bounds?.dateTo"
                             [minDate]="state.dateRangeFilter.bounds?.dateFrom"
                             [value]="state.dateRangeFilter?.value"

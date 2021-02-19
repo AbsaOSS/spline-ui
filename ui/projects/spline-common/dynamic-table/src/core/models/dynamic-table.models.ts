@@ -31,9 +31,15 @@ export type DynamicTableColumnSchema<T = unknown, THeader = unknown,
     & DtHeaderCellSchema<THeader, TTitleOptions>
     & DtSecondaryHeaderCellSchema<TSecondaryHeader, TTitleOptions>
 
-export interface DtCellValueControlEvent<TData extends SplineRecord = {}> {
-    type: string
-    data?: TData
+export interface DtCellValueControlEvent<TData extends SplineRecord = SplineRecord> {
+    readonly type: string
+    readonly data?: TData
+}
+
+export class CommonDtCellValueControlEvent<TData extends SplineRecord = SplineRecord> implements DtCellValueControlEvent<TData> {
+    readonly type: string
+    constructor(readonly data: TData = {} as TData) {
+    }
 }
 
 export interface DynamicTableOptions {
@@ -54,7 +60,7 @@ export type DtHeaderCellCustomEvent = {
     event: DtCellValueControlEvent
 }
 
-export type DtCellCustomEvent<T> = {
+export type DtCellCustomEvent<T extends SplineRecord = SplineRecord> = {
     rowData: T
     colId: string
     event: DtCellValueControlEvent

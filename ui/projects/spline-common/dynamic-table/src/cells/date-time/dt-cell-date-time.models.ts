@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { DtCellLayout, DtCellValueSchema, TCellValue } from '../../core'
+import { DtCellLayout, DtCellValueSchema, DtLayoutBuilder, TCellValue } from '../../core'
 
 
 export namespace DtCellDateTime {
@@ -36,12 +36,12 @@ export namespace DtCellDateTime {
         secondaryDateFormat: DEFAULT_SECONDARY_DATE_FORMAT
     })
 
-    export const DEFAULT_LAYOUT: Readonly<DtCellLayout> = Object.freeze<DtCellLayout>({
-        styles: {
-            justifyContent: 'center',
-            maxWidth: '160px'
-        }
-    })
+    export function getDefaultLayout(): DtCellLayout {
+        return (new DtLayoutBuilder())
+            .alignCenter()
+            .setWidth('160px')
+            .toLayout()
+    }
 
     export function getColSchema(value: TCellValue<Value>, options?: Options): Partial<DtCellValueSchema<Value>> {
         return {
@@ -55,7 +55,7 @@ export namespace DtCellDateTime {
         return {
             type: TYPE,
             options: { ...DEFAULT_OPTIONS },
-            layout: { ...DEFAULT_LAYOUT }
+            layout: getDefaultLayout()
         }
     }
 

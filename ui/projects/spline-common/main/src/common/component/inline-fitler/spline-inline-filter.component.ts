@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
-import { SplineDataSourceInfoResolver } from './resolvers'
-import { DsOverviewHistoryStoreFacade, DsOverviewStoreFacade } from './store'
+
+import { Component, Input } from '@angular/core'
 
 
-export * from './resolvers'
-export * from './store'
+@Component({
+    selector: 'spline-inline-filter',
+    templateUrl: './spline-inline-filter.component.html'
+})
+export class SplineInlineFilterComponent {
 
-export const services = [
-    DsOverviewStoreFacade,
-    SplineDataSourceInfoResolver,
-    DsOverviewHistoryStoreFacade,
-]
+    @Input() icon: string
+    @Input() label: string
+    @Input() placeholder: string
+
+}

@@ -14,15 +14,5 @@
  * limitations under the License.
  */
 
-import { SplineDataSourceInfoResolver } from './resolvers'
-import { DsOverviewHistoryStoreFacade, DsOverviewStoreFacade } from './store'
-
-
-export * from './resolvers'
-export * from './store'
-
-export const services = [
-    DsOverviewStoreFacade,
-    SplineDataSourceInfoResolver,
-    DsOverviewHistoryStoreFacade,
-]
+export * from './spline-inline-filter.component'
+export * from './spline-inline-filter.module'

@@ -16,14 +16,32 @@
 
 import { DataSourceWriteMode } from 'spline-api'
 import { SplineLabel } from 'spline-common'
-import { DtCellLabel, DtCellValueSchema, TCellValueFn } from 'spline-common/dynamic-table'
+import {
+    DtCellLabel,
+    DtCellLayout,
+    DtLayoutBuilder,
+    DtLayoutSize,
+    DynamicTableColumnSchema,
+    TCellValueFn
+} from 'spline-common/dynamic-table'
 
 
 export namespace SplineDataSourceSharedDtSchema {
 
+    export function getWriteModeDefaultLayout(): DtCellLayout {
+        return (new DtLayoutBuilder())
+            .alignCenter()
+            .setWidth('160px')
+            .visibleAfter(DtLayoutSize.sm)
+            .toLayout()
+    }
+
 
     export function getWriteModeColSchema(
-        getWriteModeFn: TCellValueFn<DataSourceWriteMode>): Partial<DtCellValueSchema<DtCellLabel.Value, DtCellLabel.Options>> {
+        getWriteModeFn: TCellValueFn<DataSourceWriteMode>
+    ): Partial<DynamicTableColumnSchema<DtCellLabel.Value, unknown, unknown, DtCellLabel.Options>> {
+
+        console.log(getWriteModeDefaultLayout())
 
         return {
             type: DtCellLabel.TYPE,
@@ -43,12 +61,7 @@ export namespace SplineDataSourceSharedDtSchema {
                     color
                 }
             },
-            layout: {
-                styles: {
-                    justifyContent: 'center',
-                    maxWidth: '160px'
-                }
-            }
+            layout: getWriteModeDefaultLayout()
         }
     }
 }

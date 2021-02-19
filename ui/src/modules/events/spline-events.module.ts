@@ -46,7 +46,6 @@ import { SplineTranslateModule } from 'spline-utils/translate'
 
 import * as fromComponents from './components'
 import * as fromPages from './pages'
-import { EventInfoResolver } from './services'
 import { SplineEventsRoutingModule } from './spline-events-routing.module'
 import { EventOverviewStoreFacade } from './store'
 
@@ -95,7 +94,6 @@ import { EventOverviewStoreFacade } from './store'
     ],
     providers: [
         EventOverviewStoreFacade,
-        EventInfoResolver
     ],
 })
 export class SplineEventsModule {

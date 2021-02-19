@@ -33,7 +33,7 @@
                 <mat-header-cell *matHeaderCellDef
                                  [disabled]="!columnSchema?.isSortable"
                                  [ngStyle]="columnSchema?.layout?.styles"
-                                 [ngClass]="columnSchema?.headerClasses"
+                                 [ngClass]="[].concat(columnSchema?.headerClasses || columnSchema?.layout?.classes || []) "
                                  [disableClear]="true"
                                  spline-sort-header>
 

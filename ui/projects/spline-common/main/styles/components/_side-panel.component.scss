@@ -1,5 +1,5 @@
 /*!
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 @import 'vars';
 @import 'mixins';
 
-$dialog-width: 600px;
+$dialog-width: 50%;
 $dialog-width__small: 544px;
 
 $dialog-full-width-break: 1280px;

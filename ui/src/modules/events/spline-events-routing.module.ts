@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 
 import { EventOverviewGraphPageComponent, EventOverviewPageComponent, EventsListPageComponent } from './pages'
-import { EventInfoResolver } from './services'
 
 
 const routes: Routes = [
@@ -29,9 +28,6 @@ const routes: Routes = [
     {
         path: 'overview/:id',
         component: EventOverviewPageComponent,
-        resolve: {
-            eventInfo: EventInfoResolver
-        },
         children: [
             {
                 path: 'graph',

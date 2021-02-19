@@ -14,27 +14,52 @@
  * limitations under the License.
  */
 
-import { DynamicTableDataMap, isDtColVisible } from '../../models'
+import { DtLayoutBuilder, DynamicTableColumnSchema, DynamicTableDataMap, isDtColVisible } from '../../models'
 
 
 export namespace DynamicTableStore {
 
     export type State = {
         visibleColumnsIds: string[]
+        dataMap: DynamicTableDataMap
     }
 
     export function getDefaultState(): State {
         return {
             visibleColumnsIds: [],
+            dataMap: null
         }
     }
 
     export function reduceDataMap(state: State, dataMap: DynamicTableDataMap): State {
         return {
             ...state,
+            dataMap: decorateDataMap(dataMap),
             visibleColumnsIds: dataMap
                 .filter(col => isDtColVisible(col))
                 .map(col => col.id)
         }
     }
+
+    export function decorateDataMap(dataMap: DynamicTableDataMap): DynamicTableDataMap {
+        return dataMap
+            .map(item => ({
+                ...decorateWidth(item),
+            }))
+    }
+
+    export function decorateWidth(columnMap: DynamicTableColumnSchema): DynamicTableColumnSchema {
+        if (!columnMap.width) {
+            return columnMap
+        }
+
+        return {
+            ...columnMap,
+            layout: {
+                ...DtLayoutBuilder.setWidth(columnMap.width, (columnMap.layout || {}))
+            }
+
+        }
+    }
+
 }

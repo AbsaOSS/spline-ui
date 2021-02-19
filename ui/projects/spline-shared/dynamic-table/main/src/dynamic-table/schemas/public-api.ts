@@ -16,3 +16,4 @@
 
 export * from './spline-data-source-shared.dt-schema'
 export * from './execution-event-shared.dt-schema'
+export * from './spline-shared.dt-schema'

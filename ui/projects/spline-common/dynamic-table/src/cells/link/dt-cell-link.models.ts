@@ -17,7 +17,7 @@
 
 
 
-import { DtCellValueSchema, TCellValue } from '../../core'
+import { DtCellValueControlEvent, DtCellValueSchema, TCellValue } from '../../core'
 
 
 export namespace DtCellLink {
@@ -29,7 +29,8 @@ export namespace DtCellLink {
         routerLink?: any[] | string
         routerQueryParams?: any[] | string
         target?: string
-        onClick?: (rowData) => void
+        onClick?: (rowData: any) => void
+        emitCellEvent?: (rowData: any) => DtCellValueControlEvent
         description?: string
     }
 

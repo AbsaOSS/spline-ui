@@ -21,7 +21,7 @@ import { Observable } from 'rxjs'
 import { filter, take } from 'rxjs/operators'
 import { SplineDataSourceInfo } from 'spline-api'
 
-import { DsOverviewStoreFacade } from './store'
+import { DsOverviewStoreFacade } from '../store'
 
 
 @Injectable()
