@@ -80,7 +80,7 @@ $spline-layout-settings-default: (
             border-radius: map-get($settings, content-border-radius);
             height: 100%;
             overflow: auto;
-            padding: 2rem;
+            padding: 1.5rem;
             position: relative;
 
             &.no-padding {
@@ -132,7 +132,7 @@ $spline-layout-settings-default: (
         }
 
         .page-title {
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
             text-align: center;
         }
 

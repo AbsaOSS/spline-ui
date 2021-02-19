@@ -2,7 +2,8 @@
     "DATA_SOURCES": {
         "DS_OVERVIEW__NAV_TAB__HISTORY": "History",
         "DS_HEADER__URI": "URI",
-        "DS_HEADER__TYPE": "type",
+        "DS_HEADER__TYPE": "Type",
+        "DS_HEADER__ID": "Id",
         "HISTORY__TITLE": "Data Source State History",
         "EVENTS_LIST_PAGE__TITLE": "Execution Events",
         "DS_STATE_HISTORY__COL__APPLICATION": "Execution",

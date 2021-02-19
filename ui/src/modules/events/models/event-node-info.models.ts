@@ -17,8 +17,8 @@
 import { ExecutionEventLineageNode, ExecutionEventLineageNodeType, OperationDetails, operationIdToExecutionPlanId } from 'spline-api'
 import { SplineCardHeader } from 'spline-common'
 import { SdWidgetCard, SdWidgetSchema, SdWidgetSimpleRecord, SplineDataViewSchema } from 'spline-common/data-view'
-import { SdWidgetAttributesTree, SplineAttributesTree } from 'spline-shared/attributes'
-import { SgNodeCardDataView } from 'spline-shared/data-view'
+import { SdWidgetAttributesTree } from 'spline-shared/attributes'
+import { SgEventNodeInfoShared, SgNodeCardDataView } from 'spline-shared/data-view'
 import { ProcessingStore } from 'spline-utils'
 
 import { EventNodeControl } from './event-node-control.models'
@@ -107,24 +107,11 @@ export namespace EventNodeInfo {
         }
     }
 
-    export function getOperationsDataSourceSchemasDvs(operationsInfoList: OperationDetails[]): DataSourceSchemaDetails[] {
+    export function getOperationsDataSourceSchemasDvs(operationsDetailsList: OperationDetails[]): DataSourceSchemaDetails[] {
 
-        const operationsMap: Record<string, { operationInfo: OperationDetails; attrTree: SplineAttributesTree.Tree }[]> =
-            operationsInfoList.reduce(
-                (acc, operationInfo) => {
-                    const attrTree = SplineAttributesTree.toTree(
-                        operationInfo.schemas[operationInfo.output], operationInfo.dataTypes,
-                    )
-                    const treeHash = SplineAttributesTree.calculateTreeHash(attrTree)
-                    return {
-                        ...acc,
-                        [treeHash]: [...(acc[treeHash] ? acc[treeHash] as any[] : []), { operationInfo, attrTree }]
-                    }
-                },
-                {}
-            )
+        const operationsDetailsTreeMap = SgEventNodeInfoShared.toOperationDetailsAttrTreeMap(operationsDetailsList)
 
-        return Object.values(operationsMap)
+        return Object.values(operationsDetailsTreeMap)
             .map(currentOperationsInfoList => {
 
                 // as all schemas are the same we can take just the first operation as a reference to build schema.

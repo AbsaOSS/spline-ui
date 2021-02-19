@@ -16,6 +16,7 @@
 
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
+import { SplineFakePageContentComponent } from 'spline-common/layout'
 
 import { DataSourceOverviewPageComponent, DataSourcesListPageComponent, DsOverviewHistoryPageComponent } from './pages'
 
@@ -32,6 +33,18 @@ const routes: Routes = [
             {
                 path: 'history',
                 component: DsOverviewHistoryPageComponent,
+            },
+            {
+                path: 'overview',
+                component: SplineFakePageContentComponent
+            },
+            {
+                path: 'impact',
+                component: SplineFakePageContentComponent,
+            },
+            {
+                path: 'lineage',
+                component: SplineFakePageContentComponent,
             },
             {
                 path: '',

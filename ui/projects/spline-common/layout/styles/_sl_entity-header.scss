@@ -1,5 +1,5 @@
 /*!
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ $icon-color: $color-luxury;
 
     &__icon {
         color: $icon-color;
-        padding-right: 1.5rem;
+        padding-right: .5rem;
 
         spline-icon mat-icon {
             @include icon-size(42px);
@@ -36,11 +36,11 @@ $icon-color: $color-luxury;
 
     &__icon-border {
         align-items: center;
-        border: 3px solid $icon-color;
+        //border: 3px solid $icon-color;
         border-radius: 1rem;
         display: flex;
         justify-content: center;
-        padding: 1rem 1.5rem;
+        padding: 0 1rem;
     }
 
 
@@ -50,14 +50,14 @@ $icon-color: $color-luxury;
     }
 
     &__title {
+        font-size: 20px;
         line-height: 1;
         margin-bottom: 0;
-        padding-right: 8px;
     }
 
     &__info-container {
         display: flex;
-        margin-top: 0.5rem;
+        margin-top: 0.25rem;
     }
 
     &__info-container > * {
@@ -70,5 +70,9 @@ $icon-color: $color-luxury;
         &:last-child {
             padding-right: 0;
         }
+    }
+
+    .spline-data-record__label {
+        font-size: 10px;
     }
 }

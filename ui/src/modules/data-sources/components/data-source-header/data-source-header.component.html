@@ -14,9 +14,9 @@
   ~ limitations under the License.
   -->
 
-<sl-entity-header icon="description"
-                  [title]="dataSourceInfo.name"
-                  [navTabs]="navTabs">
+<sl-entity-header [title]="dataSourceInfo.name"
+                  [navTabs]="navTabs"
+                  icon="description">
 
     <spline-data-record [label]="'DATA_SOURCES.DS_HEADER__URI' | translate">
         {{ dataSourceInfo.uri }}
@@ -24,6 +24,10 @@
 
     <spline-data-record [label]="'DATA_SOURCES.DS_HEADER__TYPE' | translate">
         {{ dataSourceInfo.type }}
+    </spline-data-record>
+
+    <spline-data-record [label]="'DATA_SOURCES.DS_HEADER__ID' | translate">
+        {{ dataSourceInfo.id }}
     </spline-data-record>
 
 </sl-entity-header>

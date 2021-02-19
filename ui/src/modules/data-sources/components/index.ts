@@ -16,11 +16,14 @@
 
 
 
+import { DataSourceDetailsComponent } from './data-source-details/data-source-details.component'
 import { DataSourceHeaderComponent } from './data-source-header/data-source-header.component'
 
 
 export const components: any[] = [
     DataSourceHeaderComponent,
+    DataSourceDetailsComponent
 ]
 
+export * from './data-source-details/data-source-details.component'
 export * from './data-source-header/data-source-header.component'

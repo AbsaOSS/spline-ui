@@ -27,12 +27,31 @@
     <div *ngIf="!!state.graphData" class="e2e-container">
 
         <!-- HEADER -->
-        <sl-content-header>
-            <plan-header *ngIf="state.executionPlan"
-                         [executionPlan]="state.executionPlan"
-                         [navTabs]="headerNavTabs">
-            </plan-header>
-        </sl-content-header>
+        <div class="header-container">
+            <div class="container">
+                <!-- TODO: replace it with reusable component after PoC approved -->
+                <div class="spline-breadcrumb">
+                    <div class="spline-breadcrumb__item">
+                        Execution Plan
+                    </div>
+                    <div class="spline-breadcrumb__delimiter">
+                        <mat-icon>chevron_right</mat-icon>
+                    </div>
+                    <div class="spline-breadcrumb__item ">
+                        {{ state.executionPlan?.extraInfo?.appName ? state.executionPlan?.extraInfo?.appName : 'PLANS.PLAN_INFO__DEFAULT_NAME' }}
+                    </div>
+                    <div class="spline-breadcrumb__delimiter">
+                        <mat-icon>chevron_right</mat-icon>
+                    </div>
+                    <div class="spline-breadcrumb__item">
+                        Graph View
+                    </div>
+                </div>
+                <plan-header *ngIf="state.executionPlan"
+                             [executionPlan]="state.executionPlan">
+                </plan-header>
+            </div>
+        </div>
         <!-- ./HEADER -->
 
 

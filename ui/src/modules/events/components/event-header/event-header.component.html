@@ -14,8 +14,8 @@
   ~ limitations under the License.
   -->
 <sl-entity-header icon="play_arrow"
-                  [navTabs]="navTabs"
-                  [title]="eventInfo.name">
+                  [title]="eventInfo.name"
+                  [navTabs]="navTabs">
 
     <spline-data-record [label]="'EVENTS.EVENT_INFO__DETAILS__EXECUTION_PLAN' | translate">
         <a [routerLink]="['/plans/overview', eventInfo.executionPlan.id]"

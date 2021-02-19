@@ -15,3 +15,4 @@
  */
 
 export * from './ds-overview.store.facade'
+export * from './ds-overview-details.store.facade'

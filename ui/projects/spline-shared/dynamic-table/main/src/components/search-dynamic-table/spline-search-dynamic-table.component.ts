@@ -50,6 +50,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
 
     @Input() urlStateQueryParamAlias = this.defaultUrlStateQueryParamAlias
     @Input() isUrlStateDisabled = false
+    @Input() showPaginator = false
 
     @Output() cellEvent$ = new EventEmitter<DtCellCustomEvent<TRowData>>()
     @Output() headerCellEvent$ = new EventEmitter<DtHeaderCellCustomEvent>()

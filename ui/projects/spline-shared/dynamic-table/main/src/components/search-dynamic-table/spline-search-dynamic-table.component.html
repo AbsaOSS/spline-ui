@@ -14,7 +14,9 @@
   ~ limitations under the License.
   -->
 
-<div class="spline-search-dt-container" *ngIf="state$ | async as state">
+<div class="spline-search-dt-container"
+     *ngIf="state$ | async as state"
+    [class.spline-search-dt-container--sticky]="options?.isSticky">
 
     <!-- LOADER -->
     <spline-loader *ngIf="state.loadingProcessing.processing"></spline-loader>
@@ -25,7 +27,7 @@
     <!-- ./ERROR -->
 
     <!-- HEADER -->
-    <div class="pb-3">
+    <div class="spline-search-dt-container__header">
         <div class="d-flex w-100">
 
             <!-- SEARCH -->
@@ -37,43 +39,57 @@
                 </spline-search-box>
             </div>
             <!-- ./SEARCH -->
-
-            <!-- FILTERS -->
-            <ng-content></ng-content>
-            <!-- ./FILTERS -->
+            <div>
+                <!-- FILTERS -->
+                <ng-content></ng-content>
+                <!-- ./FILTERS -->
+            </div>
 
         </div>
     </div>
     <!-- ./HEADER -->
 
-    <!--  TABLE  -->
-    <dynamic-table [dataSource]="dataSource"
-                   [initSorting]="state.initSorting"
-                   [dataMap]="dataMap"
-                   [options]="options"
-                   (sortingChanged$)="onSortingChanged($event)"
-                   (cellEvent$)="onCellEvent($event)"
-                   (headerCellEvent$)="onHeaderCellEvent($event)"
-                   (secondaryHeaderCellEvent$)="onSecondaryHeaderCellEvent($event)">
+    <div class="spline-search-dt-container__body">
 
-    </dynamic-table>
-    <!--  ./TABLE  -->
+        <!--  TABLE  -->
+        <dynamic-table [dataSource]="dataSource"
+                       [initSorting]="state.initSorting"
+                       [dataMap]="dataMap"
+                       [options]="options"
+                       (sortingChanged$)="onSortingChanged($event)"
+                       (cellEvent$)="onCellEvent($event)"
+                       (headerCellEvent$)="onHeaderCellEvent($event)"
+                       (secondaryHeaderCellEvent$)="onSecondaryHeaderCellEvent($event)">
 
-    <!--  NO RESULT  -->
-    <div class="pt-2" *ngIf="state.totalCount === 0">
-        <spline-no-result></spline-no-result>
+        </dynamic-table>
+        <!--  ./TABLE  -->
+
+        <!--  NO RESULT  -->
+        <div class="pt-2" *ngIf="state.totalCount === 0 && !state.loadingProcessing.processing">
+            <spline-no-result></spline-no-result>
+        </div>
+        <!--  ./NO RESULT  -->
+
+        <mat-paginator
+                *ngIf="showPaginator"
+                (page)="onPaginationChanged($event)"
+                [hidePageSize]="true"
+                [length]="state.totalCount"
+                [pageSize]="state.searchParams?.pager?.limit"
+                [pageIndex]="state.searchParams?.pager?.offset / state.searchParams?.pager?.limit"
+                [showFirstLastButtons]="true"
+                class="mat-paginator--no-bg">
+
+        </mat-paginator>
+
+        <div class="spline-search-dt-total-count" *ngIf="!showPaginator && state.totalCount > 0">
+            <div class="spline-search-dt-total-count__label">
+                Total Count
+            </div>
+            <div class="spline-search-dt-total-count__inner">
+                {{ state.totalCount }}
+            </div>
+        </div>
+
     </div>
-    <!--  ./NO RESULT  -->
-
-    <mat-paginator
-            (page)="onPaginationChanged($event)"
-            [hidePageSize]="true"
-            [length]="state.totalCount"
-            [pageSize]="state.searchParams?.pager?.limit"
-            [pageIndex]="state.searchParams?.pager?.offset / state.searchParams?.pager?.limit"
-            [showFirstLastButtons]="true"
-            class="mat-paginator--no-bg">
-
-    </mat-paginator>
-
 </div>

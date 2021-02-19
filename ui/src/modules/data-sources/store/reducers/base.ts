@@ -16,7 +16,7 @@
 
 import { ActionReducerMap, createFeatureSelector } from '@ngrx/store'
 
-import { DsOverviewHistoryStore } from './ds-overview-history.reducers'
+import { DsOverviewDetailsStore } from './ds-overview-details.reducers'
 import { DsOverviewStore } from './ds-overview.reducers'
 
 
@@ -26,12 +26,12 @@ export namespace SplineDataSourceStore {
 
     export type State = {
         [DsOverviewStore.STORE_FEATURE_NAME]: DsOverviewStore.State
-        [DsOverviewHistoryStore.STORE_FEATURE_NAME]: DsOverviewHistoryStore.State
+        [DsOverviewDetailsStore.STORE_FEATURE_NAME]: DsOverviewDetailsStore.State
     }
 
     export const reducers: ActionReducerMap<State> = {
         [DsOverviewStore.STORE_FEATURE_NAME]: DsOverviewStore.reducer,
-        [DsOverviewHistoryStore.STORE_FEATURE_NAME]: DsOverviewHistoryStore.reducer
+        [DsOverviewDetailsStore.STORE_FEATURE_NAME]: DsOverviewDetailsStore.reducer
     }
 
     export const rootState = createFeatureSelector<State>(STORE_FEATURE_NAME)

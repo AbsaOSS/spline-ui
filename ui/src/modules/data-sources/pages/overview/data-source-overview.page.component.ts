@@ -38,10 +38,25 @@ export class DataSourceOverviewPageComponent extends BaseComponent implements On
 
     readonly headerNavTabs: NavTabInfo[] = [
         {
+            label: 'Overview',
+            routeLink: './overview',
+            icon: 'description'
+        },
+        {
             label: 'DATA_SOURCES.DS_OVERVIEW__NAV_TAB__HISTORY',
-            routeLink: '.',
+            routeLink: './history',
             icon: 'history'
-        }
+        },
+        {
+            label: 'Lineage',
+            routeLink: './lineage',
+            icon: 'timeline'
+        },
+        {
+            label: 'Impact',
+            routeLink: './impact',
+            icon: 'air'
+        },
     ]
 
 

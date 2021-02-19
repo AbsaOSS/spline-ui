@@ -1,5 +1,5 @@
 /*!
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,4 +66,8 @@ $section-width: 600px;
     padding: 32px 32px 0;
     position: relative;
     z-index: 100;
+}
+
+.header-container {
+    border-bottom: 1px solid $color-grey;
 }

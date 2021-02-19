@@ -57,7 +57,11 @@ export namespace EventsListDtSchema {
                 ),
                 id: Column.executionPlanId,
                 header: 'EVENTS.EVENTS_LIST__COL__EXECUTION_PLAN',
-                isSortable: true
+                isSortable: true,
+                layout: {
+                    classes: ['d-xxl-flex d-none']
+                },
+                headerClasses: ['d-xxl-flex d-none'],
             },
             {
                 ...DtCellLink.getColSchema(
@@ -69,7 +73,11 @@ export namespace EventsListDtSchema {
                 ),
                 id: Column.dataSourceUri,
                 header: 'EVENTS.EVENTS_LIST__COL__DESTINATION',
-                isSortable: true
+                isSortable: true,
+                layout: {
+                    classes: ['d-lg-flex d-none']
+                },
+                headerClasses: ['d-lg-flex d-none'],
             },
             {
                 id: Column.dataSourceType,
@@ -79,8 +87,10 @@ export namespace EventsListDtSchema {
                     styles: {
                         justifyContent: 'center',
                         maxWidth: '160px'
-                    }
+                    },
+                    classes: ['d-lg-flex d-none']
                 },
+                headerClasses: ['d-lg-flex d-none'],
             },
             {
                 ...SplineDataSourceSharedDtSchema.getWriteModeColSchema(
@@ -88,7 +98,7 @@ export namespace EventsListDtSchema {
                 ),
                 id: Column.writeMode,
                 header: 'EVENTS.EVENTS_LIST__COL__WRITE_MODE',
-                isSortable: true
+                isSortable: true,
             },
             {
                 ...DtCellDateTime.getDefaultColSchema(),

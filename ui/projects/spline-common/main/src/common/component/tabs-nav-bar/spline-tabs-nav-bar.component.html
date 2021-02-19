@@ -15,7 +15,11 @@
   -->
 
 
-<nav mat-tab-nav-bar class="spline-tabs-nav-bar" color="accent">
+<nav mat-tab-nav-bar
+     class="spline-tabs-nav-bar"
+     color="accent"
+     [attr.mat-align-tabs]="align">
+
     <a mat-tab-link
        *ngFor="let tab of decoratedTabs"
        [routerLink]="tab.routeLink"

@@ -44,6 +44,10 @@ export class SplineDateRangeFilterComponent extends BaseLocalStateComponent<Spli
     @ViewChild(MatMenuTrigger, { static: false }) matMenuTrigger: MatMenuTrigger
 
     @Input() value: SplineDateRangeFilter.Value | null
+    @Input() showIcon = true
+
+    @Input() icon = 'schedule'
+    @Input() label: string
 
     @Input() emptyValueString = 'COMMON.DATE_FILTER__EMPTY_VALUE_LABEL'
 

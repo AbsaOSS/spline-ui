@@ -15,4 +15,4 @@
  */
 
 export * from './ds-overview.selectors'
-export * from './ds-overview-history.selectors'
+export * from './ds-overview-details.selectors'

@@ -35,6 +35,7 @@ import { StoreModule } from '@ngrx/store'
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material'
 import { SplineApiModule } from 'spline-api'
 import { SplineCommonModule } from 'spline-common'
+import { SplineDataViewModule } from 'spline-common/data-view'
 import { DynamicTableCommonCellsModule, DynamicTableModule } from 'spline-common/dynamic-table'
 import { SplineLayoutModule } from 'spline-common/layout'
 import { SplineApiConfigModule } from 'spline-shared'
@@ -76,6 +77,7 @@ import { SplineDataSourceStore } from './store/reducers/base'
         EffectsModule.forFeature(effects),
         SplineDataSourcesRoutingModule,
         SplineApiConfigModule,
+        SplineDataViewModule,
         SplineApiModule,
         SplineLayoutModule,
         SplineTranslateModule.forChild({ moduleNames: ['data-sources'] }),

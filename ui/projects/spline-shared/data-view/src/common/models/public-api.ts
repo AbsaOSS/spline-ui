@@ -15,3 +15,4 @@
  */
 
 export * from './sg-node-card-data-view.models'
+export * from './sg-event-node-info.models'

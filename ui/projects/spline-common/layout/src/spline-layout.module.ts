@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { MatButtonModule } from '@angular/material/button'
+import { MatCardModule } from '@angular/material/card'
 import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
 import { MatSidenavModule } from '@angular/material/sidenav'
@@ -37,6 +38,7 @@ import { layoutDirectives } from './directives'
         MatInputModule,
         MatIconModule,
         MatTooltipModule,
+        MatCardModule,
         MatButtonModule,
         SplineCommonModule,
         SplineTranslateModule,

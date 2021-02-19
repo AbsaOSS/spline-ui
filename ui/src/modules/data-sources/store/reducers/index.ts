@@ -15,4 +15,4 @@
  */
 
 export * from './ds-overview.reducers'
-export * from './ds-overview-history.reducers'
+export * from './ds-overview-details.reducers'

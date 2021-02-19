@@ -20,41 +20,49 @@ import { Store } from '@ngrx/store'
 import { of } from 'rxjs'
 import { switchMap } from 'rxjs/internal/operators'
 import { catchError, filter, map } from 'rxjs/operators'
-import { ExecutionEventFacade } from 'spline-api'
+import { ExecutionPlanFacade, executionPlanIdToWriteOperationId } from 'spline-api'
 
-import { DsOverviewHistoryStoreActions } from '../actions'
-import fromActions = DsOverviewHistoryStoreActions
+import { DsOverviewDetailsStoreActions } from '../actions'
+import fromActions = DsOverviewDetailsStoreActions
 
 
 @Injectable()
-export class DsOverviewHistoryEffects {
+export class DsOverviewDetailsEffects {
     //
-    // [ACTION] :: FETCH HISTORY :: REQUEST
+    // [ACTION] :: INIT :: REQUEST
     //
     @Effect()
-    fetchRequest$ = this.actions$
+    init$ = this.actions$
         .pipe(
-            ofType<fromActions.FetchHistoryRequest>(fromActions.ActionTypes.FetchHistoryRequest),
+            ofType<fromActions.Init>(fromActions.ActionTypes.Init),
             switchMap(({ payload }) =>
-                this.executionEventFacade.fetchList(payload.queryParams)
+                this.executionPlanFacade.fetchOperationDetails(executionPlanIdToWriteOperationId(payload.executionEvent.executionPlanId))
                     .pipe(
                         catchError((error) => {
                             this.store.dispatch(
-                                new fromActions.FetchHistoryError({ error })
+                                new fromActions.InitError({ error })
                             )
                             return of(null)
-                        })
+                        }),
+                        map((oneOperationsDetails) => ({
+                            operationsDetails: [oneOperationsDetails],
+                            executionEvent: payload.executionEvent
+                        }))
                     )
             ),
             filter(entity => entity !== null),
             map(result => {
-                return new fromActions.FetchHistorySuccess({ executionEventsPage: result })
+                return new fromActions.InitSuccess({
+                    operationsDetails: result.operationsDetails,
+                    executionEvent: result.executionEvent,
+                })
             })
         )
 
+
     constructor(protected readonly actions$: Actions,
                 protected readonly store: Store<any>,
-                protected readonly executionEventFacade: ExecutionEventFacade) {
+                private readonly executionPlanFacade: ExecutionPlanFacade) {
 
     }
 

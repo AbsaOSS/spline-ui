@@ -37,6 +37,8 @@ export class SplineTabsNavBarComponent extends BaseComponent implements OnInit {
         )
     }
 
+    @Input() align: 'start' | 'center' | 'end' = 'start'
+
     decoratedTabs: NavTabInfo[]
 
     constructor(private readonly router: Router,

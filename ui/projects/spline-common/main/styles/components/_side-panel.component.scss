@@ -1,5 +1,5 @@
 /*!
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,6 @@ $padding-y: 24px;
         border-radius: 32px;
         border-top: 5px solid $color-orange;
         bottom: 0;
-        //box-shadow: 0 0 8px 0 $color-shadow;
         height: calc(100% - #{$top-offset} - #{$margin * 2});
         opacity: 0.5;
         overflow: hidden;
@@ -66,9 +65,10 @@ $padding-y: 24px;
     }
 
     &__close-btn {
+        line-height: 40px;
         position: absolute;
         right: $padding-x;
-        top: 0;
+        top: 12px;
         z-index: 2;
     }
 

@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-import { DsOverviewHistoryEffects } from './ds-overview-history.effects'
+import { DsOverviewDetailsEffects } from './ds-overview-details.effects'
 import { DsOverviewEffects } from './ds-overview.effects'
 
 
 export const effects: any[] = [
     DsOverviewEffects,
-    DsOverviewHistoryEffects
+    DsOverviewDetailsEffects
 ]
 
 export * from './ds-overview.effects'
-export * from './ds-overview-history.effects'
+export * from './ds-overview-details.effects'

@@ -14,13 +14,23 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
 
 
 @Component({
     selector: 'spline-fake-page-content',
     templateUrl: './spline-fake-page-content.component.html',
 })
-export class SplineFakePageContentComponent {
+export class SplineFakePageContentComponent implements OnInit {
+
+    title: string
+
+    constructor(private readonly activatedRoute: ActivatedRoute) {
+    }
+
+    ngOnInit(): void {
+        this.title = this.activatedRoute.snapshot.data['title']
+    }
 
 }

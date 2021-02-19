@@ -62,7 +62,7 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
         this.store.state$
             .pipe(
                 map(state => state.selectedNodeId),
-                skip(2),
+                skip(1),
                 takeUntil(this.destroyed$),
                 filter(nodeId => {
                     const currentNodeId = this.activatedRoute.snapshot.queryParamMap.get(this.selectedNodeQueryParamName)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,9 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
 import { Observable } from 'rxjs'
+import { filter, map, skip, take } from 'rxjs/operators'
 import { SplineTabsNavBar } from 'spline-common'
 import { BaseComponent } from 'spline-utils'
 
@@ -40,12 +42,17 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit,
 
     readonly state$: Observable<EventOverviewStore.State>
 
-    constructor(readonly store: EventOverviewStoreFacade) {
+    constructor(private readonly activatedRoute: ActivatedRoute,
+                readonly store: EventOverviewStoreFacade) {
         super()
         this.state$ = store.state$
     }
 
     ngOnInit(): void {
+
+        const executionEventId = this.activatedRoute.snapshot.params['id']
+
+        this.store.init(executionEventId)
     }
 
     ngOnDestroy(): void {

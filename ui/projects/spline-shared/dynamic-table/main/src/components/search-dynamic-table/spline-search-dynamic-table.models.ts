@@ -60,7 +60,9 @@ export namespace SplineSearchDynamicTable {
         searchParams: SearchParams | null): Params {
 
         // keep some data in query params if it differs from the DS State
-        const searchParamsString = dataSource.searchParamsToUrlString(searchParams)
+        const searchParamsString = searchParams !== null
+            ? dataSource.searchParamsToUrlString(searchParams)
+            : null
 
         return RouterNavigation.setQueryParam(
             queryParams,

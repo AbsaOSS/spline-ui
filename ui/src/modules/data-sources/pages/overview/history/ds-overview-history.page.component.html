@@ -14,17 +14,49 @@
   ~ limitations under the License.
   -->
 
-<div class="container">
+<div *ngIf="state$ | async as state" class="container">
 
-    <h1 class="page-title my-4">
+    <h2 class="text-center mt-4">
         {{'DATA_SOURCES.HISTORY__TITLE' | translate}}
-    </h1>
+    </h2>
 
     <div class="pb-3">
         <spline-search-dynamic-table
+                (cellEvent$)="onCellEvent($event)"
                 *ngIf="(dataSourceInfo$ | async)"
                 [dataMap]="dataMap"
-                [dataSource]="dataSource">
+                [dataSource]="dataSource"
+                [options]="{isSticky: true}">
+
+            <div class="d-flex">
+
+                <spline-date-filter (valueChanged$)="onDateFilterChanged($event)"
+                                    *ngIf="!!state.dateRangeFilter?.bounds"
+                                    [maxDate]="state.dateRangeFilter.bounds?.dateTo"
+                                    [minDate]="state.dateRangeFilter.bounds?.dateFrom"
+                                    [showIcon]="false"
+                                    [value]="state.dateRangeFilter?.value"
+                                    label="Modified At">
+
+                </spline-date-filter>
+            </div>
+
         </spline-search-dynamic-table>
+
     </div>
+
 </div>
+
+<spline-side-dialog-container (closed$)="onSideDialogClosed()"
+                              [visible]="state.selectedExecutionEvent !== null">
+
+    <div class="spline-side-panel__header-content">
+        <h3 class="text-center">Data Source State Details</h3>
+    </div>
+
+    <data-source-details *ngIf="state.selectedExecutionEvent !== null"
+                         [dataSourceInfo]="(dataSourceInfo$ | async)"
+                         [executionEvent]="state.selectedExecutionEvent">
+    </data-source-details>
+
+</spline-side-dialog-container>

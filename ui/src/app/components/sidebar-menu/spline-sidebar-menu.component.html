@@ -19,7 +19,7 @@
     <mat-nav-list>
         <a *ngFor="let item of menuItems"
            [class.active]="item?.isActive"
-           [matTooltipDisabled]="showOnlyIcons"
+           [matTooltipDisabled]="!showOnlyIcons"
            [matTooltipPosition]="'right'"
            mat-list-item
            [matTooltip]="item.label | translate"

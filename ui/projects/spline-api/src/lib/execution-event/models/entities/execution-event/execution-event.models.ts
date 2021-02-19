@@ -31,15 +31,15 @@ export enum ExecutionEventField {
 }
 
 export type ExecutionEventDto = {
-    [ExecutionEventField.append]: boolean
-    [ExecutionEventField.applicationName]: string
-    [ExecutionEventField.applicationId]: string
-    [ExecutionEventField.dataSourceType]: string
-    [ExecutionEventField.dataSourceUri]: string
-    [ExecutionEventField.executionEventId]: string
-    [ExecutionEventField.executionPlanId]: string
-    [ExecutionEventField.frameworkName]: string
-    [ExecutionEventField.timestamp]: number
+    append: boolean
+    applicationName: string
+    applicationId: string
+    dataSourceType: string
+    dataSourceUri: string
+    executionEventId: string
+    executionPlanId: string
+    frameworkName: string
+    timestamp: number
 }
 
 export type ExecutionEvent =

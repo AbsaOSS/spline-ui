@@ -15,9 +15,11 @@
  */
 
 import { ExecutionEvent, ExecutionEventField } from 'spline-api'
-import { DtCellDateTime, DtCellLink, DynamicTableDataMap } from 'spline-common/dynamic-table'
+import { CommonDtCellValueControlEvent, DtCellLink, DtLayoutBuilder, DtLayoutSize, DynamicTableDataMap } from 'spline-common/dynamic-table'
 import { SplineDataSourceSharedDtSchema } from 'spline-shared/dynamic-table'
 import { EventsRouting } from 'spline-shared/events'
+import { DateTimeHelpers } from 'spline-utils'
+import LinkStyle = DtCellLink.LinkStyle
 
 
 export namespace DsStateHistoryDtSchema {
@@ -31,8 +33,49 @@ export namespace DsStateHistoryDtSchema {
         timestamp = ExecutionEventField.timestamp,
     }
 
+    export enum CellEvent {
+        OpenDsStateDetails = 'OpenDsStateDetails'
+    }
+
+    export class OpenDsStateDetailsEvent extends CommonDtCellValueControlEvent<{ id: string }> {
+        readonly type: CellEvent.OpenDsStateDetails
+    }
+
     export function getSchema(): DynamicTableDataMap<Column> {
         return [
+            {
+                ...DtCellLink.getColSchema(
+                    (rowData: ExecutionEvent) => ({
+                        title: DateTimeHelpers.toString(rowData.executedAt, DateTimeHelpers.FULL_DATE),
+                        emitCellEvent: (currentRowData: ExecutionEvent) =>
+                            new OpenDsStateDetailsEvent({
+                                id: currentRowData.dataSourceInfo.id
+                            }),
+                        description: DateTimeHelpers.toString(rowData.executedAt, DateTimeHelpers.FULL_TIME),
+                    }),
+                    {
+                        style: LinkStyle.Main
+                    }
+                ),
+                id: Column.timestamp,
+                header: 'DATA_SOURCES.DS_STATE_HISTORY__COL__TIMESTAMP',
+                isSortable: true,
+                layout: (new DtLayoutBuilder)
+                    .alignCenter()
+                    .setWidth('160px')
+                    .toLayout()
+            },
+            {
+                ...SplineDataSourceSharedDtSchema.getWriteModeColSchema(
+                    (rowData: ExecutionEvent) => rowData.writeMode
+                ),
+                id: Column.writeMode,
+                header: 'DATA_SOURCES.DS_STATE_HISTORY__COL__WRITE_MODE',
+                isSortable: true,
+                layout: (new DtLayoutBuilder(SplineDataSourceSharedDtSchema.getWriteModeDefaultLayout()))
+                    .setCSSClass([])
+                    .toLayout()
+            },
             {
                 ...DtCellLink.getColSchema(
                     (rowData: ExecutionEvent) => ({
@@ -54,28 +97,10 @@ export namespace DsStateHistoryDtSchema {
                 ),
                 id: Column.executionPlanId,
                 header: 'DATA_SOURCES.DS_STATE_HISTORY__COL__EXECUTION_PLAN',
+                layout: (new DtLayoutBuilder())
+                    .visibleAfter(DtLayoutSize.lg)
+                    .toLayout(),
                 isSortable: true,
-            },
-            {
-                ...SplineDataSourceSharedDtSchema.getWriteModeColSchema(
-                    (rowData: ExecutionEvent) => rowData.writeMode
-                ),
-                id: Column.writeMode,
-                header: 'DATA_SOURCES.DS_STATE_HISTORY__COL__WRITE_MODE',
-                isSortable: true
-            },
-            {
-                ...DtCellDateTime.getDefaultColSchema(),
-                id: Column.timestamp,
-                header: 'DATA_SOURCES.DS_STATE_HISTORY__COL__TIMESTAMP',
-                isSortable: true,
-                layout: {
-                    styles: {
-                        justifyContent: 'center',
-                        maxWidth: '160px',
-                        textAlign: 'center'
-                    }
-                }
             },
         ]
     }

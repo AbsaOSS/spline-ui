@@ -26,17 +26,45 @@
 
     <div *ngIf="!!state.dataSourceInfo" class="e2e-container">
 
-        <!-- HEADER -->
-        <sl-content-header>
-            <data-source-header [dataSourceInfo]="state.dataSourceInfo"
-                                [navTabs]="headerNavTabs">
-            </data-source-header>
-        </sl-content-header>
-        <!-- ./HEADER -->
-
+        <!-- BREADCRUMBS -->
+        <div>
+            <div class="container">
+                <!-- TODO: replace it with reusable component after PoC approved -->
+                <div class="spline-breadcrumb">
+                    <div class="spline-breadcrumb__item">
+                        Data Source
+                    </div>
+                    <div class="spline-breadcrumb__delimiter">
+                        <mat-icon>chevron_right</mat-icon>
+                    </div>
+                    <div class="spline-breadcrumb__item ">
+                        {{ state.dataSourceInfo.name }}
+                    </div>
+                    <div class="spline-breadcrumb__delimiter">
+                        <mat-icon>chevron_right</mat-icon>
+                    </div>
+                    <div class="spline-breadcrumb__item">
+                        History
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ./BREADCRUMBS -->
 
         <div class="e2e-container__body-with-scroll">
+
+            <!-- HEADER -->
+            <div class="header-container">
+                <div class="container">
+                    <data-source-header [dataSourceInfo]="state.dataSourceInfo"
+                                        [navTabs]="headerNavTabs">
+                    </data-source-header>
+                </div>
+            </div>
+            <!-- ./HEADER -->
+
             <router-outlet></router-outlet>
+
         </div>
     </div>
 </ng-container>

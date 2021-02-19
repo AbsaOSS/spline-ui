@@ -15,12 +15,11 @@
   -->
 
 <ng-container *ngIf="state$ | async as state">
-    <button mat-button [matMenuTriggerFor]="popover">
-        <mat-icon class="mr-2">schedule</mat-icon>
-        <span>
-            {{ state.valueString?.length ? state.valueString : (emptyValueString | translate) }}
-        </span>
-    </button>
+
+    <spline-inline-filter [icon]="icon" [matMenuTriggerFor]="popover"
+                          [label]="label">
+        {{ state.valueString?.length ? state.valueString : (emptyValueString | translate) }}
+    </spline-inline-filter>
 
     <mat-menu #popover="matMenu" class="spline-date-filter-menu">
         <ng-template matMenuContent>

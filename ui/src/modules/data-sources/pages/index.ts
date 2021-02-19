@@ -22,7 +22,7 @@ import { DsOverviewHistoryPageComponent } from './overview/history/ds-overview-h
 export const pageComponents: any[] = [
     DataSourcesListPageComponent,
     DataSourceOverviewPageComponent,
-    DsOverviewHistoryPageComponent
+    DsOverviewHistoryPageComponent,
 ]
 
 export * from './list/data-sources-list.page.component'

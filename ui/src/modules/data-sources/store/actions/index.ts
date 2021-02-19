@@ -15,4 +15,4 @@
  */
 
 export * from './ds-overview.actions'
-export * from './ds-overview-history.actions'
+export * from './ds-overview-details.actions'

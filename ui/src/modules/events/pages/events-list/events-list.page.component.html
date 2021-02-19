@@ -19,11 +19,13 @@
         {{'EVENTS.EVENTS_LIST_PAGE__TITLE' | translate}}
     </h1>
 
-    <spline-search-dynamic-table
-            [dataMap]="dataMap"
-            [dataSource]="dataSource">
+    <spline-search-dynamic-table [showPaginator]="true"
+                                 [dataMap]="dataMap"
+                                 [dataSource]="dataSource">
 
         <spline-date-filter *ngIf="!!state.dateRangeFilter?.bounds"
+                            label="Executed At"
+                            [showIcon]="false"
                             [maxDate]="state.dateRangeFilter.bounds?.dateTo"
                             [minDate]="state.dateRangeFilter.bounds?.dateFrom"
                             [value]="state.dateRangeFilter?.value"

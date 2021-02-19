@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-import { SplineDataSourceInfoResolver } from './spline-data-source-info.resolver'
-import { DsOverviewStoreFacade } from './store'
-import { DsOverviewHistoryStoreFacade } from './store/ds-overview-history.store.facade'
+import { SplineDataSourceInfoResolver } from './resolvers'
+import { DsOverviewDetailsStoreFacade, DsOverviewStoreFacade } from './store'
 
 
-export * from './spline-data-source-info.resolver'
+export * from './resolvers'
 export * from './store'
 
 export const services = [
     DsOverviewStoreFacade,
     SplineDataSourceInfoResolver,
-    DsOverviewHistoryStoreFacade
+    DsOverviewDetailsStoreFacade,
 ]

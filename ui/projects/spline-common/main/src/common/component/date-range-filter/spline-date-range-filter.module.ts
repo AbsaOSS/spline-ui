@@ -22,6 +22,8 @@ import { MatMenuModule } from '@angular/material/menu'
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material'
 import { SplineTranslateModule } from 'spline-utils/translate'
 
+import { SplineInlineFilterModule } from '../inline-fitler'
+
 import { SplineDateRangeFilterComponent } from './spline-date-range-filter.component'
 
 
@@ -35,7 +37,8 @@ import { SplineDateRangeFilterComponent } from './spline-date-range-filter.compo
         MatIconModule,
         MatButtonModule,
         NgxDaterangepickerMd,
-        SplineTranslateModule.forChild({})
+        SplineTranslateModule.forChild({}),
+        SplineInlineFilterModule
     ],
     exports: [
         SplineDateRangeFilterComponent
