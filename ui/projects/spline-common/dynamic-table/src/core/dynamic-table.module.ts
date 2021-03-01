@@ -21,7 +21,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
 import { RouterModule } from '@angular/router'
-import { SplineLongTextModule, SplineSortHeaderModule } from 'spline-common'
+import { SplineLongTextModule, SplineSortHeaderModule, SplineVirtualScrollModule } from 'spline-common'
 import { SplineUtilsCommonModule } from 'spline-utils'
 import { SplineTranslateModule } from 'spline-utils/translate'
 
@@ -41,6 +41,7 @@ import * as fromServices from './services'
         SplineLongTextModule,
         SplineTranslateModule.forChild({}),
         SplineSortHeaderModule,
+        SplineVirtualScrollModule,
     ],
     declarations: [
         ...dynamicTableComponents,

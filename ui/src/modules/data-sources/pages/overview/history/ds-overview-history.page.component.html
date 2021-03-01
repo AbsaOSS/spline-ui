@@ -22,14 +22,12 @@
 
     <div class="pb-3">
         <spline-search-dynamic-table
-                (cellEvent$)="onCellEvent($event)"
                 *ngIf="(dataSourceInfo$ | async)"
+                (cellEvent$)="onCellEvent($event)"
                 [dataMap]="dataMap"
-                [dataSource]="dataSource"
-                [options]="{isSticky: true}">
+                [dataSource]="dataSource">
 
             <div class="d-flex">
-
                 <spline-date-filter (valueChanged$)="onDateFilterChanged($event)"
                                     *ngIf="!!state.dateRangeFilter?.bounds"
                                     [maxDate]="state.dateRangeFilter.bounds?.dateTo"
@@ -37,7 +35,6 @@
                                     [showIcon]="false"
                                     [value]="state.dateRangeFilter?.value"
                                     label="Modified At">
-
                 </spline-date-filter>
             </div>
 

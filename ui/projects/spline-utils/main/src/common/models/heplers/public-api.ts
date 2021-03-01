@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+export * from './dom-helpers'
 export * from './date-time-helpers'
 export * from './generic-types.models'
 export * from './string-helpers'

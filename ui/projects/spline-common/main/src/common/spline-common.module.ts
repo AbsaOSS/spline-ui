@@ -23,7 +23,8 @@ import {
     SplineDataRecordModule,
     SplineDateRangeFilterModule,
     SplineDividerModule,
-    SplineIconModule, SplineInlineFilterModule,
+    SplineIconModule,
+    SplineInlineFilterModule,
     SplineLabelModule,
     SplineLoaderModule,
     SplineLongTextModule,
@@ -32,6 +33,7 @@ import {
     SplineSidePanelModule,
     SplineSortHeaderModule,
     SplineTabsNavBarModule,
+    SplineVirtualScrollModule,
 } from './component'
 
 
@@ -50,7 +52,8 @@ import {
         SplineSearchBoxModule,
         SplineSidePanelModule,
         SplineSortHeaderModule,
-        SplineInlineFilterModule
+        SplineInlineFilterModule,
+        SplineVirtualScrollModule,
     ],
     declarations: [
     ],
@@ -69,7 +72,8 @@ import {
         SplineSortHeaderModule,
         SplineTabsNavBarModule,
         SplineDateRangeFilterModule,
-        SplineInlineFilterModule
+        SplineInlineFilterModule,
+        SplineVirtualScrollModule,
     ],
 })
 export class SplineCommonModule {

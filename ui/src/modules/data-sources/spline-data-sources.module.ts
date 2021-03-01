@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import { ScrollingModule } from '@angular/cdk/scrolling'
 import { CommonModule } from '@angular/common'
 import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
@@ -85,7 +86,8 @@ import { SplineDataSourceStore } from './store/reducers/base'
         SplineEventsSharedModule,
         DynamicTableModule,
         DynamicTableCommonCellsModule,
-        SplineDynamicTableSharedModule
+        SplineDynamicTableSharedModule,
+        ScrollingModule
     ],
     exports: [
         ...fromPages.pageComponents,

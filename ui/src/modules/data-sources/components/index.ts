@@ -18,11 +18,13 @@
 
 import { DataSourceDetailsComponent } from './data-source-details/data-source-details.component'
 import { DataSourceHeaderComponent } from './data-source-header/data-source-header.component'
+import { StickyContainerComponent } from './sticky-container/sticky-container.component'
 
 
 export const components: any[] = [
     DataSourceHeaderComponent,
-    DataSourceDetailsComponent
+    DataSourceDetailsComponent,
+    StickyContainerComponent
 ]
 
 export * from './data-source-details/data-source-details.component'

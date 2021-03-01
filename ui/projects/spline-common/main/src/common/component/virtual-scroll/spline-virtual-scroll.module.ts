@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,4 +14,24 @@
  * limitations under the License.
  */
 
-@import './card-header.component';
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
+import { MatIconModule } from '@angular/material/icon'
+
+import { SplineVirtualScrollStickyContainerComponent } from './components'
+
+
+@NgModule({
+    declarations: [
+        SplineVirtualScrollStickyContainerComponent,
+    ],
+    imports: [
+        CommonModule,
+        MatIconModule,
+    ],
+    exports: [
+        SplineVirtualScrollStickyContainerComponent
+    ],
+})
+export class SplineVirtualScrollModule {
+}

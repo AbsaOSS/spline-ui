@@ -68,7 +68,7 @@ export type DtCellCustomEvent<T extends SplineRecord = unknown> = {
 
 export function getDefaultDtOptions(): DynamicTableOptions {
     return {
-        isSticky: false
+        isSticky: false,
     }
 }
 

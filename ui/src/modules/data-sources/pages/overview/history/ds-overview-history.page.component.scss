@@ -15,3 +15,31 @@
  */
 
 @import 'vars';
+
+.example-viewport {
+    border: 1px solid #000;
+    bottom: 0;
+    height: 100%;
+    position: sticky;
+    top: 40px;
+    width: 100%;
+}
+
+.example-item {
+    height: 50px;
+}
+
+.virtual-scroll-sticky-container {
+    height: 100vh;
+    overflow: hidden;
+    position: sticky;
+    top: 0;
+
+    &__inner {
+
+    }
+
+    &__virtual-scroll {
+        height: 100%;
+    }
+}

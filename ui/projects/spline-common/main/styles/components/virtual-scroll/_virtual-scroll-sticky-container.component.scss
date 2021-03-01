@@ -14,4 +14,25 @@
  * limitations under the License.
  */
 
-@import './card-header.component';
+.spline-virtual-scroll-sticky-container {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+
+    &__scroll-spacer {
+        height: 100px;
+    }
+}
+
+spline-virtual-scroll-sticky-container {
+    cdk-virtual-scroll-viewport {
+        height: 500px;
+        overflow: hidden;
+        position: sticky;
+        top: 0;
+    }
+}
+
