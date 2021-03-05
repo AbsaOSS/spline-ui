@@ -23,6 +23,7 @@ $icon-color: $color-luxury;
 .entity-header {
     align-items: center;
     display: flex;
+    overflow: hidden;
     width: 100%;
 
     &__icon {
@@ -36,7 +37,6 @@ $icon-color: $color-luxury;
 
     &__icon-border {
         align-items: center;
-        //border: 3px solid $icon-color;
         border-radius: 1rem;
         display: flex;
         justify-content: center;
@@ -57,22 +57,32 @@ $icon-color: $color-luxury;
 
     &__info-container {
         display: flex;
-        margin-top: 0.25rem;
+        flex-wrap: wrap;
+        margin: 0.25rem -1rem 0;
     }
 
     &__info-container > * {
         padding: 0 16px;
 
         &:first-child {
-            padding-left: 0;
         }
 
         &:last-child {
-            padding-right: 0;
         }
     }
 
     .spline-data-record__label {
         font-size: 10px;
     }
+
+    spline-data-record {
+        min-width: 150px;
+
+        &__value {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
 }
