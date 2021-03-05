@@ -14,17 +14,7 @@
  * limitations under the License.
  */
 
-import {
-    AfterContentInit,
-    ChangeDetectorRef,
-    Component,
-    ContentChildren,
-    EventEmitter,
-    Input,
-    Output,
-    QueryList,
-    TemplateRef
-} from '@angular/core'
+import { AfterContentInit, Component, ContentChildren, EventEmitter, Input, Output, QueryList, TemplateRef } from '@angular/core'
 
 import { SplineLayoutSectionDirective } from '../../directives'
 import { SplineLayoutSection } from '../../models'
@@ -41,6 +31,7 @@ export class SplineLayoutCommonComponent implements AfterContentInit {
     @Input() isEmbeddedMode = false
     @Input() isSideNavExpanded = false
     @Input() appVersion: string
+    @Input() noHeader = true
 
     @Output() sidenavExpanded$ = new EventEmitter<{ isExpanded: boolean }>()
 
@@ -48,8 +39,6 @@ export class SplineLayoutCommonComponent implements AfterContentInit {
 
     readonly SectionName = SplineLayoutSection.SectionName
 
-    constructor(private readonly changeDetectorRef: ChangeDetectorRef) {
-    }
 
     ngAfterContentInit(): void {
         // calculate templates collection

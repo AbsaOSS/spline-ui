@@ -41,3 +41,32 @@ $section-width: 600px;
     }
 
 }
+
+.sl-sidebar-logo {
+    align-items: center;
+    display: flex;
+    padding-bottom: 1.5rem;
+
+    &--only-log {
+
+    }
+
+    &__img {
+        margin: 0 0 0 0.5rem;
+        width: 42px;
+    }
+
+    &__text {
+        align-items: center;
+        color: $color-grey-light;
+        display: flex;
+    }
+
+    &__title {
+        color: $color-grey-light;
+        font-size: 36px;
+        line-height: 40px;
+        padding: 0 1rem;
+    }
+
+}

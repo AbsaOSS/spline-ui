@@ -155,6 +155,12 @@ $spline-layout-settings-default: (
                 border-radius: 0;
             }
         }
+
+        &--no-header {
+            .mat-sidenav-container {
+                top: 1rem;
+            }
+        }
     }
 }
 

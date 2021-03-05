@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2020 ABSA Group Limited
+  ~ Copyright 2021 ABSA Group Limited
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -13,9 +13,12 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<div class="spline-layout-common" [class.spline-layout-common--embedded]="isEmbeddedMode">
+<div class="spline-layout-common"
+     [class.spline-layout-common--embedded]="isEmbeddedMode"
+     [class.spline-layout-common--no-header]="noHeader">
+
     <!-- HEADER -->
-    <div class="sl-header" *ngIf="!isEmbeddedMode">
+    <div class="sl-header" *ngIf="!isEmbeddedMode && !noHeader">
         <div class="sl-header__container">
             <div class="pr-5">
                 <spline-layout-header-logo></spline-layout-header-logo>
@@ -41,6 +44,11 @@
                      [class.sl-sidenav--expanded]="isSideNavExpanded">
 
             <div class="sl-sidenav__inner">
+
+                <sl-sidebar-logo *ngIf="noHeader"
+                                 [showOnlyLogo]="!isSideNavExpanded">
+                </sl-sidebar-logo>
+
                 <div class="flex-grow-1">
                     <!-- SECTION :: SIDEBAR -->
                     <ng-template *ngIf="sectionsTemplatesCollection[SectionName.sidebar]"

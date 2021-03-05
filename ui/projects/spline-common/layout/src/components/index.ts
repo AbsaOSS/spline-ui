@@ -20,6 +20,7 @@ import { SlEntityHeaderComponent } from './entity-header/sl-entity-header.compon
 import { SplineFakePageContentComponent } from './fake-page-content/spline-fake-page-content.component'
 import { SplineLayoutHeaderLogoComponent } from './header-logo/spline-layout-header-logo.component'
 import { SplineLayoutCommonComponent } from './layout/spline-layout-common.component'
+import { SlSidebarLogoComponent } from './sidebar-logo/sl-sidebar-logo.component'
 
 
 export const layoutComponents: any[] = [
@@ -28,7 +29,8 @@ export const layoutComponents: any[] = [
     SlEntityHeaderComponent,
     SlContentSidebarDialogComponent,
     SplineFakePageContentComponent,
-    SlContentHeaderComponent
+    SlContentHeaderComponent,
+    SlSidebarLogoComponent
 ]
 
 export * from './public-api'
