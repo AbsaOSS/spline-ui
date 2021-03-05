@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,37 +14,4 @@
  * limitations under the License.
  */
 
-@import 'mixins';
-@import 'vars';
-
-.spline-graph {
-    &__container {
-        bottom: 0;
-        height: 100%;
-        left: 0;
-        position: absolute;
-        top: 0;
-        width: 100%;
-
-        .edge path {
-            stroke: $color-grey-2;
-        }
-
-        .arrow path {
-            fill: $color-grey-2;
-        }
-
-    }
-}
-
-.spline-graph__node-container {
-    background: none;
-    border-radius: 8px;
-    overflow: visible;
-    position: relative;
-
-    &.spline-graph__node--selected {
-
-    }
-}
-
+export * from './full-screen-control/sg-full-screen-control.directive'

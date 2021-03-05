@@ -113,6 +113,10 @@ export class SgContainerComponent extends BaseLocalStateComponent<SgContainer.St
         })
     }
 
+    refresh(): void {
+        this.graphData = {... this.graphData}
+    }
+
     focusNode(nodeId: string): void {
         this.focusNode$.next(nodeId)
     }

@@ -43,6 +43,8 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
 
     readonly selectedNodeQueryParamName: string = 'selectedNodeId'
 
+    isGraphFullScreen = false
+
     constructor(private readonly activatedRoute: ActivatedRoute,
                 private readonly router: Router,
                 readonly store: EventOverviewStoreFacade) {

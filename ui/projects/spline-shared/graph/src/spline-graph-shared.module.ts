@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import { SplineGraphModule } from 'spline-common/graph'
 import { SplineTranslateModule } from 'spline-utils/translate'
 
 import { sgSharedComponents } from './components'
+import { sgSharedDirectives } from './directives'
 
 
 @NgModule({
@@ -43,9 +44,11 @@ import { sgSharedComponents } from './components'
     ],
     declarations: [
         ...sgSharedComponents,
+        ...sgSharedDirectives,
     ],
     exports: [
         ...sgSharedComponents,
+        ...sgSharedDirectives
     ],
 })
 export class SplineGraphSharedModule {

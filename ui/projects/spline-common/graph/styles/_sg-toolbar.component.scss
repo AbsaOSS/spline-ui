@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@import 'vars';
+
 
 .sg-toolbar {
     min-width: 350px;
@@ -40,5 +42,10 @@
             bottom: 1rem;
             right: 1rem;
         }
+    }
+
+    &__icon-button {
+        //background: $color-grey-light;
+        color: $color-grey-dark-75;
     }
 }

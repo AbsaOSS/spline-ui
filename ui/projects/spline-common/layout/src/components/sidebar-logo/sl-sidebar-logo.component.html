@@ -17,7 +17,13 @@
 <a routerLink="/">
     <div class="sl-sidebar-logo" [class.sl-sidebar-logo--only-logo]="showOnlyLogo">
         <div>
-            <img class="sl-sidebar-logo__img" src="./assets/images/logo.png"/>
+            <img class="sl-sidebar-logo__img"
+                 src="./assets/images/logo.png"
+                 matTooltip="Spline"
+                 alt="Spline"
+                 matTooltipPosition="right"
+                 [matTooltipDisabled]="!showOnlyLogo"
+            />
         </div>
         <div class="sl-sidebar-logo__text" *ngIf="!showOnlyLogo">
             <div class="sl-sidebar-logo__title">

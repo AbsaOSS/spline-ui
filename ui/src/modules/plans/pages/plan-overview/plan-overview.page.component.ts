@@ -60,6 +60,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
     ]
 
     eventId: string
+    isGraphFullScreen = false
 
     constructor(private readonly activatedRoute: ActivatedRoute,
                 private readonly router: Router,

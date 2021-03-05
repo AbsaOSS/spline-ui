@@ -86,3 +86,11 @@ $icon-color: $color-luxury;
     }
 
 }
+
+@media screen and (max-width: 992px) {
+    .entity-header {
+        &__icon-border {
+            display: none;
+        }
+    }
+}

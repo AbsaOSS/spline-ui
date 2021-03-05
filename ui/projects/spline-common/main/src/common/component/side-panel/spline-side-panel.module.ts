@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,8 @@ import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
+import { MatTooltipModule } from '@angular/material/tooltip'
+import { SplineTranslateModule } from 'spline-utils/translate'
 
 import * as fromComponents from './components'
 
@@ -27,6 +29,8 @@ import * as fromComponents from './components'
         CommonModule,
         MatIconModule,
         MatButtonModule,
+        MatTooltipModule,
+        SplineTranslateModule,
     ],
     declarations: [
         ...fromComponents.sideDialogComponents

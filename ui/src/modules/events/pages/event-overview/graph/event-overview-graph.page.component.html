@@ -72,12 +72,22 @@
                               [graphData]="state.graphData"
                               [selectedNodeId]="state.selectedNodeId"
                               [graphNodeView]="state.graphNodeView"
-                              [targetNodeId]="state.targetNodeId">
+                              [targetNodeId]="state.targetNodeId"
+                              #container>
 
                     <!-- TOOLBAR -->
-                    <sg-toolbar *ngIf="state.graphHasMoreDepth" position="top-right">
+                    <sg-toolbar position="top-right">
 
-                        <div class="position-relative">
+                        <div class="text-right mb-3">
+                            <button mat-button mat-icon-button class="sg-toolbar__icon-button"
+                                    sgFullScreenControl
+                                    [matTooltip]="(!isGraphFullScreen ? 'SHARED.SG_MAXIMIZE' : 'SHARED.SG_MINIMIZE') | translate"
+                                    [(isFullScreenMode)]="isGraphFullScreen">
+                                <mat-icon>{{ isGraphFullScreen ? 'close_fullscreen' : 'open_in_full' }} </mat-icon>
+                            </button>
+                        </div>
+
+                        <div class="position-relative" *ngIf="state.graphHasMoreDepth">
 
                             <!-- LOADER -->
                             <spline-loader *ngIf="state.graphLoadingProcessing.processing"

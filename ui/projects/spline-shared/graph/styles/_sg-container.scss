@@ -1,5 +1,5 @@
 /*!
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,36 @@
 
 .sg-container {
     &__graph-view-control {
-        background: $color-grey-light;
+        background: $color-grey--25;
         border-radius: 20px;
         display: inline-block;
         padding: 8px 16px;
+    }
+}
+
+
+body.body-with-full-screen-sg-container {
+    .spline-graph__container {
+        background: $color-grey-light-2;
+        bottom: 0;
+        height: 100%;
+        left: 0;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 100;
+    }
+
+    .mat-drawer.mat-drawer-side {
+        display: none;
+    }
+
+    .sl-content-sidebar-dialog {
+        position: fixed;
+        z-index: 101;
+    }
+
+    .sl-content-sidebar {
+        position: static;
     }
 }

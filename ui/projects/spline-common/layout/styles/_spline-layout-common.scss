@@ -69,7 +69,6 @@ $spline-layout-settings-default: (
 
         .mat-drawer {
             background: map-get($settings, sidebar-bg-color);
-            border-radius: $container-border-radius 0 0;
             border-style: none;
             padding-top: 1rem;
             width: map-get($settings, sidebar-width);

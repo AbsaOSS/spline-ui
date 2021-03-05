@@ -80,10 +80,6 @@ export class DsOverviewHistoryPageComponent extends BaseLocalStateComponent<DsOv
                 this.dataSource.updateAndApplyDefaultSearchParams({
                     filter: {
                         dataSourceUri: dataSourceInfo.uri
-                    },
-                    pager: {
-                        ...this.dataSource.searchParams.pager,
-                        limit: 20
                     }
                 })
             })
