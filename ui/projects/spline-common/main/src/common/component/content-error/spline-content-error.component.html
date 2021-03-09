@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2020 ABSA Group Limited
+  ~ Copyright 2021 ABSA Group Limited
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -17,8 +17,19 @@
      [class.spline-content-error--floating]="floating">
 
     <mat-icon>error_outline</mat-icon>
-    <h3 class="message">
-        {{ 'COMMON.SERVER_COMMUNICATION_ERROR_MESSAGE' | translate }}
-    </h3>
+
+    <h2 class="spline-content-error__message">
+        {{ 'COMMON.SERVER_COMMUNICATION_ERROR__MESSAGE' | translate }}
+    </h2>
+
+    <h4 *ngIf="statusCode" class="spline-content-error__details">
+        <span class="spline-content-error__details-label">{{ 'COMMON.SERVER_COMMUNICATION_ERROR__STATUS_CODE' | translate }}</span>
+        {{ statusCode }}
+    </h4>
+
+    <h4 *ngIf="errorId" class="spline-content-error__details">
+        <span class="spline-content-error__details-label">{{ 'COMMON.SERVER_COMMUNICATION_ERROR__ID' | translate }}</span>
+        {{ errorId }}
+    </h4>
 
 </div>

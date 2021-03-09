@@ -24,7 +24,10 @@
         <!-- ./LOADER -->
 
         <!-- ERROR -->
-        <spline-content-error *ngIf="state.loadingProcessing.processingError"></spline-content-error>
+        <spline-content-error *ngIf="state.loadingProcessing.processingError"
+                              [statusCode]="state.loadingProcessing.processingError?.status"
+                              [errorId]="state.loadingProcessing.processingError?.error?.errorId">
+        </spline-content-error>
         <!-- ./ERROR -->
 
 

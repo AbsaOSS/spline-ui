@@ -1,5 +1,5 @@
 /*!
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,8 +35,21 @@
         width: 72px;
     }
 
-    .message {
+    &__message {
         color: $color-pink;
+        font-size: 32px;
+    }
+
+    &__details {
+        color: $color-grey-dark;
+        font-size: 14px;
+
+        &-label {
+            color: $color-grey-dark-75;
+            display: block;
+            font-size: 9px;
+            text-transform: uppercase;
+        }
     }
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,4 +23,6 @@ import { Component, Input } from '@angular/core'
 })
 export class SplineContentErrorComponent {
     @Input() floating = true
+    @Input() errorId: string
+    @Input() statusCode: 500 | 404 | 403 | number
 }

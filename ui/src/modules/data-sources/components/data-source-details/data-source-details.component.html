@@ -21,7 +21,10 @@
     <!-- ./LOADER -->
 
     <!-- ERROR -->
-    <spline-content-error *ngIf="state.loading.processingError"></spline-content-error>
+    <spline-content-error *ngIf="state.loading.processingError"
+                          [statusCode]="state.loading.processingError?.status"
+                          [errorId]="state.loading.processingError?.error?.errorId">
+    </spline-content-error>
     <!-- ./ERROR -->
 
     <div *ngIf="!state.loading.processing && state.loading.processingError === null">

@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2020 ABSA Group Limited
+  ~ Copyright 2021 ABSA Group Limited
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -21,7 +21,10 @@
     <!-- ./LOADER -->
 
     <!-- ERROR -->
-    <spline-content-error *ngIf="loadingProcessing.processingError"></spline-content-error>
+    <spline-content-error *ngIf="loadingProcessing.processingError"
+                          [statusCode]="loadingProcessing.processingError?.status"
+                          [errorId]="loadingProcessing.processingError?.error?.errorId">
+    </spline-content-error>
     <!-- ./ERROR -->
 
     <ng-container *ngIf="state$ | async as state">
