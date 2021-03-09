@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-@import './header-logo.component';
-@import './sl-content-sidebar';
-@import './sl-content-header';
-@import './sl-content-sidebar-dialog';
-@import './spline-layout-common';
-@import './sl-entity-header';
-@import './sl-breadcrumbs.component';
-@import './fake-page-message.component';
 
-@include spline-layout();
+export namespace SlBreadcrumbs {
+
+    export type BreadcrumbItem = {
+        label: string
+    }
+
+    export type Breadcrumbs = BreadcrumbItem[]
+
+}

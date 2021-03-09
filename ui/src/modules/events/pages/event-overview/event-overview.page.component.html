@@ -34,26 +34,15 @@
             <div class="header-container">
                 <div class="container">
 
-                    <!-- TODO: replace it with reusable component after PoC approved -->
-                    <div class="spline-breadcrumb">
-                        <div class="spline-breadcrumb__item">
-                            Execution Event
-                        </div>
-                        <div class="spline-breadcrumb__delimiter">
-                            <mat-icon>chevron_right</mat-icon>
-                        </div>
-                        <div class="spline-breadcrumb__item ">
-                            {{ state.eventInfo.name }}
-                        </div>
-                        <div class="spline-breadcrumb__delimiter">
-                            <mat-icon>chevron_right</mat-icon>
-                        </div>
-                        <div class="spline-breadcrumb__item">
-                            Graph View
-                        </div>
-                    </div>
+                    <!-- BREADCRUMBS -->
+                    <sl-breadcrumbs *ngIf="breadcrumbs$ | async as breadcrumbs"
+                                    [breadcrumbs]="breadcrumbs">
+                    </sl-breadcrumbs>
+                    <!-- ./BREADCRUMBS -->
 
+                    <!-- EVENT HEADER -->
                     <event-header [eventInfo]="state.eventInfo"></event-header>
+                    <!-- ./EVENT HEADER -->
 
                 </div>
             </div>

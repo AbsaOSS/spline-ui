@@ -29,24 +29,13 @@
         <!-- HEADER -->
         <div class="header-container">
             <div class="container">
-                <!-- TODO: replace it with reusable component after PoC approved -->
-                <div class="spline-breadcrumb">
-                    <div class="spline-breadcrumb__item">
-                        Execution Plan
-                    </div>
-                    <div class="spline-breadcrumb__delimiter">
-                        <mat-icon>chevron_right</mat-icon>
-                    </div>
-                    <div class="spline-breadcrumb__item ">
-                        {{ state.executionPlan?.extraInfo?.appName ? state.executionPlan?.extraInfo?.appName : 'PLANS.PLAN_INFO__DEFAULT_NAME' }}
-                    </div>
-                    <div class="spline-breadcrumb__delimiter">
-                        <mat-icon>chevron_right</mat-icon>
-                    </div>
-                    <div class="spline-breadcrumb__item">
-                        Graph View
-                    </div>
-                </div>
+
+                <!-- BREADCRUMBS -->
+                <sl-breadcrumbs *ngIf="breadcrumbs$ | async as breadcrumbs"
+                                [breadcrumbs]="breadcrumbs">
+                </sl-breadcrumbs>
+                <!-- ./BREADCRUMBS -->
+
                 <plan-header *ngIf="state.executionPlan"
                              [executionPlan]="state.executionPlan">
                 </plan-header>

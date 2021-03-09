@@ -18,9 +18,11 @@ import { Component, OnInit, ViewChild } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
 import keyBy from 'lodash/keyBy'
-import { filter, map, skip, takeUntil } from 'rxjs/operators'
+import { Observable } from 'rxjs'
+import { distinctUntilChanged, filter, map, skip, takeUntil } from 'rxjs/operators'
 import { AttributeSchema, ExecutionPlanFacade, OperationAttributeLineageType, toAttributeLineage } from 'spline-api'
 import { SplineTabsNavBar } from 'spline-common'
+import { SlBreadcrumbs } from 'spline-common/layout'
 import { SplineAttributesTree } from 'spline-shared/attributes'
 import { SgContainerComponent, SgNodeControl } from 'spline-shared/graph'
 import { BaseComponent, RouterNavigation } from 'spline-utils'
@@ -29,8 +31,8 @@ import { AttributeLineageDialogComponent } from '../../components'
 import { AttributeLineageDialog } from '../../components/attribute-lineage/attribute-lineage-dialog/attribute-lineage-dialog.models'
 import { PlanOverview } from '../../models'
 import { ExecutionPlanOverviewStoreFacade } from '../../store'
-import NavTabInfo = SplineTabsNavBar.NavTabInfo
 import QueryParamAlis = PlanOverview.QueryParamAlis
+import NavTabInfo = SplineTabsNavBar.NavTabInfo
 
 
 @Component({
@@ -59,6 +61,8 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         }
     ]
 
+    readonly breadcrumbs$: Observable<SlBreadcrumbs.Breadcrumbs>
+
     eventId: string
     isGraphFullScreen = false
 
@@ -79,6 +83,24 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
             )
             .subscribe(
                 () => this.resetNodeHighlightRelations(),
+            )
+
+        // TODO: Use some generic system for breadcrumbs definition.
+        this.breadcrumbs$ = this.store.state$
+            .pipe(
+                map(state => state.executionPlan?.extraInfo?.appName ?? 'PLANS.PLAN_INFO__DEFAULT_NAME'),
+                distinctUntilChanged(),
+                map(appName => [
+                    {
+                        label: 'Execution Plan'
+                    },
+                    {
+                        label: appName
+                    },
+                    {
+                        label: 'Overview'
+                    },
+                ])
             )
     }
 

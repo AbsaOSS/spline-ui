@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import { SlBreadcrumbsComponent } from './breadcrumbs/sl-breadcrumbs.component'
 import { SlContentHeaderComponent } from './content-header/sl-content-header.component'
 import { SlContentSidebarDialogComponent } from './content-sidebar-dialog/sl-content-sidebar-dialog.component'
 import { SlEntityHeaderComponent } from './entity-header/sl-entity-header.component'
@@ -30,7 +31,8 @@ export const layoutComponents: any[] = [
     SlContentSidebarDialogComponent,
     SplineFakePageContentComponent,
     SlContentHeaderComponent,
-    SlSidebarLogoComponent
+    SlSidebarLogoComponent,
+    SlBreadcrumbsComponent
 ]
 
 export * from './public-api'

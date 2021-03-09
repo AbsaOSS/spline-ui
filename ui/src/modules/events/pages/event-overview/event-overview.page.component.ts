@@ -17,8 +17,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { Observable } from 'rxjs'
-import { filter, map, skip, take } from 'rxjs/operators'
+import { distinctUntilChanged, map } from 'rxjs/operators'
 import { SplineTabsNavBar } from 'spline-common'
+import { SlBreadcrumbs } from 'spline-common/layout'
 import { BaseComponent } from 'spline-utils'
 
 import { EventOverviewStore, EventOverviewStoreFacade } from '../../store'
@@ -42,10 +43,30 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit,
 
     readonly state$: Observable<EventOverviewStore.State>
 
+    readonly breadcrumbs$: Observable<SlBreadcrumbs.Breadcrumbs>
+
     constructor(private readonly activatedRoute: ActivatedRoute,
                 readonly store: EventOverviewStoreFacade) {
         super()
         this.state$ = store.state$
+
+        // TODO: Use some generic system for breadcrumbs definition.
+        this.breadcrumbs$ = store.state$
+            .pipe(
+                map(state => state.eventInfo.name),
+                distinctUntilChanged(),
+                map(eventName => [
+                    {
+                        label: 'Execution Event'
+                    },
+                    {
+                        label: eventName
+                    },
+                    {
+                        label: 'Overview'
+                    },
+                ])
+            )
     }
 
     ngOnInit(): void {

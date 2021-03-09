@@ -17,7 +17,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { Observable } from 'rxjs'
+import { distinctUntilChanged, map } from 'rxjs/operators'
 import { SplineTabsNavBar } from 'spline-common'
+import { SlBreadcrumbs } from 'spline-common/layout'
 import { BaseComponent } from 'spline-utils'
 
 import { DsOverviewStoreFacade } from '../../services'
@@ -35,6 +37,7 @@ import NavTabInfo = SplineTabsNavBar.NavTabInfo
 export class DataSourceOverviewPageComponent extends BaseComponent implements OnInit, OnDestroy {
 
     readonly state$: Observable<DsOverviewStore.State>
+    readonly breadcrumbs$: Observable<SlBreadcrumbs.Breadcrumbs>
 
     readonly headerNavTabs: NavTabInfo[] = [
         {
@@ -65,6 +68,24 @@ export class DataSourceOverviewPageComponent extends BaseComponent implements On
         super()
 
         this.state$ = store.state$
+
+        // TODO: Use some generic system for breadcrumbs definition.
+        this.breadcrumbs$ = store.state$
+            .pipe(
+                map(state => state.dataSourceInfo.name),
+                distinctUntilChanged(),
+                map(name => [
+                    {
+                        label: 'Data Sources'
+                    },
+                    {
+                        label: name
+                    },
+                    {
+                        label: 'History'
+                    },
+                ])
+            )
     }
 
     ngOnInit(): void {
