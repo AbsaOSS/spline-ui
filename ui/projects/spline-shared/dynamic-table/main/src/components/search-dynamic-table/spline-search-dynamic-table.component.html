@@ -22,13 +22,6 @@
     <spline-loader *ngIf="state.loadingProcessing.processing"></spline-loader>
     <!-- ./LOADER -->
 
-    <!-- ERROR -->
-    <spline-content-error *ngIf="state.loadingProcessing.processingError"
-                          [statusCode]="state.loadingProcessing.processingError?.status"
-                          [errorId]="state.loadingProcessing.processingError?.error?.errorId">
-    </spline-content-error>
-    <!-- ./ERROR -->
-
     <!-- HEADER -->
     <div class="spline-search-dt-container__header">
         <div class="d-flex w-100">
@@ -68,10 +61,18 @@
         <!--  ./TABLE  -->
 
         <!--  NO RESULT  -->
-        <div class="pt-2" *ngIf="state.totalCount === 0 && !state.loadingProcessing.processing">
+        <div class="pt-2" *ngIf="state.totalCount === 0 && !state.loadingProcessing.processing && !state.loadingProcessing.processingError">
             <spline-no-result></spline-no-result>
         </div>
         <!--  ./NO RESULT  -->
+
+        <!-- ERROR -->
+        <spline-content-error *ngIf="state.loadingProcessing.processingError"
+                              [statusCode]="state.loadingProcessing.processingError?.status"
+                              [errorId]="state.loadingProcessing.processingError?.error?.errorId"
+                              [floating]="false">
+        </spline-content-error>
+        <!-- ./ERROR -->
 
         <mat-paginator
                 *ngIf="showPaginator"
@@ -85,6 +86,7 @@
 
         </mat-paginator>
 
+        <!-- TODO: is needed for sticky layout, now it is under development. Should be moved to the other place in the future. -->
         <div class="spline-search-dt-total-count" *ngIf="!showPaginator && state.totalCount > 0">
             <div class="spline-search-dt-total-count__label">
                 Total Count

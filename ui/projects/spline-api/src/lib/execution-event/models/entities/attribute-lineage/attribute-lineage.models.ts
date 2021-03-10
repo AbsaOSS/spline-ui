@@ -15,7 +15,7 @@
  */
 
 import { AttrSchemasCollection } from '../attribute'
-import { Lineage } from '../lineage'
+import { Lineage, LineageNodeLink } from '../lineage'
 import {
     OperationAttributeLineage,
     OperationAttributeLineageNode,
@@ -39,12 +39,23 @@ export function toAttributeLineage(entity: OperationAttributeLineage,
 
     return {
         lineage: {
-            links: refLineageSource.links,
+            // we need to revert graph direction as BE returns it in the a wrong way
+            // TODO: remove manual graph inversion after BE fixed.
+            links: invertLinks(refLineageSource.links),
             nodes: refLineageSource.nodes.map(node => toAttributeLineageNode(node, attrSchemaCollection, executionPlanId))
         },
     }
 }
 
+// invert graph direction
+export function invertLinks(links: LineageNodeLink[]): LineageNodeLink[] {
+    return links.map(
+        item => ({
+            source: item.target,
+            target: item.source
+        })
+    )
+}
 
 export function toAttributeLineageNode(node: OperationAttributeLineageNode,
                                        attrSchemaCollection: AttrSchemasCollection,
