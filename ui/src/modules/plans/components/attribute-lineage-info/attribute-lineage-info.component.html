@@ -47,9 +47,10 @@
         <sg-legend *ngFor="let legend of legendsList"
                    [legend]="legend">
             <button *ngIf="legend.id !== OperationAttributeLineageType.Usage"
-                    mat-button size="sm"
+                    mat-button
+                    size="sm"
                     color="accent"
-                    mat-flat-button
+                    mat-raised-button
                     (click)="onLineageLegendDetailsBtnClicked(legend)">
                 {{'COMMON.DETAILS' | translate}}
             </button>
