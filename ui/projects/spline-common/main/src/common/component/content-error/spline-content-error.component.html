@@ -19,7 +19,12 @@
     <mat-icon>error_outline</mat-icon>
 
     <h2 class="spline-content-error__message">
-        {{ 'COMMON.SERVER_COMMUNICATION_ERROR__MESSAGE' | translate }}
+        {{
+        (statusCode === 404
+            ? 'COMMON.SERVER_COMMUNICATION_ERROR__MESSAGE__NOT_FOUND'
+            : 'COMMON.SERVER_COMMUNICATION_ERROR__MESSAGE')
+            | translate
+        }}
     </h2>
 
     <h4 *ngIf="statusCode" class="spline-content-error__details">
