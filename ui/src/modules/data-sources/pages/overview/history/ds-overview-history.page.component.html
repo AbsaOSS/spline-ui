@@ -34,7 +34,7 @@
                                     [minDate]="state.dateRangeFilter.bounds?.dateFrom"
                                     [showIcon]="false"
                                     [value]="state.dateRangeFilter?.value"
-                                    label="Modified At">
+                                    [label]="'DATA_SOURCES.DS_STATE_HISTORY__FILTER__CREATED_AT' | translate">
                 </spline-date-filter>
             </div>
 
@@ -48,7 +48,7 @@
                               [visible]="state.selectedExecutionEvent !== null">
 
     <div class="spline-side-panel__header-content">
-        <h3 class="text-center">Data Source State Details</h3>
+        <h3 class="text-center">{{'DATA_SOURCES.DETAILS_DIALOG__TITLE' | translate}}</h3>
     </div>
 
     <data-source-details *ngIf="state.selectedExecutionEvent !== null"

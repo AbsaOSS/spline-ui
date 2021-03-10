@@ -99,7 +99,6 @@ export namespace DsOverviewDetailsStore {
                         treeData,
                         {
                             allowAttrSelection: false,
-                            actionIcon: 'eye-outline'
                         }
                     ),
                 )
@@ -121,22 +120,22 @@ export namespace DsOverviewDetailsStore {
             [
                 SdWidgetSimpleRecord.toSchema([
                     {
-                        label: 'Created At',
+                        label: 'DATA_SOURCES.DETAILS__CREATED_AT',
                         value: DateTimeHelpers.toString(executionEvent.executedAt)
                     },
                     {
-                        label: 'Write Mode',
+                        label: 'DATA_SOURCES.DETAILS__WRITE_MODE',
                         value: executionEvent.writeMode === DataSourceWriteMode.Append
                             ? 'Append'
                             : 'Override',
                     },
                     {
-                        label: 'Execution Event',
+                        label: 'DATA_SOURCES.DETAILS__EXECUTION_EVENT',
                         value: executionEvent[ExecutionEventField.applicationName],
                         routerLink: EventsRouting.getEventOverviewPageUrl(executionEvent[ExecutionEventField.executionEventId])
                     },
                     {
-                        label: 'Execution Plan',
+                        label: 'DATA_SOURCES.DETAILS__EXECUTION_PLAN',
                         value: executionEvent[ExecutionEventField.executionPlanId],
                         routerLink: ['/plans/overview', executionEvent[ExecutionEventField.executionPlanId]]
                     }
