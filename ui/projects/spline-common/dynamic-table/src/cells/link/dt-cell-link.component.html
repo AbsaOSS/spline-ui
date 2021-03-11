@@ -18,31 +18,33 @@
     <div *ngIf="value$ | async as value"
          class="dt-cell dt-cell-link--style-{{ options?.style ? options.style : defaultLinkStyle }}">
 
-        <ng-container *ngIf="value?.routerLink || value?.onClick || value?.emitCellEvent; else invalidRouterLink">
+        <spline-long-text>
+            <ng-container *ngIf="value?.routerLink || value?.onClick || value?.emitCellEvent; else invalidRouterLink">
 
-            <!-- onClick -->
-            <a class="link"
-               *ngIf="value.title && (value?.onClick || value?.emitCellEvent)"
-               (click)="onLinkClicked($event)">
-                {{ value.title | translate }}
-            </a>
+                <!-- onClick -->
+                <a class="link"
+                   *ngIf="value.title && (value?.onClick || value?.emitCellEvent)"
+                   (click)="onLinkClicked($event)">
+                    {{ value.title | translate }}
+                </a>
 
-            <!-- ./onClick -->
+                <!-- ./onClick -->
 
-            <!-- routerLink -->
-            <a class="link"
-               *ngIf="value?.title && value?.routerLink"
-               [routerLink]="value?.routerLink"
-               [queryParams]="value?.routerQueryParams">
+                <!-- routerLink -->
+                <a class="link"
+                   *ngIf="value?.title && value?.routerLink"
+                   [routerLink]="value?.routerLink"
+                   [queryParams]="value?.routerQueryParams">
 
-                {{ value.title | translate }}
-            </a>
-            <!-- ./routerLink -->
-        </ng-container>
+                    {{ value.title | translate }}
+                </a>
+                <!-- ./routerLink -->
+            </ng-container>
 
-        <ng-template #invalidRouterLink>
-            <span>{{ value.title }}</span>
-        </ng-template>
+            <ng-template #invalidRouterLink>
+                <span>{{ value.title }}</span>
+            </ng-template>
+        </spline-long-text>
 
         <div class="dt-cell__description" *ngIf="value?.description?.length">
             {{ value.description | translate }}

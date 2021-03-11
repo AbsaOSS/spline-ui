@@ -15,3 +15,4 @@
  */
 
 export * from './ds-state-history.dt-schema'
+export * from './data-sources-list.dt-schema'

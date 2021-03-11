@@ -14,39 +14,3 @@
  * limitations under the License.
  */
 
-@import 'vars';
-@import 'mixins';
-
-.table-container {
-    min-height: 300px;
-}
-
-.mat-column-applicationName {
-    a {
-        color: $color-black;
-        font-size: 16px;
-        font-weight: 500;
-    }
-}
-
-.minor-text {
-    @include long-text-wrapper();
-    color: $color-grey-dark;
-    display: block;
-    font-size: 10px;
-}
-
-.mat-column-timestamp {
-    justify-content: center;
-    max-width: 150px;
-}
-
-.mat-column-append {
-    justify-content: center;
-    max-width: 120px;
-}
-
-.mat-column-dataSourceType {
-    justify-content: center;
-    max-width: 160px;
-}

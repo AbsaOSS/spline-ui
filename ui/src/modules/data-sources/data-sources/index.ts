@@ -15,3 +15,4 @@
  */
 
 export * from './ds-state-history.data-source'
+export * from './spline-data-sources.data-source'

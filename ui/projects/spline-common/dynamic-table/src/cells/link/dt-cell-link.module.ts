@@ -17,6 +17,7 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { RouterModule } from '@angular/router'
+import { SplineLongTextModule } from 'spline-common'
 import { SplineTranslateModule } from 'spline-utils/translate'
 
 import { DT_CELL_FACTORY, DynamicTableModule } from '../../core'
@@ -30,7 +31,8 @@ import { DtCellLinkFactory } from './dt-cell-link.factory'
         CommonModule,
         RouterModule,
         SplineTranslateModule.forChild({}),
-        DynamicTableModule
+        DynamicTableModule,
+        SplineLongTextModule
     ],
     declarations: [
         DtCellLinkComponent

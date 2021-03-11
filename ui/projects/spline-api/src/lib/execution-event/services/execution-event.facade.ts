@@ -50,9 +50,20 @@ export class ExecutionEventFacade extends BaseFacade {
             )
     }
 
+    @Cacheable
     fetchList(queryParams: ExecutionEventsQuery.QueryParams): Observable<ExecutionEventsPageResponse> {
         const params = ExecutionEventsQuery.queryParamsToHttpParams(queryParams)
         const url = this.toUrl('execution-events')
+        return this.http.get<ExecutionEventsPageResponseDto>(url, { params: params })
+            .pipe(
+                map(toExecutionEventsPageResponse),
+            )
+    }
+
+    @Cacheable
+    fetchListAggregatedByDataSource(queryParams: ExecutionEventsQuery.QueryParams): Observable<ExecutionEventsPageResponse> {
+        const params = ExecutionEventsQuery.queryParamsToHttpParams(queryParams)
+        const url = this.toUrl('data-sources')
         return this.http.get<ExecutionEventsPageResponseDto>(url, { params: params })
             .pipe(
                 map(toExecutionEventsPageResponse),

@@ -32,7 +32,7 @@ export class EventsDataSource extends SearchDataSource<ExecutionEvent,
     ExecutionEventsQuery.QueryFilter,
     ExecutionEventField> {
 
-    constructor(private readonly executionEventFacade: ExecutionEventFacade) {
+    constructor(protected readonly executionEventFacade: ExecutionEventFacade) {
         super()
 
         this.updateAndApplyDefaultSearchParams({
@@ -79,7 +79,7 @@ export class EventsDataSource extends SearchDataSource<ExecutionEvent,
         return this.executionEventFacade.fetchList(queryParams)
     }
 
-    private toQueryParams(
+    protected toQueryParams(
         searchParams: SearchQuery.SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>,
     ): ExecutionEventsQuery.QueryParams {
         const queryFilter = {

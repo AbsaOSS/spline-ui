@@ -28,16 +28,16 @@ export namespace AppSidebarMenu {
                 routerLinkActivePattern: '^$|^\\/$|^\\/events.*'
             },
             {
-                label: 'APP.MENU__PLANS',
-                icon: 'cog-transfer-outline',
-                routerLink: '/plans/list',
-                routerLinkActivePattern: '^$|^\\/$|^\\/plans.*'
-            },
-            {
                 label: 'APP.MENU__DATA_SOURCES',
                 icon: 'description',
                 routerLink: '/data-sources/list',
                 routerLinkActivePattern: '^\\/data-sources.*'
+            },
+            {
+                label: 'APP.MENU__PLANS',
+                icon: 'cog-transfer-outline',
+                routerLink: '/plans/list',
+                routerLinkActivePattern: '^$|^\\/$|^\\/plans.*'
             }
         ]
     }
