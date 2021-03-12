@@ -23,9 +23,11 @@
         "DETAILS__EXECUTION_EVENT": "Execution Event",
         "DETAILS__EXECUTION_PLAN": "Execution Plan",
         "DETAILS__WRITE_MODE": "Write Mode",
-        "DS_LIST__FILTER__LAST_MODIFIED_AT": "Last Modified At",
+        "DS_LIST__FILTER__MODIFIED_AT": "Modified At",
         "DS_LIST__COL__LAST_MODIFIED_AT": "Last Modified At",
-        "DS_LIST__COL__EXECUTION_EVENT": "Execution Event",
+        "DS_LIST__COL__EXECUTION_EVENT": "Last Execution Event",
+        "DS_LIST__COL__EXECUTION_PLAN": "Last Execution Plan",
+        "DS_LIST__COL__WRITE_MODE": "Last Write Mode",
         "DS_LIST__COL__DATA_SOURCE": "Data Source"
     }
 }

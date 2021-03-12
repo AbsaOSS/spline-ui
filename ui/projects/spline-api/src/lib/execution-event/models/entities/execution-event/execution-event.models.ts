@@ -23,6 +23,7 @@ export enum ExecutionEventField {
     applicationName = 'applicationName',
     applicationId = 'applicationId',
     dataSourceType = 'dataSourceType',
+    dataSourceName = 'dataSourceName',
     dataSourceUri = 'dataSourceUri',
     executionEventId = 'executionEventId',
     executionPlanId = 'executionPlanId',
@@ -36,6 +37,7 @@ export type ExecutionEventDto = {
     applicationId: string
     dataSourceType: string
     dataSourceUri: string
+    dataSourceName: string
     executionEventId: string
     executionPlanId: string
     frameworkName: string
@@ -55,7 +57,7 @@ export function toExecutionEvent(entity: ExecutionEventDto): ExecutionEvent {
     return {
         ...entity,
         executedAt: new Date(entity.timestamp),
-        dataSourceInfo: uriToDatasourceInfo(entity[ExecutionEventField.dataSourceUri]),
+        dataSourceInfo: uriToDatasourceInfo(entity[ExecutionEventField.dataSourceUri], entity.dataSourceName),
         writeMode: entity[ExecutionEventField.append] ? DataSourceWriteMode.Append : DataSourceWriteMode.Overwrite
     }
 }

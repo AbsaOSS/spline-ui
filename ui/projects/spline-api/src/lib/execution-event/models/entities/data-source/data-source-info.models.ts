@@ -64,10 +64,10 @@ export function idToDataSourceInfo(id: string): SplineDataSourceInfo {
     return uriToDatasourceInfo(uri)
 }
 
-export function uriToDatasourceInfo(uri: string): SplineDataSourceInfo {
+export function uriToDatasourceInfo(uri: string, name?: string): SplineDataSourceInfo {
     return {
         id: uriToDatsSourceId(uri),
-        name: dataSourceUriToName(uri),
+        name: name ?? dataSourceUriToName(uri),
         uri,
         type: dataSourceUriToType(uri)
     }

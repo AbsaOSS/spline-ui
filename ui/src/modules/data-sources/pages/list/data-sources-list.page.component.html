@@ -23,7 +23,7 @@
                                  [dataSource]="dataSource">
 
         <spline-date-filter *ngIf="!!state.dateRangeFilter?.bounds"
-                            [label]="'DATA_SOURCES.DS_LIST__FILTER__LAST_MODIFIED_AT' | translate"
+                            [label]="'DATA_SOURCES.DS_LIST__FILTER__MODIFIED_AT' | translate"
                             [showIcon]="false"
                             [maxDate]="state.dateRangeFilter.bounds?.dateTo"
                             [minDate]="state.dateRangeFilter.bounds?.dateFrom"

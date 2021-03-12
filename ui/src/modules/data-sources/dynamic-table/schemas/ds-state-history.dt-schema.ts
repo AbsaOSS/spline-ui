@@ -27,7 +27,6 @@ export namespace DsStateHistoryDtSchema {
     export enum Column {
         applicationName = ExecutionEventField.applicationName,
         executionPlanId = ExecutionEventField.executionPlanId,
-        dataSourceUri = ExecutionEventField.dataSourceUri,
         dataSourceType = ExecutionEventField.dataSourceType,
         writeMode = ExecutionEventField.append,
         timestamp = ExecutionEventField.timestamp,

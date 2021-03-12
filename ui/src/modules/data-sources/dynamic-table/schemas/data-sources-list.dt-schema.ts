@@ -33,6 +33,7 @@ export namespace DataSourcesListDtSchema {
         applicationName = ExecutionEventField.applicationName,
         executionPlanId = ExecutionEventField.executionPlanId,
         dataSourceUri = ExecutionEventField.dataSourceUri,
+        dataSourceName = ExecutionEventField.dataSourceName,
         dataSourceType = ExecutionEventField.dataSourceType,
         writeMode = ExecutionEventField.append,
         timestamp = ExecutionEventField.timestamp,
@@ -59,7 +60,7 @@ export namespace DataSourcesListDtSchema {
                         style: DtCellLink.LinkStyle.Main
                     }
                 ),
-                id: Column.dataSourceUri,
+                id: Column.dataSourceName,
                 header: 'DATA_SOURCES.DS_LIST__COL__DATA_SOURCE',
                 isSortable: true,
             },
@@ -78,7 +79,7 @@ export namespace DataSourcesListDtSchema {
                     (rowData: ExecutionEvent) => rowData.writeMode
                 ),
                 id: Column.writeMode,
-                header: 'DATA_SOURCES.DS__COL__WRITE_MODE',
+                header: 'DATA_SOURCES.DS_LIST__COL__WRITE_MODE',
                 isSortable: true
             },
             {
@@ -90,7 +91,7 @@ export namespace DataSourcesListDtSchema {
                     })
                 ),
                 id: Column.applicationName,
-                header: 'DATA_SOURCES.DS__COL__EXECUTION_EVENT',
+                header: 'DATA_SOURCES.DS_LIST__COL__EXECUTION_EVENT',
                 isSortable: true,
                 layout: (new DtLayoutBuilder())
                     .visibleAfter(DtLayoutSize.lg)
@@ -104,7 +105,7 @@ export namespace DataSourcesListDtSchema {
                     })
                 ),
                 id: Column.executionPlanId,
-                header: 'DATA_SOURCES.DS__COL__EXECUTION_PLAN',
+                header: 'DATA_SOURCES.DS_LIST__COL__EXECUTION_PLAN',
                 layout: (new DtLayoutBuilder())
                     .visibleAfter(DtLayoutSize.xl)
                     .toLayout(),

@@ -15,13 +15,35 @@
  */
 
 import { Observable } from 'rxjs'
-import { ExecutionEventField, ExecutionEventsPageResponse, ExecutionEventsQuery } from 'spline-api'
+import {
+    ExecutionEventFacade,
+    ExecutionEventField,
+    ExecutionEventsPageResponse,
+    ExecutionEventsQuery
+} from 'spline-api'
 import { EventsDataSource } from 'spline-shared/events'
-import { SearchQuery } from 'spline-utils'
+import { QuerySorter, SearchQuery } from 'spline-utils'
 import SearchParams = SearchQuery.SearchParams
+import SortDir = QuerySorter.SortDir
 
 
 export class SplineDataSourcesDataSource extends EventsDataSource {
+
+    constructor(protected readonly executionEventFacade: ExecutionEventFacade) {
+        super(executionEventFacade)
+
+        this.updateAndApplyDefaultSearchParams({
+            filter: {
+                asAtTime: new Date().getTime()
+            },
+            sortBy: [
+                {
+                    field: ExecutionEventField.dataSourceName,
+                    dir: SortDir.ASC
+                }
+            ]
+        })
+    }
 
     protected getDataObserver(
         searchParams: SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>,

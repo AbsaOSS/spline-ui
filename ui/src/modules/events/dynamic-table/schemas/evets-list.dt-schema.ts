@@ -25,7 +25,7 @@ export namespace EventsListDtSchema {
     export enum Column {
         applicationName = ExecutionEventField.applicationName,
         executionPlanId = ExecutionEventField.executionPlanId,
-        dataSourceUri = ExecutionEventField.dataSourceUri,
+        dataSourceName = ExecutionEventField.dataSourceName,
         dataSourceType = ExecutionEventField.dataSourceType,
         writeMode = ExecutionEventField.append,
         timestamp = ExecutionEventField.timestamp,
@@ -71,7 +71,7 @@ export namespace EventsListDtSchema {
                         description: rowData.dataSourceInfo.uri
                     })
                 ),
-                id: Column.dataSourceUri,
+                id: Column.dataSourceName,
                 header: 'EVENTS.EVENTS_LIST__COL__DESTINATION',
                 isSortable: true,
                 layout: {
