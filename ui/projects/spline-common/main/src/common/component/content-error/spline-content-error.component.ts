@@ -14,15 +14,38 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core'
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core'
 
 
 @Component({
     selector: 'spline-content-error',
     templateUrl: './spline-content-error.component.html',
 })
-export class SplineContentErrorComponent {
+export class SplineContentErrorComponent implements OnChanges {
+
     @Input() floating = true
     @Input() errorId: string
     @Input() statusCode: 500 | 404 | 403 | number
+
+    readonly defaultErrorMessage = 'COMMON.SERVER_COMMUNICATION_ERROR__MESSAGE'
+
+    errorMessage = this.defaultErrorMessage
+
+    ngOnChanges(changes: SimpleChanges): void {
+        const { statusCode } = changes
+        if (statusCode) {
+            this.errorMessage = this.calculateErrorMessage(statusCode.currentValue)
+        }
+    }
+
+    private calculateErrorMessage(statusCode: number): string {
+        switch (statusCode) {
+            case 0:
+                return 'COMMON.SERVER_COMMUNICATION_ERROR__MESSAGE__FAILURE'
+            case 404:
+                return 'COMMON.SERVER_COMMUNICATION_ERROR__MESSAGE__NOT_FOUND'
+            default:
+                return this.defaultErrorMessage
+        }
+    }
 }
