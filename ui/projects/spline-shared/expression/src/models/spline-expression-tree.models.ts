@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,8 +41,9 @@ export namespace SplineExpressionTree {
 
     export function toTree(expression: OpExpression, attrSchemasCollection: AttrSchemasCollection, level = 1): Tree {
 
-        const children = expression?.children
-            ? expression?.children.map(child => toTree(child, attrSchemasCollection, level + 1)[0])
+        const children = expression?.children || expression?.child
+            ? (expression?.children || [expression?.child])
+                .map(child => toTree(child, attrSchemasCollection, level + 1)[0])
             : undefined
 
         return [{
