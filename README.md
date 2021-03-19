@@ -70,6 +70,17 @@ All available config query parameters list:
 
 `splineConsumerApiUrl` is a required query parameter.
 
+#### How to build assets for your CDN:
+
+1. Installed the LTS version of Node.js: https://nodejs.org/en/download/
+2. Install the latest version of NPM: `npm i -g npm@latest`
+3. Install dependencies:
+    1. Go to the ui directory: `cd <root>/ui`
+    2. Run `npm ci`
+4. Build the project:
+    1. Go to the ui directory: `cd <root>/ui`
+    2. Run `npm run build::CDN`
+5. CDN resources is everything inside `<root>/ui/dist`
 
 ## Building from sources
 
