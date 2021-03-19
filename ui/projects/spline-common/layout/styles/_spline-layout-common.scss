@@ -135,6 +135,12 @@ $spline-layout-settings-default: (
             text-align: center;
         }
 
+        &--no-header {
+            .mat-sidenav-container {
+                top: 1rem;
+            }
+        }
+
         &--embedded {
             .mat-sidenav-container {
                 top: 0;
@@ -152,12 +158,6 @@ $spline-layout-settings-default: (
 
             .sl-content-header {
                 border-radius: 0;
-            }
-        }
-
-        &--no-header {
-            .mat-sidenav-container {
-                top: 1rem;
             }
         }
     }

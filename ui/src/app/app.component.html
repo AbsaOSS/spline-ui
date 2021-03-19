@@ -16,16 +16,17 @@
 
 <ng-container *ngIf="state$ | async as state">
 
-    <spline-layout-common [isEmbeddedMode]="state.isEmbeddedMode"
+    <spline-layout-common *ngIf="state.isInitialized"
+                          [isEmbeddedMode]="state.isEmbeddedMode"
                           (sidenavExpanded$)="onSideNavExpanded($event.isExpanded)"
                           [appVersion]="state.appVersion"
                           [isSideNavExpanded]="state.isSideNavExpanded">
 
         <!-- HEADER -->
         <!-- TODO: SearchBar is temporary disabled due to the BE issues. -->
-<!--        <ng-template splineLayoutSection="header">-->
-<!--            <spline-attribute-search (attributeSelected$)="onAttributeSearchSelected($event.attributeInfo)"></spline-attribute-search>-->
-<!--        </ng-template>-->
+        <!--        <ng-template splineLayoutSection="header">-->
+        <!--            <spline-attribute-search (attributeSelected$)="onAttributeSearchSelected($event.attributeInfo)"></spline-attribute-search>-->
+        <!--        </ng-template>-->
         <!-- ./HEADER -->
 
         <!-- SIDEBAR -->

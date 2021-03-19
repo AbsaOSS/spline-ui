@@ -16,7 +16,7 @@
 
 import { Injectable } from '@angular/core'
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router'
-import { Observable } from 'rxjs'
+import { Observable, of } from 'rxjs'
 import { tap } from 'rxjs/internal/operators'
 
 import { SplineConfig } from './spline-config.models'
@@ -34,15 +34,14 @@ export class SplineConfigResolver implements Resolve<SplineConfig> {
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<SplineConfig> {
 
-
-        return this.splineConfigService.initConfig(route.queryParamMap)
-            .pipe(
-                tap(config => {
-                    if (config?.targetUrl) {
-                        this.router.navigateByUrl(config.targetUrl)
-                    }
-                })
-            )
+        return this.splineConfigService.config !== null
+            ? of(this.splineConfigService.config)
+            : this.splineConfigService.initConfig(route.queryParamMap)
+                .pipe(
+                    tap(config => {
+                        void this.router.navigateByUrl(config?.targetUrl ?? '/')
+                    })
+                )
     }
 
 }
