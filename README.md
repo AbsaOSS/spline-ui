@@ -72,7 +72,7 @@ All available config query parameters list:
 
 #### How to build assets for your CDN:
 
-1. Installed the LTS version of Node.js: https://nodejs.org/en/download/
+1. Install the LTS version of Node.js: https://nodejs.org/en/download/
 2. Install the latest version of NPM: `npm i -g npm@latest`
 3. Install dependencies:
     1. Go to the ui directory: `cd <root>/ui`
