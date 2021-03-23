@@ -17,7 +17,7 @@
 import { Component } from '@angular/core'
 import { isEqual } from 'lodash-es'
 import { distinctUntilChanged, filter, map, skip, takeUntil } from 'rxjs/operators'
-import { ExecutionEventFacade, ExecutionEventField, ExecutionEventsQuery } from 'spline-api'
+import { DataSourceWriteMode, ExecutionEventFacade, ExecutionEventField, ExecutionEventsQuery } from 'spline-api'
 import { SplineDateRangeFilter } from 'spline-common'
 import { EventsDataSource } from 'spline-shared/events'
 import { BaseLocalStateComponent, SearchQuery, SplineDateRangeValue } from 'spline-utils'
@@ -46,6 +46,11 @@ export class EventsListPageComponent extends BaseLocalStateComponent<EventsListP
 
     readonly dataMap = EventsListDtSchema.getSchema()
 
+    readonly listBoxDataMap = EventsListPage.listBoxDataMap
+    readonly listBoxRecords = EventsListPage.listBoxRecords
+
+    writeMode: DataSourceWriteMode[] = [DataSourceWriteMode.Append]
+
     constructor(readonly dataSource: EventsDataSource) {
         super()
 
@@ -59,6 +64,10 @@ export class EventsListPageComponent extends BaseLocalStateComponent<EventsListP
 
     onDateFilterChanged(value: SplineDateRangeFilter.Value): void {
         this.updateDateRangeFilterValue(value)
+    }
+
+    onWriteModeChanged(value: DataSourceWriteMode[]): void {
+        console.log(value)
     }
 
     private updateDateRangeFilterValue(value: SplineDateRangeFilter.Value): void {

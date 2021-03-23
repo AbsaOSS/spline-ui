@@ -15,6 +15,8 @@
  */
 
 import { SplineDateRangeFilter, SplineDateRangeFilterConsumerStore } from 'spline-common'
+import { DynamicFilterModel } from 'spline-common/dynamic-filter'
+import { DfControlDateRange } from 'spline-common/dynamic-filter/filter-controls'
 import { SplineDateRangeValue } from 'spline-utils'
 
 
@@ -42,5 +44,23 @@ export namespace DataSourcesListPage {
             ...state,
             dateRangeFilter: SplineDateRangeFilterConsumerStore.reduceBoundsChanged(state.dateRangeFilter, value)
         }
+    }
+
+    export enum FilterId {
+        dateRange = 'dateRange'
+    }
+
+    export type FilterValue = {
+        [FilterId.dateRange]: DfControlDateRange.Value
+    }
+
+    export function createFilterModel(): DynamicFilterModel<FilterValue> {
+        return new DynamicFilterModel(
+            [
+                new DfControlDateRange.Model({
+                    id: FilterId.dateRange
+                })
+            ]
+        )
     }
 }

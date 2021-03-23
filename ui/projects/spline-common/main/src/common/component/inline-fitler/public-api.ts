@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export * from './spline-inline-filter.component'
+export * from './components/public-api'
 export * from './spline-inline-filter.module'

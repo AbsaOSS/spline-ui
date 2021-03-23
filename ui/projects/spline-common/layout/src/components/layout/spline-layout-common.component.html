@@ -44,10 +44,14 @@
                      [class.sl-sidenav--expanded]="isSideNavExpanded">
 
             <div class="sl-sidenav__inner">
-
-                <sl-sidebar-logo *ngIf="noHeader"
-                                 [showOnlyLogo]="!isSideNavExpanded">
-                </sl-sidebar-logo>
+                <!-- SECTION :: SIDEBAR HEADER -->
+                <div>
+                    <ng-template *ngIf="sectionsTemplatesCollection[SectionName.sidebarHeader]"
+                                 [ngTemplateOutlet]="sectionsTemplatesCollection[SectionName.sidebarHeader]"
+                                 [ngTemplateOutletContext]="{isExpanded: isSideNavExpanded}">
+                    </ng-template>
+                </div>
+                <!-- SECTION :: ./SIDEBAR HEADER -->
 
                 <div class="flex-grow-1">
                     <!-- SECTION :: SIDEBAR -->

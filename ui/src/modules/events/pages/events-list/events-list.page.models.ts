@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-import { SplineDateRangeFilter, SplineDateRangeFilterConsumerStore } from 'spline-common'
+import { DataSourceWriteMode } from 'spline-api'
+import { SplineDateRangeFilter, SplineDateRangeFilterConsumerStore, SplineListBox } from 'spline-common'
 import { SplineDateRangeValue } from 'spline-utils'
 
 
@@ -43,4 +44,23 @@ export namespace EventsListPage {
             dateRangeFilter: SplineDateRangeFilterConsumerStore.reduceBoundsChanged(state.dateRangeFilter, value)
         }
     }
+
+
+    export const listBoxRecords: SplineListBox.SimpleListRecord<DataSourceWriteMode>[] = [
+        {
+            value: DataSourceWriteMode.Append,
+            label: 'Append'
+        },
+        {
+            value: DataSourceWriteMode.Overwrite,
+            label: 'Overwrite'
+        }
+    ]
+
+    export const listBoxDataMap: SplineListBox.DataMap<SplineListBox.SimpleListRecord<DataSourceWriteMode>, DataSourceWriteMode> = {
+        ...SplineListBox.getDefaultSimpleDataMap(),
+        trackBy: record => record.value
+    }
+
+
 }

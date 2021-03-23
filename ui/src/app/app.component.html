@@ -32,6 +32,12 @@
         <!-- ./HEADER -->
 
         <!-- SIDEBAR -->
+        <ng-template let-isExpanded="isExpanded" splineLayoutSection="sidebarHeader">
+            <sl-sidebar-logo [showOnlyLogo]="!isExpanded"></sl-sidebar-logo>
+        </ng-template>
+        <!-- ./SIDEBAR -->
+
+        <!-- SIDEBAR -->
         <ng-template let-isExpanded="isExpanded" splineLayoutSection="sidebar">
             <spline-sidebar-menu [menuItems]="state.sidebarMenuItems"
                                  [showOnlyIcons]="!isExpanded">

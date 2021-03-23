@@ -72,6 +72,7 @@ $border-radius: $height / 2;
         font-size: 14px;
         outline: none;
         padding: 0 3rem;
+        width: 100%;
 
         &::placeholder {
             color: $input-text-color;

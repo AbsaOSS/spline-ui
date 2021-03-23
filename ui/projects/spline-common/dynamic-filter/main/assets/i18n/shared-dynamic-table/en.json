@@ -1,0 +1,8 @@
+{
+    "SHARED": {
+        "DYNAMIC_TABLE": {
+            "DS_WRITE_MODE__APPEND": "Append",
+            "DS_WRITE_MODE__OVERRIDE": "Override"
+        }
+    }
+}

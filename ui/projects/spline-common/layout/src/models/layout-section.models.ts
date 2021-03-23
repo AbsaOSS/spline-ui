@@ -16,10 +16,11 @@
 
 export namespace SplineLayoutSection {
 
-    export type SectionName = 'header' | 'sidebar';
+    export type SectionName = 'header' | 'sidebar' | 'sidebarHeader'
 
     export const SectionName = {
         header: 'header' as SectionName,
         sidebar: 'sidebar' as SectionName,
+        sidebarHeader: 'sidebarHeader' as SectionName,
     }
 }

@@ -23,6 +23,8 @@ import { Component, Input } from '@angular/core'
 })
 export class SlSidebarLogoComponent {
 
+    @Input() name = 'Spline'
+    @Input() imageUrl = './assets/images/logo.png'
     @Input() showOnlyLogo: boolean
 
 }

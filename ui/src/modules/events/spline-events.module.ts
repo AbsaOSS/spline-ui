@@ -17,6 +17,7 @@
 import { CommonModule } from '@angular/common'
 import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatButtonModule } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card'
 import { MatDividerModule } from '@angular/material/divider'
@@ -32,7 +33,7 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatTreeModule } from '@angular/material/tree'
 import { RouterModule } from '@angular/router'
 import { SplineApiModule } from 'spline-api'
-import { SplineCommonModule } from 'spline-common'
+import { SplineCommonModule, SplineListBoxModule } from 'spline-common'
 import { SplineDataViewModule } from 'spline-common/data-view'
 import { DynamicTableCommonCellsModule, DynamicTableModule } from 'spline-common/dynamic-table'
 import { SplineGraphModule } from 'spline-common/graph'
@@ -57,6 +58,8 @@ import { EventOverviewStoreFacade } from './store'
     ],
     imports: [
         CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
         HttpClientModule,
         RouterModule,
         MatTableModule,
@@ -87,7 +90,8 @@ import { EventOverviewStoreFacade } from './store'
         SplineGraphSharedModule,
         DynamicTableModule,
         DynamicTableCommonCellsModule,
-        SplineDynamicTableSharedModule
+        SplineDynamicTableSharedModule,
+        SplineListBoxModule,
     ],
     exports: [
         ...fromPages.pageComponents,

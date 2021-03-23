@@ -47,6 +47,8 @@ export class DataSourcesListPageComponent extends BaseLocalStateComponent<DataSo
 
     readonly dataMap = DataSourcesListDtSchema.getSchema()
 
+    readonly filterModel = DataSourcesListPage.createFilterModel()
+
     constructor(readonly dataSource: SplineDataSourcesDataSource) {
         super()
 
