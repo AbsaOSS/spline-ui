@@ -14,33 +14,26 @@
  * limitations under the License.
  */
 
-import { SplineDateRangeFilter, SplineDateRangeFilterConsumerStore } from 'spline-common'
-import { SplineDateRangeValue } from 'spline-utils'
+import { ExecutionEventsQuery } from 'spline-api'
+import { DynamicFilterSchema } from 'spline-common/dynamic-filter'
+import { DataSourceWithDynamicFilter, ExecutionEventsDynamicFilter } from 'spline-shared'
 
 
 export namespace EventsListPage {
 
-    export type State = {
-        dateRangeFilter: SplineDateRangeFilterConsumerStore.State
+    export const FilterId = { ...ExecutionEventsDynamicFilter.FilterId }
+    export type Filter = ExecutionEventsDynamicFilter.Filter
+
+    export function getDynamicFilterSchema(): DynamicFilterSchema<Filter> {
+        return [
+            ExecutionEventsDynamicFilter.getExecutedAtFilterSchema(),
+            ExecutionEventsDynamicFilter.getWriteModeFilterSchema()
+        ]
     }
 
-    export function getDefaultState(): State {
-        return {
-            dateRangeFilter: SplineDateRangeFilterConsumerStore.getDefaultState()
-        }
+    export function getFiltersMapping(): DataSourceWithDynamicFilter.FiltersMapping<ExecutionEventsQuery.QueryFilter, Filter> {
+        return ExecutionEventsDynamicFilter.getFilterMapping()
     }
 
-    export function reduceDateRangeFilterChanged(state: State, value: SplineDateRangeFilter.Value | null): State {
-        return {
-            ...state,
-            dateRangeFilter: SplineDateRangeFilterConsumerStore.reduceValueChanged(state.dateRangeFilter, value)
-        }
-    }
 
-    export function reduceDateRangeFilterBoundsChanged(state: State, value: SplineDateRangeValue | null): State {
-        return {
-            ...state,
-            dateRangeFilter: SplineDateRangeFilterConsumerStore.reduceBoundsChanged(state.dateRangeFilter, value)
-        }
-    }
 }

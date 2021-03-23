@@ -37,6 +37,8 @@ import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material'
 import { SplineApiModule } from 'spline-api'
 import { SplineCommonModule } from 'spline-common'
 import { SplineDataViewModule } from 'spline-common/data-view'
+import { DynamicFilterModule } from 'spline-common/dynamic-filter'
+import { DfControlDateRangeModule, DfControlSelectModule } from 'spline-common/dynamic-filter/filter-controls'
 import { DynamicTableCommonCellsModule, DynamicTableModule } from 'spline-common/dynamic-table'
 import { SplineLayoutModule } from 'spline-common/layout'
 import { SplineApiConfigModule } from 'spline-shared'
@@ -87,7 +89,10 @@ import { SplineDataSourceStore } from './store/reducers/base'
         DynamicTableModule,
         DynamicTableCommonCellsModule,
         SplineDynamicTableSharedModule,
-        ScrollingModule
+        ScrollingModule,
+        DynamicFilterModule,
+        DfControlSelectModule,
+        DfControlDateRangeModule
     ],
     exports: [
         ...fromPages.pageComponents,

@@ -15,23 +15,21 @@
  */
 
 import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute, Router } from '@angular/router'
-import { isEqual } from 'lodash-es'
 import { Observable } from 'rxjs'
-import { distinctUntilChanged, filter, map, skip, takeUntil, withLatestFrom } from 'rxjs/operators'
-import { ExecutionEvent, ExecutionEventFacade, ExecutionEventField, ExecutionEventsQuery, SplineDataSourceInfo } from 'spline-api'
-import { SplineDateRangeFilter } from 'spline-common'
+import { filter, map, takeUntil, withLatestFrom } from 'rxjs/operators'
+import { ExecutionEvent, ExecutionEventFacade, ExecutionEventsQuery, SplineDataSourceInfo } from 'spline-api'
+import { DynamicFilterFactory, DynamicFilterModel } from 'spline-common/dynamic-filter'
 import { DtCellCustomEvent } from 'spline-common/dynamic-table'
-import { BaseLocalStateComponent, SearchQuery, SplineDateRangeValue } from 'spline-utils'
+import { DataSourceWithDynamicFilter } from 'spline-shared'
+import { BaseLocalStateComponent } from 'spline-utils'
 
 import { DsStateHistoryDataSource } from '../../../data-sources'
 import { DsStateHistoryDtSchema } from '../../../dynamic-table'
 import { DsOverviewStoreFacade } from '../../../services'
 
 import { DsOverviewHistoryPage } from './ds-overview-history.page.models'
-import SearchParams = SearchQuery.SearchParams
 
-// TODO: Replace redundant filter logic with some generic filter model.
+
 @Component({
     selector: 'data-sources-overview-history-page',
     templateUrl: './ds-overview-history.page.component.html',
@@ -52,17 +50,16 @@ export class DsOverviewHistoryPageComponent extends BaseLocalStateComponent<DsOv
     readonly dataMap = DsStateHistoryDtSchema.getSchema()
     readonly dataSourceInfo$: Observable<SplineDataSourceInfo>
 
+    filterModel: DynamicFilterModel<DsOverviewHistoryPage.Filter>
+
     constructor(readonly dataSource: DsStateHistoryDataSource,
-                private readonly activatedRoute: ActivatedRoute,
-                private readonly router: Router,
+                private readonly dynamicFilterFactory: DynamicFilterFactory,
                 private readonly store: DsOverviewStoreFacade) {
         super()
 
         this.updateState(
             DsOverviewHistoryPage.getDefaultState()
         )
-
-        this.initDateRangeFilter()
 
         this.dataSourceInfo$ = this.store.isInitialized$
             .pipe(
@@ -85,6 +82,18 @@ export class DsOverviewHistoryPageComponent extends BaseLocalStateComponent<DsOv
     }
 
     ngOnInit(): void {
+        this.dynamicFilterFactory
+            .schemaToModel<DsOverviewHistoryPage.Filter>(
+                DsOverviewHistoryPage.getDynamicFilterSchema()
+            )
+            .subscribe(model => {
+                this.filterModel = model
+                DataSourceWithDynamicFilter.bindDynamicFilter<ExecutionEventsQuery.QueryFilter, DsOverviewHistoryPage.Filter>(
+                    this.dataSource,
+                    this.filterModel,
+                    DsOverviewHistoryPage.getFiltersMapping()
+                )
+            })
     }
 
     onCellEvent($event: DtCellCustomEvent<ExecutionEvent>): void {
@@ -97,98 +106,11 @@ export class DsOverviewHistoryPageComponent extends BaseLocalStateComponent<DsOv
         }
     }
 
-    onDateFilterChanged(value: SplineDateRangeFilter.Value): void {
-        this.updateDateRangeFilterValue(value)
-    }
-
     onSideDialogClosed(): void {
         this.updateState(
             DsOverviewHistoryPage.reduceSelectDsState(
                 this.state, null
             )
         )
-    }
-
-    private updateDateRangeFilterValue(value: SplineDateRangeFilter.Value): void {
-        this.updateState(
-            DsOverviewHistoryPage.reduceDateRangeFilterChanged(
-                this.state, value
-            )
-        )
-    }
-
-    private initDateRangeFilter(): void {
-        //
-        // [ACTION] :: FilterValue changed
-        //      => fetch data
-        //
-        this.state$
-            .pipe(
-                map(state => state.dateRangeFilter.value),
-                skip(1),
-                takeUntil(this.destroyed$),
-                distinctUntilChanged((left, right) => isEqual(left, right)),
-                filter(filterValue => {
-                    const searchParams = this.dataSource.searchParams
-                    const currentDsFilterValue: SplineDateRangeValue = searchParams.filter.executedAtFrom
-                        ? {
-                            dateFrom: searchParams.filter.executedAtFrom,
-                            dateTo: searchParams.filter.executedAtTo,
-                        }
-                        : null
-
-                    return !isEqual(filterValue, currentDsFilterValue)
-                })
-            )
-            .subscribe(filterValue => {
-                this.dataSource.setFilter({
-                    ...this.dataSource.searchParams.filter,
-                    executedAtFrom: filterValue?.dateFrom ?? undefined,
-                    executedAtTo: filterValue?.dateTo ?? undefined,
-                })
-            })
-
-        //
-        // [ACTION] :: SearchParams changed
-        //      => update current date range filter value
-        //
-        this.dataSource.searchParams$
-            .pipe(
-                takeUntil(this.destroyed$),
-                map((searchParams: SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>) => {
-
-                    if (!searchParams.filter?.executedAtFrom || !searchParams.filter?.executedAtTo) {
-                        return null
-                    }
-
-                    return {
-                        dateFrom: searchParams.filter.executedAtFrom,
-                        dateTo: searchParams.filter.executedAtTo,
-                    }
-                }),
-                filter(filterValue => !isEqual(filterValue, this.state.dateRangeFilter.value)),
-            )
-            .subscribe(
-                filterValue => this.updateDateRangeFilterValue(filterValue),
-            )
-
-        //
-        // [ACTION] :: DateRange Bounds changed (from the fetched data)
-        //      => update current date range filter bounds value
-        //
-        this.dataSource.dataState$
-            .pipe(
-                takeUntil(this.destroyed$),
-                map(dataState => dataState?.data?.dateRangeBounds),
-                distinctUntilChanged((left, right) => isEqual(left, right)),
-                filter(dateRangeBounds => !isEqual(dateRangeBounds, this.state.dateRangeFilter.bounds))
-            )
-            .subscribe(dateRangeBounds => {
-                this.updateState(
-                    DsOverviewHistoryPage.reduceDateRangeFilterBoundsChanged(
-                        this.state, dateRangeBounds
-                    )
-                )
-            })
     }
 }

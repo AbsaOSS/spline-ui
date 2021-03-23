@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ module.exports = {
             ],
             'rules': {
                 'import/newline-after-import': ['error', {'count': 2}],
-                '@typescript-eslint/no-use-before-define': ['error', {'functions': false}],
+                '@typescript-eslint/no-use-before-define': ['warn', {functions: false, classes: false}],
                 '@typescript-eslint/no-empty-function': 0,
                 '@typescript-eslint/no-var-requires': 0,
                 '@typescript-eslint/no-explicit-any': 0,
@@ -70,12 +70,7 @@ module.exports = {
                     }
                 ],
                 '@typescript-eslint/no-namespace': 0,
-                '@typescript-eslint/explicit-function-return-type': [
-                    'warn',
-                    {
-                        "allowExpressions": true
-                    }
-                ],
+                '@typescript-eslint/explicit-function-return-type': 0,
                 'no-inner-declarations': 0,
                 'max-lines': 0,
                 'brace-style': [
@@ -119,7 +114,7 @@ module.exports = {
                     'error',
                     {
                         'type': 'attribute',
-                        'prefix': 'spline',
+                        'prefix': ['spline', 'app'],
                         'style': 'camelCase'
                     }
                 ],
@@ -127,7 +122,7 @@ module.exports = {
                     'error',
                     {
                         'type': 'element',
-                        'prefix': 'spline',
+                        'prefix': ['spline', 'app'],
                         'style': 'kebab-case'
                     }
                 ],
@@ -186,7 +181,11 @@ module.exports = {
                 '@angular-eslint/no-outputs-metadata-property': 'error',
                 '@angular-eslint/use-lifecycle-interface': 'warn',
                 '@angular-eslint/use-pipe-transform-interface': 'error',
-                '@typescript-eslint/prefer-regexp-exec': 0,
+                '@typescript-eslint/no-unsafe-return': 'warn',
+                '@typescript-eslint/no-unsafe-member-access': 'warn',
+                '@typescript-eslint/no-unsafe-assignment': 'off',
+                '@typescript-eslint/no-unsafe-call': 'warn',
+
             }
         },
         {
@@ -198,7 +197,6 @@ module.exports = {
                 '@angular-eslint/template'
             ],
             'rules': {
-                '@angular-eslint/template/banana-in-a-box': 'error',
                 '@angular-eslint/template/no-negated-async': 'error'
             }
         }

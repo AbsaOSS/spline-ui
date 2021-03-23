@@ -6,9 +6,6 @@
         "tslint-angular"
     ],
     "rules": {
-      "deprecation": {
-        "severity": "warning"
-      },
         "one-line": [
             true,
             "check-open-brace",
@@ -17,22 +14,6 @@
         "member-access": [
             true,
             "no-public"
-        ],
-        "member-ordering": [
-            true,
-            {
-                "order": [
-                    "public-static-field",
-                    "public-instance-field",
-                    "private-static-field",
-                    "private-instance-field",
-                    "public-constructor",
-                    "private-constructor",
-                    "public-instance-method",
-                    "protected-instance-method",
-                    "private-instance-method"
-                ]
-            }
         ],
         "max-classes-per-file": false,
         "no-namespace": false,

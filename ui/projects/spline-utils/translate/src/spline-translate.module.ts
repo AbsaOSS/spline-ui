@@ -63,7 +63,7 @@ export class SplineTranslateModule {
         translate.setDefaultLang(config.defaultLang)
     }
 
-    static forChild(config: SplineTranslateChildConfig): ModuleWithProviders<SplineTranslateModule> {
+    static forChild(config: SplineTranslateChildConfig = {}): ModuleWithProviders<SplineTranslateModule> {
         return {
             ngModule: SplineTranslateModule,
             providers: [

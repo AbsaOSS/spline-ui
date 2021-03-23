@@ -86,7 +86,7 @@ export namespace DataSourcesListDtSchema {
                 ...DtCellLink.getColSchema(
                     (rowData: ExecutionEvent) => ({
                         title: rowData.applicationName,
-                        routerLink: EventsRouting.getEventOverviewPageUrl(rowData.executionEventId),
+                        routerLink: ['/events/overview', rowData.executionEventId],
                         description: rowData.applicationId
                     })
                 ),

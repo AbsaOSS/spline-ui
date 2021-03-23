@@ -14,36 +14,21 @@
  * limitations under the License.
  */
 
-import { ExecutionEvent } from 'spline-api'
-import { SplineDateRangeFilter, SplineDateRangeFilterConsumerStore } from 'spline-common'
-import { SplineDateRangeValue } from 'spline-utils'
+import { ExecutionEvent, ExecutionEventsQuery } from 'spline-api'
+import { DynamicFilterSchema } from 'spline-common/dynamic-filter'
+import { DfControlDateRange } from 'spline-common/dynamic-filter/filter-controls'
+import { DataSourceWithDynamicFilter, ExecutionEventsDynamicFilter } from 'spline-shared'
 
 
 export namespace DsOverviewHistoryPage {
 
     export type State = {
-        dateRangeFilter: SplineDateRangeFilterConsumerStore.State
         selectedExecutionEvent: ExecutionEvent | null
     }
 
     export function getDefaultState(): State {
         return {
-            dateRangeFilter: SplineDateRangeFilterConsumerStore.getDefaultState(),
             selectedExecutionEvent: null
-        }
-    }
-
-    export function reduceDateRangeFilterChanged(state: State, value: SplineDateRangeFilter.Value | null): State {
-        return {
-            ...state,
-            dateRangeFilter: SplineDateRangeFilterConsumerStore.reduceValueChanged(state.dateRangeFilter, value)
-        }
-    }
-
-    export function reduceDateRangeFilterBoundsChanged(state: State, value: SplineDateRangeValue | null): State {
-        return {
-            ...state,
-            dateRangeFilter: SplineDateRangeFilterConsumerStore.reduceBoundsChanged(state.dateRangeFilter, value)
         }
     }
 
@@ -53,4 +38,24 @@ export namespace DsOverviewHistoryPage {
             selectedExecutionEvent: value
         }
     }
+
+    export type Filter = ExecutionEventsDynamicFilter.Filter
+
+    export type FilterId = keyof Filter
+    export const FilterId = { ...ExecutionEventsDynamicFilter.FilterId }
+
+    export function getDynamicFilterSchema(): DynamicFilterSchema<Filter> {
+        return [
+            {
+                ...ExecutionEventsDynamicFilter.getExecutedAtFilterSchema(),
+                label: 'DATA_SOURCES.DS_STATE_HISTORY__FILTER__CREATED_AT'
+            } as DfControlDateRange.Schema<FilterId>,
+            ExecutionEventsDynamicFilter.getWriteModeFilterSchema()
+        ]
+    }
+
+    export function getFiltersMapping(): DataSourceWithDynamicFilter.FiltersMapping<ExecutionEventsQuery.QueryFilter, Filter> {
+        return ExecutionEventsDynamicFilter.getFilterMapping()
+    }
+
 }

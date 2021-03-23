@@ -14,18 +14,11 @@
   ~ limitations under the License.
   -->
 
-<button mat-button class="px-0">
-    <div class="spline-inline-filter">
-        <div class="spline-inline-filter__inner">
-            <div class="spline-inline-filter__icon" *ngIf="icon">
-                <spline-icon [icon]="icon"></spline-icon>
-            </div>
-            <div class="spline-inline-filter__value">
-                <ng-content></ng-content>
-            </div>
-            <div class="spline-inline-filter__label" *ngIf="label">
-                {{ label }}
-            </div>
-        </div>
-    </div>
-</button>
+<spline-date-filter [label]="model.label"
+                    [icon]="model.icon ? model.icon : defaultIcon"
+                    [maxDate]="model.bounds?.dateTo"
+                    [minDate]="model.bounds?.dateFrom"
+                    [value]="model.value$ | async"
+                    (valueChanged$)="onDateFilterChanged($event)">
+
+</spline-date-filter>

@@ -22,3 +22,8 @@ export type SplineDateRangeValue<TDate = Date> = {
     dateFrom: TDate | null
     dateTo: TDate | null
 }
+
+export type GenericEvent<TData extends SplineRecord = SplineRecord> = {
+    eventName: string
+    data?: TData
+}

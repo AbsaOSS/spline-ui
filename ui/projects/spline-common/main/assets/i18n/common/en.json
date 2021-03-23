@@ -12,7 +12,7 @@
         "DELETE": "Delete",
         "CANCEL": "Cancel",
         "SUBMIT": "Submit",
-        "SEARCH": "Search",
+        "SEARCH": "Search ...",
         "REMOVE": "Remove",
         "ADD": "Add",
         "LOADING": "Loading ...",
@@ -24,6 +24,13 @@
         "SERVER_COMMUNICATION_ERROR__STATUS_CODE": "Status Code",
         "NO_RESULTS_MESSAGE": "No data found.",
         "NO_OPTIONS_FOUND": "No options found.",
-        "DATE_FILTER__EMPTY_VALUE_LABEL": "Everything"
+        "DATE_FILTER__EMPTY_VALUE_LABEL": "Everything",
+        "LIST_BOX": {
+            "SELECT_ALL_LABEL": "(Select All)"
+        },
+        "DATA_SOURCE_WRITE_MODE": {
+            "APPEND": "Append",
+            "OVERRIDE": "Override"
+        }
     }
 }

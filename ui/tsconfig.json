@@ -59,6 +59,18 @@
             "spline-common/dynamic-table/*": [
                 "projects/spline-common/dynamic-table/src/public-api/*"
             ],
+            "spline-common/dynamic-filter/filter-controls": [
+                "projects/spline-common/dynamic-filter/filter-controls/src/public-api"
+            ],
+            "spline-common/dynamic-filter/filter-controls/*": [
+                "projects/spline-common/dynamic-filter/filter-controls/src/public-api/*"
+            ],
+            "spline-common/dynamic-filter": [
+                "projects/spline-common/dynamic-filter/main/src/public-api"
+            ],
+            "spline-common/dynamic-filter/*": [
+                "projects/spline-common/dynamic-filter/main/src/public-api/*"
+            ],
             "spline-common": [
                 "projects/spline-common/main/src/public-api"
             ],
