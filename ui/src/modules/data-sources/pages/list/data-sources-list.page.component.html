@@ -13,7 +13,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<div class="container" *ngIf="state$ | async as state">
+<div class="container">
 
     <h1 class="page-title">
         {{'DATA_SOURCES.DS_LIST_PAGE__TITLE' | translate}}
@@ -22,15 +22,9 @@
     <spline-search-dynamic-table [dataMap]="dataMap"
                                  [dataSource]="dataSource">
 
-        <spline-date-filter *ngIf="!!state.dateRangeFilter?.bounds"
-                            [label]="'DATA_SOURCES.DS_LIST__FILTER__MODIFIED_AT' | translate"
-                            [showIcon]="false"
-                            [maxDate]="state.dateRangeFilter.bounds?.dateTo"
-                            [minDate]="state.dateRangeFilter.bounds?.dateFrom"
-                            [value]="state.dateRangeFilter?.value"
-                            (valueChanged$)="onDateFilterChanged($event)">
-
-        </spline-date-filter>
+        <dynamic-filter-container *ngIf="filterModel"
+                                  [model]="filterModel">
+        </dynamic-filter-container>
 
     </spline-search-dynamic-table>
 </div>

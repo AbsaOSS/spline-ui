@@ -16,7 +16,7 @@
 
 <ng-container *ngIf="options$ | async as options">
     <div *ngIf="value$ | async as value"
-         class="dt-cell dt-cell-link--style-{{ options?.style ? options.style : defaultLinkStyle }}">
+         class="dt-cell dt-cell-link dt-cell-link--style-{{ options?.style ? options.style : defaultLinkStyle }}">
 
         <spline-long-text [tooltip]="value.title">
             <ng-container *ngIf="value?.routerLink || value?.onClick || value?.emitCellEvent; else invalidRouterLink">

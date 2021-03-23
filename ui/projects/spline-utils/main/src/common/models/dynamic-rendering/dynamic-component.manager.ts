@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,23 +24,26 @@ export interface IDynamicComponentFactory<TComponent = any> {
 
 export abstract class DynamicComponentManager<TFactory extends IDynamicComponentFactory, TComponent> {
 
-    protected factoriesMap = new Map<string, TFactory>()
+    // manually registration
+    protected staticFactoriesMap = new Map<string, TFactory>()
 
     constructor(protected readonly injector: Injector) {
     }
 
-    getFactory(type: string): TFactory | null {
+    getFactory(type: string): TFactory | undefined {
 
-        if (this.factoriesMap.has(type)) {
-            return this.factoriesMap.get(type)
+        const factoriesMapFromProviders = this.toFactoriesMap(this.getFactoriesProvidersList() || [])
+
+        if (factoriesMapFromProviders.has(type)) {
+            return factoriesMapFromProviders.get(type)
         }
 
-        this.factoriesMap = this.toFactoriesMap(this.getFactoriesProvidersList())
+        if (this.staticFactoriesMap.has(type)) {
+            return this.staticFactoriesMap.get(type)
+        }
 
-        // in case if cell factory was not found try to refresh factories list
-        return this.factoriesMap.has(type)
-            ? this.factoriesMap.get(type)
-            : null
+
+        return undefined
     }
 
     getComponentType(type: string): Type<TComponent> | null {
@@ -48,6 +51,10 @@ export abstract class DynamicComponentManager<TFactory extends IDynamicComponent
         return factory
             ? factory.componentType
             : null
+    }
+
+    registerStaticFactory(factory: TFactory): void {
+        this.staticFactoriesMap.set(factory.type, factory)
     }
 
     protected toFactoriesMap(factoriesListProvider: Type<TFactory>[]): Map<string, TFactory> {
@@ -61,6 +68,6 @@ export abstract class DynamicComponentManager<TFactory extends IDynamicComponent
             }, new Map<string, TFactory>())
     }
 
-    protected abstract getFactoriesProvidersList(): Type<TFactory>[];
+    protected abstract getFactoriesProvidersList(): Type<TFactory>[]
 
 }

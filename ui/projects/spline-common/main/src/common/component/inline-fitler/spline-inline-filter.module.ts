@@ -18,24 +18,31 @@ import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
+import { MatMenuModule } from '@angular/material/menu'
+import { SplineTranslateModule } from 'spline-utils/translate'
 
 import { SplineIconModule } from '../icon'
+import { SplineLongTextModule } from '../long-text'
 
-import { SplineInlineFilterComponent } from './spline-inline-filter.component'
+import { splineInlineFiltersComponents } from './components'
+
 
 
 @NgModule({
     declarations: [
-        SplineInlineFilterComponent,
+        ...splineInlineFiltersComponents,
     ],
     imports: [
         CommonModule,
         MatIconModule,
         MatButtonModule,
         SplineIconModule,
+        MatMenuModule,
+        SplineTranslateModule,
+        SplineLongTextModule,
     ],
     exports: [
-        SplineInlineFilterComponent
+        ...splineInlineFiltersComponents
     ],
 })
 export class SplineInlineFilterModule {

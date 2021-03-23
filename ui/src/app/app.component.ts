@@ -31,7 +31,8 @@ import { AppStore } from './store'
 })
 export class AppComponent extends BaseLocalStateComponent<AppStore.State> {
 
-    constructor(private readonly router: Router, private readonly splineConfigService: SplineConfigService) {
+    constructor(private readonly router: Router,
+                private readonly splineConfigService: SplineConfigService) {
         super()
         this.updateState(
             AppStore.getDefaultState()

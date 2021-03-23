@@ -16,10 +16,12 @@
 
 
 import { SplineSafeHtmlPipe } from './safe-html.pipe'
+import { SplineSearchPipe } from './search.pipe'
 
 
 export * from './public-api'
 
 export const splineUtilsPipes = [
-    SplineSafeHtmlPipe
+    SplineSafeHtmlPipe,
+    SplineSearchPipe
 ]

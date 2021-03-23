@@ -132,7 +132,7 @@ export namespace DsOverviewDetailsStore {
                     {
                         label: 'DATA_SOURCES.DETAILS__EXECUTION_EVENT',
                         value: executionEvent[ExecutionEventField.applicationName],
-                        routerLink: EventsRouting.getEventOverviewPageUrl(executionEvent[ExecutionEventField.executionEventId])
+                        routerLink: ['/events/overview', executionEvent[ExecutionEventField.executionEventId]]
                     },
                     {
                         label: 'DATA_SOURCES.DETAILS__EXECUTION_PLAN',

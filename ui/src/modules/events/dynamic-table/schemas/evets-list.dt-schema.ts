@@ -17,7 +17,6 @@
 import { ExecutionEvent, ExecutionEventField } from 'spline-api'
 import { DtCellDateTime, DtCellLink, DynamicTableDataMap } from 'spline-common/dynamic-table'
 import { SplineDataSourceSharedDtSchema } from 'spline-shared/dynamic-table'
-import { EventsRouting } from 'spline-shared/events'
 
 
 export namespace EventsListDtSchema {
@@ -37,7 +36,7 @@ export namespace EventsListDtSchema {
                 ...DtCellLink.getColSchema(
                     (rowData: ExecutionEvent) => ({
                         title: rowData.applicationName,
-                        routerLink: EventsRouting.getEventOverviewPageUrl(rowData.executionEventId),
+                        routerLink: ['/events/overview', rowData.executionEventId],
                         description: rowData.applicationId
                     }),
                     {

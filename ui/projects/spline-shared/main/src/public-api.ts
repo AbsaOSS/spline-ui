@@ -15,4 +15,5 @@
  */
 
 export * from './api-config/public-api'
+export * from './common/public-api'
 export * from './spline-config/public-api'

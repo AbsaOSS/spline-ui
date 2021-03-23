@@ -72,6 +72,7 @@ $border-radius: $height / 2;
         font-size: 14px;
         outline: none;
         padding: 0 3rem;
+        width: 100%;
 
         &::placeholder {
             color: $input-text-color;
@@ -142,4 +143,31 @@ spline-search-box[theme='grey'] .spline-search-box {
 
 spline-search-box[theme='white-transparent'] .spline-search-box {
     @include spline-search-box($color-white-25, $color-white-55, $color-grey-dark, $color-grey-light-2);
+}
+
+
+@mixin spline-search-box-size($height: 40px, $padding-x: 0.75rem, $icon-size: 22px, $font-size: 14px) {
+    $border-radius: $height / 2;
+
+    border-radius: $border-radius;
+    display: flex;
+    line-height: $height;
+
+    &__search-icon,
+    &__clear-icon {
+        @include icon-size($icon-size);
+    }
+
+    &__clear-icon {
+        right: $padding-x;
+    }
+
+    &__search-icon {
+        left: $padding-x;
+    }
+
+    input {
+        font-size: $font-size;
+        padding: 0 calc((#{$padding-x} * 2 + #{$icon-size}));
+    }
 }

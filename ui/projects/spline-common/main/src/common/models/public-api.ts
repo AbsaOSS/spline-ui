@@ -15,4 +15,5 @@
  */
 
 export * from './spline-colors.models'
+export * from './data-source-write-mode.models'
 export * from './animations/slide-x-in-out.animation.models'
