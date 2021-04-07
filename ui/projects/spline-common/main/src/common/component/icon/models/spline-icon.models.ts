@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,4 +46,5 @@ export const SPLINE_ICONS_COLLECTION: Set<string> = new Set<string>([
     'children-nodes',
     'transit-connection',
     'cog-transfer-outline',
+    'alpha-o-circle-outline',
 ])

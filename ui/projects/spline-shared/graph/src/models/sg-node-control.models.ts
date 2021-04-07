@@ -121,7 +121,7 @@ export namespace SgNodeControl {
             [
                 NodeType.Generic,
                 {
-                    icon: 'arrow-down-circle',
+                    icon: 'alpha-o-circle-outline',
                     color: SplineColors.BLUE,
                 },
             ],
