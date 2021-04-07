@@ -19,7 +19,7 @@ import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@a
 import { Observable, of } from 'rxjs'
 import { tap } from 'rxjs/internal/operators'
 
-import { SplineConfig } from './spline-config.models'
+import { hasQueryParamsSplineConfig, SplineConfig } from './spline-config.models'
 import { SplineConfigService } from './spline-config.service'
 
 
@@ -39,7 +39,9 @@ export class SplineConfigResolver implements Resolve<SplineConfig> {
             : this.splineConfigService.initConfig(route.queryParamMap)
                 .pipe(
                     tap(config => {
-                        void this.router.navigateByUrl(config?.targetUrl ?? '/')
+                        if (hasQueryParamsSplineConfig(route.queryParamMap)) {
+                            void this.router.navigateByUrl(config?.targetUrl ?? '/')
+                        }
                     })
                 )
     }
