@@ -21,6 +21,7 @@ import { SplineDataSourceInfo, SplineDataSourceInfoDto, toDataSourceInfo } from 
 
 export type ExecutionPlan = {
     id: string
+    name: string
     inputDataSources?: SplineDataSourceInfo[]
     outputDataSource?: SplineDataSourceInfo
     agentInfo?: ExecutionPlanAgentInfo
@@ -44,19 +45,19 @@ export type ExecutionPlanSystemInfo =
 
 export type ExecutionPlanDto = {
     _id: string
+    name?: string
     inputs?: SplineDataSourceInfoDto[]
     output?: SplineDataSourceInfoDto
     agentInfo?: ExecutionPlanAgentInfo
-    systemInfo?: ExecutionPlanSystemInfo
+    systemInfo: ExecutionPlanSystemInfo
     extra?: ExecutionPlanExtraInfoDto
 }
 
 export type ExecutionPlanExtraInfo =
     &
     {
-        appName: string
-        attributes?: AttributeSchema[]
-        dataTypes?: AttributeDataType[]
+        attributes: AttributeSchema[]
+        dataTypes: AttributeDataType[]
     }
     & Record<string, any>
 
@@ -64,7 +65,6 @@ export type ExecutionPlanExtraInfo =
 export type ExecutionPlanExtraInfoDto =
     &
     {
-        appName: string
         attributes?: AttributeSchema[]
         dataTypes?: AttributeDataTypeDto[]
     }
@@ -73,6 +73,9 @@ export type ExecutionPlanExtraInfoDto =
 export function toExecutionPlan(entity: ExecutionPlanDto): ExecutionPlan {
     return {
         id: entity._id,
+        // TODO: remove extra?.appName in the next minor release, 0.7.*.
+        //       For now we support it, but it is deprecated. Only `entity.name` field should be used instead in future.
+        name: (entity.name || entity.extra?.appName) ?? `[${entity.systemInfo.name} v${entity.systemInfo.version}]`,
         inputDataSources: entity.inputs.map(toDataSourceInfo),
         outputDataSource: toDataSourceInfo(entity.output),
         agentInfo: entity.agentInfo,
@@ -84,7 +87,8 @@ export function toExecutionPlan(entity: ExecutionPlanDto): ExecutionPlan {
 export function toExecutionPlanExtraInfo(entity: ExecutionPlanExtraInfoDto): ExecutionPlanExtraInfo {
     return {
         ...entity,
-        dataTypes: entity.dataTypes.map(toAttributeDataType),
+        attributes: entity?.attributes || [],
+        dataTypes: (entity?.dataTypes || []).map(toAttributeDataType),
     }
 }
 

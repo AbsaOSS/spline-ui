@@ -32,24 +32,24 @@ export namespace PlanInfo {
     import getNodeStyles = SgNodeControl.getNodeStyles
 
 
-    export function toDataViewSchema(data: ExecutionPlan): SplineDataViewSchema {
+    export function toDataViewSchema(executionPlan: ExecutionPlan): SplineDataViewSchema {
         return [
             SdWidgetCard.toSchema(
                 {
                     color: SplineColors.ORANGE,
                     icon: 'cog-transfer-outline',
-                    title: data?.extraInfo?.appName ? data?.extraInfo?.appName : 'PLANS.PLAN_INFO__DEFAULT_NAME',
+                    title: executionPlan.name,
                     iconTooltip: 'PLANS.PLAN_INFO__LABEL',
                 },
                 [
                     SdWidgetSimpleRecord.toSchema([
                         {
                             label: 'PLANS.PLAN_INFO__DETAILS__SYSTEM_INFO',
-                            value: `${data.systemInfo.name} ${data.systemInfo.version}`,
+                            value: `${executionPlan.systemInfo.name} ${executionPlan.systemInfo.version}`,
                         },
                         {
                             label: 'PLANS.PLAN_INFO__DETAILS__AGENT_INFO',
-                            value: `${data.agentInfo.name} ${data.agentInfo.version}`,
+                            value: `${executionPlan.agentInfo.name} ${executionPlan.agentInfo.version}`,
                         },
                     ]),
                 ],

@@ -15,7 +15,7 @@
   -->
 
 <sl-entity-header icon="cog-transfer-outline"
-                  [title]="executionPlan?.extraInfo?.appName ? executionPlan?.extraInfo?.appName : 'PLANS.PLAN_INFO__DEFAULT_NAME'"
+                  [title]="executionPlan.name"
                   [navTabs]="navTabs">
 
     <spline-data-record [label]="'PLANS.PLAN_INFO__DETAILS__SYSTEM_INFO' | translate">

@@ -88,14 +88,14 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         // TODO: Use some generic system for breadcrumbs definition.
         this.breadcrumbs$ = this.store.state$
             .pipe(
-                map(state => state.executionPlan?.extraInfo?.appName ?? 'PLANS.PLAN_INFO__DEFAULT_NAME'),
+                map(state => state.executionPlan.name),
                 distinctUntilChanged(),
-                map(appName => [
+                map(name => [
                     {
                         label: 'Execution Plan'
                     },
                     {
-                        label: appName
+                        label: name
                     },
                     {
                         label: 'Overview'
