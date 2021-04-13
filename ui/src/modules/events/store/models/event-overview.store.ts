@@ -23,7 +23,7 @@ import {
     Lineage,
     LineageNodeLink
 } from 'spline-api'
-import { SdWidgetSchema } from 'spline-common/data-view'
+import { SdWidgetSchema, SplineDataViewSchema } from 'spline-common/data-view'
 import { SgData } from 'spline-common/graph'
 import { SgNodeControl } from 'spline-shared/graph'
 import { ProcessingStore, SplineEntityStore, StringHelpers } from 'spline-utils'
@@ -46,8 +46,8 @@ export namespace EventOverviewStore {
         lineageDepth: ExecutionEventLineageOverviewDepth
         graphHasMoreDepth: boolean
         selectedNodeRelations: EventNodeInfo.NodeRelationsInfo | null
-        targetNodeDvs: SdWidgetSchema | null
-        targetExecutionPlanNodeDvs: SdWidgetSchema | null
+        targetNodeDvs: SplineDataViewSchema | null
+        targetExecutionPlanNodeDvs: SplineDataViewSchema | null
         graphNodeView: SgNodeControl.NodeView
         graphData: SgData | null
     }
@@ -114,16 +114,23 @@ export namespace EventOverviewStore {
             lineageDepth: lineageOverview.executionEventInfo.lineageDepth,
             graphHasMoreDepth: calculateHasMoreDepth(lineageOverview.executionEventInfo.lineageDepth),
             targetNodeId: lineageOverview.executionEventInfo.targetDataSourceId,
-            targetNodeDvs: EventNodeInfo.toDataSchema(
+            targetNodeDvs: EventNodeInfo.nodeToDataSchema(
                 SplineEntityStore.selectOne(lineageOverview.executionEventInfo.targetDataSourceId, nodesState)
             ),
             targetExecutionPlanNodeId: eventNode.id,
-            targetExecutionPlanNodeDvs: EventNodeInfo.toDataSchema(
-                SplineEntityStore.selectOne(eventNode.id, nodesState)
-            ),
         }
 
-        return calculateGraphDataMiddleware(newState)
+        return calculateTargetExecutionPlanNodeDvs(calculateGraphDataMiddleware(newState))
+    }
+
+    export function calculateTargetExecutionPlanNodeDvs(state: State): State {
+        const targetPlanNode: ExecutionEventLineageNode = SplineEntityStore.selectOne(state.targetExecutionPlanNodeId, state.nodes)
+        return {
+            ...state,
+            targetExecutionPlanNodeDvs: EventNodeInfo.nodeToDataSchema(
+                targetPlanNode, selectNodeRelations(state, targetPlanNode)
+            ),
+        }
     }
 
     export function __reduceFakeHistoryNode(state: State, nodeId: string): State {
@@ -238,12 +245,16 @@ export namespace EventOverviewStore {
             ...state,
             selectedNodeId: nodeId,
             selectedNodeRelations: selectedNode
-                ? {
-                    node: selectedNode,
-                    children: selectChildrenNodes(state, selectedNode.id),
-                    parents: selectParentNodes(state, selectedNode.id),
-                }
+                ? selectNodeRelations(state, selectedNode)
                 : null
+        }
+    }
+
+    export function selectNodeRelations(state: State, node: ExecutionEventLineageNode): EventNodeInfo.NodeRelationsInfo {
+        return {
+            node: node,
+            children: selectChildrenNodes(state, node.id),
+            parents: selectParentNodes(state, node.id),
         }
     }
 

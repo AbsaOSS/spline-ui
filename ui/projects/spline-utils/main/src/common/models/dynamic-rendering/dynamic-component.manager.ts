@@ -43,8 +43,8 @@ export abstract class DynamicComponentManager<TFactory extends IDynamicComponent
             : null
     }
 
-    getComponentType(cellType: string): Type<TComponent> | null {
-        const factory = this.getFactory(cellType)
+    getComponentType(type: string): Type<TComponent> | null {
+        const factory = this.getFactory(type)
         return factory
             ? factory.componentType
             : null

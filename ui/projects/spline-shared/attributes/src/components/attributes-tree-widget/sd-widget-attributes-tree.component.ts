@@ -48,7 +48,9 @@ export class SdWidgetAttributesTreeComponent extends SdWidgetBaseComponent<SdWid
     }
 
     onSelectedAttrChanged($event: { attributeId: string }): void {
-        const eventObj = SdWidgetAttributesTree.createEventSelectedAttrChanged($event.attributeId)
-        this.event$.emit(eventObj)
+        if (this.options?.allowAttrSelection !== false) {
+            const eventObj = SdWidgetAttributesTree.createEventSelectedAttrChanged($event.attributeId)
+            this.event$.emit(eventObj)
+        }
     }
 }

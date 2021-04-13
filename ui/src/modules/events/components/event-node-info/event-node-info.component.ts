@@ -19,7 +19,6 @@ import isEqual from 'lodash/isEqual'
 import { delay, distinctUntilChanged, filter, takeUntil } from 'rxjs/operators'
 import { ExecutionEventLineageNodeType, ExecutionPlanFacade, executionPlanIdToWriteOperationId } from 'spline-api'
 import { SplineDataWidgetEvent } from 'spline-common/data-view'
-import { SdWidgetAttributesTree } from 'spline-shared/attributes'
 import { SgNodeCardDataView } from 'spline-shared/data-view'
 import { BaseLocalStateComponent, GenericEventInfo, ProcessingStore } from 'spline-utils'
 
@@ -137,13 +136,4 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
         this.dataViewEvent$.next($event)
     }
 
-    onDataSourceDvsEvent($event: SplineDataWidgetEvent, executionPlansIds: string[]): void {
-
-        if ($event.type === SdWidgetAttributesTree.EVENT_TYPE__SELECTED_ATTR_CHANGED) {
-            // executionPlansIds === nodeId
-            this.highlightSpecificRelations$.next({
-                nodeIds: [this.nodeRelations.node.id, ...executionPlansIds]
-            })
-        }
-    }
 }

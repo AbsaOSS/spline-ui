@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import { ExecutionPlanAgentInfo, ExecutionPlanSystemInfo } from '../execution-plan'
 import { LineageNode } from '../lineage'
 
 import { ExecutionEventLineageNodeType } from './execution-event-lineage-node-type.models'
@@ -25,18 +26,24 @@ export type ExecutionEventLineageNode =
     {
         name: string
         type: ExecutionEventLineageNodeType
+        agentInfo?: ExecutionPlanAgentInfo
+        systemInfo?: ExecutionPlanSystemInfo
     }
 
 export type ExecutionEventLineageNodeDto = {
     _id: string
     name: string
     _type: ExecutionEventLineageNodeType
+    agentInfo?: ExecutionPlanAgentInfo
+    systemInfo?: ExecutionPlanSystemInfo
 }
 
 export function toExecutionEventLineageNode(entity: ExecutionEventLineageNodeDto): ExecutionEventLineageNode {
     return {
         id: entity._id,
         name: entity.name,
-        type: entity._type
+        type: entity._type,
+        agentInfo: entity?.agentInfo,
+        systemInfo: entity?.systemInfo,
     }
 }

@@ -14,9 +14,15 @@
  * limitations under the License.
  */
 
-import { ExecutionEventLineageNode, ExecutionEventLineageNodeType, OperationDetails, operationIdToExecutionPlanId } from 'spline-api'
+import {
+    dataSourceUriToName,
+    ExecutionEventLineageNode,
+    ExecutionEventLineageNodeType,
+    OperationDetails,
+    operationIdToExecutionPlanId
+} from 'spline-api'
 import { SplineCardHeader } from 'spline-common'
-import { SdWidgetCard, SdWidgetSchema, SdWidgetSimpleRecord, SplineDataViewSchema } from 'spline-common/data-view'
+import { SdWidgetCard, SdWidgetRecordsList, SdWidgetSchema, SdWidgetSimpleRecord, SplineDataViewSchema } from 'spline-common/data-view'
 import { SdWidgetAttributesTree } from 'spline-shared/attributes'
 import { SgEventNodeInfoShared, SgNodeCardDataView } from 'spline-shared/data-view'
 import { ProcessingStore } from 'spline-utils'
@@ -36,32 +42,37 @@ export namespace EventNodeInfo {
             : 'EVENTS.EVENT_NODE_INFO__TOOLTIP__EXECUTION_PLAN'
     }
 
-    export function toDataSchema(nodeSource: ExecutionEventLineageNode): SdWidgetSchema<SdWidgetCard.Data> {
-        const nodeStyles = EventNodeControl.getNodeStyles(nodeSource)
-        const contentDataSchema: SplineDataViewSchema = nodeSource.type === ExecutionEventLineageNodeType.DataSource
-            ? [
-                SdWidgetSimpleRecord.toSchema({
-                    label: 'URI',
-                    value: nodeSource.name,
-                }),
-            ]
-            : []
+    function getNodeDefaultActions(nodeId: string): SplineCardHeader.Action[] {
+        return [
+            SgNodeCardDataView.getNodeRelationsHighlightToggleAction(nodeId),
+            SgNodeCardDataView.getNodeFocusAction(nodeId),
+        ]
+    }
 
-        const defaultActions = [
-            SgNodeCardDataView.getNodeRelationsHighlightToggleAction(nodeSource.id),
-            SgNodeCardDataView.getNodeFocusAction(nodeSource.id),
+    export function nodeToDataSchema(
+        nodeSource: ExecutionEventLineageNode,
+        nodeRelations?: EventNodeInfo.NodeRelationsInfo): SdWidgetSchema {
+
+        return nodeSource.type === ExecutionEventLineageNodeType.DataSource
+            ? dataSourceNodeToDataSchema(nodeSource)
+            : executionNodeToDataSchema(nodeSource, nodeRelations)
+    }
+
+    export function executionNodeToDataSchema(
+        nodeSource: ExecutionEventLineageNode,
+        nodeRelations: EventNodeInfo.NodeRelationsInfo): SdWidgetSchema {
+
+        const nodeStyles = EventNodeControl.getNodeStyles(nodeSource)
+
+        const actions: SplineCardHeader.Action[] = [
+            ...getNodeDefaultActions(nodeSource.id),
+            {
+                icon: 'launch',
+                tooltip: 'EVENTS.EVENT_NODE_CONTROL__ACTION__LAUNCH',
+                event: SgNodeCardDataView.toNodeWidgetEventInfo(WidgetEvent.LaunchExecutionEvent, nodeSource.id)
+            },
         ]
 
-        const actions: SplineCardHeader.Action[] = nodeSource.type === ExecutionEventLineageNodeType.Execution
-            ? [
-                ...defaultActions,
-                {
-                    icon: 'launch',
-                    tooltip: 'EVENTS.EVENT_NODE_CONTROL__ACTION__LAUNCH',
-                    event: SgNodeCardDataView.toNodeWidgetEventInfo(WidgetEvent.LaunchExecutionEvent, nodeSource.id)
-                },
-            ]
-            : [...defaultActions]
         return SdWidgetCard.toSchema(
             {
                 color: nodeStyles.color,
@@ -70,7 +81,71 @@ export namespace EventNodeInfo {
                 iconTooltip: getNodeInfoTooltip(nodeSource),
                 actions,
             },
-            contentDataSchema,
+            [
+                ...(
+                    nodeSource?.systemInfo
+                        ? [SdWidgetSimpleRecord.toSchema({
+                            label: 'EVENTS.EVENT_NODE_INFO__SYSTEM_INFO',
+                            value: `${nodeSource.systemInfo.name} ${nodeSource.systemInfo.version}`,
+                        })]
+                        : []
+                ),
+                ...(
+                    nodeSource?.agentInfo
+                        ? [SdWidgetSimpleRecord.toSchema({
+                            label: 'EVENTS.EVENT_NODE_INFO__AGENT_INFO',
+                            value: `${nodeSource.agentInfo.name} ${nodeSource.agentInfo.version}`,
+                        })]
+                        : []
+                ),
+                ...(
+                    nodeRelations?.children[0]?.name
+                        ? [SdWidgetRecordsList.toSchema([
+                            {
+                                value: dataSourceUriToName(nodeRelations.children[0].name),
+                                description: nodeRelations.children[0].name,
+                            }
+                        ],
+                        'EVENTS.EVENT_NODE_INFO__OUTPUT_DATA_SOURCES',
+                        )]
+                        :
+                        []
+                ),
+                ...(
+                    nodeRelations?.parents?.length
+                        ? [
+                            SdWidgetRecordsList.toSchema(
+                                nodeRelations?.parents
+                                    .map(node => ({
+                                        value: dataSourceUriToName(node.name),
+                                        description: node.name,
+                                    })),
+                                'EVENTS.EVENT_NODE_INFO__INPUT_DATA_SOURCES',
+                            )
+                        ]
+                        :
+                        []
+                ),
+            ],
+        )
+    }
+
+    export function dataSourceNodeToDataSchema(nodeSource: ExecutionEventLineageNode): SdWidgetSchema {
+        const nodeStyles = EventNodeControl.getNodeStyles(nodeSource)
+        return SdWidgetCard.toSchema(
+            {
+                color: nodeStyles.color,
+                icon: nodeStyles.icon,
+                title: EventNodeControl.extractNodeName(nodeSource),
+                iconTooltip: getNodeInfoTooltip(nodeSource),
+                actions: getNodeDefaultActions(nodeSource.id),
+            },
+            [
+                SdWidgetSimpleRecord.toSchema({
+                    label: 'URI',
+                    value: nodeSource.name,
+                }),
+            ],
         )
     }
 
@@ -87,10 +162,6 @@ export namespace EventNodeInfo {
 
     export type NodeInfoViewState = {
         nodeDvs: SplineDataViewSchema | null
-        parentsDvs: SplineDataViewSchema | null
-        childrenDvs: SplineDataViewSchema | null
-        parentsNumber: number
-        childrenNumber: number
         dataSourceSchemaDetailsList: DataSourceSchemaDetails[]
         loadingProcessing: ProcessingStore.EventProcessingState
     }
@@ -98,10 +169,6 @@ export namespace EventNodeInfo {
     export function getDefaultState(): NodeInfoViewState {
         return {
             nodeDvs: null,
-            parentsDvs: null,
-            childrenDvs: null,
-            parentsNumber: 0,
-            childrenNumber: 0,
             dataSourceSchemaDetailsList: [],
             loadingProcessing: ProcessingStore.getDefaultProcessingState(true)
         }
@@ -141,11 +208,7 @@ export namespace EventNodeInfo {
                                              operationsInfoList: OperationDetails[] = []): NodeInfoViewState {
         return {
             ...state,
-            nodeDvs: toDataSchema(nodeRelations.node),
-            childrenDvs: nodeRelations.children.map((node) => toDataSchema(node)),
-            parentsDvs: nodeRelations.parents.map((node) => toDataSchema(node)),
-            parentsNumber: nodeRelations?.parents?.length ?? 0,
-            childrenNumber: nodeRelations?.children?.length ?? 0,
+            nodeDvs: nodeToDataSchema(nodeRelations.node, nodeRelations),
             dataSourceSchemaDetailsList: operationsInfoList.length > 0 ? getOperationsDataSourceSchemasDvs(operationsInfoList) : [],
         }
     }
