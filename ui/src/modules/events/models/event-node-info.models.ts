@@ -19,7 +19,8 @@ import {
     ExecutionEventLineageNode,
     ExecutionEventLineageNodeType,
     OperationDetails,
-    operationIdToExecutionPlanId
+    operationIdToExecutionPlanId,
+    uriToDatsSourceId
 } from 'spline-api'
 import { SplineCardHeader } from 'spline-common'
 import { SdWidgetCard, SdWidgetRecordsList, SdWidgetSchema, SdWidgetSimpleRecord, SplineDataViewSchema } from 'spline-common/data-view'
@@ -104,6 +105,7 @@ export namespace EventNodeInfo {
                             {
                                 value: dataSourceUriToName(nodeRelations.children[0].name),
                                 description: nodeRelations.children[0].name,
+                                routerLink: ['/data-sources/overview', uriToDatsSourceId(nodeRelations.children[0].name)]
                             }
                         ],
                         'EVENTS.EVENT_NODE_INFO__OUTPUT_DATA_SOURCES',
@@ -119,6 +121,7 @@ export namespace EventNodeInfo {
                                     .map(node => ({
                                         value: dataSourceUriToName(node.name),
                                         description: node.name,
+                                        routerLink: ['/data-sources/overview', uriToDatsSourceId(node.name)]
                                     })),
                                 'EVENTS.EVENT_NODE_INFO__INPUT_DATA_SOURCES',
                             )
@@ -141,6 +144,11 @@ export namespace EventNodeInfo {
                 actions: getNodeDefaultActions(nodeSource.id),
             },
             [
+                SdWidgetSimpleRecord.toSchema({
+                    label: 'Name',
+                    value: dataSourceUriToName(nodeSource.name),
+                    routerLink: ['/data-sources/overview', uriToDatsSourceId(nodeSource.name)]
+                }),
                 SdWidgetSimpleRecord.toSchema({
                     label: 'URI',
                     value: nodeSource.name,

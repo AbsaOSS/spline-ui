@@ -21,12 +21,13 @@
             <spline-data-record [label]="record?.label" [description]="record?.description">
 
                 <span *ngIf="!record?.routerLink">
-                    {{record.value | translate}}
+                    {{ record.value | translate }}
                 </span>
 
                 <a *ngIf="!!record?.routerLink"
                    [routerLink]="record?.routerLink"
                    [queryParams]="record?.routerQueryParams">
+                    {{ record.value | translate }}
                 </a>
 
             </spline-data-record>

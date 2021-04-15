@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { dataSourceUriToName, OperationDetails } from 'spline-api'
+import { dataSourceUriToName, OperationDetails, uriToDatsSourceId } from 'spline-api'
 import { SdWidgetExpansionPanel, SdWidgetRecordsList, SdWidgetSchema, SplineDataViewSchema } from 'spline-common/data-view'
 import { SgNodeControl } from 'spline-shared/graph'
 
@@ -53,6 +53,7 @@ export namespace OperationRead {
                             .map(uri => ({
                                 value: dataSourceUriToName(uri),
                                 description: uri,
+                                routerLink: ['/data-sources/overview', uriToDatsSourceId(uri)]
                             })),
                         'PLANS.OPERATION__READ__INPUT_DATA_SOURCES_TITLE',
                     ),

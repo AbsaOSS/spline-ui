@@ -15,15 +15,17 @@
   -->
 
 <div class="spline-data-record">
+
     <div class="spline-data-record__label" *ngIf="label">
-        {{label | translate}}:
+        {{ label | translate }}:
     </div>
+
     <div class="spline-data-record__value">
 
         <ng-content></ng-content>
 
         <div class="spline-data-record__description" *ngIf="description">
-            {{description | translate}}
+            {{ description | translate }}
         </div>
 
     </div>

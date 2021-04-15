@@ -71,6 +71,7 @@ export namespace PlanInfo {
                         {
                             value: data.outputDataSource.name,
                             description: data.outputDataSource.uri,
+                            routerLink: ['/data-sources/overview', data.outputDataSource.id]
                         }
                     ],
                     'PLANS.PLAN_INFO__INPUT_OUTPUT_EX_PANEL__SECTION__OUTPUT',
@@ -80,6 +81,7 @@ export namespace PlanInfo {
                         .map(dataSourceInfo => ({
                             value: dataSourceInfo.name,
                             description: dataSourceInfo.uri,
+                            routerLink: ['/data-sources/overview', dataSourceInfo.id]
                         })),
                     'PLANS.PLAN_INFO__INPUT_OUTPUT_EX_PANEL__SECTION__INPUTS',
                 )
@@ -111,6 +113,7 @@ export namespace PlanInfo {
                     {
                         label: 'URI',
                         value: dataSourceInfo.uri,
+                        routerLink: ['/data-sources/overview', dataSourceInfo.id]
                     },
                 ]),
             ],

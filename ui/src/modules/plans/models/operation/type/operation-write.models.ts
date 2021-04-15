@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { dataSourceUriToName, OperationDetails } from 'spline-api'
+import { dataSourceUriToName, OperationDetails, uriToDatsSourceId } from 'spline-api'
 import { SdWidgetExpansionPanel, SdWidgetRecordsList, SdWidgetSchema, SplineDataViewSchema } from 'spline-common/data-view'
 import { SgNodeControl } from 'spline-shared/graph'
 
@@ -54,6 +54,7 @@ export namespace OperationWrite {
                             {
                                 value: dataSourceUriToName(properties.outputSource),
                                 description: properties.outputSource,
+                                routerLink: ['/data-sources/overview', uriToDatsSourceId(properties.outputSource)]
                             },
                         ],
                         'PLANS.OPERATION__WRITE__OUTPUT_DATA_SOURCE_TITLE',
