@@ -18,23 +18,27 @@
 
 $label-color: $color-black;
 
+spline-data-record {
+    display: block;
 
-.spline-data-record {
-    padding: 0.25rem 0;
+    .spline-data-record {
 
-    &__label {
-        color: $color-grey-dark-75;
-        font-size: 12px;
-    }
+        padding: 0.25rem 0;
 
-    &__description {
-        color: $color-grey-dark-75;
-        font-size: 12px;
-    }
+        &__label {
+            color: $color-grey-dark-75;
+            font-size: 12px;
+        }
 
-    &__value {
-        color: $color-black;
-        font-size: 13px;
-        font-weight: 500;
+        &__description {
+            color: $color-grey-dark-75;
+            font-size: 12px;
+        }
+
+        &__value {
+            color: $color-black;
+            font-size: 13px;
+            font-weight: 500;
+        }
     }
 }

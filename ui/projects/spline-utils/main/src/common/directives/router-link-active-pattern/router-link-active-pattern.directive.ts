@@ -69,7 +69,10 @@ export class RouterLinkActivePatternDirective extends BaseDirective implements O
 
     private isCurrentLinkActive(): boolean {
         if (this.splineRouterLinkActivePattern) {
-            const currentUrl = this.router.getCurrentNavigation()?.finalUrl?.toString()
+            const currentUrl = this.router.getCurrentNavigation()
+                ? this.router.getCurrentNavigation()?.finalUrl?.toString()
+                : this.router.url
+
             return RouterLinkActivePattern.isUrlActive(currentUrl, this.splineRouterLinkActivePattern)
         }
         else if (this.routerLink) {
