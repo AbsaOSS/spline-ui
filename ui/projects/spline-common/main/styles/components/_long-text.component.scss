@@ -17,5 +17,6 @@
 .spline-long-text-wrapper {
     overflow: hidden;
     text-overflow: ellipsis;
+    user-select: all;
     white-space: nowrap;
 }
