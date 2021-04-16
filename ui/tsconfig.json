@@ -15,6 +15,9 @@
             "es2018",
             "dom"
         ],
+        "types": [
+            "node"
+        ],
         "allowSyntheticDefaultImports": true,
         "emitDecoratorMetadata": true,
         "esModuleInterop": true,

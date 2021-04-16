@@ -1,0 +1,9 @@
+{
+    "COMMON": {
+        "LAYOUT": {
+            "APP_VERSION": "Version",
+            "BUILD_REVISION": "Build Revision",
+            "BUILD_TIMESTAMP": "Build Date"
+        }
+    }
+}

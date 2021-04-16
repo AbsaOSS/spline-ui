@@ -31,6 +31,8 @@ export class SplineLayoutCommonComponent implements AfterContentInit {
     @Input() isEmbeddedMode = false
     @Input() isSideNavExpanded = false
     @Input() appVersion: string
+    @Input() buildRevision: string
+    @Input() buildDate: Date
     @Input() noHeader = true
 
     @Output() sidenavExpanded$ = new EventEmitter<{ isExpanded: boolean }>()

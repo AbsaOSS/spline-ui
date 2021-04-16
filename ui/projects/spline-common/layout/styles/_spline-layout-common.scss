@@ -87,7 +87,13 @@ $spline-layout-settings-default: (
             }
         }
 
+        .mat-drawer-inner-container {
+            overflow-x: hidden;
+            // TODO: make scrollable just menu inner content and keep toggle button & logo fixed.
+        }
+
         .sl-sidenav {
+
             transition: all ease-in-out 100ms;
             width: map-get($settings, sidebar-width);
 
@@ -102,18 +108,20 @@ $spline-layout-settings-default: (
             }
 
             &__footer {
-                align-items: center;
                 color: $color-grey;
-                display: flex;
                 padding: 1rem 1rem 0.5rem 0.75rem;
             }
 
             &__version {
-                flex: 1;
-                font-size: 12px;
-                overflow: hidden;
-                text-overflow: ellipsis;
+                font-size: 10px;
+                line-height: 1;
                 white-space: nowrap;
+
+                &-label {
+                    color: $color-grey-2;
+                    font-size: 8px;
+                    margin-bottom: 2px;
+                }
             }
         }
 

@@ -15,6 +15,7 @@
  */
 
 import { environment } from '@env/environment'
+import moment from 'moment'
 
 import { SplineSidebarMenu } from '../../components'
 import { AppSidebarMenu } from '../../models'
@@ -25,6 +26,8 @@ export namespace AppStore {
     export interface State {
         isInitialized: boolean
         appVersion: string | null
+        buildRevision: string | null
+        buildDate: Date | null
         isEmbeddedMode: boolean
         isSideNavExpanded: boolean
         sidebarMenuItems: SplineSidebarMenu.MenuItem[]
@@ -34,6 +37,8 @@ export namespace AppStore {
         return {
             isInitialized: false,
             appVersion: environment.version,
+            buildRevision: environment.buildRevision ?? null,
+            buildDate: environment.buildTimestamp ? moment(environment.buildTimestamp).toDate() : null,
             isEmbeddedMode: false,
             isSideNavExpanded: false,
             sidebarMenuItems: AppSidebarMenu.getSidebarMenu(),

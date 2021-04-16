@@ -56,6 +56,7 @@ export type ExecutionEvent =
 export function toExecutionEvent(entity: ExecutionEventDto): ExecutionEvent {
     return {
         ...entity,
+        applicationName: entity.applicationName ?? entity.executionEventId,
         executedAt: new Date(entity.timestamp),
         dataSourceInfo: uriToDatasourceInfo(entity[ExecutionEventField.dataSourceUri], entity.dataSourceName),
         writeMode: entity[ExecutionEventField.append] ? DataSourceWriteMode.Append : DataSourceWriteMode.Overwrite
