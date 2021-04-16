@@ -24,7 +24,7 @@
         <version>0.5.5</version>
     </parent>
 
-    <version>0.6.0-SNAPSHOT</version>
+    <version>0.7.0-SNAPSHOT</version>
 
     <groupId>za.co.absa.spline.ui</groupId>
     <artifactId>project</artifactId>
