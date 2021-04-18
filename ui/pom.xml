@@ -30,6 +30,10 @@
 
     <packaging>pom</packaging>
 
+    <properties>
+        <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ssX</maven.build.timestamp.format>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -51,12 +55,34 @@
             </plugin>
 
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <revisionOnScmFailure>unknown</revisionOnScmFailure>
+                    <timestampFormat>{0,date,${maven.build.timestamp.format}}</timestampFormat>
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
                 <version>1.10.3</version>
                 <configuration>
                     <nodeVersion>v14.16.0</nodeVersion>
                     <npmVersion>7.6.0</npmVersion>
+                    <environmentVariables>
+                        <SPLINE_UI_BUILD_REVISION>${buildNumber}</SPLINE_UI_BUILD_REVISION>
+                        <SPLINE_UI_BUILD_TIMESTAMP>${timestamp}</SPLINE_UI_BUILD_TIMESTAMP>
+                    </environmentVariables>
                 </configuration>
                 <executions>
                     <execution>

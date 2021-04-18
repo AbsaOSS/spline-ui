@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-export const relativeUrl = '.'
-export const deploymentPrefix = '/'
+const webpack = require('webpack');
 
-export interface Environment {
-    production: boolean
-    version: string
-    buildRevision: string
-    buildTimestamp: string
-    deploymentPrefix: string
-    url: string
-    splineConfigUri: string
+module.exports = {
+    plugins: [
+        new webpack.DefinePlugin({
+            __SPLINE_UI_BUILD_REVISION__: JSON.stringify(process.env.SPLINE_UI_BUILD_REVISION),
+            __SPLINE_UI_BUILD_TIMESTAMP__: JSON.stringify(process.env.SPLINE_UI_BUILD_TIMESTAMP)
+        })
+    ]
 }

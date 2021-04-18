@@ -33,9 +33,9 @@
     <packaging>pom</packaging>
 
     <properties>
-        <scm.url><!-- defined outside the pom --></scm.url>
-        <scm.connection><!-- defined outside the pom --></scm.connection>
-        <scm.developerConnection><!-- defined outside the pom --></scm.developerConnection>
+        <scm.url>http://github.com/AbsaOSS/spline-ui/tree/master</scm.url>
+        <scm.connection>scm:git:git://github.com/AbsaOSS/spline-ui.git</scm.connection>
+        <scm.developerConnection>scm:git:ssh://github.com/AbsaOSS/spline-ui.git</scm.developerConnection>
     </properties>
 
     <scm>

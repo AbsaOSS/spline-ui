@@ -75,13 +75,17 @@ export function toExecutionPlan(entity: ExecutionPlanDto): ExecutionPlan {
         id: entity._id,
         // TODO: remove extra?.appName in the next minor release, 0.7.*.
         //       For now we support it, but it is deprecated. Only `entity.name` field should be used instead in future.
-        name: (entity.name || entity.extra?.appName) ?? `[${entity.systemInfo.name} v${entity.systemInfo.version}]`,
+        name: entity.name?.length ? entity.name : planSystemInfoToName(entity.systemInfo),
         inputDataSources: entity.inputs.map(toDataSourceInfo),
         outputDataSource: toDataSourceInfo(entity.output),
         agentInfo: entity.agentInfo,
         systemInfo: entity.systemInfo,
         extraInfo: toExecutionPlanExtraInfo(entity.extra),
     }
+}
+
+export function planSystemInfoToName(systemInfo: ExecutionPlanSystemInfo): string {
+    return `[${systemInfo.name} v${systemInfo.version}]`
 }
 
 export function toExecutionPlanExtraInfo(entity: ExecutionPlanExtraInfoDto): ExecutionPlanExtraInfo {

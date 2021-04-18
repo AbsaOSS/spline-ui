@@ -58,16 +58,28 @@
                     <!-- ./SECTION :: SIDEBAR -->
                 </div>
                 <div class="sl-sidenav__footer">
-                    <div class="sl-sidenav__version" [hidden]="!isSideNavExpanded">
-                        <spline-long-text [tooltip]="appVersion" *ngIf="appVersion?.length">
-                            {{ 'COMMON.LAYOUT__APP_VERSION' | translate }} {{ appVersion }}
-                        </spline-long-text>
+                    <div class="sl-sidenav__version " [hidden]="!isSideNavExpanded">
+                        <div class="sl-sidenav__version-label"> {{ 'COMMON.LAYOUT.APP_VERSION' | translate }}:</div>
+                        {{ appVersion }}
                     </div>
-                    <button mat-button mat-icon-button
-                            class="sl-sidenav__expand-btn"
-                            (click)="onExpandedToggleBtnClicked()">
-                        <spline-icon [icon]="isSideNavExpanded ? 'chevron-triple-left' : 'chevron-triple-right'"></spline-icon>
-                    </button>
+                    <div class="d-flex pt-2" *ngIf="buildRevision || buildDate">
+                        <div class="sl-sidenav__version pr-2" [hidden]="!isSideNavExpanded" *ngIf="buildRevision">
+                            <div class="sl-sidenav__version-label"> {{ 'COMMON.LAYOUT.BUILD_REVISION' | translate }}:</div>
+                            {{ buildRevision }}
+                        </div>
+                        <div class="sl-sidenav__version" [hidden]="!isSideNavExpanded" *ngIf="buildDate">
+                            <div class="sl-sidenav__version-label"> {{ 'COMMON.LAYOUT.BUILD_TIMESTAMP' | translate }}:</div>
+                            {{ buildDate | date : 'yyyy-MM-dd' }}
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <button mat-button mat-icon-button
+                                class="sl-sidenav__expand-btn"
+                                (click)="onExpandedToggleBtnClicked()">
+                            <spline-icon [icon]="isSideNavExpanded ? 'chevron-triple-left' : 'chevron-triple-right'"></spline-icon>
+                        </button>
+                    </div>
                 </div>
             </div>
 

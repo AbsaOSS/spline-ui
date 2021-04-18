@@ -23,7 +23,6 @@
         "SERVER_COMMUNICATION_ERROR__STATUS_CODE": "Status Code",
         "NO_RESULTS_MESSAGE": "No data found.",
         "NO_OPTIONS_FOUND": "No options found.",
-        "LAYOUT__APP_VERSION": "Version",
         "DATE_FILTER__EMPTY_VALUE_LABEL": "Everything"
     }
 }
