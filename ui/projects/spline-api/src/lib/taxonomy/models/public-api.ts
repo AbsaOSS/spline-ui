@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-export * from './spline-api.module'
-export * from './core/public-api'
-export * from './execution-event/public-api'
-export * from './taxonomy/public-api'
+export * from './taxonomy.models'
+export * from './taxonomy-tree.models'
+export * from './voltron-legacy.models'

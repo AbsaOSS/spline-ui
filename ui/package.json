@@ -6,8 +6,8 @@
   "scripts": {
     "postinstall": "sync-pom-version",
     "ng": "ng",
-    "start": "ng serve --open --port 4300",
-    "start:localhost": "ng serve -c localhost --open --port 4300",
+    "start": "ng serve --open --port 4300 --proxy-config proxy.conf.json",
+    "start:localhost": "ng serve -c localhost --open --port 4300 --proxy-config proxy.conf.json",
     "build": "ng build --prod --deploy-url=../ --base-href=SPLINE_UI_DEPLOY_CONTEXT/app/",
     "build::CDN": "ng build --prod",
     "postbuild": "shx mkdir dist/app/ && shx mv dist/index.html dist/app/ && shx mv dist/assets dist/app/",

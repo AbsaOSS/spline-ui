@@ -41,6 +41,10 @@ const routes: Routes = [
                 loadChildren: () => import('../modules/data-sources/spline-data-sources.module').then(m => m.SplineDataSourcesModule),
             },
             {
+                path: 'taxonomy',
+                loadChildren: () => import('../modules/taxonomy/spline-taxonomy.module').then(m => m.SplineTaxonomyModule),
+            },
+            {
                 path: '',
                 redirectTo: 'events',
                 pathMatch: 'full',

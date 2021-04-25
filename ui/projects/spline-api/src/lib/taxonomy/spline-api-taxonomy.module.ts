@@ -14,7 +14,21 @@
  * limitations under the License.
  */
 
-export * from './spline-api.module'
-export * from './core/public-api'
-export * from './execution-event/public-api'
-export * from './taxonomy/public-api'
+import { NgModule } from '@angular/core'
+
+import { SplineApiCoreModule } from '../core'
+
+import { taxonomyServices } from './services'
+
+
+@NgModule({
+    providers: [
+        ...taxonomyServices,
+    ],
+    imports: [
+        SplineApiCoreModule,
+    ],
+    exports: [],
+})
+export class SplineApiTaxonomyModule {
+}

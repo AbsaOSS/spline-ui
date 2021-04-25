@@ -1,0 +1,10 @@
+{
+    "/voltron/api/": {
+        "target": "https://voltrondev.corp.dsarena.com:62412",
+        "secure": false,
+        "pathRewrite": {
+            "/voltron/api/": "/voltron/api/"
+        },
+        "logLevel": "debug"
+    }
+}

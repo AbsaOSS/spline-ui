@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,4 @@
  * limitations under the License.
  */
 
-export * from './spline-api.module'
-export * from './core/public-api'
-export * from './execution-event/public-api'
-export * from './taxonomy/public-api'
+export default {}
