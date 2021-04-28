@@ -1,0 +1,74 @@
+/*!
+ * Copyright 2021 ABSA Group Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+@import 'vars';
+@import 'mixins';
+
+
+.taxonomy-tree {
+    &.mat-tree {
+        background: none;
+
+        ul {
+            margin-left: 2.5rem;
+        }
+
+        li {
+            position: relative;
+        }
+    }
+
+    &__node {
+        @include shadow-light();
+        align-items: center;
+        background: $color-white-smoked;
+        border-left: 5px solid $color-white-smoked;
+        border-radius: 20px;
+        display: flex;
+        font-size: 14px;
+        margin: 0 0.5rem 0.5rem;
+        width: 650px;
+
+        &:hover {
+            background: darken($color-white-smoked, 3);
+            border-left-color: $color-orange;
+        }
+
+        &-name {
+            flex-grow: 1;
+        }
+
+        &-details {
+            align-items: center;
+            display: flex;
+        }
+
+        &-expand-border {
+            border-left: 2px dashed $color-grey-dark-50;
+            bottom: 12px;
+            display: none;
+            left: 32px;
+            position: absolute;
+            top: 52px;
+            width: 1px;
+        }
+
+    }
+
+    [aria-expanded='true'] > li > &__node-expand-border {
+        display: block;
+    }
+}

@@ -14,4 +14,11 @@
  * limitations under the License.
  */
 
-export const components: any[] = []
+import { TaxonomyTreeComponent } from './taxonomy-tree/taxonomy-tree.component'
+
+
+export const components: any[] = [
+    TaxonomyTreeComponent
+]
+
+export * from './taxonomy-tree/taxonomy-tree.component'

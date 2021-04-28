@@ -16,11 +16,11 @@
 
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { Observable, of } from 'rxjs'
+import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { Cacheable } from 'spline-utils'
 
-import { getVoltronTaxonomyTreeMock, toVoltronTaxonomyTree, VoltronTaxonomyTree, VoltronTaxonomyTreeDto } from '../models'
+import { toVoltronTaxonomyTree, VoltronTaxonomyTree, VoltronTaxonomyTreeDto } from '../models'
 
 
 @Injectable()
@@ -34,9 +34,9 @@ export class SplineTaxonomyFacade {
     @Cacheable
     fetchTree(): Observable<VoltronTaxonomyTree> {
         // const url = this.toUrl('Graph/GetAllTaxonomy')
-        const url = './assets/voltron/get-all-taxonomy.json'
+        const url = './assets/mock/voltron/get-all-taxonomy.json'
         return this.http.get<VoltronTaxonomyTreeDto>(url)
-        // return of(getVoltronTaxonomyTreeMock())
+            // return of(getVoltronTaxonomyTreeMock())
             .pipe(
                 map(toVoltronTaxonomyTree),
             )

@@ -1,0 +1,88 @@
+<!--
+  ~ Copyright 2020 ABSA Group Limited
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<mat-tree [dataSource]="treeDataSource"
+          [treeControl]="treeControl"
+          class="taxonomy-tree">
+
+    <!-- NOT EXPANDABLE NODES -->
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+        <li class="mat-tree-node">
+            <div class="taxonomy-tree__node">
+                <!-- use a disabled button to provide padding for tree leaf -->
+                <button disabled mat-icon-button></button>
+                <div class="taxonomy-tree__node-name">
+                    <a class="dashed-link" (click)="onNodeClicked(node)">{{node.entity.name}}</a>
+                </div>
+                <div class="taxonomy-tree__node-details">
+                    <ng-container *ngTemplateOutlet="highlightBtn; context: { node: node }"></ng-container>
+                </div>
+            </div>
+        </li>
+    </mat-tree-node>
+    <!-- ./NOT EXPANDABLE NODES -->
+
+    <!-- EXPANDABLE NODES -->
+    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+        <li>
+            <div class="taxonomy-tree__node-expand-border"></div>
+            <div class="mat-tree-node">
+                <div class="taxonomy-tree__node">
+                    <button [attr.aria-label]="'toggle ' + node.name"
+                            mat-icon-button
+                            matTreeNodeToggle>
+                        <mat-icon class="mat-icon-rtl-mirror">
+                            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                        </mat-icon>
+                    </button>
+                    <div class="taxonomy-tree__node-name">
+                        <a class="dashed-link" (click)="onNodeClicked(node)">{{node.entity.name}}</a>
+                    </div>
+                    <div class="taxonomy-tree__node-details">
+                        <ng-container *ngTemplateOutlet="highlightBtn; context: { node: node }"></ng-container>
+                    </div>
+                </div>
+            </div>
+            <ul [class.d-none]="!treeControl.isExpanded(node)">
+                <ng-container matTreeNodeOutlet></ng-container>
+            </ul>
+        </li>
+    </mat-nested-tree-node>
+    <!-- ./EXPANDABLE NODES -->
+</mat-tree>
+
+
+<ng-template #highlightBtn let-node="node">
+    <div class="pr-3" *ngIf="node.entity.isBcbs">
+        <spline-label color="platinum">BCBS</spline-label>
+    </div>
+    <div class="pr-3" *ngIf="node.entity.isCde">
+        <spline-label color="human">CDE</spline-label>
+    </div>
+    <div>
+        <spline-icon class="taxonomy-tree__node-type-icon"
+                     [icon]="NODE_ENTITY_TYPE_INFO_MAP[node.entity.type].icon"
+                     [ngStyle]="{color: NODE_ENTITY_TYPE_INFO_MAP[node.entity.type].color}">
+
+        </spline-icon>
+    </div>
+    <div class="pr-2">
+        <button mat-button mat-icon-button class="color-grey-dark-75">
+            <mat-icon>more_vertical</mat-icon>
+        </button>
+    </div>
+</ng-template>
+

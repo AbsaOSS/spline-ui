@@ -37,7 +37,13 @@ export namespace AppSidebarMenu {
                 label: 'APP.MENU__PLANS',
                 icon: 'cog-transfer-outline',
                 routerLink: '/plans/list',
-                routerLinkActivePattern: '^$|^\\/$|^\\/plans.*'
+                routerLinkActivePattern: '^\\/plans.*'
+            },
+            {
+                label: 'APP.MENU__TAXONOMY',
+                icon: 'account_tree',
+                routerLink: '/taxonomy/tree',
+                routerLinkActivePattern: '^\\/taxonomy.*'
             }
         ]
     }

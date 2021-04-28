@@ -33,7 +33,31 @@
             <h2 class="text-center mt-4">
                 Taxonomy
             </h2>
+            <div class="container">
+                <div class="d-flex">
+                    <spline-search-box theme="grey"></spline-search-box>
+                </div>
+                <div class="pt-2 pb-3">
+                    <spline-divider></spline-divider>
+                </div>
+                <div class="px-5">
+
+                    <taxonomy-tree *ngIf="taxonomyTree$ | async as taxonomyTree"
+                                   [tree]="taxonomyTree"
+                                   (nodeClicked$)="onNodeClicked($event)">
+                    </taxonomy-tree>
+                </div>
+            </div>
         </div>
     </div>
 
 </ng-container>
+
+<spline-side-dialog-container (closed$)="onSideDialogClosed()"
+                              [visible]="selectedNode !== null">
+
+    <div class="spline-side-panel__header-content">
+        <h3 class="text-center">{{'Selected Node' | translate}}</h3>
+    </div>
+
+</spline-side-dialog-container>

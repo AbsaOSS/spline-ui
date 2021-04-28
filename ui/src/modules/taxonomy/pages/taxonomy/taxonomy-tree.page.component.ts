@@ -16,9 +16,12 @@
 
 import { Component, OnInit } from '@angular/core'
 import { Observable, of } from 'rxjs'
+import { map } from 'rxjs/internal/operators'
 import { SplineTaxonomyFacade } from 'spline-api'
 import { SlBreadcrumbs } from 'spline-common/layout'
 import { BaseLocalStateComponent } from 'spline-utils'
+
+import { TaxonomyTree } from '../../models'
 
 import { TaxonomyTreePage } from './taxonomy-tree.page.models'
 
@@ -31,6 +34,9 @@ import { TaxonomyTreePage } from './taxonomy-tree.page.models'
 export class TaxonomyTreePageComponent extends BaseLocalStateComponent<TaxonomyTreePage.State> implements OnInit {
 
     readonly breadcrumbs$: Observable<SlBreadcrumbs.Breadcrumbs>
+    readonly taxonomyTree$: Observable<TaxonomyTree.TreeNode[]>
+
+    selectedNode: TaxonomyTree.TreeNode = null
 
     constructor(protected readonly splineTaxonomyFacade: SplineTaxonomyFacade) {
         super()
@@ -46,17 +52,22 @@ export class TaxonomyTreePageComponent extends BaseLocalStateComponent<TaxonomyT
                 label: 'Tree'
             },
         ])
-    }
 
-    ngOnInit(): void {
-        this.init()
-    }
-
-    private init(): void {
-        this.splineTaxonomyFacade.fetchTree()
-            .subscribe(
-                (data) => console.log(data)
+        this.taxonomyTree$ = this.splineTaxonomyFacade.fetchTree()
+            .pipe(
+                map(voltronTree => TaxonomyTree.createTreeFromVoltronTree(voltronTree))
             )
     }
 
+    ngOnInit(): void {
+
+    }
+
+    onSideDialogClosed(): void {
+        this.selectedNode = null
+    }
+
+    onNodeClicked($event: { node: TaxonomyTree.TreeNode }): void {
+        this.selectedNode = $event.node
+    }
 }
