@@ -20,8 +20,8 @@
 
     <parent>
         <groupId>za.co.absa.spline</groupId>
-        <artifactId>parent-pom</artifactId>
-        <version>0.5.5</version>
+        <artifactId>package-pom</artifactId>
+        <version>0.6.1</version>
     </parent>
 
     <version>0.6.0-SNAPSHOT</version>
@@ -33,22 +33,17 @@
     <packaging>war</packaging>
 
     <properties>
-        <scm.url><!-- defined outside the pom --></scm.url>
-        <scm.connection><!-- defined outside the pom --></scm.connection>
-        <scm.developerConnection><!-- defined outside the pom --></scm.developerConnection>
-
         <ui.context.placeholder>SPLINE_UI_DEPLOY_CONTEXT</ui.context.placeholder>
         <ui.app.prefix>app</ui.app.prefix>
         <ui.app.index.html>index.html</ui.app.index.html>
         <ui.app.assets>assets</ui.app.assets>
-    </properties>
 
-    <scm>
-        <url>${scm.url}</url>
-        <connection>${scm.connection}</connection>
-        <developerConnection>${scm.developerConnection}</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
+        <dockerfile.imageName>spline-web-ui</dockerfile.imageName>
+
+        <java.version>1.8</java.version>
+        <scala.version>2.12.13</scala.version>
+        <scala.compat.version>2.12</scala.compat.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -60,20 +55,46 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>za.co.absa.commons</groupId>
             <artifactId>commons_${scala.compat.version}</artifactId>
+            <version>0.0.27</version>
         </dependency>
         <dependency>
             <groupId>commons-configuration</groupId>
             <artifactId>commons-configuration</artifactId>
+            <version>1.10</version>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+                <configuration>
+                    <scalaVersion>${scala.version}</scalaVersion>
+                    <args>
+                        <arg>-target:jvm-${java.version}</arg>
+                        <arg>-feature</arg>
+                        <arg>-deprecation</arg>
+                        <arg>-unchecked</arg>
+                        <arg>-Ywarn-numeric-widen</arg>
+                    </args>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>scala-compile</id>
+                        <goals>
+                            <goal>add-source</goal>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -120,7 +141,6 @@
                 <artifactId>dockerfile-maven-plugin</artifactId>
                 <configuration>
                     <skip>false</skip>
-                    <repository>docker.io/absaoss/spline-web-ui</repository>
                 </configuration>
             </plugin>
         </plugins>
