@@ -19,22 +19,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>za.co.absa.spline</groupId>
-        <artifactId>package-pom</artifactId>
-        <version>0.6.1</version>
+        <groupId>za.co.absa.spline.ui</groupId>
+        <artifactId>project</artifactId>
+        <relativePath>../pom.xml</relativePath>
+        <version>0.6.0-SNAPSHOT</version>
     </parent>
 
-    <version>0.6.0-SNAPSHOT</version>
-
-    <groupId>za.co.absa.spline.ui</groupId>
     <artifactId>ui-core</artifactId>
     <name>UI Core</name>
 
     <packaging>pom</packaging>
-
-    <scm>
-        <tag>HEAD</tag>
-    </scm>
 
     <properties>
         <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ssX</maven.build.timestamp.format>

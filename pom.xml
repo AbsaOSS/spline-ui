@@ -32,14 +32,17 @@
 
     <packaging>pom</packaging>
 
+    <scm>
+        <url>${scm.url}</url>
+        <connection>${scm.connection}</connection>
+        <developerConnection>${scm.developerConnection}</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
     <modules>
         <module>ui</module>
         <module>deployment/web</module>
     </modules>
-
-    <scm>
-        <tag>HEAD</tag>
-    </scm>
 
     <build>
         <plugins>
@@ -103,30 +106,6 @@
                                 </dependencies>
                             </plugin>
             -->
-
-            <!-- disable OSSRH deployment for this POM -->
-
-            <plugin>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>none</phase>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                        <phase>none</phase>
-                    </execution>
-                </executions>
-            </plugin>
 
         </plugins>
     </build>
