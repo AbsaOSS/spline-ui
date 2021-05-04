@@ -44,6 +44,9 @@
     <build>
         <pluginManagement>
             <plugins>
+
+                <!-- customize "license-check" profile -->
+
                 <plugin>
                     <groupId>org.apache.rat</groupId>
                     <artifactId>apache-rat-plugin</artifactId>
@@ -53,41 +56,80 @@
                         </excludes>
                     </configuration>
                 </plugin>
+
+                <!-- Customize "release" profile to include "package.json" into the version commit bucket -->
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>3.0.0-M1</version>
+                    <configuration>
+                        <preparationGoals>
+                            clean verify
+                            scm:add -Dincludes=**/package*.json
+                            -Dscm.url=${project.scm.url}
+                            -Dscm.connection=${project.scm.connection}
+                            -Dscm.developerConnection=${project.scm.developerConnection}
+                        </preparationGoals>
+                        <completionGoals>
+                            generate-resources
+                            scm:add -Dincludes=**/package*.json
+                            -Dscm.url=${project.scm.url}
+                            -Dscm.connection=${project.scm.connection}
+                            -Dscm.developerConnection=${project.scm.developerConnection}
+                        </completionGoals>
+                    </configuration>
+                </plugin>
+<!--
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-scm-plugin</artifactId>
+                    <version>1.11.2</version>
+                    <configuration>
+                        <providerImplementations>
+                            <git>jgit</git>
+                        </providerImplementations>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.maven.scm</groupId>
+                            <artifactId>maven-scm-provider-jgit</artifactId>
+                            <version>1.11.2</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.eclipse.jgit</groupId>
+                            <artifactId>org.eclipse.jgit</artifactId>
+                            <version>5.5.1.201910021850-r</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+-->
+
+                <!-- disable OSSRH deployment for this POM -->
+
+                <plugin>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>none</phase>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>deploy</goal>
+                            </goals>
+                            <phase>none</phase>
+                        </execution>
+                    </executions>
+                </plugin>
+
             </plugins>
         </pluginManagement>
     </build>
-
-    <profiles>
-        <profile>
-            <id>ossrh</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>none</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>deploy</goal>
-                                </goals>
-                                <phase>none</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>
