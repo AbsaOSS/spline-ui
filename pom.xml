@@ -82,30 +82,6 @@
                     </completionGoals>
                 </configuration>
             </plugin>
-            <!--
-                            <plugin>
-                                <groupId>org.apache.maven.plugins</groupId>
-                                <artifactId>maven-scm-plugin</artifactId>
-                                <version>1.11.2</version>
-                                <configuration>
-                                    <providerImplementations>
-                                        <git>jgit</git>
-                                    </providerImplementations>
-                                </configuration>
-                                <dependencies>
-                                    <dependency>
-                                        <groupId>org.apache.maven.scm</groupId>
-                                        <artifactId>maven-scm-provider-jgit</artifactId>
-                                        <version>1.11.2</version>
-                                    </dependency>
-                                    <dependency>
-                                        <groupId>org.eclipse.jgit</groupId>
-                                        <artifactId>org.eclipse.jgit</artifactId>
-                                        <version>5.5.1.201910021850-r</version>
-                                    </dependency>
-                                </dependencies>
-                            </plugin>
-            -->
 
         </plugins>
     </build>
