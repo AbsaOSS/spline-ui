@@ -32,6 +32,10 @@
 
     <packaging>pom</packaging>
 
+    <scm>
+        <tag>HEAD</tag>
+    </scm>
+
     <properties>
         <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ssX</maven.build.timestamp.format>
     </properties>

@@ -32,6 +32,10 @@
 
     <packaging>war</packaging>
 
+    <scm>
+        <tag>HEAD</tag>
+    </scm>
+
     <properties>
         <ui.context.placeholder>SPLINE_UI_DEPLOY_CONTEXT</ui.context.placeholder>
         <ui.app.prefix>app</ui.app.prefix>

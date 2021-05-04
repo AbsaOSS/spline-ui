@@ -37,6 +37,10 @@
         <module>deployment/web</module>
     </modules>
 
+    <scm>
+        <tag>HEAD</tag>
+    </scm>
+
     <build>
         <pluginManagement>
             <plugins>
