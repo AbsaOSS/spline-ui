@@ -68,14 +68,14 @@
                 <configuration>
                     <preparationGoals>
                         clean verify
-                        scm:add -Dincludes=**/package*.json
+                        scm:add -Dincludes=**/package*.json scm:add -Dexcludes=**/node_modules/**
                         -Dscm.url=${project.scm.url}
                         -Dscm.connection=${project.scm.connection}
                         -Dscm.developerConnection=${project.scm.developerConnection}
                     </preparationGoals>
                     <completionGoals>
                         generate-resources
-                        scm:add -Dincludes=**/package*.json
+                        scm:add -Dincludes=**/package*.json -Dexcludes=**/node_modules/**
                         -Dscm.url=${project.scm.url}
                         -Dscm.connection=${project.scm.connection}
                         -Dscm.developerConnection=${project.scm.developerConnection}
