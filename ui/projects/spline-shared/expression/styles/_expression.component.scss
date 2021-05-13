@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-@import './mat-autocomplete';
-@import './mat-button';
-@import './mat-dialog';
-@import './mat-card';
-@import './mat-divider';
-@import './mat-expansion-panel';
-@import './mat-icon';
-@import './mat-tab';
-@import './mat-table';
-@import './mat-tree';
+@import 'vars';
+
+spline-expression-tree {
+    .mat-tree {
+        border-radius: 32px;
+    }
+}

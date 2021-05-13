@@ -18,8 +18,7 @@
 import { Injectable } from '@angular/core'
 import { select, Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
-import { take } from 'rxjs/internal/operators'
-import { filter, switchMap } from 'rxjs/operators'
+import { filter, switchMap, take } from 'rxjs/operators'
 import { ExecutionEvent, OperationDetails, SplineDataSourceInfo } from 'spline-api'
 import { ProcessingStore } from 'spline-utils'
 

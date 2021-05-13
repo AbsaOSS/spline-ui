@@ -15,7 +15,7 @@
  */
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
-import isEqual from 'lodash/isEqual'
+import { isEqual } from 'lodash-es'
 import { delay, distinctUntilChanged, filter, takeUntil } from 'rxjs/operators'
 import { ExecutionEventLineageNodeType, ExecutionPlanFacade, executionPlanIdToWriteOperationId } from 'spline-api'
 import { SplineDataWidgetEvent } from 'spline-common/data-view'

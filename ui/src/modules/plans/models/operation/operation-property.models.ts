@@ -15,6 +15,7 @@
  */
 
 
+import { isPlainObject } from 'lodash-es'
 import { AttrSchemasCollection, OpExpression } from 'spline-api'
 import { SplineColors } from 'spline-common'
 import { SdWidgetExpansionPanel, SdWidgetJson, SdWidgetSchema, SdWidgetSimpleRecord } from 'spline-common/data-view'
@@ -24,15 +25,27 @@ import { PrimitiveNotEmpty } from 'spline-utils'
 
 export namespace EventOperationProperty {
 
-    export type NativeProperties = Record<string, any>
+    export type NativeProperties = Record<string, any | OrderSpecPropRecord[]>
+
+    export type OrderSpecPropRecord = {
+        direction: string
+        expression: OpExpression
+        nullOrdering?: string
+    }
 
     export type ExtraPropertyValue<T> = {
         label: string
         value: T
     }
 
+    export type OpExpressionInfo = {
+        expression: OpExpression
+        prefix?: string
+        suffix?: string
+    }
+
     export type ExtraPropertyValuePrimitive = ExtraPropertyValue<PrimitiveNotEmpty>
-    export type ExtraPropertyValueExpression = ExtraPropertyValue<OpExpression[]>
+    export type ExtraPropertyValueExpression = ExtraPropertyValue<OpExpressionInfo[]>
     export type ExtraPropertyValueJson = ExtraPropertyValue<any[] | Record<any, any>>
 
     export type ExtraProperties = {
@@ -53,11 +66,14 @@ export namespace EventOperationProperty {
                         }
                         return { ...acc, primitive: [...acc.primitive, primitiveValue] }
                     }
-                    else if (typeof value === 'object' && isExpresionProperty(value)) {
+                    else if (isPlainObject(value) && isExpresionProperty(value)) {
                         return { ...acc, expression: [...acc.expression, toExpressionValue(key, [value])] }
                     }
                     else if (typeof Array.isArray(value) && value.length && isExpresionProperty(value[0])) {
                         return { ...acc, expression: [...acc.expression, toExpressionValue(key, value)] }
+                    }
+                    else if (typeof Array.isArray(value) && value.length && isOrderSpecProperty(value[0])) {
+                        return { ...acc, expression: [...acc.expression, toOrderSpecValue(key, value)] }
                     }
                     else {
                         const jsonValue: ExtraPropertyValueJson = {
@@ -96,7 +112,12 @@ export namespace EventOperationProperty {
                     iconColor: SplineColors.BLUE,
                 },
                 item.value.map(
-                    expression => SdWidgetExpression.toSchema({ expression, attrSchemasCollection }),
+                    expressionInfo => SdWidgetExpression.toSchema({
+                        expression: expressionInfo.expression,
+                        prefix: expressionInfo.prefix,
+                        suffix: expressionInfo.suffix,
+                        attrSchemasCollection
+                    }),
                 ),
             ),
         )
@@ -121,7 +142,19 @@ export namespace EventOperationProperty {
     function toExpressionValue(key: string, expressionsList: OpExpression[]): ExtraPropertyValueExpression {
         return {
             label: humanizeCase(key),
-            value: expressionsList,
+            value: expressionsList.map(expression => ({expression})),
+        }
+    }
+
+    function toOrderSpecValue(key: string, orderSpecValuesList: OrderSpecPropRecord[]): ExtraPropertyValueExpression {
+        return {
+            label: humanizeCase(key),
+            value: orderSpecValuesList
+                .map(orderSpec => ({
+                    expression: orderSpec.expression,
+                    prefix: 'BY',
+                    suffix: `${orderSpec.direction} ${orderSpec.nullOrdering}`
+                })),
         }
     }
 
@@ -138,4 +171,12 @@ export namespace EventOperationProperty {
     function isExpresionProperty(propertyValue: Record<string, any>): propertyValue is OpExpression {
         return propertyValue._typeHint && (propertyValue._typeHint as string).startsWith('expr.')
     }
+
+    function isOrderSpecProperty(propertyValue: Record<string, any>): propertyValue is OrderSpecPropRecord {
+        const propertyValueObj = propertyValue as OrderSpecPropRecord
+        return propertyValueObj.direction !== undefined
+            && propertyValueObj.expression !== undefined
+            && isExpresionProperty(propertyValueObj.expression)
+    }
+
 }

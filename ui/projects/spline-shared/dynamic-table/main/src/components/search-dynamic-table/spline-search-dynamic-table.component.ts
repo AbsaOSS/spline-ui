@@ -18,9 +18,8 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core'
 import { PageEvent } from '@angular/material/paginator'
 import { ActivatedRoute, Params, Router } from '@angular/router'
-import isEqual from 'lodash/isEqual'
-import { map } from 'rxjs/internal/operators'
-import { distinctUntilChanged, skip, takeUntil } from 'rxjs/operators'
+import { isEqual } from 'lodash-es'
+import { distinctUntilChanged, map, skip, takeUntil } from 'rxjs/operators'
 import {
     DtCellCustomEvent,
     DtHeaderCellCustomEvent,

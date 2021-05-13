@@ -16,10 +16,9 @@
 
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import isEqual from 'lodash/isEqual'
+import { isEqual } from 'lodash-es'
 import { Observable } from 'rxjs'
-import { takeUntil, withLatestFrom } from 'rxjs/internal/operators'
-import { distinctUntilChanged, filter, map, skip } from 'rxjs/operators'
+import { distinctUntilChanged, filter, map, skip, takeUntil, withLatestFrom } from 'rxjs/operators'
 import { ExecutionEvent, ExecutionEventFacade, ExecutionEventField, ExecutionEventsQuery, SplineDataSourceInfo } from 'spline-api'
 import { SplineDateRangeFilter } from 'spline-common'
 import { DtCellCustomEvent } from 'spline-common/dynamic-table'

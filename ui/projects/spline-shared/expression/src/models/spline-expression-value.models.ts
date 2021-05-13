@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 
-import isEmpty from 'lodash/isEmpty'
-import isPlainObject from 'lodash/isPlainObject'
-import join from 'lodash/join'
-import map from 'lodash/map'
+import { isEmpty, isPlainObject, join, map } from 'lodash-es'
 import {
     AttrSchemasCollection,
     OpExpression,

@@ -16,7 +16,7 @@
 
 
 import { DagreSettings, Edge, Node, Orientation } from '@swimlane/ngx-graph'
-import omit from 'lodash/omit'
+import { omit } from 'lodash-es'
 import { DynamicValueProvider } from 'spline-utils'
 
 

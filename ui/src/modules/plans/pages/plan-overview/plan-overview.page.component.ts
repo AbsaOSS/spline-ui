@@ -17,7 +17,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
-import keyBy from 'lodash/keyBy'
+import { keyBy } from 'lodash-es'
 import { Observable } from 'rxjs'
 import { distinctUntilChanged, filter, map, skip, takeUntil } from 'rxjs/operators'
 import { AttributeSchema, ExecutionPlanFacade, OperationAttributeLineageType, toAttributeLineage } from 'spline-api'
