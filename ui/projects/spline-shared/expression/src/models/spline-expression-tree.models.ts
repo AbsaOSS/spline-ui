@@ -25,6 +25,7 @@ import {
     OpExpressionLiteral,
     OpExpressionType,
     OpExpressionUDF,
+    OpExpressionUntyped,
 } from 'spline-api'
 
 import { SplineExpressionValue } from './spline-expression-value.models'
@@ -70,9 +71,10 @@ export namespace SplineExpressionTree {
                 const ar = expr as OpExpressionAttrRef
                 return SplineExpressionValue.expressionToString(ar, attrSchemasCollection)
             }
+            case OpExpressionType.Untyped:
             case OpExpressionType.Generic:
             case OpExpressionType.GenericLeaf: {
-                return (expr as OpExpressionGeneric | OpExpressionGenericLeaf).name
+                return (expr as OpExpressionGeneric | OpExpressionGenericLeaf | OpExpressionUntyped).name
             }
             default:
                 throw new Error(`Unknown expression type: ${expr._typeHint}`)

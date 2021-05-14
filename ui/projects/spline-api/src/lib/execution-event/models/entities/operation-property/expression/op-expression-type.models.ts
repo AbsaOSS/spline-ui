@@ -23,5 +23,6 @@ export enum OpExpressionType {
     Union = 'expr.Union',
     Generic = 'expr.Generic',
     GenericLeaf = 'expr.GenericLeaf',
-    AttrRef = 'expr.AttrRef'
+    AttrRef = 'expr.AttrRef',
+    Untyped = 'expr.UntypedExpression'
 }
