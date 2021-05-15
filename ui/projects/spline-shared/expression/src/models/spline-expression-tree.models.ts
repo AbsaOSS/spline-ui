@@ -18,11 +18,9 @@ import {
     AttrSchemasCollection,
     OpExpression,
     OpExpressionAlias,
-    OpExpressionAttrRef,
     OpExpressionBinary,
     OpExpressionGeneric,
     OpExpressionGenericLeaf,
-    OpExpressionLiteral,
     OpExpressionType,
     OpExpressionUDF,
     OpExpressionUntyped,
@@ -55,8 +53,9 @@ export namespace SplineExpressionTree {
 
     export function getNodeName(expr: OpExpression, attrSchemasCollection: AttrSchemasCollection): string {
         switch (expr._typeHint) {
+            case OpExpressionType.AttrRef:
             case OpExpressionType.Literal: {
-                return (expr as OpExpressionLiteral).value
+                return SplineExpressionValue.expressionToString(expr, attrSchemasCollection)
             }
             case OpExpressionType.Binary: {
                 return (expr as OpExpressionBinary).symbol
@@ -66,10 +65,6 @@ export namespace SplineExpressionTree {
             }
             case OpExpressionType.UDF: {
                 return `UDF:${(expr as OpExpressionUDF).name}`
-            }
-            case OpExpressionType.AttrRef: {
-                const ar = expr as OpExpressionAttrRef
-                return SplineExpressionValue.expressionToString(ar, attrSchemasCollection)
             }
             case OpExpressionType.Untyped:
             case OpExpressionType.Generic:

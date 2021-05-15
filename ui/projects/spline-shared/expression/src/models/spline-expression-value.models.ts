@@ -38,7 +38,8 @@ export namespace SplineExpressionValue {
     export function expressionToString(expr: OpExpression, attrSchemasCollection: AttrSchemasCollection): string {
         switch (expr._typeHint) {
             case OpExpressionType.Literal: {
-                return (expr as OpExpressionLiteral).value
+                const exprLiteral = expr as OpExpressionLiteral
+                return exprLiteral.value === null ? 'null' : exprLiteral.value
             }
 
             case OpExpressionType.Binary: {
