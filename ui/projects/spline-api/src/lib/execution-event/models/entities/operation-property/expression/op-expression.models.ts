@@ -107,7 +107,6 @@ export type OpExpressionLiteral =
     & OpExpressionCommon
     &
     {
-        dataTypeId: string
-        value: string
+        value: string | null
         _typeHint: OpExpressionType.Literal
     }
