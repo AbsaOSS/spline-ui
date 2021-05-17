@@ -15,7 +15,7 @@
  */
 
 import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router'
-import omit from 'lodash/omit'
+import { omit } from 'lodash-es'
 
 import { TypeHelpers } from './heplers/type-helpers'
 

@@ -26,7 +26,7 @@ import {
     SimpleChanges,
     ViewChild
 } from '@angular/core'
-import isEqual from 'lodash/isEqual'
+import { isEqual } from 'lodash-es'
 import { Subject } from 'rxjs'
 import { distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators'
 import {

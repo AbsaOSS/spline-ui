@@ -55,6 +55,13 @@ export type OpExpressionGeneric =
         _typeHint: OpExpressionType.Generic
     }
 
+export type OpExpressionUntyped =
+    & OpExpressionGeneric
+    &
+    {
+        _typeHint: OpExpressionType.Untyped
+    }
+
 
 export type OpExpressionGenericLeaf =
     & OpExpressionCommon
@@ -100,7 +107,6 @@ export type OpExpressionLiteral =
     & OpExpressionCommon
     &
     {
-        dataTypeId: string
-        value: string
+        value: string | null
         _typeHint: OpExpressionType.Literal
     }

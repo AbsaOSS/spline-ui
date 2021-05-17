@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import differenceWith from 'lodash/differenceWith'
+import { differenceWith } from 'lodash-es'
 import {
     ExecutionEventLineageNode,
     ExecutionEventLineageNodeType,
@@ -23,7 +23,7 @@ import {
     Lineage,
     LineageNodeLink
 } from 'spline-api'
-import { SdWidgetSchema, SplineDataViewSchema } from 'spline-common/data-view'
+import { SplineDataViewSchema } from 'spline-common/data-view'
 import { SgData } from 'spline-common/graph'
 import { SgNodeControl } from 'spline-shared/graph'
 import { ProcessingStore, SplineEntityStore, StringHelpers } from 'spline-utils'

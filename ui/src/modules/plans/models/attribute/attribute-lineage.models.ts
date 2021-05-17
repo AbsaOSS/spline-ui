@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import keyBy from 'lodash/keyBy'
+import { keyBy } from 'lodash-es'
 import { OperationAttributeLineage, OperationAttributeLineageNode, OperationAttributeLineageType } from 'spline-api'
 import { SplineColors } from 'spline-common'
 

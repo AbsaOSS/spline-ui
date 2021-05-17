@@ -6,22 +6,20 @@
 [![SonarCloud Security](https://sonarcloud.io/api/project_badges/measure?project=AbsaOSS_spline-ui&metric=security_rating)](https://sonarcloud.io/dashboard?id=AbsaOSS_spline-ui)
 
 # Spline UI
-Spline UI is a new user-interface application for Spline, currently available as an alternative to Spline 0.5 Web Client,
-but is going to replace it starting from Spline 0.6 version.  
 
 Spline UI is implemented as a _single-page application (SPA)_, available alone as well as packed as a Docker image or a WAR-file.
 Choose at your deployment preferences.
 
 ## Download
 
-- [WAR-file](https://search.maven.org/search?q=g:za.co.absa.spline.ui%20AND%20p:war)
 - [Docker](https://hub.docker.com/r/absaoss/spline-web-ui)
+- [WAR-file](https://search.maven.org/search?q=g:za.co.absa.spline.ui%20AND%20p:war)
 
 ## Usage
 Spline UI needs to know where Spline Consumer API sits.
-Whether you run a WAR-file or a Docker container you need to set a `SPLINE_CONSUMER_URL` property.
+Spline Consumer API endpoint is accessed from the user browser directly, so use appropriate IP or host name.
 
-### Running a Docker
+### Running as a Docker container
 ```shell script
 docker container run \
       -e SPLINE_CONSUMER_URL=http://localhost:8080/consumer \
@@ -58,17 +56,21 @@ A WAR-file provides several alternative ways how to set configuration parameters
 It is possible to use compiled UI sources placed at some CDN server.
 In that the application can be configured with query parameters like so:
 
-`<iframe src="https://cdn.jsdelivr.net/path-to-compiled-app-assets/index.html?splineConsumerApiUrl=ENCODED_CONSUMER_API_PATH&_targetUrl=ENCODED_APP_PATH&_isEmbeddedMode=true"></iframe>`
+```html
+<iframe
+    src="https://cdn.jsdelivr.net/path-to-compiled-app-assets/index.html?_splineConsumerApiUrl=ENCODED_CONSUMER_API_PATH&_targetUrl=ENCODED_APP_PATH&_isEmbeddedMode=true">
+</iframe>
+```
 
 All available config query parameters list:
 
-| Name        | Description           | Default value  | Required  |
-| ------------- |-------------| -------------|-----:|
-| `_splineConsumerApiUrl` | Spline Consumer API URI.      |    `` | true
-| `_isEmbeddedMode`      | Embedded mode settings      |  `false`  | false
-| `_targetUrl`      | App will be redirected to that url right after initialization. The path should start with `/`. | `/` | false
+| Name        | Description | Default | Required |
+| ----------- | ----------- | ------------- | -----:   |
+| `_splineConsumerApiUrl` | Spline Consumer API URI | | true
+| `_isEmbeddedMode`       | Embedded mode settings | `false` | false
+| `_targetUrl`            | App will be redirected to that url right after initialization. The path should start with `/` | `/` | false
 
-`splineConsumerApiUrl` is a required query parameter.
+`_splineConsumerApiUrl` is a required query parameter.
 
 #### How to build assets for your CDN:
 
@@ -94,8 +96,12 @@ mvn clean install
 
 ```shell script
 cd deployment/web
-mvn dockerfile:build
+mvn install -P docker -D dockerfile.repositoryUrl=my 
 ```
+
+It will create `my/spline-web-ui` image and two tags: `$version` and `latest`
+
+See [Building Spline docker images](https://github.com/AbsaOSS/spline-getting-started/blob/main/building-docker.md) for details.
 
 ### Building UI-core (SPA) alone
 

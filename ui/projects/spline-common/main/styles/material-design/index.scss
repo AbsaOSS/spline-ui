@@ -15,7 +15,7 @@
  */
 
 @import '../vars';
-@import 'spline-theme';
+@import './spline-theme';
 
 $custom-typography: mat-typography-config($font-family: $font-name);
 

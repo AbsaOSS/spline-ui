@@ -55,6 +55,7 @@ export class SplineExpressionComponent implements OnInit {
                     suffix: this.suffix,
                 },
                 minWidth: '700px',
+                maxWidth: '1400px',
                 autoFocus: false,
             },
         )

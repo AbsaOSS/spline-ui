@@ -15,9 +15,9 @@
  */
 
 import { CollectionViewer, DataSource } from '@angular/cdk/collections'
-import isEqual from 'lodash/isEqual'
+import { isEqual } from 'lodash-es'
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs'
-import { catchError, filter, map, switchMap, take, takeUntil, tap } from 'rxjs/internal/operators'
+import { catchError, filter, map, switchMap, take, takeUntil, tap } from 'rxjs/operators'
 
 import { ProcessingStore } from '../../../store'
 import { SplineRecord, StringHelpers } from '../heplers'

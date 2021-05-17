@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 
-import isEmpty from 'lodash/isEmpty'
-import isPlainObject from 'lodash/isPlainObject'
-import join from 'lodash/join'
-import map from 'lodash/map'
+import { isEmpty, isPlainObject, join, map } from 'lodash-es'
 import {
     AttrSchemasCollection,
     OpExpression,
@@ -38,34 +35,44 @@ export namespace SplineExpressionValue {
     export function expressionToString(expr: OpExpression, attrSchemasCollection: AttrSchemasCollection): string {
         switch (expr._typeHint) {
             case OpExpressionType.Literal: {
-                return (expr as OpExpressionLiteral).value
+                const exprLiteral = expr as OpExpressionLiteral
+                return exprLiteral.value === null ? 'null' : exprLiteral.value
             }
+
             case OpExpressionType.Binary: {
                 const binaryExpr = expr as OpExpressionBinary
                 const leftOperand = expressionToString(binaryExpr.children[0], attrSchemasCollection)
                 const rightOperand = expressionToString(binaryExpr.children[1], attrSchemasCollection)
                 return `${leftOperand} ${binaryExpr.symbol} ${rightOperand}`
             }
+
             case OpExpressionType.Alias: {
                 const ae = expr as OpExpressionAlias
                 return `${expressionToString(ae.child, attrSchemasCollection)} AS  ${ae.alias}`
             }
+
             case OpExpressionType.UDF: {
                 const udf = expr as OpExpressionUDF
                 const paramList = map(udf.children, child => expressionToString(child, attrSchemasCollection))
                 return `UDF:${udf.name}(${join(paramList, ', ')})`
             }
+
             case OpExpressionType.AttrRef: {
                 const attrRef = expr as OpExpressionAttrRef
                 return attrSchemasCollection[attrRef.refId]?.name
             }
+
             case OpExpressionType.GenericLeaf: {
                 return renderAsGenericLeafExpr(expr as OpExpressionGenericLeaf, attrSchemasCollection)
             }
-            case OpExpressionType.Generic: {
+
+            case OpExpressionType.Generic:
+            case OpExpressionType.Untyped: {
                 const leafText = renderAsGenericLeafExpr(expr as OpExpressionGenericLeaf, attrSchemasCollection)
-                const childrenTexts = (expr as OpExpressionGeneric).children.map(child => expressionToString(child, attrSchemasCollection))
-                return `${leafText}(${join(childrenTexts, ', ')})`
+                const childrenTextsCollection = ((expr as OpExpressionGeneric)?.children || [])
+                    .map(child => expressionToString(child, attrSchemasCollection))
+                const childrenTextString = childrenTextsCollection.length ? `(${join(childrenTextsCollection, ', ')})` : ''
+                return `${leafText}${childrenTextString}`
             }
         }
     }

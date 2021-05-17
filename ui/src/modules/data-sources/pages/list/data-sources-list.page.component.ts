@@ -15,7 +15,7 @@
  */
 
 import { Component } from '@angular/core'
-import isEqual from 'lodash/isEqual'
+import { isEqual } from 'lodash-es'
 import { distinctUntilChanged, filter, map, skip, takeUntil } from 'rxjs/operators'
 import { ExecutionEventFacade, ExecutionEventField, ExecutionEventsQuery } from 'spline-api'
 import { SplineDateRangeFilter } from 'spline-common'

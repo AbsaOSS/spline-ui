@@ -17,7 +17,7 @@
 import { Injectable } from '@angular/core'
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router'
 import { Observable, of } from 'rxjs'
-import { tap } from 'rxjs/internal/operators'
+import { tap } from 'rxjs/operators'
 
 import { hasQueryParamsSplineConfig, SplineConfig } from './spline-config.models'
 import { SplineConfigService } from './spline-config.service'

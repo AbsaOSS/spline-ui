@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import omit from 'lodash/omit'
+import { omit } from 'lodash-es'
 
 import { AttributeDtType } from './attribute-dt-type.models'
 

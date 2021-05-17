@@ -17,8 +17,7 @@
 
 import { ChangeDetectorRef, Directive, ElementRef, Input, OnChanges, OnDestroy, Optional, Renderer2, SimpleChanges } from '@angular/core'
 import { NavigationEnd, Router, RouterLink, RouterLinkWithHref } from '@angular/router'
-import { takeUntil } from 'rxjs/internal/operators'
-import { filter } from 'rxjs/operators'
+import { filter, takeUntil } from 'rxjs/operators'
 
 import { BaseDirective } from '../base'
 
