@@ -30,6 +30,7 @@ module.exports = {
         'teamcity'
     ],
     'moduleNameMapper': {
+        '^lodash-es$': __dirname + '/node_modules/lodash/index.js',
         '/spline-api/': __dirname + '/projects/spline-api/src/public-api',
         '^spline-api$': __dirname + '/projects/spline-api/src/public-api',
         '/spline-common/': __dirname + '/projects/spline-common/main/src/public-api',

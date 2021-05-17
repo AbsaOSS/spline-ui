@@ -15,7 +15,7 @@
  */
 
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import get from 'lodash/get'
+import { get } from 'lodash-es'
 import { BehaviorSubject } from 'rxjs'
 
 import { DtCellValueSchema } from '../../../../models'

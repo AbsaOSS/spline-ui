@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import keyBy from 'lodash/keyBy'
-import omit from 'lodash/omit'
+import { keyBy, omit } from 'lodash-es'
 import { AttributeDataType, AttributeDataTypeArray, AttributeDataTypeStruct, AttributeDtType, AttributeSchema } from 'spline-api'
 
 

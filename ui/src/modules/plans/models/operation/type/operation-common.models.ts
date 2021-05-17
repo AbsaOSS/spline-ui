@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import omit from 'lodash/omit'
+import { omit } from 'lodash-es'
 import { OperationDetails } from 'spline-api'
 import { SdWidgetSchema } from 'spline-common/data-view'
 

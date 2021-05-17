@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-@import 'palettes/pallete-orange';
-@import 'palettes/pallete-human';
+@import './palettes/pallete-orange';
+@import './palettes/pallete-human';
 
 $spline-theme: mat-light-theme($spline-palette-orange, $spline-palette-human);
 

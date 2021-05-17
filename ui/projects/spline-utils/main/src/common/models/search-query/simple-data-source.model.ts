@@ -15,7 +15,7 @@
  */
 
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs'
-import { catchError, map, switchMap, take, takeUntil, tap } from 'rxjs/internal/operators'
+import { catchError, map, switchMap, take, takeUntil, tap } from 'rxjs/operators'
 
 import { ProcessingStore } from '../../../store'
 import { SplineRecord } from '../heplers'

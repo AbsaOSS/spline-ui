@@ -31,7 +31,7 @@ export namespace OperationSort {
         return getBaseOperationDetailsSchema(
             operationDetails,
             getMainSection,
-            ['condition', 'joinType'],
+            ['condition', 'joinType', 'order']
         )
     }
 

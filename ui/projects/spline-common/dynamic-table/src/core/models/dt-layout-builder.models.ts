@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import cloneDeep from 'lodash/cloneDeep'
+import { cloneDeep } from 'lodash-es'
 import { TypeHelpers } from 'spline-utils'
 
 import { DtCellLayout } from './dt-row-layout.models'
