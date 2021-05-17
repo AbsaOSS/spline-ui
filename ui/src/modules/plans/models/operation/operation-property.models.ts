@@ -152,7 +152,6 @@ export namespace EventOperationProperty {
             value: orderSpecValuesList
                 .map(orderSpec => ({
                     expression: orderSpec.expression,
-                    prefix: 'BY',
                     suffix: `${orderSpec.direction} ${orderSpec.nullOrdering}`
                 })),
         }
