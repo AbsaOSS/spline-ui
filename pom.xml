@@ -19,9 +19,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>za.co.absa.spline</groupId>
-        <artifactId>package-pom</artifactId>
-        <version>0.6.1</version>
+        <groupId>za.co.absa</groupId>
+        <artifactId>root-pom</artifactId>
+        <version>1.0.0</version>
     </parent>
 
     <version>0.7.5-SNAPSHOT</version>
@@ -38,6 +38,28 @@
         <developerConnection>${scm.developerConnection}</developerConnection>
         <tag>HEAD</tag>
     </scm>
+
+    <developers>
+        <developer>
+            <id>oleksandr-korchak</id>
+            <name>Oleksandr Korchak</name>
+            <roles>
+                <role>Front-end developer</role>
+            </roles>
+            <timezone>Europe/Prague</timezone>
+            <url>https://github.com/oleksandr-korchak</url>
+        </developer>
+        <developer>
+            <id>wajda</id>
+            <name>Oleksandr Vayda</name>
+            <roles>
+                <role>Tech Lead</role>
+                <role>Full-stack developer</role>
+            </roles>
+            <timezone>Europe/Prague</timezone>
+            <url>https://github.com/wajda</url>
+        </developer>
+    </developers>
 
     <modules>
         <module>ui</module>
