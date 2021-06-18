@@ -16,7 +16,7 @@
         "REMOVE": "Remove",
         "ADD": "Add",
         "LOADING": "Loading ...",
-        "UNEXPECTED_ERROR__MESSAGE": "Unexpected server error.",
+        "UNEXPECTED_ERROR__MESSAGE": "Unexpected error.",
         "SERVER_COMMUNICATION_ERROR__MESSAGE": "Unexpected server error.",
         "SERVER_COMMUNICATION_ERROR__MESSAGE__NOT_FOUND": "Not Found :(",
         "SERVER_COMMUNICATION_ERROR__MESSAGE__FAILURE": "Server is unavailable.",
