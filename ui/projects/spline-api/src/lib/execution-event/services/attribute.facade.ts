@@ -16,8 +16,8 @@
 
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { Observable, throwError } from 'rxjs'
+import { catchError, map } from 'rxjs/operators'
 
 import { AttributeSearchRecord, AttributeSearchRecordDto, toAttributeSearchRecord } from '../models'
 
@@ -40,6 +40,10 @@ export class AttributeFacade extends BaseFacade {
         return this.http.get<AttributeSearchRecordDto[]>(url, { params })
             .pipe(
                 map(data => data.map(toAttributeSearchRecord)),
+                catchError(error => {
+                    console.error(error)
+                    return throwError(error)
+                })
             )
     }
 }

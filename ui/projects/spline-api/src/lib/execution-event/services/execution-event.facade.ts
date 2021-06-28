@@ -16,8 +16,8 @@
 
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { Observable, throwError } from 'rxjs'
+import { catchError, map } from 'rxjs/operators'
 import { Cacheable } from 'spline-utils'
 
 import { ExecutionEventsPageResponse, ExecutionEventsPageResponseDto, ExecutionEventsQuery, toExecutionEventsPageResponse } from '../models'
@@ -47,6 +47,10 @@ export class ExecutionEventFacade extends BaseFacade {
         return this.http.get<ExecutionEventLineageOverviewDto>(url, { params: params })
             .pipe(
                 map(toExecutionEventLineageOverview),
+                catchError(error => {
+                    console.error(error)
+                    return throwError(error)
+                })
             )
     }
 
@@ -57,6 +61,10 @@ export class ExecutionEventFacade extends BaseFacade {
         return this.http.get<ExecutionEventsPageResponseDto>(url, { params: params })
             .pipe(
                 map(toExecutionEventsPageResponse),
+                catchError(error => {
+                    console.error(error)
+                    return throwError(error)
+                })
             )
     }
 
@@ -67,6 +75,10 @@ export class ExecutionEventFacade extends BaseFacade {
         return this.http.get<ExecutionEventsPageResponseDto>(url, { params: params })
             .pipe(
                 map(toExecutionEventsPageResponse),
+                catchError(error => {
+                    console.error(error)
+                    return throwError(error)
+                })
             )
     }
 }

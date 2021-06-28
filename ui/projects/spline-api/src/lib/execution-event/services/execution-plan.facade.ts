@@ -16,8 +16,8 @@
 
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { Observable, throwError } from 'rxjs'
+import { catchError, map } from 'rxjs/operators'
 import { Cacheable } from 'spline-utils'
 
 import {
@@ -51,6 +51,10 @@ export class ExecutionPlanFacade extends BaseFacade {
         return this.http.get<ExecutionPlanLineageOverviewDto>(url, { params: params })
             .pipe(
                 map(toExecutionPlanLineageOverview),
+                catchError(error => {
+                    console.error(error)
+                    return throwError(error)
+                })
             )
     }
 
@@ -60,6 +64,10 @@ export class ExecutionPlanFacade extends BaseFacade {
         return this.http.get<OperationDetailsDto>(url)
             .pipe(
                 map(toOperationDetails),
+                catchError(error => {
+                    console.error(error)
+                    return throwError(error)
+                })
             )
     }
 
@@ -74,6 +82,10 @@ export class ExecutionPlanFacade extends BaseFacade {
         return this.http.get<OperationAttributeLineageDto>(url, { params })
             .pipe(
                 map(toOperationAttributeLineage),
+                catchError(error => {
+                    console.error(error)
+                    return throwError(error)
+                })
             )
     }
 }

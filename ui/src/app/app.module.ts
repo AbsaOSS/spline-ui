@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core'
+import { ErrorHandler, NgModule } from '@angular/core'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
 import { MatListModule } from '@angular/material/list'
@@ -45,6 +45,7 @@ import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { SplineSidebarMenuComponent } from './components'
 import { AppNotFoundComponent } from './pages/not-found/not-found.component'
+import { SplineGlobalErrorHandler } from './services'
 
 
 export const metaReducers: MetaReducer<any>[] =
@@ -105,6 +106,7 @@ export const metaReducers: MetaReducer<any>[] =
                 toAssetsFilePath('common-layout'),
             ]
         },
+        { provide: ErrorHandler, useClass: SplineGlobalErrorHandler },
     ],
     bootstrap: [AppComponent],
 })
