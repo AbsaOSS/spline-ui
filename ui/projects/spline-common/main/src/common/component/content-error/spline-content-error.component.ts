@@ -27,7 +27,7 @@ export class SplineContentErrorComponent implements OnChanges {
     @Input() errorId: string
     @Input() statusCode: 500 | 404 | 403 | number
 
-    readonly defaultErrorMessage = 'COMMON.SERVER_COMMUNICATION_ERROR__MESSAGE'
+    readonly defaultErrorMessage = 'COMMON.UNEXPECTED_ERROR__MESSAGE'
 
     errorMessage = this.defaultErrorMessage
 
@@ -39,13 +39,19 @@ export class SplineContentErrorComponent implements OnChanges {
     }
 
     private calculateErrorMessage(statusCode: number): string {
-        switch (statusCode) {
-            case 0:
-                return 'COMMON.SERVER_COMMUNICATION_ERROR__MESSAGE__FAILURE'
-            case 404:
-                return 'COMMON.SERVER_COMMUNICATION_ERROR__MESSAGE__NOT_FOUND'
-            default:
-                return this.defaultErrorMessage
+
+        if (statusCode === 0) {
+            return 'COMMON.SERVER_COMMUNICATION_ERROR__MESSAGE__FAILURE'
         }
+        else if (statusCode === 404) {
+            return 'COMMON.SERVER_COMMUNICATION_ERROR__MESSAGE__NOT_FOUND'
+        }
+        else if (statusCode >= 500 && statusCode < 600) {
+            return 'COMMON.SERVER_COMMUNICATION_ERROR__MESSAGE'
+        }
+        else {
+            return this.defaultErrorMessage
+        }
+
     }
 }
