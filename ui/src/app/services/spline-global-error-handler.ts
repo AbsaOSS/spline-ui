@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,37 +14,15 @@
  * limitations under the License.
  */
 
-@import 'vars';
+import { ErrorHandler, Injectable } from '@angular/core'
 
+@Injectable()
+export class SplineGlobalErrorHandler implements ErrorHandler {
 
-.sg-toolbar {
-    position: absolute;
-    z-index: 10000;
-
-    &--position {
-        &-top-left {
-            left: 1rem;
-            top: 1rem;
-        }
-
-        &-top-right {
-            right: 1rem;
-            top: 1rem;
-        }
-
-        &-bottom-left {
-            bottom: 1rem;
-            left: 1rem;
-        }
-
-        &-bottom-right {
-            bottom: 1rem;
-            right: 1rem;
-        }
+    constructor() {
     }
 
-    &__icon-button {
-        //background: $color-grey-light;
-        color: $color-grey-dark-75;
+    handleError(error: Error): void {
+        console.error('Unexpected Error:', error)
     }
 }
