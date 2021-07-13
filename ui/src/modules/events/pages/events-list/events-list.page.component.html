@@ -38,10 +38,10 @@
             <spline-inline-filter-with-overlay
                     label="Write Mode"
                     [icon]="'save'"
-                    [filterStringValues]="'All'">
+                    [filterStringValues]="writeMode.length === 0 ? 'All' : writeMode.join(', ') ">
 
-                <spline-list-box [records]="listBoxRecords"
-                                 [(ngModel)]="writeMode"
+                <spline-list-box [splineListBoxRecords]="listBoxRecords"
+                                 [ngModel]="writeMode"
                                  ngDefaultControl
                                  (ngModelChange)="onWriteModeChanged($event)"
                                  [dataMap]="listBoxDataMap">

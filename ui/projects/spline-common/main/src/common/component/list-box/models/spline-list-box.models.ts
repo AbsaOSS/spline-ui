@@ -19,18 +19,17 @@ import { StringHelpers } from 'spline-utils'
 
 export namespace SplineListBox {
 
-    export type SelectListOption<TRecord, TValue> = {
-        record: TRecord
+    export type SelectListOption<TValue> = {
         value: TValue
         label: string
     }
 
     export type DataMap<TRecord, TValue> = {
         compareValueWith?: (valueLeft: TValue, valueRight: TValue) => boolean
-        trackBy?: (record: TRecord) => string | number
+        trackBy?: (value: TValue) => string | number
         extractValue?: (record: TRecord) => TValue
         extractLabel?: (record: TRecord) => string
-        valueToString?: (record: TRecord) => string
+        valueToString?: (value: TValue) => string
     }
 
     export function getDefaultDataMap(): DataMap<any, any> {
@@ -45,10 +44,9 @@ export namespace SplineListBox {
 
     export function toListOption<TRecord, TValue>(
         record: TRecord,
-        dataMap: DataMap<TRecord, TValue>): SelectListOption<TRecord, TValue> {
+        dataMap: DataMap<TRecord, TValue>): SelectListOption<TValue> {
 
         return {
-            record,
             value: dataMap.extractValue(record),
             label: dataMap.extractLabel(record),
         }
@@ -61,12 +59,8 @@ export namespace SplineListBox {
 
     export function getDefaultSimpleDataMap<TValue>(): DataMap<SimpleListRecord<TValue>, TValue> {
         return {
-            extractValue: (record) => {
-                console.log('value'); return record.value
-            },
-            extractLabel: (record) => {
-                console.log('label'); return record.label
-            }
+            extractValue: (record) => record.value,
+            extractLabel: (record) => record.label
         }
     }
 }

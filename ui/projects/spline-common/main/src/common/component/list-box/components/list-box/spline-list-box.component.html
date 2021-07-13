@@ -16,34 +16,54 @@
 
 <div class="spline-list-box">
 
-<!--    <div class="spline-list-box__search">-->
-<!--        <spline-search-box [searchTerm]="searchTerm"-->
-<!--                           (search$)="onSearchTermChanged($event)">-->
-<!--        </spline-search-box>-->
-<!--    </div>-->
-
     <div class="spline-list-box__header">
-
+        <div class="spline-list-box__search">
+            <spline-search-box [searchTerm]="searchTerm"
+                               (search$)="onSearchTermChanged($event)">
+            </spline-search-box>
+        </div>
     </div>
 
     <div class="spline-list-box__content">
-        <div class="spline-list-box__record">
+
+        <div class="spline-selection-list">
+            <!-- SELECT ALL -->
+            <div class="spline-selection-list__master-option-container" *ngIf="multiple && options.length">
+
+                <div class="spline-selection-list-option spline-selection-list-option--master"
+                     [class.spline-selection-list-option--selected]="masterSelectState === 'checked'"
+                     (click)="onMasterSelectClicked()">
+
+                    <div class="spline-selection-list-option__checkbox">
+                        <mat-pseudo-checkbox [state]="masterSelectState"></mat-pseudo-checkbox>
+                    </div>
+
+                    <div class="spline-selection-list-option__label">
+                        {{ 'COMMON.LIST_BOX.SELECT_ALL_LABEL' | translate}}
+                    </div>
+                </div>
+            </div>
+            <!-- ./SELECT ALL -->
+
+            <!-- OPTIONS -->
+            <div class="spline-selection-list-option"
+                 [class.spline-selection-list-option--selected]="selectionModel.isSelected(option.value)"
+                 *ngFor="let option of options; trackBy: trackByFn"
+                 (click)="onSelectionOptionClicked(option)">
+
+                <div class="spline-selection-list-option__checkbox">
+                    <mat-pseudo-checkbox [state]="selectionModel.isSelected(option.value) ? 'checked' : 'unchecked'"></mat-pseudo-checkbox>
+                </div>
+
+                <div class="spline-selection-list-option__label">
+                    {{ option.label }}
+                </div>
+            </div>
+            <!-- OPTIONS -->
         </div>
 
-        <mat-selection-list class="spline-list-box__selection-list"
-                            [multiple]="multiple"
-                            [compareWith]="compareFn"
-                            [(ngModel)]="_value"
-                            (ngModelChange)="onNgModelChange($event)">
+        <spline-no-result *ngIf="options.length === 0"></spline-no-result>
 
-            <mat-list-option *ngFor="let option of _selectionListOptions; trackBy: trackByFn"
-                             checkboxPosition="before"
-                             [value]="option.value">
-
-                {{ option.label }}
-
-            </mat-list-option>
-        </mat-selection-list>
     </div>
 
     <div class="spline-list-box__footer">

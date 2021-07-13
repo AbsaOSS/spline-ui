@@ -22,7 +22,7 @@ export namespace SplineListBoxStore {
 
 
     export type State<TRecord, TValue> = {
-        selectListOptions: SplineListBox.SelectListOption<TRecord, TValue>[]
+        selectListOptions: SplineListBox.SelectListOption<TValue>[]
         searchTerm: string
     }
 
@@ -42,7 +42,7 @@ export namespace SplineListBoxStore {
     function calculateSelectListOptions<TRecord, TValue>(
         records: TRecord[],
         dataMap: SplineListBox.DataMap<TRecord, TValue>,
-        searchTerm: string): SplineListBox.SelectListOption<TRecord, TValue>[] {
+        searchTerm: string): SplineListBox.SelectListOption<TValue>[] {
 
         return records
             .map(

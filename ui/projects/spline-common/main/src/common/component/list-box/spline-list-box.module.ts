@@ -22,19 +22,23 @@ import { MatDividerModule } from '@angular/material/divider'
 import { MatIconModule } from '@angular/material/icon'
 import { MatListModule } from '@angular/material/list'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { SplineUtilsCommonModule } from 'spline-utils'
 import { SplineTranslateModule } from 'spline-utils/translate'
 
 import { SplineDividerModule } from '../divider'
 import { SplineIconModule } from '../icon'
 import { SplineLabelModule } from '../label'
+import { SplineNoResultModule } from '../no-result'
 import { SplineSearchBoxModule } from '../search-box'
 
 import { SplineListBoxComponent } from './components'
+import { SplineListBoxRecordsDirective } from './directives'
 
 
 @NgModule({
     declarations: [
         SplineListBoxComponent,
+        SplineListBoxRecordsDirective
     ],
     imports: [
         CommonModule,
@@ -48,14 +52,16 @@ import { SplineListBoxComponent } from './components'
         MatTooltipModule,
 
         SplineTranslateModule,
-        SplineTranslateModule,
+        SplineUtilsCommonModule,
         SplineLabelModule,
         SplineIconModule,
         SplineDividerModule,
         SplineSearchBoxModule,
+        SplineNoResultModule,
     ],
     exports: [
         SplineListBoxComponent,
+        SplineListBoxRecordsDirective
     ],
 })
 export class SplineListBoxModule {

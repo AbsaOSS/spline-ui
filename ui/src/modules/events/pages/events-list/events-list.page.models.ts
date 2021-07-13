@@ -59,7 +59,7 @@ export namespace EventsListPage {
 
     export const listBoxDataMap: SplineListBox.DataMap<SplineListBox.SimpleListRecord<DataSourceWriteMode>, DataSourceWriteMode> = {
         ...SplineListBox.getDefaultSimpleDataMap(),
-        trackBy: record => record.value
+        trackBy: value => value
     }
 
 

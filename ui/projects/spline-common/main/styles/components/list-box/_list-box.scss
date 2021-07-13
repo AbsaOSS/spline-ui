@@ -14,14 +14,27 @@
  * limitations under the License.
  */
 
-
-import { SplineSafeHtmlPipe } from './safe-html.pipe'
-import { SplineSearchPipe } from './search.pipe'
+@import 'components/search-box.component';
 
 
-export * from './public-api'
+.spline-list-box {
+    &__header {
+        align-items: center;
+        border-bottom: 1px solid $color-grey;
+        display: flex;
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+    }
 
-export const splineUtilsPipes = [
-    SplineSafeHtmlPipe,
-    SplineSearchPipe
-]
+    &__master-select {
+        padding: 0 12px;
+    }
+
+    &__search {
+        flex-grow: 1;
+
+        .spline-search-box {
+            @include spline-search-box-size(32px);
+        }
+    }
+}
