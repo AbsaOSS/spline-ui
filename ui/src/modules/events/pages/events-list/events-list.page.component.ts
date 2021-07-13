@@ -19,6 +19,7 @@ import { isEqual } from 'lodash-es'
 import { distinctUntilChanged, filter, map, skip, takeUntil } from 'rxjs/operators'
 import { DataSourceWriteMode, ExecutionEventFacade, ExecutionEventField, ExecutionEventsQuery } from 'spline-api'
 import { SplineDateRangeFilter } from 'spline-common'
+import { DynamicFilterModel } from 'spline-common/dynamic-filter'
 import { EventsDataSource } from 'spline-shared/events'
 import { BaseLocalStateComponent, SearchQuery, SplineDateRangeValue } from 'spline-utils'
 
@@ -48,6 +49,7 @@ export class EventsListPageComponent extends BaseLocalStateComponent<EventsListP
 
     readonly listBoxDataMap = EventsListPage.listBoxDataMap
     readonly listBoxRecords = EventsListPage.listBoxRecords
+    readonly filterModel: DynamicFilterModel<EventsListPage.Filter>
 
     writeMode: DataSourceWriteMode[] = [DataSourceWriteMode.Append]
 
@@ -60,6 +62,12 @@ export class EventsListPageComponent extends BaseLocalStateComponent<EventsListP
 
         this.initDateRangeFilter()
 
+        this.filterModel = EventsListPage.createFilterModel()
+        this.filterModel.partialPatchValue(
+            {
+                [EventsListPage.FilterId.writeMode]: [DataSourceWriteMode.Append]
+            }
+        )
     }
 
     onDateFilterChanged(value: SplineDateRangeFilter.Value): void {

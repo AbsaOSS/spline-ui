@@ -15,7 +15,6 @@
  */
 
 import { Injectable } from '@angular/core'
-import { Observable, of } from 'rxjs'
 import { IDynamicFilterControlFactory } from 'spline-common/dynamic-filter'
 
 import { DfControlDateRangeComponent } from './df-control-date-range.component'
@@ -28,11 +27,5 @@ export class DfControlDateRangeFactory implements IDynamicFilterControlFactory<D
     readonly type = DfControlDateRange.TYPE
 
     readonly componentType = DfControlDateRangeComponent
-
-    createModel<TId extends any = string>(config: DfControlDateRange.Config<TId>): Observable<DfControlDateRange.Model<TId>> {
-        return of(
-            new DfControlDateRange.Model(config)
-        )
-    }
 
 }

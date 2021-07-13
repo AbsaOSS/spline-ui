@@ -20,7 +20,7 @@ module.exports = {
             'error',
             {
                 'type': 'attribute',
-                'prefix': ['dynamic-filter', 'filter'],
+                'prefix': ['dynamic-filter', 'filter', 'df'],
                 'style': 'camelCase'
             }
         ],
@@ -28,7 +28,7 @@ module.exports = {
             'error',
             {
                 'type': 'element',
-                'prefix': ['dynamic-filter', 'filter'],
+                'prefix': ['dynamic-filter', 'filter', 'df'],
                 'style': 'kebab-case'
             }
         ]

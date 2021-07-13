@@ -29,6 +29,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { storeFreeze } from 'ngrx-store-freeze'
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material'
 import { SplineIconModule, SplineSearchBoxModule } from 'spline-common'
+import { DynamicFilterCoreModule } from 'spline-common/dynamic-filter'
 import { SplineLayoutModule } from 'spline-common/layout'
 import { SplineConfigModule, SplineConfigSettings, SPLINE_CONFIG_SETTINGS } from 'spline-shared'
 import { SplineAttributesSharedModule } from 'spline-shared/attributes'
@@ -82,6 +83,7 @@ export const metaReducers: MetaReducer<any>[] =
         SplineIconModule,
         SplineUtilsCommonModule,
         NgxDaterangepickerMd.forRoot(),
+        DynamicFilterCoreModule.forRoot()
     ],
     providers: [
         {

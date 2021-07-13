@@ -42,8 +42,6 @@ export class DynamicFilterModel<TFilter extends Record<string, any> = Record<str
         emitEvent: true,
     })
 
-    protected readonly modelsMap: DynamicFilterControlsMap<TFilter>
-
     protected destroyed$ = new Subject<void>()
     protected readonly _controlsMap$: BehaviorSubject<DynamicFilterControlsMap<TFilter>>
 
@@ -100,15 +98,15 @@ export class DynamicFilterModel<TFilter extends Record<string, any> = Record<str
     }
 
     hasFilterControl(columnId: keyof TFilter): boolean {
-        return this.modelsMap[columnId] !== undefined
+        return this.controlsMap[columnId] !== undefined
     }
 
     getFilterControl(columnId: keyof TFilter): IDynamicFilterControlModel<TFilter[keyof TFilter], any, keyof TFilter> | undefined {
-        return this.modelsMap[columnId]
+        return this.controlsMap[columnId]
     }
 
     patchValue(valueUpdate: TFilter, emitEvent = true): void {
-        Object.keys(this.modelsMap)
+        Object.keys(this.controlsMap)
             .forEach(columnId => {
                 if (this.hasFilterControl(columnId as keyof TFilter)) {
                     const model = this.getFilterControl(columnId as keyof TFilter)

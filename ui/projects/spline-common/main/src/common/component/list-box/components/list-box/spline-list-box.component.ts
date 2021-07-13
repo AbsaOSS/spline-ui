@@ -68,7 +68,7 @@ export class SplineListBoxComponent<TValue = unknown> extends BaseComponent
             this._value = value
             if (this.selectionModel) {
                 this.selectionModel.clear()
-                this.selectionModel.select(...this._value)
+                this.selectionModel.select(...(this._value || []))
             }
         }
     }

@@ -29,7 +29,7 @@ export namespace DfControlDateRange {
 
     export type Options = {}
 
-    export type Config<TId = string> = DynamicFilterControlModelConfig<Value, Options, TId>
+    export type Config<TId = string> = DynamicFilterControlModelConfig<Value, Options>
 
     export class Model<TId = string> extends BaseDynamicFilterControlModel<Value, Options, TId> {
         readonly type = TYPE

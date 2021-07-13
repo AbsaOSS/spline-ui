@@ -15,8 +15,16 @@
   -->
 
 <spline-inline-filter-with-overlay
-        label="Write Mode"
-        [icon]="'save'"
-        [filterStringValues]="'All'">
+        [label]="model.options.label"
+        (apply$)="onApply()"
+        (reset$)="onReset()"
+        [icon]="model.options.icon"
+        [filterStringValues]="stringValue$ | async">
+
+    <spline-list-box [splineListBoxRecords]="model.options.records"
+                     [ngModel]="model.value$ | async"
+                     ngDefaultControl
+                     [dataMap]="model.options.dataMap">
+    </spline-list-box>
 
 </spline-inline-filter-with-overlay>

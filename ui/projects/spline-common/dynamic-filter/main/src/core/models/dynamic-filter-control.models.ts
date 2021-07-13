@@ -36,8 +36,7 @@ export interface IDynamicFilterControlModel<TValue = unknown,
     patchValue: (value: TValue, emitEvent: boolean) => void
 }
 
-export interface DynamicFilterControlModelConfig<TValue, TOptions extends Record<string, any> = Record<string, unknown>, TId = string> {
-    id: TId
+export interface DynamicFilterControlModelConfig<TValue, TOptions extends Record<string, any> = Record<string, unknown>> {
     defaultValue?: TValue
     options?: TOptions
 }
@@ -58,14 +57,14 @@ implements IDynamicFilterControlModel<TValue, TOptions, TId> {
 
     abstract readonly type: string
 
-    constructor(config: DynamicFilterControlModelConfig<TValue, TOptions, TId>) {
-        this.id = config.id
+    constructor(id: TId, config?: DynamicFilterControlModelConfig<TValue, TOptions>) {
+        this.id = id
 
-        if (config.options !== undefined) {
+        if (config?.options !== undefined) {
             this._options = config.options
         }
 
-        if (config.defaultValue !== undefined) {
+        if (config?.defaultValue !== undefined) {
             this.patchValue(config.defaultValue, false)
         }
 
@@ -107,13 +106,7 @@ export interface IDynamicFilterControlComponent<TValue = any, TOptions extends S
     event$: EventEmitter<GenericEvent>
 }
 
-export interface IDynamicFilterControlFactory<TValue = any, TOptions extends SplineRecord = SplineRecord, TId = string>
-    extends IDynamicComponentFactory<IDynamicFilterControlComponent<TValue, TOptions, TId>> {
-
-    createModel(
-        config: DynamicFilterControlModelConfig<TValue, TOptions, TId>
-    ): Observable<IDynamicFilterControlModel<TValue, TOptions, TId>>
-
-}
+export type IDynamicFilterControlFactory<TValue = any, TOptions extends SplineRecord = SplineRecord, TId = string>
+    = IDynamicComponentFactory<IDynamicFilterControlComponent<TValue, TOptions, TId>>
 
 export const DF_CONTROL_FACTORY = new InjectionToken<IDynamicFilterControlFactory<any>[]>('DF_CONTROL_FACTORY')

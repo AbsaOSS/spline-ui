@@ -16,6 +16,8 @@
 
 import { DataSourceWriteMode } from 'spline-api'
 import { SplineDateRangeFilter, SplineDateRangeFilterConsumerStore, SplineListBox } from 'spline-common'
+import { DynamicFilterModel } from 'spline-common/dynamic-filter'
+import { DfControlSelect } from 'spline-common/dynamic-filter/filter-controls'
 import { SplineDateRangeValue } from 'spline-utils'
 
 
@@ -62,5 +64,28 @@ export namespace EventsListPage {
         trackBy: value => value
     }
 
+    export enum FilterId {
+        writeMode = 'writeMode'
+    }
+
+    export type Filter = {
+        [FilterId.writeMode]: DataSourceWriteMode[]
+    }
+
+    export function createFilterModel(): DynamicFilterModel<Filter> {
+        return new DynamicFilterModel<Filter>([
+            new DfControlSelect.Model(
+                FilterId.writeMode,
+                {
+                    options: {
+                        records: listBoxRecords,
+                        dataMap: listBoxDataMap,
+                        icon: 'save',
+                        label: 'Write Mode'
+                    }
+                }
+            )
+        ])
+    }
 
 }

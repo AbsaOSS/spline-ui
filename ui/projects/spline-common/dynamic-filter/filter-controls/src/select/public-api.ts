@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-export * from './components/df-control-select/df-control-select.component'
+export * from './components/public-api'
+export * from './models/public-api'
 export * from './df-control-select.module'
-export * from './models/df-control-select.models'

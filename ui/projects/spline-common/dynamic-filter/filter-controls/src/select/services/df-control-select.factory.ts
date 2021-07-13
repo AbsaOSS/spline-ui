@@ -15,7 +15,6 @@
  */
 
 import { Injectable } from '@angular/core'
-import { Observable, of } from 'rxjs'
 import { IDynamicFilterControlFactory } from 'spline-common/dynamic-filter'
 
 import { DfControlSelectComponent } from '../components/df-control-select/df-control-select.component'
@@ -29,10 +28,5 @@ export class DfControlSelectFactory implements IDynamicFilterControlFactory<DfCo
 
     readonly componentType = DfControlSelectComponent
 
-    createModel<TId extends any = string>(config: DfControlSelect.Config<TId>): Observable<DfControlSelect.Model<TId>> {
-        return of(
-            new DfControlSelect.Model(config)
-        )
-    }
 
 }

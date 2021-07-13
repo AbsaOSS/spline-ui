@@ -15,3 +15,4 @@
  */
 
 export * from './date-range/public-api'
+export * from './select/public-api'

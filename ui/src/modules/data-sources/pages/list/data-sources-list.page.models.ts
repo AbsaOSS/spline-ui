@@ -57,9 +57,7 @@ export namespace DataSourcesListPage {
     export function createFilterModel(): DynamicFilterModel<FilterValue> {
         return new DynamicFilterModel(
             [
-                new DfControlDateRange.Model({
-                    id: FilterId.dateRange
-                })
+                new DfControlDateRange.Model(FilterId.dateRange)
             ]
         )
     }

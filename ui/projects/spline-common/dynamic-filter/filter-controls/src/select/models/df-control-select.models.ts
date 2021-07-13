@@ -14,25 +14,37 @@
  * limitations under the License.
  */
 
-import moment from 'moment'
+import { SplineListBox } from 'spline-common'
 import { BaseDynamicFilterControlModel, DynamicFilterControlModelConfig } from 'spline-common/dynamic-filter'
 
 
 export namespace DfControlSelect {
 
-    export const TYPE = 'date_range'
+    export const TYPE = 'DfControlSelect'
 
-    export type Config<TId = string> = DynamicFilterControlModelConfig<DfControlSelect.Value, DfControlSelect.Options, TId>
+    export type Value<TValue = unknown> = TValue[]
 
-    export type Value = {
-        dateFrom: moment.Moment
-        dateTo: moment.Moment
+    export type Options<TRecord = unknown, TValue = unknown> = {
+        label: string
+        icon: string
+        records: TRecord[]
+        dataMap: SplineListBox.DataMap<TRecord, TValue>
     }
 
-    export type Options = {}
+    export type Config<TRecord = unknown, TValue = unknown> =
+        & DynamicFilterControlModelConfig<Value<TValue>, Options<TRecord, TValue>>
+        &
+        {
+            options: Options<TRecord, TValue>
+        }
 
-    export class Model<TId = string> extends BaseDynamicFilterControlModel<Value, Options, TId> {
+    export class Model<TId = string, TRecord = unknown, TValue = unknown>
+        extends BaseDynamicFilterControlModel<Value<TValue>, Options<TRecord, TValue>, TId> {
         readonly type = TYPE
+
+        constructor(id: TId, config: Config<TRecord, TValue>) {
+            super(id, config)
+        }
     }
 
 }

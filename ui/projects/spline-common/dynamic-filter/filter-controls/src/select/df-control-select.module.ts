@@ -16,15 +16,28 @@
 
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
-import { DF_CONTROL_FACTORY, DynamicFilterModule } from 'spline-common/dynamic-filter'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { SplineInlineFilterModule, SplineListBoxModule } from 'spline-common'
+import { DF_CONTROL_FACTORY, DynamicFilterControlManager, DynamicFilterModule } from 'spline-common/dynamic-filter'
 
+import { DfControlSelectComponent } from './components'
 import { DfControlSelectFactory } from './services/df-control-select.factory'
 
 
 @NgModule({
     imports: [
         CommonModule,
-        DynamicFilterModule
+        DynamicFilterModule,
+        SplineInlineFilterModule,
+        SplineListBoxModule,
+        ReactiveFormsModule,
+        FormsModule
+    ],
+    declarations: [
+        DfControlSelectComponent
+    ],
+    exports: [
+        DfControlSelectComponent
     ],
     providers: [
         DfControlSelectFactory,
@@ -36,5 +49,11 @@ import { DfControlSelectFactory } from './services/df-control-select.factory'
     ]
 })
 export class DfControlSelectModule {
+    constructor(private readonly dynamicFilterControlManager: DynamicFilterControlManager,
+                private readonly dfControlSelectFactory: DfControlSelectFactory) {
 
+        this.dynamicFilterControlManager.registerStaticFactory(
+            this.dfControlSelectFactory
+        )
+    }
 }
