@@ -15,7 +15,7 @@
  */
 
 import { SelectionModel } from '@angular/cdk/collections'
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Optional, Output, SimpleChanges } from '@angular/core'
+import { Component, EventEmitter, Input, OnChanges, OnInit, Optional, Output, SimpleChanges } from '@angular/core'
 import { ControlValueAccessor, NgControl } from '@angular/forms'
 import { MatPseudoCheckboxState } from '@angular/material/core'
 import { isEqual } from 'lodash-es'
@@ -28,7 +28,6 @@ import { SplineListBox } from '../../models'
 @Component({
     selector: 'spline-list-box',
     templateUrl: './spline-list-box.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SplineListBoxComponent<TValue = unknown> extends BaseComponent
     implements OnChanges, OnInit, ControlValueAccessor {

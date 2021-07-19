@@ -77,6 +77,11 @@
                             },
                             {
                                 "glob": "**/*",
+                                "input": "projects/spline-common/dynamic-filter/filter-controls/assets",
+                                "output": "/assets"
+                            },
+                            {
+                                "glob": "**/*",
                                 "input": "projects/spline-shared/main/assets",
                                 "output": "/assets"
                             },

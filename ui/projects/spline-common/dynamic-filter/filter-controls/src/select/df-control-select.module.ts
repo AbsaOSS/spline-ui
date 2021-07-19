@@ -19,6 +19,7 @@ import { NgModule } from '@angular/core'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { SplineInlineFilterModule, SplineListBoxModule } from 'spline-common'
 import { DF_CONTROL_FACTORY, DynamicFilterControlManager, DynamicFilterModule } from 'spline-common/dynamic-filter'
+import { SplineTranslateModule } from 'spline-utils/translate'
 
 import { DfControlSelectComponent } from './components'
 import { DfControlSelectFactory } from './services/df-control-select.factory'
@@ -27,11 +28,13 @@ import { DfControlSelectFactory } from './services/df-control-select.factory'
 @NgModule({
     imports: [
         CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+
+        SplineTranslateModule.forChild(),
         DynamicFilterModule,
         SplineInlineFilterModule,
-        SplineListBoxModule,
-        ReactiveFormsModule,
-        FormsModule
+        SplineListBoxModule
     ],
     declarations: [
         DfControlSelectComponent

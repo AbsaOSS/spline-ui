@@ -62,12 +62,14 @@ export class EventsListPageComponent extends BaseLocalStateComponent<EventsListP
 
         this.initDateRangeFilter()
 
-        this.filterModel = EventsListPage.createFilterModel()
-        this.filterModel.partialPatchValue(
-            {
-                [EventsListPage.FilterId.writeMode]: [DataSourceWriteMode.Append]
-            }
-        )
+        this.filterModel = EventsListPage.createFilterModel({
+            [EventsListPage.FilterId.writeMode]: [DataSourceWriteMode.Append]
+        })
+
+        this.filterModel.valueChanged$
+            .subscribe(
+                value => console.log(value)
+            )
     }
 
     onDateFilterChanged(value: SplineDateRangeFilter.Value): void {

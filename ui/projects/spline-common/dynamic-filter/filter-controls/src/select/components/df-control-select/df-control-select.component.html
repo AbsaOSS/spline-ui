@@ -15,13 +15,15 @@
   -->
 
 <spline-inline-filter-with-overlay
-        [label]="model.options.label"
+        #overlayRef
+        [label]="model.label"
+        [icon]="model.icon"
+        [filterStringValues]="stringValues$ | async"
         (apply$)="onApply()"
-        (reset$)="onReset()"
-        [icon]="model.options.icon"
-        [filterStringValues]="stringValue$ | async">
+        (reset$)="onReset()">
 
-    <spline-list-box [splineListBoxRecords]="model.options.records"
+    <spline-list-box *ngIf="overlayRef.isOpened"
+                     [splineListBoxRecords]="model.records$ | async"
                      [ngModel]="model.value$ | async"
                      ngDefaultControl
                      [dataMap]="model.options.dataMap">

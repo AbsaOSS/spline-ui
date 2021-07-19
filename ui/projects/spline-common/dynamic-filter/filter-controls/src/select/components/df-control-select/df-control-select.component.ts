@@ -15,7 +15,7 @@
  */
 
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@angular/core'
-import { BehaviorSubject } from 'rxjs'
+import { Observable } from 'rxjs'
 import { map, takeUntil } from 'rxjs/operators'
 import { SplineListBoxComponent } from 'spline-common'
 import { BaseDynamicFilterControlComponent } from 'spline-common/dynamic-filter'
@@ -34,28 +34,28 @@ export class DfControlSelectComponent<TId = string>
 
     @ViewChild(SplineListBoxComponent) splineListBoxComponent: SplineListBoxComponent
 
-    readonly stringValue$ = new BehaviorSubject<string>('')
-
     @Input() model: DfControlSelect.Model<TId>
 
+    readonly defaultValueLabelAllSelected = 'COMMON.DF.FILTER_CONTROLS.SELECT.LABEL__ALL_SELECTED'
+
+    stringValues$: Observable<string[]>
+
     ngOnInit(): void {
-        (this.model.value$)
+
+        this.stringValues$ = this.model.value$
             .pipe(
                 takeUntil(this.destroyed$),
-                map(
-                    value => value?.length
+                map(value => {
+                    return value?.length
                         ? (value as any[])
                             .map(
                                 item => this.model.options.dataMap?.valueToString
                                     ? this.model.options.dataMap.valueToString(item)
                                     : item
                             )
-                            .join(', ')
-                        : 'All'
-                )
-            )
-            .subscribe(
-                stringValue => this.stringValue$.next(stringValue)
+                        : [this.model.options?.valueLabelAllSelected ?? this.defaultValueLabelAllSelected]
+
+                }),
             )
     }
 

@@ -18,7 +18,14 @@
 <spline-inline-filter [icon]="icon"
                       [matMenuTriggerFor]="overlay"
                       [label]="label">
-    {{ filterStringValues }}
+
+    <spline-long-text>
+        <ng-container *ngFor="let value of _filterStringValues; let last = last">
+            {{ value | translate }}
+            <ng-container *ngIf="!last">, </ng-container>
+        </ng-container>
+    </spline-long-text>
+
 </spline-inline-filter>
 
 <mat-menu #overlay="matMenu" class="spline-inline-filter-overlay">

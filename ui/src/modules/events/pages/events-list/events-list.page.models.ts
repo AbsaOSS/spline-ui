@@ -15,7 +15,13 @@
  */
 
 import { DataSourceWriteMode } from 'spline-api'
-import { SplineDateRangeFilter, SplineDateRangeFilterConsumerStore, SplineListBox } from 'spline-common'
+import {
+    getDataSourceWriteModeInfoList,
+    getDataSourceWriteModeLabel,
+    SplineDateRangeFilter,
+    SplineDateRangeFilterConsumerStore,
+    SplineListBox
+} from 'spline-common'
 import { DynamicFilterModel } from 'spline-common/dynamic-filter'
 import { DfControlSelect } from 'spline-common/dynamic-filter/filter-controls'
 import { SplineDateRangeValue } from 'spline-utils'
@@ -61,7 +67,8 @@ export namespace EventsListPage {
 
     export const listBoxDataMap: SplineListBox.DataMap<SplineListBox.SimpleListRecord<DataSourceWriteMode>, DataSourceWriteMode> = {
         ...SplineListBox.getDefaultSimpleDataMap(),
-        trackBy: value => value
+        trackBy: value => value,
+        valueToString: (value: DataSourceWriteMode) => getDataSourceWriteModeLabel(value)
     }
 
     export enum FilterId {
@@ -72,20 +79,26 @@ export namespace EventsListPage {
         [FilterId.writeMode]: DataSourceWriteMode[]
     }
 
-    export function createFilterModel(): DynamicFilterModel<Filter> {
-        return new DynamicFilterModel<Filter>([
+    export function createFilterModel(defaultValue: Partial<Filter>): DynamicFilterModel<Filter> {
+        const filterModel = new DynamicFilterModel<Filter>([
             new DfControlSelect.Model(
                 FilterId.writeMode,
                 {
+                    records: getDataSourceWriteModeInfoList().map(item => ({label: item.label, value: item.writeMode})),
+                    icon: 'save',
+                    label: 'Write Mode',
                     options: {
-                        records: listBoxRecords,
-                        dataMap: listBoxDataMap,
-                        icon: 'save',
-                        label: 'Write Mode'
+                        dataMap: { ...listBoxDataMap }
                     }
                 }
             )
         ])
+
+        if (defaultValue) {
+            filterModel.partialPatchValue(defaultValue)
+        }
+
+        return filterModel
     }
 
 }

@@ -106,6 +106,7 @@ export const metaReducers: MetaReducer<any>[] =
                 toAssetsFilePath('shared-expression'),
                 toAssetsFilePath('common-graph'),
                 toAssetsFilePath('common-layout'),
+                toAssetsFilePath('common.dynamic-filter.filter-controls'),
             ]
         },
         { provide: ErrorHandler, useClass: SplineGlobalErrorHandler },

@@ -27,6 +27,10 @@
         "DATE_FILTER__EMPTY_VALUE_LABEL": "Everything",
         "LIST_BOX": {
             "SELECT_ALL_LABEL": "(Select All)"
+        },
+        "DATA_SOURCE_WRITE_MODE": {
+            "APPEND": "Append",
+            "OVERRIDE": "Override"
         }
     }
 }

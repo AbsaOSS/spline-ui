@@ -29,7 +29,9 @@ export class SplineInlineFilterWithOverlayComponent {
 
     @Input() icon: string
     @Input() label: string
-    @Input() filterStringValues: string[] = []
+    @Input() set filterStringValues(value: string[] | string) {
+        this._filterStringValues = Array.isArray(value) ? value : [value]
+    }
 
     @Input() showActions = true
     @Input() applyBtnDisabled = false
@@ -43,6 +45,11 @@ export class SplineInlineFilterWithOverlayComponent {
 
     @ViewChild(MatMenuTrigger, { static: false }) matMenuTrigger: MatMenuTrigger
 
+    _filterStringValues: string[] = []
+
+    get isOpened(): boolean {
+        return this.matMenuTrigger?.menuOpen ?? false
+    }
 
     onClearBtnClicked(): void {
         this.reset$.emit()

@@ -15,7 +15,7 @@
  */
 
 import { EventEmitter, InjectionToken } from '@angular/core'
-import { BehaviorSubject, Observable } from 'rxjs'
+import { BehaviorSubject, Observable, Subject } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
 import { GenericEvent, IDynamicComponentFactory, SplineRecord } from 'spline-utils'
 
@@ -47,6 +47,7 @@ implements IDynamicFilterControlModel<TValue, TOptions, TId> {
     readonly id: TId
     readonly valueChanged$: Observable<TValue>
     readonly value$: Observable<TValue>
+    protected readonly destroyed$ = new Subject<void>()
 
     protected _options: TOptions = {} as TOptions
 
@@ -90,6 +91,11 @@ implements IDynamicFilterControlModel<TValue, TOptions, TId> {
 
     patchValue(value: TValue, emitEvent = true): void {
         this._state$.next({ value, emitEvent })
+    }
+
+    destroy(): void {
+        this.destroyed$.next()
+        this.destroyed$.complete()
     }
 }
 

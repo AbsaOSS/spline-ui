@@ -22,6 +22,7 @@ import { MatMenuModule } from '@angular/material/menu'
 import { SplineTranslateModule } from 'spline-utils/translate'
 
 import { SplineIconModule } from '../icon'
+import { SplineLongTextModule } from '../long-text'
 
 import { splineInlineFiltersComponents } from './components'
 
@@ -38,6 +39,7 @@ import { splineInlineFiltersComponents } from './components'
         SplineIconModule,
         MatMenuModule,
         SplineTranslateModule,
+        SplineLongTextModule,
     ],
     exports: [
         ...splineInlineFiltersComponents
