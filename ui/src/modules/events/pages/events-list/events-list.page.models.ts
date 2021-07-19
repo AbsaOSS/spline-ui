@@ -15,87 +15,53 @@
  */
 
 import { DataSourceWriteMode } from 'spline-api'
-import {
-    getDataSourceWriteModeInfoList,
-    getDataSourceWriteModeLabel,
-    SplineDateRangeFilter,
-    SplineDateRangeFilterConsumerStore,
-    SplineListBox
-} from 'spline-common'
+import { getDataSourceWriteModeInfoList, getDataSourceWriteModeLabel, SplineListBox } from 'spline-common'
 import { DynamicFilterModel } from 'spline-common/dynamic-filter'
-import { DfControlSelect } from 'spline-common/dynamic-filter/filter-controls'
-import { SplineDateRangeValue } from 'spline-utils'
+import { DfControlDateRange, DfControlSelect } from 'spline-common/dynamic-filter/filter-controls'
 
 
 export namespace EventsListPage {
 
-    export type State = {
-        dateRangeFilter: SplineDateRangeFilterConsumerStore.State
-    }
-
-    export function getDefaultState(): State {
-        return {
-            dateRangeFilter: SplineDateRangeFilterConsumerStore.getDefaultState()
-        }
-    }
-
-    export function reduceDateRangeFilterChanged(state: State, value: SplineDateRangeFilter.Value | null): State {
-        return {
-            ...state,
-            dateRangeFilter: SplineDateRangeFilterConsumerStore.reduceValueChanged(state.dateRangeFilter, value)
-        }
-    }
-
-    export function reduceDateRangeFilterBoundsChanged(state: State, value: SplineDateRangeValue | null): State {
-        return {
-            ...state,
-            dateRangeFilter: SplineDateRangeFilterConsumerStore.reduceBoundsChanged(state.dateRangeFilter, value)
-        }
-    }
-
-
-    export const listBoxRecords: SplineListBox.SimpleListRecord<DataSourceWriteMode>[] = [
-        {
-            value: DataSourceWriteMode.Append,
-            label: 'Append'
-        },
-        {
-            value: DataSourceWriteMode.Overwrite,
-            label: 'Overwrite'
-        }
-    ]
-
-    export const listBoxDataMap: SplineListBox.DataMap<SplineListBox.SimpleListRecord<DataSourceWriteMode>, DataSourceWriteMode> = {
-        ...SplineListBox.getDefaultSimpleDataMap(),
-        trackBy: value => value,
-        valueToString: (value: DataSourceWriteMode) => getDataSourceWriteModeLabel(value)
-    }
-
     export enum FilterId {
-        writeMode = 'writeMode'
+        writeMode = 'writeMode',
+        dataRange = 'dateRange'
     }
 
     export type Filter = {
         [FilterId.writeMode]: DataSourceWriteMode[]
+        [FilterId.dataRange]: DfControlDateRange.Value
     }
 
-    export function createFilterModel(defaultValue: Partial<Filter>): DynamicFilterModel<Filter> {
+    export function createFilterModel(defaultValue?: Partial<Filter>): DynamicFilterModel<Filter> {
         const filterModel = new DynamicFilterModel<Filter>([
+            new DfControlDateRange.Model(
+                FilterId.dataRange,
+                {
+                    label: 'EVENTS.EVENTS_LIST__DF__EXECUTED_AT'
+                }
+            ),
             new DfControlSelect.Model(
                 FilterId.writeMode,
                 {
-                    records: getDataSourceWriteModeInfoList().map(item => ({label: item.label, value: item.writeMode})),
+                    records: getDataSourceWriteModeInfoList()
+                        .map(item => ({
+                            label: item.label,
+                            value: item.writeMode
+                        })),
                     icon: 'save',
-                    label: 'Write Mode',
+                    label: 'EVENTS.EVENTS_LIST__DF__WRITE_MODE',
                     options: {
-                        dataMap: { ...listBoxDataMap }
+                        dataMap: {
+                            ...SplineListBox.getDefaultSimpleDataMap(),
+                            valueToString: (value: DataSourceWriteMode) => getDataSourceWriteModeLabel(value)
+                        }
                     }
                 }
             )
         ])
 
         if (defaultValue) {
-            filterModel.partialPatchValue(defaultValue)
+            filterModel.partialPatchValue(defaultValue, false)
         }
 
         return filterModel

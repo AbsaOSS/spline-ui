@@ -14,3 +14,11 @@
   ~ limitations under the License.
   -->
 
+<spline-date-filter [label]="model.label"
+                    [icon]="model.icon ? model.icon : defaultIcon"
+                    [maxDate]="model.bounds?.dateTo"
+                    [minDate]="model.bounds?.dateFrom"
+                    [value]="model.value$ | async"
+                    (valueChanged$)="onDateFilterChanged($event)">
+
+</spline-date-filter>

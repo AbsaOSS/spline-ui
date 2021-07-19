@@ -14,7 +14,8 @@
   ~ limitations under the License.
   -->
 
-<dynamic-filter-control *ngFor="let controlModel of model.controls$ | async"
-                        [model]="controlModel">
-
-</dynamic-filter-control>
+<div class="dynamic-filter-container">
+    <dynamic-filter-control *ngFor="let controlModel of model.controls$ | async"
+                            [model]="controlModel">
+    </dynamic-filter-control>
+</div>

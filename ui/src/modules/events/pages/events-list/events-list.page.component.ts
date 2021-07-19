@@ -18,10 +18,10 @@ import { Component } from '@angular/core'
 import { isEqual } from 'lodash-es'
 import { distinctUntilChanged, filter, map, skip, takeUntil } from 'rxjs/operators'
 import { DataSourceWriteMode, ExecutionEventFacade, ExecutionEventField, ExecutionEventsQuery } from 'spline-api'
-import { SplineDateRangeFilter } from 'spline-common'
-import { DynamicFilterModel } from 'spline-common/dynamic-filter'
+import { DynamicFilterModel, DynamicFilterValue } from 'spline-common/dynamic-filter'
+import { DfControlDateRange } from 'spline-common/dynamic-filter/filter-controls'
 import { EventsDataSource } from 'spline-shared/events'
-import { BaseLocalStateComponent, SearchQuery, SplineDateRangeValue } from 'spline-utils'
+import { BaseComponent, BaseLocalStateComponent, SearchQuery, SplineDateRangeValue } from 'spline-utils'
 
 import { EventsListDtSchema } from '../../dynamic-table'
 
@@ -43,49 +43,18 @@ import SearchParams = SearchQuery.SearchParams
         },
     ],
 })
-export class EventsListPageComponent extends BaseLocalStateComponent<EventsListPage.State> {
+export class EventsListPageComponent extends BaseComponent {
 
     readonly dataMap = EventsListDtSchema.getSchema()
-
-    readonly listBoxDataMap = EventsListPage.listBoxDataMap
-    readonly listBoxRecords = EventsListPage.listBoxRecords
-    readonly filterModel: DynamicFilterModel<EventsListPage.Filter>
-
-    writeMode: DataSourceWriteMode[] = [DataSourceWriteMode.Append]
+    readonly filterModel: DynamicFilterModel<EventsListPage.Filter> = EventsListPage.createFilterModel()
 
     constructor(readonly dataSource: EventsDataSource) {
         super()
-
-        this.updateState(
-            EventsListPage.getDefaultState()
-        )
-
         this.initDateRangeFilter()
-
-        this.filterModel = EventsListPage.createFilterModel({
-            [EventsListPage.FilterId.writeMode]: [DataSourceWriteMode.Append]
-        })
-
-        this.filterModel.valueChanged$
-            .subscribe(
-                value => console.log(value)
-            )
     }
 
-    onDateFilterChanged(value: SplineDateRangeFilter.Value): void {
-        this.updateDateRangeFilterValue(value)
-    }
-
-    onWriteModeChanged(value: DataSourceWriteMode[]): void {
-        console.log(value)
-    }
-
-    private updateDateRangeFilterValue(value: SplineDateRangeFilter.Value): void {
-        this.updateState(
-            EventsListPage.reduceDateRangeFilterChanged(
-                this.state, value
-            )
-        )
+    private get dateRangeControl(): DfControlDateRange.Model {
+        return this.filterModel.getFilterControl(EventsListPage.FilterId.dataRange) as DfControlDateRange.Model
     }
 
     private initDateRangeFilter(): void {
@@ -93,12 +62,14 @@ export class EventsListPageComponent extends BaseLocalStateComponent<EventsListP
         // [ACTION] :: FilterValue changed
         //      => fetch data
         //
-        this.state$
+        this.filterModel.valueChanged$
             .pipe(
-                map(state => state.dateRangeFilter.value),
                 skip(1),
                 takeUntil(this.destroyed$),
                 distinctUntilChanged((left, right) => isEqual(left, right)),
+                map((dynamicFilterValue: DynamicFilterValue<EventsListPage.Filter>) =>
+                    dynamicFilterValue[EventsListPage.FilterId.dataRange].value
+                ),
                 filter(filterValue => {
                     const searchParams = this.dataSource.searchParams
                     const currentDsFilterValue: SplineDateRangeValue = searchParams.filter.executedAtFrom
@@ -137,10 +108,10 @@ export class EventsListPageComponent extends BaseLocalStateComponent<EventsListP
                         dateTo: searchParams.filter.executedAtTo,
                     }
                 }),
-                filter(filterValue => !isEqual(filterValue, this.state.dateRangeFilter.value)),
+                filter(filterValue => !isEqual(filterValue, this.dateRangeControl.value)),
             )
             .subscribe(
-                filterValue => this.updateDateRangeFilterValue(filterValue),
+                filterValue => this.dateRangeControl.patchValue(filterValue),
             )
 
         //
@@ -152,14 +123,10 @@ export class EventsListPageComponent extends BaseLocalStateComponent<EventsListP
                 takeUntil(this.destroyed$),
                 map(dataState => dataState?.data?.dateRangeBounds),
                 distinctUntilChanged((left, right) => isEqual(left, right)),
-                filter(dateRangeBounds => !isEqual(dateRangeBounds, this.state.dateRangeFilter.bounds))
+                filter(dateRangeBounds => !isEqual(dateRangeBounds, this.dateRangeControl.bounds))
             )
             .subscribe(dateRangeBounds => {
-                this.updateState(
-                    EventsListPage.reduceDateRangeFilterBoundsChanged(
-                        this.state, dateRangeBounds
-                    )
-                )
+                this.dateRangeControl.bounds = dateRangeBounds
             })
     }
 }

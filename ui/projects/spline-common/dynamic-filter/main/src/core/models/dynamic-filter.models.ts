@@ -66,13 +66,13 @@ export class DynamicFilterModel<TFilter extends Record<string, any> = Record<str
 
         this.valueChanged$ = this._state$.asObservable()
             .pipe(
-                filter(({emitEvent}) => emitEvent),
-                map(({value}) => value),
+                filter(({ emitEvent }) => emitEvent),
+                map(({ value }) => value),
             )
 
         this.value$ = this._state$.asObservable()
             .pipe(
-                map(({value}) => value),
+                map(({ value }) => value),
             )
 
         this.isEmpty$ = this.value$
@@ -114,7 +114,7 @@ export class DynamicFilterModel<TFilter extends Record<string, any> = Record<str
                 }
             })
 
-        this.updateValue({...valueUpdate}, emitEvent)
+        this.updateValue({ ...valueUpdate }, emitEvent)
     }
 
     partialPatchValue(valueUpdate: Partial<TFilter>, emitEvent = true): void {
@@ -163,7 +163,7 @@ export class DynamicFilterModel<TFilter extends Record<string, any> = Record<str
     }
 
     protected updateValue(value: DynamicFilterValue<TFilter>, emitEvent = true): void {
-        this._state$.next({value: {...value}, emitEvent})
+        this._state$.next({ value: { ...value }, emitEvent })
     }
 
     protected initModel(model: IDynamicFilterControlModel<TFilter[keyof TFilter], any, keyof TFilter>): void {

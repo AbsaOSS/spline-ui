@@ -13,7 +13,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<div class="container" *ngIf="state$ | async as state">
+<div class="container">
 
     <h1 class="page-title">
         {{'EVENTS.EVENTS_LIST_PAGE__TITLE' | translate}}
@@ -23,35 +23,7 @@
                                  [dataMap]="dataMap"
                                  [dataSource]="dataSource">
 
-        <div class="d-flex">
-
-            <spline-date-filter *ngIf="!!state.dateRangeFilter?.bounds"
-                                label="Executed At"
-                                [showIcon]="false"
-                                [maxDate]="state.dateRangeFilter.bounds?.dateTo"
-                                [minDate]="state.dateRangeFilter.bounds?.dateFrom"
-                                [value]="state.dateRangeFilter?.value"
-                                (valueChanged$)="onDateFilterChanged($event)">
-
-            </spline-date-filter>
-
-            <spline-inline-filter-with-overlay
-                    label="Write Mode"
-                    [icon]="'save'"
-                    [filterStringValues]="writeMode.length === 0 ? 'All' : writeMode.join(', ') ">
-
-                <spline-list-box [splineListBoxRecords]="listBoxRecords"
-                                 [ngModel]="writeMode"
-                                 ngDefaultControl
-                                 (ngModelChange)="onWriteModeChanged($event)"
-                                 [dataMap]="listBoxDataMap">
-                </spline-list-box>
-
-            </spline-inline-filter-with-overlay>
-
-            <dynamic-filter-container [model]="filterModel"></dynamic-filter-container>
-
-        </div>
+        <dynamic-filter-container [model]="filterModel"></dynamic-filter-container>
 
     </spline-search-dynamic-table>
 </div>

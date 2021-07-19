@@ -36,7 +36,7 @@ import { SplineApiModule } from 'spline-api'
 import { SplineCommonModule, SplineListBoxModule } from 'spline-common'
 import { SplineDataViewModule } from 'spline-common/data-view'
 import { DynamicFilterModule } from 'spline-common/dynamic-filter'
-import { DfControlSelectModule } from 'spline-common/dynamic-filter/filter-controls'
+import { DfControlDateRangeModule, DfControlSelectModule } from 'spline-common/dynamic-filter/filter-controls'
 import { DynamicTableCommonCellsModule, DynamicTableModule } from 'spline-common/dynamic-table'
 import { SplineGraphModule } from 'spline-common/graph'
 import { SplineLayoutModule } from 'spline-common/layout'
@@ -95,7 +95,8 @@ import { EventOverviewStoreFacade } from './store'
         SplineDynamicTableSharedModule,
         SplineListBoxModule,
         DynamicFilterModule,
-        DfControlSelectModule
+        DfControlSelectModule,
+        DfControlDateRangeModule
     ],
     exports: [
         ...fromPages.pageComponents,

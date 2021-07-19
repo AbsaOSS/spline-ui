@@ -1,4 +1,4 @@
-/*
+/*!
  * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,20 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-
-import { Component, Input } from '@angular/core'
-import { BaseComponent } from 'spline-utils'
-
-import { DynamicFilterModel } from '../../../core'
-
-
-@Component({
-    selector: 'dynamic-filter-container',
-    templateUrl: './dynamic-filter-container.component.html'
-})
-export class DynamicFilterContainerComponent extends BaseComponent {
-
-    @Input() model: DynamicFilterModel
-
+.dynamic-filter-container {
+    display: flex;
+    flex-wrap: wrap;
 }

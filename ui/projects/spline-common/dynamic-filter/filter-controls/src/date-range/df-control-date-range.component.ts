@@ -14,12 +14,26 @@
  * limitations under the License.
  */
 
+import { Component, Input } from '@angular/core'
+import { SplineDateRangeFilter } from 'spline-common'
 import { BaseDynamicFilterControlComponent } from 'spline-common/dynamic-filter'
 
 import { DfControlDateRange } from './df-control-date-range.models'
 
-
+@Component({
+    selector: 'df-control-date-range',
+    templateUrl: './df-control-date-range.component.html',
+})
 export class DfControlDateRangeComponent<TId = string>
     extends BaseDynamicFilterControlComponent<DfControlDateRange.Value, DfControlDateRange.Options, TId> {
 
+    readonly defaultIcon = 'schedule'
+
+    @Input() model: DfControlDateRange.Model<TId>
+
+    onDateFilterChanged(value: SplineDateRangeFilter.Value): void {
+        this.model.patchValue(
+            value
+        )
+    }
 }

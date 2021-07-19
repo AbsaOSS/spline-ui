@@ -14,25 +14,44 @@
  * limitations under the License.
  */
 
-import moment from 'moment'
+import { SplineDateRangeFilter } from 'spline-common'
 import { BaseDynamicFilterControlModel, DynamicFilterControlModelConfig } from 'spline-common/dynamic-filter'
+import { SplineDateRangeValue } from 'spline-utils'
 
 
 export namespace DfControlDateRange {
 
-    export const TYPE = 'date_range'
+    export const TYPE = 'DfControlDateRange'
 
-    export type Value = {
-        dateFrom: moment.Moment
-        dateTo: moment.Moment
-    }
+    export type Value = SplineDateRangeFilter.Value
 
     export type Options = {}
 
-    export type Config<TId = string> = DynamicFilterControlModelConfig<Value, Options>
+    export type Config =
+        & DynamicFilterControlModelConfig<Value, Options>
+        &
+        {
+            icon?: string
+            label?: string
+            bounds?: SplineDateRangeValue | null
+        }
 
     export class Model<TId = string> extends BaseDynamicFilterControlModel<Value, Options, TId> {
+
         readonly type = TYPE
+
+        readonly label: string
+        readonly icon: string
+
+        bounds: SplineDateRangeValue | null = null
+
+        constructor(id: TId, config?: Config) {
+            super(id, config)
+
+            this.label = config?.label
+            this.icon = config?.icon
+            this.bounds = config?.bounds || null
+        }
     }
 
 }

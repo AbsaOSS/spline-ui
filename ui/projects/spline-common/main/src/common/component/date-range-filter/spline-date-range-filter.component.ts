@@ -52,17 +52,19 @@ export class SplineDateRangeFilterComponent extends BaseLocalStateComponent<Spli
     @Input() emptyValueString = 'COMMON.DATE_FILTER__EMPTY_VALUE_LABEL'
 
     @Input() set maxDate(value: Date) {
-        this._maxDateMoment = moment(value).endOf('day')
+        this._maxDateMoment = value ? moment(value).endOf('day') : null
     }
 
     @Input() set minDate(value: Date) {
-        this._minDateMoment = moment(value).startOf('day')
+        this._minDateMoment = value ? moment(value).startOf('day') : null
     }
 
     @Output() valueChanged$ = new EventEmitter<SplineDateRangeFilter.Value>()
 
     _maxDateMoment: moment.Moment
     _minDateMoment: moment.Moment
+
+    readonly _defaultValue = moment()
 
 
     constructor() {

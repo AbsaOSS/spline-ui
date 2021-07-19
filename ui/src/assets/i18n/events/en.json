@@ -28,6 +28,8 @@
         "EVENT_OVERVIEW__TARGET_EXECUTION_PLAN_TITLE": "Execution Plan",
         "EVENT_OVERVIEW__EXECUTION_EVENT_TITLE": "Execution Event",
         "EVENT_OVERVIEW__BACK_TO_EVENT_BUTTON": "Execution Event",
-        "EVENT_OVERVIEW__NAV_TAB__GRAPH_VIEW": "Graph View"
+        "EVENT_OVERVIEW__NAV_TAB__GRAPH_VIEW": "Graph View",
+        "EVENTS_LIST__DF__EXECUTED_AT": "Executed At",
+        "EVENTS_LIST__DF__WRITE_MODE": "Write Mode"
     }
 }

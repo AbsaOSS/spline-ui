@@ -16,15 +16,25 @@
 
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
-import { DF_CONTROL_FACTORY, DynamicFilterModule } from 'spline-common/dynamic-filter'
+import { SplineDateRangeFilterModule } from 'spline-common'
+import { DF_CONTROL_FACTORY, DynamicFilterControlManager, DynamicFilterModule } from 'spline-common/dynamic-filter'
 
+import { DfControlDateRangeComponent } from './df-control-date-range.component'
 import { DfControlDateRangeFactory } from './df-control-date-range.factory'
 
 
 @NgModule({
     imports: [
         CommonModule,
-        DynamicFilterModule
+        DynamicFilterModule,
+
+        SplineDateRangeFilterModule
+    ],
+    declarations: [
+        DfControlDateRangeComponent
+    ],
+    exports: [
+        DfControlDateRangeComponent
     ],
     providers: [
         DfControlDateRangeFactory,
@@ -36,5 +46,11 @@ import { DfControlDateRangeFactory } from './df-control-date-range.factory'
     ]
 })
 export class DfControlDateRangeModule {
+    constructor(private readonly dynamicFilterControlManager: DynamicFilterControlManager,
+                private readonly dfControlDateRangeFactory: DfControlDateRangeFactory) {
 
+        this.dynamicFilterControlManager.registerStaticFactory(
+            this.dfControlDateRangeFactory
+        )
+    }
 }

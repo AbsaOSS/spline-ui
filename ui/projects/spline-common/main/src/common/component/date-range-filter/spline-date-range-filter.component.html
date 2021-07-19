@@ -25,8 +25,8 @@
     <mat-menu #popover="matMenu" class="spline-date-filter-menu">
         <ng-template matMenuContent>
             <ngx-daterangepicker-material
-                    [startDate]="!!state.valueMoment ? state.valueMoment.dateFrom : _minDateMoment"
-                    [endDate]="!!state.valueMoment ? state.valueMoment.dateTo : _maxDateMoment"
+                    [startDate]="!!state.valueMoment ? state.valueMoment.dateFrom : (_minDateMoment ? _minDateMoment : _defaultValue)"
+                    [endDate]="!!state.valueMoment ? state.valueMoment.dateTo : (_maxDateMoment ? _maxDateMoment : _defaultValue)"
                     [showDropdowns]="true"
                     [ranges]="customDateRanges"
                     [autoApply]="false"
