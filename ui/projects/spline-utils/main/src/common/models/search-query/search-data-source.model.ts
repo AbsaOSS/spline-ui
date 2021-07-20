@@ -44,6 +44,8 @@ export abstract class SearchDataSource<TDataRecord = unknown,
     readonly onSearch$ = new Subject<{ searchTerm: string; apply: boolean; force: boolean }>()
     readonly onSort$ = new Subject<{ sortBy: QuerySorter.FieldSorter<TSortableFields>[]; apply: boolean; force: boolean }>()
 
+    readonly disconnected$: Observable<void>
+
     protected readonly entitiesList$ = new BehaviorSubject<TData[]>([])
     protected readonly _dataState$ = new BehaviorSubject<DataState<TData>>(DEFAULT_RENDER_DATA)
     protected readonly _searchParams$ = new BehaviorSubject<SearchParams<TFilter, TSortableFields>>(DEFAULT_SEARCH_PARAMS)
@@ -54,12 +56,14 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         new Subject<{ searchParams: SearchParams<TFilter, TSortableFields>; apply: boolean; forceApply: boolean }>()
 
     protected _defaultSearchParams: SearchParams<TFilter, TSortableFields> = DEFAULT_SEARCH_PARAMS
-    protected readonly disconnected$ = new Subject<void>()
+    protected readonly _disconnected$ = new Subject<void>()
+
 
     constructor() {
 
         this.searchParams$ = this._searchParams$.asObservable()
         this.dataState$ = this._dataState$.asObservable()
+        this.disconnected$ = this._disconnected$.asObservable()
 
         this.loadingProcessing$ = this.dataState$.pipe(map(data => data.loadingProcessing))
         this.loadingProcessingEvents = ProcessingStore.createProcessingEvents(
@@ -206,8 +210,8 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         this._dataState$.complete()
         this._searchParams$.complete()
 
-        this.disconnected$.next()
-        this.disconnected$.complete()
+        this._disconnected$.next()
+        this._disconnected$.complete()
     }
 
     searchParamsToUrlString(searchParams: SearchParams<TFilter, TSortableFields>): string {
@@ -236,7 +240,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         //      => emit prev data
         updateSearchParams$
             .pipe(
-                takeUntil(this.disconnected$),
+                takeUntil(this._disconnected$),
                 filter(({ isNewSearchParams }) => !isNewSearchParams),
             )
             .subscribe(() => {
@@ -251,7 +255,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         //      => fetch new data
         updateSearchParams$
             .pipe(
-                takeUntil(this.disconnected$),
+                takeUntil(this._disconnected$),
                 filter(({ isNewSearchParams, forceApply }) => isNewSearchParams || forceApply),
                 tap(({ searchParams }) => this._searchParams$.next(searchParams)),
                 filter(({ apply }) => apply),
@@ -263,7 +267,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         // SORT EVENT
         this.onSort$
             .pipe(
-                takeUntil(this.disconnected$),
+                takeUntil(this._disconnected$),
             )
             .subscribe(
                 ({ sortBy, apply, force }) => this.processOnSortEvent(sortBy, apply, force),
@@ -272,7 +276,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         // SEARCH EVENT
         this.onSearch$
             .pipe(
-                takeUntil(this.disconnected$),
+                takeUntil(this._disconnected$),
             )
             .subscribe(
                 ({ searchTerm, apply, force }) => this.processOnSearchEvent(searchTerm, apply, force),
@@ -281,7 +285,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         // FILTER CHANGED EVENT
         this.onFilterChanged$
             .pipe(
-                takeUntil(this.disconnected$),
+                takeUntil(this._disconnected$),
             )
             .subscribe(
                 (payload) => this.processOnFilterChangedEvent(payload.filter, payload.apply, payload.force),

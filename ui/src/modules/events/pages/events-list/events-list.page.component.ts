@@ -17,16 +17,14 @@
 import { Component } from '@angular/core'
 import { isEqual } from 'lodash-es'
 import { distinctUntilChanged, filter, map, skip, takeUntil } from 'rxjs/operators'
-import { DataSourceWriteMode, ExecutionEventFacade, ExecutionEventField, ExecutionEventsQuery } from 'spline-api'
+import { ExecutionEventFacade, ExecutionEventsQuery } from 'spline-api'
 import { DynamicFilterModel, DynamicFilterValue } from 'spline-common/dynamic-filter'
-import { DfControlDateRange } from 'spline-common/dynamic-filter/filter-controls'
 import { EventsDataSource } from 'spline-shared/events'
-import { BaseComponent, BaseLocalStateComponent, SearchQuery, SplineDateRangeValue } from 'spline-utils'
+import { BaseComponent, SearchDataSource } from 'spline-utils'
 
 import { EventsListDtSchema } from '../../dynamic-table'
 
 import { EventsListPage } from './events-list.page.models'
-import SearchParams = SearchQuery.SearchParams
 
 
 @Component({
@@ -50,83 +48,55 @@ export class EventsListPageComponent extends BaseComponent {
 
     constructor(readonly dataSource: EventsDataSource) {
         super()
-        this.initDateRangeFilter()
+
+        this.initDateRangeFilter<ExecutionEventsQuery.QueryFilter, EventsListPage.Filter>(this.dataSource, this.filterModel)
     }
 
-    private get dateRangeControl(): DfControlDateRange.Model {
-        return this.filterModel.getFilterControl(EventsListPage.FilterId.dataRange) as DfControlDateRange.Model
-    }
+    private initDateRangeFilter<TQueryFilter, TDynamicFilter>(
+        dataSource: SearchDataSource<any, any, TQueryFilter>,
+        filterModel: DynamicFilterModel<TDynamicFilter>): void {
 
-    private initDateRangeFilter(): void {
         //
         // [ACTION] :: FilterValue changed
         //      => fetch data
         //
-        this.filterModel.valueChanged$
+        filterModel.valueChanged$
             .pipe(
                 skip(1),
-                takeUntil(this.destroyed$),
+                takeUntil(dataSource.disconnected$),
                 distinctUntilChanged((left, right) => isEqual(left, right)),
-                map((dynamicFilterValue: DynamicFilterValue<EventsListPage.Filter>) =>
-                    dynamicFilterValue[EventsListPage.FilterId.dataRange].value
-                ),
-                filter(filterValue => {
-                    const searchParams = this.dataSource.searchParams
-                    const currentDsFilterValue: SplineDateRangeValue = searchParams.filter.executedAtFrom
-                        ? {
-                            dateFrom: searchParams.filter.executedAtFrom,
-                            dateTo: searchParams.filter.executedAtTo,
-                        }
-                        : null
-
-                    return !isEqual(filterValue, currentDsFilterValue)
+                map((dynamicFilterValue: DynamicFilterValue<TDynamicFilter>) => {
+                    const currentQueryFilter = dataSource.searchParams.filter
+                    return {
+                        ...currentQueryFilter,
+                        ...EventsListPage.dynamicFilterToQueryFilter(dynamicFilterValue as any, currentQueryFilter)
+                    }
+                }),
+                filter((queryFilter: TQueryFilter) => {
+                    const currentQueryFilter = dataSource.searchParams.filter
+                    return !isEqual(queryFilter, currentQueryFilter)
                 })
             )
-            .subscribe(filterValue => {
-                this.dataSource.setFilter({
-                    ...this.dataSource.searchParams.filter,
-                    executedAtFrom: filterValue?.dateFrom ?? undefined,
-                    executedAtTo: filterValue?.dateTo ?? undefined,
-                })
+            .subscribe(queryFilter => {
+                dataSource.setFilter(queryFilter)
             })
 
         //
         // [ACTION] :: SearchParams changed
         //      => update current date range filter value
         //
-        this.dataSource.searchParams$
+        dataSource.searchParams$
             .pipe(
-                takeUntil(this.destroyed$),
-                map((searchParams: SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>) => {
-
-                    if (!searchParams.filter?.executedAtFrom || !searchParams.filter?.executedAtTo) {
-                        return null
-                    }
-
-                    return {
-                        dateFrom: searchParams.filter.executedAtFrom,
-                        dateTo: searchParams.filter.executedAtTo,
-                    }
+                skip(1),
+                takeUntil(dataSource.disconnected$),
+                map((searchParams) => EventsListPage.queryFilterToDynamicFilter(searchParams.filter as any)),
+                filter(filterValue => {
+                    const currentValue = filterModel.plainValue
+                    return !isEqual(filterValue, currentValue)
                 }),
-                filter(filterValue => !isEqual(filterValue, this.dateRangeControl.value)),
             )
-            .subscribe(
-                filterValue => this.dateRangeControl.patchValue(filterValue),
-            )
-
-        //
-        // [ACTION] :: DateRange Bounds changed (from the fetched data)
-        //      => update current date range filter bounds value
-        //
-        this.dataSource.dataState$
-            .pipe(
-                takeUntil(this.destroyed$),
-                map(dataState => dataState?.data?.dateRangeBounds),
-                distinctUntilChanged((left, right) => isEqual(left, right)),
-                filter(dateRangeBounds => !isEqual(dateRangeBounds, this.dateRangeControl.bounds))
-            )
-            .subscribe(dateRangeBounds => {
-                this.dateRangeControl.bounds = dateRangeBounds
+            .subscribe(filterValue => {
+                filterModel.patchValue(filterValue as any, false)
             })
     }
 }

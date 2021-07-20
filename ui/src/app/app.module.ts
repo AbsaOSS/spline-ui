@@ -104,7 +104,7 @@ export const metaReducers: MetaReducer<any>[] =
                 toAssetsFilePath('shared-data-view'),
                 toAssetsFilePath('shared-dynamic-table'),
                 toAssetsFilePath('shared-expression'),
-                toAssetsFilePath('common-graph'),
+                toAssetsFilePath('common.graph'),
                 toAssetsFilePath('common-layout'),
                 toAssetsFilePath('common.dynamic-filter.filter-controls'),
             ]

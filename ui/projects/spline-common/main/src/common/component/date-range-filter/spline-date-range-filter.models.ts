@@ -50,7 +50,7 @@ export namespace SplineDateRangeFilter {
 
     export function reduceValueChanged(state: State, value: Value | null): State {
 
-        if (value === null) {
+        if (!value) {
             return {
                 ...getDefaultState()
             }

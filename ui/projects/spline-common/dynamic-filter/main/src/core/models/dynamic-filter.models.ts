@@ -97,6 +97,18 @@ export class DynamicFilterModel<TFilter extends Record<string, any> = Record<str
         return this._state$.getValue().value
     }
 
+    get plainValue(): TFilter {
+        const value = this.value
+        return Object.keys(value)
+            .reduce(
+                (acc, id) => ({
+                    ...acc,
+                    [id]: value[id]?.value ?? null
+                }),
+                {} as TFilter
+            )
+    }
+
     hasFilterControl(columnId: keyof TFilter): boolean {
         return this.controlsMap[columnId] !== undefined
     }
@@ -106,15 +118,29 @@ export class DynamicFilterModel<TFilter extends Record<string, any> = Record<str
     }
 
     patchValue(valueUpdate: TFilter, emitEvent = true): void {
-        Object.keys(this.controlsMap)
-            .forEach(columnId => {
-                if (this.hasFilterControl(columnId as keyof TFilter)) {
-                    const model = this.getFilterControl(columnId as keyof TFilter)
-                    model.patchValue(valueUpdate.value, false)
-                }
-            })
+        const filterValueInfo: DynamicFilterValue<TFilter> = Object.keys(this.controlsMap)
+            .reduce(
+                (result, columnId) => {
+                    if (this.hasFilterControl(columnId as keyof TFilter)) {
+                        // patch model value
+                        const model = this.getFilterControl(columnId as keyof TFilter)
+                        model.patchValue(valueUpdate[columnId], emitEvent)
+                        // calculate filters value info
+                        return {
+                            ...result,
+                            [columnId]: {
+                                type: model.type,
+                                value: valueUpdate[columnId] ?? null
+                            }
+                        }
+                    }
 
-        this.updateValue({ ...valueUpdate }, emitEvent)
+                    return result
+                },
+                {} as DynamicFilterValue<TFilter>
+            )
+
+        this.updateValue({ ...filterValueInfo }, emitEvent)
     }
 
     partialPatchValue(valueUpdate: Partial<TFilter>, emitEvent = true): void {
@@ -125,9 +151,12 @@ export class DynamicFilterModel<TFilter extends Record<string, any> = Record<str
                     const model = this.getFilterControl(columnId as keyof TFilter)
                     model.patchValue(valueUpdate[columnId], emitEvent)
                     // calculate filters value info
-                    result[columnId] = {
-                        type: model.type,
-                        value: valueUpdate[columnId]
+                    return {
+                        ...result,
+                        [columnId]: {
+                            type: model.type,
+                            value: valueUpdate[columnId]
+                        }
                     }
                 }
                 return result

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import { DataSourceWriteMode } from 'spline-api'
+import { DataSourceWriteMode, ExecutionEventsQuery } from 'spline-api'
 import { getDataSourceWriteModeInfoList, getDataSourceWriteModeLabel, SplineListBox } from 'spline-common'
-import { DynamicFilterModel } from 'spline-common/dynamic-filter'
+import { DynamicFilterModel, DynamicFilterValue } from 'spline-common/dynamic-filter'
 import { DfControlDateRange, DfControlSelect } from 'spline-common/dynamic-filter/filter-controls'
 
 
@@ -66,5 +66,48 @@ export namespace EventsListPage {
 
         return filterModel
     }
+
+    export function queryFilterToDynamicFilter(queryFilter: ExecutionEventsQuery.QueryFilter): Filter {
+        return {
+            [FilterId.writeMode]: queryFilter.writeMode ?? null,
+            [FilterId.dataRange]: queryFilter.executedAtFrom && queryFilter.executedAtTo
+                ? {
+                    dateFrom: queryFilter.executedAtFrom,
+                    dateTo: queryFilter.executedAtTo,
+                }
+                : null
+        }
+    }
+
+    export function dynamicFilterToQueryFilter(
+        dynamicFilter: DynamicFilterValue<Filter>,
+        queryFilter: ExecutionEventsQuery.QueryFilter = {}): ExecutionEventsQuery.QueryFilter {
+
+        if (dynamicFilter.dateRange?.value) {
+            queryFilter = {
+                ...queryFilter,
+                executedAtFrom: dynamicFilter.dateRange.value.dateFrom,
+                executedAtTo: dynamicFilter.dateRange.value.dateTo,
+            }
+        }
+        // reset date filter
+        else if (queryFilter.executedAtFrom) {
+            queryFilter = {
+                ...queryFilter,
+                executedAtFrom: null,
+                executedAtTo: null,
+            }
+        }
+
+        if (dynamicFilter.writeMode) {
+            queryFilter = {
+                ...queryFilter,
+                writeMode: dynamicFilter.writeMode.value,
+            }
+        }
+
+        return queryFilter
+    }
+
 
 }
