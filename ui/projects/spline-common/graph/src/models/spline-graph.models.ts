@@ -20,7 +20,8 @@ import { omit } from 'lodash-es'
 import { DynamicValueProvider } from 'spline-utils'
 
 
-export type SgNodeSchema<TData extends object = {}, TOptions extends object = {}, TMetadata extends object = {}> = {
+export type SgNodeSchema<TData extends Record<string, any> = Record<string, any>,
+    TOptions extends Record<string, any> = Record<string, any>, TMetadata extends Record<string, any> = Record<string, any>> = {
     id: string
     type?: string
     disallowSelection?: boolean // true by default
@@ -31,14 +32,15 @@ export type SgNodeSchema<TData extends object = {}, TOptions extends object = {}
 
 export type SgNodeNativeOptions = Omit<Node, 'id'>
 
-export type SgNode<TData extends object = {}, TOptions extends object = {}> =
+export type SgNode<TData extends Record<string, any> = Record<string, any>, TOptions extends Record<string, any> = Record<string, any>> =
     & SgNodeSchema<TData, TOptions>
     &
     {
         nativeOptions?: SgNodeNativeOptions
     }
 
-export type SgNativeNode<TData extends object = {}, TOptions extends object = {}> =
+export type SgNativeNode<TData extends Record<string, any> = Record<string, any>,
+    TOptions extends Record<string, any> = Record<string, any>> =
     & Node
     &
     {

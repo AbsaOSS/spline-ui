@@ -26,7 +26,7 @@ import {
     SimpleChanges,
     Type
 } from '@angular/core'
-import { BaseDynamicContentComponent } from 'spline-utils'
+import { BaseDynamicContentComponent, GenericEvent } from 'spline-utils'
 
 import { DynamicFilterControlManager, IDynamicFilterControlComponent, IDynamicFilterControlModel } from '../../../core'
 
@@ -40,7 +40,7 @@ export class DynamicFilterControlComponent
 
     @Input() model: IDynamicFilterControlModel<any>
 
-    @Output() event$ = new EventEmitter<void>()
+    @Output() event$ = new EventEmitter<GenericEvent>()
 
     constructor(protected componentFactoryResolver: ComponentFactoryResolver,
                 protected dynamicFilterControlManager: DynamicFilterControlManager) {
@@ -48,7 +48,7 @@ export class DynamicFilterControlComponent
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        const {model} = changes
+        const { model } = changes
         if (model) {
             this.rebuildComponent()
         }
@@ -64,7 +64,10 @@ export class DynamicFilterControlComponent
         instance.model = this.model
 
         this.eventsSubscriptionRefs.push(
-            instance.event$.subscribe((event) => this.event$.emit(event))
+            instance.event$
+                .subscribe(
+                    (event) => this.event$.emit(event)
+                )
         )
     }
 }

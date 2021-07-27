@@ -18,7 +18,6 @@
         "types": [
             "node"
         ],
-        "allowSyntheticDefaultImports": true,
         "emitDecoratorMetadata": true,
         "esModuleInterop": true,
         "resolveJsonModule": true,
@@ -143,6 +142,7 @@
         "src/**/*",
         "projects/**/*"
     ],
+    "allowSyntheticDefaultImports": true,
     "angularCompilerOptions": {
         "fullTemplateTypeCheck": true,
         "strictInjectionParameters": true

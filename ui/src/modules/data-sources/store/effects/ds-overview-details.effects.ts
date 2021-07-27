@@ -15,7 +15,7 @@
  */
 
 import { Injectable } from '@angular/core'
-import { Actions, Effect, ofType } from '@ngrx/effects'
+import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { Store } from '@ngrx/store'
 import { of } from 'rxjs'
 import { catchError, filter, map, switchMap } from 'rxjs/operators'
@@ -30,8 +30,7 @@ export class DsOverviewDetailsEffects {
     //
     // [ACTION] :: INIT :: REQUEST
     //
-    @Effect()
-    init$ = this.actions$
+    init$ = createEffect(() => this.actions$
         .pipe(
             ofType<fromActions.Init>(fromActions.ActionTypes.Init),
             switchMap(({ payload }) =>
@@ -56,7 +55,7 @@ export class DsOverviewDetailsEffects {
                     executionEvent: result.executionEvent,
                 })
             })
-        )
+        ))
 
 
     constructor(protected readonly actions$: Actions,

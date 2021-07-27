@@ -19,6 +19,7 @@ module.exports = {
     'setupFilesAfterEnv': [
         '<rootDir>/setup-jest.ts'
     ],
+    'rootDir': __dirname,
     'transformIgnorePatterns': [
         'node_modules/(?!@ngrx)'
     ],

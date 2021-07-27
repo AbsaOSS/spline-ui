@@ -35,7 +35,7 @@ import { SplineDataWidgetManager } from '../../services'
     selector: 'spline-data-widget',
     templateUrl: './spline-data-widget.component.html',
 })
-export class SplineDataWidgetComponent<TData extends object, TOptions extends object = {}>
+export class SplineDataWidgetComponent<TData extends Record<string, any>, TOptions extends Record<string, any> = Record<string, any>>
     extends BaseDynamicContentComponent<ISplineDataWidget<TData, TOptions>> implements OnChanges {
 
     @Input() schema: SdWidgetSchema<TData, TOptions>

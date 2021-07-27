@@ -25,7 +25,8 @@ import { SdWidgetBaseComponent } from './sd-widget-base.component'
     selector: 'sd-widget-with-children-base',
     template: ''
 })
-export abstract class SdWidgetWithChildrenComponent<TData extends object, TOptions extends object = {}>
+export abstract class SdWidgetWithChildrenComponent<TData extends Record<string, any>,
+    TOptions extends Record<string, any> = Record<string, any>>
     extends SdWidgetBaseComponent<TData, TOptions> {
 
     onChildWidgetEvent($event: SplineDataWidgetEvent): void {

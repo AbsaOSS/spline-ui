@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import * as config from '../../package.json'
+import config from '../../package.json'
 
 import { deploymentPrefix, Environment, relativeUrl } from './shared'
 

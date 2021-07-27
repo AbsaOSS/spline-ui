@@ -13,14 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@use '~@angular/material' as mat;
 
 @import '../vars';
 @import './spline-theme';
 
-$custom-typography: mat-typography-config($font-family: $font-name);
+$custom-typography: mat.define-typography-config($font-family: $font-name);
 
-@include mat-core($custom-typography);
+@include mat.core($custom-typography);
 
-@include angular-material-theme($spline-theme);
+@include mat.all-component-themes($spline-theme);
 
 @import './components/index';

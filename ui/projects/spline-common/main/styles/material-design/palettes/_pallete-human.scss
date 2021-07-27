@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@use '~@angular/material' as mat;
 
 @import '~@angular/material/theming';
 
@@ -49,5 +50,5 @@ $spline-color-map-human: (
     )
 );
 
-$spline-palette-human: mat-palette($spline-color-map-human);
+$spline-palette-human: mat.define-palette($spline-color-map-human);
 

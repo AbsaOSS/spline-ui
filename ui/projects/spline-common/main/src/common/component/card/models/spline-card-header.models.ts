@@ -19,7 +19,7 @@ import { GenericEventInfo } from 'spline-utils'
 
 export namespace SplineCardHeader {
 
-    export type Action<TEventData extends Record<string, any> = {}> = {
+    export type Action<TEventData extends Record<string, any> = Record<string, any>> = {
         icon: string
         tooltip?: string
         onClick?: () => void

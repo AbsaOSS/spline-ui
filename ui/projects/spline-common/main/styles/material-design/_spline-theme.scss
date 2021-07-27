@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@use '~@angular/material' as mat;
 
 @import './palettes/pallete-orange';
 @import './palettes/pallete-human';
 
-$spline-theme: mat-light-theme($spline-palette-orange, $spline-palette-human);
+$spline-theme: mat.define-light-theme($spline-palette-orange, $spline-palette-human);
 
 

@@ -26,7 +26,7 @@ import { ISgNodeControl, SgNodeControlEvent, SgNodeSchema } from '../../../model
     selector: 'sg-node-base',
     template: ''
 })
-export abstract class SgNodeBaseComponent<TData extends object, TOptions extends object = {}>
+export abstract class SgNodeBaseComponent<TData extends Record<string, any>, TOptions extends Record<string, any> = Record<string, any>>
     extends BaseComponent implements ISgNodeControl<TData, TOptions>, OnInit {
 
     @Input() schema: SgNodeSchema<TData, TOptions>

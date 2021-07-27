@@ -23,7 +23,6 @@
                     "skipTests": true
                 },
                 "@schematics/angular:module": {
-                    "skipTests": true
                 },
                 "@schematics/angular:pipe": {
                     "skipTests": true
@@ -141,7 +140,6 @@
                             ]
                         },
                         "scripts": [
-                            "./node_modules/hammerjs/hammer.min.js"
                         ]
                     },
                     "configurations": {
@@ -208,7 +206,6 @@
                         "no-cache": true,
                         "bail": true,
                         "scripts": [
-                            "./node_modules/hammerjs/hammer.min.js"
                         ],
                         "styles": [
                             "src/styles.css"
@@ -261,8 +258,7 @@
                     "options": {
                         "no-cache": true,
                         "bail": true,
-                        "scripts": [],
-                        "tsConfig": "projects/spline-api/tsconfig.spec.json"
+                        "scripts": []
                     }
                 },
                 "lint": {
@@ -290,15 +286,7 @@
                     "builder": "@angular-devkit/build-angular:ng-packagr",
                     "options": {
                         "tsConfig": "projects/spline-common/tsconfig.lib.json",
-                        "project": "projects/spline-common/ng-package.json",
-                        "stylePreprocessorOptions": {
-                            "includePaths": [
-                                "projects/spline-common/main/styles",
-                                "projects/spline-common/data-view/styles",
-                                "projects/spline-common/graph/styles",
-                                "projects/spline-common/layout/styles"
-                            ]
-                        }
+                        "project": "projects/spline-common/ng-package.json"
                     },
                     "configurations": {
                         "production": {
@@ -311,8 +299,7 @@
                     "options": {
                         "no-cache": true,
                         "bail": true,
-                        "scripts": [],
-                        "tsConfig": "projects/spline-common/tsconfig.spec.json"
+                        "scripts": []
                     }
                 },
                 "lint": {
@@ -340,16 +327,7 @@
                     "builder": "@angular-devkit/build-angular:ng-packagr",
                     "options": {
                         "tsConfig": "projects/spline-shared/tsconfig.lib.json",
-                        "project": "projects/spline-shared/ng-package.json",
-                        "stylePreprocessorOptions": {
-                            "includePaths": [
-                                "projects/spline-common/main/styles",
-                                "projects/spline-shared/main/styles",
-                                "projects/spline-shared/attributes/styles",
-                                "projects/spline-shared/expression/styles",
-                                "projects/spline-shared/graph/styles"
-                            ]
-                        }
+                        "project": "projects/spline-shared/ng-package.json"
                     },
                     "configurations": {
                         "production": {
@@ -362,8 +340,7 @@
                     "options": {
                         "no-cache": true,
                         "bail": true,
-                        "scripts": [],
-                        "tsConfig": "projects/spline-shared/tsconfig.spec.json"
+                        "scripts": []
                     }
                 },
                 "lint": {
@@ -391,12 +368,7 @@
                     "builder": "@angular-devkit/build-angular:ng-packagr",
                     "options": {
                         "tsConfig": "projects/spline-utils/tsconfig.lib.json",
-                        "project": "projects/spline-utils/ng-package.json",
-                        "stylePreprocessorOptions": {
-                            "includePaths": [
-                                "projects/spline-common/main/styles"
-                            ]
-                        }
+                        "project": "projects/spline-utils/ng-package.json"
                     },
                     "configurations": {
                         "production": {
@@ -409,8 +381,7 @@
                     "options": {
                         "no-cache": true,
                         "bail": true,
-                        "scripts": [],
-                        "tsConfig": "projects/spline-utils/tsconfig.spec.json"
+                        "scripts": []
                     }
                 },
                 "lint": {

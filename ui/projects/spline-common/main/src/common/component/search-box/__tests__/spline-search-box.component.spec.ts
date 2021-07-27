@@ -59,7 +59,7 @@ describe('SplineSearchComponent', () => {
     })
 
     test('default search term settings', fakeAsync(() => {
-        spyOn(component.search$, 'emit')
+        jest.spyOn(component.search$, 'emit')
         const defaultValue = 'default search value'
         component.searchTerm = defaultValue
         fixture.detectChanges()
@@ -75,7 +75,7 @@ describe('SplineSearchComponent', () => {
 
     test('value changed => emit value', fakeAsync(() => {
 
-        spyOn(component.search$, 'emit')
+        jest.spyOn(component.search$, 'emit')
 
         // set new value
         const newValue = 'new value'

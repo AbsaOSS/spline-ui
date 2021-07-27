@@ -18,20 +18,22 @@ import { EventEmitter, Type } from '@angular/core'
 import { DynamicValueProvider, GenericEventInfo, IDynamicComponentFactory } from 'spline-utils'
 
 
-export type SdWidgetSchema<TData extends Record<string, any> = {}, TOptions extends Record<string, any> = {}> = {
+export type SdWidgetSchema<TData extends Record<string, any> = Record<string, any>,
+    TOptions extends Record<string, any> = Record<string, any>> = {
     type: string
     data?: DynamicValueProvider<TData>
     options?: DynamicValueProvider<TOptions>
 }
 
-export type SplineDataWidgetEvent<TData extends Record<string, any> = {}> = GenericEventInfo<TData>
+export type SplineDataWidgetEvent<TData extends Record<string, any> = Record<string, any>> = GenericEventInfo<TData>
 
-export interface ISplineDataWidget<TData extends Record<string, any> = {}, TOptions extends Record<string, any> = {}> {
+export interface ISplineDataWidget<TData extends Record<string, any> = Record<string, any>,
+    TOptions extends Record<string, any> = Record<string, any>> {
     schema: SdWidgetSchema<TData, TOptions>
     event$: EventEmitter<SplineDataWidgetEvent>
 }
 
-export interface ISplineDataWidgetFactory<TData extends Record<string, any>, TOptions extends Record<string, any> = {}>
+export interface ISplineDataWidgetFactory<TData extends Record<string, any>, TOptions extends Record<string, any> = Record<string, any>>
     extends IDynamicComponentFactory {
 
     readonly componentType: Type<ISplineDataWidget<TData, TOptions>>

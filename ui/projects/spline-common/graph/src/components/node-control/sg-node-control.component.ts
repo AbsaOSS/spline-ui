@@ -38,7 +38,7 @@ import decorateDefaultSgNodeSchema = SgNodeDefault.decorateDefaultSchema
     selector: 'sg-node-control',
     templateUrl: './sg-node-control.component.html',
 })
-export class SgNodeControlComponent<TData extends object, TOptions extends object = {}>
+export class SgNodeControlComponent<TData extends Record<string, any>, TOptions extends Record<string, any> = Record<string, any>>
     extends BaseDynamicContentComponent<ISgNodeControl<TData, TOptions>> implements OnChanges {
 
     @Input() schema: SgNodeSchema<TData, TOptions>
@@ -46,7 +46,7 @@ export class SgNodeControlComponent<TData extends object, TOptions extends objec
     @Input() isFocused: boolean
     @Input() isTarget: boolean
 
-    @Output() event$ = new EventEmitter<SgNodeControlEvent<TData>>()
+    @Output() event$ = new EventEmitter<SgNodeControlEvent>()
 
     private readonly mirrorInputParams: ReadonlyArray<string> = [
         'isSelected',

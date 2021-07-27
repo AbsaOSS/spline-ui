@@ -16,7 +16,7 @@
 
 
 import { ChangeDetectorRef, Directive, ElementRef, Input, OnChanges, OnDestroy, Optional, Renderer2, SimpleChanges } from '@angular/core'
-import { NavigationEnd, Router, RouterLink, RouterLinkWithHref } from '@angular/router'
+import { IsActiveMatchOptions, NavigationEnd, Router, RouterLink, RouterLinkWithHref } from '@angular/router'
 import { filter, takeUntil } from 'rxjs/operators'
 
 import { BaseDirective } from '../base'
@@ -33,7 +33,6 @@ export class RouterLinkActivePatternDirective extends BaseDirective implements O
 
     private isActive = false
     private cssClassesList: string[] = ['active']
-    private readonly exactRouteComparison = true
 
     constructor(private router: Router,
                 private element: ElementRef,
@@ -67,6 +66,14 @@ export class RouterLinkActivePatternDirective extends BaseDirective implements O
     }
 
     private isCurrentLinkActive(): boolean {
+        // TODO: add some configuration for the matcher
+        const activeMatchOptions: IsActiveMatchOptions = {
+            paths: 'exact',
+            fragment: 'exact',
+            matrixParams: 'exact',
+            queryParams: 'exact',
+        }
+
         if (this.splineRouterLinkActivePattern) {
             const currentUrl = this.router.getCurrentNavigation()
                 ? this.router.getCurrentNavigation()?.finalUrl?.toString()
@@ -75,10 +82,10 @@ export class RouterLinkActivePatternDirective extends BaseDirective implements O
             return RouterLinkActivePattern.isUrlActive(currentUrl, this.splineRouterLinkActivePattern)
         }
         else if (this.routerLink) {
-            return this.router.isActive(this.routerLink.urlTree, this.exactRouteComparison)
+            return this.router.isActive(this.routerLink.urlTree, activeMatchOptions)
         }
         else if (this.routerLinkWithHref) {
-            return this.router.isActive(this.routerLink.urlTree, this.exactRouteComparison)
+            return this.router.isActive(this.routerLink.urlTree, activeMatchOptions)
         }
 
         return false

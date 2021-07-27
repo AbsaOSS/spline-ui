@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export type GenericEventInfo<TData extends Record<string, any> = {}> = {
+export type GenericEventInfo<TData extends Record<string, any> = Record<string, any>> = {
     type: string
     data?: TData
 }
