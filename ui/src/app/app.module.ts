@@ -35,7 +35,6 @@ import { SplineConfigModule, SplineConfigSettings, SPLINE_CONFIG_SETTINGS } from
 import { SplineAttributesSharedModule } from 'spline-shared/attributes'
 import { SplineUtilsCommonModule } from 'spline-utils'
 import {
-    COMMON_ASSETS,
     SplineTranslateCoreModule,
     SplineTranslateModule,
     SPLINE_TRANSLATE_COMMON_ASSETS,
@@ -97,16 +96,17 @@ export const metaReducers: MetaReducer<any>[] =
         {
             provide: SPLINE_TRANSLATE_COMMON_ASSETS,
             useValue: [
-                ...COMMON_ASSETS,
-                toAssetsFilePath('shared'),
-                toAssetsFilePath('shared-graph'),
-                toAssetsFilePath('shared-attributes'),
-                toAssetsFilePath('shared-data-view'),
-                toAssetsFilePath('shared-dynamic-table'),
-                toAssetsFilePath('shared-expression'),
-                toAssetsFilePath('common.graph'),
-                toAssetsFilePath('common-layout'),
-                toAssetsFilePath('common.dynamic-filter.filter-controls'),
+                toAssetsFilePath('spline-shared'),
+                toAssetsFilePath('spline-shared.attributes'),
+                toAssetsFilePath('spline-shared.data-view'),
+                toAssetsFilePath('spline-shared.dynamic-table'),
+                toAssetsFilePath('spline-shared.events'),
+                toAssetsFilePath('spline-shared.expression'),
+                toAssetsFilePath('spline-shared.graph'),
+                toAssetsFilePath('spline-common'),
+                toAssetsFilePath('spline-common.graph'),
+                toAssetsFilePath('spline-common.layout'),
+                toAssetsFilePath('spline-common.dynamic-filter.filter-controls'),
             ]
         },
         { provide: ErrorHandler, useClass: SplineGlobalErrorHandler },

@@ -1,5 +1,5 @@
-/*!
- * Copyright 2020 ABSA Group Limited
+/*
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,27 @@
  * limitations under the License.
  */
 
-.attr-lineage-info {
-    &__title {
-        font-size: 10px;
-        min-width: 230px;
-        text-transform: uppercase;
+@import '../search-box.component';
+
+
+.spline-list-box {
+    &__header {
+        align-items: center;
+        border-bottom: 1px solid $color-grey;
+        display: flex;
+        margin-bottom: 12px;
+        padding-bottom: 12px;
     }
 
+    &__master-select {
+        padding: 0 12px;
+    }
+
+    &__search {
+        flex-grow: 1;
+
+        .spline-search-box {
+            @include spline-search-box-size(32px);
+        }
+    }
 }

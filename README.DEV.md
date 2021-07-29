@@ -99,6 +99,30 @@
 
 - All SCSS files should be placed in the relevant `styles` directory instead of styles definition directly in the component with `styleUrls` property.
 - All i18n files should be placed in the relevant i18n directory.
+  
+### Styles directory naming
+
+1. Styles directory should contain the root (main entry) SCSS file & directory with the same name where all other files should be placed.
+    
+        projects/spline-common/data-view/styles:
+            spline-common.data-view/
+                ...
+                index.scss
+            spline-common.data-view.scss
+  
+    1.1 The name of the relevant entry file/directory is relevant to its placement in the `projects` directory, each directory level is separated with `.` in the file name. The main directory is it is the main entry point.
+
+        projects/spline-common/main/styles:
+            spline-common/
+                ...
+                index.scss
+            spline-common.scss
+   
+        projects/spline-common/dynamic-filter/main/styles:
+            spline-common.dynamic-filter/
+                ...
+                index.scss
+            spline-common.dynamic-filter.scss
 
 ---
 

@@ -28,7 +28,7 @@ import {
 } from '@angular/core'
 import { BaseComponent, DomHelpers } from 'spline-utils'
 
-
+// TODO: it is not usable for now, just a PoC.
 @Component({
     selector: 'spline-virtual-scroll-sticky-container',
     templateUrl: './spline-virtual-scroll-sticky-container.component.html',

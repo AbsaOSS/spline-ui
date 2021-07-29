@@ -14,5 +14,11 @@
  * limitations under the License.
  */
 
-@import 'vars';
-@import 'components/search-box.component';
+@import './header-logo.component';
+@import './sl-content-sidebar';
+@import './sl-content-header';
+@import './sl-content-sidebar-dialog';
+@import './spline-layout-common';
+@import './sl-entity-header';
+@import './sl-breadcrumbs.component';
+@import './fake-page-message.component';
