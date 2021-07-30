@@ -19,7 +19,7 @@
                                 [isFocused]="isFocused"
                                 [isTarget]="isTarget"
                                 [icon]="data?.icon"
-                                [tooltip]="data?.tooltip"
+                                [tooltip]="data?.tooltip | translate"
                                 [color]="data?.theme"
                                 (buttonClicked$)="onButtonClicked()">
     </sg-node-view-circle-button>

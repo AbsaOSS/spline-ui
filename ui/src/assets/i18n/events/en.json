@@ -30,6 +30,7 @@
         "EVENT_OVERVIEW__BACK_TO_EVENT_BUTTON": "Execution Event",
         "EVENT_OVERVIEW__NAV_TAB__GRAPH_VIEW": "Graph View",
         "EVENTS_LIST__DF__EXECUTED_AT": "Executed At",
-        "EVENTS_LIST__DF__WRITE_MODE": "Write Mode"
+        "EVENTS_LIST__DF__WRITE_MODE": "Write Mode",
+        "SG__LOAD_MORE__TOOLTIP": "Load More"
     }
 }

@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-import { differenceWith } from 'lodash-es'
 import {
     ExecutionEventLineageNode,
     ExecutionEventLineageNodeType,
     ExecutionEventLineageOverview,
     ExecutionEventLineageOverviewDepth,
-    Lineage,
     LineageNodeLink
 } from 'spline-api'
 import { SplineDataViewSchema } from 'spline-common/data-view'
@@ -28,7 +26,7 @@ import { SgData } from 'spline-common/graph'
 import { SgNodeControl } from 'spline-shared/graph'
 import { ProcessingStore, SplineEntityStore, StringHelpers } from 'spline-utils'
 
-import { EventInfo, EventNodeControl, EventNodeInfo } from '../../models'
+import { EventInfo, EventNodeControl, EventNodeHistory, EventNodeInfo } from '../../models'
 
 
 export namespace EventOverviewStore {
@@ -209,7 +207,9 @@ export namespace EventOverviewStore {
         }
     }
 
-    export function calculateGraphData(state: State): SgData {
+    // TODO: showLoadMoreControls should be removed after that feature will be implemented on BE side,
+    //       so we know when to display these controls.
+    export function calculateGraphData(state: State, showLoadMoreControls = false): SgData {
         const nodesList = EventOverviewStore.selectAllNodes(state)
 
         const graphData = {
@@ -221,21 +221,22 @@ export namespace EventOverviewStore {
                 ),
         }
 
-        return graphData
+        if (!showLoadMoreControls) {
+            return graphData
+        }
 
-        // TODO: implement that logic after BE related part will be ready
-        // const lineageData = {
-        //     nodes: nodesList,
-        //     links: state.links
-        // }
-        //
-        // const loadHistoryGraph = getLoadHistoryGraphData(lineageData)
-        // const loadFutureGraph = getLoadFutureGraphData(lineageData)
-        //
-        // return {
-        //     links: [...loadHistoryGraph.links, ...graphData.links, ...loadFutureGraph.links],
-        //     nodes: [...loadHistoryGraph.nodes, ...graphData.nodes, ...loadFutureGraph.nodes],
-        // }
+        const lineageData = {
+            nodes: nodesList,
+            links: state.links
+        }
+
+        const loadHistoryGraph = EventNodeHistory.getLoadHistoryGraphData(lineageData)
+        const loadFutureGraph = EventNodeHistory.getLoadFutureGraphData(lineageData)
+
+        return {
+            links: [...loadHistoryGraph.links, ...graphData.links, ...loadFutureGraph.links],
+            nodes: [...loadHistoryGraph.nodes, ...graphData.nodes, ...loadFutureGraph.nodes],
+        }
     }
 
     export function reduceSelectedNodeId(nodeId: string | null, state: State): State {
@@ -281,61 +282,5 @@ export namespace EventOverviewStore {
     function calculateHasMoreDepth(lineageDepth: ExecutionEventLineageOverviewDepth): boolean {
         return lineageDepth.depthRequested === lineageDepth.depthComputed
     }
-
-    export function getLoadHistoryGraphData(lineageData: Lineage<ExecutionEventLineageNode>): SgData {
-        // select DS nodes with no parents
-        const dsNodesIds = lineageData.nodes
-            .filter(item => item.type === ExecutionEventLineageNodeType.DataSource)
-            .map(item => item.id)
-
-        const dsNodesIdsWithParent = lineageData.links
-            .filter(item => dsNodesIds.includes(item.target))
-            .map(item => item.target)
-
-        const dsNodesIdsNoParent = differenceWith(dsNodesIds, dsNodesIdsWithParent)
-
-        // add new add button to the node with no parent
-
-        return {
-            links: dsNodesIdsNoParent.map(
-                nodeId => ({
-                    source: EventNodeControl.toLoadMoreNodeId(nodeId),
-                    target: nodeId
-                })
-            ),
-            nodes: dsNodesIdsNoParent.map(
-                nodeId => EventNodeControl.toLoadHistorySgNode(nodeId)
-            )
-        }
-    }
-
-    export function getLoadFutureGraphData(lineageData: Lineage<ExecutionEventLineageNode>): SgData {
-        // select DS nodes with no parents
-        const dsNodesIds = lineageData.nodes
-            .filter(item => item.type === ExecutionEventLineageNodeType.DataSource)
-            .map(item => item.id)
-
-        const dsNodesIdsWithChildren = lineageData.links
-            .filter(item => dsNodesIds.includes(item.source))
-            .map(item => item.source)
-
-        const dsNodesIdsNoChildren = differenceWith(dsNodesIds, dsNodesIdsWithChildren)
-
-        // add new add button to the node with no parent
-
-        return {
-            links: dsNodesIdsNoChildren.map(
-                nodeId => ({
-                    target: EventNodeControl.toLoadMoreNodeId(nodeId),
-                    source: nodeId
-                })
-            ),
-            nodes: dsNodesIdsNoChildren.map(
-                nodeId => EventNodeControl.toLoadFutureSgNode(nodeId)
-            )
-        }
-    }
-
-
 
 }

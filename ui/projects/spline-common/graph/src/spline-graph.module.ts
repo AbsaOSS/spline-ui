@@ -44,7 +44,7 @@ import * as fromServices from './services'
         MatDividerModule,
         MatTooltipModule,
         MatCardModule,
-        SplineTranslateModule,
+        SplineTranslateModule.forChild(),
         SplineCommonModule,
     ],
     exports: [

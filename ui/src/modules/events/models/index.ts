@@ -17,5 +17,5 @@
 export * from './event-info.models'
 export * from './event-node-control.models'
 export * from './event-node-info.models'
-export * from './events-list-url-state.models'
+export * from './event-node-history.models'
 
