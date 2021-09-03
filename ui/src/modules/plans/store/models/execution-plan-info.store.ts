@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import _ from 'lodash'
 import { Observable } from 'rxjs'
 import { ExecutionPlan } from 'spline-api'
 import { SplineDataViewSchema } from 'spline-common/data-view'
@@ -34,6 +35,8 @@ export namespace ExecutionPlanInfoStore {
     }
 
     export function toState(executionPlan: ExecutionPlan, selectedAttributeId$: Observable<string | null>): State {
+        const allAttributesSorted = _.sortBy(executionPlan.extraInfo.attributes, a => a.name)
+        const allDataTypes = executionPlan.extraInfo.dataTypes
         return {
             executionPlan: executionPlan,
             executionPlanVs: PlanInfo.toDataViewSchema(executionPlan),
@@ -42,8 +45,8 @@ export namespace ExecutionPlanInfoStore {
             outputAndInputsVs: PlanInfo.getOutputAndInputsDvs(executionPlan),
             inputsNumber: executionPlan.inputDataSources.length,
             attributesSchema: attributesSchemaToDataViewSchema(
-                executionPlan.extraInfo.attributes.sort((a, b) => a.name.localeCompare(b.name)),
-                executionPlan.extraInfo.dataTypes,
+                allAttributesSorted,
+                allDataTypes,
                 selectedAttributeId$,
             ),
         }
