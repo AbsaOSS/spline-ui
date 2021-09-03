@@ -42,7 +42,7 @@ export namespace ExecutionPlanInfoStore {
             outputAndInputsVs: PlanInfo.getOutputAndInputsDvs(executionPlan),
             inputsNumber: executionPlan.inputDataSources.length,
             attributesSchema: attributesSchemaToDataViewSchema(
-                executionPlan.extraInfo.attributes,
+                executionPlan.extraInfo.attributes.sort((a, b) => a.name.localeCompare(b.name)),
                 executionPlan.extraInfo.dataTypes,
                 selectedAttributeId$,
             ),
