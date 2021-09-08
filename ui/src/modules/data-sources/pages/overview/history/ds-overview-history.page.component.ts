@@ -86,6 +86,9 @@ export class DsOverviewHistoryPageComponent extends BaseLocalStateComponent<DsOv
             .schemaToModel<DsOverviewHistoryPage.Filter>(
                 DsOverviewHistoryPage.getDynamicFilterSchema()
             )
+            .pipe(
+                takeUntil(this.destroyed$)
+            )
             .subscribe(model => {
                 this.filterModel = model
                 DataSourceWithDynamicFilter.bindDynamicFilter<ExecutionEventsQuery.QueryFilter, DsOverviewHistoryPage.Filter>(

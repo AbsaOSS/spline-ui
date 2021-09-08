@@ -199,6 +199,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
         //
         dataSource.searchParams$
             .pipe(
+                takeUntil(this.destroyed$),
                 distinctUntilChanged((a, b) => isEqual(a, b)),
                 skip(1),
             )
