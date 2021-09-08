@@ -32,7 +32,7 @@ export abstract class BaseDynamicContentComponent<TComponent> extends BaseCompon
     protected componentRef: ComponentRef<TComponent>
     protected eventsSubscriptionRefs: Subscription[] = []
 
-    constructor(protected readonly componentFactoryResolver: ComponentFactoryResolver) {
+    protected constructor(protected readonly componentFactoryResolver: ComponentFactoryResolver) {
         super()
     }
 

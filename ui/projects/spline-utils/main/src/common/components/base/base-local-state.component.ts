@@ -27,7 +27,7 @@ export abstract class BaseLocalStateComponent<TState> extends BaseComponent impl
 
     readonly state$ = new BehaviorSubject<TState | null>(null)
 
-    constructor() {
+    protected constructor() {
         super()
     }
 

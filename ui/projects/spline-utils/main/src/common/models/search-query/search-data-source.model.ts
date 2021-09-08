@@ -59,7 +59,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
     protected readonly _disconnected$ = new Subject<void>()
 
 
-    constructor() {
+    protected constructor() {
 
         this.searchParams$ = this._searchParams$.asObservable()
         this.dataState$ = this._dataState$.asObservable()

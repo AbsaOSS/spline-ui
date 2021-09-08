@@ -40,7 +40,7 @@ export abstract class SimpleDataSource<TData, TFilter extends SplineRecord = {}>
 
     protected readonly disconnected$ = new Subject<void>()
 
-    constructor() {
+    protected constructor() {
 
         this.dataState$ = this._dataState$.asObservable()
         this.data$ = this.dataState$.pipe(map(data => data.data))
