@@ -48,7 +48,7 @@ export class PlanInfoComponent extends BaseLocalStateComponent<ExecutionPlanInfo
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.executionPlan && !!changes.executionPlan.currentValue) {
             this.updateState(
-                ExecutionPlanInfoStore.toState(changes.executionPlan.currentValue, this.selectedAttributeId$.asObservable()),
+                ExecutionPlanInfoStore.toState(changes.executionPlan.currentValue, this.selectedAttributeId$),
             )
         }
     }

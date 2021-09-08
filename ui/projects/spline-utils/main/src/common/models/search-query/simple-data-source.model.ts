@@ -42,7 +42,7 @@ export abstract class SimpleDataSource<TData, TFilter extends SplineRecord = {}>
 
     protected constructor() {
 
-        this.dataState$ = this._dataState$.asObservable()
+        this.dataState$ = this._dataState$
         this.data$ = this.dataState$.pipe(map(data => data.data))
 
         this.loadingProcessing$ = this.dataState$.pipe(map(data => data.loadingProcessing))
@@ -74,7 +74,7 @@ export abstract class SimpleDataSource<TData, TFilter extends SplineRecord = {}>
     }
 
     connect(): Observable<TData> {
-        return this._dataState$.asObservable()
+        return this._dataState$
             .pipe(
                 map(x => x.data),
             )

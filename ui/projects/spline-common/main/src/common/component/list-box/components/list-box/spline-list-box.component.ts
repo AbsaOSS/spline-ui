@@ -84,7 +84,7 @@ export class SplineListBoxComponent<TValue = unknown> extends BaseComponent
         this.selectionModel = new SelectionModel<TValue>(this.multiple)
         this.masterSelectState = this.calculateMasterSelectState()
 
-        this.selectionModel.changed.asObservable()
+        this.selectionModel.changed
             .pipe(
                 takeUntil(this.destroyed$)
             )

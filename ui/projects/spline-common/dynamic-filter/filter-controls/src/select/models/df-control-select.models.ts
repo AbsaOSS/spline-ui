@@ -62,7 +62,7 @@ export namespace DfControlSelect {
             this.icon = config.icon
             this.label = config.label
 
-            this.records$ = this._records$.asObservable()
+            this.records$ = this._records$
         }
 
         get records(): TRecord[] {
