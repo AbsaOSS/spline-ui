@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Component, OnDestroy } from '@angular/core'
+import { Component } from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
 
 import { BaseComponent } from './base.component'
@@ -23,7 +23,7 @@ import { BaseComponent } from './base.component'
     selector: 'spline-utils-base-local-state',
     template: ''
 })
-export abstract class BaseLocalStateComponent<TState> extends BaseComponent implements OnDestroy {
+export abstract class BaseLocalStateComponent<TState> extends BaseComponent {
 
     readonly state$ = new BehaviorSubject<TState | null>(null)
 

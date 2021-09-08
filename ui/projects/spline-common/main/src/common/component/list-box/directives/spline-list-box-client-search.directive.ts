@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Directive, forwardRef, Inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
+import { Directive, forwardRef, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core'
 import { BehaviorSubject, combineLatest } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
 import { BaseDirective } from 'spline-utils'
@@ -25,7 +25,7 @@ import { SplineListBox } from '../models'
 @Directive({
     selector: '[splineListBoxRecords]spline-list-box'
 })
-export class SplineListBoxRecordsDirective<TRecord, TValue> extends BaseDirective implements OnInit, OnChanges {
+export class SplineListBoxRecordsDirective<TRecord, TValue> extends BaseDirective implements OnInit, OnChanges, OnDestroy {
 
     @Input() splineListBoxRecords: TRecord[]
 
@@ -62,12 +62,21 @@ export class SplineListBoxRecordsDirective<TRecord, TValue> extends BaseDirectiv
             })
 
         this.splineListBoxComponent.searchTermChanged$
+            .pipe(
+                takeUntil(this.destroyed$)
+            )
             .subscribe(
                 searchTerm => this.search$.next(searchTerm)
             )
 
         this.search$.next(this.splineListBoxComponent.searchTerm)
         this.options$.next(this.calculateSelectOptions(this.splineListBoxRecords, this.dataMap))
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy()
+        this.options$.complete()
+        this.search$.complete()
     }
 
     private calculateSelectOptions(

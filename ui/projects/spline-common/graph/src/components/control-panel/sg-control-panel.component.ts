@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Component, forwardRef, Host, Inject } from '@angular/core'
+import { AfterViewInit, Component, forwardRef, Host, Inject, OnDestroy } from '@angular/core'
+import { Subscription } from 'rxjs'
 
 import { SgLayoutSettings, switchGraphOrientation } from '../../models'
 import { SplineGraphComponent } from '../graph/spline-graph.component'
@@ -24,26 +25,28 @@ import { SplineGraphComponent } from '../graph/spline-graph.component'
     selector: 'sg-control-panel',
     templateUrl: './sg-control-panel.component.html',
 })
-export class SgControlPanelComponent implements AfterViewInit {
+export class SgControlPanelComponent implements AfterViewInit, OnDestroy {
 
     readonly zoomLevelStep = 0.1
 
     currentZoomLevel = 1
 
+    private _subscription = new Subscription
+
     constructor(@Host() @Inject(forwardRef(() => SplineGraphComponent)) private splineGraph: SplineGraphComponent) {
     }
-
 
     ngAfterViewInit(): void {
 
         this.currentZoomLevel = this.splineGraph.ngxGraphComponent.zoomLevel
 
-        this.splineGraph.ngxGraphComponent.zoomChange
-            .subscribe(
-                zoomLevel => {
-                    this.currentZoomLevel = zoomLevel
-                },
-            )
+        this._subscription.add(
+            this.splineGraph.ngxGraphComponent.zoomChange
+                .subscribe(
+                    zoomLevel => {
+                        this.currentZoomLevel = zoomLevel
+                    },
+                ))
     }
 
     onCenterGraphBtnClicked(): void {
@@ -68,5 +71,9 @@ export class SgControlPanelComponent implements AfterViewInit {
             ...this.splineGraph.layoutSettings,
             orientation,
         } as SgLayoutSettings
+    }
+
+    ngOnDestroy(): void {
+        this._subscription.unsubscribe()
     }
 }

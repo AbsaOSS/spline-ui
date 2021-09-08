@@ -20,6 +20,7 @@ import {
     EventEmitter,
     Input,
     OnChanges,
+    OnDestroy,
     Output,
     QueryList,
     SimpleChanges,
@@ -49,7 +50,7 @@ import {
     selector: 'spline-graph',
     templateUrl: './spline-graph.component.html',
 })
-export class SplineGraphComponent extends BaseComponent implements OnChanges {
+export class SplineGraphComponent extends BaseComponent implements OnChanges, OnDestroy {
 
     @ViewChild(GraphComponent) ngxGraphComponent: GraphComponent
     @ContentChildren(SgControlPanelSectionDirective) controlPanelExtraSections: QueryList<SgControlPanelSectionDirective>
@@ -85,7 +86,7 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges {
     readonly defaultNodeWidth = 350
     readonly defaultNodeHeight = 50
 
-    readonly nativeGraphData$ = new BehaviorSubject<{nodes: SgNativeNode[]; links: Edge[]}>(null)
+    readonly nativeGraphData$ = new BehaviorSubject<{ nodes: SgNativeNode[]; links: Edge[] }>(null)
 
     private focusedNodeTimer: any
     private nodeClicksStream$ = new Subject<{ node: SgNativeNode; mouseEvent: MouseEvent }>()
@@ -110,6 +111,12 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges {
                 )
                 .subscribe((nodeId) => this.onFocusNode(nodeId))
         }
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy()
+        this.nodeClicksStream$.complete()
+        this.nativeGraphData$.complete()
     }
 
     onNodeEvent(node: SgNativeNode, event: SgNodeControlEvent<any>): void {
