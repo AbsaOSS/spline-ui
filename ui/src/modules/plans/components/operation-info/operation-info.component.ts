@@ -75,8 +75,8 @@ export class OperationInfoComponent extends BaseLocalStateComponent<OperationInf
             .subscribe(data =>
                 this.updateState({
                     operationDvs: OperationInfo.toDataViewSchema(data.operation),
-                    inputsDvs: OperationInfo.toInputsDvs(data, this.selectedAttributeId$.asObservable()),
-                    outputDvs: OperationInfo.toOutputsDvs(data, this.selectedAttributeId$.asObservable()),
+                    inputsDvs: OperationInfo.toInputsDvs(data, this.selectedAttributeId$),
+                    outputDvs: OperationInfo.toOutputsDvs(data, this.selectedAttributeId$),
                     detailsDvs: OperationInfo.toDetailsDvs(data),
                     inputsNumber: data?.inputs?.length ?? 0
                 }),

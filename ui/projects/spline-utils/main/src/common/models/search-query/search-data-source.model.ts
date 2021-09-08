@@ -61,9 +61,9 @@ export abstract class SearchDataSource<TDataRecord = unknown,
 
     constructor() {
 
-        this.searchParams$ = this._searchParams$.asObservable()
-        this.dataState$ = this._dataState$.asObservable()
-        this.disconnected$ = this._disconnected$.asObservable()
+        this.searchParams$ = this._searchParams$
+        this.dataState$ = this._dataState$
+        this.disconnected$ = this._disconnected$
 
         this.loadingProcessing$ = this.dataState$.pipe(map(data => data.loadingProcessing))
         this.loadingProcessingEvents = ProcessingStore.createProcessingEvents(
@@ -199,7 +199,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
     }
 
     connect(collectionViewer: CollectionViewer): Observable<TDataRecord[]> {
-        return this._dataState$.asObservable()
+        return this._dataState$
             .pipe(
                 map(x => x.data?.items ?? []),
             )

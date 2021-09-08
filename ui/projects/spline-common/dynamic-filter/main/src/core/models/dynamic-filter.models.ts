@@ -57,20 +57,20 @@ export class DynamicFilterModel<TFilter extends SplineRecord = SplineRecord> {
             }, {} as DynamicFilterControlsMap<TFilter>)
 
         this._controlsMap$ = new BehaviorSubject<DynamicFilterControlsMap<TFilter>>(modelsMap)
-        this.controlsMap$ = this._controlsMap$.asObservable()
+        this.controlsMap$ = this._controlsMap$
 
         this.controls$ = this.controlsMap$
             .pipe(
                 map((x) => Object.values(x))
             )
 
-        this.valueChanged$ = this._state$.asObservable()
+        this.valueChanged$ = this._state$
             .pipe(
                 filter(({ emitEvent }) => emitEvent),
                 map(({ value }) => value),
             )
 
-        this.value$ = this._state$.asObservable()
+        this.value$ = this._state$
             .pipe(
                 map(({ value }) => value),
             )

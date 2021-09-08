@@ -71,12 +71,12 @@ implements IDynamicFilterControlModel<TValue, TOptions, TId> {
             this._options = config.options
         }
 
-        this.value$ = this._state$.asObservable()
+        this.value$ = this._state$
             .pipe(
                 map(({ value }) => value),
             )
 
-        this.valueChanged$ = this._state$.asObservable()
+        this.valueChanged$ = this._state$
             .pipe(
                 filter(({ emitEvent }) => emitEvent),
                 map(({ value }) => value),

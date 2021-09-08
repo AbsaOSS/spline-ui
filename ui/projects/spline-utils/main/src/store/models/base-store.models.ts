@@ -28,7 +28,7 @@ export abstract class BaseStore<TState> {
     constructor(defaultState: TState = null) {
         this._defaultState = defaultState
         this._state$ = new BehaviorSubject<TState>(this._defaultState)
-        this.state$ = this._state$.asObservable()
+        this.state$ = this._state$
     }
 
     get state(): TState {
