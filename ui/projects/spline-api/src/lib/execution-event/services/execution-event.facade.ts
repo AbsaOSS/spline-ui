@@ -18,7 +18,6 @@ import { HttpClient, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable, throwError } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
-import { Cacheable } from 'spline-utils'
 
 import { ExecutionEventsPageResponse, ExecutionEventsPageResponseDto, ExecutionEventsQuery, toExecutionEventsPageResponse } from '../models'
 import {
@@ -37,7 +36,6 @@ export class ExecutionEventFacade extends BaseFacade {
         super(http)
     }
 
-    @Cacheable
     fetchLineageOverview(executionEventId: string, maxDepth: number = 3): Observable<ExecutionEventLineageOverview> {
         let params = new HttpParams()
         params = params.append('eventId', executionEventId)
@@ -54,7 +52,6 @@ export class ExecutionEventFacade extends BaseFacade {
             )
     }
 
-    @Cacheable
     fetchList(queryParams: ExecutionEventsQuery.QueryParams): Observable<ExecutionEventsPageResponse> {
         const params = ExecutionEventsQuery.queryParamsToHttpParams(queryParams)
         const url = this.toUrl('execution-events')
@@ -68,7 +65,6 @@ export class ExecutionEventFacade extends BaseFacade {
             )
     }
 
-    @Cacheable
     fetchListAggregatedByDataSource(queryParams: ExecutionEventsQuery.QueryParams): Observable<ExecutionEventsPageResponse> {
         const params = ExecutionEventsQuery.queryParamsToHttpParams(queryParams)
         const url = this.toUrl('data-sources')

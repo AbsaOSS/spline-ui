@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-export * from './cachable.models'
 export * from './page-response.models'
 export * from './query-pager.models'
 export * from './query-params.models'
