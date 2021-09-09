@@ -30,7 +30,7 @@ export abstract class BaseStoreWithLoading<TState extends StateWithLoading> exte
     readonly loadingEvents: ProcessingStore.ProcessingEvents<TState>
     readonly loading$: Observable<ProcessingStore.EventProcessingState>
 
-    constructor(defaultState: TState = null) {
+    protected constructor(defaultState: TState = null) {
 
         super(defaultState)
 

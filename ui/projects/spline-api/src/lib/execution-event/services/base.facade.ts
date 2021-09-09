@@ -23,7 +23,7 @@ export abstract class BaseFacade {
 
     protected readonly BASE_PATH = `${SplineConsumerApiSettings.API_URL_PREFIX_ALIAS}/`
 
-    constructor(protected readonly http: HttpClient) {
+    protected constructor(protected readonly http: HttpClient) {
     }
 
     protected toUrl(path: string): string {

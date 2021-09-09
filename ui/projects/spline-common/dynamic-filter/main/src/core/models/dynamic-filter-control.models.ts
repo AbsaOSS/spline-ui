@@ -64,7 +64,7 @@ implements IDynamicFilterControlModel<TValue, TOptions, TId> {
     })
     abstract readonly type: string
 
-    constructor(id: TId, config?: DynamicFilterControlModelConfig<TValue, TOptions>) {
+    protected constructor(id: TId, config?: DynamicFilterControlModelConfig<TValue, TOptions>) {
         this.id = id
 
         if (config?.options !== undefined) {
