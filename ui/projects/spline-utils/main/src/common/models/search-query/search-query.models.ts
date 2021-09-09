@@ -54,6 +54,8 @@ export namespace SearchQuery {
         loadingProcessing: ProcessingStore.getDefaultProcessingState(),
     }
 
+    export const DEFAULT_SERVER_POLL_INTERVAL = 5000 // msec
+
     export function toMatSortable(fieldSorter: QuerySorter.FieldSorter, disableClear = true): MatSortable {
         return {
             id: fieldSorter.field,
