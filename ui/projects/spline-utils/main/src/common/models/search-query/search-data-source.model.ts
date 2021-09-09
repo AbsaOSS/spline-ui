@@ -20,6 +20,7 @@ import { BehaviorSubject, interval, Observable, of, Subject } from 'rxjs'
 import { catchError, filter, map, multicast, refCount, switchMap, take, takeUntil, tap } from 'rxjs/operators'
 
 import { ProcessingStore } from '../../../store'
+import { whenPageVisible } from '../../rxjs-operators'
 import { SplineRecord, StringHelpers } from '../heplers'
 import { PageResponse, QuerySorter } from '../query'
 
@@ -308,6 +309,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
 
         return interval(DEFAULT_SERVER_POLLING_INTERVAL)
             .pipe(
+                whenPageVisible(),
                 switchMap(() => {
                     const lastSearchParams = this._searchParams$.getValue()
                     const freshSearchParams = {
