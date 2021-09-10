@@ -16,8 +16,8 @@
 
 import { CollectionViewer, DataSource } from '@angular/cdk/collections'
 import { isEqual } from 'lodash-es'
-import { BehaviorSubject, interval, Observable, of, Subject } from 'rxjs'
-import { catchError, filter, map, multicast, refCount, switchMap, take, takeUntil, tap } from 'rxjs/operators'
+import { BehaviorSubject, EMPTY, interval, Observable, of, Subject } from 'rxjs'
+import { catchError, filter, first, map, share, switchMap, take, takeUntil, tap } from 'rxjs/operators'
 
 import { ProcessingStore } from '../../../store'
 import { whenPageVisible } from '../../rxjs-operators'
@@ -60,8 +60,6 @@ export abstract class SearchDataSource<TDataRecord = unknown,
 
     protected _defaultSearchParams: SearchParams<TFilter, TSortableFields> = DEFAULT_SEARCH_PARAMS
     protected readonly _disconnected$ = new Subject<void>()
-
-    protected _serverDataUpdates$ = new Subject<TData>()
 
     protected constructor() {
 
@@ -215,7 +213,6 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         this.entitiesList$.complete()
         this._dataState$.complete()
         this._searchParams$.complete()
-        this._serverDataUpdates$.complete()
 
         this._disconnected$.next()
         this._disconnected$.complete()
@@ -321,12 +318,11 @@ export abstract class SearchDataSource<TDataRecord = unknown,
                     }
                     return this.getDataObserver(freshSearchParams, undefined)
                         .pipe(
-                            take(1),
-                            catchError(() => this._dataState$.pipe(map(state => state.data)))
+                            first(),
+                            catchError(() => EMPTY)
                         )
                 }),
-                multicast(this._serverDataUpdates$),
-                refCount(),
+                share(),
                 filter(serverData => !isEqual(serverData.items, this._dataState$.getValue().data.items))
             )
     }
