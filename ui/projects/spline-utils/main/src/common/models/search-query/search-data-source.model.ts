@@ -16,10 +16,11 @@
 
 import { CollectionViewer, DataSource } from '@angular/cdk/collections'
 import { isEqual } from 'lodash-es'
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs'
-import { catchError, filter, map, switchMap, take, takeUntil, tap } from 'rxjs/operators'
+import { BehaviorSubject, EMPTY, interval, Observable, of, Subject } from 'rxjs'
+import { catchError, filter, first, map, share, switchMap, take, takeUntil, tap } from 'rxjs/operators'
 
 import { ProcessingStore } from '../../../store'
+import { whenPageVisible } from '../../rxjs-operators'
 import { SplineRecord, StringHelpers } from '../heplers'
 import { PageResponse, QuerySorter } from '../query'
 
@@ -27,6 +28,7 @@ import { SearchQuery } from './search-query.models'
 import DataState = SearchQuery.DataState
 import DEFAULT_RENDER_DATA = SearchQuery.DEFAULT_RENDER_DATA
 import DEFAULT_SEARCH_PARAMS = SearchQuery.DEFAULT_SEARCH_PARAMS
+import DEFAULT_SERVER_POLLING_INTERVAL = SearchQuery.DEFAULT_SERVER_POLL_INTERVAL
 import SearchParams = SearchQuery.SearchParams
 
 
@@ -39,6 +41,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
     readonly searchParams$: Observable<SearchParams<TFilter, TSortableFields>>
     readonly loadingProcessing$: Observable<ProcessingStore.EventProcessingState>
     readonly loadingProcessingEvents: ProcessingStore.ProcessingEvents<DataState<TData>>
+    readonly serverDataUpdates$: Observable<TData>
 
     readonly onFilterChanged$ = new Subject<{ filter: TFilter; apply: boolean; force: boolean }>()
     readonly onSearch$ = new Subject<{ searchTerm: string; apply: boolean; force: boolean }>()
@@ -58,7 +61,6 @@ export abstract class SearchDataSource<TDataRecord = unknown,
     protected _defaultSearchParams: SearchParams<TFilter, TSortableFields> = DEFAULT_SEARCH_PARAMS
     protected readonly _disconnected$ = new Subject<void>()
 
-
     protected constructor() {
 
         this.searchParams$ = this._searchParams$
@@ -69,6 +71,8 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         this.loadingProcessingEvents = ProcessingStore.createProcessingEvents(
             this.dataState$, (state) => state.loadingProcessing,
         )
+
+        this.serverDataUpdates$ = this.createServerDataUpdatePoller()
 
         this.init()
     }
@@ -289,6 +293,37 @@ export abstract class SearchDataSource<TDataRecord = unknown,
             )
             .subscribe(
                 (payload) => this.processOnFilterChangedEvent(payload.filter, payload.apply, payload.force),
+            )
+    }
+
+    protected createServerDataUpdatePoller(): Observable<TData> {
+        // Poll the server using the same search query as the main one, but with `asAtTime = now()`.
+        // If the returned data differs from what the data source currently holds then an update notification
+        // is sent to the observers.
+
+        // The observable is multicast with active subscription counting.
+        // The polling stops when `count == 0` and it resumes when `count > 0`
+
+        return interval(DEFAULT_SERVER_POLLING_INTERVAL)
+            .pipe(
+                whenPageVisible(),
+                switchMap(() => {
+                    const lastSearchParams = this._searchParams$.getValue()
+                    const freshSearchParams = {
+                        ...lastSearchParams,
+                        filter: {
+                            ...lastSearchParams.filter,
+                            asAtTime: undefined
+                        }
+                    }
+                    return this.getDataObserver(freshSearchParams, undefined)
+                        .pipe(
+                            first(),
+                            catchError(() => EMPTY)
+                        )
+                }),
+                share(),
+                filter(serverData => !isEqual(serverData.items, this._dataState$.getValue().data.items))
             )
     }
 

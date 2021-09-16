@@ -17,7 +17,9 @@
 
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
+import { MatButtonModule } from '@angular/material/button'
 import { MatPaginatorModule } from '@angular/material/paginator'
+import { MatTooltipModule } from '@angular/material/tooltip'
 import { SplineCommonModule } from 'spline-common'
 import { DynamicTableModule } from 'spline-common/dynamic-table'
 import { SplineTranslateModule } from 'spline-utils/translate'
@@ -28,6 +30,8 @@ import { splineDtSharedComponents } from './components'
 @NgModule({
     imports: [
         CommonModule,
+        MatButtonModule,
+        MatTooltipModule,
         MatPaginatorModule,
         DynamicTableModule,
         SplineCommonModule,
