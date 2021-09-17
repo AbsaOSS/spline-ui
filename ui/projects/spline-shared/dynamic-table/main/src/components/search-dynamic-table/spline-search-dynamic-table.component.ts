@@ -80,9 +80,8 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
         this.router.events.pipe(
             takeUntil(this.destroyed$),
             filter((event: RouterEvent) => event instanceof NavigationEnd)
-        ).subscribe((v) => {
+        ).subscribe(() => {
             if (this.searchParamsFromUrl() === null) {
-                console.log('RESET')
                 const freshDefaultParams = {
                     ...this.dataSource.defaultSearchParams,
                     filter: {
