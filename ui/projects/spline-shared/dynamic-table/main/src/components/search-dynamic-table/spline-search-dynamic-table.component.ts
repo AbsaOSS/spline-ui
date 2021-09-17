@@ -17,10 +17,10 @@
 
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core'
 import { PageEvent } from '@angular/material/paginator'
-import { ActivatedRoute, Params, Router } from '@angular/router'
+import { ActivatedRoute, NavigationEnd, Params, Router, RouterEvent } from '@angular/router'
 import { isEqual } from 'lodash-es'
 import { Observable, Subject } from 'rxjs'
-import { distinctUntilChanged, first, map, repeatWhen, skip, startWith, takeUntil } from 'rxjs/operators'
+import { distinctUntilChanged, filter, first, map, repeatWhen, skip, startWith, takeUntil } from 'rxjs/operators'
 import {
     DtCellCustomEvent,
     DtHeaderCellCustomEvent,
@@ -76,16 +76,25 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
     }
 
     ngOnInit(): void {
+        // Refresh the table on re-navigating to the same route
+        this.router.events.pipe(
+            takeUntil(this.destroyed$),
+            filter((event: RouterEvent) => event instanceof NavigationEnd)
+        ).subscribe((v) => {
+            if (this.searchParamsFromUrl() === null) {
+                console.log('RESET')
+                const freshDefaultParams = {
+                    ...this.dataSource.defaultSearchParams,
+                    filter: {
+                        asAtTime: new Date().getTime()
+                    }
+                }
+                this.dataSource.updateSearchParams(freshDefaultParams)
+                this._resumeListeningOnServerUpdates$.next()
+            }
+        })
 
-        const searchParamsFromUrl = !this.isUrlStateDisabled
-            ? SplineSearchDynamicTable.extractSearchParamsFromUrl(
-                this.currentQueryParams,
-                this.urlStateQueryParamAlias,
-                this.dataSource
-            )
-            : null
-
-        this.initDefaultState(this.dataSource, searchParamsFromUrl)
+        this.initDefaultState(this.dataSource, this.searchParamsFromUrl())
         this.initDataSourceEvents(this.dataSource)
 
         // start listening on the server data updates
@@ -143,6 +152,16 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
 
     onSortingChanged(sorter: QuerySorter.FieldSorter): void {
         this.dataSource.sort([sorter])
+    }
+
+    private searchParamsFromUrl() {
+        return !this.isUrlStateDisabled
+            ? SplineSearchDynamicTable.extractSearchParamsFromUrl(
+                this.currentQueryParams,
+                this.urlStateQueryParamAlias,
+                this.dataSource
+            )
+            : null
     }
 
     private initDefaultState(
