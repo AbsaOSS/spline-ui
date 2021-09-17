@@ -16,12 +16,12 @@
 
 import { CollectionViewer, DataSource } from '@angular/cdk/collections'
 import { isEqual } from 'lodash-es'
-import { BehaviorSubject, EMPTY, interval, Observable, of, Subject } from 'rxjs'
-import { catchError, filter, first, map, share, switchMap, take, takeUntil, tap } from 'rxjs/operators'
+import { BehaviorSubject, EMPTY, interval, Observable, of, Subject, Subscription } from 'rxjs'
+import { catchError, filter, first, map, share, switchMap, take, tap } from 'rxjs/operators'
 
 import { ProcessingStore } from '../../../store'
 import { whenPageVisible } from '../../rxjs-operators'
-import { SplineRecord, StringHelpers } from '../heplers'
+import { SplineRecord } from '../heplers'
 import { PageResponse, QuerySorter } from '../query'
 
 import { SearchQuery } from './search-query.models'
@@ -43,23 +43,15 @@ export abstract class SearchDataSource<TDataRecord = unknown,
     readonly loadingProcessingEvents: ProcessingStore.ProcessingEvents<DataState<TData>>
     readonly serverDataUpdates$: Observable<TData>
 
-    readonly onFilterChanged$ = new Subject<{ filter: TFilter; apply: boolean; force: boolean }>()
-    readonly onSearch$ = new Subject<{ searchTerm: string; apply: boolean; force: boolean }>()
-    readonly onSort$ = new Subject<{ sortBy: QuerySorter.FieldSorter<TSortableFields>[]; apply: boolean; force: boolean }>()
-
     readonly disconnected$: Observable<void>
 
-    protected readonly entitiesList$ = new BehaviorSubject<TData[]>([])
     protected readonly _dataState$ = new BehaviorSubject<DataState<TData>>(DEFAULT_RENDER_DATA)
     protected readonly _searchParams$ = new BehaviorSubject<SearchParams<TFilter, TSortableFields>>(DEFAULT_SEARCH_PARAMS)
 
-    // Request to update params with apply flag.
-    // If apply === true then rendered data will be recalculated based on new searchParams value and the current entitiesList collection.
-    protected readonly updateSearchParams$ =
-        new Subject<{ searchParams: SearchParams<TFilter, TSortableFields>; apply: boolean; forceApply: boolean }>()
-
     protected _defaultSearchParams: SearchParams<TFilter, TSortableFields> = DEFAULT_SEARCH_PARAMS
     protected readonly _disconnected$ = new Subject<void>()
+
+    private activeFetchSubscription: Subscription
 
     protected constructor() {
 
@@ -73,8 +65,6 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         )
 
         this.serverDataUpdates$ = this.createServerDataUpdatePoller()
-
-        this.init()
     }
 
     get searchParams(): SearchParams<TFilter, TSortableFields> {
@@ -93,36 +83,37 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         return this._dataState$.getValue()
     }
 
-    updateDefaultSearchParams(value: Partial<SearchParams<TFilter, TSortableFields>>): void {
+    updateDefaultSearchParams(value: Partial<SearchParams<TFilter, TSortableFields>>): SearchParams<TFilter, TSortableFields> {
         this._defaultSearchParams = {
             ...this._defaultSearchParams,
             ...value,
         }
+        return this.updateSearchParams(this.defaultSearchParams, false, false)
     }
 
-    updateAndApplyDefaultSearchParams(
-        value: Partial<SearchParams<TFilter, TSortableFields>>,
-        apply: boolean = false,
-        forceApply: boolean = false): SearchParams<TFilter, TSortableFields> {
-
-        this.updateDefaultSearchParams(value)
-        return this.updateSearchParams(this.defaultSearchParams, apply, forceApply)
+    load(): void {
+        this.fetchData(this.searchParams, false)
     }
 
-    load(force: boolean = false): void {
-        this.fetchData(this.searchParams, force).subscribe()
+    search(searchTerm: string): void {
+        const searchParamsWithResetPagination = this.withResetPagination({ searchTerm })
+        this.updateSearchParams(searchParamsWithResetPagination, true, false)
     }
 
-    search(searchTerm: string, apply: boolean = true, force: boolean = false): void {
-        this.onSearch$.next({ searchTerm, apply, force })
+    sort(sortBy: QuerySorter.FieldSorter<TSortableFields>[]): void {
+        this.updateSearchParams({ sortBy }, true, false)
     }
 
-    sort(sortBy: QuerySorter.FieldSorter<TSortableFields>[], apply: boolean = true, force: boolean = false): void {
-        this.onSort$.next({ sortBy, apply, force })
-    }
+    setFilter(filterValue: TFilter): void {
+        const searchParams = {
+            filter: filterValue,
+            pager: {
+                limit: this.searchParams.pager.limit,
+                offset: 0,
+            },
+        }
 
-    setFilter(filterValue: TFilter, apply: boolean = true, force: boolean = false): void {
-        this.onFilterChanged$.next({ filter: filterValue, apply, force })
+        this.updateSearchParams(searchParams, true, false)
     }
 
     refresh(): void {
@@ -137,14 +128,14 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         this.updateSearchParams(newSearchParams, true, true)
     }
 
-    resetSearchParams(fetchData: boolean = false, force: boolean = false): SearchParams<TFilter, TSortableFields> {
+    resetSearchParams(): SearchParams<TFilter, TSortableFields> {
         return this.updateSearchParams({
             ...this.defaultSearchParams,
             staticFilter: this.searchParams.staticFilter,
-        }, fetchData, force)
+        }, false, false)
     }
 
-    goToPage(pageIndex: number, apply: boolean = true): void {
+    goToPage(pageIndex: number): void {
         const currentPager = this.searchParams.pager
         if (currentPager.offset !== pageIndex) {
             this.updateSearchParams({
@@ -152,24 +143,24 @@ export abstract class SearchDataSource<TDataRecord = unknown,
                     ...currentPager,
                     offset: pageIndex * currentPager.limit,
                 },
-            }, apply)
+            }, true, false)
         }
         else {
             console.warn('Nothing to do. The current offset equals to the target offset.')
         }
     }
 
-    nextPage(apply: boolean = true): void {
+    nextPage(): void {
         const currentPager = this.searchParams.pager
         this.updateSearchParams({
             pager: {
                 ...currentPager,
                 offset: currentPager.offset + currentPager.limit,
             },
-        }, apply)
+        }, true, false)
     }
 
-    prevPage(apply: boolean = true): void {
+    prevPage(): void {
         const currentPager = this.searchParams.pager
         if (currentPager.offset === 0) {
             console.error('You are already on the very first page, you cannot go back.')
@@ -180,26 +171,29 @@ export abstract class SearchDataSource<TDataRecord = unknown,
                 ...currentPager,
                 offset: currentPager.offset - currentPager.limit,
             },
-        }, apply)
+        }, true, false)
     }
 
     updateSearchParams(
         searchParams: Partial<SearchParams<TFilter, TSortableFields>>,
-        apply: boolean = true,
-        forceApply: boolean = false): SearchParams<TFilter, TSortableFields> {
+        // If apply === true then rendered data will be recalculated based on new searchParams value and the current entitiesList collection
+        apply: boolean,
+        forceApply: boolean): SearchParams<TFilter, TSortableFields> {
 
-        const newValue = {
+        const newSearchParams = {
             ...this.searchParams,
             ...searchParams,
         } as SearchParams<TFilter, TSortableFields>
 
-        this.updateSearchParams$.next({
-            searchParams: newValue,
-            apply,
-            forceApply,
-        })
+        if (forceApply || !isEqual(newSearchParams, this.searchParams)) {
+            this._searchParams$.next(newSearchParams)
 
-        return newValue
+            if (apply) {
+                this.fetchData(newSearchParams, forceApply)
+            }
+        }
+
+        return newSearchParams
     }
 
     connect(collectionViewer: CollectionViewer): Observable<TDataRecord[]> {
@@ -210,7 +204,6 @@ export abstract class SearchDataSource<TDataRecord = unknown,
     }
 
     disconnect(collectionViewer?: CollectionViewer): void {
-        this.entitiesList$.complete()
         this._dataState$.complete()
         this._searchParams$.complete()
 
@@ -218,85 +211,65 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         this._disconnected$.complete()
     }
 
-    searchParamsToUrlString(searchParams: SearchParams<TFilter, TSortableFields>): string {
-        return StringHelpers.encodeObjToUrlString(searchParams)
+    private withResetPagination(
+        searchParams: Partial<SearchParams<TFilter, TSortableFields>>,
+    ): Partial<SearchParams<TFilter, TSortableFields>> {
+        return {
+            ...searchParams,
+            pager: {
+                limit: this.searchParams.pager.limit,
+                offset: 0,
+            },
+        }
     }
 
-    searchParamsFromUrlString(searchParamsUrlString: string): SearchParams<TFilter, TSortableFields> {
-        return StringHelpers.decodeObjFromUrlString(searchParamsUrlString)
+    // DATA stuff
+
+    protected abstract getDataObserver(searchParams: SearchParams<TFilter, TSortableFields>,
+                                       force: boolean): Observable<TData>;
+
+    private updateDataState(dataState: Partial<DataState<TData>>): void {
+        this._dataState$.next({
+            ...this._dataState$.getValue(),
+            ...dataState,
+        })
     }
 
-    protected init(): void {
+    private fetchData(
+        searchParams: SearchParams<TFilter, TSortableFields>,
+        force: boolean): void {
 
-        const updateSearchParams$ = this.updateSearchParams$
+        if (this.activeFetchSubscription) {
+            this.activeFetchSubscription.unsubscribe()
+        }
+
+        this.updateDataState({
+            loadingProcessing: ProcessingStore.eventProcessingStart(this.dataState.loadingProcessing),
+        })
+
+        this.activeFetchSubscription = this.getDataObserver(searchParams, force)
             .pipe(
-                map(payload => {
-                    const isNewSearchParams = !this.compareSearchParams(payload.searchParams, this.searchParams)
-                    return {
-                        ...payload,
-                        isNewSearchParams,
+                catchError((error) => {
+                    this.updateDataState({
+                        loadingProcessing: ProcessingStore.eventProcessingFinish(this.dataState.loadingProcessing, error),
+                    })
+                    return of(null)
+                }),
+                // update data state
+                tap((result) => {
+                    if (result !== null) {
+                        this.updateDataState({
+                            data: { ...result },
+                            loadingProcessing: ProcessingStore.eventProcessingFinish(this.dataState.loadingProcessing),
+                        })
                     }
                 }),
-            )
-
-        // TODO: Do we really need that step?
-        // Last emitted SearchParams are the same as previous
-        //      => emit prev data
-        updateSearchParams$
-            .pipe(
-                takeUntil(this._disconnected$),
-                filter(({ isNewSearchParams }) => !isNewSearchParams),
-            )
-            .subscribe(() => {
-                this._dataState$.next({
-                    ...this.dataState,
-                    data: { ...this.dataState.data },
-                })
-            })
-
-        // Last emitted SearchParams differs from the previous
-        //      => save new searchParams value
-        //      => fetch new data
-        updateSearchParams$
-            .pipe(
-                takeUntil(this._disconnected$),
-                filter(({ isNewSearchParams, forceApply }) => isNewSearchParams || forceApply),
-                tap(({ searchParams }) => this._searchParams$.next(searchParams)),
-                filter(({ apply }) => apply),
-                // using here switchMap to cancel the prev request
-                switchMap(({ searchParams, forceApply }) => this.fetchData(searchParams, forceApply)),
+                take(1),
             )
             .subscribe()
-
-        // SORT EVENT
-        this.onSort$
-            .pipe(
-                takeUntil(this._disconnected$),
-            )
-            .subscribe(
-                ({ sortBy, apply, force }) => this.processOnSortEvent(sortBy, apply, force),
-            )
-
-        // SEARCH EVENT
-        this.onSearch$
-            .pipe(
-                takeUntil(this._disconnected$),
-            )
-            .subscribe(
-                ({ searchTerm, apply, force }) => this.processOnSearchEvent(searchTerm, apply, force),
-            )
-
-        // FILTER CHANGED EVENT
-        this.onFilterChanged$
-            .pipe(
-                takeUntil(this._disconnected$),
-            )
-            .subscribe(
-                (payload) => this.processOnFilterChangedEvent(payload.filter, payload.apply, payload.force),
-            )
     }
 
-    protected createServerDataUpdatePoller(): Observable<TData> {
+    private createServerDataUpdatePoller(): Observable<TData> {
         // Poll the server using the same search query as the main one, but with `asAtTime = now()`.
         // If the returned data differs from what the data source currently holds then an update notification
         // is sent to the observers.
@@ -326,99 +299,5 @@ export abstract class SearchDataSource<TDataRecord = unknown,
                 filter(serverData => !isEqual(serverData.items, this._dataState$.getValue().data.items))
             )
     }
-
-    // Returns TRUE if search$ params are the same.
-    protected compareSearchParams(
-        searchParams: SearchParams<TFilter, TSortableFields>,
-        newSearchParams: SearchParams<TFilter, TSortableFields>): boolean {
-
-        return isEqual(searchParams, newSearchParams)
-    }
-
-    protected processOnSearchEvent(searchTerm: string, apply: boolean = true, force: boolean = false): void {
-        let searchParams: Partial<SearchParams<TFilter, TSortableFields>> = { searchTerm }
-
-        // reset pagination on real search$
-        if (apply) {
-            searchParams = this.resetPagination(searchParams)
-        }
-
-        this.updateSearchParams(searchParams, apply, force)
-    }
-
-    protected processOnSortEvent(
-        sortBy: QuerySorter.FieldSorter<TSortableFields>[],
-        apply: boolean = true, force: boolean = false): void {
-
-        this.updateSearchParams({ sortBy }, apply, force)
-    }
-
-    protected processOnFilterChangedEvent(filterValue: TFilter, apply: boolean = true, force: boolean = false): void {
-        let searchParams: Partial<SearchParams<TFilter, TSortableFields>> = { filter: filterValue }
-
-        // reset pagination on real search$
-        if (apply) {
-            searchParams = {
-                ...searchParams,
-                pager: {
-                    limit: this.searchParams.pager.limit,
-                    offset: 0,
-                },
-            }
-        }
-
-        this.updateSearchParams(searchParams, apply, force)
-    }
-
-    protected fetchData(
-        searchParams: SearchParams<TFilter, TSortableFields>,
-        force: boolean = false): Observable<PageResponse<TData>> {
-
-        this.updateDataState({
-            loadingProcessing: ProcessingStore.eventProcessingStart(this.dataState.loadingProcessing),
-        })
-
-        return this.getDataObserver(searchParams, force)
-            .pipe(
-                catchError((error) => {
-                    this.updateDataState({
-                        loadingProcessing: ProcessingStore.eventProcessingFinish(this.dataState.loadingProcessing, error),
-                    })
-                    return of(null)
-                }),
-                // update data state
-                tap((result) => {
-                    if (result !== null) {
-                        this.updateDataState({
-                            data: { ...result },
-                            loadingProcessing: ProcessingStore.eventProcessingFinish(this.dataState.loadingProcessing),
-                        })
-                    }
-                }),
-                take(1),
-            )
-    }
-
-    protected updateDataState(dataState: Partial<DataState<TData>>): void {
-        this._dataState$.next({
-            ...this._dataState$.getValue(),
-            ...dataState,
-        })
-    }
-
-    protected resetPagination(
-        searchParams: Partial<SearchParams<TFilter, TSortableFields>>,
-    ): Partial<SearchParams<TFilter, TSortableFields>> {
-        return {
-            ...searchParams,
-            pager: {
-                limit: this.searchParams.pager.limit,
-                offset: 0,
-            },
-        }
-    }
-
-    protected abstract getDataObserver(searchParams: SearchParams<TFilter, TSortableFields>,
-                                       force: boolean): Observable<TData>;
 }
 

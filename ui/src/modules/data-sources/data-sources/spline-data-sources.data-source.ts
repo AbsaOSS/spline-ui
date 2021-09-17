@@ -32,7 +32,7 @@ export class SplineDataSourcesDataSource extends EventsDataSource {
     constructor(protected readonly executionEventFacade: ExecutionEventFacade) {
         super(executionEventFacade)
 
-        this.updateAndApplyDefaultSearchParams({
+        this.updateDefaultSearchParams({
             filter: {
                 asAtTime: new Date().getTime()
             },

@@ -32,7 +32,7 @@ export class EventLineageListDataSource extends SearchDataSource<ExecutionEventL
     constructor(private readonly executionEventFacade: ExecutionEventFacade) {
         super()
 
-        this.updateAndApplyDefaultSearchParams({
+        this.updateDefaultSearchParams({
             filter: {
                 asAtTime: new Date().getTime()
             },

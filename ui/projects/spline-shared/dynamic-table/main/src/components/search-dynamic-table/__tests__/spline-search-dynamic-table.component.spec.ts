@@ -117,7 +117,7 @@ describe('SplineSearchDynamicTableComponent', () => {
             componentInstance.dataSource = fakeDataSource
             componentInstance.dataMap = dataMap
 
-            fakeDataSource.updateAndApplyDefaultSearchParams({
+            fakeDataSource.updateDefaultSearchParams({
                 sortBy: [{ ...defaultSortBy }]
             })
         })
@@ -156,7 +156,6 @@ describe('SplineSearchDynamicTableComponent', () => {
             const queryParams = SplineSearchDynamicTable.applySearchParams(
                 {},
                 componentInstance.defaultUrlStateQueryParamAlias,
-                fakeDataSource,
                 urlSearchParams
             )
 

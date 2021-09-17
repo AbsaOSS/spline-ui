@@ -35,7 +35,7 @@ export class EventsDataSource extends SearchDataSource<ExecutionEvent,
     constructor(protected readonly executionEventFacade: ExecutionEventFacade) {
         super()
 
-        this.updateAndApplyDefaultSearchParams({
+        this.updateDefaultSearchParams({
             filter: {
                 asAtTime: new Date().getTime()
             },

@@ -16,7 +16,7 @@
 
 
 import { Params } from '@angular/router'
-import { ProcessingStore, QuerySorter, RouterNavigation, SearchDataSource, SearchQuery } from 'spline-utils'
+import { ProcessingStore, QuerySorter, RouterNavigation, SearchDataSource, SearchQuery, StringHelpers } from 'spline-utils'
 
 
 export namespace SplineSearchDynamicTable {
@@ -44,24 +44,22 @@ export namespace SplineSearchDynamicTable {
 
     export function extractSearchParamsFromUrl(
         queryParams: Params,
-        queryParamAlias: string,
-        dataSource: SearchDataSource): SearchParams | null {
+        queryParamAlias: string): SearchParams | null {
 
         const urlString = queryParams[queryParamAlias]
         return urlString
-            ? dataSource.searchParamsFromUrlString(urlString)
+            ? searchParamsFromUrlString(urlString)
             : null
     }
 
     export function applySearchParams(
         queryParams: Params,
         queryParamAlias: string,
-        dataSource: SearchDataSource,
         searchParams: SearchParams | null): Params {
 
         // keep some data in query params if it differs from the DS State
         const searchParamsString = searchParams !== null
-            ? dataSource.searchParamsToUrlString(searchParams)
+            ? searchParamsToUrlString(searchParams)
             : null
 
         return RouterNavigation.setQueryParam(
@@ -69,5 +67,13 @@ export namespace SplineSearchDynamicTable {
             queryParamAlias,
             searchParamsString,
         )
+    }
+
+    function searchParamsToUrlString(searchParams: SearchParams): string {
+        return StringHelpers.encodeObjToUrlString(searchParams)
+    }
+
+    function searchParamsFromUrlString(searchParamsUrlString: string): SearchParams {
+        return StringHelpers.decodeObjFromUrlString(searchParamsUrlString)
     }
 }

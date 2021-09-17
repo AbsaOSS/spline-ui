@@ -88,7 +88,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
                         asAtTime: new Date().getTime()
                     }
                 }
-                this.dataSource.updateSearchParams(freshDefaultParams)
+                this.dataSource.updateSearchParams(freshDefaultParams, true, false)
                 this._resumeListeningOnServerUpdates$.next()
             }
         })
@@ -140,7 +140,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
     }
 
     onRefreshDataClick(): void {
-        this.dataSource.updateSearchParams({ filter: { asAtTime: Date.now() } })
+        this.dataSource.updateSearchParams({ filter: { asAtTime: Date.now() } }, true, false)
         this._resumeListeningOnServerUpdates$.next()
     }
 
@@ -158,7 +158,6 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
             ? SplineSearchDynamicTable.extractSearchParamsFromUrl(
                 this.currentQueryParams,
                 this.urlStateQueryParamAlias,
-                this.dataSource
             )
             : null
     }
@@ -168,7 +167,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
         currentSearchParams?: SearchParams): void {
 
         if (currentSearchParams) {
-            dataSource.updateSearchParams({ ...currentSearchParams }, false)
+            dataSource.updateSearchParams({ ...currentSearchParams }, false, false)
         }
 
         const initSorting = dataSource.searchParams.sortBy.length > 0
@@ -258,7 +257,6 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
                 const queryParams = SplineSearchDynamicTable.applySearchParams(
                     this.currentQueryParams,
                     queryParamAlias,
-                    dataSource,
                     searchParams
                 )
                 this.updateRouterState(queryParams)
