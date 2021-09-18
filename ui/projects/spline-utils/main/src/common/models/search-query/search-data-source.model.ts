@@ -45,13 +45,13 @@ export abstract class SearchDataSource<TDataRecord = unknown,
 
     readonly disconnected$: Observable<void>
 
-    protected readonly _dataState$ = new BehaviorSubject<DataState<TData>>(DEFAULT_RENDER_DATA)
-    protected readonly _searchParams$ = new BehaviorSubject<SearchParams<TFilter, TSortableFields>>(DEFAULT_SEARCH_PARAMS)
+    private readonly _dataState$ = new BehaviorSubject<DataState<TData>>(DEFAULT_RENDER_DATA)
+    private readonly _searchParams$ = new BehaviorSubject<SearchParams<TFilter, TSortableFields>>(DEFAULT_SEARCH_PARAMS)
 
-    protected _defaultSearchParams: SearchParams<TFilter, TSortableFields> = DEFAULT_SEARCH_PARAMS
-    protected readonly _disconnected$ = new Subject<void>()
+    private _defaultSearchParams: SearchParams<TFilter, TSortableFields> = DEFAULT_SEARCH_PARAMS
+    private readonly _disconnected$ = new Subject<void>()
 
-    private activeFetchSubscription: Subscription
+    private _activeFetchSubscription: Subscription
 
     protected constructor() {
 
@@ -88,7 +88,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
             ...this._defaultSearchParams,
             ...value,
         }
-        return this.updateSearchParams(this.defaultSearchParams, false, false)
+        return this.updateSearchParams(this._defaultSearchParams, false, false)
     }
 
     load(): void {
@@ -247,7 +247,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
             loadingProcessing: ProcessingStore.eventProcessingStart(this.dataState.loadingProcessing),
         })
 
-        this.activeFetchSubscription = this.getDataObserver(searchParams, force)
+        this._activeFetchSubscription = this.getDataObserver(searchParams, force)
             .pipe(
                 catchError((error) => {
                     this.updateDataState({

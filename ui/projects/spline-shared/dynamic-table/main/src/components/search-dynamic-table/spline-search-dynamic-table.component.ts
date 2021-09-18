@@ -105,7 +105,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
         }
 
         // load data
-        this.dataSource.load()
+        this.dataSource.updateSearchParams({}, true, true)
     }
 
     ngOnChanges(changes: SimpleChanges): void {

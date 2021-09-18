@@ -57,7 +57,7 @@ export class EventsDataSource extends SearchDataSource<ExecutionEvent,
             )
 
         if (!searchParams) {
-            return { ...this.defaultSearchParams}
+            return { ...this.defaultSearchParams }
         }
 
         return {
