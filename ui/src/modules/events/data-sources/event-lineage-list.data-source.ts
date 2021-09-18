@@ -46,8 +46,7 @@ export class EventLineageListDataSource extends SearchDataSource<ExecutionEventL
     }
 
     protected getDataObserver(
-        searchParams: SearchQuery.SearchParams,
-        force: boolean
+        searchParams: SearchQuery.SearchParams
     ): Observable<PageResponse<ExecutionEventLineageList.LineageRecord>> {
         return this.executionEventFacade.fetchLineageOverview(this._executionEventId)
             .pipe(

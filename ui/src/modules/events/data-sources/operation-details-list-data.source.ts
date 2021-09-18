@@ -29,7 +29,7 @@ export class OperationDetailsListDataSource extends SimpleDataSource<OperationDe
         super()
     }
 
-    protected getDataObserver(filter: OperationDetailsListFilter, force: boolean): Observable<OperationDetails[]> {
+    protected getDataObserver(filter: OperationDetailsListFilter): Observable<OperationDetails[]> {
         return filter.operationIds.length
             ? forkJoin(
                 filter.operationIds

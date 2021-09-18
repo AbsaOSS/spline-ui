@@ -29,7 +29,7 @@ export class OperationDetailsDataSource extends SimpleDataSource<OperationDetail
         super()
     }
 
-    protected getDataObserver(filter: OperationDetailsFilter, force: boolean): Observable<OperationDetails> {
+    protected getDataObserver(filter: OperationDetailsFilter): Observable<OperationDetails> {
         return this.executionPlanFacade.fetchOperationDetails(filter.operationId)
     }
 

@@ -185,7 +185,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
             this._searchParams$.next(newSearchParams)
 
             if (apply) {
-                this.fetchData(newSearchParams, forceApply)
+                this.fetchData(newSearchParams)
             }
         }
 
@@ -221,8 +221,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
 
     // DATA stuff
 
-    protected abstract getDataObserver(searchParams: SearchParams<TFilter, TSortableFields>,
-                                       force: boolean): Observable<TData>;
+    protected abstract getDataObserver(searchParams: SearchParams<TFilter, TSortableFields>): Observable<TData>
 
     private updateDataState(dataState: Partial<DataState<TData>>): void {
         this._dataState$.next({
@@ -231,9 +230,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         })
     }
 
-    private fetchData(
-        searchParams: SearchParams<TFilter, TSortableFields>,
-        force: boolean): void {
+    private fetchData(searchParams: SearchParams<TFilter, TSortableFields>): void {
 
         if (this._activeFetchSubscription) {
             this._activeFetchSubscription.unsubscribe()
@@ -243,7 +240,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
             loadingProcessing: ProcessingStore.eventProcessingStart(this.dataState.loadingProcessing),
         })
 
-        this._activeFetchSubscription = this.getDataObserver(searchParams, force)
+        this._activeFetchSubscription = this.getDataObserver(searchParams)
             .pipe(
                 catchError((error) => {
                     this.updateDataState({
@@ -285,7 +282,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
                             asAtTime: undefined
                         }
                     }
-                    return this.getDataObserver(freshSearchParams, undefined)
+                    return this.getDataObserver(freshSearchParams)
                         .pipe(
                             first(),
                             catchError(() => EMPTY)

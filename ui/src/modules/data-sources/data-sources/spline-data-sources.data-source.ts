@@ -46,8 +46,7 @@ export class SplineDataSourcesDataSource extends EventsDataSource {
     }
 
     protected getDataObserver(
-        searchParams: SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>,
-        force: boolean,
+        searchParams: SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>
     ): Observable<ExecutionEventsPageResponse> {
 
         const queryParams = this.toQueryParams(searchParams)

@@ -65,10 +65,6 @@ export abstract class SimpleDataSource<TData, TFilter extends SplineRecord = {}>
         return this._dataState$.getValue()
     }
 
-    load(force: boolean = false): void {
-        this.fetchData(this.filter, force).subscribe()
-    }
-
     setFilter(filterValue: TFilter, apply: boolean = true, force: boolean = false): void {
         this.onFilterChanged$.next({ filter: filterValue, apply, force })
     }
@@ -94,18 +90,18 @@ export abstract class SimpleDataSource<TData, TFilter extends SplineRecord = {}>
             .pipe(
                 takeUntil(this.disconnected$),
                 tap((payload) => this._filter$.next(payload.filter)),
-                switchMap((payload) => this.fetchData(payload.filter, payload.force)),
+                switchMap((payload) => this.fetchData(payload.filter)),
             )
             .subscribe()
     }
 
-    protected fetchData(filterValue: TFilter, force: boolean = false): Observable<TData> {
+    private fetchData(filterValue: TFilter): Observable<TData> {
 
         this.updateDataState({
             loadingProcessing: ProcessingStore.eventProcessingStart(this.dataState.loadingProcessing),
         })
 
-        return this.getDataObserver(filterValue, force)
+        return this.getDataObserver(filterValue)
             .pipe(
                 catchError((error) => {
                     this.updateDataState({
@@ -134,6 +130,6 @@ export abstract class SimpleDataSource<TData, TFilter extends SplineRecord = {}>
     }
 
 
-    protected abstract getDataObserver(filterValue: TFilter, force: boolean): Observable<TData>;
+    protected abstract getDataObserver(filterValue: TFilter): Observable<TData>;
 }
 

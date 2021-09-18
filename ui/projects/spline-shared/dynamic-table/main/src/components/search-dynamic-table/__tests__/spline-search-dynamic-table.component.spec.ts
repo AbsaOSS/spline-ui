@@ -97,7 +97,7 @@ describe('SplineSearchDynamicTableComponent', () => {
             }
 
 
-            protected getDataObserver(searchParams: SearchQuery.SearchParams, force: boolean): Observable<PageResponse<FakeItem>> {
+            protected getDataObserver(searchParams: SearchQuery.SearchParams): Observable<PageResponse<FakeItem>> {
                 return of({
                     totalCount: fakeData.length,
                     items: [...fakeData]
