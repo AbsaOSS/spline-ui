@@ -43,6 +43,8 @@ export class EventLineageListDataSource extends SearchDataSource<ExecutionEventL
                 }
             ]
         })
+
+        this.updateSearchParams(this.defaultSearchParams)
     }
 
     protected getDataObserver(

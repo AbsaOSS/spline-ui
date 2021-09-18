@@ -15,16 +15,10 @@
  */
 
 import { Observable } from 'rxjs'
-import {
-    ExecutionEvent,
-    ExecutionEventFacade,
-    ExecutionEventField,
-    ExecutionEventsPageResponse,
-    ExecutionEventsQuery,
-} from 'spline-api'
-import { QuerySorter, SearchDataSource, SearchQuery, StringHelpers } from 'spline-utils'
-import SortDir = QuerySorter.SortDir
-import SearchParams = SearchQuery.SearchParams
+import { ExecutionEvent, ExecutionEventFacade, ExecutionEventField, ExecutionEventsPageResponse, ExecutionEventsQuery } from 'spline-api'
+import { QuerySorter, SearchDataSource, SearchQuery } from 'spline-utils'
+import SortDir = QuerySorter.SortDir;
+import SearchParams = SearchQuery.SearchParams;
 
 
 export class EventsDataSource extends SearchDataSource<ExecutionEvent,
@@ -46,28 +40,8 @@ export class EventsDataSource extends SearchDataSource<ExecutionEvent,
                 }
             ]
         })
-    }
 
-    searchParamsFromUrlString(
-        searchParamsUrlString: string): SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField> {
-
-        const searchParams = StringHelpers
-            .decodeObjFromUrlString<SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>>(
-                searchParamsUrlString
-            )
-
-        if (!searchParams) {
-            return { ...this.defaultSearchParams }
-        }
-
-        return {
-            ...searchParams,
-            filter: {
-                ...searchParams.filter,
-                executedAtFrom: searchParams.filter.executedAtFrom ? new Date(searchParams.filter.executedAtFrom) : undefined,
-                executedAtTo: searchParams.filter.executedAtTo ? new Date(searchParams.filter.executedAtTo) : undefined,
-            }
-        }
+        this.updateSearchParams(this.defaultSearchParams)
     }
 
     protected getDataObserver(

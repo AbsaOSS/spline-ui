@@ -83,31 +83,30 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         return this._dataState$.getValue()
     }
 
-    updateDefaultSearchParams(value: Partial<SearchParams<TFilter, TSortableFields>>): SearchParams<TFilter, TSortableFields> {
+    updateDefaultSearchParams(value: Partial<SearchParams<TFilter, TSortableFields>>): void {
         this._defaultSearchParams = {
             ...this._defaultSearchParams,
             ...value,
         }
-        return this.updateSearchParams(this._defaultSearchParams, false, false)
     }
 
     search(searchTerm: string): void {
         const searchParamsWithResetPagination = this.withResetPagination({ searchTerm })
-        this.updateSearchParams(searchParamsWithResetPagination, true, false)
+        this.updateSearchParams(searchParamsWithResetPagination)
     }
 
     sort(sortBy: QuerySorter.FieldSorter<TSortableFields>[]): void {
-        this.updateSearchParams({ sortBy }, true, false)
+        this.updateSearchParams({ sortBy })
     }
 
     setFilter(filterValue: TFilter): void {
         const searchParams = this.withResetPagination({ filter: filterValue })
-        this.updateSearchParams(searchParams, true, false)
+        this.updateSearchParams(searchParams)
     }
 
     setAlwaysOnFilter(filterValue: TFilter): void {
         const searchParams = this.withResetPagination({ alwaysOnFilter: filterValue })
-        this.updateSearchParams(searchParams, true, false)
+        this.updateSearchParams(searchParams)
     }
 
     goToPage(pageIndex: number): void {
@@ -118,7 +117,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
                     ...currentPager,
                     offset: pageIndex * currentPager.limit,
                 },
-            }, true, false)
+            })
         }
         else {
             console.warn('Nothing to do. The current offset equals to the target offset.')
@@ -132,7 +131,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
                 ...currentPager,
                 offset: currentPager.offset + currentPager.limit,
             },
-        }, true, false)
+        })
     }
 
     prevPage(): void {
@@ -146,29 +145,19 @@ export abstract class SearchDataSource<TDataRecord = unknown,
                 ...currentPager,
                 offset: currentPager.offset - currentPager.limit,
             },
-        }, true, false)
+        })
     }
 
-    updateSearchParams(
-        searchParams: Partial<SearchParams<TFilter, TSortableFields>>,
-        // If apply === true then rendered data will be recalculated based on new searchParams value and the current entitiesList collection
-        apply: boolean,
-        forceApply: boolean): SearchParams<TFilter, TSortableFields> {
-
+    updateSearchParams(searchParams: Partial<SearchParams<TFilter, TSortableFields>>): void {
         const newSearchParams = {
             ...this.searchParams,
             ...searchParams,
         } as SearchParams<TFilter, TSortableFields>
 
-        if (forceApply || !isEqual(newSearchParams, this.searchParams)) {
+        if (!isEqual(newSearchParams, this.searchParams)) {
             this._searchParams$.next(newSearchParams)
-
-            if (apply) {
-                this.fetchData(newSearchParams)
-            }
+            this.fetchData(newSearchParams)
         }
-
-        return newSearchParams
     }
 
     connect(collectionViewer: CollectionViewer): Observable<TDataRecord[]> {

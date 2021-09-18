@@ -88,12 +88,12 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
                         asAtTime: new Date().getTime()
                     }
                 }
-                this.dataSource.updateSearchParams(freshDefaultParams, true, false)
+                this.dataSource.updateSearchParams(freshDefaultParams)
                 this._resumeListeningOnServerUpdates$.next()
             }
         })
 
-        this.initDefaultState(this.dataSource, this.searchParamsFromUrl())
+        this.initDefaultState(this.dataSource)
         this.initDataSourceEvents(this.dataSource)
 
         // start listening on the server data updates
@@ -105,7 +105,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
         }
 
         // load data
-        this.dataSource.updateSearchParams({}, true, true)
+        this.dataSource.updateSearchParams(this.searchParamsFromUrl() || {})
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -140,7 +140,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
     }
 
     onRefreshDataClick(): void {
-        this.dataSource.updateSearchParams({ filter: { asAtTime: Date.now() } }, true, false)
+        this.dataSource.updateSearchParams({ filter: { asAtTime: Date.now() } })
         this._resumeListeningOnServerUpdates$.next()
     }
 
@@ -162,13 +162,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
             : null
     }
 
-    private initDefaultState(
-        dataSource: SearchDataSource<TRowData>,
-        currentSearchParams?: SearchParams): void {
-
-        if (currentSearchParams) {
-            dataSource.updateSearchParams({ ...currentSearchParams }, false, false)
-        }
+    private initDefaultState(dataSource: SearchDataSource<TRowData>): void {
 
         const initSorting = dataSource.searchParams.sortBy.length > 0
             ? dataSource.searchParams.sortBy[0]

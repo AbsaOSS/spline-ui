@@ -43,6 +43,8 @@ export class SplineDataSourcesDataSource extends EventsDataSource {
                 }
             ]
         })
+
+        this.updateSearchParams(this.defaultSearchParams)
     }
 
     protected getDataObserver(
