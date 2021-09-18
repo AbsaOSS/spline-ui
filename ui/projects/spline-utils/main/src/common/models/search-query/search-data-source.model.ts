@@ -101,27 +101,8 @@ export abstract class SearchDataSource<TDataRecord = unknown,
     }
 
     setFilter(filterValue: TFilter): void {
-        const searchParams = {
-            filter: filterValue,
-            pager: {
-                limit: this.searchParams.pager.limit,
-                offset: 0,
-            },
-        }
-
+        const searchParams = this.withResetPagination({ filter: filterValue })
         this.updateSearchParams(searchParams, true, false)
-    }
-
-    refresh(): void {
-        // reset pagination
-        const newSearchParams = {
-            pager: {
-                offset: 0,
-                limit: this.searchParams.pager.limit,
-            },
-        }
-
-        this.updateSearchParams(newSearchParams, true, true)
     }
 
     resetSearchParams(): SearchParams<TFilter, TSortableFields> {
