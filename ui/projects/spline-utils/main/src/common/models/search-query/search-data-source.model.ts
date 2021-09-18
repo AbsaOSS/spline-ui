@@ -105,13 +105,6 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         this.updateSearchParams(searchParams, true, false)
     }
 
-    resetSearchParams(): SearchParams<TFilter, TSortableFields> {
-        return this.updateSearchParams({
-            ...this.defaultSearchParams,
-            staticFilter: this.searchParams.staticFilter,
-        }, false, false)
-    }
-
     goToPage(pageIndex: number): void {
         const currentPager = this.searchParams.pager
         if (currentPager.offset !== pageIndex) {
