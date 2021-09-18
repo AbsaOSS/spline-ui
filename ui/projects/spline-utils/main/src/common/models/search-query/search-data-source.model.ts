@@ -91,10 +91,6 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         return this.updateSearchParams(this._defaultSearchParams, false, false)
     }
 
-    load(): void {
-        this.fetchData(this.searchParams, false)
-    }
-
     search(searchTerm: string): void {
         const searchParamsWithResetPagination = this.withResetPagination({ searchTerm })
         this.updateSearchParams(searchParamsWithResetPagination, true, false)
@@ -239,8 +235,8 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         searchParams: SearchParams<TFilter, TSortableFields>,
         force: boolean): void {
 
-        if (this.activeFetchSubscription) {
-            this.activeFetchSubscription.unsubscribe()
+        if (this._activeFetchSubscription) {
+            this._activeFetchSubscription.unsubscribe()
         }
 
         this.updateDataState({
