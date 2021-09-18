@@ -105,6 +105,11 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         this.updateSearchParams(searchParams, true, false)
     }
 
+    setAlwaysOnFilter(filterValue: TFilter): void {
+        const searchParams = this.withResetPagination({ alwaysOnFilter: filterValue })
+        this.updateSearchParams(searchParams, true, false)
+    }
+
     goToPage(pageIndex: number): void {
         const currentPager = this.searchParams.pager
         if (currentPager.offset !== pageIndex) {

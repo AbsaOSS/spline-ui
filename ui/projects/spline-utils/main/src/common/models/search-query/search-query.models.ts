@@ -31,7 +31,7 @@ export namespace SearchQuery {
     export interface SearchParams<TFilter extends SplineRecord = {}, TSortableField = string> {
         pager: QueryPager
         filter: TFilter
-        staticFilter: TFilter // filter which will be always applied
+        alwaysOnFilter: TFilter
         sortBy: QuerySorter.FieldSorter<TSortableField>[]
         searchTerm: string
     }
@@ -39,7 +39,7 @@ export namespace SearchQuery {
     export const DEFAULT_SEARCH_PARAMS: SearchParams<any, any> = Object.freeze({
         pager: { ...DEFAULT_PAGER },
         filter: {},
-        staticFilter: {},
+        alwaysOnFilter: {},
         sortBy: [],
         searchTerm: '',
     })

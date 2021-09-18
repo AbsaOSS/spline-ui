@@ -83,7 +83,7 @@ export class EventsDataSource extends SearchDataSource<ExecutionEvent,
     ): ExecutionEventsQuery.QueryParams {
         const queryFilter = {
             ...searchParams.filter,
-            ...searchParams.staticFilter,
+            ...searchParams.alwaysOnFilter,
             searchTerm: searchParams.searchTerm,
         }
         return {

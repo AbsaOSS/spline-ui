@@ -73,10 +73,8 @@ export class DsOverviewHistoryPageComponent extends BaseLocalStateComponent<DsOv
                 takeUntil(this.destroyed$),
             )
             .subscribe((dataSourceInfo) => {
-                this.dataSource.updateDefaultSearchParams({
-                    filter: {
-                        dataSourceUri: dataSourceInfo.uri
-                    }
+                this.dataSource.setAlwaysOnFilter({
+                    dataSourceUri: dataSourceInfo.uri
                 })
             })
     }
