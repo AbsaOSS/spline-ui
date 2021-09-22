@@ -40,8 +40,6 @@ export class EventsDataSource extends SearchDataSource<ExecutionEvent,
                 }
             ]
         })
-
-        this.updateSearchParams(this.defaultSearchParams)
     }
 
     protected getDataObserver(

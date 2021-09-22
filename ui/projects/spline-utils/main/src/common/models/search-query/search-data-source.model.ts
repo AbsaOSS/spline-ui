@@ -25,11 +25,11 @@ import { SplineRecord } from '../heplers'
 import { PageResponse, QuerySorter } from '../query'
 
 import { SearchQuery } from './search-query.models'
-import DataState = SearchQuery.DataState
-import DEFAULT_RENDER_DATA = SearchQuery.DEFAULT_RENDER_DATA
-import DEFAULT_SEARCH_PARAMS = SearchQuery.DEFAULT_SEARCH_PARAMS
-import DEFAULT_SERVER_POLLING_INTERVAL = SearchQuery.DEFAULT_SERVER_POLL_INTERVAL
-import SearchParams = SearchQuery.SearchParams
+import DataState = SearchQuery.DataState;
+import DEFAULT_RENDER_DATA = SearchQuery.DEFAULT_RENDER_DATA;
+import DEFAULT_SEARCH_PARAMS = SearchQuery.DEFAULT_SEARCH_PARAMS;
+import DEFAULT_SERVER_POLLING_INTERVAL = SearchQuery.DEFAULT_SERVER_POLL_INTERVAL;
+import SearchParams = SearchQuery.SearchParams;
 
 
 export abstract class SearchDataSource<TDataRecord = unknown,
@@ -105,8 +105,11 @@ export abstract class SearchDataSource<TDataRecord = unknown,
     }
 
     setAlwaysOnFilter(filterValue: TFilter): void {
-        const searchParams = this.withResetPagination({ alwaysOnFilter: filterValue })
-        this.updateSearchParams(searchParams)
+        // todo: This filter isn't supposed to be modified. Replace it with the default params preset.
+        this._searchParams$.next({
+            ...this.searchParams,
+            ...({ alwaysOnFilter: filterValue }),
+        } as SearchParams<TFilter, TSortableFields>)
     }
 
     goToPage(pageIndex: number): void {
@@ -149,15 +152,15 @@ export abstract class SearchDataSource<TDataRecord = unknown,
     }
 
     updateSearchParams(searchParams: Partial<SearchParams<TFilter, TSortableFields>>): void {
+        // console.log("UPDATE SEARCH PARAMS", searchParams)
+
         const newSearchParams = {
             ...this.searchParams,
             ...searchParams,
         } as SearchParams<TFilter, TSortableFields>
 
-        if (!isEqual(newSearchParams, this.searchParams)) {
-            this._searchParams$.next(newSearchParams)
-            this.fetchData(newSearchParams)
-        }
+        this._searchParams$.next(newSearchParams)
+        this.fetchData(newSearchParams)
     }
 
     connect(collectionViewer: CollectionViewer): Observable<TDataRecord[]> {

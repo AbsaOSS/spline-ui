@@ -28,10 +28,9 @@ import {
     DynamicTableOptions,
     getDefaultDtOptions
 } from 'spline-common/dynamic-table'
-import { BaseLocalStateComponent, QuerySorter, RouterNavigation, SearchDataSource, SearchQuery, SplineRecord } from 'spline-utils'
+import { BaseLocalStateComponent, QuerySorter, RouterNavigation, SearchDataSource, SplineRecord } from 'spline-utils'
 
 import { SplineSearchDynamicTable } from './spline-search-dynamic-table.models'
-import SearchParams = SearchQuery.SearchParams
 
 
 @Component({
@@ -81,6 +80,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
             takeUntil(this.destroyed$),
             filter((event: RouterEvent) => event instanceof NavigationEnd)
         ).subscribe(() => {
+            // console.log("ROUTE END: URL search params", this.searchParamsFromUrl())
             if (this.searchParamsFromUrl() === null) {
                 const freshDefaultParams = {
                     ...this.dataSource.defaultSearchParams,
@@ -105,6 +105,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
         }
 
         // load data
+        // console.log("NgInit: URL search params", this.searchParamsFromUrl())
         this.dataSource.updateSearchParams(this.searchParamsFromUrl() || {})
     }
 
