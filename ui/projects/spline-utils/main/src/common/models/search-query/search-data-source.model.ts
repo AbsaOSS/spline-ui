@@ -96,7 +96,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
     }
 
     sort(sortBy: QuerySorter.FieldSorter<TSortableFields>[]): void {
-        this.updateSearchParams({ sortBy })
+        this.updateSearchParams(this.withResetPagination({ sortBy }))
     }
 
     setFilter(filterValue: TFilter): void {
