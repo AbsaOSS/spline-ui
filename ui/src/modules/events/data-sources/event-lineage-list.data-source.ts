@@ -30,18 +30,18 @@ export class EventLineageListDataSource extends SearchDataSource<ExecutionEventL
     }
 
     constructor(private readonly executionEventFacade: ExecutionEventFacade) {
-        super()
-
-        this.updateDefaultSearchParams({
-            filter: {
-                asAtTime: new Date().getTime()
-            },
-            sortBy: [
-                {
-                    field: ExecutionEventField.timestamp,
-                    dir: SortDir.DESC
-                }
-            ]
+        super({
+            defaultSearchParams: {
+                filter: {
+                    asAtTime: new Date().getTime()
+                },
+                sortBy: [
+                    {
+                        field: ExecutionEventField.timestamp,
+                        dir: SortDir.DESC
+                    }
+                ]
+            }
         })
     }
 

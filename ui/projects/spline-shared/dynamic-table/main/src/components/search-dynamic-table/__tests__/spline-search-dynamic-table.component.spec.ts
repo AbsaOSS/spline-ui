@@ -29,7 +29,7 @@ import { filter, take } from 'rxjs/operators'
 import { SplineSearchBoxModule, SplineSortHeaderModule } from 'spline-common'
 import { DynamicTableDataMap, DynamicTableModule } from 'spline-common/dynamic-table'
 import { SplineDynamicTableSharedModule, SplineSearchDynamicTable, SplineSearchDynamicTableComponent } from 'spline-shared/dynamic-table'
-import { PageResponse, QuerySorter, SearchDataSource, SearchQuery } from 'spline-utils'
+import { PageResponse, QuerySorter, SearchDataSource, SearchDataSourceConfig, SearchQuery } from 'spline-utils'
 import { SplineTranslateTestingModule } from 'spline-utils/translate'
 import SortDir = QuerySorter.SortDir
 import SearchParams = SearchQuery.SearchParams
@@ -92,8 +92,8 @@ describe('SplineSearchDynamicTableComponent', () => {
 
         class FakeDataSource extends SearchDataSource<FakeItem> {
 
-            constructor() {
-                super()
+            constructor(config: Partial<SearchDataSourceConfig>) {
+                super(config)
             }
 
 
@@ -113,13 +113,13 @@ describe('SplineSearchDynamicTableComponent', () => {
         }
 
         beforeEach(() => {
-            fakeDataSource = new FakeDataSource()
+            fakeDataSource = new FakeDataSource({
+                defaultSearchParams: {
+                    sortBy: [{ ...defaultSortBy }]
+                }
+            })
             componentInstance.dataSource = fakeDataSource
             componentInstance.dataMap = dataMap
-
-            fakeDataSource.updateDefaultSearchParams({
-                sortBy: [{ ...defaultSortBy }]
-            })
         })
 
 

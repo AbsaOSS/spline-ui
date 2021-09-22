@@ -32,6 +32,11 @@ import DEFAULT_SERVER_POLLING_INTERVAL = SearchQuery.DEFAULT_SERVER_POLL_INTERVA
 import SearchParams = SearchQuery.SearchParams;
 
 
+export type SearchDataSourceConfig<TFilter extends SplineRecord = {}, TSortableFields = string> = {
+    defaultSearchParams: Partial<SearchParams<TFilter, TSortableFields>>
+    alwaysOnFilters: TFilter
+}
+
 export abstract class SearchDataSource<TDataRecord = unknown,
     TData extends PageResponse<TDataRecord> = PageResponse<TDataRecord>,
     TFilter extends SplineRecord = {},
@@ -42,21 +47,29 @@ export abstract class SearchDataSource<TDataRecord = unknown,
     readonly loadingProcessing$: Observable<ProcessingStore.EventProcessingState>
     readonly loadingProcessingEvents: ProcessingStore.ProcessingEvents<DataState<TData>>
     readonly serverDataUpdates$: Observable<TData>
-
     readonly disconnected$: Observable<void>
 
-    private readonly _dataState$ = new BehaviorSubject<DataState<TData>>(DEFAULT_RENDER_DATA)
-    private readonly _searchParams$ = new BehaviorSubject<SearchParams<TFilter, TSortableFields>>(DEFAULT_SEARCH_PARAMS)
-
-    private _defaultSearchParams: SearchParams<TFilter, TSortableFields> = DEFAULT_SEARCH_PARAMS
-    private readonly _disconnected$ = new Subject<void>()
+    private readonly _dataState$: BehaviorSubject<DataState<TData>>
+    private readonly _searchParams$: BehaviorSubject<SearchParams<TFilter, TSortableFields>>
+    private readonly _defaultSearchParams: SearchParams<TFilter, TSortableFields>
+    private readonly _disconnected$: Subject<void>
 
     private _activeFetchSubscription: Subscription
 
-    protected constructor() {
+    protected constructor(config: Partial<SearchDataSourceConfig<TFilter, TSortableFields>>) {
+        const defaultSearchParams = {
+            ...DEFAULT_SEARCH_PARAMS,
+            ...config.defaultSearchParams
+        }
+        this._defaultSearchParams = defaultSearchParams
 
+        this._searchParams$ = new BehaviorSubject(defaultSearchParams)
         this.searchParams$ = this._searchParams$
+
+        this._dataState$ = new BehaviorSubject(DEFAULT_RENDER_DATA)
         this.dataState$ = this._dataState$
+
+        this._disconnected$ = new Subject<void>()
         this.disconnected$ = this._disconnected$
 
         this.loadingProcessing$ = this.dataState$.pipe(map(data => data.loadingProcessing))
@@ -81,14 +94,6 @@ export abstract class SearchDataSource<TDataRecord = unknown,
 
     get dataState(): DataState<TData> {
         return this._dataState$.getValue()
-    }
-
-    updateDefaultSearchParams(value: Partial<SearchParams<TFilter, TSortableFields>>): void {
-        this._defaultSearchParams = {
-            ...this._defaultSearchParams,
-            ...value,
-        }
-        this.updateSearchParams(this._defaultSearchParams, false)
     }
 
     search(searchTerm: string): void {

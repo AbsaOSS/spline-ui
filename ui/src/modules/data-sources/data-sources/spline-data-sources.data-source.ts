@@ -30,19 +30,21 @@ import SortDir = QuerySorter.SortDir
 export class SplineDataSourcesDataSource extends EventsDataSource {
 
     constructor(protected readonly executionEventFacade: ExecutionEventFacade) {
-        super(executionEventFacade)
-
-        this.updateDefaultSearchParams({
-            filter: {
-                asAtTime: new Date().getTime()
-            },
-            sortBy: [
-                {
-                    field: ExecutionEventField.dataSourceName,
-                    dir: SortDir.ASC
+        super(
+            executionEventFacade,
+            {
+                defaultSearchParams: {
+                    filter: {
+                        asAtTime: new Date().getTime()
+                    },
+                    sortBy: [
+                        {
+                            field: ExecutionEventField.dataSourceName,
+                            dir: SortDir.ASC
+                        }
+                    ]
                 }
-            ]
-        })
+            })
     }
 
     protected getDataObserver(

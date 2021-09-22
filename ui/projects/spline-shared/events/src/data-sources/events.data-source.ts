@@ -16,7 +16,7 @@
 
 import { Observable } from 'rxjs'
 import { ExecutionEvent, ExecutionEventFacade, ExecutionEventField, ExecutionEventsPageResponse, ExecutionEventsQuery } from 'spline-api'
-import { QuerySorter, SearchDataSource, SearchQuery } from 'spline-utils'
+import { QuerySorter, SearchDataSource, SearchDataSourceConfig, SearchQuery } from 'spline-utils'
 import SortDir = QuerySorter.SortDir;
 import SearchParams = SearchQuery.SearchParams;
 
@@ -26,19 +26,25 @@ export class EventsDataSource extends SearchDataSource<ExecutionEvent,
     ExecutionEventsQuery.QueryFilter,
     ExecutionEventField> {
 
-    constructor(protected readonly executionEventFacade: ExecutionEventFacade) {
-        super()
-
-        this.updateDefaultSearchParams({
-            filter: {
-                asAtTime: new Date().getTime()
-            },
-            sortBy: [
-                {
-                    field: ExecutionEventField.timestamp,
-                    dir: SortDir.DESC
+    constructor(
+        protected readonly executionEventFacade: ExecutionEventFacade,
+        config: Partial<SearchDataSourceConfig<ExecutionEventsQuery.QueryFilter, ExecutionEventField>> = {}
+    ) {
+        super({
+            ...config,
+            defaultSearchParams:
+                config.defaultSearchParams
+                ?? {
+                    filter: {
+                        asAtTime: new Date().getTime()
+                    },
+                    sortBy: [
+                        {
+                            field: ExecutionEventField.timestamp,
+                            dir: SortDir.DESC
+                        }
+                    ]
                 }
-            ]
         })
     }
 
