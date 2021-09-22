@@ -80,7 +80,6 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
             takeUntil(this.destroyed$),
             filter((event: RouterEvent) => event instanceof NavigationEnd)
         ).subscribe(() => {
-            // console.log("ROUTE END: URL search params", this.searchParamsFromUrl())
             if (this.searchParamsFromUrl() === null) {
                 const freshDefaultParams = {
                     ...this.dataSource.defaultSearchParams,
@@ -105,7 +104,6 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
         }
 
         // load data
-        // console.log("NgInit: URL search params", this.searchParamsFromUrl())
         this.dataSource.updateSearchParams(this.searchParamsFromUrl() || {})
     }
 

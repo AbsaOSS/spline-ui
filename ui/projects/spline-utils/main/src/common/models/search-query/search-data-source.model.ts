@@ -88,6 +88,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
             ...this._defaultSearchParams,
             ...value,
         }
+        this.updateSearchParams(this._defaultSearchParams, false)
     }
 
     search(searchTerm: string): void {
@@ -106,10 +107,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
 
     setAlwaysOnFilter(filterValue: TFilter): void {
         // todo: This filter isn't supposed to be modified. Replace it with the default params preset.
-        this._searchParams$.next({
-            ...this.searchParams,
-            ...({ alwaysOnFilter: filterValue }),
-        } as SearchParams<TFilter, TSortableFields>)
+        this.updateSearchParams({ alwaysOnFilter: filterValue }, false)
     }
 
     goToPage(pageIndex: number): void {
@@ -151,16 +149,16 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         })
     }
 
-    updateSearchParams(searchParams: Partial<SearchParams<TFilter, TSortableFields>>): void {
-        // console.log("UPDATE SEARCH PARAMS", searchParams)
-
+    updateSearchParams(searchParams: Partial<SearchParams<TFilter, TSortableFields>>, apply: boolean = true): void {
         const newSearchParams = {
             ...this.searchParams,
             ...searchParams,
         } as SearchParams<TFilter, TSortableFields>
 
         this._searchParams$.next(newSearchParams)
-        this.fetchData(newSearchParams)
+        if (apply) {
+            this.fetchData(newSearchParams)
+        }
     }
 
     connect(collectionViewer: CollectionViewer): Observable<TDataRecord[]> {
@@ -202,7 +200,6 @@ export abstract class SearchDataSource<TDataRecord = unknown,
     }
 
     private fetchData(searchParams: SearchParams<TFilter, TSortableFields>): void {
-
         if (this._activeFetchSubscription) {
             this._activeFetchSubscription.unsubscribe()
         }
