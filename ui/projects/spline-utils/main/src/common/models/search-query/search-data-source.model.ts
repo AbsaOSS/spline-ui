@@ -34,7 +34,6 @@ import SearchParams = SearchQuery.SearchParams;
 
 export type SearchDataSourceConfig<TFilter extends SplineRecord = {}, TSortableFields = string> = {
     defaultSearchParams: Partial<SearchParams<TFilter, TSortableFields>>
-    alwaysOnFilters: TFilter
 }
 
 export abstract class SearchDataSource<TDataRecord = unknown,
@@ -73,10 +72,6 @@ export abstract class SearchDataSource<TDataRecord = unknown,
             const defaultSearchParams = {
                 ...DEFAULT_SEARCH_PARAMS,
                 ...config.defaultSearchParams,
-                alwaysOnFilter: {
-                    ...DEFAULT_SEARCH_PARAMS.alwaysOnFilter,
-                    ...config.alwaysOnFilters
-                }
             }
             this._defaultSearchParams = defaultSearchParams
             this._searchParams$ = new BehaviorSubject(defaultSearchParams)

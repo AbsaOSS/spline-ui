@@ -46,8 +46,10 @@ import { DsOverviewHistoryPage } from './ds-overview-history.page.models'
                         withLatestFrom(store.dataSourceInfo$),
                         filter(([isInitialized, dataSourceInfo]) => isInitialized && !!dataSourceInfo),
                         map(([, dataSourceInfo]) => ({
-                            alwaysOnFilters: {
-                                dataSourceUri: dataSourceInfo.uri
+                            defaultSearchParams: {
+                                alwaysOnFilter: {
+                                    dataSourceUri: dataSourceInfo.uri
+                                }
                             }
                         })))
 
