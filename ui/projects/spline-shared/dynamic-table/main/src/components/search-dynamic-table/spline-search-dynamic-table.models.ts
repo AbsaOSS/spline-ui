@@ -26,7 +26,7 @@ export namespace SplineSearchDynamicTable {
 
     export type State = {
         isInitialized: boolean
-        initSorting: QuerySorter.FieldSorter | null
+        sorting: QuerySorter.FieldSorter | null
         searchParams: SearchParams | null
         totalCount: number
         loadingProcessing: ProcessingStore.EventProcessingState
@@ -35,7 +35,7 @@ export namespace SplineSearchDynamicTable {
     export function getDefaultState(): State {
         return {
             isInitialized: false,
-            initSorting: null,
+            sorting: null,
             totalCount: 0,
             searchParams: null,
             loadingProcessing: ProcessingStore.getDefaultProcessingState(true)

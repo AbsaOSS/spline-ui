@@ -45,7 +45,7 @@ export class DynamicTableComponent<TRowData> extends BaseLocalStateComponent<Dyn
     @Input() dataMap: DynamicTableDataMap
 
     @Input() options: Readonly<DynamicTableOptions> = getDefaultDtOptions()
-    @Input() initSorting: Readonly<QuerySorter.FieldSorter>
+    @Input() sorting: Readonly<QuerySorter.FieldSorter>
 
     // events
     @Output() sortingChanged$ = new EventEmitter<QuerySorter.FieldSorter>()

@@ -133,7 +133,7 @@ describe('SplineSearchDynamicTableComponent', () => {
                     take(1),
                 )
                 .subscribe((state) => {
-                    expect(state.initSorting).toEqual(defaultSortBy)
+                    expect(state.sorting).toEqual(defaultSortBy)
                     done()
                 })
 
@@ -182,7 +182,7 @@ describe('SplineSearchDynamicTableComponent', () => {
                         )
                         .subscribe((state) => {
                             // expect comp state was initialized from router
-                            expect(state.initSorting).toEqual(urlSorting)
+                            expect(state.sorting).toEqual(urlSorting)
 
                             // expect DataSource search Params were sync with a Router state
                             expect(fakeDataSource.searchParams).toEqual(urlSearchParams)

@@ -92,8 +92,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
             }
         })
 
-        this.initDefaultState(this.dataSource)
-        this.initDataSourceEvents(this.dataSource)
+        this.subscribeToDataSource(this.dataSource)
 
         // start listening on the server data updates
         this.initDataUpdateAvailableObservable(this.dataSource)
@@ -161,22 +160,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
             : null
     }
 
-    private initDefaultState(dataSource: SearchDataSource<TRowData>): void {
-
-        const initSorting = dataSource.searchParams.sortBy.length > 0
-            ? dataSource.searchParams.sortBy[0]
-            : null
-
-        this.updateState({
-            initSorting,
-            isInitialized: true,
-            totalCount: dataSource.dataState.data?.totalCount ?? 0,
-            loadingProcessing: { ...dataSource.dataState.loadingProcessing },
-            searchParams: { ...dataSource.searchParams }
-        })
-    }
-
-    private initDataSourceEvents(dataSource: SearchDataSource<TRowData>): void {
+    private subscribeToDataSource(dataSource: SearchDataSource<TRowData>): void {
         // totalCount
         dataSource.dataState$
             .pipe(
@@ -210,13 +194,16 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
                 skip(1),
                 distinctUntilChanged((left, right) => isEqual(left, right))
             )
-            .subscribe(
-                searchParams => this.updateState({
-                    searchParams
-                })
-            )
+            .subscribe(searchParams => {
+                const sorting = searchParams.sortBy.length > 0
+                    ? searchParams.sortBy[0]
+                    : null
 
-        // TODO :: SearchParams sort changed => update table sorting
+                this.updateState({
+                    sorting: sorting,
+                    searchParams: { ...searchParams }
+                })
+            })
     }
 
     private initDataUpdateAvailableObservable(dataSource: SearchDataSource<TRowData>): void {
