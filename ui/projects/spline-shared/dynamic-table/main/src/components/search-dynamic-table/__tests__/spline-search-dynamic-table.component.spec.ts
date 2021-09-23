@@ -128,10 +128,6 @@ describe('SplineSearchDynamicTableComponent', () => {
             componentFixture.detectChanges()
 
             componentInstance.state$
-                .pipe(
-                    filter(state => state.isInitialized),
-                    take(1),
-                )
                 .subscribe((state) => {
                     expect(state.sorting).toEqual(defaultSortBy)
                     done()
@@ -176,10 +172,6 @@ describe('SplineSearchDynamicTableComponent', () => {
                     componentFixture.detectChanges()
 
                     componentInstance.state$
-                        .pipe(
-                            filter(state => state.isInitialized),
-                            take(1),
-                        )
                         .subscribe((state) => {
                             // expect comp state was initialized from router
                             expect(state.sorting).toEqual(urlSorting)
