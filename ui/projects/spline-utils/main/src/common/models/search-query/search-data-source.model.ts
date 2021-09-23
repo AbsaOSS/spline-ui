@@ -16,8 +16,8 @@
 
 import { CollectionViewer, DataSource } from '@angular/cdk/collections'
 import { isEqual } from 'lodash-es'
-import { BehaviorSubject, EMPTY, interval, Observable, of, Subject, Subscription } from 'rxjs'
-import { catchError, filter, first, map, share, switchMap, take, tap } from 'rxjs/operators'
+import { BehaviorSubject, EMPTY, interval, isObservable, Observable, of, Subject, Subscription } from 'rxjs'
+import { catchError, filter, first, map, share, switchMap, take, takeUntil, tap } from 'rxjs/operators'
 
 import { ProcessingStore } from '../../../store'
 import { whenPageVisible } from '../../rxjs-operators'
@@ -43,34 +43,48 @@ export abstract class SearchDataSource<TDataRecord = unknown,
     TSortableFields = string> implements DataSource<TDataRecord> {
 
     readonly dataState$: Observable<DataState<TData>>
-    readonly searchParams$: Observable<SearchParams<TFilter, TSortableFields>>
+    /*readonly*/
+    searchParams$: Observable<SearchParams<TFilter, TSortableFields>>
     readonly loadingProcessing$: Observable<ProcessingStore.EventProcessingState>
     readonly loadingProcessingEvents: ProcessingStore.ProcessingEvents<DataState<TData>>
     readonly serverDataUpdates$: Observable<TData>
     readonly disconnected$: Observable<void>
 
     private readonly _dataState$: BehaviorSubject<DataState<TData>>
-    private readonly _searchParams$: BehaviorSubject<SearchParams<TFilter, TSortableFields>>
-    private readonly _defaultSearchParams: SearchParams<TFilter, TSortableFields>
+    private /*readonly*/ _searchParams$: BehaviorSubject<SearchParams<TFilter, TSortableFields>>
+    private /*readonly*/ _defaultSearchParams: SearchParams<TFilter, TSortableFields>
     private readonly _disconnected$: Subject<void>
 
     private _activeFetchSubscription: Subscription
 
-    protected constructor(config: Partial<SearchDataSourceConfig<TFilter, TSortableFields>>) {
-        const defaultSearchParams = {
-            ...DEFAULT_SEARCH_PARAMS,
-            ...config.defaultSearchParams
-        }
-        this._defaultSearchParams = defaultSearchParams
+    protected constructor(
+        configOr$: Partial<SearchDataSourceConfig<TFilter, TSortableFields>>
+            | Observable<Partial<SearchDataSourceConfig<TFilter, TSortableFields>>>
+    ) {
+        this._disconnected$ = new Subject<void>()
+        this.disconnected$ = this._disconnected$
 
-        this._searchParams$ = new BehaviorSubject(defaultSearchParams)
-        this.searchParams$ = this._searchParams$
+        const config$ = (isObservable(configOr$) ? configOr$ : of(configOr$))
+
+        config$.pipe(
+            takeUntil(this._disconnected$),
+            first()
+        ).subscribe(config => {
+            const defaultSearchParams = {
+                ...DEFAULT_SEARCH_PARAMS,
+                ...config.defaultSearchParams,
+                alwaysOnFilter: {
+                    ...DEFAULT_SEARCH_PARAMS.alwaysOnFilter,
+                    ...config.alwaysOnFilters
+                }
+            }
+            this._defaultSearchParams = defaultSearchParams
+            this._searchParams$ = new BehaviorSubject(defaultSearchParams)
+            this.searchParams$ = this._searchParams$
+        })
 
         this._dataState$ = new BehaviorSubject(DEFAULT_RENDER_DATA)
         this.dataState$ = this._dataState$
-
-        this._disconnected$ = new Subject<void>()
-        this.disconnected$ = this._disconnected$
 
         this.loadingProcessing$ = this.dataState$.pipe(map(data => data.loadingProcessing))
         this.loadingProcessingEvents = ProcessingStore.createProcessingEvents(
@@ -108,11 +122,6 @@ export abstract class SearchDataSource<TDataRecord = unknown,
     setFilter(filterValue: TFilter): void {
         const searchParams = this.withResetPagination({ filter: filterValue })
         this.updateSearchParams(searchParams)
-    }
-
-    setAlwaysOnFilter(filterValue: TFilter): void {
-        // todo: This filter isn't supposed to be modified. Replace it with the default params preset.
-        this.updateSearchParams({ alwaysOnFilter: filterValue }, false)
     }
 
     goToPage(pageIndex: number): void {
@@ -154,16 +163,14 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         })
     }
 
-    updateSearchParams(searchParams: Partial<SearchParams<TFilter, TSortableFields>>, apply: boolean = true): void {
+    updateSearchParams(searchParams: Partial<SearchParams<TFilter, TSortableFields>>): void {
         const newSearchParams = {
             ...this.searchParams,
             ...searchParams,
         } as SearchParams<TFilter, TSortableFields>
 
         this._searchParams$.next(newSearchParams)
-        if (apply) {
-            this.fetchData(newSearchParams)
-        }
+        this.fetchData(newSearchParams)
     }
 
     connect(collectionViewer: CollectionViewer): Observable<TDataRecord[]> {

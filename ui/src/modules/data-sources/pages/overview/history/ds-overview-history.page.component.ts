@@ -37,10 +37,26 @@ import { DsOverviewHistoryPage } from './ds-overview-history.page.models'
     providers: [
         {
             provide: DsStateHistoryDataSource,
-            useFactory: (executionEventFacade: ExecutionEventFacade) => {
-                return new DsStateHistoryDataSource(executionEventFacade)
+            useFactory: (
+                executionEventFacade: ExecutionEventFacade,
+                store: DsOverviewStoreFacade) => {
+
+                const config$ = store.isInitialized$
+                    .pipe(
+                        withLatestFrom(store.dataSourceInfo$),
+                        filter(([isInitialized, dataSourceInfo]) => isInitialized && !!dataSourceInfo),
+                        map(([, dataSourceInfo]) => ({
+                            alwaysOnFilters: {
+                                dataSourceUri: dataSourceInfo.uri
+                            }
+                        })))
+
+                return new DsStateHistoryDataSource(executionEventFacade, config$)
             },
-            deps: [ExecutionEventFacade],
+            deps: [
+                ExecutionEventFacade,
+                DsOverviewStoreFacade
+            ],
         },
     ],
 
@@ -67,16 +83,6 @@ export class DsOverviewHistoryPageComponent extends BaseLocalStateComponent<DsOv
                 filter(([isInitialized, dataSourceInfo]) => isInitialized && !!dataSourceInfo),
                 map(([isInitialized, dataSourceInfo]) => dataSourceInfo),
             )
-
-        this.dataSourceInfo$
-            .pipe(
-                takeUntil(this.destroyed$),
-            )
-            .subscribe((dataSourceInfo) => {
-                this.dataSource.setAlwaysOnFilter({
-                    dataSourceUri: dataSourceInfo.uri
-                })
-            })
     }
 
     ngOnInit(): void {

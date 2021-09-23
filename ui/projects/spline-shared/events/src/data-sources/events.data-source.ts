@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs'
+import { Observable, of } from 'rxjs'
+import { map } from 'rxjs/operators'
 import { ExecutionEvent, ExecutionEventFacade, ExecutionEventField, ExecutionEventsPageResponse, ExecutionEventsQuery } from 'spline-api'
 import { QuerySorter, SearchDataSource, SearchDataSourceConfig, SearchQuery } from 'spline-utils'
 import SortDir = QuerySorter.SortDir;
@@ -28,9 +29,11 @@ export class EventsDataSource extends SearchDataSource<ExecutionEvent,
 
     constructor(
         protected readonly executionEventFacade: ExecutionEventFacade,
-        config: Partial<SearchDataSourceConfig<ExecutionEventsQuery.QueryFilter, ExecutionEventField>> = {}
+        config$:
+            Observable<Partial<SearchDataSourceConfig<ExecutionEventsQuery.QueryFilter, ExecutionEventField>>>
+        = of({})
     ) {
-        super({
+        super(config$.pipe(map(config => ({
             ...config,
             defaultSearchParams:
                 config.defaultSearchParams
@@ -45,7 +48,7 @@ export class EventsDataSource extends SearchDataSource<ExecutionEvent,
                         }
                     ]
                 }
-        })
+        }))))
     }
 
     protected getDataObserver(

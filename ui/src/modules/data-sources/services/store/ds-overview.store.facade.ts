@@ -27,7 +27,7 @@ import { DsOverviewStore, DsOverviewStoreActions, DsOverviewStoreSelectors } fro
 export class DsOverviewStoreFacade {
 
     readonly state$: Observable<DsOverviewStore.State>
-    readonly isInitialized$: Observable<boolean>
+    readonly isInitialized$: Observable<boolean> // TODO: why is it needed?
     readonly dataSourceInfo$: Observable<SplineDataSourceInfo>
 
     constructor(private readonly store: Store<any>) {

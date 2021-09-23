@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs'
+import { Observable, of } from 'rxjs'
 import {
     ExecutionEventFacade,
     ExecutionEventField,
@@ -32,7 +32,7 @@ export class SplineDataSourcesDataSource extends EventsDataSource {
     constructor(protected readonly executionEventFacade: ExecutionEventFacade) {
         super(
             executionEventFacade,
-            {
+            of({
                 defaultSearchParams: {
                     filter: {
                         asAtTime: new Date().getTime()
@@ -44,7 +44,7 @@ export class SplineDataSourcesDataSource extends EventsDataSource {
                         }
                     ]
                 }
-            })
+            }))
     }
 
     protected getDataObserver(
