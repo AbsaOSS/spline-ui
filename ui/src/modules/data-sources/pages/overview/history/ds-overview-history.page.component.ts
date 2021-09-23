@@ -16,7 +16,7 @@
 
 import { Component, OnInit } from '@angular/core'
 import { Observable } from 'rxjs'
-import { filter, map, takeUntil, withLatestFrom } from 'rxjs/operators'
+import { map, takeUntil } from 'rxjs/operators'
 import { ExecutionEvent, ExecutionEventFacade, ExecutionEventsQuery, SplineDataSourceInfo } from 'spline-api'
 import { DynamicFilterFactory, DynamicFilterModel } from 'spline-common/dynamic-filter'
 import { DtCellCustomEvent } from 'spline-common/dynamic-table'
@@ -41,17 +41,13 @@ import { DsOverviewHistoryPage } from './ds-overview-history.page.models'
                 executionEventFacade: ExecutionEventFacade,
                 store: DsOverviewStoreFacade) => {
 
-                const config$ = store.isInitialized$
-                    .pipe(
-                        withLatestFrom(store.dataSourceInfo$),
-                        filter(([isInitialized, dataSourceInfo]) => isInitialized && !!dataSourceInfo),
-                        map(([, dataSourceInfo]) => ({
-                            defaultSearchParams: {
-                                alwaysOnFilter: {
-                                    dataSourceUri: dataSourceInfo.uri
-                                }
-                            }
-                        })))
+                const config$ = store.dataSourceInfo$.pipe(map((dataSourceInfo) => ({
+                    defaultSearchParams: {
+                        alwaysOnFilter: {
+                            dataSourceUri: dataSourceInfo.uri
+                        }
+                    }
+                })))
 
                 return new DsStateHistoryDataSource(executionEventFacade, config$)
             },
@@ -79,12 +75,7 @@ export class DsOverviewHistoryPageComponent extends BaseLocalStateComponent<DsOv
             DsOverviewHistoryPage.getDefaultState()
         )
 
-        this.dataSourceInfo$ = this.store.isInitialized$
-            .pipe(
-                withLatestFrom(this.store.dataSourceInfo$),
-                filter(([isInitialized, dataSourceInfo]) => isInitialized && !!dataSourceInfo),
-                map(([isInitialized, dataSourceInfo]) => dataSourceInfo),
-            )
+        this.dataSourceInfo$ = this.store.dataSourceInfo$
     }
 
     ngOnInit(): void {
