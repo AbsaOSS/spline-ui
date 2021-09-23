@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-import { Observable, of } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { Observable } from 'rxjs'
 import { ExecutionEvent, ExecutionEventFacade, ExecutionEventField, ExecutionEventsPageResponse, ExecutionEventsQuery } from 'spline-api'
-import { QuerySorter, SearchDataSource, SearchDataSourceConfig, SearchQuery } from 'spline-utils'
+import { QuerySorter, SearchDataSource, SearchQuery } from 'spline-utils'
 import SortDir = QuerySorter.SortDir;
 import SearchParams = SearchQuery.SearchParams;
 
@@ -28,27 +27,21 @@ export class EventsDataSource extends SearchDataSource<ExecutionEvent,
     ExecutionEventField> {
 
     constructor(
-        protected readonly executionEventFacade: ExecutionEventFacade,
-        config$:
-            Observable<Partial<SearchDataSourceConfig<ExecutionEventsQuery.QueryFilter, ExecutionEventField>>>
-        = of({})
+        protected readonly executionEventFacade: ExecutionEventFacade
     ) {
-        super(config$.pipe(map(config => ({
-            ...config,
-            defaultSearchParams:
-                config.defaultSearchParams
-                ?? {
-                    filter: {
-                        asAtTime: new Date().getTime()
-                    },
-                    sortBy: [
-                        {
-                            field: ExecutionEventField.timestamp,
-                            dir: SortDir.DESC
-                        }
-                    ]
-                }
-        }))))
+        super({
+            defaultSearchParams: {
+                filter: {
+                    asAtTime: new Date().getTime()
+                },
+                sortBy: [
+                    {
+                        field: ExecutionEventField.timestamp,
+                        dir: SortDir.DESC
+                    }
+                ]
+            }
+        })
     }
 
     protected getDataObserver(

@@ -41,15 +41,9 @@ import { DsOverviewHistoryPage } from './ds-overview-history.page.models'
                 executionEventFacade: ExecutionEventFacade,
                 store: DsOverviewStoreFacade) => {
 
-                const config$ = store.dataSourceInfo$.pipe(map((dataSourceInfo) => ({
-                    defaultSearchParams: {
-                        alwaysOnFilter: {
-                            dataSourceUri: dataSourceInfo.uri
-                        }
-                    }
-                })))
+                const dsUri$ = store.dataSourceInfo$.pipe(map((dataSourceInfo) => dataSourceInfo.uri))
 
-                return new DsStateHistoryDataSource(executionEventFacade, config$)
+                return new DsStateHistoryDataSource(executionEventFacade, dsUri$)
             },
             deps: [
                 ExecutionEventFacade,

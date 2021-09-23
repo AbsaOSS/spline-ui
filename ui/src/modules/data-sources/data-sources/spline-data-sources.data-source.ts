@@ -14,37 +14,36 @@
  * limitations under the License.
  */
 
-import { Observable, of } from 'rxjs'
-import {
-    ExecutionEventFacade,
-    ExecutionEventField,
-    ExecutionEventsPageResponse,
-    ExecutionEventsQuery
-} from 'spline-api'
-import { EventsDataSource } from 'spline-shared/events'
-import { QuerySorter, SearchQuery } from 'spline-utils'
-import SearchParams = SearchQuery.SearchParams
-import SortDir = QuerySorter.SortDir
+import { Observable } from 'rxjs'
+import { ExecutionEvent, ExecutionEventFacade, ExecutionEventField, ExecutionEventsPageResponse, ExecutionEventsQuery } from 'spline-api'
+import { QuerySorter, SearchDataSource, SearchQuery } from 'spline-utils'
+import SearchParams = SearchQuery.SearchParams;
+import SortDir = QuerySorter.SortDir;
 
 
-export class SplineDataSourcesDataSource extends EventsDataSource {
+export class SplineDataSourcesDataSource
 
-    constructor(protected readonly executionEventFacade: ExecutionEventFacade) {
-        super(
-            executionEventFacade,
-            of({
-                defaultSearchParams: {
-                    filter: {
-                        asAtTime: new Date().getTime()
-                    },
-                    sortBy: [
-                        {
-                            field: ExecutionEventField.dataSourceName,
-                            dir: SortDir.ASC
-                        }
-                    ]
-                }
-            }))
+    extends SearchDataSource<ExecutionEvent,
+        ExecutionEventsPageResponse,
+        ExecutionEventsQuery.QueryFilter,
+        ExecutionEventField> {
+
+    constructor(
+        protected readonly executionEventFacade: ExecutionEventFacade
+    ) {
+        super({
+            defaultSearchParams: {
+                filter: {
+                    asAtTime: new Date().getTime()
+                },
+                sortBy: [
+                    {
+                        field: ExecutionEventField.dataSourceName,
+                        dir: SortDir.ASC
+                    }
+                ]
+            }
+        })
     }
 
     protected getDataObserver(
@@ -53,5 +52,20 @@ export class SplineDataSourcesDataSource extends EventsDataSource {
 
         const queryParams = this.toQueryParams(searchParams)
         return this.executionEventFacade.fetchListAggregatedByDataSource(queryParams)
+    }
+
+    protected toQueryParams(
+        searchParams: SearchQuery.SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>,
+    ): ExecutionEventsQuery.QueryParams {
+        const queryFilter = {
+            ...searchParams.filter,
+            ...searchParams.alwaysOnFilter,
+            searchTerm: searchParams.searchTerm,
+        }
+        return {
+            filter: queryFilter,
+            pager: searchParams.pager,
+            sortBy: searchParams.sortBy,
+        }
     }
 }

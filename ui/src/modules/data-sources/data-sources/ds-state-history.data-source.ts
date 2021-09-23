@@ -14,9 +14,62 @@
  * limitations under the License.
  */
 
-import { EventsDataSource } from 'spline-shared/events'
+import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
+import { ExecutionEvent, ExecutionEventFacade, ExecutionEventField, ExecutionEventsPageResponse, ExecutionEventsQuery } from 'spline-api'
+import { QuerySorter, SearchDataSource, SearchQuery } from 'spline-utils'
+import SearchParams = SearchQuery.SearchParams;
+import SortDir = QuerySorter.SortDir;
 
 
-export class DsStateHistoryDataSource extends EventsDataSource {
+export class DsStateHistoryDataSource extends SearchDataSource<ExecutionEvent,
+    ExecutionEventsPageResponse,
+    ExecutionEventsQuery.QueryFilter,
+    ExecutionEventField> {
 
+    constructor(
+        protected readonly executionEventFacade: ExecutionEventFacade,
+        dsUri$: Observable<string>
+    ) {
+        super(dsUri$.pipe(map(dsUri => ({
+            defaultSearchParams: {
+                alwaysOnFilter: {
+                    dataSourceUri: dsUri
+                },
+                filter: {
+                    asAtTime: new Date().getTime()
+                },
+                sortBy: [
+                    {
+                        field: ExecutionEventField.timestamp,
+                        dir: SortDir.DESC
+                    }
+                ]
+            }
+        })
+        )))
+    }
+
+    protected getDataObserver(
+        searchParams: SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>
+    ): Observable<ExecutionEventsPageResponse> {
+
+        const queryParams = this.toQueryParams(searchParams)
+        return this.executionEventFacade.fetchList(queryParams)
+    }
+
+    protected toQueryParams(
+        searchParams: SearchQuery.SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>,
+    ): ExecutionEventsQuery.QueryParams {
+        const queryFilter = {
+            ...searchParams.filter,
+            ...searchParams.alwaysOnFilter,
+            searchTerm: searchParams.searchTerm,
+        }
+        return {
+            filter: queryFilter,
+            pager: searchParams.pager,
+            sortBy: searchParams.sortBy,
+        }
+    }
 }
