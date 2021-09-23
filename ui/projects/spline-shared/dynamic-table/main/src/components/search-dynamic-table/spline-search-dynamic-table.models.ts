@@ -16,7 +16,7 @@
 
 
 import { Params } from '@angular/router'
-import { ProcessingStore, QuerySorter, RouterNavigation, SearchDataSource, SearchQuery, StringHelpers } from 'spline-utils'
+import { ProcessingStore, QuerySorter, RouterNavigation, SearchQuery, StringHelpers } from 'spline-utils'
 
 
 export namespace SplineSearchDynamicTable {
