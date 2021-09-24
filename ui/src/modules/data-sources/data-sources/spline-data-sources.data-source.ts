@@ -21,12 +21,10 @@ import SearchParams = SearchQuery.SearchParams;
 import SortDir = QuerySorter.SortDir;
 
 
-export class SplineDataSourcesDataSource
-
-    extends SearchDataSource<ExecutionEvent,
-        ExecutionEventsPageResponse,
-        ExecutionEventsQuery.QueryFilter,
-        ExecutionEventField> {
+export class SplineDataSourcesDataSource extends SearchDataSource<ExecutionEvent,
+    ExecutionEventsPageResponse,
+    ExecutionEventsQuery.QueryFilter,
+    ExecutionEventField> {
 
     constructor(
         protected readonly executionEventFacade: ExecutionEventFacade
@@ -50,22 +48,8 @@ export class SplineDataSourcesDataSource
         searchParams: SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>
     ): Observable<ExecutionEventsPageResponse> {
 
-        const queryParams = this.toQueryParams(searchParams)
+        const queryParams = ExecutionEventsQuery.toQueryParams(searchParams)
         return this.executionEventFacade.fetchListAggregatedByDataSource(queryParams)
     }
 
-    protected toQueryParams(
-        searchParams: SearchQuery.SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>,
-    ): ExecutionEventsQuery.QueryParams {
-        const queryFilter = {
-            ...searchParams.filter,
-            ...searchParams.alwaysOnFilter,
-            searchTerm: searchParams.searchTerm,
-        }
-        return {
-            filter: queryFilter,
-            pager: searchParams.pager,
-            sortBy: searchParams.sortBy,
-        }
-    }
 }

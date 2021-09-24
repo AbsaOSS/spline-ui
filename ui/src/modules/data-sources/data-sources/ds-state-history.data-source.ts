@@ -54,22 +54,7 @@ export class DsStateHistoryDataSource extends SearchDataSource<ExecutionEvent,
         searchParams: SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>
     ): Observable<ExecutionEventsPageResponse> {
 
-        const queryParams = this.toQueryParams(searchParams)
+        const queryParams = ExecutionEventsQuery.toQueryParams(searchParams)
         return this.executionEventFacade.fetchList(queryParams)
-    }
-
-    protected toQueryParams(
-        searchParams: SearchQuery.SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>,
-    ): ExecutionEventsQuery.QueryParams {
-        const queryFilter = {
-            ...searchParams.filter,
-            ...searchParams.alwaysOnFilter,
-            searchTerm: searchParams.searchTerm,
-        }
-        return {
-            filter: queryFilter,
-            pager: searchParams.pager,
-            sortBy: searchParams.sortBy,
-        }
     }
 }
