@@ -16,8 +16,8 @@
 
 import { CollectionViewer, DataSource } from '@angular/cdk/collections'
 import { isEqual } from 'lodash-es'
-import { BehaviorSubject, EMPTY, interval, isObservable, Observable, of, Subject, Subscription } from 'rxjs'
-import { catchError, filter, first, map, share, switchMap, take, takeUntil, tap } from 'rxjs/operators'
+import { BehaviorSubject, EMPTY, interval, isObservable, Observable, of, Subject } from 'rxjs'
+import { catchError, filter, first, map, share, skip, switchMap, takeUntil, tap, withLatestFrom } from 'rxjs/operators'
 
 import { ProcessingStore } from '../../../store'
 import { whenPageVisible } from '../../rxjs-operators'
@@ -49,42 +49,28 @@ export abstract class SearchDataSource<TDataRecord = unknown,
     TSortableFields = string> implements DataSource<TDataRecord> {
 
     readonly dataState$: Observable<DataState<TData>>
-    /*readonly*/
-    searchParams$: Observable<SearchParams<TFilter, TSortableFields>>
+    readonly searchParams$: Observable<SearchParams<TFilter, TSortableFields>>
+
     readonly loadingProcessing$: Observable<ProcessingStore.EventProcessingState>
     readonly loadingProcessingEvents: ProcessingStore.ProcessingEvents<DataState<TData>>
     readonly serverDataUpdates$: Observable<TData>
     readonly disconnected$: Observable<void>
 
     private readonly _dataState$: BehaviorSubject<DataState<TData>>
-    private /*readonly*/ _searchParams$: BehaviorSubject<SearchParams<TFilter, TSortableFields>>
+    private readonly _searchParams$: BehaviorSubject<SearchParams<TFilter, TSortableFields>>
     private /*readonly*/ _defaultSearchParamsProvider: () => SearchParams<TFilter, TSortableFields>
     private readonly _disconnected$: Subject<void>
 
-    private _activeFetchSubscription: Subscription
+    protected abstract getDataObserver(searchParams: SearchParams<TFilter, TSortableFields>): Observable<TData>
 
     protected constructor(configInput: SearchDataSourceConfigInput<TFilter, TSortableFields>) {
         this._disconnected$ = new Subject<void>()
         this.disconnected$ = this._disconnected$
 
-        const configObservable = isObservable(configInput) ? configInput : of(configInput)
-        configObservable
-            .pipe(
-                takeUntil(this._disconnected$),
-                first()
-            )
-            .subscribe(configFnOrObj => {
-                const configProvider = isFunction(configFnOrObj) ? configFnOrObj : (() => configFnOrObj)
-                this._defaultSearchParamsProvider = () => {
-                    const partialConfig = configProvider()
-                    return {
-                        ...DEFAULT_SEARCH_PARAMS,
-                        ...partialConfig.defaultSearchParams,
-                    }
-                }
-                this._searchParams$ = new BehaviorSubject(this._defaultSearchParamsProvider())
-                this.searchParams$ = this._searchParams$
-            })
+        this._searchParams$ = new BehaviorSubject(undefined)
+        this.searchParams$ = this._searchParams$
+
+        this.asyncInitDefaultSearchParams(configInput)
 
         this._dataState$ = new BehaviorSubject(DEFAULT_RENDER_DATA)
         this.dataState$ = this._dataState$
@@ -95,18 +81,8 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         )
 
         this.serverDataUpdates$ = this.createServerDataUpdatePoller()
-    }
 
-    get searchParams(): SearchParams<TFilter, TSortableFields> {
-        return this._searchParams$.getValue()
-    }
-
-    get data(): TData {
-        return this._dataState$.getValue().data
-    }
-
-    get dataState(): DataState<TData> {
-        return this._dataState$.getValue()
+        this.subscribeToSearchParams()
     }
 
     reset(): void {
@@ -128,7 +104,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
     }
 
     goToPage(pageIndex: number): void {
-        const currentPager = this.searchParams.pager
+        const currentPager = this._searchParams$.getValue().pager
         if (currentPager.offset !== pageIndex) {
             this.updateSearchParams({
                 pager: {
@@ -143,7 +119,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
     }
 
     nextPage(): void {
-        const currentPager = this.searchParams.pager
+        const currentPager = this._searchParams$.getValue().pager
         this.updateSearchParams({
             pager: {
                 ...currentPager,
@@ -153,7 +129,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
     }
 
     prevPage(): void {
-        const currentPager = this.searchParams.pager
+        const currentPager = this._searchParams$.getValue().pager
         if (currentPager.offset === 0) {
             console.error('You are already on the very first page, you cannot go back.')
             return
@@ -185,31 +161,55 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         this._disconnected$.complete()
     }
 
-    private withResetPagination(
-        searchParams: Partial<SearchParams<TFilter, TSortableFields>>,
-    ): Partial<SearchParams<TFilter, TSortableFields>> {
-        return {
-            ...searchParams,
-            pager: {
-                limit: this.searchParams.pager.limit,
-                offset: 0,
-            },
-        }
+    private asyncInitDefaultSearchParams(configInput: SearchDataSourceConfigInput<TFilter, TSortableFields>): void {
+        const configObservable = isObservable(configInput) ? configInput : of(configInput)
+        configObservable
+            .pipe(
+                takeUntil(this._disconnected$),
+                first()
+            )
+            .subscribe(configFnOrObj => {
+                const configProvider = isFunction(configFnOrObj) ? configFnOrObj : (() => configFnOrObj)
+                this._defaultSearchParamsProvider = () => {
+                    const partialConfig = configProvider()
+                    return {
+                        ...DEFAULT_SEARCH_PARAMS,
+                        ...partialConfig.defaultSearchParams,
+                    }
+                }
+                this._searchParams$.next(this._defaultSearchParamsProvider())
+            })
     }
 
-    private updateSearchParams(searchParams: Partial<SearchParams<TFilter, TSortableFields>>): void {
-        const newSearchParams = {
-            ...this.searchParams,
-            ...searchParams,
-        } as SearchParams<TFilter, TSortableFields>
-
-        this._searchParams$.next(newSearchParams)
-        this.fetchData(newSearchParams)
+    private subscribeToSearchParams(): void {
+        this._searchParams$
+            .pipe(
+                skip(1), // skip default search params
+                withLatestFrom(this._dataState$),
+                tap(([, dataState]) => this.updateDataState({
+                    loadingProcessing: ProcessingStore.eventProcessingStart(dataState.loadingProcessing),
+                })),
+                switchMap(([searchParams, dataState]) => this.getDataObserver(searchParams)
+                    .pipe(
+                        catchError((error) => {
+                            this.updateDataState({
+                                loadingProcessing: ProcessingStore.eventProcessingFinish(dataState.loadingProcessing, error),
+                            })
+                            return of(null)
+                        })
+                    )
+                ),
+                withLatestFrom(this._dataState$)
+            )
+            .subscribe(([result, dataState]) => {
+                if (result !== null) {
+                    this.updateDataState({
+                        data: { ...result },
+                        loadingProcessing: ProcessingStore.eventProcessingFinish(dataState.loadingProcessing),
+                    })
+                }
+            })
     }
-
-    // DATA stuff
-
-    protected abstract getDataObserver(searchParams: SearchParams<TFilter, TSortableFields>): Observable<TData>
 
     private updateDataState(dataState: Partial<DataState<TData>>): void {
         this._dataState$.next({
@@ -218,35 +218,25 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         })
     }
 
-    private fetchData(searchParams: SearchParams<TFilter, TSortableFields>): void {
-        if (this._activeFetchSubscription) {
-            this._activeFetchSubscription.unsubscribe()
+    private withResetPagination(
+        searchParams: Partial<SearchParams<TFilter, TSortableFields>>,
+    ): Partial<SearchParams<TFilter, TSortableFields>> {
+        return {
+            ...searchParams,
+            pager: {
+                limit: this._searchParams$.getValue().pager.limit,
+                offset: 0,
+            },
         }
+    }
 
-        this.updateDataState({
-            loadingProcessing: ProcessingStore.eventProcessingStart(this.dataState.loadingProcessing),
-        })
+    private updateSearchParams(searchParams: Partial<SearchParams<TFilter, TSortableFields>>): void {
+        const newSearchParams = {
+            ...this._searchParams$.getValue(),
+            ...searchParams,
+        } as SearchParams<TFilter, TSortableFields>
 
-        this._activeFetchSubscription = this.getDataObserver(searchParams)
-            .pipe(
-                catchError((error) => {
-                    this.updateDataState({
-                        loadingProcessing: ProcessingStore.eventProcessingFinish(this.dataState.loadingProcessing, error),
-                    })
-                    return of(null)
-                }),
-                // update data state
-                tap((result) => {
-                    if (result !== null) {
-                        this.updateDataState({
-                            data: { ...result },
-                            loadingProcessing: ProcessingStore.eventProcessingFinish(this.dataState.loadingProcessing),
-                        })
-                    }
-                }),
-                take(1),
-            )
-            .subscribe()
+        this._searchParams$.next(newSearchParams)
     }
 
     private createServerDataUpdatePoller(): Observable<TData> {
@@ -260,8 +250,8 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         return interval(DEFAULT_SERVER_POLLING_INTERVAL)
             .pipe(
                 whenPageVisible(),
-                switchMap(() => {
-                    const lastSearchParams = this._searchParams$.getValue()
+                withLatestFrom(this._searchParams$),
+                switchMap(([, lastSearchParams]) => {
                     const freshSearchParams = {
                         ...lastSearchParams,
                         filter: {
@@ -276,7 +266,9 @@ export abstract class SearchDataSource<TDataRecord = unknown,
                         )
                 }),
                 share(),
-                filter(serverData => !isEqual(serverData.items, this._dataState$.getValue().data.items))
+                withLatestFrom(this._dataState$),
+                filter(([serverData, lastDataState]) => !isEqual(serverData.items, lastDataState.data.items)),
+                map(([serverData]) => serverData)
             )
     }
 }

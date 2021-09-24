@@ -33,6 +33,7 @@ import { PageResponse, QuerySorter, SearchDataSource, SearchDataSourceConfigInpu
 import { SplineTranslateTestingModule } from 'spline-utils/translate'
 import SortDir = QuerySorter.SortDir;
 import SearchParams = SearchQuery.SearchParams;
+import DEFAULT_SEARCH_PARAMS = SearchQuery.DEFAULT_SEARCH_PARAMS;
 
 
 describe('SplineSearchDynamicTableComponent', () => {
@@ -143,7 +144,7 @@ describe('SplineSearchDynamicTableComponent', () => {
             }
 
             const urlSearchParams: SearchParams = {
-                ...fakeDataSource.searchParams,
+                ...DEFAULT_SEARCH_PARAMS,
                 sortBy: [
                     urlSorting
                 ]
@@ -177,7 +178,7 @@ describe('SplineSearchDynamicTableComponent', () => {
                             expect(state.sorting).toEqual(urlSorting)
 
                             // expect DataSource search Params were sync with a Router state
-                            expect(fakeDataSource.searchParams).toEqual(urlSearchParams)
+                            expect(urlSearchParams.sortBy).toEqual([urlSorting])
                             done()
                         })
                 })

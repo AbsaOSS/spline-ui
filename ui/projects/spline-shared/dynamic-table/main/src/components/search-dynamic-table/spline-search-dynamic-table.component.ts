@@ -87,7 +87,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
         }
 
         // load data
-        this.dataSource.update(this.searchParamsFromUrl() || {})
+        this.dataSource.update(this.searchParamsFromUrl() ?? {})
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -225,11 +225,11 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
                 distinctUntilChanged((a, b) => isEqual(a, b)),
                 skip(1),
             )
-            .subscribe(() => {
+            .subscribe((searchParams) => {
                 const queryParams = SplineSearchDynamicTable.applySearchParams(
                     this.currentQueryParams,
                     queryParamAlias,
-                    dataSource.searchParams
+                    searchParams
                 )
                 this.updateRouterState(queryParams)
             })
