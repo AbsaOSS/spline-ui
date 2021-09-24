@@ -75,23 +75,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
     }
 
     ngOnInit(): void {
-        // Refresh the table on re-navigating to the same route
-        this.router.events.pipe(
-            takeUntil(this.destroyed$),
-            filter((event: RouterEvent) => event instanceof NavigationEnd)
-        ).subscribe(() => {
-            if (this.searchParamsFromUrl() === null) {
-                const freshDefaultParams = {
-                    ...this.dataSource.defaultSearchParams,
-                    filter: {
-                        asAtTime: new Date().getTime()
-                    }
-                }
-                this.dataSource.updateSearchParams(freshDefaultParams)
-                this._resumeListeningOnServerUpdates$.next()
-            }
-        })
-
+        this.subscribeToRouter(this.router)
         this.subscribeToDataSource(this.dataSource)
 
         // start listening on the server data updates
@@ -103,7 +87,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
         }
 
         // load data
-        this.dataSource.updateSearchParams(this.searchParamsFromUrl() || {})
+        this.dataSource.update(this.searchParamsFromUrl() || {})
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -138,7 +122,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
     }
 
     onRefreshDataClick(): void {
-        this.dataSource.updateSearchParams({ filter: { asAtTime: Date.now() } })
+        this.dataSource.setFilter({ asAtTime: Date.now() })
         this._resumeListeningOnServerUpdates$.next()
     }
 
@@ -158,6 +142,19 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
                 this.urlStateQueryParamAlias,
             )
             : null
+    }
+
+    private subscribeToRouter(router: Router): void {
+        // Refresh the table on re-navigating to the same route
+        router.events.pipe(
+            takeUntil(this.destroyed$),
+            filter((event: RouterEvent) => event instanceof NavigationEnd)
+        ).subscribe(() => {
+            if (this.searchParamsFromUrl() === null) {
+                this.dataSource.reset()
+                this._resumeListeningOnServerUpdates$.next()
+            }
+        })
     }
 
     private subscribeToDataSource(dataSource: SearchDataSource<TRowData>): void {
@@ -229,15 +226,10 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
                 skip(1),
             )
             .subscribe(() => {
-
-                const searchParams = !isEqual(dataSource.searchParams, dataSource.defaultSearchParams)
-                    ? dataSource.searchParams
-                    : null
-
                 const queryParams = SplineSearchDynamicTable.applySearchParams(
                     this.currentQueryParams,
                     queryParamAlias,
-                    searchParams
+                    dataSource.searchParams
                 )
                 this.updateRouterState(queryParams)
             })

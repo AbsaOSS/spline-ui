@@ -30,7 +30,7 @@ export class EventLineageListDataSource extends SearchDataSource<ExecutionEventL
     }
 
     constructor(private readonly executionEventFacade: ExecutionEventFacade) {
-        super({
+        super(() => ({
             defaultSearchParams: {
                 filter: {
                     asAtTime: new Date().getTime()
@@ -42,7 +42,7 @@ export class EventLineageListDataSource extends SearchDataSource<ExecutionEventL
                     }
                 ]
             }
-        })
+        }))
     }
 
     protected getDataObserver(

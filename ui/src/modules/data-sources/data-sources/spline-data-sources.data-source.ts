@@ -29,7 +29,7 @@ export class SplineDataSourcesDataSource extends SearchDataSource<ExecutionEvent
     constructor(
         protected readonly executionEventFacade: ExecutionEventFacade
     ) {
-        super({
+        super(() => ({
             defaultSearchParams: {
                 filter: {
                     asAtTime: new Date().getTime()
@@ -41,7 +41,7 @@ export class SplineDataSourcesDataSource extends SearchDataSource<ExecutionEvent
                     }
                 ]
             }
-        })
+        }))
     }
 
     protected getDataObserver(

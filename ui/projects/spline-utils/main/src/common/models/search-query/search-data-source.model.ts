@@ -21,7 +21,7 @@ import { catchError, filter, first, map, share, switchMap, take, takeUntil, tap 
 
 import { ProcessingStore } from '../../../store'
 import { whenPageVisible } from '../../rxjs-operators'
-import { SplineRecord } from '../heplers'
+import { SplineRecord, TypeHelpers } from '../heplers'
 import { PageResponse, QuerySorter } from '../query'
 
 import { SearchQuery } from './search-query.models'
@@ -30,11 +30,18 @@ import DEFAULT_RENDER_DATA = SearchQuery.DEFAULT_RENDER_DATA;
 import DEFAULT_SEARCH_PARAMS = SearchQuery.DEFAULT_SEARCH_PARAMS;
 import DEFAULT_SERVER_POLLING_INTERVAL = SearchQuery.DEFAULT_SERVER_POLL_INTERVAL;
 import SearchParams = SearchQuery.SearchParams;
+import isFunction = TypeHelpers.isFunction;
 
 
-export type SearchDataSourceConfig<TFilter extends SplineRecord = {}, TSortableFields = string> = {
+export type SearchDataSourceConfig<TFilter extends SplineRecord, TSortableFields> = {
     defaultSearchParams: Partial<SearchParams<TFilter, TSortableFields>>
 }
+
+export type SearchDataSourceConfigInput<TFilter extends SplineRecord, TSortableFields> =
+    | Partial<SearchDataSourceConfig<TFilter, TSortableFields>>
+    | (() => Partial<SearchDataSourceConfig<TFilter, TSortableFields>>)
+    | Observable<Partial<SearchDataSourceConfig<TFilter, TSortableFields>>>
+    | Observable<() => Partial<SearchDataSourceConfig<TFilter, TSortableFields>>>
 
 export abstract class SearchDataSource<TDataRecord = unknown,
     TData extends PageResponse<TDataRecord> = PageResponse<TDataRecord>,
@@ -51,32 +58,33 @@ export abstract class SearchDataSource<TDataRecord = unknown,
 
     private readonly _dataState$: BehaviorSubject<DataState<TData>>
     private /*readonly*/ _searchParams$: BehaviorSubject<SearchParams<TFilter, TSortableFields>>
-    private /*readonly*/ _defaultSearchParams: SearchParams<TFilter, TSortableFields>
+    private /*readonly*/ _defaultSearchParamsProvider: () => SearchParams<TFilter, TSortableFields>
     private readonly _disconnected$: Subject<void>
 
     private _activeFetchSubscription: Subscription
 
-    protected constructor(
-        configOr$: Partial<SearchDataSourceConfig<TFilter, TSortableFields>>
-            | Observable<Partial<SearchDataSourceConfig<TFilter, TSortableFields>>>
-    ) {
+    protected constructor(configInput: SearchDataSourceConfigInput<TFilter, TSortableFields>) {
         this._disconnected$ = new Subject<void>()
         this.disconnected$ = this._disconnected$
 
-        const config$ = (isObservable(configOr$) ? configOr$ : of(configOr$))
-
-        config$.pipe(
-            takeUntil(this._disconnected$),
-            first()
-        ).subscribe(config => {
-            const defaultSearchParams = {
-                ...DEFAULT_SEARCH_PARAMS,
-                ...config.defaultSearchParams,
-            }
-            this._defaultSearchParams = defaultSearchParams
-            this._searchParams$ = new BehaviorSubject(defaultSearchParams)
-            this.searchParams$ = this._searchParams$
-        })
+        const configObservable = isObservable(configInput) ? configInput : of(configInput)
+        configObservable
+            .pipe(
+                takeUntil(this._disconnected$),
+                first()
+            )
+            .subscribe(configFnOrObj => {
+                const configProvider = isFunction(configFnOrObj) ? configFnOrObj : (() => configFnOrObj)
+                this._defaultSearchParamsProvider = () => {
+                    const partialConfig = configProvider()
+                    return {
+                        ...DEFAULT_SEARCH_PARAMS,
+                        ...partialConfig.defaultSearchParams,
+                    }
+                }
+                this._searchParams$ = new BehaviorSubject(this._defaultSearchParamsProvider())
+                this.searchParams$ = this._searchParams$
+            })
 
         this._dataState$ = new BehaviorSubject(DEFAULT_RENDER_DATA)
         this.dataState$ = this._dataState$
@@ -93,16 +101,16 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         return this._searchParams$.getValue()
     }
 
-    get defaultSearchParams(): SearchParams<TFilter, TSortableFields> {
-        return this._defaultSearchParams
-    }
-
     get data(): TData {
         return this._dataState$.getValue().data
     }
 
     get dataState(): DataState<TData> {
         return this._dataState$.getValue()
+    }
+
+    reset(): void {
+        this.updateSearchParams(this._defaultSearchParamsProvider())
     }
 
     search(searchTerm: string): void {
@@ -158,14 +166,8 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         })
     }
 
-    updateSearchParams(searchParams: Partial<SearchParams<TFilter, TSortableFields>>): void {
-        const newSearchParams = {
-            ...this.searchParams,
-            ...searchParams,
-        } as SearchParams<TFilter, TSortableFields>
-
-        this._searchParams$.next(newSearchParams)
-        this.fetchData(newSearchParams)
+    update(searchParams: Partial<SearchParams<TFilter, TSortableFields>>): void {
+        this.updateSearchParams(searchParams)
     }
 
     connect(collectionViewer: CollectionViewer): Observable<TDataRecord[]> {
@@ -193,6 +195,16 @@ export abstract class SearchDataSource<TDataRecord = unknown,
                 offset: 0,
             },
         }
+    }
+
+    private updateSearchParams(searchParams: Partial<SearchParams<TFilter, TSortableFields>>): void {
+        const newSearchParams = {
+            ...this.searchParams,
+            ...searchParams,
+        } as SearchParams<TFilter, TSortableFields>
+
+        this._searchParams$.next(newSearchParams)
+        this.fetchData(newSearchParams)
     }
 
     // DATA stuff

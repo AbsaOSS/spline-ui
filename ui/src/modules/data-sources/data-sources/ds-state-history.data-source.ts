@@ -31,7 +31,7 @@ export class DsStateHistoryDataSource extends SearchDataSource<ExecutionEvent,
         protected readonly executionEventFacade: ExecutionEventFacade,
         dsUri$: Observable<string>
     ) {
-        super(dsUri$.pipe(map(dsUri => ({
+        super(dsUri$.pipe(map(dsUri => () => ({
             defaultSearchParams: {
                 alwaysOnFilter: {
                     dataSourceUri: dsUri

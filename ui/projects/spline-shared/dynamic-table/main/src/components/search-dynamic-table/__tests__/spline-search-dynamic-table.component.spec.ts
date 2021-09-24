@@ -29,10 +29,10 @@ import { filter, take } from 'rxjs/operators'
 import { SplineSearchBoxModule, SplineSortHeaderModule } from 'spline-common'
 import { DynamicTableDataMap, DynamicTableModule } from 'spline-common/dynamic-table'
 import { SplineDynamicTableSharedModule, SplineSearchDynamicTable, SplineSearchDynamicTableComponent } from 'spline-shared/dynamic-table'
-import { PageResponse, QuerySorter, SearchDataSource, SearchDataSourceConfig, SearchQuery } from 'spline-utils'
+import { PageResponse, QuerySorter, SearchDataSource, SearchDataSourceConfigInput, SearchQuery } from 'spline-utils'
 import { SplineTranslateTestingModule } from 'spline-utils/translate'
-import SortDir = QuerySorter.SortDir
-import SearchParams = SearchQuery.SearchParams
+import SortDir = QuerySorter.SortDir;
+import SearchParams = SearchQuery.SearchParams;
 
 
 describe('SplineSearchDynamicTableComponent', () => {
@@ -92,7 +92,7 @@ describe('SplineSearchDynamicTableComponent', () => {
 
         class FakeDataSource extends SearchDataSource<FakeItem> {
 
-            constructor(config: Partial<SearchDataSourceConfig>) {
+            constructor(config: SearchDataSourceConfigInput<any, any>) {
                 super(config)
             }
 
@@ -167,7 +167,7 @@ describe('SplineSearchDynamicTableComponent', () => {
                     filter(event => event instanceof NavigationEnd),
                     take(1)
                 )
-                .subscribe((event: NavigationEnd) => {
+                .subscribe(() => {
                     // init component after router state is init
                     componentFixture.detectChanges()
 
