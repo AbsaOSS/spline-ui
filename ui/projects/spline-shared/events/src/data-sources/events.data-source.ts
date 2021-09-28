@@ -15,16 +15,10 @@
  */
 
 import { Observable } from 'rxjs'
-import {
-    ExecutionEvent,
-    ExecutionEventFacade,
-    ExecutionEventField,
-    ExecutionEventsPageResponse,
-    ExecutionEventsQuery,
-} from 'spline-api'
-import { QuerySorter, SearchDataSource, SearchQuery, StringHelpers } from 'spline-utils'
-import SortDir = QuerySorter.SortDir
-import SearchParams = SearchQuery.SearchParams
+import { ExecutionEvent, ExecutionEventFacade, ExecutionEventField, ExecutionEventsPageResponse, ExecutionEventsQuery } from 'spline-api'
+import { QuerySorter, SearchDataSource, SearchQuery } from 'spline-utils'
+import SortDir = QuerySorter.SortDir;
+import SearchParams = SearchQuery.SearchParams;
 
 
 export class EventsDataSource extends SearchDataSource<ExecutionEvent,
@@ -32,65 +26,29 @@ export class EventsDataSource extends SearchDataSource<ExecutionEvent,
     ExecutionEventsQuery.QueryFilter,
     ExecutionEventField> {
 
-    constructor(protected readonly executionEventFacade: ExecutionEventFacade) {
-        super()
-
-        this.updateAndApplyDefaultSearchParams({
-            filter: {
-                asAtTime: new Date().getTime()
-            },
-            sortBy: [
-                {
-                    field: ExecutionEventField.timestamp,
-                    dir: SortDir.DESC
-                }
-            ]
-        })
-    }
-
-    searchParamsFromUrlString(
-        searchParamsUrlString: string): SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField> {
-
-        const searchParams = StringHelpers
-            .decodeObjFromUrlString<SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>>(
-                searchParamsUrlString
-            )
-
-        if (!searchParams) {
-            return { ...this.defaultSearchParams}
-        }
-
-        return {
-            ...searchParams,
-            filter: {
-                ...searchParams.filter,
-                executedAtFrom: searchParams.filter.executedAtFrom ? new Date(searchParams.filter.executedAtFrom) : undefined,
-                executedAtTo: searchParams.filter.executedAtTo ? new Date(searchParams.filter.executedAtTo) : undefined,
+    constructor(
+        protected readonly executionEventFacade: ExecutionEventFacade
+    ) {
+        super(() => ({
+            defaultSearchParams: {
+                filter: {
+                    asAtTime: new Date().getTime()
+                },
+                sortBy: [
+                    {
+                        field: ExecutionEventField.timestamp,
+                        dir: SortDir.DESC
+                    }
+                ]
             }
-        }
+        }))
     }
 
     protected getDataObserver(
-        searchParams: SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>,
-        force: boolean,
+        searchParams: SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>
     ): Observable<ExecutionEventsPageResponse> {
 
-        const queryParams = this.toQueryParams(searchParams)
+        const queryParams = ExecutionEventsQuery.toQueryParams(searchParams)
         return this.executionEventFacade.fetchList(queryParams)
-    }
-
-    protected toQueryParams(
-        searchParams: SearchQuery.SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>,
-    ): ExecutionEventsQuery.QueryParams {
-        const queryFilter = {
-            ...searchParams.filter,
-            ...searchParams.staticFilter,
-            searchTerm: searchParams.searchTerm,
-        }
-        return {
-            filter: queryFilter,
-            pager: searchParams.pager,
-            sortBy: searchParams.sortBy,
-        }
     }
 }

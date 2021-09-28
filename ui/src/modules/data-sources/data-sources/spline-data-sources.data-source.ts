@@ -15,42 +15,41 @@
  */
 
 import { Observable } from 'rxjs'
-import {
-    ExecutionEventFacade,
-    ExecutionEventField,
+import { ExecutionEvent, ExecutionEventFacade, ExecutionEventField, ExecutionEventsPageResponse, ExecutionEventsQuery } from 'spline-api'
+import { QuerySorter, SearchDataSource, SearchQuery } from 'spline-utils'
+import SearchParams = SearchQuery.SearchParams;
+import SortDir = QuerySorter.SortDir;
+
+
+export class SplineDataSourcesDataSource extends SearchDataSource<ExecutionEvent,
     ExecutionEventsPageResponse,
-    ExecutionEventsQuery
-} from 'spline-api'
-import { EventsDataSource } from 'spline-shared/events'
-import { QuerySorter, SearchQuery } from 'spline-utils'
-import SearchParams = SearchQuery.SearchParams
-import SortDir = QuerySorter.SortDir
+    ExecutionEventsQuery.QueryFilter,
+    ExecutionEventField> {
 
-
-export class SplineDataSourcesDataSource extends EventsDataSource {
-
-    constructor(protected readonly executionEventFacade: ExecutionEventFacade) {
-        super(executionEventFacade)
-
-        this.updateAndApplyDefaultSearchParams({
-            filter: {
-                asAtTime: new Date().getTime()
-            },
-            sortBy: [
-                {
-                    field: ExecutionEventField.dataSourceName,
-                    dir: SortDir.ASC
-                }
-            ]
-        })
+    constructor(
+        protected readonly executionEventFacade: ExecutionEventFacade
+    ) {
+        super(() => ({
+            defaultSearchParams: {
+                filter: {
+                    asAtTime: new Date().getTime()
+                },
+                sortBy: [
+                    {
+                        field: ExecutionEventField.dataSourceName,
+                        dir: SortDir.ASC
+                    }
+                ]
+            }
+        }))
     }
 
     protected getDataObserver(
-        searchParams: SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>,
-        force: boolean,
+        searchParams: SearchParams<ExecutionEventsQuery.QueryFilter, ExecutionEventField>
     ): Observable<ExecutionEventsPageResponse> {
 
-        const queryParams = this.toQueryParams(searchParams)
+        const queryParams = ExecutionEventsQuery.toQueryParams(searchParams)
         return this.executionEventFacade.fetchListAggregatedByDataSource(queryParams)
     }
+
 }

@@ -12,7 +12,7 @@
     "build::CDN": "ng build --prod",
     "postbuild": "shx mkdir dist/app/ && shx mv dist/index.html dist/app/ && shx mv dist/assets dist/app/",
     "test": "jest --passWithNoTests --coverage",
-    "test:no-covarege": "jest --passWithNoTests",
+    "test:no-coverage": "jest --passWithNoTests",
     "lint": "npm run lint:ts && npm run lint:styles",
     "lint:ts": "eslint src/**/*.ts projects/**/*.ts --quiet",
     "lint:ts:fix": "eslint src/**/*.ts projects/**/*.ts --fix",
@@ -21,7 +21,7 @@
     "e2e": "ng e2e",
     "ngcc": "ngcc --properties es2015 browser module main --async false",
     "license-check": "cd ../ && mvn validate -Plicense-check",
-    "pre-pull-request": "npm run lint && npm run test:no-covarege && npm run license-check"
+    "pre-pull-request": "npm run lint && npm run test:no-coverage && npm run license-check"
   },
   "private": false,
   "dependencies": {

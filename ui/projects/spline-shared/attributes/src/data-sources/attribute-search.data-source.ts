@@ -30,11 +30,7 @@ export class AttributeSearchDataSource extends SimpleDataSource<SplineAttributeS
         super()
     }
 
-    protected getDataObserver(
-        filterValue: AttributeSearchDataSourceFilter,
-        force: boolean,
-    ): Observable<SplineAttributeSearch.Data> {
-
+    protected getDataObserver(filterValue: AttributeSearchDataSourceFilter): Observable<SplineAttributeSearch.Data> {
         return filterValue?.search?.length
             ? this.attributeFacade.search(filterValue.search)
             : of([])

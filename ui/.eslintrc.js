@@ -151,7 +151,7 @@ module.exports = {
                         'accessibility': 'no-public'
                     }
                 ],
-                '@typescript-eslint/member-ordering': 'error',
+                '@typescript-eslint/member-ordering': 'warn',
                 'no-multiple-empty-lines': 'off',
                 'no-empty': 'off',
                 '@typescript-eslint/no-inferrable-types': [

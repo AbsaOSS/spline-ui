@@ -23,8 +23,8 @@
                    matSort
                    (matSortChange)="onSortChanged($event)"
                    [matSortDisableClear]="true"
-                   [matSortActive]="initSorting?.field"
-                   [matSortDirection]="initSorting?.dir?.toLowerCase()">
+                   [matSortActive]="sorting?.field"
+                   [matSortDirection]="sorting?.dir?.toLowerCase()">
 
             <!-- DATA COLUMNS -->
             <ng-container [matColumnDef]="columnSchema.id" *ngFor="let columnSchema of dataMap">
