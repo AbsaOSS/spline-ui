@@ -64,19 +64,19 @@ implements IDynamicFilterControlModel<TValue, TOptions, TId> {
     })
     abstract readonly type: string
 
-    constructor(id: TId, config?: DynamicFilterControlModelConfig<TValue, TOptions>) {
+    protected constructor(id: TId, config?: DynamicFilterControlModelConfig<TValue, TOptions>) {
         this.id = id
 
         if (config?.options !== undefined) {
             this._options = config.options
         }
 
-        this.value$ = this._state$.asObservable()
+        this.value$ = this._state$
             .pipe(
                 map(({ value }) => value),
             )
 
-        this.valueChanged$ = this._state$.asObservable()
+        this.valueChanged$ = this._state$
             .pipe(
                 filter(({ emitEvent }) => emitEvent),
                 map(({ value }) => value),

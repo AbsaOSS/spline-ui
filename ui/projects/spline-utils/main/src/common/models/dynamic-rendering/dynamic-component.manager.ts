@@ -27,7 +27,7 @@ export abstract class DynamicComponentManager<TFactory extends IDynamicComponent
     // manually registration
     protected staticFactoriesMap = new Map<string, TFactory>()
 
-    constructor(protected readonly injector: Injector) {
+    protected constructor(protected readonly injector: Injector) {
     }
 
     getFactory(type: string): TFactory | undefined {

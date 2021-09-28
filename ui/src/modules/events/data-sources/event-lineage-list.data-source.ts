@@ -30,24 +30,23 @@ export class EventLineageListDataSource extends SearchDataSource<ExecutionEventL
     }
 
     constructor(private readonly executionEventFacade: ExecutionEventFacade) {
-        super()
-
-        this.updateAndApplyDefaultSearchParams({
-            filter: {
-                asAtTime: new Date().getTime()
-            },
-            sortBy: [
-                {
-                    field: ExecutionEventField.timestamp,
-                    dir: SortDir.DESC
-                }
-            ]
-        })
+        super(() => ({
+            defaultSearchParams: {
+                filter: {
+                    asAtTime: new Date().getTime()
+                },
+                sortBy: [
+                    {
+                        field: ExecutionEventField.timestamp,
+                        dir: SortDir.DESC
+                    }
+                ]
+            }
+        }))
     }
 
     protected getDataObserver(
-        searchParams: SearchQuery.SearchParams,
-        force: boolean
+        searchParams: SearchQuery.SearchParams
     ): Observable<PageResponse<ExecutionEventLineageList.LineageRecord>> {
         return this.executionEventFacade.fetchLineageOverview(this._executionEventId)
             .pipe(

@@ -18,7 +18,6 @@ import { HttpClient, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable, throwError } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
-import { Cacheable } from 'spline-utils'
 
 import {
     ExecutionPlanLineageOverview,
@@ -42,8 +41,7 @@ export class ExecutionPlanFacade extends BaseFacade {
         super(http)
     }
 
-    @Cacheable
-    fetchLineageOverview(executionPlanId: string): Observable<ExecutionPlanLineageOverview> {
+    fetchExecutionPlanDetails(executionPlanId: string): Observable<ExecutionPlanLineageOverview> {
         let params = new HttpParams()
         params = params.append('execId', executionPlanId)
 
@@ -58,7 +56,6 @@ export class ExecutionPlanFacade extends BaseFacade {
             )
     }
 
-    @Cacheable
     fetchOperationDetails(operationId: string): Observable<OperationDetails> {
         const url = this.toUrl(`operations/${operationId}`)
         return this.http.get<OperationDetailsDto>(url)
@@ -71,8 +68,7 @@ export class ExecutionPlanFacade extends BaseFacade {
             )
     }
 
-    @Cacheable
-    fetchAttributeLinage(executionPlanId: string, attributeId: string): Observable<OperationAttributeLineage> {
+    fetchAttributeLineage(executionPlanId: string, attributeId: string): Observable<OperationAttributeLineage> {
         let params = new HttpParams()
         params = params.append('execId', executionPlanId)
         params = params.append('attributeId', attributeId)

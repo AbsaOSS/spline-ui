@@ -18,7 +18,6 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable, of } from 'rxjs'
 import { delay } from 'rxjs/operators'
-import { Cacheable } from 'spline-utils'
 
 import { idToDataSourceInfo, SplineDataSourceInfo } from '../models'
 
@@ -32,7 +31,6 @@ export class SplineDataSourceFacade extends BaseFacade {
         super(http)
     }
 
-    @Cacheable
     fetchOne(id: string): Observable<SplineDataSourceInfo> {
         return of(idToDataSourceInfo(id))
             .pipe(

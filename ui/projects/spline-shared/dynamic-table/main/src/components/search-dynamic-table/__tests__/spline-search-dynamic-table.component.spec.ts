@@ -29,10 +29,11 @@ import { filter, take } from 'rxjs/operators'
 import { SplineSearchBoxModule, SplineSortHeaderModule } from 'spline-common'
 import { DynamicTableDataMap, DynamicTableModule } from 'spline-common/dynamic-table'
 import { SplineDynamicTableSharedModule, SplineSearchDynamicTable, SplineSearchDynamicTableComponent } from 'spline-shared/dynamic-table'
-import { PageResponse, QuerySorter, SearchDataSource, SearchQuery } from 'spline-utils'
+import { PageResponse, QuerySorter, SearchDataSource, SearchDataSourceConfigInput, SearchQuery } from 'spline-utils'
 import { SplineTranslateTestingModule } from 'spline-utils/translate'
-import SortDir = QuerySorter.SortDir
-import SearchParams = SearchQuery.SearchParams
+import SortDir = QuerySorter.SortDir;
+import SearchParams = SearchQuery.SearchParams;
+import DEFAULT_SEARCH_PARAMS = SearchQuery.DEFAULT_SEARCH_PARAMS;
 
 
 describe('SplineSearchDynamicTableComponent', () => {
@@ -92,12 +93,12 @@ describe('SplineSearchDynamicTableComponent', () => {
 
         class FakeDataSource extends SearchDataSource<FakeItem> {
 
-            constructor() {
-                super()
+            constructor(config: SearchDataSourceConfigInput<any, any>) {
+                super(config)
             }
 
 
-            protected getDataObserver(searchParams: SearchQuery.SearchParams, force: boolean): Observable<PageResponse<FakeItem>> {
+            protected getDataObserver(searchParams: SearchQuery.SearchParams): Observable<PageResponse<FakeItem>> {
                 return of({
                     totalCount: fakeData.length,
                     items: [...fakeData]
@@ -113,13 +114,13 @@ describe('SplineSearchDynamicTableComponent', () => {
         }
 
         beforeEach(() => {
-            fakeDataSource = new FakeDataSource()
+            fakeDataSource = new FakeDataSource({
+                defaultSearchParams: {
+                    sortBy: [{ ...defaultSortBy }]
+                }
+            })
             componentInstance.dataSource = fakeDataSource
             componentInstance.dataMap = dataMap
-
-            fakeDataSource.updateAndApplyDefaultSearchParams({
-                sortBy: [{ ...defaultSortBy }]
-            })
         })
 
 
@@ -128,12 +129,8 @@ describe('SplineSearchDynamicTableComponent', () => {
             componentFixture.detectChanges()
 
             componentInstance.state$
-                .pipe(
-                    filter(state => state.isInitialized),
-                    take(1),
-                )
                 .subscribe((state) => {
-                    expect(state.initSorting).toEqual(defaultSortBy)
+                    expect(state.sorting).toEqual(defaultSortBy)
                     done()
                 })
 
@@ -147,7 +144,7 @@ describe('SplineSearchDynamicTableComponent', () => {
             }
 
             const urlSearchParams: SearchParams = {
-                ...fakeDataSource.searchParams,
+                ...DEFAULT_SEARCH_PARAMS,
                 sortBy: [
                     urlSorting
                 ]
@@ -156,7 +153,6 @@ describe('SplineSearchDynamicTableComponent', () => {
             const queryParams = SplineSearchDynamicTable.applySearchParams(
                 {},
                 componentInstance.defaultUrlStateQueryParamAlias,
-                fakeDataSource,
                 urlSearchParams
             )
 
@@ -172,21 +168,17 @@ describe('SplineSearchDynamicTableComponent', () => {
                     filter(event => event instanceof NavigationEnd),
                     take(1)
                 )
-                .subscribe((event: NavigationEnd) => {
+                .subscribe(() => {
                     // init component after router state is init
                     componentFixture.detectChanges()
 
                     componentInstance.state$
-                        .pipe(
-                            filter(state => state.isInitialized),
-                            take(1),
-                        )
                         .subscribe((state) => {
                             // expect comp state was initialized from router
-                            expect(state.initSorting).toEqual(urlSorting)
+                            expect(state.sorting).toEqual(urlSorting)
 
                             // expect DataSource search Params were sync with a Router state
-                            expect(fakeDataSource.searchParams).toEqual(urlSearchParams)
+                            expect(urlSearchParams.sortBy).toEqual([urlSorting])
                             done()
                         })
                 })

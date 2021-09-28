@@ -2,7 +2,9 @@
     "SHARED": {
         "DYNAMIC_TABLE": {
             "DS_WRITE_MODE__APPEND": "Append",
-            "DS_WRITE_MODE__OVERRIDE": "Override"
+            "DS_WRITE_MODE__OVERRIDE": "Override",
+            "BUTTON__REFRESH": "Refresh",
+            "TOOLTIP__UPDATE_AVAILABLE": "New data is available on the server"
         }
     }
 }

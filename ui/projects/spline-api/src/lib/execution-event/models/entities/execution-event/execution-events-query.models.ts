@@ -15,7 +15,7 @@
  */
 
 import { HttpParams } from '@angular/common/http'
-import { DEFAULT_PAGE_LIMIT, PageQueryParams, QueryPager, QuerySorter } from 'spline-utils'
+import { DEFAULT_PAGE_LIMIT, PageQueryParams, QueryPager, QuerySorter, SearchQuery } from 'spline-utils'
 
 import { DataSourceWriteMode } from '../data-source'
 
@@ -72,6 +72,22 @@ export namespace ExecutionEventsQuery {
         const queryParamsDto = toQueryParamsDto(queryParams)
         return queryParamsDtoToHttpParams(queryParamsDto)
     }
+
+    export function toQueryParams(
+        searchParams: SearchQuery.SearchParams<QueryFilter, ExecutionEventField>,
+    ): QueryParams {
+        const queryFilter = {
+            ...searchParams.filter,
+            ...searchParams.alwaysOnFilter,
+            searchTerm: searchParams.searchTerm,
+        }
+        return {
+            filter: queryFilter,
+            pager: searchParams.pager,
+            sortBy: searchParams.sortBy,
+        }
+    }
+
 
     function toQueryFilterDto(queryFilter: QueryFilter): Partial<QueryParamsDto> {
         return {

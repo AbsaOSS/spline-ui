@@ -88,6 +88,7 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
 
         this.dataSource.loadingProcessingEvents.error$
             .pipe(
+                takeUntil(this.destroyed$),
                 distinctUntilChanged((left, right) => isEqual(left, right)),
                 delay(domRelaxationTime)
             )

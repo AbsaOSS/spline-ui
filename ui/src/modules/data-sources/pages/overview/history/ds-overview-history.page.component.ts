@@ -16,7 +16,7 @@
 
 import { Component, OnInit } from '@angular/core'
 import { Observable } from 'rxjs'
-import { filter, map, takeUntil, withLatestFrom } from 'rxjs/operators'
+import { map, takeUntil } from 'rxjs/operators'
 import { ExecutionEvent, ExecutionEventFacade, ExecutionEventsQuery, SplineDataSourceInfo } from 'spline-api'
 import { DynamicFilterFactory, DynamicFilterModel } from 'spline-common/dynamic-filter'
 import { DtCellCustomEvent } from 'spline-common/dynamic-table'
@@ -37,10 +37,18 @@ import { DsOverviewHistoryPage } from './ds-overview-history.page.models'
     providers: [
         {
             provide: DsStateHistoryDataSource,
-            useFactory: (executionEventFacade: ExecutionEventFacade) => {
-                return new DsStateHistoryDataSource(executionEventFacade)
+            useFactory: (
+                executionEventFacade: ExecutionEventFacade,
+                store: DsOverviewStoreFacade) => {
+
+                const dsUri$ = store.dataSourceInfo$.pipe(map((dataSourceInfo) => dataSourceInfo.uri))
+
+                return new DsStateHistoryDataSource(executionEventFacade, dsUri$)
             },
-            deps: [ExecutionEventFacade],
+            deps: [
+                ExecutionEventFacade,
+                DsOverviewStoreFacade
+            ],
         },
     ],
 
@@ -61,30 +69,16 @@ export class DsOverviewHistoryPageComponent extends BaseLocalStateComponent<DsOv
             DsOverviewHistoryPage.getDefaultState()
         )
 
-        this.dataSourceInfo$ = this.store.isInitialized$
-            .pipe(
-                withLatestFrom(this.store.dataSourceInfo$),
-                filter(([isInitialized, dataSourceInfo]) => isInitialized && !!dataSourceInfo),
-                map(([isInitialized, dataSourceInfo]) => dataSourceInfo),
-            )
-
-        this.dataSourceInfo$
-            .pipe(
-                takeUntil(this.destroyed$),
-            )
-            .subscribe((dataSourceInfo) => {
-                this.dataSource.updateAndApplyDefaultSearchParams({
-                    filter: {
-                        dataSourceUri: dataSourceInfo.uri
-                    }
-                })
-            })
+        this.dataSourceInfo$ = this.store.dataSourceInfo$
     }
 
     ngOnInit(): void {
         this.dynamicFilterFactory
             .schemaToModel<DsOverviewHistoryPage.Filter>(
                 DsOverviewHistoryPage.getDynamicFilterSchema()
+            )
+            .pipe(
+                takeUntil(this.destroyed$)
             )
             .subscribe(model => {
                 this.filterModel = model

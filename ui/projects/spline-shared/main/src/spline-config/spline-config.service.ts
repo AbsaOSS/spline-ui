@@ -45,7 +45,7 @@ export class SplineConfigService {
     constructor(private readonly http: HttpClient,
                 @Optional() @Inject(SPLINE_CONFIG_SETTINGS) private readonly settings: SplineConfigSettings) {
 
-        this.config$ = this._config$.asObservable()
+        this.config$ = this._config$
             .pipe(
                 filter(x => !!x),
             )

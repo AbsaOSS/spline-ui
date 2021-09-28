@@ -17,9 +17,10 @@
 
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core'
 import { PageEvent } from '@angular/material/paginator'
-import { ActivatedRoute, Params, Router } from '@angular/router'
+import { ActivatedRoute, NavigationEnd, Params, Router, RouterEvent } from '@angular/router'
 import { isEqual } from 'lodash-es'
-import { distinctUntilChanged, map, skip, takeUntil } from 'rxjs/operators'
+import { Observable, Subject } from 'rxjs'
+import { distinctUntilChanged, filter, first, map, repeatWhen, skip, startWith, takeUntil } from 'rxjs/operators'
 import {
     DtCellCustomEvent,
     DtHeaderCellCustomEvent,
@@ -27,10 +28,9 @@ import {
     DynamicTableOptions,
     getDefaultDtOptions
 } from 'spline-common/dynamic-table'
-import { BaseLocalStateComponent, QuerySorter, RouterNavigation, SearchDataSource, SearchQuery, SplineRecord } from 'spline-utils'
+import { BaseLocalStateComponent, QuerySorter, RouterNavigation, SearchDataSource, SplineRecord } from 'spline-utils'
 
 import { SplineSearchDynamicTable } from './spline-search-dynamic-table.models'
-import SearchParams = SearchQuery.SearchParams
 
 
 @Component({
@@ -55,6 +55,9 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
     @Output() headerCellEvent$ = new EventEmitter<DtHeaderCellCustomEvent>()
     @Output() secondaryHeaderCellEvent$ = new EventEmitter<DtHeaderCellCustomEvent>()
 
+    private readonly _resumeListeningOnServerUpdates$ = new Subject<void>()
+    private _dataUpdateAvailable$: Observable<boolean>
+
     constructor(private readonly activatedRoute: ActivatedRoute,
                 private readonly router: Router) {
         super()
@@ -67,18 +70,16 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
         return this.activatedRoute.snapshot.queryParams
     }
 
+    get isDataUpdateAvailable$(): Observable<boolean> {
+        return this._dataUpdateAvailable$
+    }
+
     ngOnInit(): void {
+        this.subscribeToRouter(this.router)
+        this.subscribeToDataSource(this.dataSource)
 
-        const searchParamsFromUrl = !this.isUrlStateDisabled
-            ? SplineSearchDynamicTable.extractSearchParamsFromUrl(
-                this.currentQueryParams,
-                this.urlStateQueryParamAlias,
-                this.dataSource
-            )
-            : null
-
-        this.initDefaultState(this.dataSource, searchParamsFromUrl)
-        this.initDataSourceEvents(this.dataSource)
+        // start listening on the server data updates
+        this.initDataUpdateAvailableObservable(this.dataSource)
 
         // init URL state Sync if it is allowed
         if (!this.isUrlStateDisabled) {
@@ -86,7 +87,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
         }
 
         // load data
-        this.dataSource.load()
+        this.dataSource.update(this.searchParamsFromUrl() ?? {})
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -120,7 +121,13 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
         this.dataSource.search(searchTerm)
     }
 
+    onRefreshDataClick(): void {
+        this.dataSource.setFilter({ asAtTime: Date.now() })
+        this._resumeListeningOnServerUpdates$.next()
+    }
+
     ngOnDestroy(): void {
+        this._resumeListeningOnServerUpdates$.complete()
         super.ngOnDestroy()
     }
 
@@ -128,28 +135,29 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
         this.dataSource.sort([sorter])
     }
 
-    private initDefaultState(
-        dataSource: SearchDataSource<TRowData>,
-        currentSearchParams?: SearchParams): void {
-
-        if (currentSearchParams) {
-            dataSource.updateSearchParams({ ...currentSearchParams }, false)
-        }
-
-        const initSorting = dataSource.searchParams.sortBy.length > 0
-            ? dataSource.searchParams.sortBy[0]
+    private searchParamsFromUrl() {
+        return !this.isUrlStateDisabled
+            ? SplineSearchDynamicTable.extractSearchParamsFromUrl(
+                this.currentQueryParams,
+                this.urlStateQueryParamAlias,
+            )
             : null
+    }
 
-        this.updateState({
-            initSorting,
-            isInitialized: true,
-            totalCount: dataSource.dataState.data?.totalCount ?? 0,
-            loadingProcessing: { ...dataSource.dataState.loadingProcessing },
-            searchParams: { ...dataSource.searchParams }
+    private subscribeToRouter(router: Router): void {
+        // Refresh the table on re-navigating to the same route
+        router.events.pipe(
+            takeUntil(this.destroyed$),
+            filter((event: RouterEvent) => event instanceof NavigationEnd)
+        ).subscribe(() => {
+            if (this.searchParamsFromUrl() === null) {
+                this.dataSource.reset()
+                this._resumeListeningOnServerUpdates$.next()
+            }
         })
     }
 
-    private initDataSourceEvents(dataSource: SearchDataSource<TRowData>): void {
+    private subscribeToDataSource(dataSource: SearchDataSource<TRowData>): void {
         // totalCount
         dataSource.dataState$
             .pipe(
@@ -183,13 +191,27 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
                 skip(1),
                 distinctUntilChanged((left, right) => isEqual(left, right))
             )
-            .subscribe(
-                searchParams => this.updateState({
-                    searchParams
-                })
-            )
+            .subscribe(searchParams => {
+                const sorting = searchParams.sortBy.length > 0
+                    ? searchParams.sortBy[0]
+                    : null
 
-        // TODO :: SearchParams sort changed => update table sorting
+                this.updateState({
+                    sorting: sorting,
+                    searchParams: { ...searchParams }
+                })
+            })
+    }
+
+    private initDataUpdateAvailableObservable(dataSource: SearchDataSource<TRowData>): void {
+        this._dataUpdateAvailable$ = dataSource.serverDataUpdates$
+            .pipe(
+                takeUntil(this.destroyed$),
+                map(() => true),
+                first(),
+                startWith(false),
+                repeatWhen(() => this._resumeListeningOnServerUpdates$)
+            )
     }
 
     private initUrlStateSync(dataSource: SearchDataSource<TRowData>, queryParamAlias: string): void {
@@ -199,19 +221,14 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
         //
         dataSource.searchParams$
             .pipe(
+                takeUntil(this.destroyed$),
                 distinctUntilChanged((a, b) => isEqual(a, b)),
                 skip(1),
             )
-            .subscribe(() => {
-
-                const searchParams = !isEqual(dataSource.searchParams, dataSource.defaultSearchParams)
-                    ? dataSource.searchParams
-                    : null
-
+            .subscribe((searchParams) => {
                 const queryParams = SplineSearchDynamicTable.applySearchParams(
                     this.currentQueryParams,
                     queryParamAlias,
-                    dataSource,
                     searchParams
                 )
                 this.updateRouterState(queryParams)

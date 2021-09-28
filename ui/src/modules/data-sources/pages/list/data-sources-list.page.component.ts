@@ -15,6 +15,7 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core'
+import { takeUntil } from 'rxjs/operators'
 import { ExecutionEventFacade, ExecutionEventsQuery } from 'spline-api'
 import { DynamicFilterFactory, DynamicFilterModel } from 'spline-common/dynamic-filter'
 import { DataSourceWithDynamicFilter } from 'spline-shared'
@@ -55,6 +56,9 @@ export class DataSourcesListPageComponent extends BaseComponent implements OnDes
         this.dynamicFilterFactory
             .schemaToModel<DataSourcesListPage.Filter>(
                 DataSourcesListPage.getDynamicFilterSchema()
+            )
+            .pipe(
+                takeUntil(this.destroyed$)
             )
             .subscribe(model => {
                 this.filterModel = model

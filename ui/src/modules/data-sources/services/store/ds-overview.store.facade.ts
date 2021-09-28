@@ -27,12 +27,10 @@ import { DsOverviewStore, DsOverviewStoreActions, DsOverviewStoreSelectors } fro
 export class DsOverviewStoreFacade {
 
     readonly state$: Observable<DsOverviewStore.State>
-    readonly isInitialized$: Observable<boolean>
     readonly dataSourceInfo$: Observable<SplineDataSourceInfo>
 
     constructor(private readonly store: Store<any>) {
         this.state$ = this.store.pipe(select(DsOverviewStoreSelectors.rootState))
-        this.isInitialized$ = this.store.pipe(select(DsOverviewStoreSelectors.isInitialized))
         this.dataSourceInfo$ = this.store.pipe(select(DsOverviewStoreSelectors.dataSourceInfo))
     }
 

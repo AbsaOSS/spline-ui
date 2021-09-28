@@ -16,7 +16,7 @@
 
 import { isEqual } from 'lodash-es'
 import { Observable } from 'rxjs'
-import { distinctUntilChanged, filter, map, skip, takeUntil } from 'rxjs/operators'
+import { distinctUntilChanged, filter, map, skip, takeUntil, withLatestFrom } from 'rxjs/operators'
 import { DynamicFilterModel } from 'spline-common/dynamic-filter'
 import { SearchDataSource, SplineRecord } from 'spline-utils'
 
@@ -50,19 +50,19 @@ export namespace DataSourceWithDynamicFilter {
             .pipe(
                 takeUntil(bindTill$),
                 distinctUntilChanged((left, right) => isEqual(left, right)),
-                map((filterValue) => {
-                    const currentQueryFilter = dataSource.searchParams.filter
-                    return {
-                        ...currentQueryFilter,
-                        ...filtersMapping.dynamicFilterToQueryFilterMapFn(filterValue, currentQueryFilter)
-                    }
+                withLatestFrom(dataSource.searchParams$),
+                map(([filterValue, searchParams]) => {
+                    const currentQueryFilter = searchParams.filter
+                    return [
+                        {
+                            ...currentQueryFilter,
+                            ...filtersMapping.dynamicFilterToQueryFilterMapFn(filterValue, currentQueryFilter)
+                        },
+                        currentQueryFilter]
                 }),
-                filter((queryFilter: TQueryFilter) => {
-                    const currentQueryFilter = dataSource.searchParams.filter
-                    return !isEqual(queryFilter, currentQueryFilter)
-                })
+                filter(([queryFilter, currentQueryFilter]) => !isEqual(queryFilter, currentQueryFilter))
             )
-            .subscribe(queryFilter => {
+            .subscribe(([queryFilter]) => {
                 dataSource.setFilter(queryFilter)
             })
 

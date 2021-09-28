@@ -35,6 +35,20 @@
                 </spline-search-box>
             </div>
             <!-- ./SEARCH -->
+
+            <!-- UPDATE NOTIFICATION -->
+            <div class="flex-grow-1">
+                <button mat-raised-button color="accent"
+                        *ngIf="isDataUpdateAvailable$ | async"
+                        [matTooltip]="'SHARED.DYNAMIC_TABLE.TOOLTIP__UPDATE_AVAILABLE' | translate"
+                        (click)="onRefreshDataClick()"
+                        >
+                    <mat-icon>refresh</mat-icon>
+                    {{ 'SHARED.DYNAMIC_TABLE.BUTTON__REFRESH' | translate }}
+                </button>
+            </div>
+            <!-- ./UPDATE NOTIFICATION -->
+
             <div>
                 <!-- FILTERS -->
                 <ng-content></ng-content>
@@ -49,7 +63,7 @@
 
         <!--  TABLE  -->
         <dynamic-table [dataSource]="dataSource"
-                       [initSorting]="state.initSorting"
+                       [sorting]="state.sorting"
                        [dataMap]="dataMap"
                        [options]="options"
                        (sortingChanged$)="onSortingChanged($event)"

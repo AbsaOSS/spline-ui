@@ -113,7 +113,7 @@ export class ExecutionPlanOverviewStoreFacade extends BaseStoreWithLoading<Execu
                     ),
                 })
 
-                this.executionPlanFacade.fetchAttributeLinage(this.state.executionPlanId, attrId)
+                this.executionPlanFacade.fetchAttributeLineage(this.state.executionPlanId, attrId)
                     .pipe(
                         catchError((error) => {
                             this.updateState({
@@ -148,7 +148,7 @@ export class ExecutionPlanOverviewStoreFacade extends BaseStoreWithLoading<Execu
         })
 
         const operationObserver: Observable<OperationAttributeLineage | null> = selectedAttributeId
-            ? this.executionPlanFacade.fetchAttributeLinage(executionPlanId, selectedAttributeId)
+            ? this.executionPlanFacade.fetchAttributeLineage(executionPlanId, selectedAttributeId)
             : of(null)
 
         type CombinedData = {
@@ -157,7 +157,7 @@ export class ExecutionPlanOverviewStoreFacade extends BaseStoreWithLoading<Execu
         }
 
         const observer: Observable<CombinedData> = forkJoin([
-            this.executionPlanFacade.fetchLineageOverview(executionPlanId),
+            this.executionPlanFacade.fetchExecutionPlanDetails(executionPlanId),
             operationObserver,
         ])
             .pipe(
