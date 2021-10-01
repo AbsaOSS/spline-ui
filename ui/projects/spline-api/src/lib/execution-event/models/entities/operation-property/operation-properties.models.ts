@@ -18,11 +18,14 @@ import { OpExpression } from './expression/op-expression.models'
 
 
 export type OperationProperties =
+    & (Record<string, any>)
+
+export type OperationPropertiesAlias =
+    & OperationProperties
     &
     {
         name: string
     }
-    & (Record<string, any>)
 
 export type OperationPropertiesAggregate =
     & OperationProperties

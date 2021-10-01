@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { OperationDetails } from 'spline-api'
+import { OperationDetails, OperationPropertiesJoin } from 'spline-api'
 import { SdWidgetExpansionPanel, SdWidgetSchema, SplineDataViewSchema } from 'spline-common/data-view'
 import { SdWidgetExpression } from 'spline-shared/expression'
 import { SgNodeControl } from 'spline-shared/graph'
@@ -37,7 +37,7 @@ export namespace OperationJoin {
     export function getMainSection(operationDetails: OperationDetails,
                                    primitiveProps: EventOperationProperty.ExtraPropertyValuePrimitive[]): SdWidgetSchema[] {
 
-        const properties = operationDetails.operation.properties
+        const properties = operationDetails.operation.properties as OperationPropertiesJoin
         const nodeStyles = SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Join)
 
         return [

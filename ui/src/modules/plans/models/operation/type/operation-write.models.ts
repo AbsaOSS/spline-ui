@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { dataSourceUriToName, OperationDetails, uriToDatsSourceId } from 'spline-api'
+import { dataSourceUriToName, OperationDetails, OperationPropertiesWrite, uriToDatsSourceId } from 'spline-api'
 import { SdWidgetExpansionPanel, SdWidgetRecordsList, SdWidgetSchema, SplineDataViewSchema } from 'spline-common/data-view'
 import { SgNodeControl } from 'spline-shared/graph'
 
@@ -37,7 +37,7 @@ export namespace OperationWrite {
     export function getMainSection(operationDetails: OperationDetails,
                                    primitiveProps: EventOperationProperty.ExtraPropertyValuePrimitive[]): SdWidgetSchema[] {
 
-        const properties = operationDetails.operation.properties
+        const properties = operationDetails.operation.properties as OperationPropertiesWrite
         const nodeStyles = SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Write)
 
         return [
