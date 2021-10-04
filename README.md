@@ -8,16 +8,18 @@
 ## Table of Contents
 
 <!--ts-->
+
 * [Spline UI](#spline-ui)
-   * [Download](#download)
-   * [Usage](#usage)
-      * [Running as a Docker container](#run-as-docker)
-      * [Running a WAR-file](#run-as-war)
-      * [Running as embedded CDN resource](#run-as-cdn)
-   * [Building from sources](#build)
-      * [TL;DR](#tldr)
-      * [Building a Docker](#build-docker)
-      * [Building UI-core (SPA) alone](#build-core)
+    * [Download](#download)
+    * [Usage](#usage)
+        * [Running as a Docker container](#run-as-docker)
+        * [Running a WAR-file](#run-as-war)
+        * [Running as embedded CDN resource](#run-as-cdn)
+    * [Building from sources](#build)
+        * [TL;DR](#tldr)
+        * [Building a Docker](#build-docker)
+        * [Building UI-core (SPA) alone](#build-core)
+    * [Versioning strategy](#versioning)
 
 <!-- Added by: wajda, at: Mon 17 May 17:10:10 CEST 2021 -->
 
@@ -28,8 +30,8 @@
 
 The UI for [Spline project](https://absaoss.github.io/spline/)
 
-Spline UI app is implemented as a _single-page application (SPA)_, available alone as well as packed as a Docker image or a WAR-file.
-Choose at your deployment preferences.
+Spline UI app is implemented as a _single-page application (SPA)_, available alone as well as packed as a Docker image or a WAR-file. Choose according to your
+deployment preferences.
 
 <a id="download"></a>
 ## Download
@@ -39,11 +41,14 @@ Choose at your deployment preferences.
 
 <a id="usage"></a>
 ## Usage
-Spline UI needs to know where Spline Consumer API sits.
-Spline Consumer API endpoint is accessed from the user browser directly, so use appropriate IP or host name.
+
+Spline UI needs to know where Spline Consumer API sits. Spline Consumer API endpoint is accessed from the user browser directly, so use appropriate IP
+or host name.
 
 <a id="run-as-docker"></a>
+
 ### Running as a Docker container
+
 ```shell script
 docker container run \
       -e SPLINE_CONSUMER_URL=http://localhost:8080/consumer \
@@ -55,13 +60,14 @@ Open Spline UI in a browser - http://localhost:9090
 
 <a id="run-as-war"></a>
 ### Running a WAR-file
-Download a WAR-file using the link above, and deploy it into any J2EE-compatible Web Container,
-e.g. Tomcat, Jetty, JBoss etc.
+
+Download a WAR-file using the link above, and deploy it into any J2EE-compatible Web Container, e.g. Tomcat, Jetty, JBoss etc.
 
 A WAR-file provides several alternative ways how to set configuration parameters:
+
 - JNDI
 
-    (for example in a `context.xml` in the Tomcat server)
+  (for example in a `context.xml` in the Tomcat server)
     ```xml
     <Environment name="spline/consumer/url" value="..." type="java.lang.String"/>
     ```
@@ -79,10 +85,10 @@ A WAR-file provides several alternative ways how to set configuration parameters
 <a id="run-as-cdn"></a>
 ### Running as embedded CDN resource
 
-It is possible to use compiled UI sources placed at some CDN server.
-In that the application can be configured with query parameters like so:
+It is possible to use compiled UI sources placed at some CDN server. In that the application can be configured with query parameters like so:
 
 ```html
+
 <iframe
     src="https://cdn.jsdelivr.net/path-to-compiled-app-assets/index.html?_splineConsumerApiUrl=ENCODED_CONSUMER_API_PATH&_targetUrl=ENCODED_APP_PATH&_isEmbeddedMode=true">
 </iframe>
@@ -135,13 +141,14 @@ See [Building Spline docker images](https://github.com/AbsaOSS/spline-getting-st
 <a id="build-core"></a>
 ### Building UI-core (SPA) alone
 
-#### Config 
+#### Config
 
-Config file should be placed in the directory: 
- - after build in the dist folder `/dist/assets/config.json` 
- - or before build `/src/assets/config.json` (this option applies for development)
- 
- The example of the config can be found here: `/src/assets/example.json`
+Config file should be placed in the directory:
+
+- after build in the dist folder `/dist/assets/config.json`
+- or before build `/src/assets/config.json` (this option applies for development)
+
+The example of the config can be found here: `/src/assets/example.json`
 
 #### Development server
 
@@ -149,9 +156,29 @@ Run `npm start` for a dev server. Navigate to `http://localhost:4300/`. The app 
 
 #### Build
 
-Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory.
-When build completes replace `SPLINE_UI_DEPLOY_CONTEXT` in the `dist/app/index.html` accordingly to your deployment schema,
-and verify/create `dist/app/assets/config.json` as described above.
+Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory. When build completes
+replace `SPLINE_UI_DEPLOY_CONTEXT` in the `dist/app/index.html` accordingly to your deployment schema, and verify/create `dist/app/assets/config.json`
+as described above.
+
+<a id="versioning"></a>
+## Versioning strategy
+
+Spline UI version number mimics _Semantic Versioning_ structure, although it doesn't strictly follow it. The reason is that it's difficult to define
+what is a _Public API_[^1] of the Spline UI in terms of _Semantic Versioning_.
+
+But for the sake of consistency, Spline UI version uses a similar three-digit pattern with the _pre-release_ and _build_ labels, but slightly
+different meaning of the _major_ and _minor_ components.
+
+- The _major version_ component indicates the Spline REST major version it supports with guarantee. The Spline server with the major version that is
+  higher than the UI major version can also be supported, depending on the reason why that major version was incremented at the first place. (Spline
+  server exposes multiple different APIs, and a given major version might expose exactly the same Consumer API that the previous one did).
+
+- The _minor version_ component is incremented when new important features or significant internal changes are introduced.
+
+- The _patch version_ component is incremented on bugfixes and small enhancements.
+
+[^1]: [Semantic Versioning](https://semver.org/) specification relies on the definition of the _Public API_ that the given application exposes and the
+changes to which is communicated by incrementing the version numbers.
 
 ---
 
