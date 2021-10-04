@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { OperationDetails } from 'spline-api'
-import { SdWidgetExpansionPanel, SdWidgetSchema, SplineDataViewSchema } from 'spline-common/data-view'
+import { OperationDetails, OperationPropertiesAlias } from 'spline-api'
+import { SdWidgetExpansionPanel, SdWidgetSchema, SdWidgetSimpleRecord, SplineDataViewSchema } from 'spline-common/data-view'
 import { SgNodeControl } from 'spline-shared/graph'
 
 import { EventOperationProperty } from '../operation-property.models'
@@ -36,20 +36,25 @@ export namespace OperationAlias {
     export function getMainSection(operationDetails: OperationDetails,
                                    primitiveProps: EventOperationProperty.ExtraPropertyValuePrimitive[]): SdWidgetSchema[] {
 
+        const properties = operationDetails.operation.properties as OperationPropertiesAlias
         const nodeStyles = SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Alias)
 
-        return primitiveProps.length
-            ? [
-                SdWidgetExpansionPanel.toSchema(
-                    {
-                        title: 'PLANS.OPERATION__ALIAS__MAIN_SECTION_TITLE',
-                        icon: nodeStyles.icon,
-                        iconColor: nodeStyles.color,
-                    },
-                    EventOperationProperty.primitivePropsToDvs(primitiveProps),
-                ),
-            ]
-            : []
+        return [
+            SdWidgetExpansionPanel.toSchema(
+                {
+                    title: 'PLANS.OPERATION__ALIAS__MAIN_SECTION_TITLE',
+                    icon: nodeStyles.icon,
+                    iconColor: nodeStyles.color,
+                },
+                [
+                    SdWidgetSimpleRecord.toSchema({
+                        label: 'PLANS.OPERATION__ALIAS__MAIN_SECTION__PROPERTY_NAME',
+                        value: properties.name,
+                    }),
+                    ...EventOperationProperty.primitivePropsToDvs(primitiveProps),
+                ]
+            ),
+        ]
     }
 
 }

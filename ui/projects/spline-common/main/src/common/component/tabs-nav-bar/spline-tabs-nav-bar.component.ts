@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core'
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
-import { filter, takeUntil } from 'rxjs/operators'
-import { BaseComponent } from 'spline-utils'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
 import { SplineTabsNavBar } from './spline-tabs-nav-bar.models'
 import NavTabInfo = SplineTabsNavBar.NavTabInfo
@@ -28,38 +25,13 @@ import NavTabInfo = SplineTabsNavBar.NavTabInfo
     templateUrl: './spline-tabs-nav-bar.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SplineTabsNavBarComponent extends BaseComponent implements OnInit {
+export class SplineTabsNavBarComponent {
 
     @Input() set tabs(tabs: NavTabInfo[]) {
-        const currentUrl = this.activatedRoute.snapshot.url.toString()
-        this.decoratedTabs = tabs.map(
-            currentTab => SplineTabsNavBar.decorateNavTabActive(currentTab, currentUrl)
-        )
+        this.decoratedTabs = tabs
     }
 
     @Input() align: 'start' | 'center' | 'end' = 'start'
 
     decoratedTabs: NavTabInfo[]
-
-    constructor(private readonly router: Router,
-                private readonly activatedRoute: ActivatedRoute) {
-
-        super()
-
-        this.router.events
-            .pipe(
-                takeUntil(this.destroyed$),
-                filter(navObj => navObj instanceof NavigationEnd)
-            )
-            .subscribe((navObj: NavigationEnd) => {
-                this.decoratedTabs = this.decoratedTabs.map(
-                    currentTab => SplineTabsNavBar.decorateNavTabActive(currentTab, navObj.url)
-                )
-            })
-    }
-
-    ngOnInit(): void {
-
-    }
-
 }
