@@ -17,7 +17,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
 import { SplineTabsNavBar } from './spline-tabs-nav-bar.models'
-import NavTabInfo = SplineTabsNavBar.NavTabInfo;
+import NavTabInfo = SplineTabsNavBar.NavTabInfo
 
 
 @Component({
