@@ -30,7 +30,7 @@ export function getDataSourceWriteModeLabel(writeMode: DataSourceWriteMode): str
             return `${prefix}.APPEND`
 
         case DataSourceWriteMode.Overwrite:
-            return `${prefix}.OVERRIDE`
+            return `${prefix}.OVERWRITE`
 
         default:
             console.warn(`Unknown write mode: ${writeMode}`)

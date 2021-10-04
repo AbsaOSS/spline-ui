@@ -19,7 +19,6 @@ import { SplineColors } from 'spline-common'
 import { SdWidgetCard, SdWidgetExpansionPanel, SdWidgetSimpleRecord, SdWidgetTitle, SplineDataViewSchema } from 'spline-common/data-view'
 import { SdWidgetAttributesTree } from 'spline-shared/attributes'
 import { SgEventNodeInfoShared } from 'spline-shared/data-view'
-import { EventsRouting } from 'spline-shared/events'
 import { DateTimeHelpers, ProcessingStore } from 'spline-utils'
 
 import { DsOverviewDetailsStoreActions } from '../actions'
@@ -127,7 +126,7 @@ export namespace DsOverviewDetailsStore {
                         label: 'DATA_SOURCES.DETAILS__WRITE_MODE',
                         value: executionEvent.writeMode === DataSourceWriteMode.Append
                             ? 'Append'
-                            : 'Override',
+                            : 'Overwrite',
                     },
                     {
                         label: 'DATA_SOURCES.DETAILS__EXECUTION_EVENT',

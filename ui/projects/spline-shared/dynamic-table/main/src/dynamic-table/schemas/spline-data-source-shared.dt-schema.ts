@@ -47,7 +47,7 @@ export namespace SplineDataSourceSharedDtSchema {
                 const writeMode = getWriteModeFn(rowData)
                 return writeMode === DataSourceWriteMode.Append
                     ? 'SHARED.DYNAMIC_TABLE.DS_WRITE_MODE__APPEND'
-                    : 'SHARED.DYNAMIC_TABLE.DS_WRITE_MODE__OVERRIDE'
+                    : 'SHARED.DYNAMIC_TABLE.DS_WRITE_MODE__OVERWRITE'
             },
             options: (rowData) => {
                 const writeMode = getWriteModeFn(rowData)
