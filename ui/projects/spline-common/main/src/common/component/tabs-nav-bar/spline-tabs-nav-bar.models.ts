@@ -26,13 +26,4 @@ export namespace SplineTabsNavBar {
         urlPattern?: string
     }
 
-    export function decorateNavTabActive(tab: NavTabInfo, url: string): NavTabInfo {
-        return {
-            ...tab,
-            active: tab?.urlPattern
-                ? !!new RegExp(tab.urlPattern).exec(url)
-                : false
-        }
-    }
-
 }
