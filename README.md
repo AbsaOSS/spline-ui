@@ -30,7 +30,7 @@
 
 The UI for [Spline project](https://absaoss.github.io/spline/)
 
-Spline UI app is implemented as a _single-page application (SPA)_, available alone as well as packed as a Docker image or a WAR-file. Choose at your
+Spline UI app is implemented as a _single-page application (SPA)_, available alone as well as packed as a Docker image or a WAR-file. Choose according to your
 deployment preferences.
 
 <a id="download"></a>
