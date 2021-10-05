@@ -37,7 +37,7 @@ export class TimeDurationPipe implements PipeTransform {
     }
 
     private static toText(durationNs: number): string {
-        const [, text] =
+        const [, result] =
             Object.entries(TIME_INTERVAL_UNITS)
                 .reduce<[number, string]>(([seconds, prevText], [unitName, unitScale]) => {
                     const unitQuantity = Math.floor(seconds / unitScale)
@@ -48,6 +48,6 @@ export class TimeDurationPipe implements PipeTransform {
                     return [secondsReminder, text]
                 }, [durationNs / 1000000000, ''])
 
-        return text.trim()
+        return result.trim()
     }
 }
