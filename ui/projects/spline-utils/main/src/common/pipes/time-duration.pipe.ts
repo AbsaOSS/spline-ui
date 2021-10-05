@@ -15,31 +15,25 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core'
-import { TypeHelpers } from "../models";
-import isNumber = TypeHelpers.isNumber;
+
+import { TypeHelpers } from '../models'
+import isNumber = TypeHelpers.isNumber
+
 
 const TIME_INTERVAL_UNITS = {
-    'd': 86400,
-    'h': 3600,
-    'min': 60,
-    'sec': 1
+    d: 86400,
+    h: 3600,
+    min: 60,
+    sec: 1
 }
 
 @Pipe({ name: 'timeDuration' })
 export class TimeDurationPipe implements PipeTransform {
 
-    transform(value: number) {
-        if (isNumber(value)) {
-            return TimeDurationPipe.toText(value)
-        } else {
-            return value
-        }
-    }
-
     private static toText(durationNs: number): string {
         const [, result] =
             Object.entries(TIME_INTERVAL_UNITS)
-                .reduce<[number, string]>(([seconds, prevText], [unitName, unitScale]) => {
+                .reduce(([seconds, prevText], [unitName, unitScale]) => {
                     const unitQuantity = Math.floor(seconds / unitScale)
                     const secondsReminder = seconds - unitQuantity * unitScale
                     const text = unitQuantity > 0
@@ -49,5 +43,11 @@ export class TimeDurationPipe implements PipeTransform {
                 }, [durationNs / 1000000000, ''])
 
         return result.trim()
+    }
+
+    transform(value: number) {
+        return isNumber(value)
+            ? TimeDurationPipe.toText(value)
+            : value
     }
 }

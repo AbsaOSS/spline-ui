@@ -23,11 +23,9 @@ export namespace DtCellElapsedTime {
 
     export type Value = number
 
-    export type Options = {
-    }
+    export type Options = {}
 
-    export const DEFAULT_OPTIONS: Readonly<Options> = Object.freeze<Options>({
-    })
+    export const DEFAULT_OPTIONS: Readonly<Options> = Object.freeze<Options>({})
 
     export function getDefaultLayout(): DtCellLayout {
         return (new DtLayoutBuilder())

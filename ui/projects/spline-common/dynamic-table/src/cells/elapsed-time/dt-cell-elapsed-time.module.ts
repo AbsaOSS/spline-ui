@@ -16,12 +16,12 @@
 
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
+import { SplineUtilsCommonModule } from 'spline-utils'
 
 import { DT_CELL_FACTORY, DynamicTableModule } from '../../core'
 
-import { DtCellElapsedTimeComponent } from './dt-cell-elapsed-time.component'
 import { DtCellElapsedTimeFactory } from './dt-cell-elapsed-time-factory.service'
-import { SplineUtilsCommonModule } from "spline-utils";
+import { DtCellElapsedTimeComponent } from './dt-cell-elapsed-time.component'
 
 
 @NgModule({

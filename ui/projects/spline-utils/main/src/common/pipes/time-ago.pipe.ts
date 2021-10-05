@@ -15,46 +15,51 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core'
-import { isDate, isMoment, Moment } from "moment";
-import { TypeHelpers } from "../models";
-import isNumber = TypeHelpers.isNumber;
+import { isDate, isMoment, Moment } from 'moment'
+
+import { TypeHelpers } from '../models'
+import isNumber = TypeHelpers.isNumber
+
 
 const TIME_INTERVAL_UNITS = {
-    'year': 31536000,
-    'month': 2592000,
-    'week': 604800,
-    'day': 86400,
-    'hour': 3600,
-    'minute': 60,
-    'second': 1
+    year: 31536000,
+    month: 2592000,
+    week: 604800,
+    day: 86400,
+    hour: 3600,
+    minute: 60,
+    second: 1
 }
 
 @Pipe({ name: 'timeAgo' })
 export class TimeAgoPipe implements PipeTransform {
 
-    transform(value: number | Date | Moment) {
-        if (isDate(value)) {
-            return TimeAgoPipe.toText(value.getTime())
-        } else if (isMoment(value)) {
-            return TimeAgoPipe.toText(+value)
-        } else if (isNumber(value)) {
-            return TimeAgoPipe.toText(value)
-        } else {
-            return value
-        }
-    }
-
     private static toText(timestamp: number): string {
         const seconds = (Date.now() - timestamp) / 1000
-        if (seconds < 29)
+        if (seconds < 29) {
             return 'Just now'
+        }
 
         for (const unit of Object.keys(TIME_INTERVAL_UNITS)) {
             const n = Math.floor(seconds / TIME_INTERVAL_UNITS[unit])
-            if (n > 0)
+            if (n > 0) {
                 return (n === 1)
                     ? `${n} ${unit} ago` // singular
                     : `${n} ${unit}s ago` // plural
+            }
         }
+    }
+
+    transform(value: number | Date | Moment) {
+        if (isDate(value)) {
+            return TimeAgoPipe.toText(value.getTime())
+        }
+        if (isMoment(value)) {
+            return TimeAgoPipe.toText(+value)
+        }
+        else if (isNumber(value)) {
+            return TimeAgoPipe.toText(value)
+        }
+        return value
     }
 }

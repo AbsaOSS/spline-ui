@@ -17,8 +17,8 @@
 
 import { SplineSafeHtmlPipe } from './safe-html.pipe'
 import { SplineSearchPipe } from './search.pipe'
-import { TimeAgoPipe } from "./time-ago.pipe";
-import { TimeDurationPipe } from "./time-duration.pipe";
+import { TimeAgoPipe } from './time-ago.pipe'
+import { TimeDurationPipe } from './time-duration.pipe'
 
 
 export * from './public-api'
