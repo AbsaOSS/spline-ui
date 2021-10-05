@@ -31,14 +31,14 @@ import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material'
 import { SplineIconModule, SplineSearchBoxModule } from 'spline-common'
 import { DynamicFilterCoreModule } from 'spline-common/dynamic-filter'
 import { SplineLayoutModule } from 'spline-common/layout'
-import { SplineConfigModule, SplineConfigSettings, SPLINE_CONFIG_SETTINGS } from 'spline-shared'
+import { SPLINE_CONFIG_SETTINGS, SplineConfigModule, SplineConfigSettings } from 'spline-shared'
 import { SplineAttributesSharedModule } from 'spline-shared/attributes'
 import { SplineUtilsCommonModule } from 'spline-utils'
 import {
     COMMON_ASSETS,
+    SPLINE_TRANSLATE_COMMON_ASSETS,
     SplineTranslateCoreModule,
     SplineTranslateModule,
-    SPLINE_TRANSLATE_COMMON_ASSETS,
     toAssetsFilePath
 } from 'spline-utils/translate'
 
@@ -47,6 +47,7 @@ import { AppComponent } from './app.component'
 import { SplineSidebarMenuComponent } from './components'
 import { AppNotFoundComponent } from './pages/not-found/not-found.component'
 import { SplineGlobalErrorHandler } from './services'
+import { relativeUrl } from '@env/shared'
 
 
 export const metaReducers: MetaReducer<any>[] =
@@ -89,8 +90,10 @@ export const metaReducers: MetaReducer<any>[] =
         {
             provide: SPLINE_CONFIG_SETTINGS,
             useFactory: (): SplineConfigSettings => {
+                const envFileSuffix = environment.key && `${environment.key}.` || ''
                 return {
-                    configFileUri: environment.splineConfigUri,
+                    defaultConfigUri: `${relativeUrl}/assets/config.default.json`,
+                    userConfigUri: `${relativeUrl}/assets/config.${envFileSuffix}json`,
                 }
             },
         },

@@ -24,5 +24,5 @@ export interface Environment {
     buildTimestamp: string
     deploymentPrefix: string
     url: string
-    splineConfigUri: string
+    key: string
 }

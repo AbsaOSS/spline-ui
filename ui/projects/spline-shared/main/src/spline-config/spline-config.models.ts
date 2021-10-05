@@ -25,7 +25,8 @@ export type SplineConfig = {
 }
 
 export type SplineConfigSettings = {
-    configFileUri: string
+    defaultConfigUri: string
+    userConfigUri: string
 }
 
 export const SPLINE_CONFIG_SETTINGS = new InjectionToken<SplineConfigSettings>('SPLINE_CONFIG_SETTINGS')

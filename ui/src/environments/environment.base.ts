@@ -31,5 +31,5 @@ export const environmentBase: Environment = {
     buildTimestamp: __SPLINE_UI_BUILD_TIMESTAMP__,
     deploymentPrefix,
     url,
-    splineConfigUri: `${relativeUrl}/assets/config.json`,
+    key: null,
 }
