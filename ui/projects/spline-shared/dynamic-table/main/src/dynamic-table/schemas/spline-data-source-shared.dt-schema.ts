@@ -44,10 +44,14 @@ export namespace SplineDataSourceSharedDtSchema {
         return {
             type: DtCellLabel.TYPE,
             value: (rowData) => {
-                const writeMode = getWriteModeFn(rowData)
-                return writeMode === DataSourceWriteMode.Append
-                    ? 'SHARED.DYNAMIC_TABLE.DS_WRITE_MODE__APPEND'
-                    : 'SHARED.DYNAMIC_TABLE.DS_WRITE_MODE__OVERRIDE'
+                switch (getWriteModeFn(rowData)) {
+                    case DataSourceWriteMode.Append:
+                        return 'SHARED.DYNAMIC_TABLE.DS_WRITE_MODE__APPEND'
+                    case DataSourceWriteMode.Overwrite:
+                        return 'SHARED.DYNAMIC_TABLE.DS_WRITE_MODE__OVERWRITE'
+                    default:
+                        return null
+                }
             },
             options: (rowData) => {
                 const writeMode = getWriteModeFn(rowData)
