@@ -15,6 +15,7 @@
  */
 
 export * from './date-time/public-api'
+export * from './elapsed-time/public-api'
 export * from './label/public-api'
 export * from './link/public-api'
 export * from './long-text/public-api'

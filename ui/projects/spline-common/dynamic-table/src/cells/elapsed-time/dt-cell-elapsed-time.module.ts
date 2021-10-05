@@ -14,32 +14,37 @@
  * limitations under the License.
  */
 
-
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 
-import { DynamicTableModule } from '../core'
+import { DT_CELL_FACTORY, DynamicTableModule } from '../../core'
 
-import { DtCellDateTimeModule } from './date-time'
-import { DtCellElapsedTimeModule } from './elapsed-time'
-import { DtCellLabelModule } from './label'
-import { DtCellLinkModule } from './link'
-import { DtCellLongTextModule } from './long-text'
+import { DtCellElapsedTimeComponent } from './dt-cell-elapsed-time.component'
+import { DtCellElapsedTimeFactory } from './dt-cell-elapsed-time-factory.service'
+import { SplineUtilsCommonModule } from "spline-utils";
 
 
 @NgModule({
     imports: [
         CommonModule,
+        SplineUtilsCommonModule,
         DynamicTableModule,
     ],
+    declarations: [
+        DtCellElapsedTimeComponent
+    ],
     exports: [
-        DtCellLongTextModule,
-        DtCellLinkModule,
-        DtCellDateTimeModule,
-        DtCellElapsedTimeModule,
-        DtCellLabelModule,
+        DtCellElapsedTimeComponent
+    ],
+    providers: [
+        DtCellElapsedTimeFactory,
+        {
+            provide: DT_CELL_FACTORY,
+            useValue: DtCellElapsedTimeFactory,
+            multi: true
+        }
     ]
 })
-export class DynamicTableCommonCellsModule {
+export class DtCellElapsedTimeModule {
 
 }

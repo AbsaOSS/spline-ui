@@ -15,7 +15,7 @@
  */
 
 import { ExecutionEvent, ExecutionEventField } from 'spline-api'
-import { DtCellDateTime, DtCellLink, DynamicTableDataMap } from 'spline-common/dynamic-table'
+import { DtCellDateTime, DtCellElapsedTime, DtCellLink, DynamicTableDataMap } from 'spline-common/dynamic-table'
 import { SplineDataSourceSharedDtSchema } from 'spline-shared/dynamic-table'
 
 
@@ -28,6 +28,7 @@ export namespace EventsListDtSchema {
         dataSourceType = ExecutionEventField.dataSourceType,
         writeMode = ExecutionEventField.append,
         timestamp = ExecutionEventField.timestamp,
+        duration = ExecutionEventField.duration,
     }
 
     export function getSchema(): DynamicTableDataMap<Column> {
@@ -104,6 +105,12 @@ export namespace EventsListDtSchema {
                 id: Column.timestamp,
                 header: 'EVENTS.EVENTS_LIST__COL__TIMESTAMP',
                 isSortable: true
+            },
+            {
+                ...DtCellElapsedTime.getDefaultColSchema(),
+                id: Column.duration,
+                header: 'EVENTS.EVENTS_LIST__COL__ELAPSED_TIME',
+                isSortable: true,
             },
         ]
     }

@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 
-import { SplineSafeHtmlPipe } from './safe-html.pipe'
-import { SplineSearchPipe } from './search.pipe'
-import { TimeAgoPipe } from "./time-ago.pipe";
-import { TimeDurationPipe } from "./time-duration.pipe";
+import { DtCellBaseComponent } from '../../core'
+
+import { DtCellElapsedTime } from './dt-cell-elapsed-time.models'
 
 
-export * from './public-api'
-
-export const splineUtilsPipes = [
-    SplineSafeHtmlPipe,
-    SplineSearchPipe,
-    TimeAgoPipe,
-    TimeDurationPipe,
-]
+@Component({
+    selector: 'dt-cell-date-time',
+    templateUrl: './dt-cell-elapsed-time.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DtCellElapsedTimeComponent extends DtCellBaseComponent<DtCellElapsedTime.Value, DtCellElapsedTime.Options> {
+}

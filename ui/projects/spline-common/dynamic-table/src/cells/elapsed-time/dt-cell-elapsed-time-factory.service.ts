@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 
+import { Injectable } from '@angular/core'
 
-import { SplineSafeHtmlPipe } from './safe-html.pipe'
-import { SplineSearchPipe } from './search.pipe'
-import { TimeAgoPipe } from "./time-ago.pipe";
-import { TimeDurationPipe } from "./time-duration.pipe";
+import { IDtCellFactory } from '../../core'
+
+import { DtCellElapsedTimeComponent } from './dt-cell-elapsed-time.component'
+import { DtCellElapsedTime } from './dt-cell-elapsed-time.models'
 
 
-export * from './public-api'
+@Injectable()
+export class DtCellElapsedTimeFactory implements IDtCellFactory<DtCellElapsedTime.Value> {
 
-export const splineUtilsPipes = [
-    SplineSafeHtmlPipe,
-    SplineSearchPipe,
-    TimeAgoPipe,
-    TimeDurationPipe,
-]
+    readonly type = DtCellElapsedTime.TYPE
+
+    readonly componentType = DtCellElapsedTimeComponent
+}
+

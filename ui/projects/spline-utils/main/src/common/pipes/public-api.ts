@@ -16,3 +16,5 @@
 
 export * from './safe-html.pipe'
 export * from './search.pipe'
+export * from './time-ago.pipe'
+export * from './time-duration.pipe'

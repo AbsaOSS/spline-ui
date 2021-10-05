@@ -31,6 +31,7 @@ export enum ExecutionEventField {
     executionPlanId = 'executionPlanId',
     frameworkName = 'frameworkName',
     timestamp = 'timestamp',
+    duration = 'durationNs',
 }
 
 export type ExecutionEventDto = {
