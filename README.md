@@ -148,7 +148,10 @@ Config file should be placed in the directory:
 - after build in the dist folder `/dist/assets/config.json`
 - or before build `/src/assets/config.json` (this option applies for development)
 
-The example of the config can be found here: `/src/assets/example.json`
+The example of the config can be found here: `/src/assets/config.example.json`
+
+The list of all configuration properties along with their default values are stored in the `config.default.json`.
+Properties provided in the `config.json` overwrite corresponding properties from the `config.default.json`.
 
 #### Development server
 
