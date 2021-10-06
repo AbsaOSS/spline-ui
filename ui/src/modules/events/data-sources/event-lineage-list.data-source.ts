@@ -19,6 +19,7 @@ import { map } from 'rxjs/operators'
 import { ExecutionEventFacade, ExecutionEventField, ExecutionEventLineageList } from 'spline-api'
 import { PageResponse, QuerySorter, SearchDataSource, SearchQuery } from 'spline-utils'
 import SortDir = QuerySorter.SortDir
+import { SplineConfigService } from 'spline-shared'
 
 
 export class EventLineageListDataSource extends SearchDataSource<ExecutionEventLineageList.LineageRecord> {
@@ -29,7 +30,10 @@ export class EventLineageListDataSource extends SearchDataSource<ExecutionEventL
         this._executionEventId = value
     }
 
-    constructor(private readonly executionEventFacade: ExecutionEventFacade) {
+    constructor(
+        private readonly executionEventFacade: ExecutionEventFacade,
+        private readonly splineConfigService: SplineConfigService,
+    ) {
         super(() => ({
             defaultSearchParams: {
                 filter: {
@@ -41,7 +45,8 @@ export class EventLineageListDataSource extends SearchDataSource<ExecutionEventL
                         dir: SortDir.DESC
                     }
                 ]
-            }
+            },
+            pollingInterval: splineConfigService.config.serverPollingIntervalMs
         }))
     }
 

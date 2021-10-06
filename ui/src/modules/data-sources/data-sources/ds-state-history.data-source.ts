@@ -18,8 +18,9 @@ import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { ExecutionEvent, ExecutionEventFacade, ExecutionEventField, ExecutionEventsPageResponse, ExecutionEventsQuery } from 'spline-api'
 import { QuerySorter, SearchDataSource, SearchQuery } from 'spline-utils'
-import SearchParams = SearchQuery.SearchParams;
-import SortDir = QuerySorter.SortDir;
+import { SplineConfigService } from 'spline-shared'
+import SearchParams = SearchQuery.SearchParams
+import SortDir = QuerySorter.SortDir
 
 
 export class DsStateHistoryDataSource extends SearchDataSource<ExecutionEvent,
@@ -28,25 +29,27 @@ export class DsStateHistoryDataSource extends SearchDataSource<ExecutionEvent,
     ExecutionEventField> {
 
     constructor(
-        protected readonly executionEventFacade: ExecutionEventFacade,
+        private readonly executionEventFacade: ExecutionEventFacade,
+        private readonly splineConfigService: SplineConfigService,
         dsUri$: Observable<string>
     ) {
         super(dsUri$.pipe(map(dsUri => () => ({
-            defaultSearchParams: {
-                alwaysOnFilter: {
-                    dataSourceUri: dsUri
+                defaultSearchParams: {
+                    alwaysOnFilter: {
+                        dataSourceUri: dsUri
+                    },
+                    filter: {
+                        asAtTime: new Date().getTime()
+                    },
+                    sortBy: [
+                        {
+                            field: ExecutionEventField.timestamp,
+                            dir: SortDir.DESC
+                        }
+                    ]
                 },
-                filter: {
-                    asAtTime: new Date().getTime()
-                },
-                sortBy: [
-                    {
-                        field: ExecutionEventField.timestamp,
-                        dir: SortDir.DESC
-                    }
-                ]
-            }
-        })
+                pollingInterval: splineConfigService.config.serverPollingIntervalMs
+            })
         )))
     }
 

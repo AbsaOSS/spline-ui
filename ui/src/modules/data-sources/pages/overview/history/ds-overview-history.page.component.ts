@@ -20,7 +20,7 @@ import { map, takeUntil } from 'rxjs/operators'
 import { ExecutionEvent, ExecutionEventFacade, ExecutionEventsQuery, SplineDataSourceInfo } from 'spline-api'
 import { DynamicFilterFactory, DynamicFilterModel } from 'spline-common/dynamic-filter'
 import { DtCellCustomEvent } from 'spline-common/dynamic-table'
-import { DataSourceWithDynamicFilter } from 'spline-shared'
+import { DataSourceWithDynamicFilter, SplineConfigService } from 'spline-shared'
 import { BaseLocalStateComponent } from 'spline-utils'
 
 import { DsStateHistoryDataSource } from '../../../data-sources'
@@ -39,15 +39,17 @@ import { DsOverviewHistoryPage } from './ds-overview-history.page.models'
             provide: DsStateHistoryDataSource,
             useFactory: (
                 executionEventFacade: ExecutionEventFacade,
+                splineConfigService: SplineConfigService,
                 store: DsOverviewStoreFacade) => {
 
                 const dsUri$ = store.dataSourceInfo$.pipe(map((dataSourceInfo) => dataSourceInfo.uri))
 
-                return new DsStateHistoryDataSource(executionEventFacade, dsUri$)
+                return new DsStateHistoryDataSource(executionEventFacade, splineConfigService, dsUri$)
             },
             deps: [
                 ExecutionEventFacade,
-                DsOverviewStoreFacade
+                SplineConfigService,
+                DsOverviewStoreFacade,
             ],
         },
     ],
