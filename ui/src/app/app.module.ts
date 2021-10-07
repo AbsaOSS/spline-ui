@@ -22,6 +22,7 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { environment } from '@env/environment'
+import { RELATIVE_URL } from '@env/shared'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreRouterConnectingModule } from '@ngrx/router-store'
 import { MetaReducer, StoreModule } from '@ngrx/store'
@@ -47,7 +48,6 @@ import { AppComponent } from './app.component'
 import { SplineSidebarMenuComponent } from './components'
 import { AppNotFoundComponent } from './pages/not-found/not-found.component'
 import { SplineGlobalErrorHandler } from './services'
-import { relativeUrl } from '@env/shared'
 
 
 export const metaReducers: MetaReducer<any>[] =
@@ -92,8 +92,8 @@ export const metaReducers: MetaReducer<any>[] =
             useFactory: (): SplineConfigSettings => {
                 const envFileSuffix = environment.key && `${environment.key}.` || ''
                 return {
-                    defaultConfigUri: `${relativeUrl}/assets/config.default.json`,
-                    userConfigUri: `${relativeUrl}/assets/config.${envFileSuffix}json`,
+                    defaultConfigUri: `${RELATIVE_URL}/assets/config.default.json`,
+                    userConfigUri: `${RELATIVE_URL}/assets/config.${envFileSuffix}json`,
                 }
             },
         },

@@ -20,5 +20,5 @@ import { Environment } from './shared'
 
 export const environment: Environment = {
     ...environmentBase,
-    key: `localhost`,
+    key: 'localhost',
 }

@@ -16,20 +16,20 @@
 
 import * as config from '../../package.json'
 
-import { deploymentPrefix, Environment, relativeUrl } from './shared'
+import { DEPLOYMENT_PREFIX, Environment, RELATIVE_URL } from './shared'
 
 
 declare const __SPLINE_UI_BUILD_REVISION__: string
 declare const __SPLINE_UI_BUILD_TIMESTAMP__: string
 
-const url = relativeUrl + deploymentPrefix
+const URL = RELATIVE_URL + DEPLOYMENT_PREFIX
 
 export const environmentBase: Environment = {
     production: false,
     version: config.version,
     buildRevision: __SPLINE_UI_BUILD_REVISION__,
     buildTimestamp: __SPLINE_UI_BUILD_TIMESTAMP__,
-    deploymentPrefix,
-    url,
+    deploymentPrefix: DEPLOYMENT_PREFIX,
+    url: URL,
     key: null,
 }
