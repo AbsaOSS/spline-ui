@@ -17,11 +17,15 @@
 
 import { SplineSafeHtmlPipe } from './safe-html.pipe'
 import { SplineSearchPipe } from './search.pipe'
+import { TimeAgoPipe } from './time-ago.pipe'
+import { TimeDurationPipe } from './time-duration.pipe'
 
 
 export * from './public-api'
 
 export const splineUtilsPipes = [
     SplineSafeHtmlPipe,
-    SplineSearchPipe
+    SplineSearchPipe,
+    TimeAgoPipe,
+    TimeDurationPipe,
 ]

@@ -25,23 +25,23 @@ import { SplineRecord, TypeHelpers } from '../heplers'
 import { PageResponse, QuerySorter } from '../query'
 
 import { SearchQuery } from './search-query.models'
-import DataState = SearchQuery.DataState;
-import DEFAULT_RENDER_DATA = SearchQuery.DEFAULT_RENDER_DATA;
-import DEFAULT_SEARCH_PARAMS = SearchQuery.DEFAULT_SEARCH_PARAMS;
-import DEFAULT_SERVER_POLLING_INTERVAL = SearchQuery.DEFAULT_SERVER_POLL_INTERVAL;
-import SearchParams = SearchQuery.SearchParams;
-import isFunction = TypeHelpers.isFunction;
+import DataState = SearchQuery.DataState
+import DEFAULT_RENDER_DATA = SearchQuery.DEFAULT_RENDER_DATA
+import DEFAULT_SEARCH_PARAMS = SearchQuery.DEFAULT_SEARCH_PARAMS
+import SearchParams = SearchQuery.SearchParams
+import isFunction = TypeHelpers.isFunction
 
 
 export type SearchDataSourceConfig<TFilter extends SplineRecord, TSortableFields> = {
-    defaultSearchParams: Partial<SearchParams<TFilter, TSortableFields>>
+    defaultSearchParams: Partial<SearchParams<TFilter, TSortableFields>>,
+    pollingInterval: number
 }
 
 export type SearchDataSourceConfigInput<TFilter extends SplineRecord, TSortableFields> =
-    | Partial<SearchDataSourceConfig<TFilter, TSortableFields>>
-    | (() => Partial<SearchDataSourceConfig<TFilter, TSortableFields>>)
-    | Observable<Partial<SearchDataSourceConfig<TFilter, TSortableFields>>>
-    | Observable<() => Partial<SearchDataSourceConfig<TFilter, TSortableFields>>>
+    | SearchDataSourceConfig<TFilter, TSortableFields>
+    | (() => SearchDataSourceConfig<TFilter, TSortableFields>)
+    | Observable<SearchDataSourceConfig<TFilter, TSortableFields>>
+    | Observable<() => SearchDataSourceConfig<TFilter, TSortableFields>>
 
 export abstract class SearchDataSource<TDataRecord = unknown,
     TData extends PageResponse<TDataRecord> = PageResponse<TDataRecord>,
@@ -70,7 +70,18 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         this._searchParams$ = new BehaviorSubject(undefined)
         this.searchParams$ = this._searchParams$
 
-        this.asyncInitDefaultSearchParams(configInput)
+        const configLike$ = isObservable(configInput) ? configInput : of(configInput)
+        const configProvider$ = configLike$
+            .pipe(
+                takeUntil(this._disconnected$),
+                first(),
+                map(configFnOrObj => {
+                    return isFunction(configFnOrObj) ? configFnOrObj : (() => configFnOrObj)
+                }),
+                share()
+            )
+
+        this.asyncInitDefaultSearchParams(configProvider$)
 
         this._dataState$ = new BehaviorSubject(DEFAULT_RENDER_DATA)
         this.dataState$ = this._dataState$
@@ -80,7 +91,10 @@ export abstract class SearchDataSource<TDataRecord = unknown,
             this.dataState$, (state) => state.loadingProcessing,
         )
 
-        this.serverDataUpdates$ = this.createServerDataUpdatePoller()
+        this.serverDataUpdates$ =
+            configProvider$.pipe(
+                switchMap(configProvider => this.createServerDataUpdatePoller(configProvider().pollingInterval))
+            )
 
         this.subscribeToSearchParams()
     }
@@ -161,20 +175,14 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         this._disconnected$.complete()
     }
 
-    private asyncInitDefaultSearchParams(configInput: SearchDataSourceConfigInput<TFilter, TSortableFields>): void {
-        const configObservable = isObservable(configInput) ? configInput : of(configInput)
-        configObservable
-            .pipe(
-                takeUntil(this._disconnected$),
-                first()
-            )
-            .subscribe(configFnOrObj => {
-                const configProvider = isFunction(configFnOrObj) ? configFnOrObj : (() => configFnOrObj)
+    private asyncInitDefaultSearchParams(configProvider$: Observable<() => SearchDataSourceConfig<TFilter, TSortableFields>>): void {
+        configProvider$
+            .subscribe(configProvider => {
                 this._defaultSearchParamsProvider = () => {
-                    const partialConfig = configProvider()
+                    const config = configProvider()
                     return {
                         ...DEFAULT_SEARCH_PARAMS,
-                        ...partialConfig.defaultSearchParams,
+                        ...config.defaultSearchParams,
                     }
                 }
                 this._searchParams$.next(this._defaultSearchParamsProvider())
@@ -239,7 +247,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         this._searchParams$.next(newSearchParams)
     }
 
-    private createServerDataUpdatePoller(): Observable<TData> {
+    private createServerDataUpdatePoller(pollingInterval: number): Observable<TData> {
         // Poll the server using the same search query as the main one, but with `asAtTime = now()`.
         // If the returned data differs from what the data source currently holds then an update notification
         // is sent to the observers.
@@ -247,7 +255,7 @@ export abstract class SearchDataSource<TDataRecord = unknown,
         // The observable is multicast with active subscription counting.
         // The polling stops when `count == 0` and it resumes when `count > 0`
 
-        return interval(DEFAULT_SERVER_POLLING_INTERVAL)
+        return interval(pollingInterval)
             .pipe(
                 whenPageVisible(),
                 withLatestFrom(this._searchParams$),

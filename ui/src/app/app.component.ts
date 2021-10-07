@@ -67,7 +67,7 @@ export class AppComponent extends BaseLocalStateComponent<AppStore.State> {
     private init(splineConfig: SplineConfig): void {
         this.updateState({
             isInitialized: true,
-            isEmbeddedMode: !!splineConfig?.isEmbeddedMode,
+            isEmbeddedMode: !!splineConfig.isEmbeddedMode,
         })
     }
 

@@ -17,8 +17,9 @@
 import { Observable } from 'rxjs'
 import { ExecutionEvent, ExecutionEventFacade, ExecutionEventField, ExecutionEventsPageResponse, ExecutionEventsQuery } from 'spline-api'
 import { QuerySorter, SearchDataSource, SearchQuery } from 'spline-utils'
-import SortDir = QuerySorter.SortDir;
-import SearchParams = SearchQuery.SearchParams;
+import { SplineConfigService } from 'spline-shared'
+import SortDir = QuerySorter.SortDir
+import SearchParams = SearchQuery.SearchParams
 
 
 export class EventsDataSource extends SearchDataSource<ExecutionEvent,
@@ -27,7 +28,8 @@ export class EventsDataSource extends SearchDataSource<ExecutionEvent,
     ExecutionEventField> {
 
     constructor(
-        protected readonly executionEventFacade: ExecutionEventFacade
+        private readonly executionEventFacade: ExecutionEventFacade,
+        private readonly splineConfigService: SplineConfigService
     ) {
         super(() => ({
             defaultSearchParams: {
@@ -40,7 +42,8 @@ export class EventsDataSource extends SearchDataSource<ExecutionEvent,
                         dir: SortDir.DESC
                     }
                 ]
-            }
+            },
+            pollingInterval: splineConfigService.config.serverPollingIntervalMs
         }))
     }
 

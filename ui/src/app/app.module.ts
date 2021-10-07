@@ -22,6 +22,7 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { environment } from '@env/environment'
+import { RELATIVE_URL } from '@env/shared'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreRouterConnectingModule } from '@ngrx/router-store'
 import { MetaReducer, StoreModule } from '@ngrx/store'
@@ -31,13 +32,13 @@ import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material'
 import { SplineIconModule, SplineSearchBoxModule } from 'spline-common'
 import { DynamicFilterCoreModule } from 'spline-common/dynamic-filter'
 import { SplineLayoutModule } from 'spline-common/layout'
-import { SplineConfigModule, SplineConfigSettings, SPLINE_CONFIG_SETTINGS } from 'spline-shared'
+import { SPLINE_CONFIG_SETTINGS, SplineConfigModule, SplineConfigSettings } from 'spline-shared'
 import { SplineAttributesSharedModule } from 'spline-shared/attributes'
 import { SplineUtilsCommonModule } from 'spline-utils'
 import {
+    SPLINE_TRANSLATE_COMMON_ASSETS,
     SplineTranslateCoreModule,
     SplineTranslateModule,
-    SPLINE_TRANSLATE_COMMON_ASSETS,
     toAssetsFilePath
 } from 'spline-utils/translate'
 
@@ -88,8 +89,10 @@ export const metaReducers: MetaReducer<any>[] =
         {
             provide: SPLINE_CONFIG_SETTINGS,
             useFactory: (): SplineConfigSettings => {
+                const envFileSuffix = environment.key && `${environment.key}.` || ''
                 return {
-                    configFileUri: environment.splineConfigUri,
+                    defaultConfigUri: `${RELATIVE_URL}/assets/config.default.json`,
+                    userConfigUri: `${RELATIVE_URL}/assets/config.${envFileSuffix}json`,
                 }
             },
         },

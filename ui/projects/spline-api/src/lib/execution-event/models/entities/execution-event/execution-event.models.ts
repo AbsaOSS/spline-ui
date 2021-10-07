@@ -15,6 +15,8 @@
  */
 
 
+import { isBoolean } from 'lodash-es'
+
 import { DataSourceWriteMode, SplineDataSourceInfo, uriToDatasourceInfo } from '../data-source'
 
 
@@ -29,6 +31,7 @@ export enum ExecutionEventField {
     executionPlanId = 'executionPlanId',
     frameworkName = 'frameworkName',
     timestamp = 'timestamp',
+    duration = 'durationNs',
 }
 
 export type ExecutionEventDto = {
@@ -54,11 +57,18 @@ export type ExecutionEvent =
     }
 
 export function toExecutionEvent(entity: ExecutionEventDto): ExecutionEvent {
+    const append = entity[ExecutionEventField.append]
+    const writeMode =
+        isBoolean(append)
+            ? append
+                ? DataSourceWriteMode.Append
+                : DataSourceWriteMode.Overwrite
+            : null
     return {
         ...entity,
         applicationName: entity.applicationName ?? entity.executionEventId,
         executedAt: new Date(entity.timestamp),
         dataSourceInfo: uriToDatasourceInfo(entity[ExecutionEventField.dataSourceUri], entity.dataSourceName),
-        writeMode: entity[ExecutionEventField.append] ? DataSourceWriteMode.Append : DataSourceWriteMode.Overwrite
+        writeMode: writeMode
     }
 }

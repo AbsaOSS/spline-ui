@@ -4,6 +4,7 @@
         "EVENTS_LIST__COL__APPLICATION": "Execution",
         "EVENTS_LIST__COL__EXECUTION_PLAN": "Execution Plan",
         "EVENTS_LIST__COL__TIMESTAMP": "Executed At",
+        "EVENTS_LIST__COL__ELAPSED_TIME": "Elapsed Time",
         "EVENTS_LIST__COL__DESTINATION": "Destination",
         "EVENTS_LIST__COL__TYPE": "Type",
         "EVENTS_LIST__COL__WRITE_MODE": "Write Mode",

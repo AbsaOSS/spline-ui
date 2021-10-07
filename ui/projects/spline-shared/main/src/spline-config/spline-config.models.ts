@@ -20,12 +20,14 @@ import { ParamMap } from '@angular/router'
 
 export type SplineConfig = {
     splineConsumerApiUrl: string
-    isEmbeddedMode?: boolean
+    isEmbeddedMode: boolean
     targetUrl?: string
+    serverPollingIntervalMs: number
 }
 
 export type SplineConfigSettings = {
-    configFileUri: string
+    defaultConfigUri: string
+    userConfigUri: string
 }
 
 export const SPLINE_CONFIG_SETTINGS = new InjectionToken<SplineConfigSettings>('SPLINE_CONFIG_SETTINGS')
@@ -47,10 +49,10 @@ export function initSplineConfigFromQueryParams(paramsMap: ParamMap): SplineConf
                 const queryParamName = SplineConfigQueryParam[key]
 
                 if (paramsMap.has(queryParamName)) {
-                    return {...acc, [key]: paramsMap.get(queryParamName)}
+                    return { ...acc, [key]: paramsMap.get(queryParamName) }
                 }
 
-                return {...acc}
+                return { ...acc }
 
             },
             {} as SplineConfig

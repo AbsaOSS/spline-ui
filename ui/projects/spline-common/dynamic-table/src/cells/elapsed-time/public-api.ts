@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export * from './safe-html.pipe'
-export * from './search.pipe'
-export * from './time-ago.pipe'
-export * from './time-duration.pipe'
+export * from './dt-cell-elapsed-time.component'
+export * from './dt-cell-elapsed-time-factory.service'
+export * from './dt-cell-elapsed-time.models'
+export * from './dt-cell-elapsed-time.module'

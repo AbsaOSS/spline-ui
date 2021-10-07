@@ -26,8 +26,14 @@ export namespace DataSourcesListPage {
 
     export function getDynamicFilterSchema(): DynamicFilterSchema<Filter> {
         return [
-            ExecutionEventsDynamicFilter.getExecutedAtFilterSchema(),
-            ExecutionEventsDynamicFilter.getWriteModeFilterSchema()
+            {
+                ...ExecutionEventsDynamicFilter.getExecutedAtFilterSchema(),
+                label: 'DATA_SOURCES.DS_LIST__FILTER__LAST_MODIFIED_AT'
+            },
+            {
+                ...ExecutionEventsDynamicFilter.getWriteModeFilterSchema(),
+                label: 'DATA_SOURCES.DS_LIST__FILTER__LAST_WRITE_MODE'
+            }
         ]
     }
 
