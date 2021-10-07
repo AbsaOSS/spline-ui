@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-export const relativeUrl = '.'
-export const deploymentPrefix = '/'
+export const RELATIVE_URL = '.'
+export const DEPLOYMENT_PREFIX = '/'
 
 export interface Environment {
     production: boolean
@@ -24,5 +24,5 @@ export interface Environment {
     buildTimestamp: string
     deploymentPrefix: string
     url: string
-    splineConfigUri: string
+    key: string
 }

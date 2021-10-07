@@ -17,15 +17,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Inject, Injectable, Optional } from '@angular/core'
 import { ParamMap } from '@angular/router'
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs'
-import { catchError, filter, tap } from 'rxjs/operators'
+import { BehaviorSubject, combineLatest, Observable, of, throwError } from 'rxjs'
+import { catchError, filter, first, map, tap } from 'rxjs/operators'
 
 import {
     hasQueryParamsSplineConfig,
     initSplineConfigFromQueryParams,
+    SPLINE_CONFIG_SETTINGS,
     SplineConfig,
-    SplineConfigSettings,
-    SPLINE_CONFIG_SETTINGS
+    SplineConfigSettings
 } from './spline-config.models'
 
 
@@ -57,50 +57,47 @@ export class SplineConfigService {
 
     initConfig(queryParamMap?: ParamMap): Observable<SplineConfig> {
         // first check if query config is in query params, if not fetch from url.
-        return queryParamMap && hasQueryParamsSplineConfig(queryParamMap)
-            ? this.initConfigFromUrl(queryParamMap)
-            : this.initConfigFromFile()
-    }
+        const userConfig$ = queryParamMap && hasQueryParamsSplineConfig(queryParamMap)
+            ? SplineConfigService.loadUserConfigFromUrlParams(queryParamMap)
+            : this.loadUserConfigFromAssets()
 
-    initConfigFromUrl(queryParamMap: ParamMap): Observable<SplineConfig> {
-        return of(initSplineConfigFromQueryParams(queryParamMap))
-            .pipe(
-                tap(config => this._config$.next(config)),
-            )
-    }
+        const defaultConfig$ = this.fetchConfig(this.settings.defaultConfigUri)
 
-    getConfig(force = false): Observable<SplineConfig> {
-        return this.config !== null && !force
-            ? of(this.config)
-            : this.initConfigFromFile()
-    }
-
-    initConfigFromFile(): Observable<SplineConfig> {
-        return this.fetchConfig()
-            .pipe(
-                tap(config => this._config$.next(config)),
-            )
-    }
-
-
-    private fetchConfig(): Observable<SplineConfig> {
-        return this.http.get<SplineConfig>(
-            this.settings.configFileUri,
-            {
-                headers: new HttpHeaders({
-                    'Cache-Control': 'no-cache, no-store, must-revalidate',
-                }),
-            },
+        return combineLatest([defaultConfig$, userConfig$]).pipe(
+            map(([defaultConfig, userConfig]) => ({
+                ...defaultConfig,
+                ...userConfig
+            })),
+            tap(config => this._config$.next(config))
         )
+    }
+
+    private static loadUserConfigFromUrlParams(queryParamMap: ParamMap): Observable<SplineConfig> {
+        return of(initSplineConfigFromQueryParams(queryParamMap))
+    }
+
+    private loadUserConfigFromAssets(): Observable<SplineConfig> {
+        return this.fetchConfig(this.settings.userConfigUri)
             .pipe(
                 catchError((error) => {
                     console.error(`
                         The Spline App Config file cannot be found.
-                        Please make sure the file exists: ${this.settings.configFileUri}.
+                        Please make sure the file exists: ${this.settings.userConfigUri}.
                     `)
                     return throwError(error)
                 }),
+                first()
             )
+    }
 
+    private fetchConfig(url: string): Observable<SplineConfig> {
+        return this.http.get<SplineConfig>(
+            url,
+            {
+                headers: new HttpHeaders({
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                })
+            }
+        )
     }
 }

@@ -117,7 +117,8 @@ describe('SplineSearchDynamicTableComponent', () => {
             fakeDataSource = new FakeDataSource({
                 defaultSearchParams: {
                     sortBy: [{ ...defaultSortBy }]
-                }
+                },
+                pollingInterval: -1
             })
             componentInstance.dataSource = fakeDataSource
             componentInstance.dataMap = dataMap

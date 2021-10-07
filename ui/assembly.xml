@@ -17,6 +17,7 @@
             <directory>${project.basedir}/dist</directory>
             <outputDirectory/>
             <includes>
+                <include>app/assets/config.default.json</include>
                 <include>app/assets/config.example.json</include>
             </includes>
         </fileSet>

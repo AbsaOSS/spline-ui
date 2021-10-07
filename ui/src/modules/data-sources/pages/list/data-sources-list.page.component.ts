@@ -18,7 +18,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { takeUntil } from 'rxjs/operators'
 import { ExecutionEventFacade, ExecutionEventsQuery } from 'spline-api'
 import { DynamicFilterFactory, DynamicFilterModel } from 'spline-common/dynamic-filter'
-import { DataSourceWithDynamicFilter } from 'spline-shared'
+import { DataSourceWithDynamicFilter, SplineConfigService } from 'spline-shared'
 import { BaseComponent } from 'spline-utils'
 
 import { SplineDataSourcesDataSource } from '../../data-sources'
@@ -34,10 +34,16 @@ import { DataSourcesListPage } from './data-sources-list.page.models'
     providers: [
         {
             provide: SplineDataSourcesDataSource,
-            useFactory: (executionEventFacade: ExecutionEventFacade) => {
-                return new SplineDataSourcesDataSource(executionEventFacade)
+            useFactory: (
+                executionEventFacade: ExecutionEventFacade,
+                splineConfigService: SplineConfigService,
+            ) => {
+                return new SplineDataSourcesDataSource(executionEventFacade, splineConfigService)
             },
-            deps: [ExecutionEventFacade],
+            deps: [
+                ExecutionEventFacade,
+                SplineConfigService,
+            ],
         },
     ],
 })

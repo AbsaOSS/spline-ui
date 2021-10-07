@@ -15,10 +15,10 @@
  */
 
 import { environmentBase } from './environment.base'
-import { Environment, relativeUrl } from './shared'
+import { Environment } from './shared'
 
 
 export const environment: Environment = {
     ...environmentBase,
-    splineConfigUri: `${relativeUrl}/assets/config.localhost.json`,
+    key: 'localhost',
 }
