@@ -14,7 +14,19 @@
  * limitations under the License.
  */
 
-export * from './safe-html.pipe'
-export * from './search.pipe'
-export * from './time-ago.pipe'
-export * from './time-duration.pipe'
+import { Injectable } from '@angular/core'
+
+import { IDtCellFactory } from '../../core'
+
+import { DtCellElapsedTimeComponent } from './dt-cell-elapsed-time.component'
+import { DtCellElapsedTime } from './dt-cell-elapsed-time.models'
+
+
+@Injectable()
+export class DtCellElapsedTimeFactory implements IDtCellFactory<DtCellElapsedTime.Value> {
+
+    readonly type = DtCellElapsedTime.TYPE
+
+    readonly componentType = DtCellElapsedTimeComponent
+}
+

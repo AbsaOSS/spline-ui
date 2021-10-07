@@ -14,7 +14,17 @@
  * limitations under the License.
  */
 
-export * from './safe-html.pipe'
-export * from './search.pipe'
-export * from './time-ago.pipe'
-export * from './time-duration.pipe'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
+
+import { DtCellBaseComponent } from '../../core'
+
+import { DtCellElapsedTime } from './dt-cell-elapsed-time.models'
+
+
+@Component({
+    selector: 'dt-cell-date-time',
+    templateUrl: './dt-cell-elapsed-time.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DtCellElapsedTimeComponent extends DtCellBaseComponent<DtCellElapsedTime.Value, DtCellElapsedTime.Options> {
+}
