@@ -24,7 +24,7 @@
         <version>0.6.1</version>
     </parent>
 
-    <version>0.7.0-SNAPSHOT</version>
+    <version>0.7.0</version>
 
     <groupId>za.co.absa.spline.ui</groupId>
     <artifactId>project</artifactId>
@@ -36,7 +36,7 @@
         <url>${scm.url}</url>
         <connection>${scm.connection}</connection>
         <developerConnection>${scm.developerConnection}</developerConnection>
-        <tag>HEAD</tag>
+        <tag>release/0.7.0</tag>
     </scm>
 
     <modules>
