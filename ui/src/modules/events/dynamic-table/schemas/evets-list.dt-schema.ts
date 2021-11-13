@@ -64,6 +64,24 @@ export namespace EventsListDtSchema {
                 headerClasses: ['d-xxl-flex d-none'],
             },
             {
+                ...SplineDataSourceSharedDtSchema.getWriteModeColSchema(
+                    (rowData: ExecutionEvent) => rowData.writeMode
+                ),
+                id: Column.writeMode,
+            },
+            {
+                id: Column.dataSourceType,
+                header: 'EVENTS.EVENTS_LIST__COL__TYPE',
+                isSortable: true,
+                layout: {
+                    styles: {
+                        maxWidth: '100px'
+                    },
+                    classes: ['d-lg-flex d-none']
+                },
+                headerClasses: ['d-lg-flex d-none'],
+            },
+            {
                 ...DtCellLink.getColSchema(
                     (rowData: ExecutionEvent) => ({
                         title: rowData.dataSourceInfo.name,
@@ -78,27 +96,6 @@ export namespace EventsListDtSchema {
                     classes: ['d-lg-flex d-none']
                 },
                 headerClasses: ['d-lg-flex d-none'],
-            },
-            {
-                id: Column.dataSourceType,
-                header: 'EVENTS.EVENTS_LIST__COL__TYPE',
-                isSortable: true,
-                layout: {
-                    styles: {
-                        justifyContent: 'center',
-                        maxWidth: '160px'
-                    },
-                    classes: ['d-lg-flex d-none']
-                },
-                headerClasses: ['d-lg-flex d-none'],
-            },
-            {
-                ...SplineDataSourceSharedDtSchema.getWriteModeColSchema(
-                    (rowData: ExecutionEvent) => rowData.writeMode
-                ),
-                id: Column.writeMode,
-                header: 'EVENTS.EVENTS_LIST__COL__WRITE_MODE',
-                isSortable: true,
             },
             {
                 ...DtCellDateTime.getDefaultColSchema(),

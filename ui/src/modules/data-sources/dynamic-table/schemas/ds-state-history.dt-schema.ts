@@ -17,7 +17,6 @@
 import { ExecutionEvent, ExecutionEventField } from 'spline-api'
 import { CommonDtCellValueControlEvent, DtCellLink, DtLayoutBuilder, DtLayoutSize, DynamicTableDataMap } from 'spline-common/dynamic-table'
 import { SplineDataSourceSharedDtSchema } from 'spline-shared/dynamic-table'
-import { EventsRouting } from 'spline-shared/events'
 import { DateTimeHelpers } from 'spline-utils'
 import LinkStyle = DtCellLink.LinkStyle
 
@@ -69,11 +68,21 @@ export namespace DsStateHistoryDtSchema {
                     (rowData: ExecutionEvent) => rowData.writeMode
                 ),
                 id: Column.writeMode,
-                header: 'DATA_SOURCES.DS_STATE_HISTORY__COL__WRITE_MODE',
-                isSortable: true,
                 layout: (new DtLayoutBuilder(SplineDataSourceSharedDtSchema.getWriteModeDefaultLayout()))
                     .setCSSClass([])
                     .toLayout()
+            },
+            {
+                id: Column.dataSourceType,
+                header: 'DATA_SOURCES.DS_STATE_HISTORY__COL__TYPE',
+                isSortable: true,
+                layout: {
+                    styles: {
+                        maxWidth: '100px'
+                    },
+                    classes: ['d-lg-flex d-none']
+                },
+                headerClasses: ['d-lg-flex d-none'],
             },
             {
                 ...DtCellLink.getColSchema(

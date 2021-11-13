@@ -14,10 +14,30 @@
  * limitations under the License.
  */
 
-export * from './date-time/public-api'
-export * from './elapsed-time/public-api'
-export * from './label/public-api'
-export * from './icon/public-api'
-export * from './link/public-api'
-export * from './long-text/public-api'
-export * from './dynamic-table-common-cells.module'
+
+
+
+import { DtCellValueSchema, TCellValue } from '../../core'
+import { SplineLabel } from 'spline-common'
+
+
+export namespace DtCellIcon {
+
+    export const TYPE = 'Icon'
+
+    export type Icon = string
+
+    export type Options = {
+        color: SplineLabel.Color,
+        hint: string,
+    }
+
+    export function getColSchema(value: TCellValue<Icon>, options?: Options): Partial<DtCellValueSchema<Icon>> {
+        return {
+            type: TYPE,
+            value,
+            options
+        }
+    }
+
+}

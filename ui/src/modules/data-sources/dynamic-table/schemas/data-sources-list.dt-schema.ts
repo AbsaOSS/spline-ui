@@ -24,7 +24,6 @@ import {
     DynamicTableDataMap
 } from 'spline-common/dynamic-table'
 import { SplineDataSourceSharedDtSchema } from 'spline-shared/dynamic-table'
-import { EventsRouting } from 'spline-shared/events'
 
 
 export namespace DataSourcesListDtSchema {
@@ -65,22 +64,19 @@ export namespace DataSourcesListDtSchema {
                 isSortable: true,
             },
             {
-                id: Column.dataSourceType,
-                header: 'DATA_SOURCES.DS__COL__TYPE',
-                isSortable: true,
-                layout: (new DtLayoutBuilder)
-                    .alignCenter()
-                    .setWidth('160px')
-                    .visibleAfter(DtLayoutSize.lg)
-                    .toLayout()
-            },
-            {
                 ...SplineDataSourceSharedDtSchema.getWriteModeColSchema(
                     (rowData: ExecutionEvent) => rowData.writeMode
                 ),
                 id: Column.writeMode,
-                header: 'DATA_SOURCES.DS_LIST__COL__WRITE_MODE',
-                isSortable: true
+            },
+            {
+                id: Column.dataSourceType,
+                header: 'DATA_SOURCES.DS__COL__TYPE',
+                isSortable: true,
+                layout: (new DtLayoutBuilder)
+                    .setWidth('100px')
+                    .visibleAfter(DtLayoutSize.lg)
+                    .toLayout()
             },
             {
                 ...DtCellLink.getColSchema(
@@ -95,6 +91,7 @@ export namespace DataSourcesListDtSchema {
                 isSortable: true,
                 layout: (new DtLayoutBuilder())
                     .visibleAfter(DtLayoutSize.lg)
+                    .setWidth('250px')
                     .toLayout(),
             },
             {
@@ -108,6 +105,7 @@ export namespace DataSourcesListDtSchema {
                 header: 'DATA_SOURCES.DS_LIST__COL__EXECUTION_PLAN',
                 layout: (new DtLayoutBuilder())
                     .visibleAfter(DtLayoutSize.xl)
+                    .setWidth('150px')
                     .toLayout(),
                 isSortable: true,
             },
