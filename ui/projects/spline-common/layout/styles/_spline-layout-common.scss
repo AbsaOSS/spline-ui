@@ -110,17 +110,21 @@ $spline-layout-settings-default: (
             &__footer {
                 color: $color-grey;
                 padding: 1rem 1rem 0.5rem 0.75rem;
-            }
 
-            &__version {
-                font-size: 10px;
-                line-height: 1;
-                white-space: nowrap;
+                &__entry {
+                    font-size: 10px;
+                    line-height: 1;
+                    white-space: nowrap;
 
-                &-label {
-                    color: $color-grey-2;
-                    font-size: 8px;
-                    margin-bottom: 2px;
+                    &-label {
+                        color: $color-grey-2;
+                        font-size: 8px;
+                        margin-bottom: 2px;
+                    }
+
+                    a {
+                        color: $color-grey;
+                    }
                 }
             }
         }

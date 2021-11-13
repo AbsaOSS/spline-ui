@@ -27,3 +27,8 @@ export type GenericEvent<TData extends SplineRecord = SplineRecord> = {
     eventName: string
     data?: TData
 }
+
+export type NamedHref = {
+    name: string
+    href: string
+}

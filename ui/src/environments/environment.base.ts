@@ -29,6 +29,12 @@ export const environmentBase: Environment = {
     version: config.version,
     buildRevision: __SPLINE_UI_BUILD_REVISION__,
     buildTimestamp: __SPLINE_UI_BUILD_TIMESTAMP__,
+    projectPagesHref: 'https://absaoss.github.io/spline',
+    copyright: '© 2019 ABSA Group Limited',
+    license: {
+        name: 'Apache License, Version 2.0.',
+        href: 'https://www.apache.org/licenses/LICENSE-2.0'
+    },
     deploymentPrefix: DEPLOYMENT_PREFIX,
     url: URL,
     key: null,
