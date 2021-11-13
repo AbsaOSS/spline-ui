@@ -14,37 +14,45 @@
  * limitations under the License.
  */
 
-export const SPLINE_ICONS_COLLECTION: Set<string> = new Set<string>([
-    'database',
-    'cog-transfer',
-    'arrow-down-circle',
-    'source-branch',
-    'head-cog',
-    'code-json',
-    'shuffle-variant',
-    'arrow-collapse-all',
-    'group',
-    'code-brackets',
-    'target',
-    'eye-outline',
-    'vector-line',
-    'graph-outline',
-    'chevron-double-left',
-    'chevron-triple-left',
-    'chevron-triple-right',
-    'eye-off-outline',
-    'ray-start-arrow',
-    'ray-end-arrow',
-    'arrow-expand-down',
-    'arrow-expand-up',
-    'arrow-split-horizontal',
-    'swap-vertical-bold',
-    'arrow-expand-vertical',
-    'arrow-expand',
-    'arrow-collapse',
-    'parent-nodes',
-    'children-nodes',
-    'transit-connection',
-    'cog-transfer-outline',
-    'alpha-o-circle-outline',
-])
+export namespace SplineIcon {
+
+    export type Color = string
+    export type Icon = typeof ICONS[number]
+
+    export const ICONS = [
+        'database',
+        'cog-transfer',
+        'arrow-down-circle',
+        'source-branch',
+        'head-cog',
+        'code-json',
+        'shuffle-variant',
+        'arrow-collapse-all',
+        'group',
+        'code-brackets',
+        'target',
+        'eye-outline',
+        'vector-line',
+        'graph-outline',
+        'chevron-double-left',
+        'chevron-triple-left',
+        'chevron-triple-right',
+        'eye-off-outline',
+        'ray-start-arrow',
+        'ray-end-arrow',
+        'arrow-expand-down',
+        'arrow-expand-up',
+        'arrow-split-horizontal',
+        'swap-vertical-bold',
+        'arrow-expand-vertical',
+        'arrow-expand',
+        'arrow-collapse',
+        'parent-nodes',
+        'children-nodes',
+        'transit-connection',
+        'cog-transfer-outline',
+        'alpha-o-circle-outline',
+    ]
+
+    export const ICON_SET: Set<string> = new Set(ICONS)
+}

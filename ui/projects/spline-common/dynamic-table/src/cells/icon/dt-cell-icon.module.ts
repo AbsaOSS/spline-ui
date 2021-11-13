@@ -14,34 +14,41 @@
  * limitations under the License.
  */
 
-
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
+import { RouterModule } from '@angular/router'
+import { SplineIconModule } from 'spline-common'
+import { SplineTranslateModule } from 'spline-utils/translate'
 
-import { DynamicTableModule } from '../core'
+import { DT_CELL_FACTORY, DynamicTableModule } from '../../core'
 
-import { DtCellDateTimeModule } from './date-time'
-import { DtCellElapsedTimeModule } from './elapsed-time'
-import { DtCellLabelModule } from './label'
-import { DtCellIconModule } from './icon'
-import { DtCellLinkModule } from './link'
-import { DtCellLongTextModule } from './long-text'
+import { DtCellIconComponent } from './dt-cell-icon.component'
+import { DtCellIconFactory } from './dt-cell-icon.factory'
 
 
 @NgModule({
     imports: [
         CommonModule,
+        RouterModule,
+        SplineTranslateModule.forChild({}),
         DynamicTableModule,
+        SplineIconModule
+    ],
+    declarations: [
+        DtCellIconComponent
     ],
     exports: [
-        DtCellLongTextModule,
-        DtCellLinkModule,
-        DtCellDateTimeModule,
-        DtCellElapsedTimeModule,
-        DtCellLabelModule,
-        DtCellIconModule,
+        DtCellIconComponent
+    ],
+    providers: [
+        DtCellIconFactory,
+        {
+            provide: DT_CELL_FACTORY,
+            useValue: DtCellIconFactory,
+            multi: true
+        }
     ]
 })
-export class DynamicTableCommonCellsModule {
+export class DtCellIconModule {
 
 }

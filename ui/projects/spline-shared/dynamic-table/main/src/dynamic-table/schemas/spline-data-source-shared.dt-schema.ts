@@ -15,9 +15,9 @@
  */
 
 import { DataSourceWriteMode } from 'spline-api'
-import { SplineLabel } from 'spline-common'
+import { SplineColors, SplineIcon } from 'spline-common'
 import {
-    DtCellLabel,
+    DtCellIcon,
     DtCellLayout,
     DtLayoutBuilder,
     DtLayoutSize,
@@ -31,7 +31,7 @@ export namespace SplineDataSourceSharedDtSchema {
     export function getWriteModeDefaultLayout(): DtCellLayout {
         return (new DtLayoutBuilder())
             .alignCenter()
-            .setWidth('160px')
+            .setWidth('50px')
             .visibleAfter(DtLayoutSize.sm)
             .toLayout()
     }
@@ -39,31 +39,36 @@ export namespace SplineDataSourceSharedDtSchema {
 
     export function getWriteModeColSchema(
         getWriteModeFn: TCellValueFn<DataSourceWriteMode>
-    ): Partial<DynamicTableColumnSchema<DtCellLabel.Value, unknown, unknown, DtCellLabel.Options>> {
+    ): Partial<DynamicTableColumnSchema<DtCellIcon.Icon, unknown, unknown, DtCellIcon.Options>> {
 
         return {
-            type: DtCellLabel.TYPE,
+            type: DtCellIcon.TYPE,
             value: (rowData) => {
                 switch (getWriteModeFn(rowData)) {
                     case DataSourceWriteMode.Append:
-                        return 'SHARED.DYNAMIC_TABLE.DS_WRITE_MODE__APPEND'
+                        return 'post_add'
                     case DataSourceWriteMode.Overwrite:
-                        return 'SHARED.DYNAMIC_TABLE.DS_WRITE_MODE__OVERWRITE'
+                        return 'save'
                     default:
                         return null
                 }
             },
             options: (rowData) => {
                 const writeMode = getWriteModeFn(rowData)
-                const color: SplineLabel.Color = writeMode === DataSourceWriteMode.Append
-                    ? SplineLabel.Color.platinum
-                    : SplineLabel.Color.human
+                const color: SplineIcon.Color = writeMode === DataSourceWriteMode.Append
+                    ? SplineColors.BLUE
+                    : SplineColors.GREEN
+                const hint: string = writeMode === DataSourceWriteMode.Append
+                    ? 'SHARED.DYNAMIC_TABLE.DS_WRITE_MODE__APPEND'
+                    : 'SHARED.DYNAMIC_TABLE.DS_WRITE_MODE__OVERWRITE'
 
                 return {
-                    color
+                    color,
+                    hint
                 }
             },
-            layout: getWriteModeDefaultLayout()
+            layout: getWriteModeDefaultLayout(),
+            isSortable: false
         }
     }
 }

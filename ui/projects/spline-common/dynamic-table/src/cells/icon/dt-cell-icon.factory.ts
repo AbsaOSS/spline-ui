@@ -14,10 +14,19 @@
  * limitations under the License.
  */
 
-export * from './date-time/public-api'
-export * from './elapsed-time/public-api'
-export * from './label/public-api'
-export * from './icon/public-api'
-export * from './link/public-api'
-export * from './long-text/public-api'
-export * from './dynamic-table-common-cells.module'
+import { Injectable } from '@angular/core'
+
+import { IDtCellFactory } from '../../core'
+
+import { DtCellIconComponent } from './dt-cell-icon.component'
+import { DtCellIcon } from './dt-cell-icon.models'
+
+
+@Injectable()
+export class DtCellIconFactory implements IDtCellFactory<DtCellIcon.Icon> {
+
+    readonly type = DtCellIcon.TYPE
+
+    readonly componentType = DtCellIconComponent
+}
+

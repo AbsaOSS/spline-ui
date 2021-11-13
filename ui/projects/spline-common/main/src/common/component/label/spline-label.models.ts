@@ -17,11 +17,6 @@
 
 export namespace SplineLabel {
 
-    export type Color = 'platinum' | 'human' | string
-
-    export const Color = {
-        platinum: 'platinum' as Color,
-        human: 'human' as Color,
-    }
+    export type Color = string
 
 }

@@ -14,10 +14,4 @@
  * limitations under the License.
  */
 
-export * from './date-time/public-api'
-export * from './elapsed-time/public-api'
-export * from './label/public-api'
-export * from './icon/public-api'
-export * from './link/public-api'
-export * from './long-text/public-api'
-export * from './dynamic-table-common-cells.module'
+export * from './public-api'

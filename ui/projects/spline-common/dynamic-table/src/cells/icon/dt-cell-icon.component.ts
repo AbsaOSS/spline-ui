@@ -14,10 +14,19 @@
  * limitations under the License.
  */
 
-export * from './date-time/public-api'
-export * from './elapsed-time/public-api'
-export * from './label/public-api'
-export * from './icon/public-api'
-export * from './link/public-api'
-export * from './long-text/public-api'
-export * from './dynamic-table-common-cells.module'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
+
+import { DtCellBaseComponent } from '../../core'
+
+import { DtCellIcon } from './dt-cell-icon.models'
+
+
+@Component({
+    selector: 'dt-cell-icon',
+    templateUrl: './dt-cell-icon.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DtCellIconComponent extends DtCellBaseComponent<DtCellIcon.Icon, DtCellIcon.Options> {
+
+
+}
