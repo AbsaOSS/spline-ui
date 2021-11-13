@@ -19,6 +19,7 @@ import moment from 'moment'
 
 import { SplineSidebarMenu } from '../../components'
 import { AppSidebarMenu } from '../../models'
+import { NamedHref } from 'spline-utils'
 
 
 export namespace AppStore {
@@ -28,6 +29,9 @@ export namespace AppStore {
         appVersion: string | null
         buildRevision: string | null
         buildDate: Date | null
+        projectPages: NamedHref
+        copyright: string
+        license: NamedHref
         isEmbeddedMode: boolean
         isSideNavExpanded: boolean
         sidebarMenuItems: SplineSidebarMenu.MenuItem[]
@@ -39,6 +43,12 @@ export namespace AppStore {
             appVersion: environment.version,
             buildRevision: environment.buildRevision ?? null,
             buildDate: environment.buildTimestamp ? moment(environment.buildTimestamp).toDate() : null,
+            projectPages: {
+                name: environment.projectPagesHref,
+                href: environment.projectPagesHref
+            },
+            copyright: environment.copyright,
+            license: environment.license,
             isEmbeddedMode: false,
             isSideNavExpanded: false,
             sidebarMenuItems: AppSidebarMenu.getSidebarMenu(),

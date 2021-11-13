@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+import { NamedHref } from 'spline-utils'
+
+
 export const RELATIVE_URL = '.'
 export const DEPLOYMENT_PREFIX = '/'
 
@@ -22,6 +25,9 @@ export interface Environment {
     version: string
     buildRevision: string
     buildTimestamp: string
+    projectPagesHref: string
+    copyright: string
+    license: NamedHref
     deploymentPrefix: string
     url: string
     key: string
