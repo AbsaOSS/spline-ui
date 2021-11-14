@@ -22,7 +22,7 @@
         <groupId>za.co.absa.spline.ui</groupId>
         <artifactId>project</artifactId>
         <relativePath>../pom.xml</relativePath>
-        <version>0.7.2</version>
+        <version>0.7.3-SNAPSHOT</version>
     </parent>
 
     <artifactId>ui-core</artifactId>
