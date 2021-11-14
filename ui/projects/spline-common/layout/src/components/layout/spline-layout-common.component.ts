@@ -18,6 +18,7 @@ import { AfterContentInit, Component, ContentChildren, EventEmitter, Input, Outp
 
 import { SplineLayoutSectionDirective } from '../../directives'
 import { SplineLayoutSection } from '../../models'
+import { NamedHref } from 'spline-utils'
 
 
 @Component({
@@ -33,6 +34,9 @@ export class SplineLayoutCommonComponent implements AfterContentInit {
     @Input() appVersion: string
     @Input() buildRevision: string
     @Input() buildDate: Date
+    @Input() projectPages: NamedHref
+    @Input() copyright: string
+    @Input() license: NamedHref
     @Input() noHeader = true
 
     @Output() sidenavExpanded$ = new EventEmitter<{ isExpanded: boolean }>()

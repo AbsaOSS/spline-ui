@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,19 @@
  * limitations under the License.
  */
 
-import { NamedHref } from 'spline-utils'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
+
+import { DtCellBaseComponent } from '../../core'
+
+import { DtCellIcon } from './dt-cell-icon.models'
 
 
-export const RELATIVE_URL = '.'
-export const DEPLOYMENT_PREFIX = '/'
+@Component({
+    selector: 'dt-cell-icon',
+    templateUrl: './dt-cell-icon.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DtCellIconComponent extends DtCellBaseComponent<DtCellIcon.Icon, DtCellIcon.Options> {
 
-export interface Environment {
-    production: boolean
-    version: string
-    buildRevision: string
-    buildTimestamp: string
-    projectPagesHref: string
-    copyright: string
-    license: NamedHref
-    deploymentPrefix: string
-    url: string
-    key: string
+
 }

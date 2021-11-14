@@ -21,7 +21,7 @@ import { DomSanitizer } from '@angular/platform-browser'
 
 import { SplineIconWithTextComponent } from './components/icon-with-text/spline-icon-with-text.component'
 import { SplineIconComponent } from './components/icon/spline-icon.component'
-import { SPLINE_ICONS_COLLECTION } from './models/spline-icon.models'
+import { SplineIcon } from './models/spline-icon.models'
 
 
 @NgModule({
@@ -44,7 +44,7 @@ export class SplineIconModule {
     constructor(private readonly matIconRegistry: MatIconRegistry,
                 private readonly sanitizer: DomSanitizer) {
 
-        SPLINE_ICONS_COLLECTION.forEach(
+        SplineIcon.ICONS.forEach(
             iconName => this.addIcon(iconName),
         )
     }

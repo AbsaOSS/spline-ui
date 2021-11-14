@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import _ from 'lodash'
 import { Pipe, PipeTransform } from '@angular/core'
 
 import { TypeHelpers } from '../models'
@@ -26,6 +27,9 @@ const TIME_INTERVAL_UNITS = {
     min: 60,
     sec: 1
 }
+
+const TIME_INTERVAL_SMALLEST_UNIT =
+    _.sortBy(Object.entries(TIME_INTERVAL_UNITS), ([, scale]) => scale)[0]
 
 @Pipe({ name: 'timeDuration' })
 export class TimeDurationPipe implements PipeTransform {
@@ -42,7 +46,7 @@ export class TimeDurationPipe implements PipeTransform {
                     return [secondsReminder, text]
                 }, [durationNs / 1000000000, ''])
 
-        return result.trim()
+        return result || `< ${TIME_INTERVAL_SMALLEST_UNIT[1]} ${TIME_INTERVAL_SMALLEST_UNIT[0]}`
     }
 
     transform(value: number) {

@@ -16,7 +16,7 @@
 
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core'
 
-import { SPLINE_ICONS_COLLECTION } from '../../models/spline-icon.models'
+import { SplineIcon } from '../../models/spline-icon.models'
 
 
 @Component({
@@ -26,9 +26,18 @@ import { SPLINE_ICONS_COLLECTION } from '../../models/spline-icon.models'
 })
 export class SplineIconComponent implements OnChanges {
 
-    @Input() icon: string
+    @Input() icon: SplineIcon.Icon
+
+    @Input() set color(value: SplineIcon.Color) {
+        this.styles = {
+            ...this.styles,
+            color: value
+        }
+    }
+
     @Input() set size(value: string) {
         this.styles = {
+            ...this.styles,
             width: value,
             fontSize: value,
             height: value,
@@ -38,11 +47,13 @@ export class SplineIconComponent implements OnChanges {
 
     isCustomIcon = false
 
-    styles: Partial<CSSStyleDeclaration>
+    styles: Partial<CSSStyleDeclaration> = {
+        cursor: 'default'
+    }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.icon && changes.icon.currentValue) {
-            this.isCustomIcon = SPLINE_ICONS_COLLECTION.has(changes.icon.currentValue)
+            this.isCustomIcon = SplineIcon.ICON_SET.has(changes.icon.currentValue)
         }
 
     }
