@@ -23,7 +23,7 @@
     </spline-data-record>
 
     <spline-data-record [label]="'PLANS.PLAN_INFO__DETAILS__AGENT_INFO' | translate">
-        {{ executionPlan.agentInfo.name }} {{ executionPlan.agentInfo.version }}
+        {{ executionPlan.agentInfo?.name }} {{ executionPlan.agentInfo?.version }}
     </spline-data-record>
 
     <spline-data-record [label]="'Output' | translate">

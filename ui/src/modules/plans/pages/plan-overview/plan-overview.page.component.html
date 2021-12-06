@@ -70,6 +70,7 @@
                         <plan-operation-info (focusNode$)="onNodeFocus($event.nodeId)"
                                              (selectedAttributeChanged$)="onSelectedAttributeChanged($event.attributeId)"
                                              [node]="store.selectedNode$ | async"
+                                             [agentInfo]="(store.executionPlan$ | async).agentInfo"
                                              [selectedAttributeId]="state.selectedAttributeId">
                         </plan-operation-info>
 

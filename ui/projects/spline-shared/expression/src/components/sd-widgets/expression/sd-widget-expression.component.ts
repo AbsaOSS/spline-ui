@@ -15,7 +15,6 @@
  */
 
 import { Component } from '@angular/core'
-import { BehaviorSubject } from 'rxjs'
 import { SdWidgetBaseComponent } from 'spline-common/data-view'
 
 import { SdWidgetExpression } from '../../../models'
@@ -26,5 +25,5 @@ import { SdWidgetExpression } from '../../../models'
     templateUrl: './sd-widget-expression.component.html',
 })
 export class SdWidgetExpressionComponent extends SdWidgetBaseComponent<SdWidgetExpression.Data, SdWidgetExpression.Options> {
-    readonly data$ = new BehaviorSubject<SdWidgetExpression.Data>(null)
+
 }
