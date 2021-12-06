@@ -14,16 +14,10 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core'
-import { SdWidgetBaseComponent } from 'spline-common/data-view'
 
-import { SdWidgetExpression } from '../../../models'
-
-
-@Component({
-    selector: 'sd-widget-expression',
-    templateUrl: './sd-widget-expression.component.html',
-})
-export class SdWidgetExpressionComponent extends SdWidgetBaseComponent<SdWidgetExpression.Data, SdWidgetExpression.Options> {
-
+export namespace EventOverviewPage {
+    export namespace QueryParam {
+        export const SelectedNodeId: string = 'selectedNodeId'
+        export const RequestedGraphDepth: string = 'depth'
+    }
 }

@@ -105,7 +105,7 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
             const nodeRelations: EventNodeInfo.NodeRelationsInfo = changes.nodeRelations.currentValue
 
             const operationIds = nodeRelations.node.type === ExecutionEventLineageNodeType.DataSource && nodeRelations?.parents?.length > 0
-                ? nodeRelations.parents.map(node => executionPlanIdToWriteOperationId(node.id, node.agentInfo.version))
+                ? nodeRelations.parents.map(node => executionPlanIdToWriteOperationId(node.id, node.agentInfo?.version))
                 : []
 
             this.updateState({
