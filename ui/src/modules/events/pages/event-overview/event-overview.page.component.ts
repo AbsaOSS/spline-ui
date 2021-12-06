@@ -24,6 +24,7 @@ import { BaseComponent } from 'spline-utils'
 
 import { EventOverviewStore, EventOverviewStoreFacade } from '../../store'
 import NavTabInfo = SplineTabsNavBar.NavTabInfo
+import { EventOverviewPage } from './event-overview.page.model'
 
 
 @Component({
@@ -70,10 +71,14 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit,
     }
 
     ngOnInit(): void {
+        const executionEventId =
+            this.activatedRoute.snapshot.params['id']
 
-        const executionEventId = this.activatedRoute.snapshot.params['id']
+        const requestedGraphDepth =
+            +this.activatedRoute.snapshot.queryParams[EventOverviewPage.QueryParam.RequestedGraphDepth]
+            || EventOverviewStore.GRAPH_DEFAULT_DEPTH
 
-        this.store.init(executionEventId)
+        this.store.init(executionEventId, requestedGraphDepth)
     }
 
     ngOnDestroy(): void {

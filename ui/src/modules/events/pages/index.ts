@@ -25,6 +25,7 @@ export const pageComponents: any[] = [
     EventOverviewGraphPageComponent,
 ]
 
+export * from './event-overview/event-overview.page.model'
 export * from './event-overview/event-overview.page.component'
 export * from './event-overview/graph/event-overview-graph.page.component'
 export * from './events-list/events-list.page.component'

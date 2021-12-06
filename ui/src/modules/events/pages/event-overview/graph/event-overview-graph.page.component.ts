@@ -17,7 +17,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Observable } from 'rxjs'
-import { filter, map, skip, takeUntil } from 'rxjs/operators'
+import { filter, map, takeUntil } from 'rxjs/operators'
 import { ExecutionEventLineageNodeType } from 'spline-api'
 import { SplineDataWidgetEvent } from 'spline-common/data-view'
 import { SgNodeEvent, SgNodeSchema } from 'spline-common/graph'
@@ -28,6 +28,7 @@ import { BaseComponent, GenericEventInfo, RouterNavigation } from 'spline-utils'
 import { EventNodeControl, EventNodeInfo } from '../../../models'
 import { EventOverviewStore, EventOverviewStoreFacade } from '../../../store'
 import NodeEventData = SgNodeCardDataView.NodeEventData
+import { EventOverviewPage } from '../event-overview.page.model'
 
 
 @Component({
@@ -41,8 +42,6 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
 
     readonly state$: Observable<EventOverviewStore.State>
 
-    readonly selectedNodeQueryParamName: string = 'selectedNodeId'
-
     isGraphFullScreen = false
 
     constructor(private readonly activatedRoute: ActivatedRoute,
@@ -54,7 +53,7 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
     }
 
     ngOnInit(): void {
-        const selectedNodeId = this.activatedRoute.snapshot.queryParamMap.get(this.selectedNodeQueryParamName)
+        const selectedNodeId = this.activatedRoute.snapshot.queryParamMap.get(EventOverviewPage.QueryParam.SelectedNodeId)
         this.store.setSelectedNode(selectedNodeId)
 
         //
@@ -64,16 +63,28 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
         this.store.state$
             .pipe(
                 map(state => state.selectedNodeId),
-                skip(1),
                 takeUntil(this.destroyed$),
                 filter(nodeId => {
-                    const currentNodeId = this.activatedRoute.snapshot.queryParamMap.get(this.selectedNodeQueryParamName)
+                    const currentNodeId = this.activatedRoute.snapshot.queryParamMap.get(EventOverviewPage.QueryParam.SelectedNodeId)
                     return currentNodeId !== nodeId
                 }),
             )
-            .subscribe(
-                nodeId => this.updateQueryParams(nodeId),
+            .subscribe(nodeId => this.updateQueryParams(EventOverviewPage.QueryParam.SelectedNodeId, nodeId))
+
+        //
+        // [ACTION] :: GRAPH DEPTH CHANGE
+        //      => update query params
+        //
+        this.store.state$
+            .pipe(
+                map(state => state.lineageDepth.depthRequested),
+                takeUntil(this.destroyed$),
+                filter(depth => {
+                    const currentDepth = +this.activatedRoute.snapshot.queryParamMap.get(EventOverviewPage.QueryParam.RequestedGraphDepth)
+                    return currentDepth !== depth
+                }),
             )
+            .subscribe(depth => this.updateQueryParams(EventOverviewPage.QueryParam.RequestedGraphDepth, depth.toString()))
     }
 
     onNodeSelected(nodeId: string | null): void {
@@ -159,12 +170,12 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
         )
     }
 
-    private updateQueryParams(nodeId: string | null): void {
+    private updateQueryParams(param: string, value: string | null): void {
         RouterNavigation.updateCurrentRouterOneQueryParam(
             this.router,
             this.activatedRoute,
-            this.selectedNodeQueryParamName,
-            nodeId,
+            param,
+            value,
         )
     }
 }

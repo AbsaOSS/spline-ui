@@ -67,7 +67,7 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
 
     init(
         executionEventId: string,
-        graphDepth: number = EventOverviewStore.GRAPH_DEFAULT_DEPTH,
+        graphDepth: number,
     ): void {
 
         this.loadData(
