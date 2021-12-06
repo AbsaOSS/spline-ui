@@ -25,7 +25,7 @@ import {
 } from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
 import { filter, takeUntil } from 'rxjs/operators'
-import { ExecutionPlanFacade, ExecutionPlanLineageNode } from 'spline-api'
+import { ExecutionPlanAgentInfo, ExecutionPlanFacade, ExecutionPlanLineageNode } from 'spline-api'
 import { SplineDataWidgetEvent } from 'spline-common/data-view'
 import { SdWidgetAttributesTree } from 'spline-shared/attributes'
 import { SgNodeCardDataView } from 'spline-shared/data-view'
@@ -55,6 +55,8 @@ export class OperationInfoComponent extends BaseLocalStateComponent<OperationInf
 
     @Input() node: ExecutionPlanLineageNode
 
+    @Input() agentInfo: ExecutionPlanAgentInfo | undefined
+
     @Input() set selectedAttributeId(attributeId: string | null) {
         this.selectedAttributeId$.next(attributeId)
     }
@@ -77,7 +79,7 @@ export class OperationInfoComponent extends BaseLocalStateComponent<OperationInf
                     operationDvs: OperationInfo.toDataViewSchema(data.operation),
                     inputsDvs: OperationInfo.toInputsDvs(data, this.selectedAttributeId$),
                     outputDvs: OperationInfo.toOutputsDvs(data, this.selectedAttributeId$),
-                    detailsDvs: OperationInfo.toDetailsDvs(data),
+                    detailsDvs: OperationInfo.toDetailsDvs(data, this.agentInfo),
                     inputsNumber: data?.inputs?.length ?? 0
                 }),
             )

@@ -49,7 +49,7 @@ export namespace PlanInfo {
                         },
                         {
                             label: 'PLANS.PLAN_INFO__DETAILS__AGENT_INFO',
-                            value: `${executionPlan.agentInfo.name} ${executionPlan.agentInfo.version}`,
+                            value: `${executionPlan.agentInfo?.name} ${executionPlan.agentInfo?.version}`,
                         },
                     ]),
                 ],

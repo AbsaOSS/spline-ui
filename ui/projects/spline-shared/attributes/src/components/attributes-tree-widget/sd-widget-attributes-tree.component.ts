@@ -31,8 +31,6 @@ export class SdWidgetAttributesTreeComponent extends SdWidgetBaseComponent<SdWid
     selectedAttributeId$: Observable<string | null>
     attributesTree$: Observable<SplineAttributesTree.Tree | null>
 
-    @Output() event$ = new EventEmitter<SdWidgetAttributesTree.EventSelectedAttrChanged>()
-
     constructor() {
         super()
 

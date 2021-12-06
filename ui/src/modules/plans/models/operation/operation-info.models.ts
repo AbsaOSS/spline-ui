@@ -15,7 +15,7 @@
  */
 
 import { Observable } from 'rxjs'
-import { Operation, OperationDetails, OperationType } from 'spline-api'
+import { ExecutionPlanAgentInfo, Operation, OperationDetails, OperationType } from 'spline-api'
 import { SdWidgetCard, SplineDataViewSchema } from 'spline-common/data-view'
 import { SgNodeCardDataView } from 'spline-shared/data-view'
 import { SgNodeControl } from 'spline-shared/graph'
@@ -121,39 +121,48 @@ export namespace OperationInfo {
         )
     }
 
-    export function toDetailsDvs(operationDetails: OperationDetails): SplineDataViewSchema | null {
+    export function toDetailsDvs(
+        operationDetails: OperationDetails,
+        agentInfo: ExecutionPlanAgentInfo | undefined
+    ): SplineDataViewSchema | null {
         const nodeType = toNodeType(operationDetails.operation.type, operationDetails.operation.name)
-        switch (nodeType) {
-            case SgNodeControl.NodeType.Read:
-                return OperationRead.toDataViewSchema(operationDetails)
+        if (agentInfo?.name == 'spline') {
+            switch (nodeType) {
+                case SgNodeControl.NodeType.Read:
+                    return OperationRead.toDataViewSchema(operationDetails)
 
-            case SgNodeControl.NodeType.Write:
-                return OperationWrite.toDataViewSchema(operationDetails)
+                case SgNodeControl.NodeType.Write:
+                    return OperationWrite.toDataViewSchema(operationDetails)
 
-            case SgNodeControl.NodeType.Filter:
-                return OperationFilter.toDataViewSchema(operationDetails)
+                case SgNodeControl.NodeType.Filter:
+                    return OperationFilter.toDataViewSchema(operationDetails)
 
-            case SgNodeControl.NodeType.Alias:
-                return OperationAlias.toDataViewSchema(operationDetails)
+                case SgNodeControl.NodeType.Alias:
+                    return OperationAlias.toDataViewSchema(operationDetails)
 
-            case SgNodeControl.NodeType.Join:
-                return OperationJoin.toDataViewSchema(operationDetails)
+                case SgNodeControl.NodeType.Join:
+                    return OperationJoin.toDataViewSchema(operationDetails)
 
-            case SgNodeControl.NodeType.Projection:
-                return OperationProjection.toDataViewSchema(operationDetails)
+                case SgNodeControl.NodeType.Projection:
+                    return OperationProjection.toDataViewSchema(operationDetails)
 
-            case SgNodeControl.NodeType.Aggregate:
-                return OperationAggregate.toDataViewSchema(operationDetails)
+                case SgNodeControl.NodeType.Aggregate:
+                    return OperationAggregate.toDataViewSchema(operationDetails)
 
-            case SgNodeControl.NodeType.Sort:
-                return OperationSort.toDataViewSchema(operationDetails)
+                case SgNodeControl.NodeType.Sort:
+                    return OperationSort.toDataViewSchema(operationDetails)
 
-            case SgNodeControl.NodeType.Transformation:
-            case SgNodeControl.NodeType.Generic:
-                return OperationGeneric.toDataViewSchema(operationDetails)
+                case SgNodeControl.NodeType.Transformation:
+                case SgNodeControl.NodeType.Generic:
+                    return OperationGeneric.toDataViewSchema(operationDetails)
 
-            default:
-                return null
+                default:
+                    return null
+            }
+        }
+        else {
+            // no detailed view for metadata collected by 3rd-party agents
+            return OperationGeneric.toDataViewSchema(operationDetails)
         }
     }
 
