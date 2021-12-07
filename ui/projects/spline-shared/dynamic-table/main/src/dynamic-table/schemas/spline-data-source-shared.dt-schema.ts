@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { DataSourceWriteMode } from 'spline-api'
+import { DataSourceWriteMode, ExecutionError } from 'spline-api'
 import { SplineColors, SplineIcon } from 'spline-common'
 import {
     DtCellIcon,
@@ -38,12 +38,17 @@ export namespace SplineDataSourceSharedDtSchema {
 
 
     export function getWriteModeColSchema(
-        getWriteModeFn: TCellValueFn<DataSourceWriteMode>
+        getWriteModeFn: TCellValueFn<DataSourceWriteMode>,
+        errorFn: TCellValueFn<ExecutionError>,
     ): Partial<DynamicTableColumnSchema<DtCellIcon.Icon, unknown, unknown, DtCellIcon.Options>> {
 
         return {
             type: DtCellIcon.TYPE,
             value: (rowData) => {
+                const executionError = errorFn(rowData)
+                if (executionError) {
+                    return 'error'
+                }
                 switch (getWriteModeFn(rowData)) {
                     case DataSourceWriteMode.Append:
                         return 'post_add'
@@ -54,13 +59,20 @@ export namespace SplineDataSourceSharedDtSchema {
                 }
             },
             options: (rowData) => {
+                const executionError = errorFn(rowData)
                 const writeMode = getWriteModeFn(rowData)
-                const color: SplineIcon.Color = writeMode === DataSourceWriteMode.Append
-                    ? SplineColors.BLUE
-                    : SplineColors.GREEN
-                const hint: string = writeMode === DataSourceWriteMode.Append
-                    ? 'SHARED.DYNAMIC_TABLE.DS_WRITE_MODE__APPEND'
-                    : 'SHARED.DYNAMIC_TABLE.DS_WRITE_MODE__OVERWRITE'
+                const color: SplineIcon.Color =
+                    executionError
+                        ? SplineColors.SMILE
+                        : writeMode === DataSourceWriteMode.Append
+                            ? SplineColors.BLUE
+                            : SplineColors.GREEN
+                const hint: string =
+                    executionError
+                        ? executionError.toString()
+                        : writeMode === DataSourceWriteMode.Append
+                            ? 'SHARED.DYNAMIC_TABLE.DS_WRITE_MODE__APPEND'
+                            : 'SHARED.DYNAMIC_TABLE.DS_WRITE_MODE__OVERWRITE'
 
                 return {
                     color,
