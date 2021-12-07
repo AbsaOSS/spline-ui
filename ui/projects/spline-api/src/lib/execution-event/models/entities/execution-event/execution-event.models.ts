@@ -45,7 +45,10 @@ export type ExecutionEventDto = {
     executionPlanId: string
     frameworkName: string
     timestamp: number
+    error: ExecutionError
 }
+
+export type ExecutionError = any
 
 export type ExecutionEvent =
     & ExecutionEventDto

@@ -65,7 +65,8 @@ export namespace DataSourcesListDtSchema {
             },
             {
                 ...SplineDataSourceSharedDtSchema.getWriteModeColSchema(
-                    (rowData: ExecutionEvent) => rowData.writeMode
+                    (rowData: ExecutionEvent) => rowData.writeMode,
+                    (rowData: ExecutionEvent) => rowData.error,
                 ),
                 id: Column.writeMode,
             },

@@ -65,8 +65,9 @@ export namespace DsStateHistoryDtSchema {
             },
             {
                 ...SplineDataSourceSharedDtSchema.getWriteModeColSchema(
-                    (rowData: ExecutionEvent) => rowData.writeMode
-                ),
+                    (rowData: ExecutionEvent) => rowData.writeMode,
+                    (rowData: ExecutionEvent) => rowData.error,
+    ),
                 id: Column.writeMode,
                 layout: (new DtLayoutBuilder(SplineDataSourceSharedDtSchema.getWriteModeDefaultLayout()))
                     .setCSSClass([])
