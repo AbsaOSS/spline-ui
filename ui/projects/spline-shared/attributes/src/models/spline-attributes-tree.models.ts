@@ -39,7 +39,7 @@ export namespace SplineAttributesTree {
                     id: attrSchema.id,
                     name: attrSchema.name,
                     dataType,
-                    children: getDataTypeChildren(dataType, dataTypesMap, attrSchema.id),
+                    children: dataType && getDataTypeChildren(dataType, dataTypesMap, attrSchema.id),
                 }
             })
     }
