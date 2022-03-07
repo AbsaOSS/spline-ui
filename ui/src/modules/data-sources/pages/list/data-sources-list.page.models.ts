@@ -31,7 +31,7 @@ export namespace DataSourcesListPage {
                 label: 'DATA_SOURCES.DS_LIST__FILTER__LAST_MODIFIED_AT'
             },
             {
-                ...ExecutionEventsDynamicFilter.getWriteModeFilterSchema(),
+                ...ExecutionEventsDynamicFilter.getWriteModeFilterSchema(true),
                 label: 'DATA_SOURCES.DS_LIST__FILTER__LAST_WRITE_MODE'
             }
         ]

@@ -40,13 +40,13 @@ export namespace ExecutionEventsDynamicFilter {
         }
     }
 
-    export function getWriteModeFilterSchema(): DfControlSelect.Schema<FilterId.writeMode> {
+    export function getWriteModeFilterSchema(includeNull: boolean = false): DfControlSelect.Schema<FilterId.writeMode> {
         return {
             id: FilterId.writeMode,
             type: DfControlSelect.TYPE,
             label: 'SHARED.EXECUTION_EVENTS__DF__WRITE_MODE',
             icon: 'save',
-            records: getDataSourceWriteModeInfoList()
+            records: getDataSourceWriteModeInfoList(includeNull)
                 .map(item => ({
                     label: item.label,
                     value: item.writeMode

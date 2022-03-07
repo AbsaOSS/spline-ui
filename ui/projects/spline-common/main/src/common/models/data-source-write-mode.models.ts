@@ -32,16 +32,20 @@ export function getDataSourceWriteModeLabel(writeMode: DataSourceWriteMode): str
         case DataSourceWriteMode.Overwrite:
             return `${prefix}.OVERWRITE`
 
+        case null:
+            return `${prefix}.NULL`
+
         default:
             console.warn(`Unknown write mode: ${writeMode}`)
             return writeMode as string
     }
 }
 
-export function getDataSourceWriteModeInfoList(): DataSourceWriteModeInfo[] {
-    return Object.values(DataSourceWriteMode)
-        .map(writeMode => ({
-            writeMode,
-            label: getDataSourceWriteModeLabel(writeMode)
-        }))
+export function getDataSourceWriteModeInfoList(includeNull: boolean): DataSourceWriteModeInfo[] {
+    const writeModes = Object.values(DataSourceWriteMode)
+    const values = includeNull ? [...writeModes, null] : writeModes
+    return values.map(v => ({
+        writeMode: v,
+        label: getDataSourceWriteModeLabel(v)
+    }))
 }
