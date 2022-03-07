@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { BehaviorSubject, Observable } from 'rxjs'
+import { BehaviorSubject } from 'rxjs'
 import { SplineListBox } from 'spline-common'
 import { BaseDynamicFilterControlModel, DynamicFilterControlSchema } from 'spline-common/dynamic-filter'
 
@@ -48,29 +48,17 @@ export namespace DfControlSelect {
 
         readonly label: string
         readonly icon: string
-        readonly records$: Observable<TRecord[]>
-
-        private readonly _records$ = new BehaviorSubject<TRecord[]>([])
+        readonly records$ = new BehaviorSubject<TRecord[]>([])
 
         constructor(id: TId, config: Config<TRecord, TSelectValue>) {
             super(id, config)
 
             if (config.records) {
-                this.records = config.records
+                this.records$.next(config.records)
             }
 
             this.icon = config.icon
             this.label = config.label
-
-            this.records$ = this._records$
-        }
-
-        get records(): TRecord[] {
-            return this._records$.getValue()
-        }
-
-        set records(records: TRecord[]) {
-            this._records$.next(records)
         }
     }
 

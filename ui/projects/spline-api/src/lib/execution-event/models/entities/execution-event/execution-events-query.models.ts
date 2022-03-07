@@ -47,7 +47,7 @@ export namespace ExecutionEventsQuery {
         dataSourceUri?: string
         asAtTime?: number
         applicationId?: string
-        append?: boolean
+        append?: Array<boolean | null>
     }
 
     export function toQueryParamsDto(queryParams: QueryParams): QueryParamsDto {
@@ -97,12 +97,17 @@ export namespace ExecutionEventsQuery {
             dataSourceUri: queryFilter?.dataSourceUri,
             asAtTime: queryFilter?.asAtTime,
             applicationId: queryFilter?.applicationId,
-            append: queryFilter?.writeMode
-                ? (
-                    queryFilter.writeMode?.length === 1
-                        ? queryFilter.writeMode[0] === DataSourceWriteMode.Append
-                        : undefined // there are just 2 options for now, if we have specified 2 options it means we want to see all items
-                )
+            append: queryFilter?.writeMode?.length
+                ? queryFilter?.writeMode.map(m => {
+                    switch (m) {
+                        case DataSourceWriteMode.Append:
+                            return true
+                        case DataSourceWriteMode.Overwrite:
+                            return false
+                        default:
+                            return null // (append === null) means no writes, i.e. read-only items.
+                    }
+                })
                 : undefined
         }
     }

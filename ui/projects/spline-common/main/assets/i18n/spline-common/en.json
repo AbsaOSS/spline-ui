@@ -30,7 +30,8 @@
         },
         "DATA_SOURCE_WRITE_MODE": {
             "APPEND": "Append",
-            "OVERWRITE": "Overwrite"
+            "OVERWRITE": "Overwrite",
+            "NULL": "Read-Only"
         }
     }
 }
