@@ -17,9 +17,8 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { Store } from '@ngrx/store'
-import { of } from 'rxjs'
 import { catchError, filter, map, switchMap } from 'rxjs/operators'
-import { ExecutionPlanFacade, executionPlanIdToWriteOperationId } from 'spline-api'
+import { ExecutionPlanFacade } from 'spline-api'
 
 import { DsOverviewDetailsStoreActions } from '../actions'
 import fromActions = DsOverviewDetailsStoreActions
@@ -34,13 +33,13 @@ export class DsOverviewDetailsEffects {
         .pipe(
             ofType<fromActions.Init>(fromActions.ActionTypes.Init),
             switchMap(({ payload }) =>
-                this.executionPlanFacade.fetchOperationDetails(executionPlanIdToWriteOperationId(payload.executionEvent.executionPlanId))
+                this.executionPlanFacade.fetchExecutionPlanRootOperationDetails(payload.executionEvent.executionPlanId)
                     .pipe(
                         catchError((error) => {
                             this.store.dispatch(
                                 new fromActions.InitError({ error })
                             )
-                            return of(null)
+                            throw error
                         }),
                         map((oneOperationsDetails) => ({
                             operationsDetails: [oneOperationsDetails],

@@ -73,8 +73,6 @@ export type ExecutionPlanExtraInfoDto =
 export function toExecutionPlan(entity: ExecutionPlanDto): ExecutionPlan {
     return {
         id: entity._id,
-        // TODO: remove extra?.appName in the next minor release, 0.7.*.
-        //       For now we support it, but it is deprecated. Only `entity.name` field should be used instead in future.
         name: entity.name?.length ? entity.name : planSystemInfoToName(entity.systemInfo),
         inputDataSources: entity.inputs.map(toDataSourceInfo),
         outputDataSource: toDataSourceInfo(entity.output),
@@ -94,35 +92,6 @@ export function toExecutionPlanExtraInfo(entity: ExecutionPlanExtraInfoDto): Exe
         attributes: entity?.attributes || [],
         dataTypes: (entity?.dataTypes || []).map(toAttributeDataType),
     }
-}
-
-export function executionPlanIdToWriteOperationId(executionPlanId: string, agentVersion: string | undefined = undefined): string {
-    // This method assumes a particular format of the write operation ID depending on the agent version.
-    // Strictly speaking that's not correct as there is no stable convention about the operation ID format.
-    // It's OK for a short term solution, but should be changed as soon as possible.
-    // For a long-term solution see https://github.com/AbsaOSS/spline/issues/982
-
-    let isAgentVersionAtLeast07
-    if (agentVersion) {
-        const SEMVER_REGEXP = new RegExp([
-            /^/,
-            /(0|[1-9]\d*)\./,
-            /(0|[1-9]\d*)\./,
-            /(0|[1-9]\d*)/,
-            /(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?/,
-            /(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?/,
-            /$/
-        ].map(r => r.source).join(''))
-        const [, vMajor, vMinor] = SEMVER_REGEXP.exec(agentVersion)
-        isAgentVersionAtLeast07 = +vMajor > 0 || +vMinor > 6
-    }
-    else {
-        // assume that UUID ver 5 means Agent 0.7+ (!!! VERY WEAK ASSUMPTION !!!)
-        isAgentVersionAtLeast07 = executionPlanId.charAt(14) === '5'
-    }
-    return isAgentVersionAtLeast07
-        ? `${executionPlanId}:op-0`
-        : `${executionPlanId}:0`
 }
 
 export function operationIdToExecutionPlanId(operationId: string): string {
