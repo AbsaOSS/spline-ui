@@ -20,7 +20,7 @@ import { SimpleDataSource } from 'spline-utils'
 
 
 export type OperationDetailsListFilter = {
-    operationIds: string[]
+    executionPlanIds: string[]
 }
 
 export class OperationDetailsListDataSource extends SimpleDataSource<OperationDetails[], OperationDetailsListFilter> {
@@ -30,10 +30,10 @@ export class OperationDetailsListDataSource extends SimpleDataSource<OperationDe
     }
 
     protected getDataObserver(filter: OperationDetailsListFilter): Observable<OperationDetails[]> {
-        return filter.operationIds.length
+        return filter.executionPlanIds.length
             ? forkJoin(
-                filter.operationIds
-                    .map(id => this.executionPlanFacade.fetchOperationDetails(id))
+                filter.executionPlanIds
+                    .map(planId => this.executionPlanFacade.fetchExecutionPlanRootOperationDetails(planId))
             )
             : of([])
     }

@@ -21,7 +21,9 @@
     <!-- ./LOADER -->
 
     <!-- ERROR -->
-    <spline-content-error *ngIf="state.loadingProcessing.processingError"></spline-content-error>
+    <spline-content-error *ngIf="state.loadingProcessing.processingError"
+                          [statusCode]="state.loadingProcessing.processingError?.status">
+    </spline-content-error>
     <!-- ./ERROR -->
 
     <ng-container *ngIf="!state.loadingProcessing.processing">

@@ -68,6 +68,18 @@ export class ExecutionPlanFacade extends BaseFacade {
             )
     }
 
+    fetchExecutionPlanRootOperationDetails(executionPlanId: string): Observable<OperationDetails> {
+        const url = this.toUrl(`execution-plans/${executionPlanId}/write-op`)
+        return this.http.get<OperationDetailsDto>(url)
+            .pipe(
+                map(toOperationDetails),
+                catchError(error => {
+                    console.error(error)
+                    return throwError(error)
+                })
+            )
+    }
+
     fetchAttributeLineage(executionPlanId: string, attributeId: string): Observable<OperationAttributeLineage> {
         let params = new HttpParams()
         params = params.append('execId', executionPlanId)

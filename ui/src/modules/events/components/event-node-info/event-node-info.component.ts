@@ -17,7 +17,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
 import { isEqual } from 'lodash-es'
 import { delay, distinctUntilChanged, filter, takeUntil } from 'rxjs/operators'
-import { ExecutionEventLineageNodeType, ExecutionPlanFacade, executionPlanIdToWriteOperationId } from 'spline-api'
+import { ExecutionEventLineageNodeType, ExecutionPlanFacade } from 'spline-api'
 import { SplineDataWidgetEvent } from 'spline-common/data-view'
 import { SgNodeCardDataView } from 'spline-shared/data-view'
 import { BaseLocalStateComponent, GenericEventInfo, ProcessingStore } from 'spline-utils'
@@ -104,8 +104,8 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
         if (changes?.nodeRelations && !!changes.nodeRelations.currentValue) {
             const nodeRelations: EventNodeInfo.NodeRelationsInfo = changes.nodeRelations.currentValue
 
-            const operationIds = nodeRelations.node.type === ExecutionEventLineageNodeType.DataSource && nodeRelations?.parents?.length > 0
-                ? nodeRelations.parents.map(node => executionPlanIdToWriteOperationId(node.id, node.agentInfo?.version))
+            const executionPlanIds = nodeRelations.node.type === ExecutionEventLineageNodeType.DataSource && nodeRelations?.parents?.length > 0
+                ? nodeRelations.parents.map(node => node.id)
                 : []
 
             this.updateState({
@@ -114,7 +114,7 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
 
             // set filter and trigger data fetching
             this.dataSource.setFilter({
-                operationIds
+                executionPlanIds
             })
         }
     }
