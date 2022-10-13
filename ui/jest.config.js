@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+/** @type {import('jest').Config} */
 module.exports = {
     'preset': 'jest-preset-angular',
     'setupFilesAfterEnv': [
@@ -23,13 +24,14 @@ module.exports = {
     'transformIgnorePatterns': [
         'node_modules/(?!@ngrx)'
     ],
-    "testResultsProcessor": "jest-teamcity-reporter",
+    'testResultsProcessor': 'jest-teamcity-reporter',
     'coverageReporters': [
         'text',
         'html',
         'cobertura',
         'teamcity'
     ],
+    'coverageDirectory': 'target/coverage',
     'moduleNameMapper': {
         '^lodash-es$': __dirname + '/node_modules/lodash/index.js',
         '/spline-api/': __dirname + '/projects/spline-api/src/public-api',
