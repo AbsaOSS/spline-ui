@@ -18,35 +18,35 @@ import { createSelector } from '@ngrx/store'
 import { ExecutionEvent, OperationDetails } from 'spline-api'
 import { ProcessingStore } from 'spline-utils'
 
-import { DsOverviewDetailsStore } from '../reducers'
-import { SplineDataSourceStore } from '../reducers/base'
+import { DsOverviewDetailsStateManagement } from '../state-managements'
+import { SplineDataSourceStateManagement } from '../state-managements/spline-data-source.state-management'
 
 
 export namespace DsOverviewDetailsStoreSelectors {
 
     export const rootState = createSelector(
-        SplineDataSourceStore.rootState,
-        (_state: SplineDataSourceStore.State) => _state[DsOverviewDetailsStore.STORE_FEATURE_NAME]
+        SplineDataSourceStateManagement.rootState,
+        (_state: SplineDataSourceStateManagement.State) => _state[DsOverviewDetailsStateManagement.STORE_FEATURE_NAME]
     )
 
-    export const loading = createSelector<any, DsOverviewDetailsStore.State, ProcessingStore.EventProcessingState>(
+    export const loading = createSelector<any, DsOverviewDetailsStateManagement.State, ProcessingStore.EventProcessingState>(
         rootState,
-        (_state) => _state.loading,
+        (_state) => _state.loading
     )
 
-    export const isLoading = createSelector<any, DsOverviewDetailsStore.State, boolean>(
+    export const isLoading = createSelector<any, DsOverviewDetailsStateManagement.State, boolean>(
         rootState,
-        (_state) => _state.loading.processing,
+        (_state) => _state.loading.processing
     )
 
-    export const executionEvent = createSelector<any, DsOverviewDetailsStore.State, ExecutionEvent>(
+    export const executionEvent = createSelector<any, DsOverviewDetailsStateManagement.State, ExecutionEvent>(
         rootState,
-        (_state) => _state.executionEvent,
+        (_state) => _state.executionEvent
     )
 
-    export const operationDetails = createSelector<any, DsOverviewDetailsStore.State, OperationDetails[]>(
+    export const operationDetails = createSelector<any, DsOverviewDetailsStateManagement.State, OperationDetails[]>(
         rootState,
-        (_state) => _state.operationDetails,
+        (_state) => _state.operationDetails
     )
 
 }

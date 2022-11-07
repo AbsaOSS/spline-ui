@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export * from './ds-state-history.data-source'
-export * from './spline-data-sources.data-source'
+export * from './ds-state-history.factory-store'
+export * from './spline-data-sources.factory-store'

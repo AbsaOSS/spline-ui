@@ -16,15 +16,15 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { takeUntil } from 'rxjs/operators'
-import { ExecutionEventFacade, ExecutionEventsQuery } from 'spline-api'
+import { ExecutionEventApiService, ExecutionEventsQuery } from 'spline-api'
 import { DynamicFilterFactory, DynamicFilterModel } from 'spline-common/dynamic-filter'
-import { DataSourceWithDynamicFilter, SplineConfigService } from 'spline-shared'
+import { DynamicFilterStorePlugin, SplineConfigApiService } from 'spline-shared'
 import { BaseComponent } from 'spline-utils'
 
-import { SplineDataSourcesDataSource } from '../../data-sources'
+import { SplineDataSourcesFactoryStore } from '../../data-sources'
 import { DataSourcesListDtSchema } from '../../dynamic-table'
 
-import { DataSourcesListPage } from './data-sources-list.page.models'
+import { DataSourcesListPageSchema } from './data-sources-list.page.schema'
 
 
 @Component({
@@ -33,45 +33,46 @@ import { DataSourcesListPage } from './data-sources-list.page.models'
     styleUrls: ['./data-sources-list.page.component.scss'],
     providers: [
         {
-            provide: SplineDataSourcesDataSource,
+            provide: SplineDataSourcesFactoryStore,
             useFactory: (
-                executionEventFacade: ExecutionEventFacade,
-                splineConfigService: SplineConfigService,
+                executionEventApiService: ExecutionEventApiService,
+                configApiService: SplineConfigApiService
             ) => {
-                return new SplineDataSourcesDataSource(executionEventFacade, splineConfigService)
+                return new SplineDataSourcesFactoryStore(executionEventApiService, configApiService)
             },
             deps: [
-                ExecutionEventFacade,
-                SplineConfigService,
-            ],
-        },
-    ],
+                ExecutionEventApiService,
+                SplineConfigApiService
+            ]
+        }
+    ]
 })
 export class DataSourcesListPageComponent extends BaseComponent implements OnDestroy, OnInit {
 
     readonly dataMap = DataSourcesListDtSchema.getSchema()
 
-    filterModel: DynamicFilterModel<DataSourcesListPage.Filter>
+    filterModel: DynamicFilterModel<DataSourcesListPageSchema.Filter>
 
-    constructor(readonly dataSource: SplineDataSourcesDataSource,
-                private readonly dynamicFilterFactory: DynamicFilterFactory) {
+    constructor(readonly dataSource: SplineDataSourcesFactoryStore,
+                private readonly dynamicFilterFactory: DynamicFilterFactory
+    ) {
         super()
     }
 
     ngOnInit(): void {
         this.dynamicFilterFactory
-            .schemaToModel<DataSourcesListPage.Filter>(
-                DataSourcesListPage.getDynamicFilterSchema()
+            .schemaToModel<DataSourcesListPageSchema.Filter>(
+                DataSourcesListPageSchema.getDynamicFilterSchema()
             )
             .pipe(
                 takeUntil(this.destroyed$)
             )
             .subscribe(model => {
                 this.filterModel = model
-                DataSourceWithDynamicFilter.bindDynamicFilter<ExecutionEventsQuery.QueryFilter, DataSourcesListPage.Filter>(
+                DynamicFilterStorePlugin.bindDynamicFilter<ExecutionEventsQuery.QueryFilter, DataSourcesListPageSchema.Filter>(
                     this.dataSource,
                     this.filterModel,
-                    DataSourcesListPage.getFiltersMapping()
+                    DataSourcesListPageSchema.getFiltersMapping()
                 )
             })
     }

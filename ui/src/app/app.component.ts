@@ -18,27 +18,28 @@ import { Component } from '@angular/core'
 import { Router } from '@angular/router'
 import { take } from 'rxjs/operators'
 import { AttributeSearchRecord } from 'spline-api'
-import { SplineConfig, SplineConfigService } from 'spline-shared'
+import { SplineConfig, SplineConfigApiService } from 'spline-shared'
 import { BaseLocalStateComponent } from 'spline-utils'
 
-import { AppStore } from './store'
+import { AppStateManagement } from './store'
 
 
 @Component({
     selector: 'spline-app',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
+    styleUrls: ['./app.component.scss']
 })
-export class AppComponent extends BaseLocalStateComponent<AppStore.State> {
+export class AppComponent extends BaseLocalStateComponent<AppStateManagement.State> {
 
     constructor(private readonly router: Router,
-                private readonly splineConfigService: SplineConfigService) {
+                private readonly splineConfigApiService: SplineConfigApiService
+    ) {
         super()
         this.updateState(
-            AppStore.getDefaultState()
+            AppStateManagement.getDefaultState()
         )
 
-        this.splineConfigService.config$
+        this.splineConfigApiService.config$
             .pipe(
                 take(1)
             )
@@ -52,22 +53,22 @@ export class AppComponent extends BaseLocalStateComponent<AppStore.State> {
             ['/plans/overview', attributeInfo.executionEventId],
             {
                 queryParams: {
-                    attributeId: attributeInfo.id,
-                },
-            },
+                    attributeId: attributeInfo.id
+                }
+            }
         )
     }
 
     onSideNavExpanded(isExpanded: boolean): void {
         this.updateState(
-            AppStore.reduceSideNavExpanded(this.state, isExpanded)
+            AppStateManagement.reduceSideNavExpanded(this.state, isExpanded)
         )
     }
 
     private init(splineConfig: SplineConfig): void {
         this.updateState({
             isInitialized: true,
-            isEmbeddedMode: !!splineConfig.isEmbeddedMode,
+            isEmbeddedMode: !!splineConfig.isEmbeddedMode
         })
     }
 

@@ -17,21 +17,21 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core'
 import { ExecutionEvent, SplineDataSourceInfo } from 'spline-api'
 
-import { DsOverviewDetailsStoreFacade } from '../../services'
+import { DsOverviewDetailsStore } from '../../services'
 
 
 @Component({
     selector: 'data-source-details',
     templateUrl: './data-source-details.component.html',
     styleUrls: ['./data-source-details.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataSourceDetailsComponent implements OnChanges {
 
     @Input() executionEvent: ExecutionEvent
     @Input() dataSourceInfo: SplineDataSourceInfo
 
-    constructor(readonly store: DsOverviewDetailsStoreFacade) {
+    constructor(readonly store: DsOverviewDetailsStore) {
     }
 
     ngOnChanges(changes: SimpleChanges): void {

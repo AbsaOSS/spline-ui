@@ -15,4 +15,4 @@
  */
 
 export * from './execution-plan-info.store'
-export * from './execution-plan-overview.store'
+export * from './execution-plan-overview.state-management'

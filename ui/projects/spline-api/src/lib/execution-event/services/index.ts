@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-import { AttributeFacade } from './attribute.facade'
-import { ExecutionEventFacade } from './execution-event.facade'
-import { ExecutionPlanFacade } from './execution-plan.facade'
-import { SplineDataSourceFacade } from './spline-data-source-facade.service'
+import { AttributeApiService } from './attribute-api.service'
+import { ExecutionEventApiService } from './execution-event-api.service'
+import { ExecutionPlanApiService } from './execution-plan-api.service'
+import { SplineDataSourceApiService } from './spline-data-source-api.service'
 
 
 export const executionEventServices: any[] = [
-    ExecutionEventFacade,
-    ExecutionPlanFacade,
-    AttributeFacade,
-    SplineDataSourceFacade
+    ExecutionEventApiService,
+    ExecutionPlanApiService,
+    AttributeApiService,
+    SplineDataSourceApiService
 ]
 
 export * from './public-api'

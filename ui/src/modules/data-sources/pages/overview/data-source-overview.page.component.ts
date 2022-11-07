@@ -22,21 +22,20 @@ import { SplineTabsNavBar } from 'spline-common'
 import { SlBreadcrumbs } from 'spline-common/layout'
 import { BaseComponent } from 'spline-utils'
 
-import { DsOverviewStoreFacade } from '../../services'
-import { DsOverviewStore } from '../../store'
-
+import { DsOverviewStore } from '../../services'
+import { DsOverviewStateManagement } from '../../store'
 import NavTabInfo = SplineTabsNavBar.NavTabInfo
 
 
 @Component({
     selector: 'data-sources-overview-page',
     templateUrl: './data-source-overview.page.component.html',
-    styleUrls: ['./data-source-overview.page.component.scss'],
+    styleUrls: ['./data-source-overview.page.component.scss']
 
 })
 export class DataSourceOverviewPageComponent extends BaseComponent implements OnInit, OnDestroy {
 
-    readonly state$: Observable<DsOverviewStore.State>
+    readonly state$: Observable<DsOverviewStateManagement.State>
     readonly breadcrumbs$: Observable<SlBreadcrumbs.Breadcrumbs>
 
     readonly headerNavTabs: NavTabInfo[] = [
@@ -59,12 +58,12 @@ export class DataSourceOverviewPageComponent extends BaseComponent implements On
             label: 'Impact',
             routeLink: './impact',
             icon: 'air'
-        },
+        }
     ]
 
-
     constructor(private readonly activatedRoute: ActivatedRoute,
-                private readonly store: DsOverviewStoreFacade) {
+                private readonly store: DsOverviewStore
+    ) {
         super()
 
         this.state$ = store.state$
@@ -83,7 +82,7 @@ export class DataSourceOverviewPageComponent extends BaseComponent implements On
                     },
                     {
                         label: 'History'
-                    },
+                    }
                 ])
             )
     }

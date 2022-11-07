@@ -26,7 +26,7 @@ import { SgContainerComponent, SgNodeControl } from 'spline-shared/graph'
 import { BaseComponent, GenericEventInfo, RouterNavigation } from 'spline-utils'
 
 import { EventNodeControl, EventNodeInfo } from '../../../models'
-import { EventOverviewStore, EventOverviewStoreFacade } from '../../../store'
+import { EventOverviewStateManagement, EventOverviewStore } from '../../../store'
 import { EventOverviewPage } from '../event-overview.page.model'
 import NodeEventData = SgNodeCardDataView.NodeEventData
 
@@ -40,13 +40,14 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
 
     @ViewChild(SgContainerComponent) readonly sgContainer: SgContainerComponent
 
-    readonly state$: Observable<EventOverviewStore.State>
+    readonly state$: Observable<EventOverviewStateManagement.State>
 
     isGraphFullScreen = false
 
     constructor(private readonly activatedRoute: ActivatedRoute,
                 private readonly router: Router,
-                readonly store: EventOverviewStoreFacade) {
+                readonly store: EventOverviewStore
+    ) {
         super()
 
         this.state$ = store.state$

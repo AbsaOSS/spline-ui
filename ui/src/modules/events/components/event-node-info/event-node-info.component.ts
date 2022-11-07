@@ -17,12 +17,12 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
 import { isEqual } from 'lodash-es'
 import { delay, distinctUntilChanged, filter, takeUntil } from 'rxjs/operators'
-import { ExecutionEventLineageNodeType, ExecutionPlanFacade } from 'spline-api'
+import { ExecutionEventLineageNodeType, ExecutionPlanApiService } from 'spline-api'
 import { SplineDataWidgetEvent } from 'spline-common/data-view'
 import { SgNodeCardDataView } from 'spline-shared/data-view'
 import { BaseLocalStateComponent, GenericEventInfo, ProcessingStore } from 'spline-utils'
 
-import { OperationDetailsListDataSource } from '../../data-sources'
+import { OperationDetailsListFactoryStore } from '../../data-sources'
 import { EventNodeInfo } from '../../models'
 import NodeEventData = SgNodeCardDataView.NodeEventData
 
@@ -34,13 +34,13 @@ import NodeEventData = SgNodeCardDataView.NodeEventData
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         {
-            provide: OperationDetailsListDataSource,
-            useFactory: (executionPlanFacade: ExecutionPlanFacade) => {
-                return new OperationDetailsListDataSource(executionPlanFacade)
+            provide: OperationDetailsListFactoryStore,
+            useFactory: (executionPlanApiService: ExecutionPlanApiService) => {
+                return new OperationDetailsListFactoryStore(executionPlanApiService)
             },
-            deps: [ExecutionPlanFacade],
-        },
-    ],
+            deps: [ExecutionPlanApiService]
+        }
+    ]
 })
 export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInfo.NodeInfoViewState> implements OnChanges {
 
@@ -52,7 +52,7 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
     @Output() highlightSpecificRelations$ = new EventEmitter<{ nodeIds: string[] }>()
     @Output() dataViewEvent$ = new EventEmitter<SplineDataWidgetEvent>()
 
-    constructor(readonly dataSource: OperationDetailsListDataSource) {
+    constructor(readonly dataSource: OperationDetailsListFactoryStore) {
         super()
 
         this.updateState(
@@ -65,7 +65,7 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
         this.dataSource.data$
             .pipe(
                 filter(state => !!state),
-                takeUntil(this.destroyed$),
+                takeUntil(this.destroyed$)
             )
             .subscribe(operationDetailsList => {
                 this.updateState({
@@ -73,7 +73,7 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
                         this.state,
                         this.nodeRelations,
                         operationDetailsList
-                    ),
+                    )
                 })
 
                 setTimeout(
@@ -95,7 +95,8 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
             .subscribe(state =>
                 this.updateState({
                     loadingProcessing:
-                        ProcessingStore.eventProcessingFinish(this.state.loadingProcessing, state.loadingProcessing.processingError)
+                        ProcessingStore.eventProcessingFinish(
+                            this.state.loadingProcessing, state.loadingProcessing.processingError)
                 })
             )
     }
@@ -104,9 +105,10 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
         if (changes?.nodeRelations && !!changes.nodeRelations.currentValue) {
             const nodeRelations: EventNodeInfo.NodeRelationsInfo = changes.nodeRelations.currentValue
 
-            const executionPlanIds = nodeRelations.node.type === ExecutionEventLineageNodeType.DataSource && nodeRelations?.parents?.length > 0
-                ? nodeRelations.parents.map(node => node.id)
-                : []
+            const executionPlanIds = nodeRelations.node.type === ExecutionEventLineageNodeType.DataSource &&
+                                     nodeRelations?.parents?.length > 0
+                                     ? nodeRelations.parents.map(node => node.id)
+                                     : []
 
             this.updateState({
                 loadingProcessing: ProcessingStore.eventProcessingStart(this.state.loadingProcessing)

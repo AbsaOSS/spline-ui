@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core'
 import { PageEvent } from '@angular/material/paginator'
 import { ActivatedRoute, NavigationEnd, Params, Router, RouterEvent } from '@angular/router'
@@ -28,7 +27,7 @@ import {
     DynamicTableOptions,
     getDefaultDtOptions
 } from 'spline-common/dynamic-table'
-import { BaseLocalStateComponent, QuerySorter, RouterNavigation, SearchDataSource, SplineRecord } from 'spline-utils'
+import { BaseLocalStateComponent, QuerySorter, RouterNavigation, SearchFactoryStore, SplineRecord } from 'spline-utils'
 
 import { SplineSearchDynamicTable } from './spline-search-dynamic-table.models'
 
@@ -43,7 +42,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
     readonly defaultUrlStateQueryParamAlias = 'searchTable'
 
     @Input() dataMap: DynamicTableDataMap
-    @Input() dataSource: SearchDataSource<TRowData>
+    @Input() dataSource: SearchFactoryStore<TRowData>
 
     @Input() options: Readonly<DynamicTableOptions> = getDefaultDtOptions()
 
@@ -59,7 +58,8 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
     private _dataUpdateAvailable$: Observable<boolean>
 
     constructor(private readonly activatedRoute: ActivatedRoute,
-                private readonly router: Router) {
+                private readonly router: Router
+    ) {
         super()
         this.updateState(
             SplineSearchDynamicTable.getDefaultState()
@@ -137,11 +137,11 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
 
     private searchParamsFromUrl() {
         return !this.isUrlStateDisabled
-            ? SplineSearchDynamicTable.extractSearchParamsFromUrl(
+               ? SplineSearchDynamicTable.extractSearchParamsFromUrl(
                 this.currentQueryParams,
-                this.urlStateQueryParamAlias,
+                this.urlStateQueryParamAlias
             )
-            : null
+               : null
     }
 
     private subscribeToRouter(router: Router): void {
@@ -157,7 +157,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
         })
     }
 
-    private subscribeToDataSource(dataSource: SearchDataSource<TRowData>): void {
+    private subscribeToDataSource(dataSource: SearchFactoryStore<TRowData>): void {
         // totalCount
         dataSource.dataState$
             .pipe(
@@ -193,8 +193,8 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
             )
             .subscribe(searchParams => {
                 const sorting = searchParams.sortBy.length > 0
-                    ? searchParams.sortBy[0]
-                    : null
+                                ? searchParams.sortBy[0]
+                                : null
 
                 this.updateState({
                     sorting: sorting,
@@ -203,7 +203,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
             })
     }
 
-    private initDataUpdateAvailableObservable(dataSource: SearchDataSource<TRowData>): void {
+    private initDataUpdateAvailableObservable(dataSource: SearchFactoryStore<TRowData>): void {
         this._dataUpdateAvailable$ = dataSource.serverDataUpdates$
             .pipe(
                 takeUntil(this.destroyed$),
@@ -214,7 +214,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
             )
     }
 
-    private initUrlStateSync(dataSource: SearchDataSource<TRowData>, queryParamAlias: string): void {
+    private initUrlStateSync(dataSource: SearchFactoryStore<TRowData>, queryParamAlias: string): void {
         //
         // [ACTION] :: SEARCH PARAMS CHANGED
         //      => update URL
@@ -223,7 +223,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
             .pipe(
                 takeUntil(this.destroyed$),
                 distinctUntilChanged((a, b) => isEqual(a, b)),
-                skip(1),
+                skip(1)
             )
             .subscribe((searchParams) => {
                 const queryParams = SplineSearchDynamicTable.applySearchParams(
@@ -240,9 +240,8 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
             this.router,
             this.activatedRoute,
             queryParams,
-            replaceUrl,
+            replaceUrl
         )
     }
-
 
 }

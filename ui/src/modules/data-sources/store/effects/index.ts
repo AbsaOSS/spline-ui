@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-import { DsOverviewDetailsEffects } from './ds-overview-details.effects'
-import { DsOverviewEffects } from './ds-overview.effects'
+import { DsOverviewDetailsEffect } from './ds-overview-details.effect'
+import { DsOverviewEffect } from './ds-overview.effect'
 
 
 export const effects: any[] = [
-    DsOverviewEffects,
-    DsOverviewDetailsEffects
+    DsOverviewEffect,
+    DsOverviewDetailsEffect
 ]
 
-export * from './ds-overview.effects'
-export * from './ds-overview-details.effects'
+export * from './ds-overview.effect'
+export * from './ds-overview-details.effect'

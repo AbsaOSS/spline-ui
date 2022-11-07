@@ -19,31 +19,32 @@ import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@a
 import { Observable, of } from 'rxjs'
 import { tap } from 'rxjs/operators'
 
+import { SplineConfigApiService } from './spline-config-api.service'
 import { hasQueryParamsSplineConfig, SplineConfig } from './spline-config.models'
-import { SplineConfigService } from './spline-config.service'
 
 
 @Injectable({
-    providedIn: 'root',
+    providedIn: 'root'
 })
 export class SplineConfigResolver implements Resolve<SplineConfig> {
 
-    constructor(private readonly splineConfigService: SplineConfigService,
-                private readonly router: Router) {
+    constructor(private readonly splineConfigService: SplineConfigApiService,
+                private readonly router: Router
+    ) {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<SplineConfig> {
 
         return this.splineConfigService.config !== null
-            ? of(this.splineConfigService.config)
-            : this.splineConfigService.initConfig(route.queryParamMap)
-                .pipe(
-                    tap(config => {
-                        if (hasQueryParamsSplineConfig(route.queryParamMap)) {
-                            void this.router.navigateByUrl(config?.targetUrl ?? '/')
-                        }
-                    })
-                )
+               ? of(this.splineConfigService.config)
+               : this.splineConfigService.initConfig(route.queryParamMap)
+                   .pipe(
+                       tap(config => {
+                           if (hasQueryParamsSplineConfig(route.queryParamMap)) {
+                               void this.router.navigateByUrl(config?.targetUrl ?? '/')
+                           }
+                       })
+                   )
     }
 
 }

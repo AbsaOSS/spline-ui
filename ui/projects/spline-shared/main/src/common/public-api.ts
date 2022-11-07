@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export * from './models/public-api'
+export * from './store-plugins/public-api'

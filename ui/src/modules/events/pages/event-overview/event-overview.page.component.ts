@@ -22,15 +22,16 @@ import { SplineTabsNavBar } from 'spline-common'
 import { SlBreadcrumbs } from 'spline-common/layout'
 import { BaseComponent } from 'spline-utils'
 
-import { EventOverviewStore, EventOverviewStoreFacade } from '../../store'
-import NavTabInfo = SplineTabsNavBar.NavTabInfo
+import { EventOverviewStateManagement, EventOverviewStore } from '../../store'
+
 import { EventOverviewPage } from './event-overview.page.model'
+import NavTabInfo = SplineTabsNavBar.NavTabInfo
 
 
 @Component({
     selector: 'event-overview-page',
     templateUrl: './event-overview.page.component.html',
-    styleUrls: ['./event-overview.page.component.scss'],
+    styleUrls: ['./event-overview.page.component.scss']
 })
 export class EventOverviewPageComponent extends BaseComponent implements OnInit, OnDestroy {
 
@@ -42,12 +43,13 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit,
         }
     ]
 
-    readonly state$: Observable<EventOverviewStore.State>
+    readonly state$: Observable<EventOverviewStateManagement.State>
 
     readonly breadcrumbs$: Observable<SlBreadcrumbs.Breadcrumbs>
 
     constructor(private readonly activatedRoute: ActivatedRoute,
-                readonly store: EventOverviewStoreFacade) {
+                readonly store: EventOverviewStore
+    ) {
         super()
         this.state$ = store.state$
 
@@ -65,7 +67,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit,
                     },
                     {
                         label: 'Overview'
-                    },
+                    }
                 ])
             )
     }
@@ -76,7 +78,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit,
 
         const requestedGraphDepth =
             +this.activatedRoute.snapshot.queryParams[EventOverviewPage.QueryParam.RequestedGraphDepth]
-            || EventOverviewStore.GRAPH_DEFAULT_DEPTH
+            || EventOverviewStateManagement.GRAPH_DEFAULT_DEPTH
 
         this.store.init(executionEventId, requestedGraphDepth)
     }

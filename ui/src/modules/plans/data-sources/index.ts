@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export * from './operation-details.data-source'
+export * from './operation-details.factory-store'

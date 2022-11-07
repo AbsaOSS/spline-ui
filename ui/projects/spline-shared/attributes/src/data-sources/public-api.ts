@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export * from './attribute-search.data-source'
+export * from './attribute-search.factory-store'

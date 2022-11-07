@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-export * from './attribute.facade'
-export * from './base.facade'
-export * from './execution-event.facade'
-export * from './spline-data-source-facade.service'
-export * from './execution-plan.facade'
+export * from './attribute-api.service'
+export * from './base-api.service'
+export * from './execution-event-api.service'
+export * from './spline-data-source-api.service'
+export * from './execution-plan-api.service'
