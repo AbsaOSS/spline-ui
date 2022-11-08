@@ -18,6 +18,7 @@ import { Injectable } from '@angular/core'
 import { Observable, of } from 'rxjs'
 import { catchError, take, tap } from 'rxjs/operators'
 import { ExecutionEventFacade, ExecutionEventLineageNode, ExecutionEventLineageOverview } from 'spline-api'
+import { OverviewTypeEnum } from 'spline-common/graph'
 import { SgNodeControl } from 'spline-shared/graph'
 import { BaseStore, ProcessingStore } from 'spline-utils'
 
@@ -45,10 +46,11 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
         )
     }
 
-    setGraphDepth(graphDepth: number): void {
+    setGraphDepth(graphDepth: number, overviewType: OverviewTypeEnum = OverviewTypeEnum.LINEAGE_OVERVIEW): void {
         this.loadData(
             this.state.executionEventId,
             graphDepth,
+            overviewType,
             state => ({
                 ...state,
                 graphLoadingProcessing: ProcessingStore.eventProcessingStart(this.state.graphLoadingProcessing)
@@ -67,28 +69,29 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
 
     init(
         executionEventId: string,
-        graphDepth: number,
+        graphDepth: number
     ): void {
 
         this.loadData(
             executionEventId,
             graphDepth,
+            OverviewTypeEnum.LINEAGE_OVERVIEW,
             state => ({
                 ...state,
                 loadingProcessing: ProcessingStore.eventProcessingStart(this.state.loadingProcessing)
             }),
             state => ({
                 ...state,
-                loadingProcessing: ProcessingStore.eventProcessingFinish(this.state.loadingProcessing),
+                loadingProcessing: ProcessingStore.eventProcessingFinish(this.state.loadingProcessing)
             }),
             (state, error) => ({
                 ...state,
-                loadingProcessing: ProcessingStore.eventProcessingFinish(this.state.loadingProcessing, error),
-            }),
+                loadingProcessing: ProcessingStore.eventProcessingFinish(this.state.loadingProcessing, error)
+            })
         )
             .subscribe(() => {
                 this.updateState({
-                    executionEventId,
+                    executionEventId
                 })
             })
     }
@@ -138,16 +141,17 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
     private loadData(
         executionEventId: string,
         graphDepth: number,
+        overviewType: OverviewTypeEnum,
         onLoadingStart: (state: EventOverviewStore.State) => EventOverviewStore.State,
         onLoadingSuccess: (state: EventOverviewStore.State) => EventOverviewStore.State,
-        onLoadingError: (state: EventOverviewStore.State, error: any | null) => EventOverviewStore.State,
+        onLoadingError: (state: EventOverviewStore.State, error: any | null) => EventOverviewStore.State
     ): Observable<ExecutionEventLineageOverview> {
 
         this.updateState({
             ...onLoadingStart(this.state)
         })
 
-        return this.executionEventFacade.fetchLineageOverview(executionEventId, graphDepth)
+        return this.executionEventFacade.fetchLineageOverview<OverviewTypeEnum>(executionEventId, overviewType, graphDepth)
             .pipe(
                 catchError((error) => {
                     this.updateState({
@@ -163,11 +167,11 @@ export class EventOverviewStoreFacade extends BaseStore<EventOverviewStore.State
                                 onLoadingSuccess(this.state),
                                 executionEventId,
                                 lineageData
-                            ),
+                            )
                         })
                     }
                 }),
-                take(1),
+                take(1)
             )
     }
 

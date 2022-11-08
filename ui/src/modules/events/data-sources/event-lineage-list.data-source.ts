@@ -18,21 +18,16 @@ import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { ExecutionEventFacade, ExecutionEventField, ExecutionEventLineageList } from 'spline-api'
 import { PageResponse, QuerySorter, SearchDataSource, SearchQuery } from 'spline-utils'
-import SortDir = QuerySorter.SortDir
 import { SplineConfigService } from 'spline-shared'
+import { OverviewTypeEnum } from 'spline-common/graph'
+import SortDir = QuerySorter.SortDir
 
 
 export class EventLineageListDataSource extends SearchDataSource<ExecutionEventLineageList.LineageRecord> {
 
-    private _executionEventId: string
-
-    set executionEventId(value: string) {
-        this._executionEventId = value
-    }
-
     constructor(
         private readonly executionEventFacade: ExecutionEventFacade,
-        private readonly splineConfigService: SplineConfigService,
+        private readonly splineConfigService: SplineConfigService
     ) {
         super(() => ({
             defaultSearchParams: {
@@ -50,10 +45,16 @@ export class EventLineageListDataSource extends SearchDataSource<ExecutionEventL
         }))
     }
 
+    private _executionEventId: string
+
+    set executionEventId(value: string) {
+        this._executionEventId = value
+    }
+
     protected getDataObserver(
         searchParams: SearchQuery.SearchParams
     ): Observable<PageResponse<ExecutionEventLineageList.LineageRecord>> {
-        return this.executionEventFacade.fetchLineageOverview(this._executionEventId)
+        return this.executionEventFacade.fetchLineageOverview<OverviewTypeEnum>(this._executionEventId, OverviewTypeEnum.LINEAGE_OVERVIEW)
             .pipe(
                 map(
                     lineageOverview => {

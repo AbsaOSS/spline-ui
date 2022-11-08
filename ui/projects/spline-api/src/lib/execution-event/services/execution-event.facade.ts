@@ -23,7 +23,7 @@ import { ExecutionEventsPageResponse, ExecutionEventsPageResponseDto, ExecutionE
 import {
     ExecutionEventLineageOverview,
     ExecutionEventLineageOverviewDto,
-    toExecutionEventLineageOverview,
+    toExecutionEventLineageOverview
 } from '../models/entities/execution-event-overview'
 
 import { BaseFacade } from './base.facade'
@@ -36,13 +36,13 @@ export class ExecutionEventFacade extends BaseFacade {
         super(http)
     }
 
-    fetchLineageOverview(executionEventId: string, maxDepth: number = 3): Observable<ExecutionEventLineageOverview> {
+    fetchLineageOverview<T = string>(executionEventId: string, overviewType: T, maxDepth: number = 3): Observable<ExecutionEventLineageOverview> {
         let params = new HttpParams()
         params = params.append('eventId', executionEventId)
         params = params.append('maxDepth', maxDepth.toString())
 
-        const url = this.toUrl('lineage-overview')
-        return this.http.get<ExecutionEventLineageOverviewDto>(url, { params: params })
+        const url = this.toUrl(`${ overviewType }-overview`)
+        return this.http.get<ExecutionEventLineageOverviewDto>(url, {params: params})
             .pipe(
                 map(toExecutionEventLineageOverview),
                 catchError(error => {
@@ -55,7 +55,7 @@ export class ExecutionEventFacade extends BaseFacade {
     fetchList(queryParams: ExecutionEventsQuery.QueryParams): Observable<ExecutionEventsPageResponse> {
         const params = ExecutionEventsQuery.queryParamsToHttpParams(queryParams)
         const url = this.toUrl('execution-events')
-        return this.http.get<ExecutionEventsPageResponseDto>(url, { params: params })
+        return this.http.get<ExecutionEventsPageResponseDto>(url, {params: params})
             .pipe(
                 map(toExecutionEventsPageResponse),
                 catchError(error => {
@@ -68,7 +68,7 @@ export class ExecutionEventFacade extends BaseFacade {
     fetchListAggregatedByDataSource(queryParams: ExecutionEventsQuery.QueryParams): Observable<ExecutionEventsPageResponse> {
         const params = ExecutionEventsQuery.queryParamsToHttpParams(queryParams)
         const url = this.toUrl('data-sources')
-        return this.http.get<ExecutionEventsPageResponseDto>(url, { params: params })
+        return this.http.get<ExecutionEventsPageResponseDto>(url, {params: params})
             .pipe(
                 map(toExecutionEventsPageResponse),
                 catchError(error => {

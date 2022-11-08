@@ -24,6 +24,21 @@
         "pre-pull-request": "npm run lint && npm run test:no-coverage && npm run license-check"
     },
     "private": false,
+    "jscpd": {
+        "threshold": 0.1,
+        "reporters": [
+            "html",
+            "console",
+            "badge"
+        ],
+        "ignore": [
+            "**/node_modules/**",
+            "**/*.min.js,**/*.map",
+            "**/coverage/**"
+        ],
+        "absolute": true,
+        "gitignore": true
+    },
     "dependencies": {
         "@angular/animations": "12.1.3",
         "@angular/cdk": "12.1.3",

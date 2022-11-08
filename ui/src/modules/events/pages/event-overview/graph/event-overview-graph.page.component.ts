@@ -20,21 +20,21 @@ import { Observable } from 'rxjs'
 import { filter, map, takeUntil } from 'rxjs/operators'
 import { ExecutionEventLineageNodeType } from 'spline-api'
 import { SplineDataWidgetEvent } from 'spline-common/data-view'
-import { SgNodeEvent, SgNodeSchema } from 'spline-common/graph'
+import { OverviewTypeEnum, SgNodeEvent, SgNodeSchema } from 'spline-common/graph'
 import { SgNodeCardDataView } from 'spline-shared/data-view'
 import { SgContainerComponent, SgNodeControl } from 'spline-shared/graph'
 import { BaseComponent, GenericEventInfo, RouterNavigation } from 'spline-utils'
 
 import { EventNodeControl, EventNodeInfo } from '../../../models'
 import { EventOverviewStore, EventOverviewStoreFacade } from '../../../store'
-import NodeEventData = SgNodeCardDataView.NodeEventData
 import { EventOverviewPage } from '../event-overview.page.model'
+import NodeEventData = SgNodeCardDataView.NodeEventData
 
 
 @Component({
     selector: 'event-overview-graph-page',
     templateUrl: './event-overview-graph.page.component.html',
-    styleUrls: ['./event-overview-graph.page.component.scss'],
+    styleUrls: ['./event-overview-graph.page.component.scss']
 })
 export class EventOverviewGraphPageComponent extends BaseComponent implements OnInit {
 
@@ -67,7 +67,7 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
                 filter(nodeId => {
                     const currentNodeId = this.activatedRoute.snapshot.queryParamMap.get(EventOverviewPage.QueryParam.SelectedNodeId)
                     return currentNodeId !== nodeId
-                }),
+                })
             )
             .subscribe(nodeId => this.updateQueryParams(EventOverviewPage.QueryParam.SelectedNodeId, nodeId))
 
@@ -82,7 +82,7 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
                 filter(depth => {
                     const currentDepth = +this.activatedRoute.snapshot.queryParamMap.get(EventOverviewPage.QueryParam.RequestedGraphDepth)
                     return currentDepth !== depth
-                }),
+                })
             )
             .subscribe(depth => this.updateQueryParams(EventOverviewPage.QueryParam.RequestedGraphDepth, depth.toString()))
     }
@@ -139,6 +139,10 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
         this.onNodeSelected(null)
     }
 
+    onOverviewChanged(overviewType: OverviewTypeEnum) {
+        this.store.setGraphDepth(3, overviewType)
+    }
+
     onGraphNodeViewChanged(graphNodeView: SgNodeControl.NodeView): void {
         this.store.setGraphNodeView(graphNodeView)
     }
@@ -164,9 +168,9 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
             ['/plans/overview', executionPlanId],
             {
                 queryParams: {
-                    eventId: this.store.state.executionEventId,
-                },
-            },
+                    eventId: this.store.state.executionEventId
+                }
+            }
         )
     }
 
@@ -175,7 +179,7 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
             this.router,
             this.activatedRoute,
             param,
-            value,
+            value
         )
     }
 }

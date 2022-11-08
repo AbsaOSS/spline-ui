@@ -30,6 +30,7 @@ import { isEqual } from 'lodash-es'
 import { Subject } from 'rxjs'
 import { distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators'
 import {
+    OverviewTypeEnum,
     SgControlPanelSectionDirective,
     SgData,
     SgNodeEvent,
@@ -65,6 +66,7 @@ export class SgContainerComponent extends BaseLocalStateComponent<SgContainer.St
     @Output() nodeSelectionChange$ = new EventEmitter<{ nodeId: string | null }>()
     @Output() highlightedRelationsNodesIdsChange$ = new EventEmitter<{ nodeIds: string[] | null }>()
     @Output() graphNodeViewChange$ = new EventEmitter<{ nodeView: NodeView }>()
+    @Output() changeOverview$ = new EventEmitter<{ overviewType: OverviewTypeEnum }>()
 
     readonly focusNode$ = new Subject<string>()
 
@@ -79,17 +81,17 @@ export class SgContainerComponent extends BaseLocalStateComponent<SgContainer.St
                 filter(nodeId => nodeId !== this.selectedNodeId)
             )
             .subscribe(
-                nodeId => this.nodeSelectionChange$.emit({ nodeId })
+                nodeId => this.nodeSelectionChange$.emit({nodeId})
             )
 
         this.state$
             .pipe(
                 map(state => state && state?.highlightedRelationsNodesIds),
                 distinctUntilChanged((left, right) => isEqual(left, right)),
-                takeUntil(this.destroyed$),
+                takeUntil(this.destroyed$)
             )
             .subscribe(
-                nodeIds => this.highlightedRelationsNodesIdsChange$.emit({ nodeIds })
+                nodeIds => this.highlightedRelationsNodesIdsChange$.emit({nodeIds})
             )
     }
 
@@ -109,12 +111,12 @@ export class SgContainerComponent extends BaseLocalStateComponent<SgContainer.St
         // init default state
         this.updateState({
             selectedNodeId: this.selectedNodeId,
-            highlightedRelationsNodesIds: null,
+            highlightedRelationsNodesIds: null
         })
     }
 
     refresh(): void {
-        this.graphData = {... this.graphData}
+        this.graphData = {...this.graphData}
     }
 
     focusNode(nodeId: string): void {
@@ -139,20 +141,19 @@ export class SgContainerComponent extends BaseLocalStateComponent<SgContainer.St
     }
 
     onNodeSelected(nodeSchema: SgNodeSchema | null): void {
-        this.nodeSelectionChange$.emit({ nodeId: nodeSchema ? nodeSchema.id : null })
+        this.nodeSelectionChange$.emit({nodeId: nodeSchema ? nodeSchema.id : null})
     }
 
     onToggleAllRelationsBtnClicked(): void {
         this.highlightNodeRelations(null)
     }
 
+    onOverviewChanged(overviewType: OverviewTypeEnum): void {
+        this.changeOverview$.emit({overviewType})
+    }
 
     onNodeFocus(nodeId: string): void {
         this.focusNode(nodeId)
-    }
-
-    onNodeHighlightRelations(nodeId: string): void {
-        this.highlightNodeRelations(nodeId)
     }
 
     onGraphNodeEvent($event: SgNodeEvent): void {
@@ -170,7 +171,7 @@ export class SgContainerComponent extends BaseLocalStateComponent<SgContainer.St
     }
 
     onNodeDoubleClick(nodeSchema: SgNodeSchema): void {
-        this.nodeDoubleClick$.emit({ nodeSchema })
+        this.nodeDoubleClick$.emit({nodeSchema})
     }
 
     onGraphNodeViewChanged(checked: boolean): void {
@@ -187,7 +188,7 @@ export class SgContainerComponent extends BaseLocalStateComponent<SgContainer.St
         const highlightedRelationsNodesIds = SgRelations.toggleSelection(
             this.state.highlightedRelationsNodesIds ?? [],
             nodeId,
-            this.graphData.links,
+            this.graphData.links
         )
         this.updateState({
             highlightedRelationsNodesIds: highlightedRelationsNodesIds.length > 0 ? highlightedRelationsNodesIds : null

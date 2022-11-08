@@ -1,5 +1,5 @@
-/*!
- * Copyright 2020 ABSA Group Limited
+/*
+ * Copyright 2022 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,8 @@
  * limitations under the License.
  */
 
-@import './node-view/index';
-@import './graph.component';
-@import './sg-control-panel.component';
-@import './sg-relations-control.component';
-@import './sg-overview-control.component';
-@import './sg-toolbar.component';
-@import './sg-zoom-control';
+export enum OverviewTypeEnum {
+    LINEAGE_OVERVIEW = 'lineage',
+    IMPACT_OVERVIEW = 'impact',
+    MIXED_OVERVIEW = 'mixed'
+}
