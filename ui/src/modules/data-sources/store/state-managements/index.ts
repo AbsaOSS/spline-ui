@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export * from './ds-overview.state-management'
-export * from './ds-overview-details.state-management'
+export * from './ds-overview-store.ns'
+export * from './ds-overview-details-store.ns'

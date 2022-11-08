@@ -22,7 +22,7 @@ import { SplineSidebarMenu } from '../../components'
 import { AppSidebarMenu } from '../../models'
 
 
-export namespace AppStateManagement {
+export namespace AppStoreNs {
 
     export interface State {
         isInitialized: boolean

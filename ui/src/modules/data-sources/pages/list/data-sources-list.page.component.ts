@@ -18,13 +18,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { takeUntil } from 'rxjs/operators'
 import { ExecutionEventApiService, ExecutionEventsQuery } from 'spline-api'
 import { DynamicFilterFactory, DynamicFilterModel } from 'spline-common/dynamic-filter'
-import { DynamicFilterStorePlugin, SplineConfigApiService } from 'spline-shared'
+import { DynamicFilterStoreExtras, SplineConfigApiService } from 'spline-shared'
 import { BaseComponent } from 'spline-utils'
 
 import { SplineDataSourcesFactoryStore } from '../../data-sources'
 import { DataSourcesListDtSchema } from '../../dynamic-table'
 
-import { DataSourcesListPageSchema } from './data-sources-list.page.schema'
+import { DataSourcesListPageConfig } from './data-sources-list.page-config'
 
 
 @Component({
@@ -51,7 +51,7 @@ export class DataSourcesListPageComponent extends BaseComponent implements OnDes
 
     readonly dataMap = DataSourcesListDtSchema.getSchema()
 
-    filterModel: DynamicFilterModel<DataSourcesListPageSchema.Filter>
+    filterModel: DynamicFilterModel<DataSourcesListPageConfig.Filter>
 
     constructor(readonly dataSource: SplineDataSourcesFactoryStore,
                 private readonly dynamicFilterFactory: DynamicFilterFactory
@@ -61,18 +61,18 @@ export class DataSourcesListPageComponent extends BaseComponent implements OnDes
 
     ngOnInit(): void {
         this.dynamicFilterFactory
-            .schemaToModel<DataSourcesListPageSchema.Filter>(
-                DataSourcesListPageSchema.getDynamicFilterSchema()
+            .schemaToModel<DataSourcesListPageConfig.Filter>(
+                DataSourcesListPageConfig.getDynamicFilterSchema()
             )
             .pipe(
                 takeUntil(this.destroyed$)
             )
             .subscribe(model => {
                 this.filterModel = model
-                DynamicFilterStorePlugin.bindDynamicFilter<ExecutionEventsQuery.QueryFilter, DataSourcesListPageSchema.Filter>(
+                DynamicFilterStoreExtras.bindDynamicFilter<ExecutionEventsQuery.QueryFilter, DataSourcesListPageConfig.Filter>(
                     this.dataSource,
                     this.filterModel,
-                    DataSourcesListPageSchema.getFiltersMapping()
+                    DataSourcesListPageConfig.getFiltersMapping()
                 )
             })
     }

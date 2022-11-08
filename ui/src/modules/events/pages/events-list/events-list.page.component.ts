@@ -18,13 +18,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { takeUntil } from 'rxjs/operators'
 import { ExecutionEventApiService, ExecutionEventsQuery } from 'spline-api'
 import { DynamicFilterFactory, DynamicFilterModel } from 'spline-common/dynamic-filter'
-import { DynamicFilterStorePlugin, SplineConfigApiService } from 'spline-shared'
+import { DynamicFilterStoreExtras, SplineConfigApiService } from 'spline-shared'
 import { EventsFactoryStore } from 'spline-shared/events'
 import { BaseComponent } from 'spline-utils'
 
 import { EventsListDtSchema } from '../../dynamic-table'
 
-import { EventsListPage } from './events-list.page.schema'
+import { EventsListPageConfig } from './events-list.page-config'
 
 
 @Component({
@@ -51,7 +51,7 @@ export class EventsListPageComponent extends BaseComponent implements OnDestroy,
 
     readonly dataMap = EventsListDtSchema.getSchema()
 
-    filterModel: DynamicFilterModel<EventsListPage.Filter>
+    filterModel: DynamicFilterModel<EventsListPageConfig.Filter>
 
     constructor(readonly dataSource: EventsFactoryStore,
                 private readonly dynamicFilterFactory: DynamicFilterFactory
@@ -61,18 +61,18 @@ export class EventsListPageComponent extends BaseComponent implements OnDestroy,
 
     ngOnInit(): void {
         this.dynamicFilterFactory
-            .schemaToModel<EventsListPage.Filter>(
-                EventsListPage.getDynamicFilterSchema()
+            .schemaToModel<EventsListPageConfig.Filter>(
+                EventsListPageConfig.getDynamicFilterSchema()
             )
             .pipe(
                 takeUntil(this.destroyed$)
             )
             .subscribe(model => {
                 this.filterModel = model
-                DynamicFilterStorePlugin.bindDynamicFilter<ExecutionEventsQuery.QueryFilter, EventsListPage.Filter>(
+                DynamicFilterStoreExtras.bindDynamicFilter<ExecutionEventsQuery.QueryFilter, EventsListPageConfig.Filter>(
                     this.dataSource,
                     this.filterModel,
-                    EventsListPage.getFiltersMapping()
+                    EventsListPageConfig.getFiltersMapping()
                 )
             })
     }

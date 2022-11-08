@@ -19,10 +19,10 @@ import { select, Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
 import { filter, switchMap, take } from 'rxjs/operators'
 import { ExecutionEvent, OperationDetails, SplineDataSourceInfo } from 'spline-api'
-import { ProcessingStore } from 'spline-utils'
+import { ProcessingStoreNs } from 'spline-utils'
 
 import {
-    DsOverviewDetailsStateManagement,
+    DsOverviewDetailsStoreNs,
     DsOverviewDetailsStoreActions,
     DsOverviewDetailsStoreSelectors,
     DsOverviewStoreSelectors
@@ -32,8 +32,8 @@ import {
 @Injectable()
 export class DsOverviewDetailsStore {
 
-    readonly state$: Observable<DsOverviewDetailsStateManagement.State>
-    readonly loading$: Observable<ProcessingStore.EventProcessingState>
+    readonly state$: Observable<DsOverviewDetailsStoreNs.State>
+    readonly loading$: Observable<ProcessingStoreNs.EventProcessingState>
     readonly isInitialized$: Observable<boolean>
     readonly dataSourceInfo$: Observable<SplineDataSourceInfo>
     readonly operationDetails$: Observable<OperationDetails[]>

@@ -17,10 +17,10 @@
 import { ExecutionEvent, ExecutionEventsQuery } from 'spline-api'
 import { DynamicFilterSchema } from 'spline-common/dynamic-filter'
 import { DfControlDateRange } from 'spline-common/dynamic-filter/filter-controls'
-import { DynamicFilterStorePlugin, ExecutionEventsDynamicFilterStorePlugin } from 'spline-shared'
+import { DynamicFilterStoreExtras, ExecutionEventsDynamicFilterStoreExtras } from 'spline-shared'
 
 
-export namespace DsOverviewHistoryPageSchema {
+export namespace DsOverviewHistoryPageConfig {
 
     export type State = {
         selectedExecutionEvent: ExecutionEvent | null
@@ -39,23 +39,23 @@ export namespace DsOverviewHistoryPageSchema {
         }
     }
 
-    export type Filter = ExecutionEventsDynamicFilterStorePlugin.Filter
+    export type Filter = ExecutionEventsDynamicFilterStoreExtras.Filter
 
     export type FilterId = keyof Filter
-    export const FilterId = { ...ExecutionEventsDynamicFilterStorePlugin.FilterId }
+    export const FilterId = { ...ExecutionEventsDynamicFilterStoreExtras.FilterId }
 
     export function getDynamicFilterSchema(): DynamicFilterSchema<Filter> {
         return [
             {
-                ...ExecutionEventsDynamicFilterStorePlugin.getExecutedAtFilterSchema(),
+                ...ExecutionEventsDynamicFilterStoreExtras.getExecutedAtFilterSchema(),
                 label: 'DATA_SOURCES.DS_STATE_HISTORY__FILTER__CREATED_AT'
             } as DfControlDateRange.Schema<FilterId>,
-            ExecutionEventsDynamicFilterStorePlugin.getWriteModeFilterSchema()
+            ExecutionEventsDynamicFilterStoreExtras.getWriteModeFilterSchema()
         ]
     }
 
-    export function getFiltersMapping(): DynamicFilterStorePlugin.FiltersMapping<ExecutionEventsQuery.QueryFilter, Filter> {
-        return ExecutionEventsDynamicFilterStorePlugin.getFilterMapping()
+    export function getFiltersMapping(): DynamicFilterStoreExtras.FiltersMapping<ExecutionEventsQuery.QueryFilter, Filter> {
+        return ExecutionEventsDynamicFilterStoreExtras.getFilterMapping()
     }
 
 }

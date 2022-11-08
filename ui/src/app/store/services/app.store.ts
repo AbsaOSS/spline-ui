@@ -20,14 +20,14 @@ import { take } from 'rxjs/operators'
 import { SplineConfigApiService } from 'spline-shared'
 import { BaseStore } from 'spline-utils'
 
-import { AppStateManagement } from '../models'
+import { AppStoreNs } from '../models'
 
 
 @Injectable()
-export class AppStore extends BaseStore<AppStateManagement.State> {
+export class AppStore extends BaseStore<AppStoreNs.State> {
 
     constructor(private readonly splineConfigApiService: SplineConfigApiService) {
-        super(AppStateManagement.getDefaultState())
+        super(AppStoreNs.getDefaultState())
     }
 
     init(): void {

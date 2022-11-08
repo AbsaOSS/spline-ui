@@ -16,35 +16,35 @@
 
 import { createSelector } from '@ngrx/store'
 import { ExecutionEvent, OperationDetails } from 'spline-api'
-import { ProcessingStore } from 'spline-utils'
+import { ProcessingStoreNs } from 'spline-utils'
 
-import { DsOverviewDetailsStateManagement } from '../state-managements'
-import { SplineDataSourceStateManagement } from '../state-managements/spline-data-source.state-management'
+import { DsOverviewDetailsStoreNs } from '../state-managements'
+import { SplineDataSourceStoreNs } from '../state-managements/spline-data-source-store.ns'
 
 
 export namespace DsOverviewDetailsStoreSelectors {
 
     export const rootState = createSelector(
-        SplineDataSourceStateManagement.rootState,
-        (_state: SplineDataSourceStateManagement.State) => _state[DsOverviewDetailsStateManagement.STORE_FEATURE_NAME]
+        SplineDataSourceStoreNs.rootState,
+        (_state: SplineDataSourceStoreNs.State) => _state[DsOverviewDetailsStoreNs.STORE_FEATURE_NAME]
     )
 
-    export const loading = createSelector<any, DsOverviewDetailsStateManagement.State, ProcessingStore.EventProcessingState>(
+    export const loading = createSelector<any, DsOverviewDetailsStoreNs.State, ProcessingStoreNs.EventProcessingState>(
         rootState,
         (_state) => _state.loading
     )
 
-    export const isLoading = createSelector<any, DsOverviewDetailsStateManagement.State, boolean>(
+    export const isLoading = createSelector<any, DsOverviewDetailsStoreNs.State, boolean>(
         rootState,
         (_state) => _state.loading.processing
     )
 
-    export const executionEvent = createSelector<any, DsOverviewDetailsStateManagement.State, ExecutionEvent>(
+    export const executionEvent = createSelector<any, DsOverviewDetailsStoreNs.State, ExecutionEvent>(
         rootState,
         (_state) => _state.executionEvent
     )
 
-    export const operationDetails = createSelector<any, DsOverviewDetailsStateManagement.State, OperationDetails[]>(
+    export const operationDetails = createSelector<any, DsOverviewDetailsStoreNs.State, OperationDetails[]>(
         rootState,
         (_state) => _state.operationDetails
     )

@@ -22,7 +22,7 @@ import { SplineTabsNavBar } from 'spline-common'
 import { SlBreadcrumbs } from 'spline-common/layout'
 import { BaseComponent } from 'spline-utils'
 
-import { EventOverviewStateManagement, EventOverviewStore } from '../../store'
+import { EventOverviewStoreNs, EventOverviewStore } from '../../store'
 
 import { EventOverviewPage } from './event-overview.page.model'
 import NavTabInfo = SplineTabsNavBar.NavTabInfo
@@ -43,7 +43,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit,
         }
     ]
 
-    readonly state$: Observable<EventOverviewStateManagement.State>
+    readonly state$: Observable<EventOverviewStoreNs.State>
 
     readonly breadcrumbs$: Observable<SlBreadcrumbs.Breadcrumbs>
 
@@ -78,7 +78,7 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit,
 
         const requestedGraphDepth =
             +this.activatedRoute.snapshot.queryParams[EventOverviewPage.QueryParam.RequestedGraphDepth]
-            || EventOverviewStateManagement.GRAPH_DEFAULT_DEPTH
+            || EventOverviewStoreNs.GRAPH_DEFAULT_DEPTH
 
         this.store.init(executionEventId, requestedGraphDepth)
     }

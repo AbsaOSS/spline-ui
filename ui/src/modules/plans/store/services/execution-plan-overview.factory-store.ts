@@ -26,20 +26,20 @@ import {
     OperationAttributeLineage
 } from 'spline-api'
 import { SgNodeControl } from 'spline-shared/graph'
-import { BaseStoreWithLoading, ProcessingStore, SplineEntityStore } from 'spline-utils'
+import { ExtendedStore, ProcessingStoreNs, SplineEntityStoreNs } from 'spline-utils'
 
-import { ExecutionPlanOverviewStateManagement } from '../models'
+import { ExecutionPlanOverviewStoreNs } from '../models'
 
 
 @Injectable()
-export class ExecutionPlanOverviewFactoryStore extends BaseStoreWithLoading<ExecutionPlanOverviewStateManagement.State> {
+export class ExecutionPlanOverviewFactoryStore extends ExtendedStore<ExecutionPlanOverviewStoreNs.State> {
 
     selectedNode$: Observable<ExecutionPlanLineageNode | null>
     selectedAttribute$: Observable<AttributeSchema | null>
     executionPlan$: Observable<ExecutionPlan | null>
 
     constructor(private readonly executionPlanApiService: ExecutionPlanApiService) {
-        super(ExecutionPlanOverviewStateManagement.getDefaultState())
+        super(ExecutionPlanOverviewStoreNs.getDefaultState())
 
         this.selectedNode$ = this.state$
             .pipe(
@@ -48,7 +48,7 @@ export class ExecutionPlanOverviewFactoryStore extends BaseStoreWithLoading<Exec
                     if (state.selectedNodeId === null) {
                         return null
                     }
-                    return SplineEntityStore.selectOne<ExecutionPlanLineageNode>(state.selectedNodeId, state.nodes)
+                    return SplineEntityStoreNs.selectOne<ExecutionPlanLineageNode>(state.selectedNodeId, state.nodes)
                 }),
                 shareReplay(1)
             )
@@ -80,7 +80,7 @@ export class ExecutionPlanOverviewFactoryStore extends BaseStoreWithLoading<Exec
 
     setGraphNodeView(graphNodeView: SgNodeControl.NodeView): void {
         this.updateState(
-            ExecutionPlanOverviewStateManagement.reduceGraphNodeView(this.state, graphNodeView)
+            ExecutionPlanOverviewStoreNs.reduceGraphNodeView(this.state, graphNodeView)
         )
     }
 
@@ -98,7 +98,7 @@ export class ExecutionPlanOverviewFactoryStore extends BaseStoreWithLoading<Exec
                 this.updateState({
                     selectedAttributeId: attrId,
                     attributeLineage: null,
-                    attributeLineageLoading: ProcessingStore.eventProcessingFinish(
+                    attributeLineageLoading: ProcessingStoreNs.eventProcessingFinish(
                         this.state.attributeLineageLoading
                     )
                 })
@@ -108,7 +108,7 @@ export class ExecutionPlanOverviewFactoryStore extends BaseStoreWithLoading<Exec
                 this.updateState({
                     selectedAttributeId: attrId,
                     attributeLineage: null,
-                    attributeLineageLoading: ProcessingStore.eventProcessingStart(
+                    attributeLineageLoading: ProcessingStoreNs.eventProcessingStart(
                         this.state.attributeLineageLoading
                     )
                 })
@@ -117,7 +117,7 @@ export class ExecutionPlanOverviewFactoryStore extends BaseStoreWithLoading<Exec
                     .pipe(
                         catchError((error) => {
                             this.updateState({
-                                attributeLineageLoading: ProcessingStore.eventProcessingFinish(
+                                attributeLineageLoading: ProcessingStoreNs.eventProcessingFinish(
                                     this.state.attributeLineageLoading, error
                                 )
                             })
@@ -127,7 +127,7 @@ export class ExecutionPlanOverviewFactoryStore extends BaseStoreWithLoading<Exec
                         tap((attributeLineage: OperationAttributeLineage) => {
                             if (attributeLineage !== null) {
                                 this.updateState({
-                                    attributeLineageLoading: ProcessingStore.eventProcessingFinish(
+                                    attributeLineageLoading: ProcessingStoreNs.eventProcessingFinish(
                                         this.state.attributeLineageLoading
                                     ),
                                     attributeLineage
@@ -144,7 +144,7 @@ export class ExecutionPlanOverviewFactoryStore extends BaseStoreWithLoading<Exec
 
     init(executionPlanId: string, selectedNodeId: string | null = null, selectedAttributeId: string | null = null): void {
         this.updateState({
-            loading: ProcessingStore.eventProcessingStart(this.state.loading)
+            loading: ProcessingStoreNs.eventProcessingStart(this.state.loading)
         })
 
         const operationObserver: Observable<OperationAttributeLineage | null> = selectedAttributeId
@@ -174,7 +174,7 @@ export class ExecutionPlanOverviewFactoryStore extends BaseStoreWithLoading<Exec
             .pipe(
                 catchError((error) => {
                     this.updateState({
-                        loading: ProcessingStore.eventProcessingFinish(this.state.loading, error)
+                        loading: ProcessingStoreNs.eventProcessingFinish(this.state.loading, error)
                     })
                     return of(null)
                 }),
@@ -182,12 +182,12 @@ export class ExecutionPlanOverviewFactoryStore extends BaseStoreWithLoading<Exec
                 tap((data: CombinedData) => {
                     if (data !== null) {
                         this.updateState({
-                            ...ExecutionPlanOverviewStateManagement.reduceLineageOverviewData(
+                            ...ExecutionPlanOverviewStoreNs.reduceLineageOverviewData(
                                 this.state,
                                 executionPlanId,
                                 data.executionPlanLinage
                             ),
-                            loading: ProcessingStore.eventProcessingFinish(this.state.loading),
+                            loading: ProcessingStoreNs.eventProcessingFinish(this.state.loading),
                             selectedNodeId,
                             executionPlanId,
                             selectedAttributeId,

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export namespace SplineEntityStore {
+export namespace SplineEntityStoreNs {
 
     export interface EntityState<T> {
         ids: number[] | string[]
@@ -29,7 +29,7 @@ export namespace SplineEntityStore {
     export function getDefaultState<T>(): EntityState<T> {
         return {
             ids: [],
-            entities: {},
+            entities: {}
         }
     }
 
@@ -38,7 +38,8 @@ export namespace SplineEntityStore {
     }
 
     export function entitiesListToDictionary<T>(entities: T[],
-                                                selectEntityIdFn: (entity: T) => number | string): Record<string | number, T> {
+                                                selectEntityIdFn: (entity: T) => number | string
+    ): Record<string | number, T> {
         return entities.reduce(
             (result, currentEntity) => {
                 const id = selectEntityIdFn(currentEntity)
@@ -52,7 +53,8 @@ export namespace SplineEntityStore {
     export function addAll<T, TState extends EntityState<T> = EntityState<T>>(
         entities: T[],
         state: TState,
-        selectId: (entity: T) => string | number = selectIdFn): TState {
+        selectId: (entity: T) => string | number = selectIdFn
+    ): TState {
 
         return {
             ...state,
@@ -62,45 +64,48 @@ export namespace SplineEntityStore {
                     const id = selectId(currentEntity)
                     result[id] = currentEntity
                     return result
-                }, {}),
+                }, {})
         }
     }
 
     export function addMany<T, TState extends EntityState<T> = EntityState<T>>(
         entities: T[],
         state: TState,
-        selectId: (entity: T) => string | number = selectIdFn): TState {
+        selectId: (entity: T) => string | number = selectIdFn
+    ): TState {
 
         return {
             ...state,
             ids: [...state.ids, ...entities.map(selectId)],
             entities: {
                 ...state.entities,
-                ...entitiesListToDictionary<T>(entities, selectId),
-            },
+                ...entitiesListToDictionary<T>(entities, selectId)
+            }
         }
     }
 
     export function upsertMany<T, TState extends EntityState<T> = EntityState<T>>(
         entities: T[],
         state: TState,
-        selectId: (entity: T) => string | number = selectIdFn): TState {
+        selectId: (entity: T) => string | number = selectIdFn
+    ): TState {
 
         return entities.reduce(
             (newState: TState, entity: T) => {
                 const id = selectId(entity)
                 return newState.entities[id]
-                    ? updateOne({ id, update: entity }, newState)
-                    : addOne(entity, newState, selectId)
+                       ? updateOne({ id, update: entity }, newState)
+                       : addOne(entity, newState, selectId)
             },
-            state,
+            state
         )
     }
 
     export function addOne<T, TState extends EntityState<T> = EntityState<T>>(
         entity: T,
         state: TState,
-        selectId: (entity: T) => string | number = selectIdFn): TState {
+        selectId: (entity: T) => string | number = selectIdFn
+    ): TState {
 
         const id = selectId(entity)
 
@@ -109,14 +114,15 @@ export namespace SplineEntityStore {
             ids: [...state.ids, id],
             entities: {
                 ...state.entities,
-                [id]: entity,
-            },
+                [id]: entity
+            }
         }
     }
 
     export function updateOne<T, TState extends EntityState<T> = EntityState<T>>(
         payload: EntityUpdate<T>,
-        state: TState): TState {
+        state: TState
+    ): TState {
 
         return {
             ...state,
@@ -124,39 +130,41 @@ export namespace SplineEntityStore {
                 ...state.entities,
                 [payload.id]: {
                     ...state.entities[payload.id],
-                    ...payload.update,
-                },
-            },
+                    ...payload.update
+                }
+            }
         }
     }
 
     export function updateMany<T, TState extends EntityState<T> = EntityState<T>>(
         payload: EntityUpdate<T>[],
-        state: TState): TState {
+        state: TState
+    ): TState {
 
         const entitiesUpdate = payload.reduce(
             (result, currentEntityUpdate) => {
                 result[currentEntityUpdate.id] = {
                     ...state.entities[currentEntityUpdate.id],
-                    ...currentEntityUpdate.update,
+                    ...currentEntityUpdate.update
                 }
                 return result
             },
-            {},
+            {}
         )
 
         return {
             ...state,
             entities: {
                 ...state.entities,
-                ...entitiesUpdate,
-            },
+                ...entitiesUpdate
+            }
         }
     }
 
     export function removeOne<T, TState extends EntityState<T> = EntityState<T>>(
         id: number | string,
-        state: TState): TState {
+        state: TState
+    ): TState {
 
         const ids = (state.ids as any[]).filter(item => item !== id)
 
@@ -167,17 +175,18 @@ export namespace SplineEntityStore {
                 (result, currentId) => {
                     result[currentId] = state.entities[currentId]
                     return result
-                }, {}),
+                }, {})
         }
     }
 
     export function removeMany<T, TState extends EntityState<T> = EntityState<T>>(
         ids: number[] | string[],
-        state: TState): TState {
+        state: TState
+    ): TState {
 
         const newIds = (state.ids as any[])
             .filter(
-                item => !(ids as any[]).includes(item),
+                item => !(ids as any[]).includes(item)
             )
 
         return {
@@ -187,7 +196,7 @@ export namespace SplineEntityStore {
                 (result, currentId) => {
                     result[currentId] = state.entities[currentId]
                     return result
-                }, {}),
+                }, {})
         }
     }
 
@@ -217,12 +226,12 @@ export namespace SplineEntityStore {
 
     export function getDefaultAdapterOptions<T, TState>(): AdapterOptions<T, TState> {
         return {
-            selectIdFn: (entity: T) => selectIdFn<T>(entity),
+            selectIdFn: (entity: T) => selectIdFn<T>(entity)
         }
     }
 
     export function createAdapter<T, TState extends EntityState<T> = EntityState<T>>(
-        options?: AdapterOptions<T, TState>,
+        options?: AdapterOptions<T, TState>
     ): Adapter<T, TState> {
         const adapterOptions = { ...getDefaultAdapterOptions(), ...options }
 
@@ -254,13 +263,13 @@ export namespace SplineEntityStore {
             removeOne: (id: number | string, state: TState) => removeOne<T, TState>(id, state),
             removeMany: (ids: number[] | string[], state: TState) => removeMany<T, TState>(ids, state),
             selectIdFn: adapterOptions.selectIdFn,
-            sortFn: adapterOptions.sortFn,
+            sortFn: adapterOptions.sortFn
         }
     }
 
     function applySorting<T, TState extends EntityState<T> = EntityState<T>>(
         state: TState,
-        sortFn?: AdapterSortFn<T, TState>,
+        sortFn?: AdapterSortFn<T, TState>
     ): TState {
         if (!sortFn) {
             return state
@@ -268,11 +277,11 @@ export namespace SplineEntityStore {
 
         const sortedIds = [...state.ids]
             .sort(
-                (a: number | string, b: number | string) => sortFn(selectOne<T>(a, state), selectOne<T>(b, state), state),
+                (a: number | string, b: number | string) => sortFn(selectOne<T>(a, state), selectOne<T>(b, state), state)
             )
         return {
             ...state,
-            ids: sortedIds,
+            ids: sortedIds
         }
 
     }

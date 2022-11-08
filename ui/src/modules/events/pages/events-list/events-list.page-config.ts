@@ -16,23 +16,23 @@
 
 import { ExecutionEventsQuery } from 'spline-api'
 import { DynamicFilterSchema } from 'spline-common/dynamic-filter'
-import { DynamicFilterStorePlugin, ExecutionEventsDynamicFilterStorePlugin } from 'spline-shared'
+import { DynamicFilterStoreExtras, ExecutionEventsDynamicFilterStoreExtras } from 'spline-shared'
 
 
-export namespace EventsListPage {
+export namespace EventsListPageConfig {
 
-    export const FilterId = { ...ExecutionEventsDynamicFilterStorePlugin.FilterId }
-    export type Filter = ExecutionEventsDynamicFilterStorePlugin.Filter
+    export const FilterId = { ...ExecutionEventsDynamicFilterStoreExtras.FilterId }
+    export type Filter = ExecutionEventsDynamicFilterStoreExtras.Filter
 
     export function getDynamicFilterSchema(): DynamicFilterSchema<Filter> {
         return [
-            ExecutionEventsDynamicFilterStorePlugin.getExecutedAtFilterSchema(),
-            ExecutionEventsDynamicFilterStorePlugin.getWriteModeFilterSchema()
+            ExecutionEventsDynamicFilterStoreExtras.getExecutedAtFilterSchema(),
+            ExecutionEventsDynamicFilterStoreExtras.getWriteModeFilterSchema()
         ]
     }
 
-    export function getFiltersMapping(): DynamicFilterStorePlugin.FiltersMapping<ExecutionEventsQuery.QueryFilter, Filter> {
-        return ExecutionEventsDynamicFilterStorePlugin.getFilterMapping()
+    export function getFiltersMapping(): DynamicFilterStoreExtras.FiltersMapping<ExecutionEventsQuery.QueryFilter, Filter> {
+        return ExecutionEventsDynamicFilterStoreExtras.getFilterMapping()
     }
 
 }

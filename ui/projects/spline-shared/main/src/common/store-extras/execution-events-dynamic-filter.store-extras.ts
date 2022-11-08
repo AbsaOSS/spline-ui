@@ -17,10 +17,10 @@
 import { DataSourceWriteMode, ExecutionEventsQuery } from 'spline-api'
 import { getDataSourceWriteModeInfoList, getDataSourceWriteModeLabel, SplineListBox } from 'spline-common'
 import { DfControlDateRange, DfControlSelect } from 'spline-common/dynamic-filter/filter-controls'
-import { DynamicFilterStorePlugin } from 'spline-shared'
+import { DynamicFilterStoreExtras } from 'spline-shared'
 
 
-export namespace ExecutionEventsDynamicFilterStorePlugin {
+export namespace ExecutionEventsDynamicFilterStoreExtras {
 
     export enum FilterId {
         writeMode = 'writeMode',
@@ -103,7 +103,7 @@ export namespace ExecutionEventsDynamicFilterStorePlugin {
         return queryFilter
     }
 
-    export function getFilterMapping(): DynamicFilterStorePlugin.FiltersMapping<ExecutionEventsQuery.QueryFilter, Filter> {
+    export function getFilterMapping(): DynamicFilterStoreExtras.FiltersMapping<ExecutionEventsQuery.QueryFilter, Filter> {
         return {
             dynamicFilterToQueryFilterMapFn: dynamicFilterToQueryFilter,
             queryFilterToDynamicFilterMapFn: queryFilterToDynamicFilter

@@ -20,7 +20,7 @@ import { delay, distinctUntilChanged, filter, takeUntil } from 'rxjs/operators'
 import { ExecutionEventLineageNodeType, ExecutionPlanApiService } from 'spline-api'
 import { SplineDataWidgetEvent } from 'spline-common/data-view'
 import { SgNodeCardDataView } from 'spline-shared/data-view'
-import { BaseLocalStateComponent, GenericEventInfo, ProcessingStore } from 'spline-utils'
+import { BaseLocalStateComponent, GenericEventInfo, ProcessingStoreNs } from 'spline-utils'
 
 import { OperationDetailsListFactoryStore } from '../../data-sources'
 import { EventNodeInfo } from '../../models'
@@ -79,7 +79,7 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
                 setTimeout(
                     () => {
                         this.updateState({
-                            loadingProcessing: ProcessingStore.eventProcessingFinish(this.state.loadingProcessing)
+                            loadingProcessing: ProcessingStoreNs.eventProcessingFinish(this.state.loadingProcessing)
                         })
                     },
                     domRelaxationTime
@@ -95,7 +95,7 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
             .subscribe(state =>
                 this.updateState({
                     loadingProcessing:
-                        ProcessingStore.eventProcessingFinish(
+                        ProcessingStoreNs.eventProcessingFinish(
                             this.state.loadingProcessing, state.loadingProcessing.processingError)
                 })
             )
@@ -111,7 +111,7 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
                                      : []
 
             this.updateState({
-                loadingProcessing: ProcessingStore.eventProcessingStart(this.state.loadingProcessing)
+                loadingProcessing: ProcessingStoreNs.eventProcessingStart(this.state.loadingProcessing)
             })
 
             // set filter and trigger data fetching

@@ -21,7 +21,7 @@ import { DynamicFilterModel } from 'spline-common/dynamic-filter'
 import { SearchFactoryStore, SplineRecord } from 'spline-utils'
 
 
-export namespace DynamicFilterStorePlugin {
+export namespace DynamicFilterStoreExtras {
 
     export type DynamicFilterToQueryFilterMapFn<TQueryFilter extends SplineRecord, TDynamicFilter extends SplineRecord> =
         (dynamicFilter: TDynamicFilter, queryFilter?: TQueryFilter) => TQueryFilter

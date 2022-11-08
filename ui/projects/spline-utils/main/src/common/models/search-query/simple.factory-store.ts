@@ -17,7 +17,7 @@
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs'
 import { catchError, map, switchMap, take, takeUntil, tap } from 'rxjs/operators'
 
-import { ProcessingStore } from '../../../store'
+import { ProcessingStoreNs } from '../../../store'
 import { SplineRecord } from '../heplers'
 
 import { SearchQuery } from './search-query.models'
@@ -30,8 +30,8 @@ export abstract class SimpleFactoryStore<TData, TFilter extends SplineRecord = {
     readonly dataState$: Observable<DataState<TData>>
     readonly data$: Observable<TData>
 
-    readonly loadingProcessing$: Observable<ProcessingStore.EventProcessingState>
-    readonly loadingProcessingEvents: ProcessingStore.ProcessingEvents<DataState<TData>>
+    readonly loadingProcessing$: Observable<ProcessingStoreNs.EventProcessingState>
+    readonly loadingProcessingEvents: ProcessingStoreNs.ProcessingEvents<DataState<TData>>
 
     readonly onFilterChanged$ = new Subject<{ filter: TFilter; apply: boolean; force: boolean }>()
 
@@ -46,7 +46,7 @@ export abstract class SimpleFactoryStore<TData, TFilter extends SplineRecord = {
         this.data$ = this.dataState$.pipe(map(data => data.data))
 
         this.loadingProcessing$ = this.dataState$.pipe(map(data => data.loadingProcessing))
-        this.loadingProcessingEvents = ProcessingStore.createProcessingEvents(
+        this.loadingProcessingEvents = ProcessingStoreNs.createProcessingEvents(
             this.dataState$, (state) => state.loadingProcessing
         )
 
@@ -97,9 +97,9 @@ export abstract class SimpleFactoryStore<TData, TFilter extends SplineRecord = {
 
     protected updateDataState(dataState: Partial<DataState<TData>>): void {
         this._dataState$.next({
-                                  ...this._dataState$.getValue(),
-                                  ...dataState
-                              })
+            ...this._dataState$.getValue(),
+            ...dataState
+        })
     }
 
     protected abstract getDataObserver(filterValue: TFilter): Observable<TData>;
@@ -107,25 +107,25 @@ export abstract class SimpleFactoryStore<TData, TFilter extends SplineRecord = {
     private fetchData(filterValue: TFilter): Observable<TData> {
 
         this.updateDataState({
-                                 loadingProcessing: ProcessingStore.eventProcessingStart(this.dataState.loadingProcessing)
-                             })
+            loadingProcessing: ProcessingStoreNs.eventProcessingStart(this.dataState.loadingProcessing)
+        })
 
         return this.getDataObserver(filterValue)
             .pipe(
                 catchError((error) => {
                     this.updateDataState({
-                                             loadingProcessing: ProcessingStore.eventProcessingFinish(
-                                                 this.dataState.loadingProcessing, error)
-                                         })
+                        loadingProcessing: ProcessingStoreNs.eventProcessingFinish(
+                            this.dataState.loadingProcessing, error)
+                    })
                     return of(null)
                 }),
                 // update data state
                 tap((result) => {
                     if (result !== null) {
                         this.updateDataState({
-                                                 data: result,
-                                                 loadingProcessing: ProcessingStore.eventProcessingFinish(this.dataState.loadingProcessing)
-                                             })
+                            data: result,
+                            loadingProcessing: ProcessingStoreNs.eventProcessingFinish(this.dataState.loadingProcessing)
+                        })
                     }
                 }),
                 take(1)

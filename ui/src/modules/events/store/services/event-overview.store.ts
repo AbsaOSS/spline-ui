@@ -20,29 +20,29 @@ import { catchError, take, tap } from 'rxjs/operators'
 import { ExecutionEventApiService, ExecutionEventLineageNode, ExecutionEventLineageOverview } from 'spline-api'
 import { OverviewTypeEnum } from 'spline-common/graph'
 import { SgNodeControl } from 'spline-shared/graph'
-import { BaseStore, ProcessingStore } from 'spline-utils'
+import { BaseStore, ProcessingStoreNs } from 'spline-utils'
 
-import { EventOverviewStateManagement } from '../models'
+import { EventOverviewStoreNs } from '../models'
 
 
 @Injectable()
-export class EventOverviewStore extends BaseStore<EventOverviewStateManagement.State> {
+export class EventOverviewStore extends BaseStore<EventOverviewStoreNs.State> {
 
     constructor(private readonly executionEventApiService: ExecutionEventApiService) {
-        super(EventOverviewStateManagement.getDefaultState())
+        super(EventOverviewStoreNs.getDefaultState())
     }
 
     setSelectedNode(nodeId: string | null): void {
         if (this.state.selectedNodeId !== nodeId) {
             this.updateState(
-                EventOverviewStateManagement.reduceSelectedNodeId(nodeId, this.state)
+                EventOverviewStoreNs.reduceSelectedNodeId(nodeId, this.state)
             )
         }
     }
 
     setGraphNodeView(graphNodeView: SgNodeControl.NodeView): void {
         this.updateState(
-            EventOverviewStateManagement.reduceGraphNodeView(this.state, graphNodeView)
+            EventOverviewStoreNs.reduceGraphNodeView(this.state, graphNodeView)
         )
     }
 
@@ -53,15 +53,15 @@ export class EventOverviewStore extends BaseStore<EventOverviewStateManagement.S
             overviewType,
             state => ({
                 ...state,
-                graphLoadingProcessing: ProcessingStore.eventProcessingStart(this.state.graphLoadingProcessing)
+                graphLoadingProcessing: ProcessingStoreNs.eventProcessingStart(this.state.graphLoadingProcessing)
             }),
             state => ({
                 ...state,
-                graphLoadingProcessing: ProcessingStore.eventProcessingFinish(this.state.graphLoadingProcessing)
+                graphLoadingProcessing: ProcessingStoreNs.eventProcessingFinish(this.state.graphLoadingProcessing)
             }),
             (state, error) => ({
                 ...state,
-                graphLoadingProcessing: ProcessingStore.eventProcessingFinish(this.state.graphLoadingProcessing, error)
+                graphLoadingProcessing: ProcessingStoreNs.eventProcessingFinish(this.state.graphLoadingProcessing, error)
             })
         )
             .subscribe()
@@ -78,15 +78,15 @@ export class EventOverviewStore extends BaseStore<EventOverviewStateManagement.S
             OverviewTypeEnum.LINEAGE_OVERVIEW,
             state => ({
                 ...state,
-                loadingProcessing: ProcessingStore.eventProcessingStart(this.state.loadingProcessing)
+                loadingProcessing: ProcessingStoreNs.eventProcessingStart(this.state.loadingProcessing)
             }),
             state => ({
                 ...state,
-                loadingProcessing: ProcessingStore.eventProcessingFinish(this.state.loadingProcessing)
+                loadingProcessing: ProcessingStoreNs.eventProcessingFinish(this.state.loadingProcessing)
             }),
             (state, error) => ({
                 ...state,
-                loadingProcessing: ProcessingStore.eventProcessingFinish(this.state.loadingProcessing, error)
+                loadingProcessing: ProcessingStoreNs.eventProcessingFinish(this.state.loadingProcessing, error)
             })
         )
             .subscribe(() => {
@@ -97,28 +97,28 @@ export class EventOverviewStore extends BaseStore<EventOverviewStateManagement.S
     }
 
     findNode(nodeId: string): ExecutionEventLineageNode {
-        return EventOverviewStateManagement.selectNode(this.state, nodeId)
+        return EventOverviewStoreNs.selectNode(this.state, nodeId)
     }
 
     findChildrenNodes(nodeId: string): ExecutionEventLineageNode[] {
-        return EventOverviewStateManagement.selectChildrenNodes(this.state, nodeId)
+        return EventOverviewStoreNs.selectChildrenNodes(this.state, nodeId)
     }
 
     findParentNodes(nodeId: string): ExecutionEventLineageNode[] {
-        return EventOverviewStateManagement.selectParentNodes(this.state, nodeId)
+        return EventOverviewStoreNs.selectParentNodes(this.state, nodeId)
     }
 
     // TODO: remove it after BE will support it.
     loadNodeHistory(nodeId: string): void {
 
         this.updateState({
-            graphLoadingProcessing: ProcessingStore.eventProcessingStart(this.state.graphLoadingProcessing)
+            graphLoadingProcessing: ProcessingStoreNs.eventProcessingStart(this.state.graphLoadingProcessing)
         })
 
         setTimeout(() => {
             this.updateState({
-                ...EventOverviewStateManagement.__reduceFakeHistoryNode(this.state, nodeId),
-                graphLoadingProcessing: ProcessingStore.eventProcessingFinish(this.state.graphLoadingProcessing)
+                ...EventOverviewStoreNs.__reduceFakeHistoryNode(this.state, nodeId),
+                graphLoadingProcessing: ProcessingStoreNs.eventProcessingFinish(this.state.graphLoadingProcessing)
             })
         }, 500)
     }
@@ -127,13 +127,13 @@ export class EventOverviewStore extends BaseStore<EventOverviewStateManagement.S
     loadNodeFuture(nodeId: string): void {
 
         this.updateState({
-            graphLoadingProcessing: ProcessingStore.eventProcessingStart(this.state.graphLoadingProcessing)
+            graphLoadingProcessing: ProcessingStoreNs.eventProcessingStart(this.state.graphLoadingProcessing)
         })
 
         setTimeout(() => {
             this.updateState({
-                ...EventOverviewStateManagement.__reduceFakeFutureNode(this.state, nodeId),
-                graphLoadingProcessing: ProcessingStore.eventProcessingFinish(this.state.graphLoadingProcessing)
+                ...EventOverviewStoreNs.__reduceFakeFutureNode(this.state, nodeId),
+                graphLoadingProcessing: ProcessingStoreNs.eventProcessingFinish(this.state.graphLoadingProcessing)
             })
         }, 500)
     }
@@ -142,9 +142,9 @@ export class EventOverviewStore extends BaseStore<EventOverviewStateManagement.S
         executionEventId: string,
         graphDepth: number,
         overviewType: OverviewTypeEnum,
-        onLoadingStart: (state: EventOverviewStateManagement.State) => EventOverviewStateManagement.State,
-        onLoadingSuccess: (state: EventOverviewStateManagement.State) => EventOverviewStateManagement.State,
-        onLoadingError: (state: EventOverviewStateManagement.State, error: any | null) => EventOverviewStateManagement.State
+        onLoadingStart: (state: EventOverviewStoreNs.State) => EventOverviewStoreNs.State,
+        onLoadingSuccess: (state: EventOverviewStoreNs.State) => EventOverviewStoreNs.State,
+        onLoadingError: (state: EventOverviewStoreNs.State, error: any | null) => EventOverviewStoreNs.State
     ): Observable<ExecutionEventLineageOverview> {
 
         this.updateState({
@@ -163,7 +163,7 @@ export class EventOverviewStore extends BaseStore<EventOverviewStateManagement.S
                 tap((lineageData) => {
                     if (lineageData !== null) {
                         this.updateState({
-                            ...EventOverviewStateManagement.reduceLineageOverviewData(
+                            ...EventOverviewStoreNs.reduceLineageOverviewData(
                                 onLoadingSuccess(this.state),
                                 executionEventId,
                                 lineageData

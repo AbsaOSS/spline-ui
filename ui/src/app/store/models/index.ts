@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export * from './app.state-management'
+export * from './app-store.ns'

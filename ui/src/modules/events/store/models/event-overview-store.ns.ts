@@ -24,20 +24,20 @@ import {
 import { SplineDataViewSchema } from 'spline-common/data-view'
 import { SgData } from 'spline-common/graph'
 import { SgNodeControl } from 'spline-shared/graph'
-import { ProcessingStore, SplineEntityStore, StringHelpers } from 'spline-utils'
+import { ProcessingStoreNs, SplineEntityStoreNs, StringHelpers } from 'spline-utils'
 
 import { EventInfo, EventNodeControl, EventNodeHistory, EventNodeInfo } from '../../models'
 
 
-export namespace EventOverviewStateManagement {
+export namespace EventOverviewStoreNs {
 
     export type State = {
-        nodes: SplineEntityStore.EntityState<ExecutionEventLineageNode>
+        nodes: SplineEntityStoreNs.EntityState<ExecutionEventLineageNode>
         links: LineageNodeLink[]
         executionEventId: string | null
         eventInfo: EventInfo | null
-        loadingProcessing: ProcessingStore.EventProcessingState
-        graphLoadingProcessing: ProcessingStore.EventProcessingState
+        loadingProcessing: ProcessingStoreNs.EventProcessingState
+        graphLoadingProcessing: ProcessingStoreNs.EventProcessingState
         selectedNodeId: string | null
         targetNodeId: string | null
         targetExecutionPlanNodeId: string | null
@@ -59,12 +59,12 @@ export namespace EventOverviewStateManagement {
 
     export function getDefaultState(): State {
         return {
-            nodes: SplineEntityStore.getDefaultState<ExecutionEventLineageNode>(),
+            nodes: SplineEntityStoreNs.getDefaultState<ExecutionEventLineageNode>(),
             links: [],
             executionEventId: null,
             eventInfo: null,
-            loadingProcessing: ProcessingStore.getDefaultProcessingState(),
-            graphLoadingProcessing: ProcessingStore.getDefaultProcessingState(),
+            loadingProcessing: ProcessingStoreNs.getDefaultProcessingState(),
+            graphLoadingProcessing: ProcessingStoreNs.getDefaultProcessingState(),
             selectedNodeId: null,
             targetNodeId: null,
             targetNodeDvs: null,
@@ -91,7 +91,7 @@ export namespace EventOverviewStateManagement {
                           ? lineageOverview.lineage.nodes.find(x => x.id === targetEdge.source)
                           : undefined
 
-        const nodesState = SplineEntityStore.addAll(lineageOverview.lineage.nodes, state.nodes)
+        const nodesState = SplineEntityStoreNs.addAll(lineageOverview.lineage.nodes, state.nodes)
 
         const newState = {
             ...state,
@@ -113,7 +113,7 @@ export namespace EventOverviewStateManagement {
             graphHasMoreDepth: calculateHasMoreDepth(lineageOverview.executionEventInfo.lineageDepth),
             targetNodeId: lineageOverview.executionEventInfo.targetDataSourceId,
             targetNodeDvs: EventNodeInfo.nodeToDataSchema(
-                SplineEntityStore.selectOne(lineageOverview.executionEventInfo.targetDataSourceId, nodesState)
+                SplineEntityStoreNs.selectOne(lineageOverview.executionEventInfo.targetDataSourceId, nodesState)
             ),
             targetExecutionPlanNodeId: eventNode.id
         }
@@ -122,7 +122,7 @@ export namespace EventOverviewStateManagement {
     }
 
     export function calculateTargetExecutionPlanNodeDvs(state: State): State {
-        const targetPlanNode: ExecutionEventLineageNode = SplineEntityStore.selectOne(state.targetExecutionPlanNodeId, state.nodes)
+        const targetPlanNode: ExecutionEventLineageNode = SplineEntityStoreNs.selectOne(state.targetExecutionPlanNodeId, state.nodes)
         return {
             ...state,
             targetExecutionPlanNodeDvs: EventNodeInfo.nodeToDataSchema(
@@ -146,7 +146,7 @@ export namespace EventOverviewStateManagement {
 
         const newState = {
             ...state,
-            nodes: SplineEntityStore.addMany([fakeNodeJob, fakeNodeDs], state.nodes),
+            nodes: SplineEntityStoreNs.addMany([fakeNodeJob, fakeNodeDs], state.nodes),
             links: [
                 {
                     source: fakeNodeDs.id,
@@ -177,7 +177,7 @@ export namespace EventOverviewStateManagement {
 
         const newState = {
             ...state,
-            nodes: SplineEntityStore.addMany([fakeNodeJob, fakeNodeDs], state.nodes),
+            nodes: SplineEntityStoreNs.addMany([fakeNodeJob, fakeNodeDs], state.nodes),
             links: [
                 {
                     target: fakeNodeDs.id,
@@ -210,7 +210,7 @@ export namespace EventOverviewStateManagement {
     // TODO: showLoadMoreControls should be removed after that feature will be implemented on BE side,
     //       so we know when to display these controls.
     export function calculateGraphData(state: State, showLoadMoreControls = false): SgData {
-        const nodesList = EventOverviewStateManagement.selectAllNodes(state)
+        const nodesList = EventOverviewStoreNs.selectAllNodes(state)
 
         const graphData = {
             links: state.links,
@@ -260,23 +260,23 @@ export namespace EventOverviewStateManagement {
     }
 
     export function selectAllNodes(state: State): ExecutionEventLineageNode[] {
-        return SplineEntityStore.selectAll(state.nodes)
+        return SplineEntityStoreNs.selectAll(state.nodes)
     }
 
     export function selectNode(state: State, nodeId: string): ExecutionEventLineageNode | undefined {
-        return SplineEntityStore.selectOne(nodeId, state.nodes)
+        return SplineEntityStoreNs.selectOne(nodeId, state.nodes)
     }
 
     export function selectChildrenNodes(state: State, nodeId: string): ExecutionEventLineageNode[] {
         return state.links
             .filter(link => link.source === nodeId)
-            .map(link => SplineEntityStore.selectOne(link.target, state.nodes))
+            .map(link => SplineEntityStoreNs.selectOne(link.target, state.nodes))
     }
 
     export function selectParentNodes(state: State, nodeId: string): ExecutionEventLineageNode[] {
         return state.links
             .filter(link => link.target === nodeId)
-            .map(link => SplineEntityStore.selectOne(link.source, state.nodes))
+            .map(link => SplineEntityStoreNs.selectOne(link.source, state.nodes))
     }
 
     function calculateHasMoreDepth(lineageDepth: ExecutionEventLineageOverviewDepth): boolean {

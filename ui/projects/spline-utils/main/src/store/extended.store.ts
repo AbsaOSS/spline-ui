@@ -17,25 +17,25 @@
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
-import { BaseStore } from './base-store.models'
-import { ProcessingStore } from './processing-store.models'
+import { BaseStore } from './base.store'
+import { ProcessingStoreNs } from './processing-store.ns'
 
 
 export type StateWithLoading = {
-    loading: ProcessingStore.EventProcessingState
+    loading: ProcessingStoreNs.EventProcessingState
 }
 
-export abstract class BaseStoreWithLoading<TState extends StateWithLoading> extends BaseStore<TState> {
+export abstract class ExtendedStore<TState extends StateWithLoading> extends BaseStore<TState> {
 
-    readonly loadingEvents: ProcessingStore.ProcessingEvents<TState>
-    readonly loading$: Observable<ProcessingStore.EventProcessingState>
+    readonly loadingEvents: ProcessingStoreNs.ProcessingEvents<TState>
+    readonly loading$: Observable<ProcessingStoreNs.EventProcessingState>
 
     protected constructor(defaultState: TState = null) {
 
         super(defaultState)
 
-        this.loadingEvents = ProcessingStore.createProcessingEvents(
-            this.state$, (state) => state.loading,
+        this.loadingEvents = ProcessingStoreNs.createProcessingEvents(
+            this.state$, (state) => state.loading
         )
 
         this.loading$ = this.state$.pipe(map(data => data.loading))

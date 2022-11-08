@@ -18,7 +18,7 @@ import { Observable } from 'rxjs'
 import { filter, switchMap, take } from 'rxjs/operators'
 
 
-export namespace ProcessingStore {
+export namespace ProcessingStoreNs {
 
     export interface ProcessingEvents<TState> {
         processingStart$: Observable<TState>
@@ -35,17 +35,18 @@ export namespace ProcessingStore {
     export function getDefaultProcessingState(defaultProcessingState = false): EventProcessingState {
         return {
             processing: defaultProcessingState,
-            processingError: null,
+            processingError: null
         }
     }
 
     export function createProcessingEvents<TState>(
         state$: Observable<TState>,
-        selectEventProcessingStateFn: (state: TState) => EventProcessingState): ProcessingEvents<TState> {
+        selectEventProcessingStateFn: (state: TState) => EventProcessingState
+    ): ProcessingEvents<TState> {
 
         const processingStart$ = state$
             .pipe(
-                filter(state => selectEventProcessingStateFn(state).processing),
+                filter(state => selectEventProcessingStateFn(state).processing)
             )
 
         const processingEnd$ = processingStart$
@@ -54,33 +55,33 @@ export namespace ProcessingStore {
                     state$
                         .pipe(
                             filter(state => !selectEventProcessingStateFn(state).processing),
-                            take(1),
-                        ),
-                ),
+                            take(1)
+                        )
+                )
             )
 
         const success$ = processingEnd$
             .pipe(
-                filter(state => selectEventProcessingStateFn(state).processingError === null),
+                filter(state => selectEventProcessingStateFn(state).processingError === null)
             )
 
         const error$ = processingEnd$
             .pipe(
-                filter(state => selectEventProcessingStateFn(state).processingError !== null),
+                filter(state => selectEventProcessingStateFn(state).processingError !== null)
             )
 
         return {
             processingStart$,
             processingEnd$,
             success$,
-            error$,
+            error$
         }
     }
 
     export function eventProcessingStart(state: EventProcessingState): EventProcessingState {
         return {
             ...state,
-            processing: true,
+            processing: true
         }
     }
 
@@ -88,7 +89,7 @@ export namespace ProcessingStore {
         return {
             ...state,
             processing: false,
-            processingError: error,
+            processingError: error
         }
     }
 

@@ -51,7 +51,7 @@ import * as fromPages from './pages'
 import { services } from './services'
 import { SplineDataSourcesRoutingModule } from './spline-data-sources-routing.module'
 import { effects } from './store'
-import { SplineDataSourceStateManagement } from './store/state-managements/spline-data-source.state-management'
+import { SplineDataSourceStoreNs } from './store/state-managements/spline-data-source-store.ns'
 
 
 @NgModule({
@@ -76,7 +76,7 @@ import { SplineDataSourceStateManagement } from './store/state-managements/splin
         MatInputModule,
         MatMenuModule,
         NgxDaterangepickerMd.forRoot(),
-        StoreModule.forFeature(SplineDataSourceStateManagement.STORE_FEATURE_NAME, SplineDataSourceStateManagement.reducers),
+        StoreModule.forFeature(SplineDataSourceStoreNs.STORE_FEATURE_NAME, SplineDataSourceStoreNs.reducers),
         EffectsModule.forFeature(effects),
         SplineDataSourcesRoutingModule,
         SplineApiConfigModule,

@@ -28,7 +28,11 @@ import { Observable, of } from 'rxjs'
 import { filter, take } from 'rxjs/operators'
 import { SplineSearchBoxModule, SplineSortHeaderModule } from 'spline-common'
 import { DynamicTableDataMap, DynamicTableModule } from 'spline-common/dynamic-table'
-import { SplineDynamicTableSharedModule, SplineSearchDynamicTable, SplineSearchDynamicTableComponent } from 'spline-shared/dynamic-table'
+import {
+    SplineDynamicTableSharedModule,
+    SplineSearchDynamicTableComponent,
+    SplineSearchDynamicTableStoreNs
+} from 'spline-shared/dynamic-table'
 import { PageResponse, QuerySorter, SearchDataSourceConfigInput, SearchFactoryStore, SearchQuery } from 'spline-utils'
 import { SplineTranslateTestingModule } from 'spline-utils/translate'
 import SortDir = QuerySorter.SortDir
@@ -137,7 +141,7 @@ describe('SplineSearchDynamicTableComponent', () => {
                 ]
             }
 
-            const queryParams = SplineSearchDynamicTable.applySearchParams(
+            const queryParams = SplineSearchDynamicTableStoreNs.applySearchParams(
                 {},
                 componentInstance.defaultUrlStateQueryParamAlias,
                 urlSearchParams

@@ -19,13 +19,13 @@ import { select, Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
 import { SplineDataSourceInfo } from 'spline-api'
 
-import { DsOverviewStateManagement, DsOverviewStoreActions, DsOverviewStoreSelectors } from '../../store'
+import { DsOverviewStoreNs, DsOverviewStoreActions, DsOverviewStoreSelectors } from '../../store'
 
 
 @Injectable()
 export class DsOverviewStore {
 
-    readonly state$: Observable<DsOverviewStateManagement.State>
+    readonly state$: Observable<DsOverviewStoreNs.State>
     readonly dataSourceInfo$: Observable<SplineDataSourceInfo>
 
     constructor(private readonly store: Store<any>) {

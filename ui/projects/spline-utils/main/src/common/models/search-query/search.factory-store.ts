@@ -19,7 +19,7 @@ import { isEqual } from 'lodash-es'
 import { BehaviorSubject, EMPTY, interval, isObservable, Observable, of, Subject } from 'rxjs'
 import { catchError, filter, first, map, share, skip, switchMap, takeUntil, tap, withLatestFrom } from 'rxjs/operators'
 
-import { ProcessingStore } from '../../../store'
+import { ProcessingStoreNs } from '../../../store'
 import { whenPageVisible } from '../../rxjs-operators'
 import { SplineRecord, TypeHelpers } from '../heplers'
 import { PageResponse, QuerySorter } from '../query'
@@ -51,8 +51,8 @@ export abstract class SearchFactoryStore<TDataRecord = unknown,
     readonly dataState$: Observable<DataState<TData>>
     readonly searchParams$: Observable<SearchParams<TFilter, TSortableFields>>
 
-    readonly loadingProcessing$: Observable<ProcessingStore.EventProcessingState>
-    readonly loadingProcessingEvents: ProcessingStore.ProcessingEvents<DataState<TData>>
+    readonly loadingProcessing$: Observable<ProcessingStoreNs.EventProcessingState>
+    readonly loadingProcessingEvents: ProcessingStoreNs.ProcessingEvents<DataState<TData>>
     readonly serverDataUpdates$: Observable<TData>
     readonly disconnected$: Observable<void>
 
@@ -85,7 +85,7 @@ export abstract class SearchFactoryStore<TDataRecord = unknown,
         this.dataState$ = this._dataState$
 
         this.loadingProcessing$ = this.dataState$.pipe(map(data => data.loadingProcessing))
-        this.loadingProcessingEvents = ProcessingStore.createProcessingEvents(
+        this.loadingProcessingEvents = ProcessingStoreNs.createProcessingEvents(
             this.dataState$, (state) => state.loadingProcessing
         )
 
@@ -195,14 +195,14 @@ export abstract class SearchFactoryStore<TDataRecord = unknown,
                 skip(1), // skip default search params
                 withLatestFrom(this._dataState$),
                 tap(([, dataState]) => this.updateDataState({
-                    loadingProcessing: ProcessingStore.eventProcessingStart(
+                    loadingProcessing: ProcessingStoreNs.eventProcessingStart(
                         dataState.loadingProcessing)
                 })),
                 switchMap(([searchParams, dataState]) => this.getDataObserver(searchParams)
                     .pipe(
                         catchError((error) => {
                             this.updateDataState({
-                                loadingProcessing: ProcessingStore.eventProcessingFinish(
+                                loadingProcessing: ProcessingStoreNs.eventProcessingFinish(
                                     dataState.loadingProcessing, error)
                             })
                             return of(null)
@@ -215,7 +215,7 @@ export abstract class SearchFactoryStore<TDataRecord = unknown,
                 if (result !== null) {
                     this.updateDataState({
                         data: { ...result },
-                        loadingProcessing: ProcessingStore.eventProcessingFinish(dataState.loadingProcessing)
+                        loadingProcessing: ProcessingStoreNs.eventProcessingFinish(dataState.loadingProcessing)
                     })
                 }
             })

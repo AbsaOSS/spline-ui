@@ -23,7 +23,7 @@ import { SlBreadcrumbs } from 'spline-common/layout'
 import { BaseComponent } from 'spline-utils'
 
 import { DsOverviewStore } from '../../services'
-import { DsOverviewStateManagement } from '../../store'
+import { DsOverviewStoreNs } from '../../store'
 import NavTabInfo = SplineTabsNavBar.NavTabInfo
 
 
@@ -35,7 +35,7 @@ import NavTabInfo = SplineTabsNavBar.NavTabInfo
 })
 export class DataSourceOverviewPageComponent extends BaseComponent implements OnInit, OnDestroy {
 
-    readonly state$: Observable<DsOverviewStateManagement.State>
+    readonly state$: Observable<DsOverviewStoreNs.State>
     readonly breadcrumbs$: Observable<SlBreadcrumbs.Breadcrumbs>
 
     readonly headerNavTabs: NavTabInfo[] = [

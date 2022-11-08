@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-
 import { SplineDateRangeValue } from 'spline-utils'
 
 import { SplineDateRangeFilter } from './spline-date-range-filter.models'
 
 
-export namespace SplineDateRangeFilterConsumerStore {
+export namespace SplineDateRangeFilterConsumerStoreNs {
 
     export type State = {
         bounds: SplineDateRangeValue | null
@@ -37,15 +36,14 @@ export namespace SplineDateRangeFilterConsumerStore {
     export function reduceValueChanged(state: State, value: SplineDateRangeFilter.Value | null): State {
         return {
             ...state,
-            value: value ? {...value} : null
+            value: value ? { ...value } : null
         }
     }
-
 
     export function reduceBoundsChanged(state: State, value: SplineDateRangeValue | null): State {
         return {
             ...state,
-            bounds: value ? {...value} : null
+            bounds: value ? { ...value } : null
         }
     }
 

@@ -19,18 +19,18 @@ import { SplineColors } from 'spline-common'
 import { SdWidgetCard, SdWidgetExpansionPanel, SdWidgetSimpleRecord, SdWidgetTitle, SplineDataViewSchema } from 'spline-common/data-view'
 import { SdWidgetAttributesTree } from 'spline-shared/attributes'
 import { SgEventNodeInfoShared } from 'spline-shared/data-view'
-import { DateTimeHelpers, ProcessingStore } from 'spline-utils'
+import { DateTimeHelpers, ProcessingStoreNs } from 'spline-utils'
 
 import { DsOverviewDetailsStoreActions } from '../actions'
 import ActionTypes = DsOverviewDetailsStoreActions.ActionTypes
 
 
-export namespace DsOverviewDetailsStateManagement {
+export namespace DsOverviewDetailsStoreNs {
 
     export const STORE_FEATURE_NAME = 'overviewDetails'
 
     export type State = {
-        loading: ProcessingStore.EventProcessingState
+        loading: ProcessingStoreNs.EventProcessingState
         executionEvent: ExecutionEvent
         operationDetails: OperationDetails[]
         attributesSchemasDvs: SplineDataViewSchema
@@ -39,7 +39,7 @@ export namespace DsOverviewDetailsStateManagement {
 
     export function getInitState(): State {
         return {
-            loading: ProcessingStore.getDefaultProcessingState(true),
+            loading: ProcessingStoreNs.getDefaultProcessingState(true),
             executionEvent: null,
             operationDetails: [],
             attributesSchemasDvs: [],
@@ -55,7 +55,7 @@ export namespace DsOverviewDetailsStateManagement {
             case ActionTypes.Init:
                 return {
                     ...state,
-                    loading: ProcessingStore.eventProcessingStart(state.loading)
+                    loading: ProcessingStoreNs.eventProcessingStart(state.loading)
                 }
 
             case ActionTypes.InitSuccess:
@@ -65,13 +65,13 @@ export namespace DsOverviewDetailsStateManagement {
                     operationDetails: action.payload.operationsDetails,
                     attributesSchemasDvs: operationDetailsToAttributesSchemasDvs(action.payload.operationsDetails),
                     dataSourceInfoDvs: toDataSourceInfoSchemasDvs(action.payload.executionEvent),
-                    loading: ProcessingStore.eventProcessingFinish(state.loading)
+                    loading: ProcessingStoreNs.eventProcessingFinish(state.loading)
                 }
 
             case ActionTypes.InitError:
                 return {
                     ...state,
-                    loading: ProcessingStore.eventProcessingFinish(state.loading, action.payload.error)
+                    loading: ProcessingStoreNs.eventProcessingFinish(state.loading, action.payload.error)
                 }
 
             case ActionTypes.ResetState:

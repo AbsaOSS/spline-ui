@@ -29,7 +29,7 @@ import {
 } from 'spline-common/dynamic-table'
 import { BaseLocalStateComponent, QuerySorter, RouterNavigation, SearchFactoryStore, SplineRecord } from 'spline-utils'
 
-import { SplineSearchDynamicTable } from './spline-search-dynamic-table.models'
+import { SplineSearchDynamicTableStoreNs } from './spline-search-dynamic-table-store.ns'
 
 
 @Component({
@@ -37,7 +37,7 @@ import { SplineSearchDynamicTable } from './spline-search-dynamic-table.models'
     templateUrl: './spline-search-dynamic-table.component.html'
 })
 export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter extends SplineRecord = {}, TSortableFields = string>
-    extends BaseLocalStateComponent<SplineSearchDynamicTable.State> implements OnInit, OnDestroy, OnChanges {
+    extends BaseLocalStateComponent<SplineSearchDynamicTableStoreNs.State> implements OnInit, OnDestroy, OnChanges {
 
     readonly defaultUrlStateQueryParamAlias = 'searchTable'
 
@@ -62,7 +62,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
     ) {
         super()
         this.updateState(
-            SplineSearchDynamicTable.getDefaultState()
+            SplineSearchDynamicTableStoreNs.getDefaultState()
         )
     }
 
@@ -137,7 +137,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
 
     private searchParamsFromUrl() {
         return !this.isUrlStateDisabled
-               ? SplineSearchDynamicTable.extractSearchParamsFromUrl(
+               ? SplineSearchDynamicTableStoreNs.extractSearchParamsFromUrl(
                 this.currentQueryParams,
                 this.urlStateQueryParamAlias
             )
@@ -226,7 +226,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
                 skip(1)
             )
             .subscribe((searchParams) => {
-                const queryParams = SplineSearchDynamicTable.applySearchParams(
+                const queryParams = SplineSearchDynamicTableStoreNs.applySearchParams(
                     this.currentQueryParams,
                     queryParamAlias,
                     searchParams

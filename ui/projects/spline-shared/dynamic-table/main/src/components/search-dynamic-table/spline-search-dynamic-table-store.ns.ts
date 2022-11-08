@@ -14,22 +14,20 @@
  * limitations under the License.
  */
 
-
 import { Params } from '@angular/router'
-import { ProcessingStore, QuerySorter, RouterNavigation, SearchQuery, StringHelpers } from 'spline-utils'
+import { ProcessingStoreNs, QuerySorter, RouterNavigation, SearchQuery, StringHelpers } from 'spline-utils'
 
 
-export namespace SplineSearchDynamicTable {
+export namespace SplineSearchDynamicTableStoreNs {
 
     import SearchParams = SearchQuery.SearchParams
-
 
     export type State = {
         isInitialized: boolean
         sorting: QuerySorter.FieldSorter | null
         searchParams: SearchParams | null
         totalCount: number
-        loadingProcessing: ProcessingStore.EventProcessingState
+        loadingProcessing: ProcessingStoreNs.EventProcessingState
     }
 
     export function getDefaultState(): State {
@@ -38,34 +36,36 @@ export namespace SplineSearchDynamicTable {
             sorting: null,
             totalCount: 0,
             searchParams: null,
-            loadingProcessing: ProcessingStore.getDefaultProcessingState(true)
+            loadingProcessing: ProcessingStoreNs.getDefaultProcessingState(true)
         }
     }
 
     export function extractSearchParamsFromUrl(
         queryParams: Params,
-        queryParamAlias: string): SearchParams | null {
+        queryParamAlias: string
+    ): SearchParams | null {
 
         const urlString = queryParams[queryParamAlias]
         return urlString
-            ? searchParamsFromUrlString(urlString)
-            : null
+               ? searchParamsFromUrlString(urlString)
+               : null
     }
 
     export function applySearchParams(
         queryParams: Params,
         queryParamAlias: string,
-        searchParams: SearchParams | null): Params {
+        searchParams: SearchParams | null
+    ): Params {
 
         // keep some data in query params if it differs from the DS State
         const searchParamsString = searchParams !== null
-            ? searchParamsToUrlString(searchParams)
-            : null
+                                   ? searchParamsToUrlString(searchParams)
+                                   : null
 
         return RouterNavigation.setQueryParam(
             queryParams,
             queryParamAlias,
-            searchParamsString,
+            searchParamsString
         )
     }
 

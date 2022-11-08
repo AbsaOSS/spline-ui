@@ -23,25 +23,25 @@ import {
 } from 'spline-api'
 import { SgData } from 'spline-common/graph'
 import { SgNodeControl } from 'spline-shared/graph'
-import { ProcessingStore, SplineEntityStore } from 'spline-utils'
+import { ProcessingStoreNs, SplineEntityStoreNs } from 'spline-utils'
 
 import { PlanNodeControl } from '../../models'
 
 
-export namespace ExecutionPlanOverviewStateManagement {
+export namespace ExecutionPlanOverviewStoreNs {
 
     export type State = {
-        nodes: SplineEntityStore.EntityState<ExecutionPlanLineageNode>
+        nodes: SplineEntityStoreNs.EntityState<ExecutionPlanLineageNode>
         executionPlanId: string | null
         links: LineageNodeLink[]
         executionPlan: ExecutionPlan | null
-        loading: ProcessingStore.EventProcessingState
+        loading: ProcessingStoreNs.EventProcessingState
 
         selectedNodeId: string | null
         selectedAttributeId: string | null
 
         attributeLineage: OperationAttributeLineage | null
-        attributeLineageLoading: ProcessingStore.EventProcessingState
+        attributeLineageLoading: ProcessingStoreNs.EventProcessingState
 
         graphNodeView: SgNodeControl.NodeView
         graphData: SgData | null
@@ -49,17 +49,17 @@ export namespace ExecutionPlanOverviewStateManagement {
 
     export function getDefaultState(): State {
         return {
-            nodes: SplineEntityStore.getDefaultState<ExecutionPlanLineageNode>(),
+            nodes: SplineEntityStoreNs.getDefaultState<ExecutionPlanLineageNode>(),
             executionPlanId: null,
             links: [],
             executionPlan: null,
-            loading: ProcessingStore.getDefaultProcessingState(),
+            loading: ProcessingStoreNs.getDefaultProcessingState(),
 
             selectedNodeId: null,
             selectedAttributeId: null,
 
             attributeLineage: null,
-            attributeLineageLoading: ProcessingStore.getDefaultProcessingState(),
+            attributeLineageLoading: ProcessingStoreNs.getDefaultProcessingState(),
 
             graphNodeView: SgNodeControl.NodeView.Detailed,
             graphData: null
@@ -98,7 +98,7 @@ export namespace ExecutionPlanOverviewStateManagement {
     ): State {
         const newState = {
             ...state,
-            nodes: SplineEntityStore.addAll(executionPlanOverview.lineage.nodes, state.nodes),
+            nodes: SplineEntityStoreNs.addAll(executionPlanOverview.lineage.nodes, state.nodes),
             links: executionPlanOverview.lineage.links,
             executionPlan: executionPlanOverview.executionPlan
         }
@@ -107,11 +107,11 @@ export namespace ExecutionPlanOverviewStateManagement {
     }
 
     export function selectAllNodes(state: State): ExecutionPlanLineageNode[] {
-        return SplineEntityStore.selectAll(state.nodes)
+        return SplineEntityStoreNs.selectAll(state.nodes)
     }
 
     export function selectNode(state: State, nodeId: string): ExecutionPlanLineageNode | undefined {
-        return SplineEntityStore.selectOne(nodeId, state.nodes)
+        return SplineEntityStoreNs.selectOne(nodeId, state.nodes)
     }
 
 }

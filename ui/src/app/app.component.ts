@@ -21,7 +21,7 @@ import { AttributeSearchRecord } from 'spline-api'
 import { SplineConfig, SplineConfigApiService } from 'spline-shared'
 import { BaseLocalStateComponent } from 'spline-utils'
 
-import { AppStateManagement } from './store'
+import { AppStoreNs } from './store'
 
 
 @Component({
@@ -29,14 +29,14 @@ import { AppStateManagement } from './store'
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent extends BaseLocalStateComponent<AppStateManagement.State> {
+export class AppComponent extends BaseLocalStateComponent<AppStoreNs.State> {
 
     constructor(private readonly router: Router,
                 private readonly splineConfigApiService: SplineConfigApiService
     ) {
         super()
         this.updateState(
-            AppStateManagement.getDefaultState()
+            AppStoreNs.getDefaultState()
         )
 
         this.splineConfigApiService.config$
@@ -61,7 +61,7 @@ export class AppComponent extends BaseLocalStateComponent<AppStateManagement.Sta
 
     onSideNavExpanded(isExpanded: boolean): void {
         this.updateState(
-            AppStateManagement.reduceSideNavExpanded(this.state, isExpanded)
+            AppStoreNs.reduceSideNavExpanded(this.state, isExpanded)
         )
     }
 

@@ -20,13 +20,13 @@ import { map, takeUntil } from 'rxjs/operators'
 import { ExecutionEvent, ExecutionEventApiService, ExecutionEventsQuery, SplineDataSourceInfo } from 'spline-api'
 import { DynamicFilterFactory, DynamicFilterModel } from 'spline-common/dynamic-filter'
 import { DtCellCustomEvent } from 'spline-common/dynamic-table'
-import { DynamicFilterStorePlugin, SplineConfigApiService } from 'spline-shared'
+import { DynamicFilterStoreExtras, SplineConfigApiService } from 'spline-shared'
 import { BaseLocalStateComponent } from 'spline-utils'
 
 import { DsStateHistoryFactoryStore } from '../../../data-sources'
 import { DsStateHistoryDtSchema } from '../../../dynamic-table'
 import { DsOverviewStore } from '../../../services'
-import { DsOverviewHistoryPageSchema } from './ds-overview-history.page.schema'
+import { DsOverviewHistoryPageConfig } from './ds-overview-history.page-config'
 
 
 @Component({
@@ -55,12 +55,12 @@ import { DsOverviewHistoryPageSchema } from './ds-overview-history.page.schema'
     ]
 
 })
-export class DsOverviewHistoryPageComponent extends BaseLocalStateComponent<DsOverviewHistoryPageSchema.State> implements OnInit {
+export class DsOverviewHistoryPageComponent extends BaseLocalStateComponent<DsOverviewHistoryPageConfig.State> implements OnInit {
 
     readonly dataMap = DsStateHistoryDtSchema.getSchema()
     readonly dataSourceInfo$: Observable<SplineDataSourceInfo>
 
-    filterModel: DynamicFilterModel<DsOverviewHistoryPageSchema.Filter>
+    filterModel: DynamicFilterModel<DsOverviewHistoryPageConfig.Filter>
 
     constructor(readonly dataSource: DsStateHistoryFactoryStore,
                 private readonly dynamicFilterFactory: DynamicFilterFactory,
@@ -69,7 +69,7 @@ export class DsOverviewHistoryPageComponent extends BaseLocalStateComponent<DsOv
         super()
 
         this.updateState(
-            DsOverviewHistoryPageSchema.getDefaultState()
+            DsOverviewHistoryPageConfig.getDefaultState()
         )
 
         this.dataSourceInfo$ = this.store.dataSourceInfo$
@@ -77,18 +77,18 @@ export class DsOverviewHistoryPageComponent extends BaseLocalStateComponent<DsOv
 
     ngOnInit(): void {
         this.dynamicFilterFactory
-            .schemaToModel<DsOverviewHistoryPageSchema.Filter>(
-                DsOverviewHistoryPageSchema.getDynamicFilterSchema()
+            .schemaToModel<DsOverviewHistoryPageConfig.Filter>(
+                DsOverviewHistoryPageConfig.getDynamicFilterSchema()
             )
             .pipe(
                 takeUntil(this.destroyed$)
             )
             .subscribe(model => {
                 this.filterModel = model
-                DynamicFilterStorePlugin.bindDynamicFilter<ExecutionEventsQuery.QueryFilter, DsOverviewHistoryPageSchema.Filter>(
+                DynamicFilterStoreExtras.bindDynamicFilter<ExecutionEventsQuery.QueryFilter, DsOverviewHistoryPageConfig.Filter>(
                     this.dataSource,
                     this.filterModel,
-                    DsOverviewHistoryPageSchema.getFiltersMapping()
+                    DsOverviewHistoryPageConfig.getFiltersMapping()
                 )
             })
     }
@@ -96,7 +96,7 @@ export class DsOverviewHistoryPageComponent extends BaseLocalStateComponent<DsOv
     onCellEvent($event: DtCellCustomEvent<ExecutionEvent>): void {
         if ($event.event instanceof DsStateHistoryDtSchema.OpenDsStateDetailsEvent) {
             this.updateState(
-                DsOverviewHistoryPageSchema.reduceSelectDsState(
+                DsOverviewHistoryPageConfig.reduceSelectDsState(
                     this.state, $event.rowData
                 )
             )
@@ -105,7 +105,7 @@ export class DsOverviewHistoryPageComponent extends BaseLocalStateComponent<DsOv
 
     onSideDialogClosed(): void {
         this.updateState(
-            DsOverviewHistoryPageSchema.reduceSelectDsState(
+            DsOverviewHistoryPageConfig.reduceSelectDsState(
                 this.state, null
             )
         )

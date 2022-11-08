@@ -17,7 +17,7 @@
 import { DtLayoutBuilder, DynamicTableColumnSchema, DynamicTableDataMap, isDtColVisible } from '../../models'
 
 
-export namespace DynamicTableStore {
+export namespace DynamicTableStoreNs {
 
     export type State = {
         visibleColumnsIds: string[]
@@ -44,7 +44,7 @@ export namespace DynamicTableStore {
     export function decorateDataMap(dataMap: DynamicTableDataMap): DynamicTableDataMap {
         return dataMap
             .map(item => ({
-                ...decorateWidth(item),
+                ...decorateWidth(item)
             }))
     }
 

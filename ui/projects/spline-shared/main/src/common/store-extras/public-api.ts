@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export * from './dynamic-filter.store-plugin'
-export * from './execution-events-dynamic-filter.store-plugin'
+export * from './dynamic-filter.store-extras'
+export * from './execution-events-dynamic-filter.store-extras'

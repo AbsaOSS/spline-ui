@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-
 import { SplineListBox } from './spline-list-box.models'
 
 
-export namespace SplineListBoxStore {
-
+export namespace SplineListBoxStoreNs {
 
     export type State<TRecord, TValue> = {
         selectListOptions: SplineListBox.SelectListOption<TValue>[]
@@ -30,7 +28,8 @@ export namespace SplineListBoxStore {
         state: State<TRecord, TValue>,
         records: TRecord[],
         dataMap: SplineListBox.DataMap<TRecord, TValue>,
-        searchTerm: string): State<TRecord, TValue> {
+        searchTerm: string
+    ): State<TRecord, TValue> {
 
         return {
             ...state,
@@ -42,7 +41,8 @@ export namespace SplineListBoxStore {
     function calculateSelectListOptions<TRecord, TValue>(
         records: TRecord[],
         dataMap: SplineListBox.DataMap<TRecord, TValue>,
-        searchTerm: string): SplineListBox.SelectListOption<TValue>[] {
+        searchTerm: string
+    ): SplineListBox.SelectListOption<TValue>[] {
 
         return records
             .map(

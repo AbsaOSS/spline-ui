@@ -15,25 +15,25 @@
  */
 
 import { SplineDataSourceInfo } from 'spline-api'
-import { ProcessingStore } from 'spline-utils'
+import { ProcessingStoreNs } from 'spline-utils'
 
 import { DsOverviewStoreActions } from '../actions'
 import ActionTypes = DsOverviewStoreActions.ActionTypes
 
 
-export namespace DsOverviewStateManagement {
+export namespace DsOverviewStoreNs {
 
     export const STORE_FEATURE_NAME = 'overview'
 
     export type State = {
         dataSourceInfo: SplineDataSourceInfo
-        loading: ProcessingStore.EventProcessingState
+        loading: ProcessingStoreNs.EventProcessingState
     }
 
     export function getInitState(): State {
         return {
             dataSourceInfo: null,
-            loading: ProcessingStore.getDefaultProcessingState(true)
+            loading: ProcessingStoreNs.getDefaultProcessingState(true)
         }
     }
 
@@ -45,20 +45,20 @@ export namespace DsOverviewStateManagement {
             case ActionTypes.InitRequest:
                 return {
                     ...state,
-                    loading: ProcessingStore.eventProcessingStart(state.loading)
+                    loading: ProcessingStoreNs.eventProcessingStart(state.loading)
                 }
 
             case ActionTypes.InitSuccess:
                 return {
                     ...state,
                     dataSourceInfo: action.payload.dataSourceInfo,
-                    loading: ProcessingStore.eventProcessingFinish(state.loading)
+                    loading: ProcessingStoreNs.eventProcessingFinish(state.loading)
                 }
 
             case ActionTypes.InitError:
                 return {
                     ...state,
-                    loading: ProcessingStore.eventProcessingFinish(state.loading, action.payload.error)
+                    loading: ProcessingStoreNs.eventProcessingFinish(state.loading, action.payload.error)
                 }
 
             case ActionTypes.ResetState:
