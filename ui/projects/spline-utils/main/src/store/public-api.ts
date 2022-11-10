@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export * from './models/base-store.models'
-export * from './models/base-store-with-loading.models'
-export * from './models/processing-store.models'
-export * from './models/entity-store.models'
+export * from './base.store'
+export * from './extended.store'
+export * from './processing-store.ns'
+export * from './spline-entity-store.ns'

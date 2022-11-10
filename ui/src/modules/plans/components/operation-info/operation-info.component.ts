@@ -14,26 +14,18 @@
  * limitations under the License.
  */
 
-import {
-    ChangeDetectionStrategy,
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
 import { filter, takeUntil } from 'rxjs/operators'
-import { ExecutionPlanAgentInfo, ExecutionPlanFacade, ExecutionPlanLineageNode } from 'spline-api'
+import { ExecutionPlanAgentInfo, ExecutionPlanApiService, ExecutionPlanLineageNode } from 'spline-api'
 import { SplineDataWidgetEvent } from 'spline-common/data-view'
 import { SdWidgetAttributesTree } from 'spline-shared/attributes'
 import { SgNodeCardDataView } from 'spline-shared/data-view'
-import NodeEventData = SgNodeCardDataView.NodeEventData
 import { BaseLocalStateComponent, GenericEventInfo } from 'spline-utils'
 
-import { OperationDetailsDataSource } from '../../data-sources'
+import { OperationDetailsFactoryStore } from '../../data-sources'
 import { OperationInfo } from '../../models'
+import NodeEventData = SgNodeCardDataView.NodeEventData
 
 
 @Component({
@@ -43,36 +35,30 @@ import { OperationInfo } from '../../models'
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         {
-            provide: OperationDetailsDataSource,
-            useFactory: (executionPlanFacade: ExecutionPlanFacade) => {
-                return new OperationDetailsDataSource(executionPlanFacade)
+            provide: OperationDetailsFactoryStore,
+            useFactory: (executionPlanApiService: ExecutionPlanApiService) => {
+                return new OperationDetailsFactoryStore(executionPlanApiService)
             },
-            deps: [ExecutionPlanFacade],
-        },
-    ],
+            deps: [ExecutionPlanApiService]
+        }
+    ]
 })
 export class OperationInfoComponent extends BaseLocalStateComponent<OperationInfo.State> implements OnChanges {
 
     @Input() node: ExecutionPlanLineageNode
 
     @Input() agentInfo: ExecutionPlanAgentInfo | undefined
-
-    @Input() set selectedAttributeId(attributeId: string | null) {
-        this.selectedAttributeId$.next(attributeId)
-    }
-
     @Output() selectedAttributeChanged$ = new EventEmitter<{ attributeId: string | null }>()
     @Output() focusNode$ = new EventEmitter<{ nodeId: string }>()
-
     private readonly selectedAttributeId$ = new BehaviorSubject<string | null>(null)
 
-    constructor(readonly dataSource: OperationDetailsDataSource) {
+    constructor(readonly dataSource: OperationDetailsFactoryStore) {
         super()
 
         this.dataSource.data$
             .pipe(
                 filter(state => !!state),
-                takeUntil(this.destroyed$),
+                takeUntil(this.destroyed$)
             )
             .subscribe(data =>
                 this.updateState({
@@ -81,14 +67,18 @@ export class OperationInfoComponent extends BaseLocalStateComponent<OperationInf
                     outputDvs: OperationInfo.toOutputsDvs(data, this.selectedAttributeId$),
                     detailsDvs: OperationInfo.toDetailsDvs(data, this.agentInfo),
                     inputsNumber: data?.inputs?.length ?? 0
-                }),
+                })
             )
+    }
+
+    @Input() set selectedAttributeId(attributeId: string | null) {
+        this.selectedAttributeId$.next(attributeId)
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.node && !!changes.node.currentValue) {
             this.dataSource.setFilter({
-                operationId: changes.node.currentValue.id,
+                operationId: changes.node.currentValue.id
             })
         }
     }

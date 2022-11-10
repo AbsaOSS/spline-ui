@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-export * from './search-data-source.model'
+export * from './search.factory-store'
 export * from './search-query.models'
-export * from './simple-data-source.model'
+export * from './simple.factory-store'

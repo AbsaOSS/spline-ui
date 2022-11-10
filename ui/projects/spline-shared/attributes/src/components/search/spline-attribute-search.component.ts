@@ -18,26 +18,26 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Output, ViewChild } f
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { map, switchMap } from 'rxjs/operators'
-import { AttributeFacade, AttributeSearchRecord } from 'spline-api'
+import { AttributeApiService, AttributeSearchRecord } from 'spline-api'
 import { SplineSearchBoxComponent } from 'spline-common'
 
-import { AttributeSearchDataSource } from '../../data-sources/attribute-search.data-source'
+import { AttributeSearchFactoryStore } from '../../data-sources/attribute-search.factory-store'
 
 
 @Component({
-    selector: 'spline-attribute-search',
-    templateUrl: './spline-attribute-search.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        {
-            provide: AttributeSearchDataSource,
-            useFactory: (attributeFacade: AttributeFacade) => {
-                return new AttributeSearchDataSource(attributeFacade)
-            },
-            deps: [AttributeFacade],
-        },
-    ],
-})
+               selector: 'spline-attribute-search',
+               templateUrl: './spline-attribute-search.component.html',
+               changeDetection: ChangeDetectionStrategy.OnPush,
+               providers: [
+                   {
+                       provide: AttributeSearchFactoryStore,
+                       useFactory: (attributeApiService: AttributeApiService) => {
+                           return new AttributeSearchFactoryStore(attributeApiService)
+                       },
+                       deps: [AttributeApiService]
+                   }
+               ]
+           })
 export class SplineAttributeSearchComponent {
 
     @ViewChild(SplineSearchBoxComponent) splineSearchBoxComponent: SplineSearchBoxComponent
@@ -48,7 +48,7 @@ export class SplineAttributeSearchComponent {
 
     noOptionsFound$: Observable<boolean>
 
-    constructor(readonly dataSource: AttributeSearchDataSource) {
+    constructor(readonly dataSource: AttributeSearchFactoryStore) {
         this.noOptionsFound$ = this.dataSource.onFilterChanged$
             .pipe(
                 switchMap(
@@ -56,15 +56,15 @@ export class SplineAttributeSearchComponent {
                         .pipe(
                             map(dataState => ({
                                 dataState,
-                                filter,
-                            })),
-                        ),
+                                filter
+                            }))
+                        )
                 ),
                 map(({ dataState, filter }) => (
                     !dataState.loadingProcessing.processing
                     && dataState.data?.length === 0
                     && filter?.search?.length > 0
-                )),
+                ))
             )
     }
 
@@ -73,14 +73,14 @@ export class SplineAttributeSearchComponent {
     onSearch(searchTerm: string): void {
         this.searchTerm$.next(searchTerm)
         this.dataSource.setFilter({
-            search: searchTerm,
-        })
+                                      search: searchTerm
+                                  })
     }
 
     onAutocompleteOptionSelected($event: MatAutocompleteSelectedEvent): void {
         this.attributeSelected$.emit({
-            attributeInfo: $event.option.value,
-        })
+                                         attributeInfo: $event.option.value
+                                     })
         this.searchTerm$.next('')
         this.splineSearchBoxComponent.clearFocus()
 
@@ -88,7 +88,7 @@ export class SplineAttributeSearchComponent {
 
     onAutocompleteOpened(): void {
         this.dataSource.setFilter({
-            search: this.searchTerm$.getValue(),
-        })
+                                      search: this.searchTerm$.getValue()
+                                  })
     }
 }

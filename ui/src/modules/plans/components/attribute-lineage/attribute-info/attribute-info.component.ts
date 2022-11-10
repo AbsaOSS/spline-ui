@@ -20,16 +20,16 @@ import { SdWidgetAttributesTree, SplineAttributesTree } from 'spline-shared/attr
 import { SgNodeControl } from 'spline-shared/graph'
 import { BaseLocalStateComponent } from 'spline-utils'
 
-import { ExecutionPlanInfoStore } from '../../../store'
+import { ExecutionPlanInfoStoreNs } from '../../../store'
 
 
 @Component({
     selector: 'plan-attribute-info',
     templateUrl: './attribute-info.component.html',
     styleUrls: ['./attribute-info.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AttributeInfoComponent extends BaseLocalStateComponent<ExecutionPlanInfoStore.State> implements OnChanges {
+export class AttributeInfoComponent extends BaseLocalStateComponent<ExecutionPlanInfoStoreNs.State> implements OnChanges {
 
     @Input() attributeTreeSchema: SplineAttributesTree.Tree
 
@@ -41,7 +41,7 @@ export class AttributeInfoComponent extends BaseLocalStateComponent<ExecutionPla
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        const {attributeTreeSchema} = changes
+        const { attributeTreeSchema } = changes
 
         if (attributeTreeSchema && attributeTreeSchema.currentValue) {
             this.attributeTreeDvs = SdWidgetCard.toContentOnlySchema([
@@ -60,12 +60,10 @@ export class AttributeInfoComponent extends BaseLocalStateComponent<ExecutionPla
                 {
                     color: nodeStyles.color,
                     icon: nodeStyles.icon,
-                    title: attributeTreeSchema.currentValue[0].name,
+                    title: attributeTreeSchema.currentValue[0].name
                 }
             )
         }
     }
-
-
 
 }

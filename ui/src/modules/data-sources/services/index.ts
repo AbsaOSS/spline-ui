@@ -15,14 +15,14 @@
  */
 
 import { SplineDataSourceInfoResolver } from './resolvers'
-import { DsOverviewDetailsStoreFacade, DsOverviewStoreFacade } from './store'
+import { DsOverviewDetailsStore, DsOverviewStore } from './store'
 
 
 export * from './resolvers'
 export * from './store'
 
 export const services = [
-    DsOverviewStoreFacade,
+    DsOverviewStore,
     SplineDataSourceInfoResolver,
-    DsOverviewDetailsStoreFacade,
+    DsOverviewDetailsStore
 ]

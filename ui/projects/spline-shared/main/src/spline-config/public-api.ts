@@ -17,4 +17,4 @@
 export * from './spline-config.models'
 export * from './spline-config.module'
 export * from './spline-config.resolver'
-export * from './spline-config.service'
+export * from './spline-config-api.service'

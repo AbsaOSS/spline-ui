@@ -51,13 +51,13 @@ import * as fromPages from './pages'
 import { services } from './services'
 import { SplineDataSourcesRoutingModule } from './spline-data-sources-routing.module'
 import { effects } from './store'
-import { SplineDataSourceStore } from './store/reducers/base'
+import { SplineDataSourceStoreNs } from './store/state-managements/spline-data-source-store.ns'
 
 
 @NgModule({
     declarations: [
         ...fromPages.pageComponents,
-        ...components,
+        ...components
     ],
     imports: [
         CommonModule,
@@ -76,7 +76,7 @@ import { SplineDataSourceStore } from './store/reducers/base'
         MatInputModule,
         MatMenuModule,
         NgxDaterangepickerMd.forRoot(),
-        StoreModule.forFeature(SplineDataSourceStore.STORE_FEATURE_NAME, SplineDataSourceStore.reducers),
+        StoreModule.forFeature(SplineDataSourceStoreNs.STORE_FEATURE_NAME, SplineDataSourceStoreNs.reducers),
         EffectsModule.forFeature(effects),
         SplineDataSourcesRoutingModule,
         SplineApiConfigModule,
@@ -95,11 +95,11 @@ import { SplineDataSourceStore } from './store/reducers/base'
         DfControlDateRangeModule
     ],
     exports: [
-        ...fromPages.pageComponents,
+        ...fromPages.pageComponents
     ],
     providers: [
         ...services
-    ],
+    ]
 })
 export class SplineDataSourcesModule {
 }
