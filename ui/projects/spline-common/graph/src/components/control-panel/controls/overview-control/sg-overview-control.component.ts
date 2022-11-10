@@ -15,8 +15,7 @@
  */
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core'
-
-import { OverviewTypeEnum } from '../../../../models/sg-overview-type.models'
+import { EventOverviewType } from 'spline-api'
 
 
 @Component({
@@ -25,15 +24,15 @@ import { OverviewTypeEnum } from '../../../../models/sg-overview-type.models'
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SgOverviewControlComponent {
-    @Output() changeOverview$ = new EventEmitter<{ overviewType: OverviewTypeEnum }>()
+    @Output() changeOverview$ = new EventEmitter<{ eventOverviewType: EventOverviewType }>()
 
-    overviewTypeEnum = OverviewTypeEnum
-    toggleLinageImpactView = OverviewTypeEnum.LINEAGE_OVERVIEW
+    overviewTypeEnum = EventOverviewType
+    toggleLinageImpactView = EventOverviewType.Lineage
 
-    onToggleOverviewBtnClicked(overviewType: OverviewTypeEnum): void {
-        this.toggleLinageImpactView = overviewType
+    onToggleOverviewBtnClicked(eventOverviewType: EventOverviewType): void {
+        this.toggleLinageImpactView = eventOverviewType
 
-        this.changeOverview$.emit({overviewType})
+        this.changeOverview$.emit({ eventOverviewType })
 
     }
 }

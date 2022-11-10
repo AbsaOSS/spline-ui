@@ -17,5 +17,3 @@
 export * from './spline-graph.models'
 export * from './spline-graph-node-control.models'
 export * from './sg-relations.models'
-export * from './sg-overview-type.models'
-

@@ -20,6 +20,7 @@ import { Observable, throwError } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 
 import {
+    EventOverviewType,
     ExecutionEventLineageOverview,
     ExecutionEventLineageOverviewDto,
     ExecutionEventsPageResponse,
@@ -39,8 +40,8 @@ export class ExecutionEventApiService extends BaseApiService {
         super(http)
     }
 
-    fetchLineageOverview<T = string>(executionEventId: string, overviewType: T,
-                                     maxDepth: number = 3
+    fetchEventOverview(executionEventId: string, overviewType: EventOverviewType,
+                       maxDepth: number = 3
     ): Observable<ExecutionEventLineageOverview> {
         let params = new HttpParams()
         params = params.append('eventId', executionEventId)

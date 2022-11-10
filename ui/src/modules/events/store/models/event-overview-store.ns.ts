@@ -15,6 +15,7 @@
  */
 
 import {
+    EventOverviewType,
     ExecutionEventLineageNode,
     ExecutionEventLineageNodeType,
     ExecutionEventLineageOverview,
@@ -42,6 +43,7 @@ export namespace EventOverviewStoreNs {
         targetNodeId: string | null
         targetExecutionPlanNodeId: string | null
         lineageDepth: ExecutionEventLineageOverviewDepth
+        overviewType: EventOverviewType
         graphHasMoreDepth: boolean
         selectedNodeRelations: EventNodeInfo.NodeRelationsInfo | null
         targetNodeDvs: SplineDataViewSchema | null
@@ -49,6 +51,10 @@ export namespace EventOverviewStoreNs {
         graphNodeView: SgNodeControl.NodeView
         graphData: SgData | null
     }
+
+    export type ProcessingFn = (state: EventOverviewStoreNs.State) => EventOverviewStoreNs.State
+
+    export type ProcessingErrorFn = (state: EventOverviewStoreNs.State, error: any | null) => EventOverviewStoreNs.State
 
     export const GRAPH_DEFAULT_DEPTH = 2
 
@@ -72,6 +78,7 @@ export namespace EventOverviewStoreNs {
             targetExecutionPlanNodeId: null,
             targetExecutionPlanNodeDvs: null,
             lineageDepth: { ...DEFAULT_LINEAGE_DEPTH },
+            overviewType: EventOverviewType.Lineage,
             graphHasMoreDepth: calculateHasMoreDepth(DEFAULT_LINEAGE_DEPTH),
             graphNodeView: SgNodeControl.NodeView.Detailed,
             graphData: null
@@ -80,7 +87,8 @@ export namespace EventOverviewStoreNs {
 
     export function reduceLineageOverviewData(state: State,
                                               executionEventId: string,
-                                              lineageOverview: ExecutionEventLineageOverview
+                                              lineageOverview: ExecutionEventLineageOverview,
+                                              eventOverviewType: EventOverviewType
     ): State {
 
         const targetEdge = lineageOverview.lineage.links
@@ -110,6 +118,7 @@ export namespace EventOverviewStoreNs {
                                : undefined
             },
             lineageDepth: lineageOverview.executionEventInfo.lineageDepth,
+            eventOverviewType,
             graphHasMoreDepth: calculateHasMoreDepth(lineageOverview.executionEventInfo.lineageDepth),
             targetNodeId: lineageOverview.executionEventInfo.targetDataSourceId,
             targetNodeDvs: EventNodeInfo.nodeToDataSchema(

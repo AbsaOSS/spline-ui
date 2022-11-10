@@ -66,7 +66,7 @@
                 <!-- ./LOADER -->
 
                 <sg-container #container
-                              (changeOverview$)="onOverviewChanged($event.overviewType)"
+                              (changeOverview$)="onOverviewChanged($event.eventOverviewType)"
                               (graphNodeViewChange$)="onGraphNodeViewChanged($event.nodeView)"
                               (nodeDoubleClick$)="onNodeDoubleClick($event.nodeSchema)"
                               (nodeEvent$)="onGraphNodeEvent($event)"
@@ -74,16 +74,18 @@
                               [graphData]="state.graphData"
                               [graphNodeView]="state.graphNodeView"
                               [selectedNodeId]="state.selectedNodeId"
-                              [targetNodeId]="state.targetNodeId">
+                              [targetNodeId]="state.targetNodeId"
+                              [showFeatureOverviewControl]="true">
 
                     <!-- TOOLBAR -->
                     <sg-toolbar position="top-right">
 
                         <div class="text-right mb-3">
-                            <button [(isFullScreenMode)]="isGraphFullScreen" [matTooltip]="(!isGraphFullScreen ? 'SHARED.SG_MAXIMIZE' : 'SHARED.SG_MINIMIZE') | translate" class="sg-toolbar__icon-button"
-                                    mat-button
-                                    mat-icon-button
-                                    sgFullScreenControl>
+                            <button mat-button mat-icon-button class="sg-toolbar__icon-button"
+                                    sgFullScreenControl
+                                    [matTooltip]="(!isGraphFullScreen ? 'SHARED.SG_MAXIMIZE' : 'SHARED.SG_MINIMIZE') | translate"
+                                    [(isFullScreenMode)]="isGraphFullScreen">
+
                                 <mat-icon>{{ isGraphFullScreen ? 'close_fullscreen' : 'open_in_full' }} </mat-icon>
                             </button>
                         </div>

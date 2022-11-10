@@ -18,15 +18,15 @@ import { Component, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Observable } from 'rxjs'
 import { filter, map, takeUntil } from 'rxjs/operators'
-import { ExecutionEventLineageNodeType } from 'spline-api'
+import { EventOverviewType, ExecutionEventLineageNodeType } from 'spline-api'
 import { SplineDataWidgetEvent } from 'spline-common/data-view'
-import { OverviewTypeEnum, SgNodeEvent, SgNodeSchema } from 'spline-common/graph'
+import { SgNodeEvent, SgNodeSchema } from 'spline-common/graph'
 import { SgNodeCardDataView } from 'spline-shared/data-view'
 import { SgContainerComponent, SgNodeControl } from 'spline-shared/graph'
 import { BaseComponent, GenericEventInfo, RouterNavigation } from 'spline-utils'
 
 import { EventNodeControl, EventNodeInfo } from '../../../models'
-import { EventOverviewStoreNs, EventOverviewStore } from '../../../store'
+import { EventOverviewStore, EventOverviewStoreNs } from '../../../store'
 import { EventOverviewPage } from '../event-overview.page.model'
 import NodeEventData = SgNodeCardDataView.NodeEventData
 
@@ -140,8 +140,8 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
         this.onNodeSelected(null)
     }
 
-    onOverviewChanged(overviewType: OverviewTypeEnum) {
-        this.store.setGraphDepth(3, overviewType)
+    onOverviewChanged(overviewType: EventOverviewType) {
+        this.store.setGraphOverviewType(overviewType)
     }
 
     onGraphNodeViewChanged(graphNodeView: SgNodeControl.NodeView): void {
