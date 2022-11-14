@@ -18,22 +18,22 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 
-import { SplineConfigService } from '../../spline-config/spline-config.service'
+import { SplineConfigApiService } from '../../spline-config/spline-config-api.service'
 import { SplineApiConfig } from '../models/spline-api-config.models'
 
 
 @Injectable()
 export class SplineApiConfigInterceptor implements HttpInterceptor {
 
-    constructor(private readonly splineConfigService: SplineConfigService) {
+    constructor(private readonly splineConfigApiService: SplineConfigApiService) {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         if (SplineApiConfig.hasUrlAnyApiAlias(request.url)) {
-            const splineConfig = this.splineConfigService.config
+            const splineConfig = this.splineConfigApiService.config
             request = request.clone({
-                url: SplineApiConfig.decorateUrl(request.url, splineConfig),
+                url: SplineApiConfig.decorateUrl(request.url, splineConfig)
             })
             return next.handle(request)
 

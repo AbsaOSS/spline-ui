@@ -13,7 +13,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<ng-container *ngIf="state$ | async as state" >
+<ng-container *ngIf="state$ | async as state">
     <div *ngIf="!state.loadingProcessing.processingError && !state.loadingProcessing.processing" class="e2e-container">
 
         <div class="e2e-container flex-row">
@@ -60,20 +60,22 @@
 
                 <!-- LOADER -->
                 <spline-loader *ngIf="state.graphLoadingProcessing.processing"
-                               mode="cover"
-                               [blurBackground]="true">
+                               [blurBackground]="true"
+                               mode="cover">
                 </spline-loader>
                 <!-- ./LOADER -->
 
-                <sg-container (nodeDoubleClick$)="onNodeDoubleClick($event.nodeSchema)"
+                <sg-container #container
+                              (changeOverview$)="onOverviewChanged($event.eventOverviewType)"
+                              (graphNodeViewChange$)="onGraphNodeViewChanged($event.nodeView)"
+                              (nodeDoubleClick$)="onNodeDoubleClick($event.nodeSchema)"
                               (nodeEvent$)="onGraphNodeEvent($event)"
                               (nodeSelectionChange$)="onNodeSelected($event.nodeId)"
-                              (graphNodeViewChange$)="onGraphNodeViewChanged($event.nodeView)"
                               [graphData]="state.graphData"
-                              [selectedNodeId]="state.selectedNodeId"
                               [graphNodeView]="state.graphNodeView"
+                              [selectedNodeId]="state.selectedNodeId"
                               [targetNodeId]="state.targetNodeId"
-                              #container>
+                              [showFeatureOverviewControl]="true">
 
                     <!-- TOOLBAR -->
                     <sg-toolbar position="top-right">
@@ -83,11 +85,12 @@
                                     sgFullScreenControl
                                     [matTooltip]="(!isGraphFullScreen ? 'SHARED.SG_MAXIMIZE' : 'SHARED.SG_MINIMIZE') | translate"
                                     [(isFullScreenMode)]="isGraphFullScreen">
+
                                 <mat-icon>{{ isGraphFullScreen ? 'close_fullscreen' : 'open_in_full' }} </mat-icon>
                             </button>
                         </div>
 
-                        <div class="position-relative" *ngIf="state.graphHasMoreDepth">
+                        <div *ngIf="state.graphHasMoreDepth" class="position-relative">
 
                             <!-- LOADER -->
                             <spline-loader *ngIf="state.graphLoadingProcessing.processing"
@@ -98,8 +101,8 @@
 
                             <!-- DEPTH CONTROL -->
                             <sg-depth-control
-                                    (depthChanged$)="onChangeGraphDepth($event.depth)"
-                                    [depth]="state?.lineageDepth?.depthComputed">
+                                (depthChanged$)="onChangeGraphDepth($event.depth)"
+                                [depth]="state?.lineageDepth?.depthComputed">
                             </sg-depth-control>
                             <!-- ./DEPTH CONTROL -->
                         </div>

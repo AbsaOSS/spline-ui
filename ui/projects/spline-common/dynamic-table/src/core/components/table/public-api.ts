@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export * from './dynamic-table.store.models'
+export * from './dynamic-table-store.ns'
 export * from './dynamic-table.component'

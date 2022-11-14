@@ -50,13 +50,13 @@ import { SplineTranslateModule } from 'spline-utils/translate'
 import * as fromComponents from './components'
 import * as fromPages from './pages'
 import { SplineEventsRoutingModule } from './spline-events-routing.module'
-import { EventOverviewStoreFacade } from './store'
+import { EventOverviewStore } from './store'
 
 
 @NgModule({
     declarations: [
         ...fromPages.pageComponents,
-        ...fromComponents.components,
+        ...fromComponents.components
     ],
     imports: [
         CommonModule,
@@ -99,11 +99,11 @@ import { EventOverviewStoreFacade } from './store'
         DfControlDateRangeModule
     ],
     exports: [
-        ...fromPages.pageComponents,
+        ...fromPages.pageComponents
     ],
     providers: [
-        EventOverviewStoreFacade,
-    ],
+        EventOverviewStore
+    ]
 })
 export class SplineEventsModule {
 }

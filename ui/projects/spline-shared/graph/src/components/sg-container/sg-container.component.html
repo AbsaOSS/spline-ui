@@ -15,24 +15,24 @@
   -->
 
 <spline-graph
-        (nodeEvent$)="onGraphNodeEvent($event)"
-        (nodeSelectionChange$)="onNodeSelected($event.nodeSchema)"
-        (nodeDoubleClick$)="onNodeDoubleClick($event.nodeSchema)"
-        *ngIf="state$ | async as state"
-        [focusNode$]="focusNode$"
-        [graphData]="graphData"
-        [selectedNodeId]="state.selectedNodeId"
-        [sgHighlightedRelations]="state.highlightedRelationsNodesIds"
-        [targetNodeId]="targetNodeId">
+    (nodeDoubleClick$)="onNodeDoubleClick($event.nodeSchema)"
+    (nodeEvent$)="onGraphNodeEvent($event)"
+    (nodeSelectionChange$)="onNodeSelected($event.nodeSchema)"
+    *ngIf="state$ | async as state"
+    [focusNode$]="focusNode$"
+    [graphData]="graphData"
+    [selectedNodeId]="state.selectedNodeId"
+    [sgHighlightedRelations]="state.highlightedRelationsNodesIds"
+    [targetNodeId]="targetNodeId">
 
     <ng-content></ng-content>
 
     <!-- NODE VIEW CONTROL -->
-    <sg-toolbar position="top-left" *ngIf="showGraphNodeView">
+    <sg-toolbar *ngIf="showGraphNodeView" position="top-left">
         <div class="sg-container__graph-view-control">
-            <mat-slide-toggle color="primary"
+            <mat-slide-toggle (change)="onGraphNodeViewChanged($event.checked)"
                               [checked]="graphNodeView === 'Compact'"
-                              (change)="onGraphNodeViewChanged($event.checked)">
+                              color="primary">
 
                 {{ 'SHARED.SG_NODE_VIEW_CONTROL__COMPACT_VIEW_TITLE' | translate }}
 
@@ -41,6 +41,12 @@
     </sg-toolbar>
     <!-- ./NODE VIEW CONTROL -->
 
+    <!-- CONTROL PANEL :: PARENT/CHILD VIEW -->
+    <ng-template *ngIf="showFeatureOverviewControl" sgControlPanelSection>
+        <sg-overview-control (changeOverview$)="onOverviewChanged($event.eventOverviewType)"></sg-overview-control>
+    </ng-template>
+    <!-- ./CONTROL PANEL :: PARENT/CHILD VIEW -->
+
     <!-- CONTROL PANEL :: ACTIONS -->
     <ng-template sgControlPanelSection>
         <sg-relations-control (showAll$)="onToggleAllRelationsBtnClicked()"></sg-relations-control>
@@ -48,7 +54,7 @@
     <!-- ./CONTROL PANEL :: ACTIONS -->
 
     <!-- CP :: EXTRA SECTIONS -->
-    <ng-template sgControlPanelSection *ngFor="let actionTmpl of controlPanelExtraSections">
+    <ng-template *ngFor="let actionTmpl of controlPanelExtraSections" sgControlPanelSection>
         <ng-container *ngTemplateOutlet="actionTmpl.template"></ng-container>
     </ng-template>
     <!-- ./CP :: EXTRA SECTIONS -->

@@ -20,7 +20,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
 import { keyBy } from 'lodash-es'
 import { Observable } from 'rxjs'
 import { distinctUntilChanged, filter, map, skip, takeUntil } from 'rxjs/operators'
-import { AttributeSchema, ExecutionPlanFacade, OperationAttributeLineageType, toAttributeLineage } from 'spline-api'
+import { AttributeSchema, ExecutionPlanApiService, OperationAttributeLineageType, toAttributeLineage } from 'spline-api'
 import { SplineTabsNavBar } from 'spline-common'
 import { SlBreadcrumbs } from 'spline-common/layout'
 import { SplineAttributesTree } from 'spline-shared/attributes'
@@ -30,7 +30,7 @@ import { BaseComponent, RouterNavigation } from 'spline-utils'
 import { AttributeLineageDialogComponent } from '../../components'
 import { AttributeLineageDialog } from '../../components/attribute-lineage/attribute-lineage-dialog/attribute-lineage-dialog.models'
 import { PlanOverview } from '../../models'
-import { ExecutionPlanOverviewStoreFacade } from '../../store'
+import { ExecutionPlanOverviewFactoryStore } from '../../store'
 import QueryParamAlis = PlanOverview.QueryParamAlis
 import NavTabInfo = SplineTabsNavBar.NavTabInfo
 
@@ -41,12 +41,12 @@ import NavTabInfo = SplineTabsNavBar.NavTabInfo
     styleUrls: ['./plan-overview.page.component.scss'],
     providers: [
         {
-            provide: ExecutionPlanOverviewStoreFacade,
-            useFactory: (executionPlanFacade: ExecutionPlanFacade) => {
-                return new ExecutionPlanOverviewStoreFacade(executionPlanFacade)
+            provide: ExecutionPlanOverviewFactoryStore,
+            useFactory: (executionPlanApiService: ExecutionPlanApiService) => {
+                return new ExecutionPlanOverviewFactoryStore(executionPlanApiService)
             },
-            deps: [ExecutionPlanFacade],
-        },
+            deps: [ExecutionPlanApiService]
+        }
     ]
 })
 export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
@@ -69,7 +69,8 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
     constructor(private readonly activatedRoute: ActivatedRoute,
                 private readonly router: Router,
                 private readonly matDialog: MatDialog,
-                readonly store: ExecutionPlanOverviewStoreFacade) {
+                readonly store: ExecutionPlanOverviewFactoryStore
+    ) {
         super()
 
         //
@@ -79,10 +80,10 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         this.store.selectedAttribute$
             .pipe(
                 skip(2),
-                takeUntil(this.destroyed$),
+                takeUntil(this.destroyed$)
             )
             .subscribe(
-                () => this.resetNodeHighlightRelations(),
+                () => this.resetNodeHighlightRelations()
             )
 
         // TODO: Use some generic system for breadcrumbs definition.
@@ -99,7 +100,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
                     },
                     {
                         label: 'Overview'
-                    },
+                    }
                 ])
             )
     }
@@ -113,7 +114,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         this.store.init(
             routerState[QueryParamAlis.ExecutionPlanId],
             routerState[QueryParamAlis.SelectedNodeId],
-            routerState[QueryParamAlis.SelectedAttributeId],
+            routerState[QueryParamAlis.SelectedAttributeId]
         )
 
         this.watchStoreStateChanges()
@@ -191,10 +192,10 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
                 filter(selectedNodeId => {
                     const nodeId = PlanOverview.getSelectedNodeId(this.activatedRoute)
                     return selectedNodeId !== nodeId
-                }),
+                })
             )
             .subscribe(selectedNodeId =>
-                this.updateQueryParams(PlanOverview.QueryParamAlis.SelectedNodeId, selectedNodeId),
+                this.updateQueryParams(PlanOverview.QueryParamAlis.SelectedNodeId, selectedNodeId)
             )
 
         //
@@ -209,10 +210,10 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
                 filter(selectedAttributeId => {
                     const attrId = PlanOverview.getSelectedAttributeId(this.activatedRoute)
                     return selectedAttributeId !== attrId
-                }),
+                })
             )
             .subscribe(attrId =>
-                this.updateQueryParams(PlanOverview.QueryParamAlis.SelectedAttributeId, attrId),
+                this.updateQueryParams(PlanOverview.QueryParamAlis.SelectedAttributeId, attrId)
             )
     }
 
@@ -221,7 +222,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         this.router.events
             .pipe(
                 filter(event => event instanceof NavigationEnd),
-                takeUntil(this.destroyed$),
+                takeUntil(this.destroyed$)
             )
             .subscribe(() => {
 
@@ -233,7 +234,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
                     this.store.init(
                         routerState[QueryParamAlis.ExecutionPlanId],
                         routerState[QueryParamAlis.SelectedNodeId],
-                        routerState[QueryParamAlis.SelectedAttributeId],
+                        routerState[QueryParamAlis.SelectedAttributeId]
                     )
                 }
                 else {
@@ -249,7 +250,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
             this.activatedRoute,
             paramName,
             value,
-            replaceUrl,
+            replaceUrl
         )
     }
 }

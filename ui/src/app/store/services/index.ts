@@ -16,11 +16,11 @@
 
 import { Provider } from '@angular/core'
 
-import { AppStoreFacade } from './app.store.facade'
+import { AppStore } from './app.store'
 
 
 export const appStoreServices: Provider[] = [
-    AppStoreFacade
+    AppStore
 ]
 
-export * from './app.store.facade'
+export * from './app.store'

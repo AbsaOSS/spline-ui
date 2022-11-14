@@ -14,24 +14,23 @@
  * limitations under the License.
  */
 
-
 import { Injectable } from '@angular/core'
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router'
 import { Observable } from 'rxjs'
 import { filter, take } from 'rxjs/operators'
 import { SplineDataSourceInfo } from 'spline-api'
 
-import { DsOverviewStoreFacade } from '../store'
+import { DsOverviewStore } from '../store'
 
 
 @Injectable()
 export class SplineDataSourceInfoResolver implements Resolve<SplineDataSourceInfo> {
 
-    constructor(private readonly dsOverviewStoreFacade: DsOverviewStoreFacade) {
+    constructor(private readonly store: DsOverviewStore) {
     }
 
     resolve(route: ActivatedRouteSnapshot, routerState: RouterStateSnapshot): Observable<SplineDataSourceInfo> {
-        return this.dsOverviewStoreFacade.dataSourceInfo$
+        return this.store.dataSourceInfo$
             .pipe(
                 filter(value => !!value),
                 take(1)

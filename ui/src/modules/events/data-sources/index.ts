@@ -14,5 +14,4 @@
  * limitations under the License.
  */
 
-export * from './event-lineage-list.data-source'
-export * from './operation-details-list-data.source'
+export * from './operation-details-list.factory-store'

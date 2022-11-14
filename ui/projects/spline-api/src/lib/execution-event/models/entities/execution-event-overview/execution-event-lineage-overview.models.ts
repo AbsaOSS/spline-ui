@@ -54,14 +54,20 @@ export function toExecutionEventLineageOverview(entity: ExecutionEventLineageOve
     return {
         lineage: {
             links: entity.graph.edges.map(toLineageNodeTransition),
-            nodes: entity.graph.nodes.map(toExecutionEventLineageNode),
+            nodes: entity.graph.nodes.map(toExecutionEventLineageNode)
         },
         executionEventInfo: {
             ...entity.info,
             lineageDepth: {
                 depthComputed: entity.graph.depthComputed,
-                depthRequested: entity.graph.depthRequested,
-            },
-        },
+                depthRequested: entity.graph.depthRequested
+            }
+        }
     }
 }
+
+export enum EventOverviewType {
+    Lineage = 'lineage',
+    Impact = 'impact',
+}
+

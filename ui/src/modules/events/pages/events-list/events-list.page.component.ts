@@ -16,15 +16,15 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { takeUntil } from 'rxjs/operators'
-import { ExecutionEventFacade, ExecutionEventsQuery } from 'spline-api'
+import { ExecutionEventApiService, ExecutionEventsQuery } from 'spline-api'
 import { DynamicFilterFactory, DynamicFilterModel } from 'spline-common/dynamic-filter'
-import { DataSourceWithDynamicFilter, SplineConfigService } from 'spline-shared'
-import { EventsDataSource } from 'spline-shared/events'
+import { DynamicFilterStoreExtras, SplineConfigApiService } from 'spline-shared'
+import { EventsFactoryStore } from 'spline-shared/events'
 import { BaseComponent } from 'spline-utils'
 
 import { EventsListDtSchema } from '../../dynamic-table'
 
-import { EventsListPage } from './events-list.page.models'
+import { EventsListPageConfig } from './events-list.page-config'
 
 
 @Component({
@@ -33,45 +33,46 @@ import { EventsListPage } from './events-list.page.models'
     styleUrls: ['./events-list.page.component.scss'],
     providers: [
         {
-            provide: EventsDataSource,
+            provide: EventsFactoryStore,
             useFactory: (
-                executionEventFacade: ExecutionEventFacade,
-                splineConfigService: SplineConfigService,
+                executionEventApiService: ExecutionEventApiService,
+                splineConfigApiService: SplineConfigApiService
             ) => {
-                return new EventsDataSource(executionEventFacade, splineConfigService)
+                return new EventsFactoryStore(executionEventApiService, splineConfigApiService)
             },
             deps: [
-                ExecutionEventFacade,
-                SplineConfigService
-            ],
-        },
-    ],
+                ExecutionEventApiService,
+                SplineConfigApiService
+            ]
+        }
+    ]
 })
 export class EventsListPageComponent extends BaseComponent implements OnDestroy, OnInit {
 
     readonly dataMap = EventsListDtSchema.getSchema()
 
-    filterModel: DynamicFilterModel<EventsListPage.Filter>
+    filterModel: DynamicFilterModel<EventsListPageConfig.Filter>
 
-    constructor(readonly dataSource: EventsDataSource,
-                private readonly dynamicFilterFactory: DynamicFilterFactory) {
+    constructor(readonly dataSource: EventsFactoryStore,
+                private readonly dynamicFilterFactory: DynamicFilterFactory
+    ) {
         super()
     }
 
     ngOnInit(): void {
         this.dynamicFilterFactory
-            .schemaToModel<EventsListPage.Filter>(
-                EventsListPage.getDynamicFilterSchema()
+            .schemaToModel<EventsListPageConfig.Filter>(
+                EventsListPageConfig.getDynamicFilterSchema()
             )
             .pipe(
                 takeUntil(this.destroyed$)
             )
             .subscribe(model => {
                 this.filterModel = model
-                DataSourceWithDynamicFilter.bindDynamicFilter<ExecutionEventsQuery.QueryFilter, EventsListPage.Filter>(
+                DynamicFilterStoreExtras.bindDynamicFilter<ExecutionEventsQuery.QueryFilter, EventsListPageConfig.Filter>(
                     this.dataSource,
                     this.filterModel,
-                    EventsListPage.getFiltersMapping()
+                    EventsListPageConfig.getFiltersMapping()
                 )
             })
     }
