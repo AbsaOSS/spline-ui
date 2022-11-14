@@ -15,4 +15,4 @@
  */
 
 export * from './spline-list-box.models'
-export * from './spline-list-box.store'
+export * from './spline-list-box-store.ns'

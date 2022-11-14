@@ -29,14 +29,8 @@ import {
 import { isEqual } from 'lodash-es'
 import { Subject } from 'rxjs'
 import { distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators'
-import {
-    SgControlPanelSectionDirective,
-    SgData,
-    SgNodeEvent,
-    SgNodeSchema,
-    SgRelations,
-    SplineGraphComponent
-} from 'spline-common/graph'
+import { EventOverviewType } from 'spline-api'
+import { SgControlPanelSectionDirective, SgData, SgNodeEvent, SgNodeSchema, SgRelations, SplineGraphComponent } from 'spline-common/graph'
 import { BaseLocalStateComponent } from 'spline-utils'
 
 import { SgNodeControl } from '../../models'
@@ -59,12 +53,14 @@ export class SgContainerComponent extends BaseLocalStateComponent<SgContainer.St
     @Input() targetNodeId: string | null
     @Input() graphNodeView: NodeView = NodeView.Detailed
     @Input() showGraphNodeView = true
+    @Input() showFeatureOverviewControl = false
 
     @Output() nodeEvent$ = new EventEmitter<SgNodeEvent>()
     @Output() nodeDoubleClick$ = new EventEmitter<{ nodeSchema: SgNodeSchema }>()
     @Output() nodeSelectionChange$ = new EventEmitter<{ nodeId: string | null }>()
     @Output() highlightedRelationsNodesIdsChange$ = new EventEmitter<{ nodeIds: string[] | null }>()
     @Output() graphNodeViewChange$ = new EventEmitter<{ nodeView: NodeView }>()
+    @Output() changeOverview$ = new EventEmitter<{ eventOverviewType: EventOverviewType }>()
 
     readonly focusNode$ = new Subject<string>()
 
@@ -86,7 +82,7 @@ export class SgContainerComponent extends BaseLocalStateComponent<SgContainer.St
             .pipe(
                 map(state => state && state?.highlightedRelationsNodesIds),
                 distinctUntilChanged((left, right) => isEqual(left, right)),
-                takeUntil(this.destroyed$),
+                takeUntil(this.destroyed$)
             )
             .subscribe(
                 nodeIds => this.highlightedRelationsNodesIdsChange$.emit({ nodeIds })
@@ -109,12 +105,12 @@ export class SgContainerComponent extends BaseLocalStateComponent<SgContainer.St
         // init default state
         this.updateState({
             selectedNodeId: this.selectedNodeId,
-            highlightedRelationsNodesIds: null,
+            highlightedRelationsNodesIds: null
         })
     }
 
     refresh(): void {
-        this.graphData = {... this.graphData}
+        this.graphData = { ...this.graphData }
     }
 
     focusNode(nodeId: string): void {
@@ -146,13 +142,12 @@ export class SgContainerComponent extends BaseLocalStateComponent<SgContainer.St
         this.highlightNodeRelations(null)
     }
 
+    onOverviewChanged(eventOverviewType: EventOverviewType): void {
+        this.changeOverview$.emit({ eventOverviewType })
+    }
 
     onNodeFocus(nodeId: string): void {
         this.focusNode(nodeId)
-    }
-
-    onNodeHighlightRelations(nodeId: string): void {
-        this.highlightNodeRelations(nodeId)
     }
 
     onGraphNodeEvent($event: SgNodeEvent): void {
@@ -187,7 +182,7 @@ export class SgContainerComponent extends BaseLocalStateComponent<SgContainer.St
         const highlightedRelationsNodesIds = SgRelations.toggleSelection(
             this.state.highlightedRelationsNodesIds ?? [],
             nodeId,
-            this.graphData.links,
+            this.graphData.links
         )
         this.updateState({
             highlightedRelationsNodesIds: highlightedRelationsNodesIds.length > 0 ? highlightedRelationsNodesIds : null

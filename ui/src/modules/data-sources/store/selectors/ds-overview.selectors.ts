@@ -17,25 +17,25 @@
 import { createSelector } from '@ngrx/store'
 import { SplineDataSourceInfo } from 'spline-api'
 
-import { DsOverviewStore } from '../reducers'
-import { SplineDataSourceStore } from '../reducers/base'
+import { DsOverviewStoreNs } from '../state-managements'
+import { SplineDataSourceStoreNs } from '../state-managements/spline-data-source-store.ns'
 
 
 export namespace DsOverviewStoreSelectors {
 
     export const rootState = createSelector(
-        SplineDataSourceStore.rootState,
-        (_state: SplineDataSourceStore.State) => _state[DsOverviewStore.STORE_FEATURE_NAME]
+        SplineDataSourceStoreNs.rootState,
+        (_state: SplineDataSourceStoreNs.State) => _state[DsOverviewStoreNs.STORE_FEATURE_NAME]
     )
 
-    export const dataSourceInfo = createSelector<any, DsOverviewStore.State, SplineDataSourceInfo>(
+    export const dataSourceInfo = createSelector<any, DsOverviewStoreNs.State, SplineDataSourceInfo>(
         rootState,
-        (_state) => _state.dataSourceInfo,
+        (_state) => _state.dataSourceInfo
     )
 
-    export const isLoading = createSelector<any, DsOverviewStore.State, boolean>(
+    export const isLoading = createSelector<any, DsOverviewStoreNs.State, boolean>(
         rootState,
-        (_state) => _state.loading.processing,
+        (_state) => _state.loading.processing
     )
 
     export const isInitialized = createSelector<any, SplineDataSourceInfo, boolean, boolean>(

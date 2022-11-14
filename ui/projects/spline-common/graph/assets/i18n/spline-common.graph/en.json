@@ -5,7 +5,9 @@
             "ZOOM_OUT": "Zoom Out",
             "RESET_LAYOUT": "Reset Layout",
             "CHANGE_GRAPH_DIRECTION": "Change Graph Direction",
-            "ACTION__HIGHLIGHT_RELATIONS__TOGGLE": "Highlight All Relations Toggle"
+            "ACTION__HIGHLIGHT_RELATIONS__TOGGLE": "Highlight All Relations Toggle",
+            "ACTION__SHOW_LINEAGE_OVERVIEW__TOGGLE": "Lineage overview",
+            "ACTION__SHOW_IMPACT_OVERVIEW__TOGGLE": "Impact overview"
         }
     }
 }

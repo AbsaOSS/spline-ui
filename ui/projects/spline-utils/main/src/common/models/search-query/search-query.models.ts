@@ -17,7 +17,7 @@
 import { MatSortable } from '@angular/material/sort'
 import { Sort } from '@angular/material/sort/sort'
 
-import { ProcessingStore } from '../../../store'
+import { ProcessingStoreNs } from '../../../store'
 import { SplineRecord } from '../heplers'
 import { DEFAULT_PAGER, QueryPager, QuerySorter } from '../query'
 
@@ -26,7 +26,6 @@ export namespace SearchQuery {
 
     import FieldSorter = QuerySorter.FieldSorter
     import SortDir = QuerySorter.SortDir
-
 
     export interface SearchParams<TFilter extends SplineRecord = {}, TSortableField = string> {
         pager: QueryPager
@@ -41,17 +40,17 @@ export namespace SearchQuery {
         filter: {},
         alwaysOnFilter: {},
         sortBy: [],
-        searchTerm: '',
+        searchTerm: ''
     })
 
     export type DataState<TData> = {
         data: TData | null
-        loadingProcessing: ProcessingStore.EventProcessingState
+        loadingProcessing: ProcessingStoreNs.EventProcessingState
     }
 
     export const DEFAULT_RENDER_DATA: DataState<any> = {
         data: null,
-        loadingProcessing: ProcessingStore.getDefaultProcessingState(),
+        loadingProcessing: ProcessingStoreNs.getDefaultProcessingState()
     }
 
     export const DEFAULT_SERVER_POLL_INTERVAL = 5000 // msec
@@ -60,14 +59,14 @@ export namespace SearchQuery {
         return {
             id: fieldSorter.field,
             start: fieldSorter.dir.toLowerCase(),
-            disableClear,
+            disableClear
         } as MatSortable
     }
 
     export function matSortToFiledSorter<TFiled = string>(sort: Sort): FieldSorter<TFiled> {
         return {
             field: sort.active as any,
-            dir: sort.direction === 'asc' ? SortDir.ASC : SortDir.DESC,
+            dir: sort.direction === 'asc' ? SortDir.ASC : SortDir.DESC
         }
     }
 

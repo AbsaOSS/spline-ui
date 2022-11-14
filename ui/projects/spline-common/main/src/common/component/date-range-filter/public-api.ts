@@ -16,5 +16,5 @@
 
 export * from './spline-date-range-filter.component'
 export * from './spline-date-range-filter.models'
-export * from './spline-date-range-filter-consumer.store'
+export * from './spline-date-range-filter-consumer-store.ns'
 export * from './spline-date-range-filter.module'

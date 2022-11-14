@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export * from './execution-plan-info.store'
-export * from './execution-plan-overview.store'
+export * from './execution-plan-info-store.ns'
+export * from './execution-plan-overview-store.ns'

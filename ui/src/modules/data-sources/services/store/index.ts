@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export * from './ds-overview.store.facade'
-export * from './ds-overview-details.store.facade'
+export * from './ds-overview.store'
+export * from './ds-overview-details.store'

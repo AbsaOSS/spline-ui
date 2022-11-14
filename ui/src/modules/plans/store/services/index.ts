@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export * from './execution-plan-overview-store.facade'
+export * from './execution-plan-overview.factory-store'
 

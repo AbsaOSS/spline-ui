@@ -15,4 +15,4 @@
  */
 
 export * from './search-dynamic-table/spline-search-dynamic-table.component'
-export * from './search-dynamic-table/spline-search-dynamic-table.models'
+export * from './search-dynamic-table/spline-search-dynamic-table-store.ns'

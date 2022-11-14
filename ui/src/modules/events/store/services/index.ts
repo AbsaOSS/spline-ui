@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export * from './event-overview-store.facade'
+export * from './event-overview.store'

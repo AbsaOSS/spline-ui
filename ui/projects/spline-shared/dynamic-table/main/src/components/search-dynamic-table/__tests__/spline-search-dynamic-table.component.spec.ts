@@ -28,12 +28,16 @@ import { Observable, of } from 'rxjs'
 import { filter, take } from 'rxjs/operators'
 import { SplineSearchBoxModule, SplineSortHeaderModule } from 'spline-common'
 import { DynamicTableDataMap, DynamicTableModule } from 'spline-common/dynamic-table'
-import { SplineDynamicTableSharedModule, SplineSearchDynamicTable, SplineSearchDynamicTableComponent } from 'spline-shared/dynamic-table'
-import { PageResponse, QuerySorter, SearchDataSource, SearchDataSourceConfigInput, SearchQuery } from 'spline-utils'
+import {
+    SplineDynamicTableSharedModule,
+    SplineSearchDynamicTableComponent,
+    SplineSearchDynamicTableStoreNs
+} from 'spline-shared/dynamic-table'
+import { PageResponse, QuerySorter, SearchDataSourceConfigInput, SearchFactoryStore, SearchQuery } from 'spline-utils'
 import { SplineTranslateTestingModule } from 'spline-utils/translate'
-import SortDir = QuerySorter.SortDir;
-import SearchParams = SearchQuery.SearchParams;
-import DEFAULT_SEARCH_PARAMS = SearchQuery.DEFAULT_SEARCH_PARAMS;
+import SortDir = QuerySorter.SortDir
+import DEFAULT_SEARCH_PARAMS = SearchQuery.DEFAULT_SEARCH_PARAMS
+import SearchParams = SearchQuery.SearchParams
 
 
 describe('SplineSearchDynamicTableComponent', () => {
@@ -58,7 +62,7 @@ describe('SplineSearchDynamicTableComponent', () => {
                 SplineDynamicTableSharedModule,
                 SplineTranslateTestingModule
             ],
-            schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
+            schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
         })
             .compileComponents()
     )
@@ -69,34 +73,21 @@ describe('SplineSearchDynamicTableComponent', () => {
         router = TestBed.inject<Router>(Router)
     })
 
-
     describe('Init Default State', () => {
 
         type FakeItem = {
             id: number
         }
 
-        const dataMap: DynamicTableDataMap = [
-            {
-                id: 'id'
-            }
-        ]
+        const dataMap: DynamicTableDataMap = [{ id: 'id' }]
 
-        const fakeData: FakeItem[] = [
-            {
-                id: 1
-            },
-            {
-                id: 2
-            }
-        ]
+        const fakeData: FakeItem[] = [{ id: 1 }, { id: 2 }]
 
-        class FakeDataSource extends SearchDataSource<FakeItem> {
+        class FakeFactoryStore extends SearchFactoryStore<FakeItem> {
 
             constructor(config: SearchDataSourceConfigInput<any, any>) {
                 super(config)
             }
-
 
             protected getDataObserver(searchParams: SearchQuery.SearchParams): Observable<PageResponse<FakeItem>> {
                 return of({
@@ -106,7 +97,7 @@ describe('SplineSearchDynamicTableComponent', () => {
             }
         }
 
-        let fakeDataSource: FakeDataSource
+        let fakeDataSource: FakeFactoryStore
 
         const defaultSortBy: QuerySorter.FieldSorter = {
             field: 'id',
@@ -114,7 +105,7 @@ describe('SplineSearchDynamicTableComponent', () => {
         }
 
         beforeEach(() => {
-            fakeDataSource = new FakeDataSource({
+            fakeDataSource = new FakeFactoryStore({
                 defaultSearchParams: {
                     sortBy: [{ ...defaultSortBy }]
                 },
@@ -123,7 +114,6 @@ describe('SplineSearchDynamicTableComponent', () => {
             componentInstance.dataSource = fakeDataSource
             componentInstance.dataMap = dataMap
         })
-
 
         test('Init Sorting from DataSource', (done) => {
 
@@ -151,17 +141,16 @@ describe('SplineSearchDynamicTableComponent', () => {
                 ]
             }
 
-            const queryParams = SplineSearchDynamicTable.applySearchParams(
+            const queryParams = SplineSearchDynamicTableStoreNs.applySearchParams(
                 {},
                 componentInstance.defaultUrlStateQueryParamAlias,
                 urlSearchParams
             )
 
-
             // fake router init state
             router.navigate([], {
                 queryParams,
-                replaceUrl: true,
+                replaceUrl: true
             })
 
             router.events

@@ -31,14 +31,14 @@ import {
     getDefaultDtOptions
 } from '../../models'
 
-import { DynamicTableStore } from './dynamic-table.store.models'
+import { DynamicTableStoreNs } from './dynamic-table-store.ns'
 
 
 @Component({
     selector: 'dynamic-table',
-    templateUrl: './dynamic-table.component.html',
+    templateUrl: './dynamic-table.component.html'
 })
-export class DynamicTableComponent<TRowData> extends BaseLocalStateComponent<DynamicTableStore.State>
+export class DynamicTableComponent<TRowData> extends BaseLocalStateComponent<DynamicTableStoreNs.State>
     implements OnChanges, AfterViewInit {
 
     @Input() dataSource: DataSource<TRowData> | TRowData[]
@@ -64,7 +64,7 @@ export class DynamicTableComponent<TRowData> extends BaseLocalStateComponent<Dyn
         super()
 
         this.updateState(
-            DynamicTableStore.getDefaultState()
+            DynamicTableStoreNs.getDefaultState()
         )
     }
 
@@ -75,7 +75,7 @@ export class DynamicTableComponent<TRowData> extends BaseLocalStateComponent<Dyn
         // init data map
         if (dataMap && dataMap.currentValue) {
             this.updateState(
-                DynamicTableStore.reduceDataMap(this.state, dataMap.currentValue)
+                DynamicTableStoreNs.reduceDataMap(this.state, dataMap.currentValue)
             )
         }
     }

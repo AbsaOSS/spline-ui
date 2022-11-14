@@ -21,18 +21,19 @@ import { SplineDataWidgetEvent } from 'spline-common/data-view'
 import { SdWidgetAttributesTree } from 'spline-shared/attributes'
 import { BaseLocalStateComponent } from 'spline-utils'
 
-import { ExecutionPlanInfoStore } from '../../store'
+import { ExecutionPlanInfoStoreNs } from '../../store'
 
 
 @Component({
     selector: 'plan-info',
     templateUrl: './plan-info.component.html',
     styleUrls: ['./plan-info.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PlanInfoComponent extends BaseLocalStateComponent<ExecutionPlanInfoStore.State> implements OnChanges {
+export class PlanInfoComponent extends BaseLocalStateComponent<ExecutionPlanInfoStoreNs.State> implements OnChanges {
 
     @Input() executionPlan: ExecutionPlan
+
     @Input() set selectedAttributeId(attributeId: string | null) {
         this.selectedAttributeId$.next(attributeId)
     }
@@ -48,11 +49,10 @@ export class PlanInfoComponent extends BaseLocalStateComponent<ExecutionPlanInfo
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.executionPlan && !!changes.executionPlan.currentValue) {
             this.updateState(
-                ExecutionPlanInfoStore.toState(changes.executionPlan.currentValue, this.selectedAttributeId$),
+                ExecutionPlanInfoStoreNs.toState(changes.executionPlan.currentValue, this.selectedAttributeId$)
             )
         }
     }
-
 
     onDataViewEvent($event: SplineDataWidgetEvent): void {
         switch ($event.type) {
@@ -62,7 +62,7 @@ export class PlanInfoComponent extends BaseLocalStateComponent<ExecutionPlanInfo
                 break
 
             default:
-                // DO NOTHING
+            // DO NOTHING
         }
     }
 
