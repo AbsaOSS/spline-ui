@@ -79,7 +79,7 @@
                 <artifactId>frontend-maven-plugin</artifactId>
                 <version>1.10.3</version>
                 <configuration>
-                    <nodeVersion>v14.16.0</nodeVersion>
+                    <nodeVersion>v16.9.1</nodeVersion>
                     <npmVersion>7.6.0</npmVersion>
                     <environmentVariables>
                         <SPLINE_UI_BUILD_REVISION>${buildNumber}</SPLINE_UI_BUILD_REVISION>
