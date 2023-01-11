@@ -43,7 +43,10 @@
 
     <!-- CONTROL PANEL :: PARENT/CHILD VIEW -->
     <ng-template *ngIf="showFeatureOverviewControl" sgControlPanelSection>
-        <sg-overview-control (changeOverview$)="onOverviewChanged($event.eventOverviewType)"></sg-overview-control>
+        <sg-overview-control
+            [selectedOverviewType]="selectedOverviewType"
+            (changeOverview$)="onOverviewChanged($event.eventOverviewType)">
+        </sg-overview-control>
     </ng-template>
     <!-- ./CONTROL PANEL :: PARENT/CHILD VIEW -->
 

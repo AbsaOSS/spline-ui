@@ -18,14 +18,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { Observable } from 'rxjs'
 import { distinctUntilChanged, map } from 'rxjs/operators'
-import { SplineTabsNavBar } from 'spline-common'
+import { EventOverviewType } from 'spline-api'
 import { SlBreadcrumbs } from 'spline-common/layout'
 import { BaseComponent } from 'spline-utils'
 
-import { EventOverviewStoreNs, EventOverviewStore } from '../../store'
+import { EventOverviewStore, EventOverviewStoreNs } from '../../store'
 
 import { EventOverviewPage } from './event-overview.page.model'
-import NavTabInfo = SplineTabsNavBar.NavTabInfo
 
 
 @Component({
@@ -34,15 +33,6 @@ import NavTabInfo = SplineTabsNavBar.NavTabInfo
     styleUrls: ['./event-overview.page.component.scss']
 })
 export class EventOverviewPageComponent extends BaseComponent implements OnInit, OnDestroy {
-
-    readonly headerNavTabs: NavTabInfo[] = [
-        {
-            label: 'EVENTS.EVENT_OVERVIEW__NAV_TAB__GRAPH_VIEW',
-            routeLink: '.',
-            icon: 'graph-outline'
-        }
-    ]
-
     readonly state$: Observable<EventOverviewStoreNs.State>
 
     readonly breadcrumbs$: Observable<SlBreadcrumbs.Breadcrumbs>
@@ -72,6 +62,9 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit,
             )
     }
 
+    isImpactOverviewType(overviewType: string): overviewType is EventOverviewType.Impact {
+        return overviewType === EventOverviewType.Impact
+    }
     ngOnInit(): void {
         const executionEventId =
             this.activatedRoute.snapshot.params['id']
@@ -79,8 +72,9 @@ export class EventOverviewPageComponent extends BaseComponent implements OnInit,
         const requestedGraphDepth =
             +this.activatedRoute.snapshot.queryParams[EventOverviewPage.QueryParam.RequestedGraphDepth]
             || EventOverviewStoreNs.GRAPH_DEFAULT_DEPTH
-
-        this.store.init(executionEventId, requestedGraphDepth)
+        const queryParamOverviewType = this.activatedRoute.snapshot.queryParams['overview']
+        const overviewType = this.isImpactOverviewType(queryParamOverviewType) ? EventOverviewType.Impact : EventOverviewType.Lineage
+        this.store.init(executionEventId, requestedGraphDepth, overviewType)
     }
 
     ngOnDestroy(): void {

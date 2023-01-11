@@ -50,6 +50,7 @@ export class SgContainerComponent extends BaseLocalStateComponent<SgContainer.St
 
     @Input() graphData: SgData
     @Input() selectedNodeId: string | null
+    @Input() selectedOverviewType: EventOverviewType
     @Input() targetNodeId: string | null
     @Input() graphNodeView: NodeView = NodeView.Detailed
     @Input() showGraphNodeView = true
@@ -66,7 +67,6 @@ export class SgContainerComponent extends BaseLocalStateComponent<SgContainer.St
 
     constructor() {
         super()
-
         this.state$
             .pipe(
                 map(state => state && state?.selectedNodeId),

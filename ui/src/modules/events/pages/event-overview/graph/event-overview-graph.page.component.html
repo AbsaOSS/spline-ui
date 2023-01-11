@@ -65,7 +65,7 @@
                 </spline-loader>
                 <!-- ./LOADER -->
 
-                <sg-container #container
+                <sg-container
                               (changeOverview$)="onOverviewChanged($event.eventOverviewType)"
                               (graphNodeViewChange$)="onGraphNodeViewChanged($event.nodeView)"
                               (nodeDoubleClick$)="onNodeDoubleClick($event.nodeSchema)"
@@ -74,6 +74,7 @@
                               [graphData]="state.graphData"
                               [graphNodeView]="state.graphNodeView"
                               [selectedNodeId]="state.selectedNodeId"
+                              [selectedOverviewType]="state.overviewType"
                               [targetNodeId]="state.targetNodeId"
                               [showFeatureOverviewControl]="true">
 

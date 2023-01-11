@@ -17,7 +17,8 @@
 
 export namespace EventOverviewPage {
     export namespace QueryParam {
-        export const SelectedNodeId: string = 'selectedNodeId'
-        export const RequestedGraphDepth: string = 'depth'
+        export const SelectedNodeId = 'selectedNodeId'
+        export const RequestedGraphDepth = 'depth'
+        export const OverviewType = 'overview'
     }
 }

@@ -85,10 +85,10 @@ export class EventOverviewStore extends BaseStore<EventOverviewStoreNs.State> {
 
     init(
         executionEventId: string,
-        graphDepth: number
+        graphDepth: number,
+        overviewType: EventOverviewType
     ): void {
-
-        this.loadData(executionEventId, EventOverviewType.Lineage, graphDepth, state => ({
+        this.loadData(executionEventId, overviewType, graphDepth, state => ({
             ...state,
             loadingProcessing: ProcessingStoreNs.eventProcessingStart(this.state.loadingProcessing)
         }), state => ({
@@ -100,7 +100,9 @@ export class EventOverviewStore extends BaseStore<EventOverviewStoreNs.State> {
         }))
             .subscribe(() => {
                 this.updateState({
-                    executionEventId
+                    executionEventId,
+                    lineageDepth: {...this.state.lineageDepth, depthRequested: graphDepth},
+                    overviewType
                 })
             })
     }
@@ -108,15 +110,6 @@ export class EventOverviewStore extends BaseStore<EventOverviewStoreNs.State> {
     findNode(nodeId: string): ExecutionEventLineageNode {
         return EventOverviewStoreNs.selectNode(this.state, nodeId)
     }
-
-    findChildrenNodes(nodeId: string): ExecutionEventLineageNode[] {
-        return EventOverviewStoreNs.selectChildrenNodes(this.state, nodeId)
-    }
-
-    findParentNodes(nodeId: string): ExecutionEventLineageNode[] {
-        return EventOverviewStoreNs.selectParentNodes(this.state, nodeId)
-    }
-
     // TODO: remove it after BE will support it.
     loadNodeHistory(nodeId: string): void {
 

@@ -15,10 +15,10 @@
  */
 
 import {
-    dataSourceUriToName,
     ExecutionEventLineageNode,
     ExecutionEventLineageNodeType,
     OperationDetails,
+    dataSourceUriToName,
     operationIdToExecutionPlanId,
     uriToDatsSourceId
 } from 'spline-api'
@@ -38,7 +38,7 @@ export namespace EventNodeInfo {
     }
 
     export function getNodeInfoTooltip(nodeSource: ExecutionEventLineageNode): string {
-        return nodeSource.type === ExecutionEventLineageNodeType.DataSource
+        return nodeSource?.type === ExecutionEventLineageNodeType.DataSource
                ? 'EVENTS.EVENT_NODE_INFO__TOOLTIP__DATA_SOURCE'
                : 'EVENTS.EVENT_NODE_INFO__TOOLTIP__EXECUTION_PLAN'
     }
@@ -55,7 +55,7 @@ export namespace EventNodeInfo {
         nodeRelations?: EventNodeInfo.NodeRelationsInfo
     ): SdWidgetSchema {
 
-        return nodeSource.type === ExecutionEventLineageNodeType.DataSource
+        return nodeSource?.type === ExecutionEventLineageNodeType.DataSource
                ? dataSourceNodeToDataSchema(nodeSource)
                : executionNodeToDataSchema(nodeSource, nodeRelations)
     }
@@ -226,7 +226,7 @@ export namespace EventNodeInfo {
     ): NodeInfoViewState {
         return {
             ...state,
-            nodeDvs: nodeToDataSchema(nodeRelations.node, nodeRelations),
+            nodeDvs: nodeToDataSchema(nodeRelations?.node, nodeRelations),
             dataSourceSchemaDetailsList: operationsInfoList.length > 0 ? getOperationsDataSourceSchemasDvs(operationsInfoList) : []
         }
     }

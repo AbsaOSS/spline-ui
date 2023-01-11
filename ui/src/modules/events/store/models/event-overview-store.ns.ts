@@ -29,7 +29,6 @@ import { ProcessingStoreNs, SplineEntityStoreNs, StringHelpers } from 'spline-ut
 
 import { EventInfo, EventNodeControl, EventNodeHistory, EventNodeInfo } from '../../models'
 
-
 export namespace EventOverviewStoreNs {
 
     export type State = {
@@ -57,6 +56,7 @@ export namespace EventOverviewStoreNs {
     export type ProcessingErrorFn = (state: EventOverviewStoreNs.State, error: any | null) => EventOverviewStoreNs.State
 
     export const GRAPH_DEFAULT_DEPTH = 2
+    export const GRAPH_DEFAULT_OVERVIEW_TYPE = EventOverviewType.Lineage
 
     const DEFAULT_LINEAGE_DEPTH = Object.freeze<ExecutionEventLineageOverviewDepth>({
         depthComputed: GRAPH_DEFAULT_DEPTH,
@@ -78,7 +78,7 @@ export namespace EventOverviewStoreNs {
             targetExecutionPlanNodeId: null,
             targetExecutionPlanNodeDvs: null,
             lineageDepth: { ...DEFAULT_LINEAGE_DEPTH },
-            overviewType: EventOverviewType.Lineage,
+            overviewType: GRAPH_DEFAULT_OVERVIEW_TYPE,
             graphHasMoreDepth: calculateHasMoreDepth(DEFAULT_LINEAGE_DEPTH),
             graphNodeView: SgNodeControl.NodeView.Detailed,
             graphData: null

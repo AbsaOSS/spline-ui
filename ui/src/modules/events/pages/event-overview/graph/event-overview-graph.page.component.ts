@@ -17,7 +17,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Observable } from 'rxjs'
-import { filter, map, takeUntil } from 'rxjs/operators'
+import { filter, map, skip, takeUntil } from 'rxjs/operators'
 import { EventOverviewType, ExecutionEventLineageNodeType } from 'spline-api'
 import { SplineDataWidgetEvent } from 'spline-common/data-view'
 import { SgNodeEvent, SgNodeSchema } from 'spline-common/graph'
@@ -78,14 +78,21 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
         //
         this.store.state$
             .pipe(
-                map(state => state.lineageDepth.depthRequested),
+                skip(1),
+                map(state => ({depth: state.lineageDepth.depthRequested, overviewType: state.overviewType})),
                 takeUntil(this.destroyed$),
-                filter(depth => {
-                    const currentDepth = +this.activatedRoute.snapshot.queryParamMap.get(EventOverviewPage.QueryParam.RequestedGraphDepth)
-                    return currentDepth !== depth
-                })
             )
-            .subscribe(depth => this.updateQueryParams(EventOverviewPage.QueryParam.RequestedGraphDepth, depth.toString()))
+            .subscribe(({depth, overviewType}) => {
+                const currentDepth = +this.activatedRoute.snapshot.queryParamMap.get(EventOverviewPage.QueryParam.RequestedGraphDepth)
+                const currentOverviewType = this.activatedRoute.snapshot.queryParamMap.get(EventOverviewPage.QueryParam.OverviewType)
+
+                if (currentDepth !== depth) {
+                    this.updateQueryParams(EventOverviewPage.QueryParam.RequestedGraphDepth, depth.toString())
+                }
+                if (currentOverviewType !== overviewType) {
+                    this.updateQueryParams(EventOverviewPage.QueryParam.OverviewType, overviewType)
+                }
+            })
     }
 
     onNodeSelected(nodeId: string | null): void {
