@@ -14,21 +14,24 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core'
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { EventOverviewType } from 'spline-api'
-
 
 @Component({
     selector: 'sg-overview-control',
     templateUrl: './sg-overview-control.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SgOverviewControlComponent {
+export class SgOverviewControlComponent implements OnInit {
+    @Input() selectedOverviewType: EventOverviewType
     @Output() changeOverview$ = new EventEmitter<{ eventOverviewType: EventOverviewType }>()
 
     overviewTypeEnum = EventOverviewType
-    toggleLinageImpactView = EventOverviewType.Lineage
+    toggleLinageImpactView: EventOverviewType = EventOverviewType.Lineage
 
+    ngOnInit() {
+        this.toggleLinageImpactView = this.selectedOverviewType
+    }
     onToggleOverviewBtnClicked(eventOverviewType: EventOverviewType): void {
         this.toggleLinageImpactView = eventOverviewType
 

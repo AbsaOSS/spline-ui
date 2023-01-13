@@ -15,10 +15,8 @@
  */
 
 export namespace SgContainer {
-
     export type State = {
         highlightedRelationsNodesIds: string[] | null
         selectedNodeId: string | null
     }
-
 }

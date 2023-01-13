@@ -20,7 +20,6 @@ import { SgNodeControl } from 'spline-shared/graph'
 
 import { OperationInfo } from '../operation'
 
-
 export namespace PlanNodeControl {
 
     import NodeView = SgNodeControl.NodeView
@@ -32,7 +31,7 @@ export namespace PlanNodeControl {
 
     export function toSgNode(nodeSource: ExecutionPlanLineageNode,
                              nodeView: NodeView = NodeView.Detailed): SgNode {
-        const nodeStyles = OperationInfo.getNodeStyles(nodeSource.type, nodeSource.name)
+        const nodeStyles = OperationInfo.getNodeStyles(nodeSource?.type, nodeSource.name)
 
         const defaultActions = [
             ...SgNodeControl.getNodeRelationsHighlightActions(),

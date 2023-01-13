@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 ABSA Group Limited
+ * Copyright 2023 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,19 @@
  * limitations under the License.
  */
 
+import { defineConfig } from 'cypress'
 
-export namespace EventOverviewPage {
-    export namespace QueryParam {
-        export const SelectedNodeId = 'selectedNodeId'
-        export const RequestedGraphDepth = 'depth'
-        export const OverviewType = 'overview'
+
+export default defineConfig({
+    e2e: {
+        'baseUrl': 'http://localhost:4200',
+        supportFile: false
+    },
+    component: {
+        devServer: {
+            framework: 'angular',
+            bundler: 'webpack'
+        },
+        specPattern: '**/*.cy.ts'
     }
-}
+})

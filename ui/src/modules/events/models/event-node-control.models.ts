@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { dataSourceUriToName, ExecutionEventLineageNode, ExecutionEventLineageNodeType } from 'spline-api'
+import { ExecutionEventLineageNode, ExecutionEventLineageNodeType, dataSourceUriToName } from 'spline-api'
 import { SgNode, SgNodeCircle, SgNodeCircleButton, SgNodeDefault } from 'spline-common/graph'
 import { SgNodeControl } from 'spline-shared/graph'
 import NodeType = SgNodeControl.NodeType
@@ -74,7 +74,7 @@ export namespace EventNodeControl {
                     {
                         label: extractNodeName(nodeSource),
                         ...nodeStyles,
-                        inlineActions: nodeSource.type === ExecutionEventLineageNodeType.DataSource
+                        inlineActions: nodeSource?.type === ExecutionEventLineageNodeType.DataSource
                             ? [
                                 ...defaultActions
                             ]
