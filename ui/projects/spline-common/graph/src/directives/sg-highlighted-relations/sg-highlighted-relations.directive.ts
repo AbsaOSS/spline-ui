@@ -14,89 +14,75 @@
  * limitations under the License.
  */
 
-
-import { AfterViewInit, Directive, forwardRef, Host, Inject, Input, OnChanges, SimpleChanges } from '@angular/core'
-import { GraphComponent } from '@swimlane/ngx-graph'
+import { Directive, ElementRef, Input, OnChanges, QueryList, SimpleChange } from '@angular/core'
+import { GraphComponent, Node } from '@swimlane/ngx-graph'
+import { Edge } from '@swimlane/ngx-graph/lib/models/edge.model'
 
 import { SplineGraphComponent } from '../../components'
-import { getLinkDomSelector, getNodeDomSelector, SgData } from '../../models'
 
 
 @Directive({
-    selector: '[sgHighlightedRelations]spline-graph',
+    selector: 'spline-graph[sgHighlightedRelations]'
 })
-export class SgHighlightedRelationsDirective implements AfterViewInit, OnChanges {
+export class SgHighlightedRelationsDirective implements OnChanges {
 
-    @Input() graphData: SgData
     @Input() sgHighlightedRelations: string[] | null = null // node ids
+    @Input() splineGraph: SplineGraphComponent
 
-    constructor(
-        @Host() @Inject(forwardRef(() => SplineGraphComponent)) private splineGraph: SplineGraphComponent,
-    ) {
+    get ngxGraphComponent(): GraphComponent {
+        return this.splineGraph?.ngxGraphComponent
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes.sgHighlightedRelations && !changes.sgHighlightedRelations.isFirstChange()) {
-            this.applyNodeStyles(changes.sgHighlightedRelations.currentValue, this.splineGraph.ngxGraphComponent)
+    ngOnChanges(changes: { sgHighlightedRelations: SimpleChange }): void {
+        const sgHighlightedRelations = changes.sgHighlightedRelations
+        if (this.ngxGraphComponent && sgHighlightedRelations && !sgHighlightedRelations?.firstChange) {
+            this.applyNodeStyles()
         }
     }
 
-    ngAfterViewInit(): void {
-        this.applyNodeStyles(this.sgHighlightedRelations, this.splineGraph.ngxGraphComponent)
-    }
-
-    private applyNodeStyles(highlightedNodes: string[] | null, ngxGraphComponent: GraphComponent): void {
-
+    private applyNodeStyles(): void {
+        const highlightedNodes = this.sgHighlightedRelations
+        const ngxGraphComponent = this.ngxGraphComponent
         const highlightedNodesSet = new Set<string>(highlightedNodes)
 
         const cssClassesMap = {
             highlighted: 'sg-node-relation--highlighted',
-            hidden: 'sg-node-relation--hidden',
+            hidden: 'sg-node-relation--hidden'
         }
 
         const cssClassesList = Object.values(cssClassesMap)
 
-        function applyStylesToDomElm(selector: string,
-                                     rootElmRef: HTMLElement,
-                                     ifHighlighted: boolean | null,
+        function applyStylesToDomElm(elementRef: ElementRef<HTMLElement>,
+                                     ifHighlighted: boolean | null
         ): void {
-            const elementRef = rootElmRef.querySelector(selector)
             if (elementRef) {
                 // remove all styles
                 if (ifHighlighted === null) {
                     cssClassesList
                         .forEach(
-                            className => elementRef.classList.remove(className)
+                            className => elementRef.nativeElement.classList.remove(className)
                         )
                 }
                 else {
-                    elementRef.classList.add(ifHighlighted ? cssClassesMap.highlighted : cssClassesMap.hidden)
-                    elementRef.classList.remove(!ifHighlighted ? cssClassesMap.highlighted : cssClassesMap.hidden)
+                    elementRef.nativeElement.classList.add(ifHighlighted ? cssClassesMap.highlighted : cssClassesMap.hidden)
+                    elementRef.nativeElement.classList.remove(!ifHighlighted ? cssClassesMap.highlighted : cssClassesMap.hidden)
                 }
             }
         }
 
-        ngxGraphComponent.nodes
-            .forEach(item =>
-                applyStylesToDomElm(
-                    getNodeDomSelector(item.id),
-                    ngxGraphComponent.chart.nativeElement,
-                    highlightedNodes
-                        ? highlightedNodesSet.has(item.id)
-                        : null
-                )
+        ngxGraphComponent.nodes.forEach((item: Node, index) =>
+            applyStylesToDomElm(
+                (ngxGraphComponent.nodeElements as QueryList<ElementRef<HTMLElement>>).get(index),
+                highlightedNodes ? highlightedNodesSet.has(item.id) : null
             )
+        )
 
-        ngxGraphComponent.links
-            .forEach(item =>
-                applyStylesToDomElm(
-                    getLinkDomSelector(item.id),
-                    ngxGraphComponent.chart.nativeElement,
-                    highlightedNodes
-                        ? highlightedNodesSet.has(item.source) && highlightedNodesSet.has(item.target)
-                        : null,
-                ),
+        ngxGraphComponent.links.forEach((item: Edge, index) =>
+            applyStylesToDomElm(
+                (ngxGraphComponent.linkElements as QueryList<ElementRef<HTMLElement>>).get(index),
+                highlightedNodes ? highlightedNodesSet.has(item.source) && highlightedNodesSet.has(item.target) : null
             )
+        )
     }
 
 }

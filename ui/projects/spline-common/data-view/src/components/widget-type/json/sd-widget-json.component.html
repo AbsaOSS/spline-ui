@@ -16,7 +16,7 @@
 
 <ng-container *ngIf="data$ | async as data">
 
-    <ngx-json-viewer *ngIf="data$ | async as data" [json]="data.json"
+    <ngx-json-viewer [json]="data.json"
                      [expanded]="options?.expanded">
     </ngx-json-viewer>
 

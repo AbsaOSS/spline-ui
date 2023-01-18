@@ -79,9 +79,10 @@
                 </div>
 
                 <div class="e2e-container__body">
-                    <sg-container (nodeSelectionChange$)="onNodeSelected($event.nodeId)"
+                    <sg-container #sgContainer (nodeSelectionChange$)="onNodeSelected($event.nodeId)"
                                   (graphNodeViewChange$)="onGraphNodeViewChanged($event.nodeView)"
                                   [sgAttributeLineage]="state.attributeLineage"
+                                  [splineGraph]="sgContainer.splineGraph"
                                   [graphNodeView]="state.graphNodeView"
                                   (highlightedRelationsNodesIdsChange$)="onHighlightedRelationsNodesIdsChange($event.nodeIds)"
                                   [graphData]="state.graphData"

@@ -15,9 +15,6 @@
  */
 
 @import 'spline-common/material-design/spline-theme';
-@import '~ngx-daterangepicker-material/daterangepicker-theme';
-
-@include date-range-picker-theme($spline-theme);
 
 .md-drppicker {
     .buttons button {
