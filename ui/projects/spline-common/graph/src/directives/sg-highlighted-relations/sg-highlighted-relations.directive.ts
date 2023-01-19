@@ -27,15 +27,21 @@ import { SplineGraphComponent } from '../../components'
 export class SgHighlightedRelationsDirective implements OnChanges {
 
     @Input() sgHighlightedRelations: string[] | null = null // node ids
+    // eslint-disable-next-line no-explicit-any
     @Input() splineGraph: SplineGraphComponent
 
-    get ngxGraphComponent(): GraphComponent {
+    cssClassesMap = {
+        highlighted: 'sg-node-relation--highlighted',
+        hidden: 'sg-node-relation--hidden'
+    }
+
+    get ngxGraphComponent(): GraphComponent | unknown {
         return this.splineGraph?.ngxGraphComponent
     }
 
     ngOnChanges(changes: { sgHighlightedRelations: SimpleChange }): void {
         const sgHighlightedRelations = changes.sgHighlightedRelations
-        if (this.ngxGraphComponent && sgHighlightedRelations && !sgHighlightedRelations?.firstChange) {
+        if (this.ngxGraphComponent && sgHighlightedRelations && !sgHighlightedRelations.firstChange) {
             this.applyNodeStyles()
         }
     }
@@ -43,46 +49,55 @@ export class SgHighlightedRelationsDirective implements OnChanges {
     private applyNodeStyles(): void {
         const highlightedNodes = this.sgHighlightedRelations
         const ngxGraphComponent = this.ngxGraphComponent
-        const highlightedNodesSet = new Set<string>(highlightedNodes)
 
-        const cssClassesMap = {
-            highlighted: 'sg-node-relation--highlighted',
-            hidden: 'sg-node-relation--hidden'
+        if (ngxGraphComponent) {
+            this.updateGraphComponent(ngxGraphComponent, highlightedNodes)
         }
-
-        const cssClassesList = Object.values(cssClassesMap)
-
-        function applyStylesToDomElm(elementRef: ElementRef<HTMLElement>,
-                                     ifHighlighted: boolean | null
-        ): void {
-            if (elementRef) {
-                // remove all styles
-                if (ifHighlighted === null) {
-                    cssClassesList
-                        .forEach(
-                            className => elementRef.nativeElement.classList.remove(className)
-                        )
-                }
-                else {
-                    elementRef.nativeElement.classList.add(ifHighlighted ? cssClassesMap.highlighted : cssClassesMap.hidden)
-                    elementRef.nativeElement.classList.remove(!ifHighlighted ? cssClassesMap.highlighted : cssClassesMap.hidden)
-                }
-            }
-        }
-
-        ngxGraphComponent.nodes.forEach((item: Node, index) =>
-            applyStylesToDomElm(
-                (ngxGraphComponent.nodeElements as QueryList<ElementRef<HTMLElement>>).get(index),
-                highlightedNodes ? highlightedNodesSet.has(item.id) : null
-            )
-        )
-
-        ngxGraphComponent.links.forEach((item: Edge, index) =>
-            applyStylesToDomElm(
-                (ngxGraphComponent.linkElements as QueryList<ElementRef<HTMLElement>>).get(index),
-                highlightedNodes ? highlightedNodesSet.has(item.source) && highlightedNodesSet.has(item.target) : null
-            )
-        )
     }
 
+    private updateGraphComponent(ngxGraphComponent, highlightedNodes) {
+        const highlightedNodesSet = new Set<string>(highlightedNodes)
+
+        ngxGraphComponent.nodes.forEach((item: Node, index) => {
+            const elementRef = (ngxGraphComponent.nodeElements as QueryList<ElementRef<HTMLElement>>).get(index)
+
+            if (elementRef) {
+                this.applyStylesToDomElm(
+                    elementRef,
+                    highlightedNodes ? highlightedNodesSet.has(item.id) : null
+                )
+            }
+        })
+
+        ngxGraphComponent.links.forEach((item: Edge, index) => {
+            const elementRef = (ngxGraphComponent.linkElements as QueryList<ElementRef<HTMLElement>>).get(index)
+
+            if (elementRef) {
+                this.applyStylesToDomElm(
+                    elementRef,
+                    highlightedNodes ? highlightedNodesSet.has(item.source) && highlightedNodesSet.has(item.target) : null
+                )
+            }
+        })
+    }
+
+    private applyStylesToDomElm(
+        elementRef: ElementRef<HTMLElement>,
+        ifHighlighted: boolean | null
+    ): void {
+        const cssClassesList = Object.values(this.cssClassesMap)
+
+        // remove all styles
+        if (ifHighlighted === null) {
+            cssClassesList
+                .forEach(
+                    className => elementRef.nativeElement.classList.remove(className)
+                )
+
+            return
+        }
+
+        elementRef.nativeElement.classList.add(ifHighlighted ? this.cssClassesMap.highlighted : this.cssClassesMap.hidden)
+        elementRef.nativeElement.classList.remove(!ifHighlighted ? this.cssClassesMap.highlighted : this.cssClassesMap.hidden)
+    }
 }

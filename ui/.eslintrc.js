@@ -64,9 +64,11 @@ module.exports = {
             ],
             'extends': [
                 'eslint:recommended',
+                "plugin:@angular-eslint/recommended",
                 'plugin:@typescript-eslint/eslint-recommended',
                 'plugin:@typescript-eslint/recommended',
                 'plugin:@typescript-eslint/recommended-requiring-type-checking',
+                "plugin:@angular-eslint/template/process-inline-templates"
             ],
             'rules': {
                 'import/newline-after-import': ['error', {'count': 2}],
@@ -206,9 +208,7 @@ module.exports = {
                 '*.component.html'
             ],
             'parser': '@angular-eslint/template-parser',
-            'plugins': [
-                '@angular-eslint/template'
-            ],
+            "extends": ["plugin:@angular-eslint/template/recommended"],
             'rules': {
                 '@angular-eslint/template/no-negated-async': 'error'
             }
