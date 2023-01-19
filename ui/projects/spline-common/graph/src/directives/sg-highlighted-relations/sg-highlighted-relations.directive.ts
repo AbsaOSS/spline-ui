@@ -27,7 +27,7 @@ import { SplineGraphComponent } from '../../components'
 export class SgHighlightedRelationsDirective implements OnChanges {
 
     @Input() sgHighlightedRelations: string[] | null = null // node ids
-    // eslint-disable-next-line no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     @Input() splineGraph: SplineGraphComponent
 
     cssClassesMap = {
@@ -58,7 +58,9 @@ export class SgHighlightedRelationsDirective implements OnChanges {
     private updateGraphComponent(ngxGraphComponent, highlightedNodes) {
         const highlightedNodesSet = new Set<string>(highlightedNodes)
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
         ngxGraphComponent.nodes.forEach((item: Node, index) => {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             const elementRef = (ngxGraphComponent.nodeElements as QueryList<ElementRef<HTMLElement>>).get(index)
 
             if (elementRef) {
@@ -69,7 +71,9 @@ export class SgHighlightedRelationsDirective implements OnChanges {
             }
         })
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
         ngxGraphComponent.links.forEach((item: Edge, index) => {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             const elementRef = (ngxGraphComponent.linkElements as QueryList<ElementRef<HTMLElement>>).get(index)
 
             if (elementRef) {
