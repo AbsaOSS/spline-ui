@@ -1,455 +1,439 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1,
-  "newProjectRoot": "projects",
-  "projects": {
-    "spline-ui": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss",
-          "skipTests": true
-        },
-        "@schematics/angular:class": {
-          "skipTests": true
-        },
-        "@schematics/angular:directive": {
-          "skipTests": true
-        },
-        "@schematics/angular:guard": {
-          "skipTests": true
-        },
-        "@schematics/angular:interceptor": {
-          "skipTests": true
-        },
-        "@schematics/angular:module": {},
-        "@schematics/angular:pipe": {
-          "skipTests": true
-        },
-        "@schematics/angular:service": {
-          "skipTests": true
-        }
-      },
-      "root": "",
-      "sourceRoot": "src",
-      "prefix": "app",
-      "architect": {
-        "build": {
-          "builder": "@angular-builders/custom-webpack:browser",
-          "options": {
-            "customWebpackConfig": {
-              "path": "./custom-webpack.config.js",
-              "replaceDuplicatePlugins": true
-            },
-            "outputPath": "dist",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
-            "aot": true,
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "src/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "**/*",
-                "input": "projects/spline-common/main/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "**/*",
-                "input": "projects/spline-common/graph/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "**/*",
-                "input": "projects/spline-common/layout/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "**/*",
-                "input": "projects/spline-common/dynamic-table/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "**/*",
-                "input": "projects/spline-common/dynamic-filter/main/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "**/*",
-                "input": "projects/spline-common/dynamic-filter/filter-controls/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "**/*",
-                "input": "projects/spline-shared/main/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "**/*",
-                "input": "projects/spline-shared/attributes/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "**/*",
-                "input": "projects/spline-shared/expression/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "**/*",
-                "input": "projects/spline-shared/graph/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "**/*",
-                "input": "projects/spline-shared/dynamic-table/main/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "**/*",
-                "input": "projects/spline-shared/data-view/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "**/*",
-                "input": "projects/spline-shared/events/assets",
-                "output": "/assets"
-              }
-            ],
-            "styles": [
-              "src/styles/styles.scss"
-            ],
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/styles",
-                "projects/spline-common/main/styles",
-                "projects/spline-common/data-view/styles",
-                "projects/spline-common/dynamic-table/styles",
-                "projects/spline-common/graph/styles",
-                "projects/spline-common/layout/styles",
-                "projects/spline-common/dynamic-filter/main/styles",
-                "projects/spline-shared/main/styles",
-                "projects/spline-shared/attributes/styles",
-                "projects/spline-shared/expression/styles",
-                "projects/spline-shared/graph/styles",
-                "projects/spline-shared/dynamic-table/main/styles"
-              ]
-            },
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "3mb",
-                  "maximumError": "5mb"
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "spline-ui": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss",
+                    "skipTests": true
                 },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "600kb",
-                  "maximumError": "100kb"
+                "@schematics/angular:class": {
+                    "skipTests": true
+                },
+                "@schematics/angular:directive": {
+                    "skipTests": true
+                },
+                "@schematics/angular:guard": {
+                    "skipTests": true
+                },
+                "@schematics/angular:interceptor": {
+                    "skipTests": true
+                },
+                "@schematics/angular:module": {},
+                "@schematics/angular:pipe": {
+                    "skipTests": true
+                },
+                "@schematics/angular:service": {
+                    "skipTests": true
                 }
-              ]
             },
-            "localhost": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.localhost.ts"
+            "root": "",
+            "sourceRoot": "src",
+            "prefix": "app",
+            "architect": {
+                "build": {
+                    "builder": "@angular-builders/custom-webpack:browser",
+                    "options": {
+                        "customWebpackConfig": {
+                            "path": "./custom-webpack.config.js",
+                            "replaceDuplicatePlugins": true
+                        },
+                        "outputPath": "dist",
+                        "index": "src/index.html",
+                        "main": "src/main.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "tsconfig.app.json",
+                        "aot": true,
+                        "assets": [
+                            {
+                                "glob": "**/*",
+                                "input": "src/assets",
+                                "output": "/assets"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "projects/spline-common/main/assets",
+                                "output": "/assets"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "projects/spline-common/graph/assets",
+                                "output": "/assets"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "projects/spline-common/layout/assets",
+                                "output": "/assets"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "projects/spline-common/dynamic-table/assets",
+                                "output": "/assets"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "projects/spline-common/dynamic-filter/main/assets",
+                                "output": "/assets"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "projects/spline-common/dynamic-filter/filter-controls/assets",
+                                "output": "/assets"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "projects/spline-shared/main/assets",
+                                "output": "/assets"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "projects/spline-shared/attributes/assets",
+                                "output": "/assets"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "projects/spline-shared/expression/assets",
+                                "output": "/assets"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "projects/spline-shared/graph/assets",
+                                "output": "/assets"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "projects/spline-shared/dynamic-table/main/assets",
+                                "output": "/assets"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "projects/spline-shared/data-view/assets",
+                                "output": "/assets"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "projects/spline-shared/events/assets",
+                                "output": "/assets"
+                            }
+                        ],
+                        "styles": [
+                            "src/styles/styles.scss"
+                        ],
+                        "stylePreprocessorOptions": {
+                            "includePaths": [
+                                "src/styles",
+                                "projects/spline-common/main/styles",
+                                "projects/spline-common/data-view/styles",
+                                "projects/spline-common/dynamic-table/styles",
+                                "projects/spline-common/graph/styles",
+                                "projects/spline-common/layout/styles",
+                                "projects/spline-common/dynamic-filter/main/styles",
+                                "projects/spline-shared/main/styles",
+                                "projects/spline-shared/attributes/styles",
+                                "projects/spline-shared/expression/styles",
+                                "projects/spline-shared/graph/styles",
+                                "projects/spline-shared/dynamic-table/main/styles"
+                            ]
+                        },
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "3mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "600kb",
+                                    "maximumError": "100kb"
+                                }
+                            ]
+                        },
+                        "localhost": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.localhost.ts"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-builders/custom-webpack:dev-server",
+                    "options": {
+                        "browserTarget": "spline-ui:build",
+                        "sourceMap": {
+                            "scripts": true,
+                            "styles": true,
+                            "vendor": false
+                        }
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "spline-ui:build:production"
+                        },
+                        "localhost": {
+                            "browserTarget": "spline-ui:build:localhost"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "spline-ui:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-builders/jest:run",
+                    "options": {
+                        "no-cache": true,
+                        "bail": true,
+                        "scripts": [],
+                        "styles": [
+                            "src/styles.css"
+                        ],
+                        "assets": [
+                            {
+                                "glob": "**/*",
+                                "input": "src/assets",
+                                "output": "/assets"
+                            }
+                        ],
+                        "tsConfig": "tsconfig.spec.json"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-eslint/builder:lint",
+                    "options": {
+                        "eslintConfig": ".eslintrc.js",
+                        "lintFilePatterns": [
+                            "src/**/*.spec.ts",
+                            "src/**/*.ts"
+                        ]
+                    }
+                },
+                "cypress-run": {
+                    "builder": "@cypress/schematic:cypress",
+                    "options": {
+                        "devServerTarget": "spline-ui:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "spline-ui:serve:production"
+                        }
+                    }
+                },
+                "cypress-open": {
+                    "builder": "@cypress/schematic:cypress",
+                    "options": {
+                        "watch": true,
+                        "headless": false
+                    }
+                },
+                "ct": {
+                    "builder": "@cypress/schematic:cypress",
+                    "options": {
+                        "devServerTarget": "spline-ui:serve",
+                        "watch": true,
+                        "headless": false,
+                        "testingType": "component"
+                    },
+                    "configurations": {
+                        "development": {
+                            "devServerTarget": "spline-ui:serve:development"
+                        }
+                    }
+                },
+                "e2e": {
+                    "builder": "@cypress/schematic:cypress",
+                    "options": {
+                        "devServerTarget": "spline-ui:serve",
+                        "watch": true,
+                        "headless": false
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "spline-ui:serve:production"
+                        }
+                    }
                 }
-              ]
             }
-          }
         },
-        "serve": {
-          "builder": "@angular-builders/custom-webpack:dev-server",
-          "options": {
-            "browserTarget": "spline-ui:build",
-            "sourceMap": {
-              "scripts": true,
-              "styles": true,
-              "vendor": false
+        "spline-api": {
+            "projectType": "library",
+            "root": "projects/spline-api",
+            "sourceRoot": "projects/spline-api/src",
+            "prefix": "lib",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:ng-packagr",
+                    "options": {
+                        "tsConfig": "projects/spline-api/tsconfig.lib.json",
+                        "project": "projects/spline-api/ng-package.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "projects/spline-api/tsconfig.lib.prod.json"
+                        }
+                    }
+                },
+                "test": {
+                    "builder": "@angular-builders/jest:run",
+                    "options": {
+                        "no-cache": true,
+                        "bail": true,
+                        "scripts": []
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-eslint/builder:lint",
+                    "options": {
+                        "eslintConfig": ".eslintrc.js",
+                        "lintFilePatterns": [
+                            "projects/spline-api/**/*.spec.ts",
+                            "projects/spline-api/**/*.ts"
+                        ]
+                    }
+                }
             }
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "spline-ui:build:production"
-            },
-            "localhost": {
-              "browserTarget": "spline-ui:build:localhost"
+        },
+        "spline-common": {
+            "projectType": "library",
+            "root": "projects/spline-common",
+            "sourceRoot": "projects/spline-common/src",
+            "prefix": "lib",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:ng-packagr",
+                    "options": {
+                        "tsConfig": "projects/spline-common/tsconfig.lib.json",
+                        "project": "projects/spline-common/ng-package.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "projects/spline-common/tsconfig.lib.prod.json"
+                        }
+                    }
+                },
+                "test": {
+                    "builder": "@angular-builders/jest:run",
+                    "options": {
+                        "no-cache": true,
+                        "bail": true,
+                        "scripts": []
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-eslint/builder:lint",
+                    "options": {
+                        "eslintConfig": ".eslintrc.js",
+                        "lintFilePatterns": [
+                            "projects/spline-common/**/*.spec.ts",
+                            "projects/spline-common/**/*.ts"
+                        ]
+                    }
+                }
             }
-          }
         },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "spline-ui:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-builders/jest:run",
-          "options": {
-            "no-cache": true,
-            "bail": true,
-            "scripts": [],
-            "styles": [
-              "src/styles.css"
-            ],
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "src/assets",
-                "output": "/assets"
-              }
-            ],
-            "tsConfig": "tsconfig.spec.json"
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "eslintConfig": ".eslintrc.js",
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "cypress/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        },
-        "cypress-run": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "devServerTarget": "spline-ui:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "spline-ui:serve:production"
+        "spline-shared": {
+            "projectType": "library",
+            "root": "projects/spline-shared",
+            "sourceRoot": "projects/spline-shared/src",
+            "prefix": "lib",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:ng-packagr",
+                    "options": {
+                        "tsConfig": "projects/spline-shared/tsconfig.lib.json",
+                        "project": "projects/spline-shared/ng-package.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "projects/spline-shared/tsconfig.lib.prod.json"
+                        }
+                    }
+                },
+                "test": {
+                    "builder": "@angular-builders/jest:run",
+                    "options": {
+                        "no-cache": true,
+                        "bail": true,
+                        "scripts": []
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-eslint/builder:lint",
+                    "options": {
+                        "eslintConfig": ".eslintrc.js",
+                        "lintFilePatterns": [
+                            "projects/spline-shared/**/*.spec.ts",
+                            "projects/spline-shared/**/*.ts"
+                        ]
+                    }
+                }
             }
-          }
         },
-        "cypress-open": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "watch": true,
-            "headless": false
-          }
-        },
-        "ct": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "devServerTarget": "spline-ui:serve",
-            "watch": true,
-            "headless": false,
-            "testingType": "component"
-          },
-          "configurations": {
-            "development": {
-              "devServerTarget": "spline-ui:serve:development"
+        "spline-utils": {
+            "projectType": "library",
+            "root": "projects/spline-utils",
+            "sourceRoot": "projects/spline-utils/src",
+            "prefix": "lib",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:ng-packagr",
+                    "options": {
+                        "tsConfig": "projects/spline-utils/tsconfig.lib.json",
+                        "project": "projects/spline-utils/ng-package.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "projects/spline-utils/tsconfig.lib.prod.json"
+                        }
+                    }
+                },
+                "test": {
+                    "builder": "@angular-builders/jest:run",
+                    "options": {
+                        "no-cache": true,
+                        "bail": true,
+                        "scripts": []
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-eslint/builder:lint",
+                    "options": {
+                        "eslintConfig": ".eslintrc.js",
+                        "lintFilePatterns": [
+                            "projects/spline-utils/**/*.spec.ts",
+                            "projects/spline-utils/**/*.ts"
+                        ]
+                    }
+                }
             }
-          }
-        },
-        "e2e": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "devServerTarget": "spline-ui:serve",
-            "watch": true,
-            "headless": false
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "spline-ui:serve:production"
-            }
-          }
         }
-      }
     },
-    "spline-api": {
-      "projectType": "library",
-      "root": "projects/spline-api",
-      "sourceRoot": "projects/spline-api/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "tsConfig": "projects/spline-api/tsconfig.lib.json",
-            "project": "projects/spline-api/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/spline-api/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "test": {
-          "builder": "@angular-builders/jest:run",
-          "options": {
-            "no-cache": true,
-            "bail": true,
-            "scripts": []
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "eslintConfig": ".eslintrc.js",
-            "tsConfig": [
-              "tsconfig.lib.json",
-              "tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "spline-common": {
-      "projectType": "library",
-      "root": "projects/spline-common",
-      "sourceRoot": "projects/spline-common/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "tsConfig": "projects/spline-common/tsconfig.lib.json",
-            "project": "projects/spline-common/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/spline-common/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "test": {
-          "builder": "@angular-builders/jest:run",
-          "options": {
-            "no-cache": true,
-            "bail": true,
-            "scripts": []
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "eslintConfig": "projects/spline-common/.eslintrc.js",
-            "tsConfig": [
-              "projects/spline-common/tsconfig.lib.json",
-              "projects/spline-common/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "spline-shared": {
-      "projectType": "library",
-      "root": "projects/spline-shared",
-      "sourceRoot": "projects/spline-shared/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "tsConfig": "projects/spline-shared/tsconfig.lib.json",
-            "project": "projects/spline-shared/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/spline-shared/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "test": {
-          "builder": "@angular-builders/jest:run",
-          "options": {
-            "no-cache": true,
-            "bail": true,
-            "scripts": []
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "eslintConfig": ".eslintrc.js",
-            "tsConfig": [
-              "tsconfig.lib.json",
-              "tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "spline-utils": {
-      "projectType": "library",
-      "root": "projects/spline-utils",
-      "sourceRoot": "projects/spline-utils/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "tsConfig": "projects/spline-utils/tsconfig.lib.json",
-            "project": "projects/spline-utils/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/spline-utils/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "test": {
-          "builder": "@angular-builders/jest:run",
-          "options": {
-            "no-cache": true,
-            "bail": true,
-            "scripts": []
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "eslintConfig": ".eslintrc.js",
-            "tsConfig": [
-              "tsconfig.lib.json",
-                            "tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
+    "defaultProject": "spline-ui",
+    "cli": {
+        "analytics": "0813ba40-5264-4248-a453-393bba4de37c"
     }
-  },
-  "defaultProject": "spline-ui",
-  "cli": {
-    "analytics": "0813ba40-5264-4248-a453-393bba4de37c"
-  }
 }

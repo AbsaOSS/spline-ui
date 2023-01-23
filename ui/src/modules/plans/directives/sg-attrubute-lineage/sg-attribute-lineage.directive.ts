@@ -14,130 +14,123 @@
  * limitations under the License.
  */
 
-
-import { AfterContentInit, Directive, forwardRef, Host, Inject, Input, OnChanges, SimpleChanges } from '@angular/core'
-import { GraphComponent } from '@swimlane/ngx-graph'
+import { Directive, ElementRef, Input, OnChanges, QueryList, SimpleChange } from '@angular/core'
+import { Edge, GraphComponent, Node } from '@swimlane/ngx-graph'
 import { OperationAttributeLineage, OperationAttributeLineageType } from 'spline-api'
-import { getLinkDomSelector, getNodeDomSelector, SplineGraphComponent } from 'spline-common/graph'
-import { SgContainerComponent } from 'spline-shared/graph'
+import { SplineGraphComponent } from 'spline-common/graph'
 
-import { extractAttributeLineageNodesMap } from '../../models/attribute'
+import { AttributeLineageNodesMap, extractAttributeLineageNodesMap } from '../../models'
 
 
 @Directive({
-    selector: 'sg-container[sgAttributeLineage]',
+    selector: 'sg-container[sgAttributeLineage]'
 })
-export class SgAttributeLineageDirective implements AfterContentInit, OnChanges {
-
-    readonly domRelationDelayInMs = 500
+export class SgAttributeLineageDirective implements OnChanges {
 
     @Input() sgAttributeLineage: OperationAttributeLineage | null
+    @Input() splineGraph: SplineGraphComponent
 
-    get splineGraph(): SplineGraphComponent {
-        return this.sgContainerComponent.splineGraph
+    cssClassesMap = {
+        [OperationAttributeLineageType.Usage]: 'sg-attribute-lineage--usage',
+        [OperationAttributeLineageType.Lineage]: 'sg-attribute-lineage--lineage',
+        [OperationAttributeLineageType.Impact]: 'sg-attribute-lineage--impact',
+        none: 'sg-attribute-lineage--none'
     }
 
-    constructor(
-        @Host() @Inject(forwardRef(() => SgContainerComponent)) private sgContainerComponent: SgContainerComponent,
-    ) {
+    get ngxGraphComponent(): GraphComponent | unknown {
+        return this.splineGraph?.ngxGraphComponent
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-
-        const {sgAttributeLineage} = changes
-
-        if (sgAttributeLineage && !sgAttributeLineage.isFirstChange()) {
-            setTimeout(
-                () => this.applyLineageStyles(changes.sgAttributeLineage.currentValue, this.splineGraph.ngxGraphComponent),
-                this.domRelationDelayInMs
-            )
-
+    ngOnChanges(changes: { sgAttributeLineage: SimpleChange }): void {
+        const sgAttributeLineage = changes.sgAttributeLineage
+        if (this.ngxGraphComponent && sgAttributeLineage && !sgAttributeLineage?.firstChange) {
+            this.applyLineageStyles()
         }
     }
 
-    ngAfterContentInit(): void {
-        setTimeout(
-            () => this.applyLineageStyles(this.sgAttributeLineage, this.splineGraph.ngxGraphComponent),
-            this.domRelationDelayInMs
-        )
+    private applyLineageStyles(): void {
+        const attributeLineage: OperationAttributeLineage | null = this.sgAttributeLineage
+        const ngxGraphComponent = this.ngxGraphComponent
+
+        if (ngxGraphComponent instanceof GraphComponent && attributeLineage) {
+            this.updateGraphComponent(ngxGraphComponent, attributeLineage)
+        }
     }
 
-    private applyLineageStyles(attributeLineage: OperationAttributeLineage | null, ngxGraphComponent: GraphComponent): void {
-        const attributesLineageNodesMap = extractAttributeLineageNodesMap(attributeLineage)
+    private updateGraphComponent(ngxGraphComponent: GraphComponent, attributeLineage: OperationAttributeLineage): void {
+        const attributesNodesMap: AttributeLineageNodesMap = extractAttributeLineageNodesMap(attributeLineage)
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        const nodes = ngxGraphComponent.nodes
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        const nodeElements = ngxGraphComponent.nodeElements as QueryList<ElementRef<HTMLElement>>
 
-        const cssClassesMap = {
-            [OperationAttributeLineageType.Usage]: 'sg-attribute-lineage--usage',
-            [OperationAttributeLineageType.Lineage]: 'sg-attribute-lineage--lineage',
-            [OperationAttributeLineageType.Impact]: 'sg-attribute-lineage--impact',
-            none: 'sg-attribute-lineage--none',
-        }
+        nodes.forEach((item: Node, index) => {
+            const elementRef: ElementRef<HTMLElement> = nodeElements.get(index)
+            const evaluationFn = (lineageType: OperationAttributeLineageType): boolean => {
+                const lineageNodesMap = attributesNodesMap[lineageType]
 
-        const lineageTypesList = Object.values(OperationAttributeLineageType)
+                return lineageNodesMap.has(item.id)
+            }
 
-        function applyStylesToDomElm(selector: string,
-                                     rootElmRef: HTMLElement,
-                                     evaluationFn: (lineageType: OperationAttributeLineageType) => boolean,
-        ): void {
-            const elementRef = rootElmRef.querySelector(selector)
             if (elementRef) {
-                let hasAnyType = false
-                lineageTypesList
-                    .forEach(lineageType => {
-                        const refCssClassName = cssClassesMap[lineageType]
-                        if (evaluationFn(lineageType)) {
-                            elementRef.classList.add(refCssClassName)
-                            hasAnyType = true
-                        }
-                        else {
-                            elementRef.classList.remove(refCssClassName)
-                        }
-                    })
+                this.applyStylesToDomElm(elementRef, attributeLineage, evaluationFn)
+            }
+        })
 
-                // no type styles
-                if (hasAnyType || attributeLineage === null) {
-                    elementRef.classList.remove(cssClassesMap.none)
-                }
-                else {
-                    elementRef.classList.add(cssClassesMap.none)
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        const links = ngxGraphComponent.links
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        const linkElements = ngxGraphComponent.linkElements as QueryList<ElementRef<HTMLElement>>
+        links.forEach((item: Edge, index) => {
+            const elementRef = linkElements.get(index)
+            const evaluationFn = (lineageType: OperationAttributeLineageType): boolean => {
+                const lineageNodesMap = attributesNodesMap[lineageType]
+                const usageNodeMap = attributesNodesMap[OperationAttributeLineageType.Usage]
+
+                switch (lineageType) {
+                    case OperationAttributeLineageType.Lineage:
+                        return lineageNodesMap.has(item.source) && (lineageNodesMap.has(item.target) || usageNodeMap.has(item.target))
+
+                    case OperationAttributeLineageType.Impact:
+                        return lineageNodesMap.has(item.target) && (lineageNodesMap.has(item.source) || usageNodeMap.has(item.source))
+
+                    default:
+                        return lineageNodesMap.has(item.source)
                 }
             }
+
+            if (elementRef) {
+                this.applyStylesToDomElm(elementRef, attributeLineage, evaluationFn)
+            }
+        })
+    }
+
+    private applyStylesToDomElm(
+        elementRef: ElementRef<HTMLElement>,
+        attributeLineage,
+        evaluationFn: (lineageType: OperationAttributeLineageType) => boolean
+    ): void {
+        const lineageTypesList = Object.values(OperationAttributeLineageType)
+
+        let hasAnyType = false
+        lineageTypesList
+            .forEach(lineageType => {
+                const refCssClassName = this.cssClassesMap[lineageType]
+                if (evaluationFn(lineageType)) {
+                    elementRef.nativeElement.classList.add(refCssClassName)
+                    hasAnyType = true
+                }
+                else {
+                    elementRef.nativeElement.classList.remove(refCssClassName)
+                }
+            })
+
+        // no type styles
+        if (hasAnyType || attributeLineage === null) {
+            elementRef.nativeElement.classList.remove(this.cssClassesMap.none)
         }
-
-        ngxGraphComponent.nodes
-            .forEach(item =>
-                applyStylesToDomElm(
-                    getNodeDomSelector(item.id),
-                    ngxGraphComponent.chart.nativeElement,
-                    (lineageType) => attributesLineageNodesMap[lineageType].has(item.id),
-                ),
-            )
-
-        ngxGraphComponent.links
-            .forEach(item =>
-                applyStylesToDomElm(
-                    getLinkDomSelector(item.id),
-                    ngxGraphComponent.chart.nativeElement,
-                    (lineageType) => {
-                        switch (lineageType) {
-                            case OperationAttributeLineageType.Lineage:
-                                return attributesLineageNodesMap[lineageType].has(item.source)
-                                    && (
-                                        attributesLineageNodesMap[lineageType].has(item.target)
-                                        || attributesLineageNodesMap[OperationAttributeLineageType.Usage].has(item.target)
-                                    )
-
-                            case OperationAttributeLineageType.Impact:
-                                return attributesLineageNodesMap[lineageType].has(item.target)
-                                    && (
-                                        attributesLineageNodesMap[lineageType].has(item.source)
-                                        || attributesLineageNodesMap[OperationAttributeLineageType.Usage].has(item.source)
-                                    )
-
-                            default:
-                                return attributesLineageNodesMap[lineageType].has(item.source)
-                        }
-                    },
-                ),
-            )
+        else {
+            elementRef.nativeElement.classList.add(this.cssClassesMap.none)
+        }
     }
 }

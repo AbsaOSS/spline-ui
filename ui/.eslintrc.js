@@ -29,7 +29,27 @@ module.exports = {
             ]
         },
         {
-            'files': ['*.ts'],
+            'files': ['cypress/*.ts', "cypress.config.ts"],
+            'parser': '@typescript-eslint/parser',
+            'parserOptions': {
+                'ecmaVersion': 2020,
+                'sourceType': 'module',
+                'tsconfigRootDir': __dirname,
+                'project': 'cypress/tsconfig.json'
+            },
+            'plugins': [
+                'eslint-plugin-cypress',
+                '@typescript-eslint',
+                'import',
+            ],
+            'extends': [
+                'eslint:recommended',
+                'plugin:@typescript-eslint/eslint-recommended',
+                'plugin:@typescript-eslint/recommended',
+            ],
+        },
+        {
+            'files': ['src/**/*.ts', 'projects/**/*.ts'],
             'parser': '@typescript-eslint/parser',
             'parserOptions': {
                 'ecmaVersion': 2020,
@@ -39,15 +59,16 @@ module.exports = {
             },
             'plugins': [
                 '@typescript-eslint',
-                '@typescript-eslint/tslint',
                 '@angular-eslint',
                 'import',
             ],
             'extends': [
                 'eslint:recommended',
+                "plugin:@angular-eslint/recommended",
                 'plugin:@typescript-eslint/eslint-recommended',
                 'plugin:@typescript-eslint/recommended',
                 'plugin:@typescript-eslint/recommended-requiring-type-checking',
+                "plugin:@angular-eslint/template/process-inline-templates"
             ],
             'rules': {
                 'import/newline-after-import': ['error', {'count': 2}],
@@ -63,12 +84,6 @@ module.exports = {
                     }
                 ],
                 '@typescript-eslint/no-non-null-assertion': 0,
-                '@typescript-eslint/tslint/config': [
-                    'error',
-                    {
-                        'lintFile': __dirname + '/tslint.json'
-                    }
-                ],
                 '@typescript-eslint/no-namespace': 0,
                 '@typescript-eslint/explicit-function-return-type': 0,
                 'no-inner-declarations': 0,
@@ -193,9 +208,7 @@ module.exports = {
                 '*.component.html'
             ],
             'parser': '@angular-eslint/template-parser',
-            'plugins': [
-                '@angular-eslint/template'
-            ],
+            "extends": ["plugin:@angular-eslint/template/recommended"],
             'rules': {
                 '@angular-eslint/template/no-negated-async': 'error'
             }

@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-
+import { SgHighlightedRelationsDirective } from 'spline-common/graph'
 import { SgControlPanelSectionDirective } from './control-panel-action/sg-control-panel-section.directive'
-import { SgHighlightedRelationsDirective } from './sg-highlighted-relations/sg-highlighted-relations.directive'
 
 
 export const splineGraphDirectives: any[] = [

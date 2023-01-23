@@ -17,7 +17,6 @@
 import { Component } from '@angular/core'
 import { Router } from '@angular/router'
 import { take } from 'rxjs/operators'
-import { AttributeSearchRecord } from 'spline-api'
 import { SplineConfig, SplineConfigApiService } from 'spline-shared'
 import { BaseLocalStateComponent } from 'spline-utils'
 
@@ -46,17 +45,6 @@ export class AppComponent extends BaseLocalStateComponent<AppStoreNs.State> {
             .subscribe((splineConfig) => {
                 this.init(splineConfig)
             })
-    }
-
-    onAttributeSearchSelected(attributeInfo: AttributeSearchRecord): void {
-        this.router.navigate(
-            ['/plans/overview', attributeInfo.executionEventId],
-            {
-                queryParams: {
-                    attributeId: attributeInfo.id
-                }
-            }
-        )
     }
 
     onSideNavExpanded(isExpanded: boolean): void {
