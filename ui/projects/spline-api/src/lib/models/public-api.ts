@@ -14,4 +14,14 @@
  * limitations under the License.
  */
 
-export * from './entities/public-api'
+export * from './attribute/public-api'
+export * from './attribute-lineage/public-api'
+export * from './operation-attribute-lineage/public-api'
+export * from './data-source/public-api'
+export * from './execution-event/public-api'
+export * from './execution-event-overview/public-api'
+export * from './execution-plan/public-api'
+export * from './lineage/public-api'
+export * from './operation/public-api'
+export * from './operation-property/public-api'
+export * from './consumer-api-settings/consumer-api-settings.models'

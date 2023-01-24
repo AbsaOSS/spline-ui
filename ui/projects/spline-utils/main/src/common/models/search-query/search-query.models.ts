@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 
-import { MatSortable } from '@angular/material/sort'
-import { Sort } from '@angular/material/sort/sort'
-
 import { ProcessingStoreNs } from '../../../store'
 import { SplineRecord } from '../heplers'
 import { DEFAULT_PAGER, QueryPager, QuerySorter } from '../query'
@@ -24,14 +21,13 @@ import { DEFAULT_PAGER, QueryPager, QuerySorter } from '../query'
 
 export namespace SearchQuery {
 
-    import FieldSorter = QuerySorter.FieldSorter
-    import SortDir = QuerySorter.SortDir
-
+    // eslint-disable-next-line @typescript-eslint/ban-types
     export interface SearchParams<TFilter extends SplineRecord = {}, TSortableField = string> {
         pager: QueryPager
         filter: TFilter
         alwaysOnFilter: TFilter
         sortBy: QuerySorter.FieldSorter<TSortableField>[]
+        label?: string[]
         searchTerm: string
     }
 
@@ -51,23 +47,6 @@ export namespace SearchQuery {
     export const DEFAULT_RENDER_DATA: DataState<any> = {
         data: null,
         loadingProcessing: ProcessingStoreNs.getDefaultProcessingState()
-    }
-
-    export const DEFAULT_SERVER_POLL_INTERVAL = 5000 // msec
-
-    export function toMatSortable(fieldSorter: QuerySorter.FieldSorter, disableClear = true): MatSortable {
-        return {
-            id: fieldSorter.field,
-            start: fieldSorter.dir.toLowerCase(),
-            disableClear
-        } as MatSortable
-    }
-
-    export function matSortToFiledSorter<TFiled = string>(sort: Sort): FieldSorter<TFiled> {
-        return {
-            field: sort.active as any,
-            dir: sort.direction === 'asc' ? SortDir.ASC : SortDir.DESC
-        }
     }
 
 }

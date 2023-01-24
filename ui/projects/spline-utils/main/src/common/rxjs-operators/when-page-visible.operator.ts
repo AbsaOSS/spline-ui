@@ -17,7 +17,7 @@
 import { fromEvent, Observable } from 'rxjs'
 import { filter, repeatWhen, shareReplay, takeUntil } from 'rxjs/operators'
 
-
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function whenPageVisible() {
     const visibilitychange$ = fromEvent(document, 'visibilitychange').pipe(
         shareReplay({ refCount: true, bufferSize: 1 })

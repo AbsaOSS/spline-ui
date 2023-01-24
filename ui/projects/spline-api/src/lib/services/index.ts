@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2021 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core'
+import {
+    AttributeApiService,
+    ExecutionEventApiService,
+    ExecutionPlanApiService,
+    LabelApiService,
+    SplineDataSourceApiService
+} from 'spline-api'
 
-import { SplineApiCoreModule } from '../core'
 
-import * as fromServices from './services'
+export const commonServiceProvider: any[] = [
+    ExecutionEventApiService,
+    ExecutionPlanApiService,
+    AttributeApiService,
+    SplineDataSourceApiService,
+    LabelApiService
+]
 
-
-@NgModule({
-    providers: [
-        ...fromServices.executionEventServices,
-    ],
-    imports: [
-        SplineApiCoreModule,
-    ],
-    exports: [],
-})
-export class SplineApiExecutionEventModule {
-}
+export * from './public-api'

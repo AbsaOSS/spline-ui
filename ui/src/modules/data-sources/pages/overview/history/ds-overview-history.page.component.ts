@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { Observable } from 'rxjs'
 import { map, takeUntil } from 'rxjs/operators'
 import { ExecutionEvent, ExecutionEventApiService, ExecutionEventsQuery, SplineDataSourceInfo } from 'spline-api'
@@ -30,6 +30,7 @@ import { DsOverviewHistoryPageConfig } from './ds-overview-history.page-config'
 
 
 @Component({
+    // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'data-sources-overview-history-page',
     templateUrl: './ds-overview-history.page.component.html',
     styleUrls: ['./ds-overview-history.page.component.scss'],
@@ -55,7 +56,8 @@ import { DsOverviewHistoryPageConfig } from './ds-overview-history.page-config'
     ]
 
 })
-export class DsOverviewHistoryPageComponent extends BaseLocalStateComponent<DsOverviewHistoryPageConfig.State> implements OnInit {
+export class DsOverviewHistoryPageComponent extends BaseLocalStateComponent<DsOverviewHistoryPageConfig.State> implements OnInit,
+                                                                                                                          OnDestroy {
 
     readonly dataMap = DsStateHistoryDtSchema.getSchema()
     readonly dataSourceInfo$: Observable<SplineDataSourceInfo>
@@ -91,6 +93,11 @@ export class DsOverviewHistoryPageComponent extends BaseLocalStateComponent<DsOv
                     DsOverviewHistoryPageConfig.getFiltersMapping()
                 )
             })
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy()
+        this.dataSource.disconnect()
     }
 
     onCellEvent($event: DtCellCustomEvent<ExecutionEvent>): void {

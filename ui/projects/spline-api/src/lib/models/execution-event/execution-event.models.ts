@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 import { isBoolean } from 'lodash-es'
 
 import { DataSourceWriteMode, SplineDataSourceInfo, uriToDatasourceInfo } from '../data-source'
@@ -61,12 +60,16 @@ export type ExecutionEvent =
 
 export function toExecutionEvent(entity: ExecutionEventDto): ExecutionEvent {
     const append = entity[ExecutionEventField.append]
-    const writeMode =
-        isBoolean(append)
-            ? append
-                ? DataSourceWriteMode.Append
-                : DataSourceWriteMode.Overwrite
-            : null
+    let writeMode = null
+    
+    if (isBoolean(append) && !append) {
+        writeMode = DataSourceWriteMode.Overwrite
+    }
+
+    if (isBoolean(append) && append) {
+        writeMode = DataSourceWriteMode.Append
+    }
+
     return {
         ...entity,
         applicationName: entity.applicationName ?? entity.executionEventId,

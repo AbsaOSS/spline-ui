@@ -15,7 +15,15 @@
  */
 
 import { HttpParams } from '@angular/common/http'
-import { DEFAULT_PAGE_LIMIT, PageQueryParams, QueryPager, QuerySorter, SearchQuery } from 'spline-utils'
+import {
+    DEFAULT_PAGE_LIMIT,
+    LabelPageQueryParams,
+    LabelValuesPageQueryParams,
+    PageQueryParams,
+    QueryPager,
+    QuerySorter,
+    SearchQuery
+} from 'spline-utils'
 
 import { DataSourceWriteMode } from '../data-source'
 
@@ -28,6 +36,7 @@ export namespace ExecutionEventsQuery {
         executedAtFrom?: Date
         executedAtTo?: Date
         searchTerm?: string
+        label?: string[]
         dataSourceUri?: string
         asAtTime?: number
         applicationId?: string
@@ -42,6 +51,7 @@ export namespace ExecutionEventsQuery {
         sortOrder?: string
         sortField?: string
         searchTerm?: string
+        label?: string[]
         pageSize?: number
         pageNum?: number
         dataSourceUri?: string
@@ -58,7 +68,8 @@ export namespace ExecutionEventsQuery {
         }
     }
 
-    export function queryParamsDtoToHttpParams(queryParamsDto: QueryParamsDto): HttpParams {
+    // eslint-disable-next-line max-len
+    export function queryParamsDtoToHttpParams(queryParamsDto: QueryParamsDto | LabelPageQueryParams | LabelValuesPageQueryParams): HttpParams {
         let httpParams = new HttpParams()
         Object.keys(queryParamsDto)
             .filter(key => queryParamsDto[key] !== undefined)
@@ -66,6 +77,10 @@ export namespace ExecutionEventsQuery {
                 httpParams = httpParams.append(key, queryParamsDto[key])
             })
         return httpParams
+    }
+
+    export function labelQueryParamsToHttpParams(queryParams: LabelPageQueryParams | LabelValuesPageQueryParams): HttpParams {
+        return queryParamsDtoToHttpParams(queryParams)
     }
 
     export function queryParamsToHttpParams(queryParams: QueryParams): HttpParams {
@@ -88,6 +103,14 @@ export namespace ExecutionEventsQuery {
         }
     }
 
+    export function toLabelQueryParams(
+        labelSearchValue: string, labelString?: string
+    ): LabelPageQueryParams | LabelValuesPageQueryParams {
+        const search = labelSearchValue ? { search: labelSearchValue } : null
+        const labelName = labelString ? { labelName: labelString } : null
+        return Object.assign({ length: -1, offset: 0 }, search, labelName)
+    }
+
     function parseDate(value = undefined) {
         if (typeof value === 'number') {
             return value
@@ -108,11 +131,12 @@ export namespace ExecutionEventsQuery {
             timestampStart: parseDate(queryFilter.executedAtFrom),
             timestampEnd: parseDate(queryFilter.executedAtTo),
             searchTerm: queryFilter?.searchTerm?.length ? queryFilter?.searchTerm : undefined,
+            label: queryFilter?.label?.length ? queryFilter?.label : undefined,
             dataSourceUri: queryFilter?.dataSourceUri,
             asAtTime: queryFilter?.asAtTime,
             applicationId: queryFilter?.applicationId,
             append: queryFilter?.writeMode?.length
-                ? queryFilter?.writeMode.map(m => {
+                    ? queryFilter?.writeMode.map(m => {
                     switch (m) {
                         case DataSourceWriteMode.Append:
                             return true
@@ -122,7 +146,7 @@ export namespace ExecutionEventsQuery {
                             return null // (append === null) means no writes, i.e. read-only items.
                     }
                 })
-                : undefined
+                    : undefined
         }
     }
 

@@ -14,42 +14,42 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Output, ViewChild } from '@angular/core'
+import { ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
-import { BehaviorSubject, Observable } from 'rxjs'
-import { map, switchMap } from 'rxjs/operators'
+import { BehaviorSubject, Observable, Subject } from 'rxjs'
+import { map, switchMap, takeUntil } from 'rxjs/operators'
 import { AttributeApiService, AttributeSearchRecord } from 'spline-api'
 import { SplineSearchBoxComponent } from 'spline-common'
 
-import { AttributeSearchFactoryStore } from '../../data-sources/attribute-search.factory-store'
+import { AttributeSearchFactoryStore } from '../../data-sources'
 
 
 @Component({
-               selector: 'spline-attribute-search',
-               templateUrl: './spline-attribute-search.component.html',
-               changeDetection: ChangeDetectionStrategy.OnPush,
-               providers: [
-                   {
-                       provide: AttributeSearchFactoryStore,
-                       useFactory: (attributeApiService: AttributeApiService) => {
-                           return new AttributeSearchFactoryStore(attributeApiService)
-                       },
-                       deps: [AttributeApiService]
-                   }
-               ]
-           })
-export class SplineAttributeSearchComponent {
+    selector: 'spline-attribute-search',
+    templateUrl: './spline-attribute-search.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: AttributeSearchFactoryStore,
+            useFactory: (attributeApiService: AttributeApiService) => {
+                return new AttributeSearchFactoryStore(attributeApiService)
+            },
+            deps: [AttributeApiService]
+        }
+    ]
+})
+export class SplineAttributeSearchComponent implements OnDestroy {
 
     @ViewChild(SplineSearchBoxComponent) splineSearchBoxComponent: SplineSearchBoxComponent
 
     @Output() attributeSelected$ = new EventEmitter<{ attributeInfo: AttributeSearchRecord }>()
 
     readonly searchTerm$ = new BehaviorSubject<string>('')
-
+    destroyed$ = new Subject<void>()
     noOptionsFound$: Observable<boolean>
 
     constructor(readonly dataSource: AttributeSearchFactoryStore) {
-        this.noOptionsFound$ = this.dataSource.onFilterChanged$
+        this.noOptionsFound$ = this.dataSource.filterChanged$
             .pipe(
                 switchMap(
                     ({ filter }) => this.dataSource.dataState$
@@ -64,31 +64,37 @@ export class SplineAttributeSearchComponent {
                     !dataState.loadingProcessing.processing
                     && dataState.data?.length === 0
                     && filter?.search?.length > 0
-                ))
+                )),
+                takeUntil(this.destroyed$)
             )
     }
 
-    displayWitFn = (item: AttributeSearchRecord) => item?.name ? item.name : ''
+    displayWitFn = (item: AttributeSearchRecord): string => item?.name ? item.name : ''
 
     onSearch(searchTerm: string): void {
         this.searchTerm$.next(searchTerm)
         this.dataSource.setFilter({
-                                      search: searchTerm
-                                  })
+            search: searchTerm
+        })
     }
 
     onAutocompleteOptionSelected($event: MatAutocompleteSelectedEvent): void {
         this.attributeSelected$.emit({
-                                         attributeInfo: $event.option.value
-                                     })
+            attributeInfo: $event.option.value
+        })
         this.searchTerm$.next('')
         this.splineSearchBoxComponent.clearFocus()
-
     }
 
     onAutocompleteOpened(): void {
         this.dataSource.setFilter({
-                                      search: this.searchTerm$.getValue()
-                                  })
+            search: this.searchTerm$.getValue()
+        })
+    }
+
+    ngOnDestroy(): void {
+        this.destroyed$.next()
+        this.destroyed$.complete()
+        this.dataSource.disconnect()
     }
 }

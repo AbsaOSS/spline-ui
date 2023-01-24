@@ -45,7 +45,6 @@ export namespace SplineSearchDynamicTableStoreNs {
         queryParams: Params,
         queryParamAlias: string
     ): SearchParams | null {
-
         const urlString = queryParams[queryParamAlias]
         return urlString
             ? searchParamsFromUrlString(urlString)

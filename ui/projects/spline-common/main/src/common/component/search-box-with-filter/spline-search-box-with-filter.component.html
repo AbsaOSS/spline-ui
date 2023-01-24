@@ -1,0 +1,74 @@
+<!--
+  ~ Copyright 2023 ABSA Group Limited
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<form [formGroup]="formGroup">
+    <div class="table-search" theme="grey">
+        <div [class.spline-search-box--focused]="isSearchFocused" class="spline-search-box">
+
+            <!-- SEARCH ICON -->
+            <mat-icon class="spline-search-box__search-icon">search</mat-icon>
+            <!-- ./SEARCH ICON -->
+            <input
+                #inputRef
+                matInput
+                class="spline-search-box__input"
+                (focusin)="focusinInput()"
+                (focusout)="isSearchFocused = false"
+                formControlName="searchControl"
+                [matAutocomplete]="matAutocomplete"
+                [placeholder]="placeholder | translate"
+                type="text">
+
+            <!-- CLEAR ICON -->
+            <mat-icon class="spline-search-box__clear-icon"
+                      *ngIf="formGroup.get('searchControl').value?.length"
+                      [matTooltip]="'COMMON.CLEAR' | translate"
+                      (click)="onClearBtnClicked()">
+                close
+            </mat-icon>
+            <!-- ./CLEAR ICON -->
+
+        </div>
+    </div>
+
+    <mat-autocomplete #matAutocomplete="matAutocomplete"
+                      (optionSelected)="onAutocompletedOptionSelected($event)">
+        <ng-container *ngIf="autocompletedFilterFragments as filterOptions">
+
+            <ng-container *ngIf="(autocompleteProcessing$ | async) === autocompleteStateEnum.LOADED">
+                <mat-option *ngFor="let option of filterOptions" [value]="option">
+                    <div class="spline-search-attribute__option">
+                        <div class="spline-search-attribute__option-name-container">
+                            <div class="spline-search-attribute__option-name">
+                                {{ option }}
+                            </div>
+                        </div>
+                    </div>
+                </mat-option>
+            </ng-container>
+
+            <!-- LOADING -->
+            <mat-option *ngIf="(autocompleteProcessing$ | async) === autocompleteStateEnum.LOADING" [value]="null" disabled="true">
+                <h4 class="my-0 d-flex align-items-center">
+                    <spline-loader mode="inline" size="xs"></spline-loader>
+                    <span class="pl-3">{{'COMMON.LOADING' | translate }}</span>
+                </h4>
+            </mat-option>
+            <!-- ./LOADING -->
+
+        </ng-container>
+
+    </mat-autocomplete>
+</form>

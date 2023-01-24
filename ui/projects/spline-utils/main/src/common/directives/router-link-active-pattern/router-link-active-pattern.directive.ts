@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-
-import { ChangeDetectorRef, Directive, ElementRef, Input, OnChanges, OnDestroy, Optional, Renderer2, SimpleChanges } from '@angular/core'
+import { ChangeDetectorRef, Directive, ElementRef, Input, OnChanges, OnDestroy, Optional, Renderer2 } from '@angular/core'
 import { IsActiveMatchOptions, NavigationEnd, Router, RouterLink, RouterLinkWithHref } from '@angular/router'
 import { filter, takeUntil } from 'rxjs/operators'
 
@@ -39,7 +38,8 @@ export class RouterLinkActivePatternDirective extends BaseDirective implements O
                 private renderer: Renderer2,
                 private readonly changeDetectorRef: ChangeDetectorRef,
                 @Optional() private routerLink?: RouterLink,
-                @Optional() private routerLinkWithHref?: RouterLinkWithHref) {
+                @Optional() private routerLinkWithHref?: RouterLinkWithHref
+    ) {
         super()
 
         this.router.events
@@ -47,7 +47,7 @@ export class RouterLinkActivePatternDirective extends BaseDirective implements O
                 filter(event => event instanceof NavigationEnd),
                 takeUntil(this.destroyed$)
             )
-            .subscribe((event: NavigationEnd) => {
+            .subscribe(() => {
                 this.onUrlChanged()
             })
     }
@@ -57,7 +57,7 @@ export class RouterLinkActivePatternDirective extends BaseDirective implements O
         this.cssClassesList = classes.filter(c => !!c)
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges(): void {
         this.updateActiveState()
     }
 
@@ -71,7 +71,7 @@ export class RouterLinkActivePatternDirective extends BaseDirective implements O
             paths: 'exact',
             fragment: 'exact',
             matrixParams: 'exact',
-            queryParams: 'exact',
+            queryParams: 'exact'
         }
 
         if (this.splineRouterLinkActivePattern) {

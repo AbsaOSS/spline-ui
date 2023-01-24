@@ -28,11 +28,13 @@
 
             <!-- SEARCH -->
             <div class="flex-grow-1">
-                <spline-search-box class="table-search"
-                                   theme="grey"
-                                   [searchTerm]="state.searchParams.searchTerm"
-                                   (search$)="onSearch($event)">
-                </spline-search-box>
+                <spline-search-box-with-filter class="table-search"
+                                               theme="grey"
+                                               [dataSource]="dataSource"
+                                               [labelApiService]="labelApiService"
+                                               [searchDefaultString]="state.searchParams.searchTerm"
+                                               (search)="onSearch($event)">
+                </spline-search-box-with-filter>
             </div>
             <!-- ./SEARCH -->
 

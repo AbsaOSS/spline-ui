@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { CollectionViewer, DataSource } from '@angular/cdk/collections'
+import { DataSource } from '@angular/cdk/collections'
 import { isEqual } from 'lodash-es'
 import { BehaviorSubject, EMPTY, interval, isObservable, Observable, of, Subject } from 'rxjs'
 import { catchError, filter, first, map, share, skip, switchMap, takeUntil, tap, withLatestFrom } from 'rxjs/operators'
@@ -33,6 +33,7 @@ import isFunction = TypeHelpers.isFunction
 
 
 export type SearchDataSourceConfig<TFilter extends SplineRecord, TSortableFields> = {
+    // eslint-disable-next-line @typescript-eslint/member-delimiter-style
     defaultSearchParams: Partial<SearchParams<TFilter, TSortableFields>>,
     pollingInterval: number
 }
@@ -45,29 +46,21 @@ export type SearchDataSourceConfigInput<TFilter extends SplineRecord, TSortableF
 
 export abstract class SearchFactoryStore<TDataRecord = unknown,
     TData extends PageResponse<TDataRecord> = PageResponse<TDataRecord>,
+    // eslint-disable-next-line @typescript-eslint/ban-types
     TFilter extends SplineRecord = {},
     TSortableFields = string> implements DataSource<TDataRecord> {
 
-    readonly dataState$: Observable<DataState<TData>>
-    readonly searchParams$: Observable<SearchParams<TFilter, TSortableFields>>
+    readonly dataState$: BehaviorSubject<DataState<TData>> = new BehaviorSubject(DEFAULT_RENDER_DATA)
+    readonly searchParams$: BehaviorSubject<SearchParams<TFilter, TSortableFields>> = new BehaviorSubject(undefined)
+    readonly disconnected$ = new Subject<void>()
 
+    readonly serverDataUpdates$: Observable<TData>
     readonly loadingProcessing$: Observable<ProcessingStoreNs.EventProcessingState>
     readonly loadingProcessingEvents: ProcessingStoreNs.ProcessingEvents<DataState<TData>>
-    readonly serverDataUpdates$: Observable<TData>
-    readonly disconnected$: Observable<void>
 
-    private readonly _dataState$: BehaviorSubject<DataState<TData>>
-    private readonly _searchParams$: BehaviorSubject<SearchParams<TFilter, TSortableFields>>
-    private /*readonly*/ _defaultSearchParamsProvider: () => SearchParams<TFilter, TSortableFields>
-    private readonly _disconnected$: Subject<void>
+    private defaultSearchParamsProvider: () => SearchParams<TFilter, TSortableFields>
 
     protected constructor(configInput: SearchDataSourceConfigInput<TFilter, TSortableFields>) {
-        this._disconnected$ = new Subject<void>()
-        this.disconnected$ = this._disconnected$
-
-        this._searchParams$ = new BehaviorSubject(undefined)
-        this.searchParams$ = this._searchParams$
-
         const configLike$ = isObservable(configInput) ? configInput : of(configInput)
         const configProvider$ = configLike$
             .pipe(
@@ -76,29 +69,29 @@ export abstract class SearchFactoryStore<TDataRecord = unknown,
                     return isFunction(configFnOrObj) ? configFnOrObj : (() => configFnOrObj)
                 }),
                 share(),
-                takeUntil(this._disconnected$)
+                takeUntil(this.disconnected$)
             )
 
         this.asyncInitDefaultSearchParams(configProvider$)
 
-        this._dataState$ = new BehaviorSubject(DEFAULT_RENDER_DATA)
-        this.dataState$ = this._dataState$
+        this.dataState$ = new BehaviorSubject(DEFAULT_RENDER_DATA)
 
-        this.loadingProcessing$ = this.dataState$.pipe(map(data => data.loadingProcessing))
+        this.loadingProcessing$ = this.dataState$.pipe(map(data => data.loadingProcessing), takeUntil(this.disconnected$))
         this.loadingProcessingEvents = ProcessingStoreNs.createProcessingEvents(
             this.dataState$, (state) => state.loadingProcessing
         )
 
         this.serverDataUpdates$ =
             configProvider$.pipe(
-                switchMap(configProvider => this.createServerDataUpdatePoller(configProvider().pollingInterval))
+                switchMap(configProvider => this.createServerDataUpdatePoller(configProvider().pollingInterval)),
+                takeUntil(this.disconnected$)
             )
 
         this.subscribeToSearchParams()
     }
 
     reset(): void {
-        this.updateSearchParams(this._defaultSearchParamsProvider())
+        this.updateSearchParams(this.defaultSearchParamsProvider())
     }
 
     search(searchTerm: string): void {
@@ -111,12 +104,17 @@ export abstract class SearchFactoryStore<TDataRecord = unknown,
     }
 
     setFilter(filterValue: TFilter): void {
+        if ('searchTerm' in filterValue) {
+            const searchParams = this.withResetPagination({ filter: filterValue, searchTerm: filterValue.searchTerm })
+            this.updateSearchParams(searchParams)
+            return
+        }
         const searchParams = this.withResetPagination({ filter: filterValue })
         this.updateSearchParams(searchParams)
     }
 
     goToPage(pageIndex: number): void {
-        const currentPager = this._searchParams$.getValue().pager
+        const currentPager = this.searchParams$.getValue().pager
         if (currentPager.offset !== pageIndex) {
             this.updateSearchParams({
                 pager: {
@@ -130,70 +128,46 @@ export abstract class SearchFactoryStore<TDataRecord = unknown,
         }
     }
 
-    nextPage(): void {
-        const currentPager = this._searchParams$.getValue().pager
-        this.updateSearchParams({
-            pager: {
-                ...currentPager,
-                offset: currentPager.offset + currentPager.limit
-            }
-        })
-    }
-
-    prevPage(): void {
-        const currentPager = this._searchParams$.getValue().pager
-        if (currentPager.offset === 0) {
-            console.error('You are already on the very first page, you cannot go back.')
-            return
-        }
-        this.updateSearchParams({
-            pager: {
-                ...currentPager,
-                offset: currentPager.offset - currentPager.limit
-            }
-        })
-    }
-
     update(searchParams: Partial<SearchParams<TFilter, TSortableFields>>): void {
         this.updateSearchParams(searchParams)
     }
 
-    connect(collectionViewer: CollectionViewer): Observable<TDataRecord[]> {
-        return this._dataState$
+    connect(): Observable<TDataRecord[]> {
+        return this.dataState$
             .pipe(
-                map(x => x.data?.items ?? [])
+                map(x => x.data?.items ?? []),
+                takeUntil(this.disconnected$)
             )
     }
 
-    disconnect(collectionViewer?: CollectionViewer): void {
-        this._dataState$.complete()
-        this._searchParams$.complete()
-
-        this._disconnected$.next()
-        this._disconnected$.complete()
+    disconnect(): void {
+        this.disconnected$.next()
+        this.disconnected$.complete()
     }
 
     protected abstract getDataObserver(searchParams: SearchParams<TFilter, TSortableFields>): Observable<TData>
 
+    // eslint-disable-next-line @typescript-eslint/member-ordering
     private asyncInitDefaultSearchParams(configProvider$: Observable<() => SearchDataSourceConfig<TFilter, TSortableFields>>): void {
         configProvider$
             .subscribe(configProvider => {
-                this._defaultSearchParamsProvider = () => {
+                this.defaultSearchParamsProvider = () => {
                     const config = configProvider()
                     return {
                         ...DEFAULT_SEARCH_PARAMS,
                         ...config.defaultSearchParams
                     }
                 }
-                this._searchParams$.next(this._defaultSearchParamsProvider())
+                this.searchParams$.next(this.defaultSearchParamsProvider())
             })
     }
 
+    // eslint-disable-next-line @typescript-eslint/member-ordering
     private subscribeToSearchParams(): void {
-        this._searchParams$
+        this.searchParams$
             .pipe(
                 skip(1), // skip default search params
-                withLatestFrom(this._dataState$),
+                withLatestFrom(this.dataState$),
                 tap(([, dataState]) => this.updateDataState({
                     loadingProcessing: ProcessingStoreNs.eventProcessingStart(
                         dataState.loadingProcessing)
@@ -209,7 +183,8 @@ export abstract class SearchFactoryStore<TDataRecord = unknown,
                         })
                     )
                 ),
-                withLatestFrom(this._dataState$)
+                withLatestFrom(this.dataState$),
+                takeUntil(this.disconnected$)
             )
             .subscribe(([result, dataState]) => {
                 if (result !== null) {
@@ -221,34 +196,40 @@ export abstract class SearchFactoryStore<TDataRecord = unknown,
             })
     }
 
+    // eslint-disable-next-line @typescript-eslint/member-ordering
     private updateDataState(dataState: Partial<DataState<TData>>): void {
-        this._dataState$.next({
-            ...this._dataState$.getValue(),
+        this.dataState$.next({
+            ...this.dataState$.getValue(),
             ...dataState
         })
     }
 
+    // eslint-disable-next-line @typescript-eslint/member-ordering
     private withResetPagination(
         searchParams: Partial<SearchParams<TFilter, TSortableFields>>
     ): Partial<SearchParams<TFilter, TSortableFields>> {
         return {
             ...searchParams,
             pager: {
-                limit: this._searchParams$.getValue().pager.limit,
+                limit: this.searchParams$.getValue().pager.limit,
                 offset: 0
             }
         }
     }
 
+    // eslint-disable-next-line @typescript-eslint/member-ordering
     private updateSearchParams(searchParams: Partial<SearchParams<TFilter, TSortableFields>>): void {
+        const currentSearchParams = { ...this.searchParams$.getValue() }
+        delete currentSearchParams.searchTerm
+        delete currentSearchParams.filter
         const newSearchParams = {
-            ...this._searchParams$.getValue(),
+            ...currentSearchParams,
             ...searchParams
         } as SearchParams<TFilter, TSortableFields>
-
-        this._searchParams$.next(newSearchParams)
+        this.searchParams$.next(newSearchParams)
     }
 
+    // eslint-disable-next-line @typescript-eslint/member-ordering
     private createServerDataUpdatePoller(pollingInterval: number): Observable<TData> {
         // Poll the server using the same search query as the main one, but with `asAtTime = now()`.
         // If the returned data differs from what the data source currently holds then an update notification
@@ -260,7 +241,7 @@ export abstract class SearchFactoryStore<TDataRecord = unknown,
         return interval(pollingInterval)
             .pipe(
                 whenPageVisible(),
-                withLatestFrom(this._searchParams$),
+                withLatestFrom(this.searchParams$),
                 switchMap(([, lastSearchParams]) => {
                     const freshSearchParams = {
                         ...lastSearchParams,
@@ -272,13 +253,15 @@ export abstract class SearchFactoryStore<TDataRecord = unknown,
                     return this.getDataObserver(freshSearchParams)
                         .pipe(
                             first(),
-                            catchError(() => EMPTY)
+                            catchError(() => EMPTY),
+                            takeUntil(this.disconnected$)
                         )
                 }),
                 share(),
-                withLatestFrom(this._dataState$),
+                withLatestFrom(this.dataState$),
                 filter(([serverData, lastDataState]) => !isEqual(serverData.items, lastDataState.data.items)),
-                map(([serverData]) => serverData)
+                map(([serverData]) => serverData),
+                takeUntil(this.disconnected$)
             )
     }
 }

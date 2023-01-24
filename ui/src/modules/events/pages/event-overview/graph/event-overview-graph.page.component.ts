@@ -32,6 +32,7 @@ import NodeEventData = SgNodeCardDataView.NodeEventData
 
 
 @Component({
+    // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'event-overview-graph-page',
     templateUrl: './event-overview-graph.page.component.html',
     styleUrls: ['./event-overview-graph.page.component.scss']
@@ -64,11 +65,11 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
         this.store.state$
             .pipe(
                 map(state => state.selectedNodeId),
-                takeUntil(this.destroyed$),
                 filter(nodeId => {
                     const currentNodeId = this.activatedRoute.snapshot.queryParamMap.get(EventOverviewPage.QueryParam.SelectedNodeId)
                     return currentNodeId !== nodeId
-                })
+                }),
+                takeUntil(this.destroyed$)
             )
             .subscribe(nodeId => this.updateQueryParams(EventOverviewPage.QueryParam.SelectedNodeId, nodeId))
 
@@ -79,10 +80,10 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
         this.store.state$
             .pipe(
                 skip(1),
-                map(state => ({depth: state.lineageDepth.depthRequested, overviewType: state.overviewType})),
-                takeUntil(this.destroyed$),
+                map(state => ({ depth: state.lineageDepth.depthRequested, overviewType: state.overviewType })),
+                takeUntil(this.destroyed$)
             )
-            .subscribe(({depth, overviewType}) => {
+            .subscribe(({ depth, overviewType }) => {
                 const currentDepth = +this.activatedRoute.snapshot.queryParamMap.get(EventOverviewPage.QueryParam.RequestedGraphDepth)
                 const currentOverviewType = this.activatedRoute.snapshot.queryParamMap.get(EventOverviewPage.QueryParam.OverviewType)
 
@@ -99,21 +100,21 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
         this.store.setSelectedNode(nodeId)
     }
 
-    onNodeDoubleClick(nodeSchema: SgNodeSchema): void {
+    async onNodeDoubleClick(nodeSchema: SgNodeSchema): Promise<void> {
         const node = this.store.findNode(nodeSchema.id)
         if (node.type === ExecutionEventLineageNodeType.Execution) {
-            this.navigateToExecutionPlanPage(node.id)
+            await this.navigateToExecutionPlanPage(node.id)
         }
     }
 
-    onChangeGraphDepth(depth): void {
+    onChangeGraphDepth(depth: number): void {
         this.store.setGraphDepth(depth)
     }
 
-    onDataViewEvent($event: SplineDataWidgetEvent): void {
+    async onDataViewEvent($event: SplineDataWidgetEvent): Promise<void> {
         switch ($event.type) {
             case EventNodeInfo.WidgetEvent.LaunchExecutionEvent:
-                this.onExecutionPlanNodeLaunchAction(($event as GenericEventInfo<NodeEventData>).data.nodeId)
+                await this.onExecutionPlanNodeLaunchAction(($event as GenericEventInfo<NodeEventData>).data.nodeId)
                 break
             case SgNodeCardDataView.WidgetEvent.FocusNode:
                 this.onNodeFocus(($event as GenericEventInfo<NodeEventData>).data.nodeId)
@@ -125,10 +126,10 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
         }
     }
 
-    onGraphNodeEvent($event: SgNodeEvent): void {
+    async onGraphNodeEvent($event: SgNodeEvent): Promise<void> {
         switch ($event.event.type) {
             case EventNodeControl.NodeControlEvent.LaunchExecutionEvent:
-                this.onExecutionPlanNodeLaunchAction($event.nodeSchema.id)
+                await this.onExecutionPlanNodeLaunchAction($event.nodeSchema.id)
                 break
             case EventNodeControl.NodeControlEvent.LoadHistory:
                 this.store.loadNodeHistory(
@@ -147,7 +148,7 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
         this.onNodeSelected(null)
     }
 
-    onOverviewChanged(overviewType: EventOverviewType) {
+    onOverviewChanged(overviewType: EventOverviewType): void {
         this.store.setGraphOverviewType(overviewType)
     }
 
@@ -159,8 +160,8 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
         this.sgContainer.highlightSpecificRelations(nodeIds)
     }
 
-    private onExecutionPlanNodeLaunchAction(nodeId: string): void {
-        this.navigateToExecutionPlanPage(nodeId)
+    private async onExecutionPlanNodeLaunchAction(nodeId: string): Promise<void> {
+        await this.navigateToExecutionPlanPage(nodeId)
     }
 
     private onNodeFocus(nodeId: string): void {
@@ -171,8 +172,8 @@ export class EventOverviewGraphPageComponent extends BaseComponent implements On
         this.sgContainer.highlightNodeRelations(nodeId)
     }
 
-    private navigateToExecutionPlanPage(executionPlanId: string): void {
-        this.router.navigate(
+    private async navigateToExecutionPlanPage(executionPlanId: string): Promise<void> {
+        await this.router.navigate(
             ['/plans/overview', executionPlanId],
             {
                 queryParams: {
