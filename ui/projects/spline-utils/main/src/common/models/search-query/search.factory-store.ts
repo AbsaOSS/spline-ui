@@ -71,12 +71,12 @@ export abstract class SearchFactoryStore<TDataRecord = unknown,
         const configLike$ = isObservable(configInput) ? configInput : of(configInput)
         const configProvider$ = configLike$
             .pipe(
-                takeUntil(this._disconnected$),
                 first(),
                 map(configFnOrObj => {
                     return isFunction(configFnOrObj) ? configFnOrObj : (() => configFnOrObj)
                 }),
-                share()
+                share(),
+                takeUntil(this._disconnected$)
             )
 
         this.asyncInitDefaultSearchParams(configProvider$)
