@@ -117,12 +117,12 @@ export class EventOverviewStore extends BaseStore<EventOverviewStoreNs.State> {
             graphLoadingProcessing: ProcessingStoreNs.eventProcessingStart(this.state.graphLoadingProcessing)
         })
 
-        setTimeout(() => {
+        
             this.updateState({
                 ...EventOverviewStoreNs.__reduceFakeHistoryNode(this.state, nodeId),
                 graphLoadingProcessing: ProcessingStoreNs.eventProcessingFinish(this.state.graphLoadingProcessing)
             })
-        }, 500)
+        
     }
 
     // TODO: remove it after BE will support it.
@@ -132,12 +132,12 @@ export class EventOverviewStore extends BaseStore<EventOverviewStoreNs.State> {
             graphLoadingProcessing: ProcessingStoreNs.eventProcessingStart(this.state.graphLoadingProcessing)
         })
 
-        setTimeout(() => {
+        
             this.updateState({
                 ...EventOverviewStoreNs.__reduceFakeFutureNode(this.state, nodeId),
                 graphLoadingProcessing: ProcessingStoreNs.eventProcessingFinish(this.state.graphLoadingProcessing)
             })
-        }, 500)
+        
     }
 
     private loadData(
