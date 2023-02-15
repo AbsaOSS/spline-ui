@@ -44,8 +44,8 @@ export class RouterLinkActivePatternDirective extends BaseDirective implements O
 
         this.router.events
             .pipe(
-                takeUntil(this.destroyed$),
-                filter(event => event instanceof NavigationEnd)
+                filter(event => event instanceof NavigationEnd),
+                takeUntil(this.destroyed$)
             )
             .subscribe((event: NavigationEnd) => {
                 this.onUrlChanged()

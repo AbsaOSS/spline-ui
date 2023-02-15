@@ -33,8 +33,8 @@ export function whenPageVisible() {
 
     return function <T>(source: Observable<T>) {
         return source.pipe(
-            takeUntil(pageHidden$),
-            repeatWhen(() => pageVisible$)
+            repeatWhen(() => pageVisible$),
+            takeUntil(pageHidden$)
         )
     }
 }

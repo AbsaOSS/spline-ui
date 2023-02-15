@@ -88,9 +88,9 @@ export abstract class SimpleFactoryStore<TData, TFilter extends SplineRecord = {
         // FILTER CHANGED EVENT
         this.onFilterChanged$
             .pipe(
-                takeUntil(this.disconnected$),
                 tap((payload) => this._filter$.next(payload.filter)),
-                switchMap((payload) => this.fetchData(payload.filter))
+                switchMap((payload) => this.fetchData(payload.filter)),
+                takeUntil(this.disconnected$)
             )
             .subscribe()
     }
