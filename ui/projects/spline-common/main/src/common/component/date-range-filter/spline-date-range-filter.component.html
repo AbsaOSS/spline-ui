@@ -25,20 +25,20 @@
     <mat-menu #popover="matMenu" class="spline-date-filter-menu">
         <ng-template matMenuContent>
             <ngx-daterangepicker-material
-                    [startDate]="!!state.valueMoment ? state.valueMoment.dateFrom : (_minDateMoment ? _minDateMoment : _defaultValue)"
-                    [endDate]="!!state.valueMoment ? state.valueMoment.dateTo : (_maxDateMoment ? _maxDateMoment : _defaultValue)"
-                    [showDropdowns]="true"
-                    [ranges]="customDateRanges"
-                    [autoApply]="false"
-                    [showCustomRangeLabel]="false"
-                    [alwaysShowCalendars]="true"
-                    [showClearButton]="true"
-                    [showCancel]="true"
-                    [linkedCalendars]="false"
-                    [keepCalendarOpeningWithRange]="true"
-                    [showRangeLabelOnInput]="true"
-                    (closeDateRangePicker)="onCloseDatePicker()"
-                    (chosenDate)="onDateChosen($event)">
+                [startDate]="initialStartDate"
+                [endDate]="initialEndDate"
+                [showDropdowns]="true"
+                [ranges]="_customDateRanges"
+                [autoApply]="false"
+                [showCustomRangeLabel]="false"
+                [alwaysShowCalendars]="true"
+                [showClearButton]="true"
+                [showCancel]="true"
+                [linkedCalendars]="false"
+                [keepCalendarOpeningWithRange]="true"
+                [showRangeLabelOnInput]="true"
+                (close)="onCloseDatePicker()"
+                (choosedDate)="onDateChosen($event)">
             </ngx-daterangepicker-material>
         </ng-template>
     </mat-menu>

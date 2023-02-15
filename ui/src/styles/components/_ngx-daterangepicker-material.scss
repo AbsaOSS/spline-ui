@@ -14,17 +14,56 @@
  * limitations under the License.
  */
 
-@import 'spline-common/material-design/spline-theme';
-@import '~ngx-daterangepicker-material/daterangepicker-theme';
+@use 'sass:map';
+@use '~@angular/material' as mat;
+//@import 'spline-common/material-design/spline-theme';
+//@import '~@angular/material/datepicker/_datepicker-theme.import.scss';
 
-@include date-range-picker-theme($spline-theme);
+@include mat.core();
+
+$spline-primary: mat.define-palette(mat.$orange-palette);
+$spline-accent: mat.define-palette(mat.$orange-palette, A200, A100, A400);
+
+$spline-warn: mat.define-palette(mat.$deep-orange-palette);
+
+$spline-theme: mat.define-light-theme((
+    color: (
+        primary: $spline-primary,
+        accent: $spline-accent,
+        warn: $spline-warn,
+    )
+));
+
+@include mat.all-component-themes($spline-theme);
 
 .md-drppicker {
+    .ranges ul li button.active {
+        background: map.get($spline-primary, 800) !important;
+    }
+
+    td.active,
+    td.active:hover {
+        background: map.get($spline-primary, 600) !important;
+    }
+
+    .btn {
+        text-transform: inherit !important;
+    }
+
+    .btn:last-child {
+        background: map.get($spline-primary, 800) !important;
+    }
+
+    .clear svg {
+        margin: -0.25rem !important;
+    }
+
     .buttons button {
         border-radius: 16px !important;
         font-size: 12px;
         line-height: 32px;
-        margin-top: 1rem;
+        margin: 0.25rem;
+        padding: 0 1rem;
     }
 
     .navigation-button {

@@ -21,14 +21,13 @@ import { TypeHelpers } from '../models'
 
 
 @Pipe({
-    name: 'splineSearch',
+    name: 'splineSearch'
 })
 export class SplineSearchPipe implements PipeTransform {
 
     transform(value: Record<string, any>[] | string[], searchTerm: string, fieldAlias?: string): Record<string, any>[] | string[] {
 
         const decoratedSearchTerm = searchTerm.trim().toLowerCase()
-        console.log(decoratedSearchTerm)
         if (decoratedSearchTerm?.length === 0) {
             return value
         }

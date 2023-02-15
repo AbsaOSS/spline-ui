@@ -29,20 +29,20 @@ import { SplineDateRangeFilterComponent } from './spline-date-range-filter.compo
 
 @NgModule({
     declarations: [
-        SplineDateRangeFilterComponent,
+        SplineDateRangeFilterComponent
     ],
     imports: [
         CommonModule,
         MatMenuModule,
         MatIconModule,
         MatButtonModule,
-        NgxDaterangepickerMd,
+        NgxDaterangepickerMd.forRoot(),
         SplineTranslateModule.forChild({}),
         SplineInlineFilterModule
     ],
     exports: [
         SplineDateRangeFilterComponent
-    ],
+    ]
 })
 export class SplineDateRangeFilterModule {
 }
