@@ -35,20 +35,20 @@ import { BaseComponent } from 'spline-utils'
 
 import { SgControlPanelSectionDirective } from '../../directives/control-panel-action/sg-control-panel-section.directive'
 import {
+    SG_DEFAULT_LAYOUT_SETTINGS,
     SgData,
     SgLayoutSettings,
     SgNativeNode,
     SgNodeControlEvent,
     SgNodeEvent,
     SgNodeSchema,
-    SG_DEFAULT_LAYOUT_SETTINGS,
-    toSgNativeNode,
+    toSgNativeNode
 } from '../../models'
 
 
 @Component({
     selector: 'spline-graph',
-    templateUrl: './spline-graph.component.html',
+    templateUrl: './spline-graph.component.html'
 })
 export class SplineGraphComponent extends BaseComponent implements OnChanges, OnDestroy {
 
@@ -59,6 +59,24 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges, On
     @Input() curve: fromD3Shape.CurveFactoryLineOnly | fromD3Shape.CurveFactory = fromD3Shape.curveBasis
     @Input() layoutSettings: SgLayoutSettings = SG_DEFAULT_LAYOUT_SETTINGS
     @Input() focusNode$: Observable<string>
+    @Output() substrateClick$ = new EventEmitter<{ mouseEvent: MouseEvent }>()
+    @Output() nodeClick$ = new EventEmitter<{ nodeSchema: SgNodeSchema; mouseEvent: MouseEvent }>()
+    @Output() nodeDoubleClick$ = new EventEmitter<{ nodeSchema: SgNodeSchema; mouseEvent: MouseEvent }>()
+    @Output() nodeEvent$ = new EventEmitter<SgNodeEvent>()
+    @Output() nodeSelectionChange$ = new EventEmitter<{ nodeSchema: SgNodeSchema | null }>()
+    _focusedNodeId: string
+    readonly defaultNodeWidth = 350
+    readonly defaultNodeHeight = 50
+    readonly nativeGraphData$ = new BehaviorSubject<{ nodes: SgNativeNode[]; links: Edge[] }>(null)
+    private focusedNodeTimer: any
+    private nodeClicksStream$ = new Subject<{ node: SgNativeNode; mouseEvent: MouseEvent }>()
+
+    constructor() {
+        super()
+        this.initNodeClicksEvents()
+    }
+
+    _selectedNodeId: string
 
     @Input() set selectedNodeId(nodeId: string) {
         if (nodeId !== this._selectedNodeId) {
@@ -66,34 +84,12 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges, On
         }
     }
 
+    _targetNodeId: string
+
     @Input() set targetNodeId(nodeId: string) {
         if (nodeId !== this._targetNodeId) {
             this._targetNodeId = nodeId
         }
-    }
-
-    @Output() substrateClick$ = new EventEmitter<{ mouseEvent: MouseEvent }>()
-    @Output() nodeClick$ = new EventEmitter<{ nodeSchema: SgNodeSchema; mouseEvent: MouseEvent }>()
-    @Output() nodeDoubleClick$ = new EventEmitter<{ nodeSchema: SgNodeSchema; mouseEvent: MouseEvent }>()
-    @Output() nodeEvent$ = new EventEmitter<SgNodeEvent>()
-    @Output() nodeSelectionChange$ = new EventEmitter<{ nodeSchema: SgNodeSchema | null }>()
-
-
-    _selectedNodeId: string
-    _focusedNodeId: string
-    _targetNodeId: string
-
-    readonly defaultNodeWidth = 350
-    readonly defaultNodeHeight = 50
-
-    readonly nativeGraphData$ = new BehaviorSubject<{ nodes: SgNativeNode[]; links: Edge[] }>(null)
-
-    private focusedNodeTimer: any
-    private nodeClicksStream$ = new Subject<{ node: SgNativeNode; mouseEvent: MouseEvent }>()
-
-    constructor() {
-        super()
-        this.initNodeClicksEvents()
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -107,7 +103,7 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges, On
         if (changes?.focusNode$ && changes.focusNode$.currentValue) {
             changes.focusNode$.currentValue
                 .pipe(
-                    takeUntil(this.destroyed$),
+                    takeUntil(this.destroyed$)
                 )
                 .subscribe((nodeId) => this.onFocusNode(nodeId))
         }
@@ -122,7 +118,7 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges, On
     onNodeEvent(node: SgNativeNode, event: SgNodeControlEvent<any>): void {
         this.nodeEvent$.emit({
             nodeSchema: node,
-            event,
+            event
         })
     }
 
@@ -131,7 +127,7 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges, On
 
         this.nodeClicksStream$.next({
             node,
-            mouseEvent,
+            mouseEvent
         })
     }
 
@@ -142,17 +138,17 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges, On
     private initNodeClicksEvents(): void {
         const doubleClickDelayInMs = 150
         const buff$ = this.nodeClicksStream$.pipe(
-            debounceTime(doubleClickDelayInMs),
+            debounceTime(doubleClickDelayInMs)
         )
 
         this.nodeClicksStream$
             .pipe(
-                buffer(buff$),
+                buffer(buff$)
             )
             .subscribe((bufferValue: Array<{ node: SgNativeNode; mouseEvent: MouseEvent }>) => {
 
-                const refNode = bufferValue[0].node
-                const refMouseEvent = bufferValue[0].mouseEvent
+                const refNode = bufferValue[0]?.node
+                const refMouseEvent = bufferValue[0]?.mouseEvent
 
                 if (bufferValue.length === 1) {
                     this.nodeClick$.emit({ nodeSchema: refNode.schema, mouseEvent: refMouseEvent })
@@ -208,7 +204,7 @@ export class SplineGraphComponent extends BaseComponent implements OnChanges, On
                     this.focusedNodeTimer = null
                 }
             },
-            removeClassAfterTimeInMs,
+            removeClassAfterTimeInMs
         )
     }
 }

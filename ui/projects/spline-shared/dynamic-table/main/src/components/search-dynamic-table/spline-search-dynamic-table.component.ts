@@ -15,22 +15,19 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core'
-import { PageEvent } from '@angular/material/paginator'
-import { ActivatedRoute, NavigationEnd, Params, Router, RouterEvent } from '@angular/router'
-import { isEqual } from 'lodash-es'
-import { Observable, Subject } from 'rxjs'
-import { distinctUntilChanged, filter, first, map, repeatWhen, skip, startWith, takeUntil } from 'rxjs/operators'
-import {
-    DtCellCustomEvent,
-    DtHeaderCellCustomEvent,
-    DynamicTableDataMap,
-    DynamicTableOptions,
-    getDefaultDtOptions
-} from 'spline-common/dynamic-table'
+import { DtCellCustomEvent, DtHeaderCellCustomEvent, DynamicTableDataMap } from 'spline-common/dynamic-table'
 import { BaseLocalStateComponent, QuerySorter, RouterNavigation, SearchFactoryStore, SplineRecord } from 'spline-utils'
-
 import { SplineSearchDynamicTableStoreNs } from './spline-search-dynamic-table-store.ns'
+import { distinctUntilChanged, first, map, Observable, repeatWhen, skip, startWith, Subject, takeUntil } from 'rxjs'
+import { ActivatedRoute, NavigationEnd, Params, Router, RouterEvent } from '@angular/router'
+import { PageEvent } from '@angular/material/paginator'
+import { filter } from 'rxjs/operators'
+import { isEqual } from 'lodash-es'
 
+
+interface DynamicTableOptions {
+    isSticky?: boolean // stick to container
+}
 
 @Component({
     selector: 'spline-search-dynamic-table',
@@ -44,7 +41,9 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
     @Input() dataMap: DynamicTableDataMap
     @Input() dataSource: SearchFactoryStore<TRowData>
 
-    @Input() options: Readonly<DynamicTableOptions> = getDefaultDtOptions()
+    @Input() options: Readonly<DynamicTableOptions> = {
+        isSticky: false
+    }
 
     @Input() urlStateQueryParamAlias = this.defaultUrlStateQueryParamAlias
     @Input() isUrlStateDisabled = false
@@ -55,7 +54,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
     @Output() secondaryHeaderCellEvent$ = new EventEmitter<DtHeaderCellCustomEvent>()
 
     private readonly _resumeListeningOnServerUpdates$ = new Subject<void>()
-    private _dataUpdateAvailable$: Observable<boolean>
+    private _dataUpdateAvailable$: Observable<unknown | boolean>
 
     constructor(private readonly activatedRoute: ActivatedRoute,
                 private readonly router: Router
@@ -70,7 +69,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
         return this.activatedRoute.snapshot.queryParams
     }
 
-    get isDataUpdateAvailable$(): Observable<boolean> {
+    get isDataUpdateAvailable$(): Observable<unknown | boolean> {
         return this._dataUpdateAvailable$
     }
 
@@ -137,11 +136,11 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
 
     private searchParamsFromUrl() {
         return !this.isUrlStateDisabled
-               ? SplineSearchDynamicTableStoreNs.extractSearchParamsFromUrl(
+            ? SplineSearchDynamicTableStoreNs.extractSearchParamsFromUrl(
                 this.currentQueryParams,
                 this.urlStateQueryParamAlias
             )
-               : null
+            : null
     }
 
     private subscribeToRouter(router: Router): void {
@@ -193,8 +192,8 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
             )
             .subscribe(searchParams => {
                 const sorting = searchParams.sortBy.length > 0
-                                ? searchParams.sortBy[0]
-                                : null
+                    ? searchParams.sortBy[0]
+                    : null
 
                 this.updateState({
                     sorting: sorting,

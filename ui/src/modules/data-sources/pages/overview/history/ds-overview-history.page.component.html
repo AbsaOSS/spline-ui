@@ -22,10 +22,10 @@
 
     <div class="pb-3">
         <spline-search-dynamic-table
-                *ngIf="(dataSourceInfo$ | async)"
-                (cellEvent$)="onCellEvent($event)"
-                [dataMap]="dataMap"
-                [dataSource]="dataSource">
+            *ngIf="(dataSourceInfo$ | async)"
+            (cellEvent$)="onCellEvent($event)"
+            [dataMap]="dataMap"
+            [dataSource]="dataSource">
 
             <dynamic-filter-container *ngIf="filterModel"
                                       [model]="filterModel">
