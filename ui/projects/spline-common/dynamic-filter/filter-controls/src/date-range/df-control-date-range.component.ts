@@ -15,23 +15,24 @@
  */
 
 import { Component, Input } from '@angular/core'
-import { SplineDateRangeFilter } from 'spline-common'
 import { BaseDynamicFilterControlComponent } from 'spline-common/dynamic-filter'
+import { SplineDateRangeValue } from 'spline-utils'
 
 import { DfControlDateRange } from './df-control-date-range.models'
 
+
 @Component({
+    // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'df-control-date-range',
-    templateUrl: './df-control-date-range.component.html',
+    templateUrl: './df-control-date-range.component.html'
 })
 export class DfControlDateRangeComponent<TId extends keyof any = any>
     extends BaseDynamicFilterControlComponent<DfControlDateRange.Value, DfControlDateRange.Options, TId> {
 
-    readonly defaultIcon = 'schedule'
-
     @Input() model: DfControlDateRange.Model<TId>
-
-    onDateFilterChanged(value: SplineDateRangeFilter.Value): void {
+    readonly defaultIcon = 'schedule'
+    
+    onDateFilterChanged(value: SplineDateRangeValue): void {
         this.model.patchValue(
             value
         )

@@ -15,30 +15,69 @@
  */
 
 import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MatIconModule } from '@angular/material/icon'
-import { MatPaginatorModule } from '@angular/material/paginator'
-import { MatSortModule } from '@angular/material/sort'
-import { MatTableModule } from '@angular/material/table'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { NavigationEnd, Router } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
 import { Observable, of } from 'rxjs'
 import { filter, take } from 'rxjs/operators'
-import { SplineSearchBoxModule, SplineSortHeaderModule } from 'spline-common'
-import { DynamicTableDataMap, DynamicTableModule } from 'spline-common/dynamic-table'
-import {
-    SplineDynamicTableSharedModule,
-    SplineSearchDynamicTableComponent,
-    SplineSearchDynamicTableStoreNs
-} from 'spline-shared/dynamic-table'
-import { PageResponse, QuerySorter, SearchDataSourceConfigInput, SearchFactoryStore, SearchQuery } from 'spline-utils'
+import { SplineSearchDynamicTableComponent } from '../spline-search-dynamic-table.component'
+import { MatPaginatorModule } from '@angular/material/paginator'
+import { MatTableModule } from '@angular/material/table'
+import { MatSortModule } from '@angular/material/sort'
+import { MatIconModule } from '@angular/material/icon'
 import { SplineTranslateTestingModule } from 'spline-utils/translate'
+import { MockModule } from 'ng-mocks'
+import { PageResponse, QuerySorter, SearchDataSourceConfigInput, SearchFactoryStore, SearchQuery } from 'spline-utils'
+import { SplineSearchDynamicTableStoreNs } from '../spline-search-dynamic-table-store.ns'
+import { Component, Input } from '@angular/core'
+import { MatTooltipModule } from '@angular/material/tooltip'
 import SortDir = QuerySorter.SortDir
-import DEFAULT_SEARCH_PARAMS = SearchQuery.DEFAULT_SEARCH_PARAMS
 import SearchParams = SearchQuery.SearchParams
+import DEFAULT_SEARCH_PARAMS = SearchQuery.DEFAULT_SEARCH_PARAMS
 
+
+@Component({
+    selector: 'spline-loader',
+    template: '<div></div>'
+})
+class SplineLoaderComponentMock {}
+
+@Component({
+    selector: 'dynamic-table',
+    template: '<div></div>'
+})
+class DynamicTableComponentMock {
+    @Input() dataSource
+    @Input() dataMap
+    @Input() sorting
+    @Input() options
+}
+
+@Component({
+    selector: 'spline-search-box',
+    template: '<div></div>'
+})
+class SplineSearchBoxComponentMock {
+    @Input() searchTerm
+}
+
+@Component({
+    selector: 'spline-no-result',
+    template: '<div></div>'
+})
+class SplineNoResultComponentMock {
+}
+
+@Component({
+    selector: 'spline-content-error',
+    template: '<div></div>'
+})
+class SplineContentErrorComponentMock {
+    @Input() statusCode
+    @Input() errorId
+    @Input() floating
+}
 
 describe('SplineSearchDynamicTableComponent', () => {
 
@@ -48,21 +87,32 @@ describe('SplineSearchDynamicTableComponent', () => {
 
     beforeEach(async () =>
         TestBed.configureTestingModule({
+            declarations: [
+                SplineSearchDynamicTableComponent,
+                DynamicTableComponentMock,
+                SplineLoaderComponentMock,
+                SplineSearchBoxComponentMock,
+                SplineNoResultComponentMock,
+                SplineContentErrorComponentMock
+            ],
             imports: [
                 BrowserAnimationsModule,
                 RouterTestingModule,
                 HttpClientTestingModule,
-                MatPaginatorModule,
-                SplineSearchBoxModule,
-                MatTableModule,
-                MatSortModule,
-                MatIconModule,
-                SplineSortHeaderModule,
-                DynamicTableModule,
-                SplineDynamicTableSharedModule,
-                SplineTranslateTestingModule
-            ],
-            schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
+                SplineTranslateTestingModule,
+                MockModule(MatPaginatorModule),
+                MockModule(MatTableModule),
+                MockModule(MatSortModule),
+                MockModule(MatIconModule),
+                MockModule(MatTooltipModule)
+                // MockModule(SplineLoaderModule)
+                // MockModule(MatDatepickerModule),
+                // MockModule(SplineDateRangeFilterModule)
+                // SplineSearchBoxModule,
+                // SplineSortHeaderModule,
+                // DynamicTableModule,
+                // SplineDynamicTableSharedModule,
+            ]
         })
             .compileComponents()
     )
@@ -79,7 +129,7 @@ describe('SplineSearchDynamicTableComponent', () => {
             id: number
         }
 
-        const dataMap: DynamicTableDataMap = [{ id: 'id' }]
+        const dataMap = [{ id: 'id' }]
 
         const fakeData: FakeItem[] = [{ id: 1 }, { id: 2 }]
 
