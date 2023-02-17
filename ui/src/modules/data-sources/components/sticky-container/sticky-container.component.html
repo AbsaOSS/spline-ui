@@ -14,12 +14,8 @@
   ~ limitations under the License.
   -->
 
-<spline-virtual-scroll-sticky-container>
-    <cdk-virtual-scroll-viewport class="sticky-container__scroll-viewport"
-                                 [itemSize]="itemHeight">
-
-        <div *cdkVirtualFor="let item of ds" class="example-item">
-            {{item || 'Loading...'}}
-        </div>
-    </cdk-virtual-scroll-viewport>
-</spline-virtual-scroll-sticky-container>
+<cdk-virtual-scroll-viewport class="sticky-container__scroll-viewport" [itemSize]="itemHeight">
+    <div *cdkVirtualFor="let item of ds" class="example-item">
+        {{ item || "Loading..." }}
+    </div>
+</cdk-virtual-scroll-viewport>
