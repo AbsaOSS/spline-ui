@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { OperationAttributeLineageType } from 'spline-api';
-import { BaseComponent } from 'spline-utils';
+import { Component, Inject, OnInit } from '@angular/core'
+import { MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { OperationAttributeLineageType } from 'spline-api'
+import { BaseComponent } from 'spline-utils'
 
-import { AttributeLineageDialog } from './attribute-lineage-dialog.models';
+import { AttributeLineageDialog } from './attribute-lineage-dialog.models'
 
 @Component({
     selector: 'plan-attribute-lineage-dialog',
@@ -27,19 +27,19 @@ import { AttributeLineageDialog } from './attribute-lineage-dialog.models';
     styleUrls: ['./attribute-lineage-dialog.component.scss'],
 })
 export class AttributeLineageDialogComponent extends BaseComponent implements OnInit {
-    isInitialized = false;
-    readonly dialogTitle: string;
+    isInitialized = false
+    readonly dialogTitle: string
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: AttributeLineageDialog.Data) {
-        super();
+        super()
 
         this.dialogTitle =
             data.lineageType === OperationAttributeLineageType.Lineage
                 ? 'PLANS.ATTR_LINEAGE_DETAILS__DIALOG__TITLE__LINEAGE'
-                : 'PLANS.ATTR_LINEAGE_DETAILS__DIALOG__TITLE__IMPACT';
+                : 'PLANS.ATTR_LINEAGE_DETAILS__DIALOG__TITLE__IMPACT'
     }
 
     ngOnInit(): void {
-        this.isInitialized = true;
+        this.isInitialized = true
     }
 }
