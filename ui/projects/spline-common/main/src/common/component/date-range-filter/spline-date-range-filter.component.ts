@@ -16,62 +16,92 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core'
 import { MatMenuTrigger } from '@angular/material/menu'
-import moment from 'moment'
 import { DaterangepickerComponent } from 'ngx-daterangepicker-material'
-import { BaseLocalStateComponent } from 'spline-utils'
-
+import { BaseLocalStateComponent, SplineDateRangeValue } from 'spline-utils'
 import { SplineDateRangeFilter } from './spline-date-range-filter.models'
+import dayjs from 'dayjs'
 
 
 @Component({
     selector: 'spline-date-filter',
-    templateUrl: './spline-date-range-filter.component.html',
+    templateUrl: './spline-date-range-filter.component.html'
 })
 export class SplineDateRangeFilterComponent extends BaseLocalStateComponent<SplineDateRangeFilter.State> implements OnChanges {
 
-    // TODO: labels localization is needed
-    readonly customDateRanges = {
-        Today: [moment().startOf('day'), moment().endOf('day')],
-        Yesterday: [moment().subtract(1, 'day').startOf('day'), moment().subtract(1, 'day').endOf('day')],
-        'This Week': [moment().startOf('isoWeek'), moment().endOf('isoWeek')],
-        'Last Week': [moment().subtract(1, 'week').startOf('isoWeek'), moment().subtract(1, 'week').endOf('isoWeek')],
-        'This Month': [moment().startOf('month'), moment().endOf('month')],
-        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-        'Last 3 Month': [moment().subtract(3, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-    }
-
-    @ViewChild(DaterangepickerComponent, { static: false }) datePicker: DaterangepickerComponent
-    @ViewChild(MatMenuTrigger, { static: false }) matMenuTrigger: MatMenuTrigger
-
-    @Input() value: SplineDateRangeFilter.Value | null
+    @ViewChild(DaterangepickerComponent) datePicker: DaterangepickerComponent
+    @ViewChild(MatMenuTrigger) matMenuTrigger: MatMenuTrigger
+    @Input() value: SplineDateRangeValue | null
     @Input() showIcon = true
-
     @Input() icon = 'schedule'
     @Input() label: string
-
     @Input() emptyValueString = 'COMMON.DATE_FILTER__EMPTY_VALUE_LABEL'
-
-    @Input() set maxDate(value: Date) {
-        this._maxDateMoment = value ? moment(value).endOf('day') : null
-    }
-
-    @Input() set minDate(value: Date) {
-        this._minDateMoment = value ? moment(value).startOf('day') : null
-    }
-
-    @Output() valueChanged$ = new EventEmitter<SplineDateRangeFilter.Value>()
-
-    _maxDateMoment: moment.Moment
-    _minDateMoment: moment.Moment
-
-    readonly _defaultValue = moment()
-
+    @Output() valueChanged$ = new EventEmitter<SplineDateRangeValue>()
+    _customDateRanges: { [key: string]: [dayjs.Dayjs, dayjs.Dayjs] }
+    private _defaultValue: dayjs.Dayjs
 
     constructor() {
         super()
+
+        const currentDate = new Date()
+        this._defaultValue = dayjs(currentDate)
+
+        // TODO: labels localization is needed
+        this._customDateRanges = {
+            Today: [dayjs(currentDate), dayjs(currentDate)], // ts-ignore
+            Yesterday: [dayjs(currentDate).subtract(1, 'days'), dayjs(currentDate).subtract(1, 'days')],
+            'This Week': [dayjs(currentDate).startOf('week'), dayjs(currentDate).endOf('week')],
+            'Last Week': [dayjs(currentDate).subtract(1, 'weeks').startOf('week'), dayjs(currentDate).subtract(1, 'weeks').endOf('week')],
+            'This Month': [dayjs(currentDate).startOf('month'), dayjs(currentDate).endOf('month')],
+            'Last Month': [
+                dayjs(currentDate).subtract(1, 'month').startOf('month'),
+                dayjs(currentDate).subtract(1, 'month').endOf('month')
+            ],
+            'Last 3 Month': [
+                dayjs(currentDate).subtract(3, 'month').startOf('month'),
+                dayjs(currentDate).subtract(1, 'month').endOf('month')
+            ]
+        }
+
         this.updateState(
             SplineDateRangeFilter.getDefaultState()
         )
+    }
+
+    // eslint-disable-next-line @typescript-eslint/member-ordering
+    private _maxDate: dayjs.Dayjs
+
+    @Input() set maxDate(value: Date) {
+        this._maxDate = value ? dayjs(value).endOf('day') : null
+    }
+
+    // eslint-disable-next-line @typescript-eslint/member-ordering
+    private _minDate: dayjs.Dayjs
+
+    @Input() set minDate(value: Date) {
+        this._minDate = value ? dayjs(value).startOf('day') : null
+    }
+
+    get initialStartDate(): dayjs.Dayjs {
+        if (this.state?.valueDayjs) {
+            return this.state.valueDayjs.dateFrom
+        }
+
+        if (this._minDate) {
+            return this._minDate
+        }
+
+        return this._defaultValue
+    }
+
+    get initialEndDate(): dayjs.Dayjs {
+        if (this.state?.valueDayjs) {
+            return this.state.valueDayjs.dateTo
+        }
+        if (this._maxDate) {
+            return this._maxDate
+        }
+
+        return this._defaultValue
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -81,11 +111,12 @@ export class SplineDateRangeFilterComponent extends BaseLocalStateComponent<Spli
         }
     }
 
-    onDateChosen($event: { chosenLabel: string; startDate: moment.Moment; endDate: moment.Moment }): void {
-        const newValue = $event.startDate && $event.endDate
+    onDateChosen($event: { [key: string]: any }): void {
+        const { startDate, endDate } = $event as { startDate: dayjs.Dayjs; endDate: dayjs.Dayjs }
+        const newValue = startDate && endDate
             ? {
-                dateFrom: $event.startDate.startOf('day').toDate(),
-                dateTo: $event.endDate.endOf('day').toDate()
+                dateFrom: startDate?.startOf('day').toDate(),
+                dateTo: endDate?.endOf('day').toDate()
             }
             : null
         this.setValue(newValue)
@@ -97,7 +128,7 @@ export class SplineDateRangeFilterComponent extends BaseLocalStateComponent<Spli
         this.matMenuTrigger.closeMenu()
     }
 
-    private setValue(value: SplineDateRangeFilter.Value): void {
+    private setValue(value: SplineDateRangeValue): void {
         this.updateState(
             SplineDateRangeFilter.reduceValueChanged(this.state, value)
         )

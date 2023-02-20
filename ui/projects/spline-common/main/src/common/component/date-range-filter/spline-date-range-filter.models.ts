@@ -14,42 +14,34 @@
  * limitations under the License.
  */
 
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { DateTimeHelpers, SplineDateRangeValue } from 'spline-utils'
 
 
 export namespace SplineDateRangeFilter {
 
-    export type Value = SplineDateRangeValue
-
-    export type ValueMoment = {
-        dateFrom: moment.Moment
-        dateTo: moment.Moment
-    }
-
-    export function valueToString(value: Value): string {
+    export function valueToString(value: SplineDateRangeValue): string {
         const dateFromString = DateTimeHelpers.toString(value.dateFrom, DateTimeHelpers.FULL_DATE)
         const dateToString = DateTimeHelpers.toString(value.dateTo, DateTimeHelpers.FULL_DATE)
 
-        return `${dateFromString} - ${dateToString}`
+        return `${ dateFromString } - ${ dateToString }`
     }
 
     export type State = {
-        value: Value
-        valueMoment: SplineDateRangeValue<moment.Moment>
+        value: SplineDateRangeValue
+        valueDayjs: SplineDateRangeValue<dayjs.Dayjs>
         valueString: string | null
     }
 
     export function getDefaultState(): State {
         return {
             value: null,
-            valueMoment: null,
+            valueDayjs: null,
             valueString: null
         }
     }
 
-    export function reduceValueChanged(state: State, value: Value | null): State {
-
+    export function reduceValueChanged(state: State, value: SplineDateRangeValue | null): State {
         if (!value) {
             return {
                 ...getDefaultState()
@@ -61,9 +53,9 @@ export namespace SplineDateRangeFilter {
             value: {
                 ...value
             },
-            valueMoment: {
-                dateFrom: moment(value.dateFrom),
-                dateTo: moment(value.dateTo),
+            valueDayjs: {
+                dateFrom: dayjs(value.dateFrom),
+                dateTo: dayjs(value.dateTo)
             },
             valueString: valueToString(value)
         }

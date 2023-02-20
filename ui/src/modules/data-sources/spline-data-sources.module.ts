@@ -33,7 +33,6 @@ import { MatTreeModule } from '@angular/material/tree'
 import { RouterModule } from '@angular/router'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
-import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material'
 import { SplineApiModule } from 'spline-api'
 import { SplineCommonModule } from 'spline-common'
 import { SplineDataViewModule } from 'spline-common/data-view'
@@ -75,7 +74,6 @@ import { SplineDataSourceStoreNs } from './store/state-managements/spline-data-s
         MatTabsModule,
         MatInputModule,
         MatMenuModule,
-        NgxDaterangepickerMd.forRoot(),
         StoreModule.forFeature(SplineDataSourceStoreNs.STORE_FEATURE_NAME, SplineDataSourceStoreNs.reducers),
         EffectsModule.forFeature(effects),
         SplineDataSourcesRoutingModule,

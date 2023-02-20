@@ -54,7 +54,7 @@ export namespace ExecutionEventsQuery {
         return {
             ...(queryParams?.filter ? toQueryFilterDto(queryParams.filter) : {}),
             ...(queryParams?.pager ? toQueryPagerDto(queryParams.pager) : {}),
-            ...(queryParams?.sortBy?.length ? toSortingDto(queryParams.sortBy) : {}),
+            ...(queryParams?.sortBy?.length ? toSortingDto(queryParams.sortBy) : {})
         }
     }
 
@@ -74,25 +74,39 @@ export namespace ExecutionEventsQuery {
     }
 
     export function toQueryParams(
-        searchParams: SearchQuery.SearchParams<QueryFilter, ExecutionEventField>,
+        searchParams: SearchQuery.SearchParams<QueryFilter, ExecutionEventField>
     ): QueryParams {
         const queryFilter = {
             ...searchParams.filter,
             ...searchParams.alwaysOnFilter,
-            searchTerm: searchParams.searchTerm,
+            searchTerm: searchParams.searchTerm
         }
         return {
             filter: queryFilter,
             pager: searchParams.pager,
-            sortBy: searchParams.sortBy,
+            sortBy: searchParams.sortBy
         }
     }
 
+    function parseDate(value = undefined) {
+        if (typeof value === 'number') {
+            return value
+        }
+        if (typeof value === 'string') {
+            return (Date.parse(value))
+        }
+        if (value instanceof Date) {
+            return value.getTime()
+        }
+
+        return undefined
+    }
 
     function toQueryFilterDto(queryFilter: QueryFilter): Partial<QueryParamsDto> {
+
         return {
-            timestampStart: queryFilter?.executedAtFrom ? queryFilter?.executedAtFrom.getTime() : undefined,
-            timestampEnd: queryFilter?.executedAtTo ? queryFilter?.executedAtTo.getTime() : undefined,
+            timestampStart: parseDate(queryFilter.executedAtFrom),
+            timestampEnd: parseDate(queryFilter.executedAtTo),
             searchTerm: queryFilter?.searchTerm?.length ? queryFilter?.searchTerm : undefined,
             dataSourceUri: queryFilter?.dataSourceUri,
             asAtTime: queryFilter?.asAtTime,
@@ -117,14 +131,14 @@ export namespace ExecutionEventsQuery {
         const offset = queryPager?.offset ?? 0
         return {
             pageSize: limit,
-            pageNum: offset / limit + 1,
+            pageNum: offset / limit + 1
         }
     }
 
     function toSortingDto(sortBy: QuerySorter.FieldSorter<ExecutionEventField>[]): Partial<QueryParamsDto> {
         return {
             sortField: sortBy[0].field,
-            sortOrder: sortBy[0].dir.toLowerCase(),
+            sortOrder: sortBy[0]?.dir?.toLowerCase()
         }
     }
 }

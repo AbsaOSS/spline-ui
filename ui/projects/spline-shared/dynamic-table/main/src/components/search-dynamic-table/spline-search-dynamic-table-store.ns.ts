@@ -22,6 +22,7 @@ export namespace SplineSearchDynamicTableStoreNs {
 
     import SearchParams = SearchQuery.SearchParams
 
+
     export type State = {
         isInitialized: boolean
         sorting: QuerySorter.FieldSorter | null
@@ -47,8 +48,8 @@ export namespace SplineSearchDynamicTableStoreNs {
 
         const urlString = queryParams[queryParamAlias]
         return urlString
-               ? searchParamsFromUrlString(urlString)
-               : null
+            ? searchParamsFromUrlString(urlString)
+            : null
     }
 
     export function applySearchParams(
@@ -59,8 +60,8 @@ export namespace SplineSearchDynamicTableStoreNs {
 
         // keep some data in query params if it differs from the DS State
         const searchParamsString = searchParams !== null
-                                   ? searchParamsToUrlString(searchParams)
-                                   : null
+            ? searchParamsToUrlString(searchParams)
+            : null
 
         return RouterNavigation.setQueryParam(
             queryParams,
