@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-import { SplineDateRangeFilter } from 'spline-common'
 import { BaseDynamicFilterControlModel, DynamicFilterControlSchema } from 'spline-common/dynamic-filter'
-import { SplineDateRangeValue } from 'spline-utils'
+import { SplineDateRangeValue, SplineRecord } from 'spline-utils'
 
 
 export namespace DfControlDateRange {
 
     export const TYPE = 'DfControlDateRange'
 
-    export type Value = SplineDateRangeFilter.Value
+    export type Value = SplineDateRangeValue
 
-    export type Options = {}
+    export type Options = SplineRecord
 
     export type Schema<TId extends keyof any = any> =
         & DynamicFilterControlSchema<Value, Options, TId>
@@ -35,20 +34,6 @@ export namespace DfControlDateRange {
             label?: string
             bounds?: SplineDateRangeValue | null
         }
-
-    export function getSchema<TId extends keyof any = any>(
-        label?: string,
-        icon?: string,
-        bounds?: SplineDateRangeValue | null): Partial<Schema> {
-
-        return {
-            type: TYPE,
-            label,
-            icon,
-            bounds
-        }
-    }
-
     export type Config = Omit<Schema, 'id' | 'type'>
 
     export class Model<TId extends keyof any = any> extends BaseDynamicFilterControlModel<Value, Options, TId> {

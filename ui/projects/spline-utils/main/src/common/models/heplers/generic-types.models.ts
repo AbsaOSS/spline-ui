@@ -18,7 +18,7 @@ export type PrimitiveNotEmpty = number | string | boolean
 
 export type SplineRecord<T = any, K extends keyof any = string> = Record<K, T>
 
-export type SplineDateRangeValue<TDate = Date> = {
+export interface SplineDateRangeValue<TDate = Date> {
     dateFrom: TDate | null
     dateTo: TDate | null
 }
