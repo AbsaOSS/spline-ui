@@ -15,41 +15,39 @@
  */
 
 import _ from 'lodash'
-import { Observable } from 'rxjs'
-import { ExecutionPlan } from 'spline-api'
-import { SplineDataViewSchema } from 'spline-common/data-view'
+import {Observable} from 'rxjs'
+import {ExecutionPlan} from 'spline-api'
+import {SplineDataViewSchema} from 'spline-common/data-view'
 
-import { PlanInfo, attributesSchemaToDataViewSchema } from '../../models'
+import {attributesSchemaToDataViewSchema, PlanInfo} from '../../models'
 
 
-export namespace ExecutionPlanInfoStoreNs {
-
-    export type State = {
-        executionPlan: ExecutionPlan
-        executionPlanVs: SplineDataViewSchema
-        inputsVs: SplineDataViewSchema
-        outputVs: SplineDataViewSchema
-        outputAndInputsVs: SplineDataViewSchema
-        attributesSchema: SplineDataViewSchema
-        inputsNumber: number
-    }
-
-    export function toState(executionPlan: ExecutionPlan, selectedAttributeId$: Observable<string | null>): State {
-        const allAttributesSorted = _.sortBy(executionPlan.extraInfo.attributes, a => a.name)
-        const allDataTypes = executionPlan.extraInfo.dataTypes
-        return {
-            executionPlan: executionPlan,
-            executionPlanVs: PlanInfo.toDataViewSchema(executionPlan),
-            inputsVs: PlanInfo.getInputsDataViewSchema(executionPlan),
-            outputVs: PlanInfo.getOutputDataViewSchema(executionPlan),
-            outputAndInputsVs: PlanInfo.getOutputAndInputsDvs(executionPlan),
-            inputsNumber: executionPlan.inputDataSources.length,
-            attributesSchema: attributesSchemaToDataViewSchema(
-                allAttributesSorted,
-                allDataTypes,
-                selectedAttributeId$
-            )
-        }
-    }
-
+export type State = {
+    executionPlan: ExecutionPlan
+    executionPlanVs: SplineDataViewSchema
+    inputsVs: SplineDataViewSchema
+    outputVs: SplineDataViewSchema
+    outputAndInputsVs: SplineDataViewSchema
+    attributesSchema: SplineDataViewSchema
+    inputsNumber: number
 }
+
+export function toState(executionPlan: ExecutionPlan, selectedAttributeId$: Observable<string | null>): State {
+    const allAttributesSorted = _.sortBy(executionPlan.extraInfo.attributes, a => a.name)
+    const allDataTypes = executionPlan.extraInfo.dataTypes
+    return {
+        executionPlan: executionPlan,
+        executionPlanVs: PlanInfo.toDataViewSchema(executionPlan),
+        inputsVs: PlanInfo.getInputsDataViewSchema(executionPlan),
+        outputVs: PlanInfo.getOutputDataViewSchema(executionPlan),
+        outputAndInputsVs: PlanInfo.getOutputAndInputsDvs(executionPlan),
+        inputsNumber: executionPlan.inputDataSources.length,
+        attributesSchema: attributesSchemaToDataViewSchema(
+            allAttributesSorted,
+            allDataTypes,
+            selectedAttributeId$
+        )
+    }
+}
+
+

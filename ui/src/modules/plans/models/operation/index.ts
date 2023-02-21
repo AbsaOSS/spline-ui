@@ -16,4 +16,3 @@
 
 export * from './type'
 export * from './operation-info.models'
-export * from './operation-property.models'

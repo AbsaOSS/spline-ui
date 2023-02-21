@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import { dataSourceUriToName, OperationDetails, OperationPropertiesRead, uriToDatsSourceId } from 'spline-api'
-import { SdWidgetExpansionPanel, SdWidgetRecordsList, SdWidgetSchema, SplineDataViewSchema } from 'spline-common/data-view'
-import { SgNodeControl } from 'spline-shared/graph'
+import {dataSourceUriToName, OperationDetails, OperationPropertiesRead, uriToDatsSourceId} from 'spline-api'
+import {SdWidgetExpansionPanel, SdWidgetRecordsList, SdWidgetSchema, SplineDataViewSchema} from 'spline-common/data-view'
+import {SgNodeControl} from 'spline-shared/graph'
 
-import { EventOperationProperty } from '../operation-property.models'
+import {ExtraPropertyValuePrimitive, primitivePropsToDvs} from '../operation-property.models'
 
-import { getBaseOperationDetailsSchema } from './operation-common.models'
+import {getBaseOperationDetailsSchema} from './operation-common.models'
 
 
 export namespace OperationRead {
@@ -34,7 +34,7 @@ export namespace OperationRead {
     }
 
     export function getMainSection(operationDetails: OperationDetails,
-                                   primitiveProps: EventOperationProperty.ExtraPropertyValuePrimitive[]): SdWidgetSchema[] {
+                                   primitiveProps: ExtraPropertyValuePrimitive[]): SdWidgetSchema[] {
 
         const properties = operationDetails.operation.properties as OperationPropertiesRead
         const nodeStyles = SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Read)
@@ -57,7 +57,7 @@ export namespace OperationRead {
                             })),
                         'PLANS.OPERATION__READ__INPUT_DATA_SOURCES_TITLE',
                     ),
-                    ...EventOperationProperty.primitivePropsToDvs(primitiveProps),
+                    ...primitivePropsToDvs(primitiveProps),
                 ],
             ),
         ]

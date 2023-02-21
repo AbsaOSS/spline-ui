@@ -19,7 +19,7 @@ import { ActivatedRoute } from '@angular/router'
 import { RouterNavigation } from 'spline-utils'
 
 
-export namespace PlanOverview {
+
 
     export enum QueryParamAlis {
         ExecutionPlanId = 'planId',
@@ -51,4 +51,4 @@ export namespace PlanOverview {
     export function getSelectedAttributeId(activatedRoute: ActivatedRoute): string {
         return RouterNavigation.extractQueryParam(activatedRoute, QueryParamAlis.SelectedAttributeId)
     }
-}
+

@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
-import { BehaviorSubject } from 'rxjs'
-import { ExecutionPlan } from 'spline-api'
-import { SplineDataWidgetEvent } from 'spline-common/data-view'
-import { SdWidgetAttributesTree } from 'spline-shared/attributes'
-import { BaseLocalStateComponent } from 'spline-utils'
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core'
+import {BehaviorSubject} from 'rxjs'
+import {ExecutionPlan} from 'spline-api'
+import {SplineDataWidgetEvent} from 'spline-common/data-view'
+import {SdWidgetAttributesTree} from 'spline-shared/attributes'
+import {BaseLocalStateComponent} from 'spline-utils'
 
-import { ExecutionPlanInfoStoreNs } from '../../store'
+import {ExecutionPlanInfoStoreNs} from '../../store'
 
 
 @Component({
@@ -68,7 +68,7 @@ export class PlanInfoComponent extends BaseLocalStateComponent<ExecutionPlanInfo
 
     private onSelectedAttributeChanged(attributeId: string | null): void {
         this.selectedAttributeId$.next(attributeId)
-        this.selectedAttributeChanged$.emit({ attributeId })
+        this.selectedAttributeChanged$.emit({attributeId})
     }
 
 }

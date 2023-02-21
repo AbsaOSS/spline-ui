@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-import { OperationDetails, OperationPropertiesSort } from 'spline-api'
-import { SdWidgetExpansionPanel, SdWidgetSchema, SplineDataViewSchema } from 'spline-common/data-view'
-import { SdWidgetExpression } from 'spline-shared/expression'
-import { SgNodeControl } from 'spline-shared/graph'
+import {OperationDetails, OperationPropertiesSort} from 'spline-api'
+import {SdWidgetExpansionPanel, SdWidgetSchema, SplineDataViewSchema} from 'spline-common/data-view'
+import {SdWidgetExpression} from 'spline-shared/expression'
+import {SgNodeControl} from 'spline-shared/graph'
 
-import { EventOperationProperty } from '../operation-property.models'
+import {ExtraPropertyValuePrimitive} from '../operation-property.models'
 
-import { getBaseOperationDetailsSchema } from './operation-common.models'
-import { OperationGeneric } from './operation-generic.models'
+import {getBaseOperationDetailsSchema} from './operation-common.models'
+import {OperationGeneric} from './operation-generic.models'
 
 
 export namespace OperationSort {
@@ -36,7 +36,7 @@ export namespace OperationSort {
     }
 
     export function getMainSection(operationDetails: OperationDetails,
-                                   primitiveProps: EventOperationProperty.ExtraPropertyValuePrimitive[]): SdWidgetSchema[] {
+                                   primitiveProps: ExtraPropertyValuePrimitive[]): SdWidgetSchema[] {
 
         const properties = operationDetails.operation.properties as OperationPropertiesSort
         const nodeStyles = SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Sort)

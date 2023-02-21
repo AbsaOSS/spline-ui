@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-import { OperationDetails, OperationPropertiesJoin } from 'spline-api'
-import { SdWidgetExpansionPanel, SdWidgetSchema, SplineDataViewSchema } from 'spline-common/data-view'
-import { SdWidgetExpression } from 'spline-shared/expression'
-import { SgNodeControl } from 'spline-shared/graph'
+import {OperationDetails, OperationPropertiesJoin} from 'spline-api'
+import {SdWidgetExpansionPanel, SdWidgetSchema, SplineDataViewSchema} from 'spline-common/data-view'
+import {SdWidgetExpression} from 'spline-shared/expression'
+import {SgNodeControl} from 'spline-shared/graph'
 
-import { EventOperationProperty } from '../operation-property.models'
+import {ExtraPropertyValuePrimitive, primitivePropsToDvs} from '../operation-property.models'
 
-import { getBaseOperationDetailsSchema } from './operation-common.models'
+import {getBaseOperationDetailsSchema} from './operation-common.models'
 
 
 export namespace OperationJoin {
@@ -35,7 +35,7 @@ export namespace OperationJoin {
     }
 
     export function getMainSection(operationDetails: OperationDetails,
-                                   primitiveProps: EventOperationProperty.ExtraPropertyValuePrimitive[]): SdWidgetSchema[] {
+                                   primitiveProps: ExtraPropertyValuePrimitive[]): SdWidgetSchema[] {
 
         const properties = operationDetails.operation.properties as OperationPropertiesJoin
         const nodeStyles = SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Join)
@@ -53,7 +53,7 @@ export namespace OperationJoin {
                         expression: properties.condition,
                         attrSchemasCollection: operationDetails.schemasCollection,
                     }),
-                    ...EventOperationProperty.primitivePropsToDvs(primitiveProps),
+                    ...primitivePropsToDvs(primitiveProps),
                 ],
             ),
         ]

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import { OperationDetails, OperationPropertiesAlias } from 'spline-api'
-import { SdWidgetExpansionPanel, SdWidgetSchema, SdWidgetSimpleRecord, SplineDataViewSchema } from 'spline-common/data-view'
-import { SgNodeControl } from 'spline-shared/graph'
+import {OperationDetails, OperationPropertiesAlias} from 'spline-api'
+import {SdWidgetExpansionPanel, SdWidgetSchema, SdWidgetSimpleRecord, SplineDataViewSchema} from 'spline-common/data-view'
+import {SgNodeControl} from 'spline-shared/graph'
 
-import { EventOperationProperty } from '../operation-property.models'
+import {ExtraPropertyValuePrimitive, primitivePropsToDvs} from '../operation-property.models'
 
-import { getBaseOperationDetailsSchema } from './operation-common.models'
+import {getBaseOperationDetailsSchema} from './operation-common.models'
 
 
 export namespace OperationAlias {
@@ -34,7 +34,7 @@ export namespace OperationAlias {
     }
 
     export function getMainSection(operationDetails: OperationDetails,
-                                   primitiveProps: EventOperationProperty.ExtraPropertyValuePrimitive[]): SdWidgetSchema[] {
+                                   primitiveProps: ExtraPropertyValuePrimitive[]): SdWidgetSchema[] {
 
         const properties = operationDetails.operation.properties as OperationPropertiesAlias
         const nodeStyles = SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Alias)
@@ -51,7 +51,7 @@ export namespace OperationAlias {
                         label: 'PLANS.OPERATION__ALIAS__MAIN_SECTION__PROPERTY_NAME',
                         value: properties.name,
                     }),
-                    ...EventOperationProperty.primitivePropsToDvs(primitiveProps),
+                    ...primitivePropsToDvs(primitiveProps),
                 ]
             ),
         ]

@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-import { omit } from 'lodash-es'
-import { OperationDetails } from 'spline-api'
-import { SdWidgetSchema } from 'spline-common/data-view'
+import {omit} from 'lodash-es'
+import {OperationDetails} from 'spline-api'
+import {SdWidgetSchema} from 'spline-common/data-view'
 
-import { EventOperationProperty } from '../operation-property.models'
+import {expressionPropsToDvs, ExtraPropertyValuePrimitive, jsonPropsToDvs, parseExtraOptions} from '../operation-property.models'
 
 
 export const OPERATION_DEFAULT_PROPS: ReadonlyArray<string> = ['name']
 
 export type OperationDetailsMainSectionResolver
-    = (operationDetails: OperationDetails, primitiveProps: EventOperationProperty.ExtraPropertyValuePrimitive[]) => SdWidgetSchema[]
+    = (operationDetails: OperationDetails, primitiveProps: ExtraPropertyValuePrimitive[]) => SdWidgetSchema[]
 
 export function getBaseOperationDetailsSchema(operationDetails: OperationDetails,
                                               mainSectionResolver: OperationDetailsMainSectionResolver = () => [],
@@ -32,15 +32,15 @@ export function getBaseOperationDetailsSchema(operationDetails: OperationDetails
 
     const properties = operationDetails.operation.properties
     const extraPropsNative = omit(properties, [...OPERATION_DEFAULT_PROPS, ...extraDefaultProps])
-    const extraProps = EventOperationProperty.parseExtraOptions(extraPropsNative)
+    const extraProps = parseExtraOptions(extraPropsNative)
 
     const mainSection = mainSectionResolver(operationDetails, extraProps.primitive)
 
     const schema = [
         ...mainSection,
         // EXTRA PROPS :: JSON & EXPRESSION
-        ...EventOperationProperty.jsonPropsToDvs(extraProps.json),
-        ...EventOperationProperty.expressionPropsToDvs(extraProps.expression, operationDetails.schemasCollection),
+        ...jsonPropsToDvs(extraProps.json),
+        ...expressionPropsToDvs(extraProps.expression, operationDetails.schemasCollection),
     ]
 
     return schema.length ? schema : null

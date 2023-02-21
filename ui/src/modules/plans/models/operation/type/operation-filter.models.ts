@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-import { OperationDetails, OperationPropertiesFilter } from 'spline-api'
-import { SdWidgetExpansionPanel, SdWidgetSchema, SplineDataViewSchema } from 'spline-common/data-view'
-import { SdWidgetExpression } from 'spline-shared/expression'
-import { SgNodeControl } from 'spline-shared/graph'
+import {OperationDetails, OperationPropertiesFilter} from 'spline-api'
+import {SdWidgetExpansionPanel, SdWidgetSchema, SplineDataViewSchema} from 'spline-common/data-view'
+import {SdWidgetExpression} from 'spline-shared/expression'
+import {SgNodeControl} from 'spline-shared/graph'
 
-import { EventOperationProperty } from '../operation-property.models'
+import {ExtraPropertyValuePrimitive, primitivePropsToDvs} from '../operation-property.models'
 
-import { getBaseOperationDetailsSchema } from './operation-common.models'
+import {getBaseOperationDetailsSchema} from './operation-common.models'
 
 
 export namespace OperationFilter {
@@ -35,7 +35,7 @@ export namespace OperationFilter {
     }
 
     export function getMainSection(operationDetails: OperationDetails,
-                                   primitiveProps: EventOperationProperty.ExtraPropertyValuePrimitive[]): SdWidgetSchema[] {
+                                   primitiveProps: ExtraPropertyValuePrimitive[]): SdWidgetSchema[] {
 
         const properties = operationDetails.operation.properties as OperationPropertiesFilter
         const nodeStyles = SgNodeControl.getNodeStyles(SgNodeControl.NodeType.Filter)
@@ -52,7 +52,7 @@ export namespace OperationFilter {
                         expression: properties.condition,
                         attrSchemasCollection: operationDetails.schemasCollection,
                     }),
-                    ...EventOperationProperty.primitivePropsToDvs(primitiveProps),
+                    ...primitivePropsToDvs(primitiveProps),
                 ],
             ),
         ]
