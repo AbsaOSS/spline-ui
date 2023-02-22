@@ -36,19 +36,19 @@ import NavTabInfo = SplineTabsNavBar.NavTabInfo
 
 
 @Component({
-               selector: 'plan-overview-page',
-               templateUrl: './plan-overview.page.component.html',
-               styleUrls: ['./plan-overview.page.component.scss'],
-               providers: [
-                   {
-                       provide: ExecutionPlanOverviewFactoryStore,
-                       useFactory: (executionPlanApiService: ExecutionPlanApiService) => {
-                           return new ExecutionPlanOverviewFactoryStore(executionPlanApiService)
-                       },
-                       deps: [ExecutionPlanApiService]
-                   }
-               ]
-           })
+    selector: 'plan-overview-page',
+    templateUrl: './plan-overview.page.component.html',
+    styleUrls: ['./plan-overview.page.component.scss'],
+    providers: [
+        {
+            provide: ExecutionPlanOverviewFactoryStore,
+            useFactory: (executionPlanApiService: ExecutionPlanApiService) => {
+                return new ExecutionPlanOverviewFactoryStore(executionPlanApiService)
+            },
+            deps: [ExecutionPlanApiService]
+        }
+    ]
+})
 export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
 
     @ViewChild(SgContainerComponent) readonly sgContainer: SgContainerComponent
@@ -195,7 +195,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
                 })
             )
             .subscribe(selectedNodeId =>
-                           this.updateQueryParams(PlanOverview.QueryParamAlis.SelectedNodeId, selectedNodeId)
+                this.updateQueryParams(PlanOverview.QueryParamAlis.SelectedNodeId, selectedNodeId)
             )
 
         //
@@ -213,7 +213,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
                 })
             )
             .subscribe(attrId =>
-                           this.updateQueryParams(PlanOverview.QueryParamAlis.SelectedAttributeId, attrId)
+                this.updateQueryParams(PlanOverview.QueryParamAlis.SelectedAttributeId, attrId)
             )
     }
 
