@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 import { SplineRecord } from '../heplers'
 
 import { QueryPager } from './query-pager.models'
@@ -25,4 +24,17 @@ export interface PageQueryParams<TFilter extends SplineRecord, TSortableFiled = 
     pager?: Partial<QueryPager>
     filter?: TFilter
     sortBy?: QuerySorter.FieldSorter<TSortableFiled>[]
+}
+
+export interface LabelPageQueryParams {
+    length?: number
+    offset?: number
+    search?: string
+}
+
+export interface LabelValuesPageQueryParams extends LabelPageQueryParams {
+    labelName: string
+    length?: number
+    offset?: number
+    search?: string
 }

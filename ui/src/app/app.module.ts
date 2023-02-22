@@ -28,19 +28,12 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { storeFreeze } from 'ngrx-store-freeze'
-import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material'
 import { SplineIconModule, SplineSearchBoxModule } from 'spline-common'
 import { DynamicFilterCoreModule } from 'spline-common/dynamic-filter'
 import { SplineLayoutModule } from 'spline-common/layout'
 import { SPLINE_CONFIG_SETTINGS, SplineConfigModule, SplineConfigSettings } from 'spline-shared'
-import { SplineAttributesSharedModule } from 'spline-shared/attributes'
 import { SplineUtilsCommonModule } from 'spline-utils'
-import {
-    SPLINE_TRANSLATE_COMMON_ASSETS,
-    SplineTranslateCoreModule,
-    SplineTranslateModule,
-    toAssetsFilePath
-} from 'spline-utils/translate'
+import { SPLINE_TRANSLATE_COMMON_ASSETS, SplineTranslateCoreModule, SplineTranslateModule, toAssetsFilePath } from 'spline-utils/translate'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -48,8 +41,8 @@ import { SplineSidebarMenuComponent } from './components'
 import { AppNotFoundComponent } from './pages/not-found/not-found.component'
 import { SplineGlobalErrorHandler } from './services'
 
-
-export const metaReducers: MetaReducer<any>[] =
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const metaReducers: MetaReducer<{}>[] =
     !environment.production
         ? [storeFreeze]
         : []
@@ -79,22 +72,20 @@ export const metaReducers: MetaReducer<any>[] =
         SplineLayoutModule,
         SplineSearchBoxModule,
         SplineConfigModule,
-        SplineAttributesSharedModule,
         SplineIconModule,
         SplineUtilsCommonModule,
-        NgxDaterangepickerMd.forRoot(),
         DynamicFilterCoreModule.forRoot()
     ],
     providers: [
         {
             provide: SPLINE_CONFIG_SETTINGS,
             useFactory: (): SplineConfigSettings => {
-                const envFileSuffix = environment.key && `${environment.key}.` || ''
+                const envFileSuffix = environment.key && `${ environment.key }.` || ''
                 return {
-                    defaultConfigUri: `${RELATIVE_URL}/assets/config.default.json`,
-                    userConfigUri: `${RELATIVE_URL}/assets/config.${envFileSuffix}json`,
+                    defaultConfigUri: `${ RELATIVE_URL }/assets/config.default.json`,
+                    userConfigUri: `${ RELATIVE_URL }/assets/config.${ envFileSuffix }json`
                 }
-            },
+            }
         },
         {
             provide: SPLINE_TRANSLATE_COMMON_ASSETS,
@@ -109,12 +100,12 @@ export const metaReducers: MetaReducer<any>[] =
                 toAssetsFilePath('spline-common'),
                 toAssetsFilePath('spline-common.graph'),
                 toAssetsFilePath('spline-common.layout'),
-                toAssetsFilePath('spline-common.dynamic-filter.filter-controls'),
+                toAssetsFilePath('spline-common.dynamic-filter.filter-controls')
             ]
         },
-        { provide: ErrorHandler, useClass: SplineGlobalErrorHandler },
+        { provide: ErrorHandler, useClass: SplineGlobalErrorHandler }
     ],
-    bootstrap: [AppComponent],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }

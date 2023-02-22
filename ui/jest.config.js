@@ -21,9 +21,16 @@ module.exports = {
         '<rootDir>/setup-jest.ts'
     ],
     'rootDir': __dirname,
+    'testPathIgnorePatterns': [
+        'projects/spline-shared/dynamic-table/main/src/components/search-dynamic-table/__tests__'
+    ],
     'transformIgnorePatterns': [
         'node_modules/(?!@ngrx)'
     ],
+    // transform: {
+    //     "^.+\\.jsx?$": "babel-jest",
+    //     "^.+\\.mjs$": "babel-jest",
+    // },
     'testResultsProcessor': 'jest-teamcity-reporter',
     'coverageReporters': [
         'text',
@@ -33,6 +40,7 @@ module.exports = {
     ],
     'coverageDirectory': 'target/coverage',
     'moduleNameMapper': {
+        // '^ngx-daterangepicker-material$': __dirname + 'node_modules/ngx-daterangepicker-material/fesm2015/ngx-daterangepicker-material.mjs',
         '^lodash-es$': __dirname + '/node_modules/lodash/index.js',
         '/spline-api/': __dirname + '/projects/spline-api/src/public-api',
         '^spline-api$': __dirname + '/projects/spline-api/src/public-api',
@@ -72,7 +80,7 @@ module.exports = {
     'resolver': null,
     'globals': {
         'ts-jest': {
-            tsConfig: '<rootDir>/tsconfig.spec.json'
+            tsconfig: '<rootDir>/tsconfig.spec.json'
         }
     }
 };

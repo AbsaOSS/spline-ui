@@ -15,7 +15,6 @@
  */
 
 import { isEqual } from 'lodash-es'
-import { Observable } from 'rxjs'
 import { distinctUntilChanged, filter, map, skip, takeUntil, withLatestFrom } from 'rxjs/operators'
 import { DynamicFilterModel } from 'spline-common/dynamic-filter'
 import { SearchFactoryStore, SplineRecord } from 'spline-utils'
@@ -38,8 +37,7 @@ export namespace DynamicFilterStoreExtras {
     export function bindDynamicFilter<TQueryFilter extends SplineRecord, TDynamicFilter extends SplineRecord>(
         dataSource: SearchFactoryStore<any, any, TQueryFilter>,
         filterModel: DynamicFilterModel<TDynamicFilter>,
-        filtersMapping: FiltersMapping<TQueryFilter, TDynamicFilter>,
-        bindTill$: Observable<void> = dataSource.disconnected$
+        filtersMapping: FiltersMapping<TQueryFilter, TDynamicFilter>
     ): void {
 
         //
@@ -48,7 +46,6 @@ export namespace DynamicFilterStoreExtras {
         //
         filterModel.valueChanged$
             .pipe(
-                takeUntil(bindTill$),
                 distinctUntilChanged((left, right) => isEqual(left, right)),
                 withLatestFrom(dataSource.searchParams$),
                 map(([filterValue, searchParams]) => {
@@ -61,7 +58,8 @@ export namespace DynamicFilterStoreExtras {
                         currentQueryFilter
                     ]
                 }),
-                filter(([queryFilter, currentQueryFilter]) => !isEqual(queryFilter, currentQueryFilter))
+                filter(([queryFilter, currentQueryFilter]) => !isEqual(queryFilter, currentQueryFilter)),
+                takeUntil(dataSource.disconnected$)
             )
             .subscribe(([queryFilter]) => {
                 dataSource.setFilter(queryFilter)
@@ -74,12 +72,12 @@ export namespace DynamicFilterStoreExtras {
         dataSource.searchParams$
             .pipe(
                 skip(1),
-                takeUntil(bindTill$),
                 map((searchParams) => filtersMapping.queryFilterToDynamicFilterMapFn(searchParams.filter)),
                 filter(filterValue => {
                     const currentValue = filterModel.value
                     return !isEqual(filterValue, currentValue)
-                })
+                }),
+                takeUntil(dataSource.disconnected$)
             )
             .subscribe(filterValue => {
                 filterModel.patchValue(filterValue, false)

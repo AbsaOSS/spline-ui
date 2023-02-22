@@ -13,31 +13,30 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+<form [formGroup]="formGroup">
+    <div [class.spline-search-box--focused]="isFocused" class="spline-search-box">
 
-<div [class.spline-search-box--focused]="isFocused" class="spline-search-box">
+        <!-- SEARCH ICON -->
+        <mat-icon class="spline-search-box__search-icon">search</mat-icon>
+        <!-- ./SEARCH ICON -->
+        <input
+            class="spline-search-box__input"
+            (focusin)="isFocused = true"
+            (focusout)="isFocused = false"
+            formControlName="searchControl"
+            [matAutocomplete]="matAutocomplete"
+            [matAutocompleteDisabled]="!matAutocomplete"
+            [placeholder]="placeholder | translate"
+            type="text">
 
-    <!-- SEARCH ICON -->
-    <mat-icon class="spline-search-box__search-icon">search</mat-icon>
-    <!-- ./SEARCH ICON -->
+        <!-- CLEAR ICON -->
+        <mat-icon class="spline-search-box__clear-icon"
+                  *ngIf="searchControl?.value?.length"
+                  [matTooltip]="'COMMON.CLEAR' | translate"
+                  (click)="onClearBtnClicked()">
+            close
+        </mat-icon>
+        <!-- ./CLEAR ICON -->
 
-    <input #inputRef
-           class="spline-search-box__input"
-           (focusin)="isFocused = true"
-           (focusout)="isFocused = false"
-           [ngModel]="inputValue"
-           [matAutocomplete]="matAutocomplete"
-           [matAutocompleteDisabled]="!matAutocomplete"
-           (keyup)="onSearchChanged(inputRef.value)"
-           [placeholder]="placeholder | translate"
-           type="text">
-
-    <!-- CLEAR ICON -->
-    <mat-icon class="spline-search-box__clear-icon"
-              *ngIf="inputValue?.length"
-              [matTooltip]="'COMMON.CLEAR' | translate"
-              (click)="onClearBtnClicked()">
-        close
-    </mat-icon>
-    <!-- ./CLEAR ICON -->
-
-</div>
+    </div>
+</form>

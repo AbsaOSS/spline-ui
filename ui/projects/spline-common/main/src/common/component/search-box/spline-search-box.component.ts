@@ -14,71 +14,55 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { FormControl, FormGroup } from '@angular/forms'
 import { MatAutocomplete } from '@angular/material/autocomplete'
-import { Subject } from 'rxjs'
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators'
+import { distinctUntilChanged } from 'rxjs'
+import { debounceTime, takeUntil } from 'rxjs/operators'
 import { BaseComponent } from 'spline-utils'
 
 
 @Component({
     selector: 'spline-search-box',
-    templateUrl: './spline-search-box.component.html',
+    templateUrl: './spline-search-box.component.html'
 })
 export class SplineSearchBoxComponent extends BaseComponent {
-
-    @ViewChild('inputRef', { read: ElementRef, static: true }) inputRef: ElementRef<HTMLElement>
-
     @Input() placeholder = 'COMMON.SEARCH'
     @Input() matAutocomplete: MatAutocomplete
-
-    @Input() set searchTerm(value: string) {
-        this.inputValue = value
-    }
-
     @Output() search$ = new EventEmitter<string>()
-    @Output() clear$ = new EventEmitter<string>()
-
     isFocused = false
-    inputValue: string
 
+    searchControl = new FormControl()
+    formGroup = new FormGroup({
+        searchControl: this.searchControl
+    })
     readonly emitSearchEventDebounceTimeInUs = 300
-
-    protected searchValueChanged$ = new Subject<string>()
 
     constructor() {
         super()
 
-        this.searchValueChanged$
+        this.searchControl.valueChanges
             .pipe(
-                takeUntil(this.destroyed$),
                 // wait some time between keyUp events
                 debounceTime(this.emitSearchEventDebounceTimeInUs),
                 // emit only different value form the previous one
-                distinctUntilChanged((a, b) => a.trim().toLocaleLowerCase() === b.trim().toLocaleLowerCase()),
+                distinctUntilChanged((a, b) => a?.trim().toLocaleLowerCase() === b?.trim().toLocaleLowerCase()),
+                takeUntil(this.destroyed$)
             )
-            .subscribe(
-                value => this.search$.emit(value),
-            )
+            .subscribe(value => {
+                this.search$.emit(value)
+            })
     }
 
-    onSearchChanged(searchTerm: string): void {
-        this.inputValue = searchTerm
-        this.searchValueChanged$.next(searchTerm)
-        this.isFocused = true
+    @Input() set searchTerm(value: string) {
+        this.formGroup.controls['searchControl'].setValue(value)
     }
 
     onClearBtnClicked(): void {
-        this.onSearchChanged('')
-        this.focusSearchInput()
-    }
-
-    focusSearchInput(): void {
-        this.inputRef.nativeElement.focus()
+        this.searchControl.reset()
     }
 
     clearFocus(): void {
         this.isFocused = false
     }
-
 }

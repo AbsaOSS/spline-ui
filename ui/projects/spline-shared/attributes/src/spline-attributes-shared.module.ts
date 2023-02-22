@@ -22,12 +22,11 @@ import { MatCardModule } from '@angular/material/card'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatTreeModule } from '@angular/material/tree'
-import { SplineApiExecutionEventModule } from 'spline-api'
+import { SplineApiModule } from 'spline-api'
 import { SplineDividerModule, SplineIconModule, SplineLoaderModule, SplineSearchBoxModule } from 'spline-common'
 import { SD_WIDGET_FACTORY } from 'spline-common/data-view'
 import { SplineApiConfigModule } from 'spline-shared'
 import { SplineTranslateModule } from 'spline-utils/translate'
-
 
 import * as fromComponents from './components'
 import { SdWidgetAttributesTreeFactory } from './services/sd-widget-attributes-tree.factory'
@@ -47,22 +46,22 @@ import { SdWidgetAttributesTreeFactory } from './services/sd-widget-attributes-t
         SplineDividerModule,
         SplineLoaderModule,
         SplineApiConfigModule,
-        SplineApiExecutionEventModule,
+        SplineApiModule,
         SplineIconModule
     ],
     declarations: [
-        ...fromComponents.attributesComponents,
+        ...fromComponents.attributesComponents
     ],
     exports: [
-        ...fromComponents.attributesComponents,
+        ...fromComponents.attributesComponents
     ],
     providers: [
         SdWidgetAttributesTreeFactory,
         {
             provide: SD_WIDGET_FACTORY,
             useValue: SdWidgetAttributesTreeFactory,
-            multi: true,
+            multi: true
         }
     ]
 })
-export class SplineAttributesSharedModule { }
+export class SplineAttributesSharedModule {}

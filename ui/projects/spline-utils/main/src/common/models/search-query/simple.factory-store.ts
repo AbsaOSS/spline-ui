@@ -24,28 +24,24 @@ import { SearchQuery } from './search-query.models'
 import DataState = SearchQuery.DataState
 import DEFAULT_RENDER_DATA = SearchQuery.DEFAULT_RENDER_DATA
 
-
+// eslint-disable-next-line @typescript-eslint/ban-types
 export abstract class SimpleFactoryStore<TData, TFilter extends SplineRecord = {}> {
 
-    readonly dataState$: Observable<DataState<TData>>
     readonly data$: Observable<TData>
+    readonly dataState$: BehaviorSubject<DataState<TData>> = new BehaviorSubject<DataState<TData>>(DEFAULT_RENDER_DATA)
+    readonly filterChanged$ = new Subject<{ filter: TFilter; apply: boolean; force: boolean }>()
 
     readonly loadingProcessing$: Observable<ProcessingStoreNs.EventProcessingState>
     readonly loadingProcessingEvents: ProcessingStoreNs.ProcessingEvents<DataState<TData>>
 
-    readonly onFilterChanged$ = new Subject<{ filter: TFilter; apply: boolean; force: boolean }>()
-
-    protected readonly _dataState$ = new BehaviorSubject<DataState<TData>>(DEFAULT_RENDER_DATA)
-    protected readonly _filter$ = new BehaviorSubject<TFilter>({} as TFilter)
-
+    protected readonly filter$ = new BehaviorSubject<TFilter>({} as TFilter)
     protected readonly disconnected$ = new Subject<void>()
 
     protected constructor() {
 
-        this.dataState$ = this._dataState$
-        this.data$ = this.dataState$.pipe(map(data => data.data))
+        this.data$ = this.dataState$.pipe(map(data => data.data), takeUntil(this.disconnected$))
 
-        this.loadingProcessing$ = this.dataState$.pipe(map(data => data.loadingProcessing))
+        this.loadingProcessing$ = this.dataState$.pipe(map(data => data.loadingProcessing), takeUntil(this.disconnected$))
         this.loadingProcessingEvents = ProcessingStoreNs.createProcessingEvents(
             this.dataState$, (state) => state.loadingProcessing
         )
@@ -54,41 +50,36 @@ export abstract class SimpleFactoryStore<TData, TFilter extends SplineRecord = {
     }
 
     get data(): TData {
-        return this._dataState$.getValue().data
+        return this.dataState$.getValue().data
     }
 
     get filter(): TFilter {
-        return this._filter$.getValue()
+        return this.filter$.getValue()
     }
 
     get dataState(): DataState<TData> {
-        return this._dataState$.getValue()
+        return this.dataState$.getValue()
     }
 
     setFilter(filterValue: TFilter, apply: boolean = true, force: boolean = false): void {
-        this.onFilterChanged$.next({ filter: filterValue, apply, force })
+        this.filterChanged$.next({ filter: filterValue, apply, force })
     }
 
     connect(): Observable<TData> {
-        return this._dataState$
-            .pipe(
-                map(x => x.data)
-            )
+        return this.dataState$.pipe(map(x => x.data), takeUntil(this.disconnected$))
     }
 
     disconnect(): void {
-        this._dataState$.complete()
-        this._filter$.complete()
-
+        this.filter$.complete()
         this.disconnected$.next()
         this.disconnected$.complete()
     }
 
     protected init(): void {
         // FILTER CHANGED EVENT
-        this.onFilterChanged$
+        this.filterChanged$
             .pipe(
-                tap((payload) => this._filter$.next(payload.filter)),
+                tap((payload) => this.filter$.next(payload.filter)),
                 switchMap((payload) => this.fetchData(payload.filter)),
                 takeUntil(this.disconnected$)
             )
@@ -96,14 +87,15 @@ export abstract class SimpleFactoryStore<TData, TFilter extends SplineRecord = {
     }
 
     protected updateDataState(dataState: Partial<DataState<TData>>): void {
-        this._dataState$.next({
-            ...this._dataState$.getValue(),
+        this.dataState$.next({
+            ...this.dataState$.getValue(),
             ...dataState
         })
     }
 
     protected abstract getDataObserver(filterValue: TFilter): Observable<TData>;
 
+    // eslint-disable-next-line @typescript-eslint/member-ordering
     private fetchData(filterValue: TFilter): Observable<TData> {
 
         this.updateDataState({

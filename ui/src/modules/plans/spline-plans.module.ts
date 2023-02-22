@@ -34,7 +34,6 @@ import { MatTabsModule } from '@angular/material/tabs'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatTreeModule } from '@angular/material/tree'
 import { RouterModule } from '@angular/router'
-import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material'
 import { SplineApiModule } from 'spline-api'
 import { SplineCommonModule } from 'spline-common'
 import { SplineDataViewModule } from 'spline-common/data-view'
@@ -46,7 +45,6 @@ import { SplineExpressionSharedModule } from 'spline-shared/expression'
 import { SplineGraphSharedModule } from 'spline-shared/graph'
 import { SplineTranslateModule } from 'spline-utils/translate'
 
-
 import * as fromComponents from './components'
 import * as fromDirectives from './directives'
 import * as fromPages from './pages'
@@ -57,7 +55,7 @@ import { SplinePlansRoutingModule } from './spline-plans-routing.module'
     declarations: [
         ...fromPages.pageComponents,
         ...fromComponents.components,
-        ...fromDirectives.directives,
+        ...fromDirectives.directives
     ],
     imports: [
         CommonModule,
@@ -76,14 +74,13 @@ import { SplinePlansRoutingModule } from './spline-plans-routing.module'
         MatInputModule,
         MatMenuModule,
         MatChipsModule,
-        NgxDaterangepickerMd.forRoot(),
         SplinePlansRoutingModule,
         SplineApiConfigModule,
         SplineApiModule,
         SplineLayoutModule,
         SplineTranslateModule.forChild({
             moduleNames: [
-                'plans',
+                'plans'
             ]
         }),
         SplineGraphModule,
@@ -97,9 +94,9 @@ import { SplinePlansRoutingModule } from './spline-plans-routing.module'
         MatDialogModule
     ],
     exports: [
-        ...fromPages.pageComponents,
+        ...fromPages.pageComponents
     ],
-    providers: [],
+    providers: []
 })
 export class SplinePlansModule {
 }

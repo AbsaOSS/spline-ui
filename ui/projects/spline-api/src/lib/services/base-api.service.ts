@@ -14,13 +14,18 @@
  * limitations under the License.
  */
 
-export * from './attribute/public-api'
-export * from './attribute-lineage/public-api'
-export * from './operation-attribute-lineage/public-api'
-export * from './data-source/public-api'
-export * from './execution-event/public-api'
-export * from './execution-event-overview/public-api'
-export * from './execution-plan/public-api'
-export * from './lineage/public-api'
-export * from './operation/public-api'
-export * from './operation-property/public-api'
+import { HttpClient } from '@angular/common/http'
+import { SplineConsumerApiSettings } from '../models'
+
+
+export abstract class BaseApiService {
+
+    protected readonly BASE_PATH = `${ SplineConsumerApiSettings.API_URL_PREFIX_ALIAS }/`
+
+    protected constructor(protected readonly http: HttpClient) {
+    }
+
+    protected getConsumerApiResourceURL(path: string): string {
+        return this.BASE_PATH + path
+    }
+}
