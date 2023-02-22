@@ -111,11 +111,11 @@ export function expressionPropsToDvs(props: ExtraPropertyValueExpression[],
             },
             item.value.map(
                 expressionInfo => SdWidgetExpression.toSchema({
-                                                                  expression: expressionInfo.expression,
-                                                                  prefix: expressionInfo.prefix,
-                                                                  suffix: expressionInfo.suffix,
-                                                                  attrSchemasCollection
-                                                              }),
+                    expression: expressionInfo.expression,
+                    prefix: expressionInfo.prefix,
+                    suffix: expressionInfo.suffix,
+                    attrSchemasCollection
+                }),
             ),
         ),
     )
