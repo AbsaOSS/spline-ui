@@ -54,39 +54,39 @@ export type ExtraProperties = {
 
 export function parseExtraOptions(nativeProperties: NativeProperties): ExtraProperties {
     return Object.entries(nativeProperties)
-        .filter(([, v]) => v != null)
-        .reduce(
-            (acc, [key, value]) => {
-                if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
-                    const primitiveValue: ExtraPropertyValuePrimitive = {
-                        label: key,
-                        value: value,
-                    }
-                    return {...acc, primitive: [...acc.primitive, primitiveValue]}
-                }
-                else if (isPlainObject(value) && isExpresionProperty(value)) {
-                    return {...acc, expression: [...acc.expression, toExpressionValue(key, [value])]}
-                }
-                else if (typeof Array.isArray(value) && value.length && isExpresionProperty(value[0])) {
-                    return {...acc, expression: [...acc.expression, toExpressionValue(key, value)]}
-                }
-                else if (typeof Array.isArray(value) && value.length && isOrderSpecProperty(value[0])) {
-                    return {...acc, expression: [...acc.expression, toOrderSpecValue(key, value)]}
-                }
-                else {
-                    const jsonValue: ExtraPropertyValueJson = {
-                        label: humanizeCase(key),
-                        value,
-                    }
-                    return {...acc, json: [...acc.json, jsonValue]}
-                }
-            },
-            {
-                primitive: [],
-                expression: [],
-                json: [],
-            },
-        )
+                 .filter(([, v]) => v != null)
+                 .reduce(
+                     (acc, [key, value]) => {
+                         if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+                             const primitiveValue: ExtraPropertyValuePrimitive = {
+                                 label: key,
+                                 value: value,
+                             }
+                             return {...acc, primitive: [...acc.primitive, primitiveValue]}
+                         }
+                         else if (isPlainObject(value) && isExpresionProperty(value)) {
+                             return {...acc, expression: [...acc.expression, toExpressionValue(key, [value])]}
+                         }
+                         else if (typeof Array.isArray(value) && value.length && isExpresionProperty(value[0])) {
+                             return {...acc, expression: [...acc.expression, toExpressionValue(key, value)]}
+                         }
+                         else if (typeof Array.isArray(value) && value.length && isOrderSpecProperty(value[0])) {
+                             return {...acc, expression: [...acc.expression, toOrderSpecValue(key, value)]}
+                         }
+                         else {
+                             const jsonValue: ExtraPropertyValueJson = {
+                                 label: humanizeCase(key),
+                                 value,
+                             }
+                             return {...acc, json: [...acc.json, jsonValue]}
+                         }
+                     },
+                     {
+                         primitive: [],
+                         expression: [],
+                         json: [],
+                     },
+                 )
 }
 
 export function primitivePropsToDvs(props: ExtraPropertyValuePrimitive[]): SdWidgetSchema[] {
@@ -100,8 +100,7 @@ export function primitivePropsToDvs(props: ExtraPropertyValuePrimitive[]): SdWid
     ]
 }
 
-export function expressionPropsToDvs(
-    props: ExtraPropertyValueExpression[],
+export function expressionPropsToDvs(props: ExtraPropertyValueExpression[],
     attrSchemasCollection: AttrSchemasCollection): SdWidgetSchema[] {
     return props.map(
         item => SdWidgetExpansionPanel.toSchema(
@@ -112,11 +111,11 @@ export function expressionPropsToDvs(
             },
             item.value.map(
                 expressionInfo => SdWidgetExpression.toSchema({
-                    expression: expressionInfo.expression,
-                    prefix: expressionInfo.prefix,
-                    suffix: expressionInfo.suffix,
-                    attrSchemasCollection
-                }),
+                                                                  expression: expressionInfo.expression,
+                                                                  prefix: expressionInfo.prefix,
+                                                                  suffix: expressionInfo.suffix,
+                                                                  attrSchemasCollection
+                                                              }),
             ),
         ),
     )

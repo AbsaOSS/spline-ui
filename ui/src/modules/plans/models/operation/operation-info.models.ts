@@ -90,9 +90,8 @@ export function toDataViewSchema(operation: Operation): SplineDataViewSchema {
     ]
 }
 
-export function toInputsDvs(
-    operationDetails: OperationDetails,
-    selectedAttributeId$: Observable<string | null>): SplineDataViewSchema | null {
+export function toInputsDvs(operationDetails: OperationDetails,
+                            selectedAttributeId$: Observable<string | null>): SplineDataViewSchema | null {
 
     if (!operationDetails.inputs || !operationDetails.inputs?.length) {
         return null
@@ -106,9 +105,8 @@ export function toInputsDvs(
         )
 }
 
-export function toOutputsDvs(
-    operationDetails: OperationDetails,
-    selectedAttributeId$: Observable<string | null>): SplineDataViewSchema | null {
+export function toOutputsDvs(operationDetails: OperationDetails,
+                             selectedAttributeId$: Observable<string | null>): SplineDataViewSchema | null {
 
     if (operationDetails.output === null) {
         return null

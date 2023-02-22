@@ -26,9 +26,8 @@ export function extractNodeName(nodeSource: ExecutionPlanLineageNode): string {
     return nodeSource.name
 }
 
-export function toSgNode(
-    nodeSource: ExecutionPlanLineageNode,
-    nodeView: NodeView = NodeView.Detailed): SgNode {
+export function toSgNode(nodeSource: ExecutionPlanLineageNode,
+                         nodeView: NodeView = NodeView.Detailed): SgNode {
     const nodeStyles = getNodeStyles(nodeSource?.type, nodeSource.name)
 
     const defaultActions = [
