@@ -15,12 +15,12 @@
  */
 
 
-import {isPlainObject} from 'lodash-es'
-import {AttrSchemasCollection, OpExpression} from 'spline-api'
-import {SplineColors} from 'spline-common'
-import {SdWidgetExpansionPanel, SdWidgetJson, SdWidgetSchema, SdWidgetSimpleRecord} from 'spline-common/data-view'
-import {SdWidgetExpression} from 'spline-shared/expression'
-import {PrimitiveNotEmpty} from 'spline-utils'
+import { isPlainObject } from 'lodash-es'
+import { AttrSchemasCollection, OpExpression } from 'spline-api'
+import { SplineColors } from 'spline-common'
+import { SdWidgetExpansionPanel, SdWidgetJson, SdWidgetSchema, SdWidgetSimpleRecord } from 'spline-common/data-view'
+import { SdWidgetExpression } from 'spline-shared/expression'
+import { PrimitiveNotEmpty } from 'spline-utils'
 
 
 export type NativeProperties = Record<string, any | OrderSpecPropRecord[]>
@@ -100,8 +100,9 @@ export function primitivePropsToDvs(props: ExtraPropertyValuePrimitive[]): SdWid
     ]
 }
 
-export function expressionPropsToDvs(props: ExtraPropertyValueExpression[],
-                                     attrSchemasCollection: AttrSchemasCollection): SdWidgetSchema[] {
+export function expressionPropsToDvs(
+    props: ExtraPropertyValueExpression[],
+    attrSchemasCollection: AttrSchemasCollection): SdWidgetSchema[] {
     return props.map(
         item => SdWidgetExpansionPanel.toSchema(
             {

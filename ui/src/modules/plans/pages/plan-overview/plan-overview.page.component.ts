@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-import {Component, OnInit, ViewChild} from '@angular/core'
-import {MatDialog} from '@angular/material/dialog'
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router'
-import {keyBy} from 'lodash-es'
-import {Observable} from 'rxjs'
-import {distinctUntilChanged, filter, map, skip, takeUntil} from 'rxjs/operators'
-import {AttributeSchema, ExecutionPlanApiService, OperationAttributeLineageType, toAttributeLineage} from 'spline-api'
-import {SplineTabsNavBar} from 'spline-common'
-import {SlBreadcrumbs} from 'spline-common/layout'
-import {SplineAttributesTree} from 'spline-shared/attributes'
-import {SgContainerComponent, SgNodeControl} from 'spline-shared/graph'
-import {BaseComponent, RouterNavigation} from 'spline-utils'
+import { Component, OnInit, ViewChild } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
+import { keyBy } from 'lodash-es'
+import { Observable } from 'rxjs'
+import { distinctUntilChanged, filter, map, skip, takeUntil } from 'rxjs/operators'
+import { AttributeSchema, ExecutionPlanApiService, OperationAttributeLineageType, toAttributeLineage } from 'spline-api'
+import { SplineTabsNavBar } from 'spline-common'
+import { SlBreadcrumbs } from 'spline-common/layout'
+import { SplineAttributesTree } from 'spline-shared/attributes'
+import { SgContainerComponent, SgNodeControl } from 'spline-shared/graph'
+import { BaseComponent, RouterNavigation } from 'spline-utils'
 
-import {AttributeLineageDialogComponent} from '../../components'
-import {AttributeLineageDialog} from '../../components/attribute-lineage/attribute-lineage-dialog/attribute-lineage-dialog.models'
-import {PlanOverview} from '../../models'
-import {ExecutionPlanOverviewFactoryStore} from '../../store'
+import { AttributeLineageDialogComponent } from '../../components'
+import { AttributeLineageDialog } from '../../components/attribute-lineage/attribute-lineage-dialog/attribute-lineage-dialog.models'
+import { PlanOverview } from '../../models'
+import { ExecutionPlanOverviewFactoryStore } from '../../store'
 import QueryParamAlis = PlanOverview.QueryParamAlis
 import NavTabInfo = SplineTabsNavBar.NavTabInfo
 
@@ -66,10 +66,11 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
     eventId: string
     isGraphFullScreen = false
 
-    constructor(private readonly activatedRoute: ActivatedRoute,
-                private readonly router: Router,
-                private readonly matDialog: MatDialog,
-                readonly store: ExecutionPlanOverviewFactoryStore
+    constructor(
+        private readonly activatedRoute: ActivatedRoute,
+        private readonly router: Router,
+        private readonly matDialog: MatDialog,
+        readonly store: ExecutionPlanOverviewFactoryStore
     ) {
         super()
 

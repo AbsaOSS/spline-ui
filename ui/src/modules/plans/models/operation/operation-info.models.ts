@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import {Observable} from 'rxjs'
-import {ExecutionPlanAgentInfo, Operation, OperationDetails, OperationType} from 'spline-api'
-import {SdWidgetCard, SplineDataViewSchema} from 'spline-common/data-view'
-import {SgNodeCardDataView} from 'spline-shared/data-view'
-import {SgNodeControl} from 'spline-shared/graph'
+import { Observable } from 'rxjs'
+import { ExecutionPlanAgentInfo, Operation, OperationDetails, OperationType } from 'spline-api'
+import { SdWidgetCard, SplineDataViewSchema } from 'spline-common/data-view'
+import { SgNodeCardDataView } from 'spline-shared/data-view'
+import { SgNodeControl } from 'spline-shared/graph'
 
-import {attributesSchemaToDataViewSchema} from '../attribute'
+import { attributesSchemaToDataViewSchema } from '../attribute'
 
 import {
     OperationAggregate,
@@ -90,8 +90,9 @@ export function toDataViewSchema(operation: Operation): SplineDataViewSchema {
     ]
 }
 
-export function toInputsDvs(operationDetails: OperationDetails,
-                            selectedAttributeId$: Observable<string | null>): SplineDataViewSchema | null {
+export function toInputsDvs(
+    operationDetails: OperationDetails,
+    selectedAttributeId$: Observable<string | null>): SplineDataViewSchema | null {
 
     if (!operationDetails.inputs || !operationDetails.inputs?.length) {
         return null
@@ -105,8 +106,9 @@ export function toInputsDvs(operationDetails: OperationDetails,
         )
 }
 
-export function toOutputsDvs(operationDetails: OperationDetails,
-                             selectedAttributeId$: Observable<string | null>): SplineDataViewSchema | null {
+export function toOutputsDvs(
+    operationDetails: OperationDetails,
+    selectedAttributeId$: Observable<string | null>): SplineDataViewSchema | null {
 
     if (operationDetails.output === null) {
         return null

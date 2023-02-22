@@ -15,11 +15,11 @@
  */
 
 import _ from 'lodash'
-import {Observable} from 'rxjs'
-import {ExecutionPlan} from 'spline-api'
-import {SplineDataViewSchema} from 'spline-common/data-view'
+import { Observable } from 'rxjs'
+import { ExecutionPlan } from 'spline-api'
+import { SplineDataViewSchema } from 'spline-common/data-view'
 
-import {attributesSchemaToDataViewSchema, PlanInfo} from '../../models'
+import { attributesSchemaToDataViewSchema, PlanInfo } from '../../models'
 
 
 export type State = {

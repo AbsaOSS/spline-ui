@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import {dataSourceUriToName, OperationDetails, OperationPropertiesWrite, uriToDatsSourceId} from 'spline-api'
-import {SdWidgetExpansionPanel, SdWidgetRecordsList, SdWidgetSchema, SplineDataViewSchema} from 'spline-common/data-view'
-import {SgNodeControl} from 'spline-shared/graph'
+import { dataSourceUriToName, OperationDetails, OperationPropertiesWrite, uriToDatsSourceId } from 'spline-api'
+import { SdWidgetExpansionPanel, SdWidgetRecordsList, SdWidgetSchema, SplineDataViewSchema } from 'spline-common/data-view'
+import { SgNodeControl } from 'spline-shared/graph'
 
-import {ExtraPropertyValuePrimitive, primitivePropsToDvs} from '../operation-property.models'
+import { ExtraPropertyValuePrimitive, primitivePropsToDvs } from '../operation-property.models'
 
-import {getBaseOperationDetailsSchema} from './operation-common.models'
+import { getBaseOperationDetailsSchema } from './operation-common.models'
 
 
 export namespace OperationWrite {

@@ -14,12 +14,18 @@
  * limitations under the License.
  */
 
-import {ExecutionPlan, ExecutionPlanLineageNode, ExecutionPlanLineageOverview, LineageNodeLink, OperationAttributeLineage} from 'spline-api'
-import {SgData} from 'spline-common/graph'
-import {SgNodeControl} from 'spline-shared/graph'
-import {ProcessingStoreNs, SplineEntityStoreNs} from 'spline-utils'
+import {
+    ExecutionPlan,
+    ExecutionPlanLineageNode,
+    ExecutionPlanLineageOverview,
+    LineageNodeLink,
+    OperationAttributeLineage
+} from 'spline-api'
+import { SgData } from 'spline-common/graph'
+import { SgNodeControl } from 'spline-shared/graph'
+import { ProcessingStoreNs, SplineEntityStoreNs } from 'spline-utils'
 
-import {PlanNodeControl} from '../../models'
+import { PlanNodeControl } from '../../models'
 
 
 export type State = {
@@ -84,9 +90,10 @@ export function calculateGraphData(state: State): SgData {
     }
 }
 
-export function reduceLineageOverviewData(state: State,
-                                          executionEventId: string,
-                                          executionPlanOverview: ExecutionPlanLineageOverview
+export function reduceLineageOverviewData(
+    state: State,
+    executionEventId: string,
+    executionPlanOverview: ExecutionPlanLineageOverview
 ): State {
     const newState = {
         ...state,

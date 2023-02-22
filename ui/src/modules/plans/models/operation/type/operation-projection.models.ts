@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-import {AttributeSchema, OperationDetails, OperationPropertiesProjection} from 'spline-api'
-import {SplineColors} from 'spline-common'
-import {SdWidgetExpansionPanel, SdWidgetRecordsList, SdWidgetSchema, SplineDataViewSchema} from 'spline-common/data-view'
-import {SdWidgetExpression} from 'spline-shared/expression'
-import {SgNodeControl} from 'spline-shared/graph'
+import { AttributeSchema, OperationDetails, OperationPropertiesProjection } from 'spline-api'
+import { SplineColors } from 'spline-common'
+import { SdWidgetExpansionPanel, SdWidgetRecordsList, SdWidgetSchema, SplineDataViewSchema } from 'spline-common/data-view'
+import { SdWidgetExpression } from 'spline-shared/expression'
+import { SgNodeControl } from 'spline-shared/graph'
 
-import {ExtraPropertyValuePrimitive, primitivePropsToDvs} from '../operation-property.models'
+import { ExtraPropertyValuePrimitive, primitivePropsToDvs } from '../operation-property.models'
 
-import {getBaseOperationDetailsSchema} from './operation-common.models'
+import { getBaseOperationDetailsSchema } from './operation-common.models'
 
 
 export namespace OperationProjection {

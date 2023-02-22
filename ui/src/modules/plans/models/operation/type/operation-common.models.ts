@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import {omit} from 'lodash-es'
-import {OperationDetails} from 'spline-api'
-import {SdWidgetSchema} from 'spline-common/data-view'
+import { omit } from 'lodash-es'
+import { OperationDetails } from 'spline-api'
+import { SdWidgetSchema } from 'spline-common/data-view'
 
-import {expressionPropsToDvs, ExtraPropertyValuePrimitive, jsonPropsToDvs, parseExtraOptions} from '../operation-property.models'
+import { expressionPropsToDvs, ExtraPropertyValuePrimitive, jsonPropsToDvs, parseExtraOptions } from '../operation-property.models'
 
 
 export const OPERATION_DEFAULT_PROPS: ReadonlyArray<string> = ['name']

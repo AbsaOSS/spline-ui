@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import {ExecutionPlanLineageNode} from 'spline-api'
-import {SgNode, SgNodeCircle, SgNodeDefault} from 'spline-common/graph'
-import {SgNodeControl} from 'spline-shared/graph'
+import { ExecutionPlanLineageNode } from 'spline-api'
+import { SgNode, SgNodeCircle, SgNodeDefault } from 'spline-common/graph'
+import { SgNodeControl } from 'spline-shared/graph'
 
-import {getNodeStyles} from '../operation'
+import { getNodeStyles } from '../operation'
 import NodeView = SgNodeControl.NodeView
 
 
@@ -26,8 +26,9 @@ export function extractNodeName(nodeSource: ExecutionPlanLineageNode): string {
     return nodeSource.name
 }
 
-export function toSgNode(nodeSource: ExecutionPlanLineageNode,
-                         nodeView: NodeView = NodeView.Detailed): SgNode {
+export function toSgNode(
+    nodeSource: ExecutionPlanLineageNode,
+    nodeView: NodeView = NodeView.Detailed): SgNode {
     const nodeStyles = getNodeStyles(nodeSource?.type, nodeSource.name)
 
     const defaultActions = [

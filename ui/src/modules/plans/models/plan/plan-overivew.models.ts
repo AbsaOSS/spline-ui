@@ -19,36 +19,34 @@ import { ActivatedRoute } from '@angular/router'
 import { RouterNavigation } from 'spline-utils'
 
 
+export enum QueryParamAlis {
+    ExecutionPlanId = 'planId',
+    ExecutionEventId = 'eventId',
+    SelectedNodeId = 'nodeId',
+    SelectedAttributeId = 'attributeId',
+}
 
+export type RouterState = {
+    [QueryParamAlis.ExecutionPlanId]: string
+    [QueryParamAlis.ExecutionEventId]: string | null
+    [QueryParamAlis.SelectedNodeId]: string | null
+    [QueryParamAlis.SelectedAttributeId]: string | null
+}
 
-    export enum QueryParamAlis {
-        ExecutionPlanId = 'planId',
-        ExecutionEventId = 'eventId',
-        SelectedNodeId = 'nodeId',
-        SelectedAttributeId = 'attributeId',
+export function extractRouterState(activatedRoute: ActivatedRoute): RouterState {
+    return {
+        [QueryParamAlis.ExecutionPlanId]: activatedRoute.snapshot.params[QueryParamAlis.ExecutionPlanId],
+        [QueryParamAlis.ExecutionEventId]: RouterNavigation.extractQueryParam(activatedRoute, QueryParamAlis.ExecutionEventId),
+        [QueryParamAlis.SelectedNodeId]: RouterNavigation.extractQueryParam(activatedRoute, QueryParamAlis.SelectedNodeId),
+        [QueryParamAlis.SelectedAttributeId]: RouterNavigation.extractQueryParam(activatedRoute, QueryParamAlis.SelectedAttributeId),
     }
+}
 
-    export type RouterState = {
-        [QueryParamAlis.ExecutionPlanId]: string
-        [QueryParamAlis.ExecutionEventId]: string | null
-        [QueryParamAlis.SelectedNodeId]: string | null
-        [QueryParamAlis.SelectedAttributeId]: string | null
-    }
+export function getSelectedNodeId(activatedRoute: ActivatedRoute): string {
+    return RouterNavigation.extractQueryParam(activatedRoute, QueryParamAlis.SelectedNodeId)
+}
 
-    export function extractRouterState(activatedRoute: ActivatedRoute): RouterState {
-        return {
-            [QueryParamAlis.ExecutionPlanId]: activatedRoute.snapshot.params[QueryParamAlis.ExecutionPlanId],
-            [QueryParamAlis.ExecutionEventId]: RouterNavigation.extractQueryParam(activatedRoute, QueryParamAlis.ExecutionEventId),
-            [QueryParamAlis.SelectedNodeId]: RouterNavigation.extractQueryParam(activatedRoute, QueryParamAlis.SelectedNodeId),
-            [QueryParamAlis.SelectedAttributeId]: RouterNavigation.extractQueryParam(activatedRoute, QueryParamAlis.SelectedAttributeId),
-        }
-    }
-
-    export function getSelectedNodeId(activatedRoute: ActivatedRoute): string {
-        return RouterNavigation.extractQueryParam(activatedRoute, QueryParamAlis.SelectedNodeId)
-    }
-
-    export function getSelectedAttributeId(activatedRoute: ActivatedRoute): string {
-        return RouterNavigation.extractQueryParam(activatedRoute, QueryParamAlis.SelectedAttributeId)
-    }
+export function getSelectedAttributeId(activatedRoute: ActivatedRoute): string {
+    return RouterNavigation.extractQueryParam(activatedRoute, QueryParamAlis.SelectedAttributeId)
+}
 

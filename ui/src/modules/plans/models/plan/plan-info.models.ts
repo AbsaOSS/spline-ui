@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import {ExecutionPlan, SplineDataSourceInfo} from 'spline-api'
-import {SplineColors} from 'spline-common'
+import { ExecutionPlan, SplineDataSourceInfo } from 'spline-api'
+import { SplineColors } from 'spline-common'
 import {
     SdWidgetCard,
     SdWidgetExpansionPanel,
@@ -24,7 +24,7 @@ import {
     SdWidgetSimpleRecord,
     SplineDataViewSchema
 } from 'spline-common/data-view'
-import {SgNodeControl} from 'spline-shared/graph'
+import { SgNodeControl } from 'spline-shared/graph'
 import getNodeStyles = SgNodeControl.getNodeStyles
 
 

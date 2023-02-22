@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import {OperationDetails} from 'spline-api'
-import {SplineColors} from 'spline-common'
-import {SdWidgetExpansionPanel, SdWidgetSchema, SplineDataViewSchema} from 'spline-common/data-view'
+import { OperationDetails } from 'spline-api'
+import { SplineColors } from 'spline-common'
+import { SdWidgetExpansionPanel, SdWidgetSchema, SplineDataViewSchema } from 'spline-common/data-view'
 
-import {ExtraPropertyValuePrimitive, primitivePropsToDvs} from '../operation-property.models'
+import { ExtraPropertyValuePrimitive, primitivePropsToDvs } from '../operation-property.models'
 
-import {getBaseOperationDetailsSchema} from './operation-common.models'
+import { getBaseOperationDetailsSchema } from './operation-common.models'
 
 
 export namespace OperationGeneric {
