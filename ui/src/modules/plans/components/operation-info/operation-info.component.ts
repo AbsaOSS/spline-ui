@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChange } from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
 import { filter, takeUntil } from 'rxjs/operators'
 import { ExecutionPlanAgentInfo, ExecutionPlanApiService, ExecutionPlanLineageNode } from 'spline-api'
@@ -29,6 +29,7 @@ import NodeEventData = SgNodeCardDataView.NodeEventData
 
 
 @Component({
+    // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'plan-operation-info',
     templateUrl: './operation-info.component.html',
     styleUrls: ['./operation-info.component.scss'],
@@ -43,7 +44,7 @@ import NodeEventData = SgNodeCardDataView.NodeEventData
         }
     ]
 })
-export class OperationInfoComponent extends BaseLocalStateComponent<OperationInfo.State> implements OnChanges {
+export class OperationInfoComponent extends BaseLocalStateComponent<OperationInfo.State> implements OnChanges, OnDestroy {
 
     @Input() node: ExecutionPlanLineageNode
 
@@ -75,10 +76,11 @@ export class OperationInfoComponent extends BaseLocalStateComponent<OperationInf
         this.selectedAttributeId$.next(attributeId)
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes?.node && !!changes.node.currentValue) {
+    ngOnChanges(changes: { node: SimpleChange }): void {
+        if (changes?.node && !!changes?.node?.currentValue) {
             this.dataSource.setFilter({
-                operationId: changes.node.currentValue.id
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                operationId: changes?.node?.currentValue?.id
             })
         }
     }
@@ -99,6 +101,11 @@ export class OperationInfoComponent extends BaseLocalStateComponent<OperationInf
             default:
             // DO NOTHING
         }
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy()
+        this.dataSource.disconnect()
     }
 
     private onSelectedAttributeChanged(attributeId: string | null): void {

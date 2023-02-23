@@ -15,6 +15,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core'
+import { LabelApiService } from 'spline-api'
 import { DtCellCustomEvent, DtHeaderCellCustomEvent, DynamicTableDataMap } from 'spline-common/dynamic-table'
 import { BaseLocalStateComponent, QuerySorter, RouterNavigation, SearchFactoryStore, SplineRecord } from 'spline-utils'
 import { SplineSearchDynamicTableStoreNs } from './spline-search-dynamic-table-store.ns'
@@ -25,6 +26,36 @@ import { filter } from 'rxjs/operators'
 import { isEqual } from 'lodash-es'
 
 
+export interface SplineGenericToken {
+    tokenIndex: number
+    type: string
+    startIndex: number
+    endIndex: number
+    rawTokenString?: string
+}
+
+export interface SplineSearchToken extends SplineGenericToken {
+    searchToken: string
+}
+
+export interface SplineFilterToken extends SplineGenericToken {
+    startValueIndex?: number
+    keyFragment?: string
+    valueFragment?: string
+    rawFilterValue?: string
+    isFilterCompleted: boolean
+    isDoubleQuotesStartChar: boolean
+}
+
+export interface SplineMatchedTokens {
+    matchedTokens: SplineSearchToken | SplineFilterToken[]
+    filterTokens: SplineFilterToken[]
+    searchTokens: SplineSearchToken[]
+    lastToken: SplineFilterToken
+    searchInput: string
+
+}
+
 interface DynamicTableOptions {
     isSticky?: boolean // stick to container
 }
@@ -33,6 +64,7 @@ interface DynamicTableOptions {
     selector: 'spline-search-dynamic-table',
     templateUrl: './spline-search-dynamic-table.component.html'
 })
+// eslint-disable-next-line @typescript-eslint/ban-types
 export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter extends SplineRecord = {}, TSortableFields = string>
     extends BaseLocalStateComponent<SplineSearchDynamicTableStoreNs.State> implements OnInit, OnDestroy, OnChanges {
 
@@ -57,7 +89,8 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
     private _dataUpdateAvailable$: Observable<unknown | boolean>
 
     constructor(private readonly activatedRoute: ActivatedRoute,
-                private readonly router: Router
+                private readonly router: Router,
+                readonly labelApiService: LabelApiService
     ) {
         super()
         this.updateState(
@@ -116,8 +149,47 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
         this.dataSource.goToPage(pageEvent.pageIndex)
     }
 
-    onSearch(searchTerm: string): void {
-        this.dataSource.search(searchTerm)
+    onSearch({ searchTokens, filterTokens }: Partial<SplineMatchedTokens>): void {
+        const searchTerm = this.isolationSearchTerm(searchTokens)
+        const label = this.isolationLabelsFromFilters(filterTokens)
+        const searchDataFilter = Object.assign(
+            {},
+            searchTerm.length && { searchTerm },
+            label.length && { label }
+        )
+        if (!label.length && !searchTerm.length) {
+            return this.dataSource.reset()
+        }
+        this.dataSource.setFilter(searchDataFilter)
+    }
+
+    isolationSearchTerm(searchTokens: SplineSearchToken[]): string {
+        return searchTokens.reduce((result: string, item: SplineSearchToken, index) =>
+            result + `${ index ? ' ' : '' }${ item.searchToken }`
+        , '')
+    }
+
+    isolationLabelsFromFilters(filterTokens: SplineFilterToken[]): string[] {
+        const result = []
+        const filterDictionary = new Map()
+        for (const filterToken of filterTokens) {
+            if (!filterToken.keyFragment) {
+                continue
+            }
+            if (!filterDictionary.has(filterToken.keyFragment)) {
+                filterDictionary.set(filterToken.keyFragment, new Set())
+            }
+            filterDictionary.get(filterToken.keyFragment).add(filterToken.valueFragment)
+        }
+
+        for (const [filterKey, filterValues] of filterDictionary.entries()) {
+            const _filterValues = []
+            for (const filterValue of filterValues.values()) {
+                _filterValues.push(filterValue)
+            }
+            result.push(`${ filterKey as string }:${ _filterValues.join() }`)
+        }
+        return result
     }
 
     onRefreshDataClick(): void {
@@ -146,8 +218,8 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
     private subscribeToRouter(router: Router): void {
         // Refresh the table on re-navigating to the same route
         router.events.pipe(
-            takeUntil(this.destroyed$),
-            filter((event: RouterEvent) => event instanceof NavigationEnd)
+            filter((event: RouterEvent) => event instanceof NavigationEnd),
+            takeUntil(this.destroyed$)
         ).subscribe(() => {
             if (this.searchParamsFromUrl() === null) {
                 this.dataSource.reset()
@@ -160,9 +232,9 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
         // totalCount
         dataSource.dataState$
             .pipe(
-                takeUntil(this.destroyed$),
                 map(dataState => dataState.data?.totalCount ?? 0),
-                distinctUntilChanged()
+                distinctUntilChanged(),
+                takeUntil(this.destroyed$)
             )
             .subscribe(
                 totalCount => this.updateState({
@@ -173,9 +245,9 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
         // loadingProcessing
         dataSource.loadingProcessing$
             .pipe(
-                takeUntil(this.destroyed$),
                 skip(1),
-                distinctUntilChanged((left, right) => isEqual(left, right))
+                distinctUntilChanged((left, right) => isEqual(left, right)),
+                takeUntil(this.destroyed$)
             )
             .subscribe(
                 loading => this.updateState({
@@ -186,9 +258,9 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
         // searchParams
         dataSource.searchParams$
             .pipe(
-                takeUntil(this.destroyed$),
                 skip(1),
-                distinctUntilChanged((left, right) => isEqual(left, right))
+                distinctUntilChanged((left, right) => isEqual(left, right)),
+                takeUntil(this.destroyed$)
             )
             .subscribe(searchParams => {
                 const sorting = searchParams.sortBy.length > 0
@@ -205,11 +277,11 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
     private initDataUpdateAvailableObservable(dataSource: SearchFactoryStore<TRowData>): void {
         this._dataUpdateAvailable$ = dataSource.serverDataUpdates$
             .pipe(
-                takeUntil(this.destroyed$),
                 map(() => true),
                 first(),
                 startWith(false),
-                repeatWhen(() => this._resumeListeningOnServerUpdates$)
+                repeatWhen(() => this._resumeListeningOnServerUpdates$),
+                takeUntil(this.destroyed$)
             )
     }
 
@@ -220,9 +292,9 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
         //
         dataSource.searchParams$
             .pipe(
-                takeUntil(this.destroyed$),
                 distinctUntilChanged((a, b) => isEqual(a, b)),
-                skip(1)
+                skip(1),
+                takeUntil(this.destroyed$)
             )
             .subscribe((searchParams) => {
                 const queryParams = SplineSearchDynamicTableStoreNs.applySearchParams(

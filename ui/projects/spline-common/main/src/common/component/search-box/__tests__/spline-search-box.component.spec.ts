@@ -15,10 +15,11 @@
  */
 
 import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing'
-import { FormsModule } from '@angular/forms'
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatAutocompleteModule } from '@angular/material/autocomplete'
+import { MatIconModule } from '@angular/material/icon'
+import { MatTooltipModule } from '@angular/material/tooltip'
 import { By } from '@angular/platform-browser'
 import { SplineTranslateTestingModule } from 'spline-utils/translate'
 
@@ -29,25 +30,24 @@ describe('SplineSearchComponent', () => {
     let component: SplineSearchBoxComponent
     let fixture: ComponentFixture<SplineSearchBoxComponent>
 
-    beforeEach(waitForAsync(() => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
                 FormsModule,
+                ReactiveFormsModule,
+                MatIconModule,
+                MatTooltipModule,
                 HttpClientTestingModule,
-                // TranslateModule,
                 SplineTranslateTestingModule,
-                MatAutocompleteModule,
+                MatAutocompleteModule
             ],
-            declarations: [SplineSearchBoxComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
+            declarations: [SplineSearchBoxComponent]
         })
-            .compileComponents()
-    }))
+    })
 
     beforeEach(() => {
         fixture = TestBed.createComponent(SplineSearchBoxComponent)
         component = fixture.componentInstance
-        fixture.detectChanges()
     })
 
     function extractInputNativeElm(componentFixture: ComponentFixture<SplineSearchBoxComponent>): HTMLInputElement {
@@ -62,33 +62,30 @@ describe('SplineSearchComponent', () => {
         jest.spyOn(component.search$, 'emit')
         const defaultValue = 'default search value'
         component.searchTerm = defaultValue
+
         fixture.detectChanges()
         tick(component.emitSearchEventDebounceTimeInUs)
-        fixture.whenStable().then(() => {
-            expect(component.inputValue).toEqual(defaultValue)
-            const inputDomElm = extractInputNativeElm(fixture)
-            expect(inputDomElm.value).toEqual(defaultValue)
-            // do not emit event for default value initialization
-            expect(component.search$['emit']).toHaveBeenCalledTimes(0)
-        })
+
+        expect(component.searchControl.value).toEqual(defaultValue)
+        const inputDomElm = extractInputNativeElm(fixture)
+        expect(inputDomElm.value).toEqual(defaultValue)
+        // do not emit event for default value initialization
+        expect(component.search$['emit']).toHaveBeenCalledTimes(1)
+        expect(component.search$['emit']).toHaveBeenCalledWith(defaultValue)
     }))
 
     test('value changed => emit value', fakeAsync(() => {
-
         jest.spyOn(component.search$, 'emit')
 
         // set new value
         const newValue = 'new value'
-        const inputDomElm = extractInputNativeElm(fixture)
-        inputDomElm.value = newValue
-        inputDomElm.dispatchEvent(new Event('keyup'))
-        fixture.detectChanges()
-        tick(component.emitSearchEventDebounceTimeInUs)
+        component.searchControl.setValue(newValue)
 
-        fixture.whenStable().then(() => {
-            expect(component.inputValue).toEqual(newValue)
-            expect(component.search$['emit']).toHaveBeenCalledTimes(1)
-            expect(component.search$['emit']).toHaveBeenCalledWith(newValue)
-        })
+        fixture.detectChanges()
+        tick(component.emitSearchEventDebounceTimeInUs + 1)
+
+        expect(component.searchControl.value).toEqual(newValue)
+        expect(component.search$['emit']).toHaveBeenCalledTimes(1)
+        expect(component.search$['emit']).toHaveBeenCalledWith(newValue)
     }))
 })

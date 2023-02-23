@@ -21,7 +21,8 @@ import { NavigationEnd, Router } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
 import { Observable, of } from 'rxjs'
 import { filter, take } from 'rxjs/operators'
-import { SplineSearchDynamicTableComponent } from '../spline-search-dynamic-table.component'
+import { LabelApiService } from 'spline-api'
+import { SplineSearchDynamicTableComponent, SplineSearchDynamicTableStoreNs } from 'spline-shared/dynamic-table'
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatTableModule } from '@angular/material/table'
 import { MatSortModule } from '@angular/material/sort'
@@ -29,9 +30,10 @@ import { MatIconModule } from '@angular/material/icon'
 import { SplineTranslateTestingModule } from 'spline-utils/translate'
 import { MockModule } from 'ng-mocks'
 import { PageResponse, QuerySorter, SearchDataSourceConfigInput, SearchFactoryStore, SearchQuery } from 'spline-utils'
-import { SplineSearchDynamicTableStoreNs } from '../spline-search-dynamic-table-store.ns'
 import { Component, Input } from '@angular/core'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { MatDatepickerModule } from '@angular/material/datepicker'
+import { SplineDateRangeFilterModule } from 'spline-common'
 import SortDir = QuerySorter.SortDir
 import SearchParams = SearchQuery.SearchParams
 import DEFAULT_SEARCH_PARAMS = SearchQuery.DEFAULT_SEARCH_PARAMS
@@ -55,11 +57,14 @@ class DynamicTableComponentMock {
 }
 
 @Component({
-    selector: 'spline-search-box',
+    selector: 'spline-search-box-with-filter',
     template: '<div></div>'
 })
 class SplineSearchBoxComponentMock {
     @Input() searchTerm
+    @Input() dataSource
+    @Input() labelApiService
+    @Input() searchDefaultString
 }
 
 @Component({
@@ -79,6 +84,13 @@ class SplineContentErrorComponentMock {
     @Input() floating
 }
 
+@Component({
+    selector: 'ngx-daterangepicker-material',
+    template: '<div></div>'
+})
+class DaterangepickerComponentMock {
+}
+
 describe('SplineSearchDynamicTableComponent', () => {
 
     let componentFixture: ComponentFixture<SplineSearchDynamicTableComponent<any>>
@@ -93,7 +105,8 @@ describe('SplineSearchDynamicTableComponent', () => {
                 SplineLoaderComponentMock,
                 SplineSearchBoxComponentMock,
                 SplineNoResultComponentMock,
-                SplineContentErrorComponentMock
+                SplineContentErrorComponentMock,
+                DaterangepickerComponentMock
             ],
             imports: [
                 BrowserAnimationsModule,
@@ -104,15 +117,16 @@ describe('SplineSearchDynamicTableComponent', () => {
                 MockModule(MatTableModule),
                 MockModule(MatSortModule),
                 MockModule(MatIconModule),
-                MockModule(MatTooltipModule)
+                MockModule(MatTooltipModule),
+                MockModule(MatDatepickerModule),
+                MockModule(SplineDateRangeFilterModule)
                 // MockModule(SplineLoaderModule)
-                // MockModule(MatDatepickerModule),
-                // MockModule(SplineDateRangeFilterModule)
                 // SplineSearchBoxModule,
                 // SplineSortHeaderModule,
                 // DynamicTableModule,
                 // SplineDynamicTableSharedModule,
-            ]
+            ],
+            providers: [LabelApiService]
         })
             .compileComponents()
     )

@@ -40,6 +40,7 @@ import NodeView = SgNodeControl.NodeView
 
 
 @Component({
+    // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'sg-container',
     templateUrl: './sg-container.component.html'
 })
@@ -71,8 +72,8 @@ export class SgContainerComponent extends BaseLocalStateComponent<SgContainer.St
             .pipe(
                 map(state => state && state?.selectedNodeId),
                 distinctUntilChanged(),
-                takeUntil(this.destroyed$),
-                filter(nodeId => nodeId !== this.selectedNodeId)
+                filter(nodeId => nodeId !== this.selectedNodeId),
+                takeUntil(this.destroyed$)
             )
             .subscribe(
                 nodeId => this.nodeSelectionChange$.emit({ nodeId })
@@ -128,7 +129,7 @@ export class SgContainerComponent extends BaseLocalStateComponent<SgContainer.St
         }
     }
 
-    highlightSpecificRelations(nodeIds): void {
+    highlightSpecificRelations(nodeIds: string[]): void {
         this.updateState({
             highlightedRelationsNodesIds: nodeIds
         })

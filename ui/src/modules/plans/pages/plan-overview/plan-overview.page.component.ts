@@ -21,7 +21,6 @@ import { keyBy } from 'lodash-es'
 import { Observable } from 'rxjs'
 import { distinctUntilChanged, filter, map, skip, takeUntil } from 'rxjs/operators'
 import { AttributeSchema, ExecutionPlanApiService, OperationAttributeLineageType, toAttributeLineage } from 'spline-api'
-import { SplineTabsNavBar } from 'spline-common'
 import { SlBreadcrumbs } from 'spline-common/layout'
 import { SplineAttributesTree } from 'spline-shared/attributes'
 import { SgContainerComponent, SgNodeControl } from 'spline-shared/graph'
@@ -32,10 +31,10 @@ import { AttributeLineageDialog } from '../../components/attribute-lineage/attri
 import { PlanOverview } from '../../models'
 import { ExecutionPlanOverviewFactoryStore } from '../../store'
 import QueryParamAlis = PlanOverview.QueryParamAlis
-import NavTabInfo = SplineTabsNavBar.NavTabInfo
 
 
 @Component({
+    // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'plan-overview-page',
     templateUrl: './plan-overview.page.component.html',
     styleUrls: ['./plan-overview.page.component.scss'],
@@ -52,14 +51,6 @@ import NavTabInfo = SplineTabsNavBar.NavTabInfo
 export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
 
     @ViewChild(SgContainerComponent) readonly sgContainer: SgContainerComponent
-
-    readonly headerNavTabs: NavTabInfo[] = [
-        {
-            label: 'PLANS.PLAN_OVERVIEW__NAV_TAB__GRAPH_VIEW',
-            routeLink: '.',
-            icon: 'graph-outline'
-        }
-    ]
 
     readonly breadcrumbs$: Observable<SlBreadcrumbs.Breadcrumbs>
 
@@ -187,12 +178,12 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         this.store.selectedNode$
             .pipe(
                 skip(1),
-                takeUntil(this.destroyed$),
                 map(selectedNode => selectedNode ? selectedNode.id : null),
                 filter(selectedNodeId => {
                     const nodeId = PlanOverview.getSelectedNodeId(this.activatedRoute)
                     return selectedNodeId !== nodeId
-                })
+                }),
+                takeUntil(this.destroyed$)
             )
             .subscribe(selectedNodeId =>
                 this.updateQueryParams(PlanOverview.QueryParamAlis.SelectedNodeId, selectedNodeId)
@@ -205,12 +196,12 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
         this.store.selectedAttribute$
             .pipe(
                 skip(1),
-                takeUntil(this.destroyed$),
                 map(selectedAttribute => selectedAttribute ? selectedAttribute.id : null),
                 filter(selectedAttributeId => {
                     const attrId = PlanOverview.getSelectedAttributeId(this.activatedRoute)
                     return selectedAttributeId !== attrId
-                })
+                }),
+                takeUntil(this.destroyed$)
             )
             .subscribe(attrId =>
                 this.updateQueryParams(PlanOverview.QueryParamAlis.SelectedAttributeId, attrId)

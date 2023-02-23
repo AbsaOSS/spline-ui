@@ -23,7 +23,7 @@ import {
     ExecutionEventsQuery
 } from 'spline-api'
 import { SplineConfigApiService } from 'spline-shared'
-import { QuerySorter, SearchFactoryStore, SearchQuery } from 'spline-utils'
+import { QuerySorter, SearchDataSourceConfig, SearchFactoryStore, SearchQuery } from 'spline-utils'
 import SortDir = QuerySorter.SortDir
 import SearchParams = SearchQuery.SearchParams
 
@@ -50,7 +50,8 @@ export class EventsFactoryStore extends SearchFactoryStore<ExecutionEvent,
                 ]
             },
             pollingInterval: splineConfigApiService.config.serverPollingIntervalMs
-        }))
+        }) as SearchDataSourceConfig<ExecutionEventsQuery.QueryFilter,
+            ExecutionEventField>)
     }
 
     protected getDataObserver(

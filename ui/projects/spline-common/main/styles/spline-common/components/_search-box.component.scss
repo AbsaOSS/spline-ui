@@ -137,11 +137,11 @@ $border-radius: $height / 2;
     }
 }
 
-spline-search-box[theme='grey'] .spline-search-box {
+[theme='grey'] .spline-search-box {
     @include spline-search-box($color-grey-light, $color-grey-dark-50, $color-grey-dark);
 }
 
-spline-search-box[theme='white-transparent'] .spline-search-box {
+[theme='white-transparent'] .spline-search-box {
     @include spline-search-box($color-white-25, $color-white-55, $color-grey-dark, $color-grey-light-2);
 }
 

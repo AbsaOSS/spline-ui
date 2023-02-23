@@ -16,17 +16,15 @@
 
 import { NgModule } from '@angular/core'
 
-import { SplineApiCoreModule } from './core'
-import { SplineApiExecutionEventModule } from './execution-event'
+import * as fromServices from './services'
 
 
 @NgModule({
     declarations: [],
-    imports: [
-        SplineApiCoreModule,
-        SplineApiExecutionEventModule,
-    ],
     exports: [],
+    providers: [
+        ...fromServices.commonServiceProvider
+    ]
 })
 export class SplineApiModule {
 }

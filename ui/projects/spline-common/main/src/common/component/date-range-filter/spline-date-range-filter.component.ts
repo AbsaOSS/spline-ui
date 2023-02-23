@@ -16,7 +16,6 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core'
 import { MatMenuTrigger } from '@angular/material/menu'
-import { DaterangepickerComponent } from 'ngx-daterangepicker-material'
 import { BaseLocalStateComponent, SplineDateRangeValue } from 'spline-utils'
 import { SplineDateRangeFilter } from './spline-date-range-filter.models'
 import dayjs from 'dayjs'
@@ -27,8 +26,6 @@ import dayjs from 'dayjs'
     templateUrl: './spline-date-range-filter.component.html'
 })
 export class SplineDateRangeFilterComponent extends BaseLocalStateComponent<SplineDateRangeFilter.State> implements OnChanges {
-
-    @ViewChild(DaterangepickerComponent) datePicker: DaterangepickerComponent
     @ViewChild(MatMenuTrigger) matMenuTrigger: MatMenuTrigger
     @Input() value: SplineDateRangeValue | null
     @Input() showIcon = true
@@ -124,7 +121,6 @@ export class SplineDateRangeFilterComponent extends BaseLocalStateComponent<Spli
     }
 
     onCloseDatePicker(): void {
-        this.datePicker.updateView()
         this.matMenuTrigger.closeMenu()
     }
 

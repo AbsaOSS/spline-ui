@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
+import { MatAutocompleteModule } from '@angular/material/autocomplete'
 import { MatButtonModule } from '@angular/material/button'
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatTooltipModule } from '@angular/material/tooltip'
@@ -35,13 +35,15 @@ import { splineDtSharedComponents } from './components'
         MatPaginatorModule,
         DynamicTableModule,
         SplineCommonModule,
-        SplineTranslateModule.forChild({})
+        SplineTranslateModule.forChild({}),
+        MatAutocompleteModule
     ],
+    providers: [],
     declarations: [
         ...splineDtSharedComponents
     ],
     exports: [
-        ...splineDtSharedComponents,
+        ...splineDtSharedComponents
     ]
 })
 export class SplineDynamicTableSharedModule {

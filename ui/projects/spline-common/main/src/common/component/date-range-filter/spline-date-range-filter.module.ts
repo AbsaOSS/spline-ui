@@ -19,12 +19,12 @@ import { NgModule } from '@angular/core'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
 import { MatMenuModule } from '@angular/material/menu'
-import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material'
 import { SplineTranslateModule } from 'spline-utils/translate'
 
 import { SplineInlineFilterModule } from '../inline-fitler'
 
 import { SplineDateRangeFilterComponent } from './spline-date-range-filter.component'
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material'
 
 
 @NgModule({

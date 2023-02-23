@@ -24,6 +24,7 @@ import { DfControlSelect } from '../../models'
 
 
 @Component({
+    // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'df-control-select',
     templateUrl: './df-control-select.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -44,18 +45,19 @@ export class DfControlSelectComponent<TId extends keyof any = any>
 
         this.stringValues$ = this.model.value$
             .pipe(
-                takeUntil(this.destroyed$),
-                map(value => {
+                map((value: string[]) => {
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
                     return value?.length
-                        ? (value as any[])
-                            .map(
-                                item => this.model.options.dataMap?.valueToString
-                                    ? this.model.options.dataMap.valueToString(item)
-                                    : item
-                            )
+                        ? value.map(
+                            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+                            (item: any) => this.model.options.dataMap?.valueToString
+                                ? this.model.options.dataMap.valueToString(item)
+                                : item
+                        )
                         : [this.model.options?.valueLabelAllSelected ?? this.defaultValueLabelAllSelected]
 
                 }),
+                takeUntil(this.destroyed$)
             )
     }
 

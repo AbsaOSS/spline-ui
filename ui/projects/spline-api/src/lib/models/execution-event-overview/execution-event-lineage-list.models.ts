@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 import { DataSourceWriteMode, SplineDataSourceInfo, uriToDatasourceInfo } from '../data-source'
 
 import { ExecutionEventLineageNodeType } from './execution-event-lineage-node-type.models'
@@ -55,8 +54,9 @@ export namespace ExecutionEventLineageList {
 
     export function toLineageList(lineage: ExecutionEventLineage, showInputs: boolean = true): LineageRecord[] {
         const executionEventNodes = lineage.nodes.filter(node => node.type === ExecutionEventLineageNodeType.Execution)
+        executionEventNodes.sort()
+
         return executionEventNodes
-            .sort()
             .reduce(
                 (acc, currentNode) => [...acc, ...extractEventLineageList(lineage, currentNode, showInputs)],
                 []
@@ -83,7 +83,8 @@ export namespace ExecutionEventLineageList {
 
     export function extractEventLineageList(lineage: ExecutionEventLineage,
                                             eventNode: ExecutionEventLineageNode,
-                                            showInputs: boolean = true): LineageRecord[] {
+                                            showInputs: boolean = true
+    ): LineageRecord[] {
         const targetDataSourceNodeId = lineage.links.find(x => x.source === eventNode.id).target
         const targetDataSourceNode = lineage.nodes.find(x => x.id === targetDataSourceNodeId)
 

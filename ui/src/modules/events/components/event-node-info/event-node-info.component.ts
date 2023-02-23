@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core'
 import { isEqual } from 'lodash-es'
 import { delay, distinctUntilChanged, filter, takeUntil } from 'rxjs/operators'
 import { ExecutionEventLineageNodeType, ExecutionPlanApiService } from 'spline-api'
@@ -28,6 +28,7 @@ import NodeEventData = SgNodeCardDataView.NodeEventData
 
 
 @Component({
+    // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'event-node-info',
     templateUrl: './event-node-info.component.html',
     styleUrls: ['./event-node-info.component.scss'],
@@ -42,7 +43,7 @@ import NodeEventData = SgNodeCardDataView.NodeEventData
         }
     ]
 })
-export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInfo.NodeInfoViewState> implements OnChanges {
+export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInfo.NodeInfoViewState> implements OnChanges, OnDestroy {
 
     @Input() nodeRelations: EventNodeInfo.NodeRelationsInfo
 
@@ -88,9 +89,9 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
 
         this.dataSource.loadingProcessingEvents.error$
             .pipe(
-                takeUntil(this.destroyed$),
                 distinctUntilChanged((left, right) => isEqual(left, right)),
-                delay(domRelaxationTime)
+                delay(domRelaxationTime),
+                takeUntil(this.destroyed$)
             )
             .subscribe(state =>
                 this.updateState({
@@ -107,8 +108,8 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
 
             const executionPlanIds = nodeRelations.node.type === ExecutionEventLineageNodeType.DataSource &&
                                      nodeRelations?.parents?.length > 0
-                                     ? nodeRelations.parents.map(node => node.id)
-                                     : []
+                ? nodeRelations.parents.map(node => node.id)
+                : []
 
             this.updateState({
                 loadingProcessing: ProcessingStoreNs.eventProcessingStart(this.state.loadingProcessing)
@@ -119,6 +120,11 @@ export class EventNodeInfoComponent extends BaseLocalStateComponent<EventNodeInf
                 executionPlanIds
             })
         }
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy()
+        this.dataSource.disconnect()
     }
 
     onDataViewEvent($event: SplineDataWidgetEvent): void {

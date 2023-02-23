@@ -22,6 +22,7 @@ import { BaseDirective } from 'spline-utils'
 import { SplineListBoxComponent } from '../components'
 import { SplineListBox } from '../models'
 
+
 @Directive({
     selector: '[splineListBoxRecords]spline-list-box'
 })
@@ -52,7 +53,7 @@ export class SplineListBoxRecordsDirective<TRecord, TValue> extends BaseDirectiv
 
         combineLatest([
             this.options$,
-            this.search$,
+            this.search$
         ])
             .pipe(
                 takeUntil(this.destroyed$)
@@ -81,7 +82,7 @@ export class SplineListBoxRecordsDirective<TRecord, TValue> extends BaseDirectiv
 
     private calculateSelectOptions(
         records: TRecord[],
-        dataMap: SplineListBox.DataMap<TRecord, TValue>,
+        dataMap: SplineListBox.DataMap<TRecord, TValue>
     ): SplineListBox.SelectListOption<TValue>[] {
         return records
             .map(

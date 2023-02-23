@@ -16,7 +16,7 @@
 
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatAutocompleteModule } from '@angular/material/autocomplete'
 import { MatIconModule } from '@angular/material/icon'
 import { MatProgressBarModule } from '@angular/material/progress-bar'
@@ -29,7 +29,7 @@ import { SplineSearchBoxComponent } from './spline-search-box.component'
 
 @NgModule({
     declarations: [
-        SplineSearchBoxComponent,
+        SplineSearchBoxComponent
     ],
     imports: [
         CommonModule,
@@ -40,8 +40,9 @@ import { SplineSearchBoxComponent } from './spline-search-box.component'
         MatAutocompleteModule,
         MatProgressSpinnerModule,
         MatProgressBarModule,
+        ReactiveFormsModule
     ],
-    exports: [SplineSearchBoxComponent],
+    exports: [SplineSearchBoxComponent]
 })
 export class SplineSearchBoxModule {
 }
