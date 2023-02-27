@@ -15,15 +15,22 @@
  */
 
 import { NgModule } from '@angular/core'
-
-import * as fromServices from './services'
+import { AttributeApiService } from './services/attribute-api.service';
+import { ExecutionEventApiService } from './services/execution-event-api.service';
+import { ExecutionPlanApiService } from './services/execution-plan-api.service';
+import { LabelApiService } from './services/label-api.service';
+import { SplineDataSourceApiService } from './services/spline-data-source-api.service';
 
 
 @NgModule({
     declarations: [],
     exports: [],
     providers: [
-        ...fromServices.commonServiceProvider
+        ExecutionEventApiService,
+        ExecutionPlanApiService,
+        AttributeApiService,
+        SplineDataSourceApiService,
+        LabelApiService
     ]
 })
 export class SplineApiModule {
