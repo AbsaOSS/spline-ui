@@ -1,21 +1,5 @@
-/*
- * Copyright 2021 ABSA Group Limited
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
+import { Injectable } from '@angular/core'
 import { ExecutionPlan, SplineDataSourceInfo } from 'spline-api'
-import { SplineColors } from 'spline-common'
 import {
     SdWidgetCard,
     SdWidgetExpansionPanel,
@@ -24,15 +8,20 @@ import {
     SdWidgetSimpleRecord,
     SplineDataViewSchema
 } from 'spline-common/data-view'
+import { SplineColors } from 'spline-common'
 import { SgNodeControl } from 'spline-shared/graph'
 
 
-export namespace PlanInfo {
+@Injectable()
+export class PlanInfoService {
 
-    import getNodeStyles = SgNodeControl.getNodeStyles
+    private readonly getNodeStylesTypeDataSource
 
+    constructor() {
+        this.getNodeStylesTypeDataSource = SgNodeControl.getNodeStyles(SgNodeControl.NodeType.DataSource)
+    }
 
-    export function toDataViewSchema(executionPlan: ExecutionPlan): SplineDataViewSchema {
+    toDataViewSchema(executionPlan: ExecutionPlan): SplineDataViewSchema {
         return [
             SdWidgetCard.toSchema(
                 {
@@ -45,11 +34,11 @@ export namespace PlanInfo {
                     SdWidgetSimpleRecord.toSchema([
                         {
                             label: 'PLANS.PLAN_INFO__DETAILS__SYSTEM_INFO',
-                            value: `${executionPlan.systemInfo.name} ${executionPlan.systemInfo.version}`,
+                            value: `${ executionPlan.systemInfo.name } ${ executionPlan.systemInfo.version }`,
                         },
                         {
                             label: 'PLANS.PLAN_INFO__DETAILS__AGENT_INFO',
-                            value: `${executionPlan.agentInfo?.name} ${executionPlan.agentInfo?.version}`,
+                            value: `${ executionPlan.agentInfo?.name } ${ executionPlan.agentInfo?.version }`,
                         },
                     ]),
                 ],
@@ -57,7 +46,7 @@ export namespace PlanInfo {
         ]
     }
 
-    export function getOutputAndInputsDvs(data: ExecutionPlan): SplineDataViewSchema {
+    getOutputAndInputsDvs(data: ExecutionPlan): SplineDataViewSchema {
         const nodeStyles = SgNodeControl.getNodeStyles(SgNodeControl.NodeType.DataSource)
         return SdWidgetExpansionPanel.toSchema(
             {
@@ -92,19 +81,19 @@ export namespace PlanInfo {
         )
     }
 
-    export function getInputsDataViewSchema(data: ExecutionPlan): SplineDataViewSchema {
-        return data.inputDataSources.map(dataSourceInfoToDataViewSchema)
+    getInputsDataViewSchema(data: ExecutionPlan): SplineDataViewSchema {
+        return data.inputDataSources.map(this.dataSourceInfoToDataViewSchema)
     }
 
-    export function getOutputDataViewSchema(data: ExecutionPlan): SplineDataViewSchema {
+    getOutputDataViewSchema(data: ExecutionPlan): SplineDataViewSchema {
         const dataSourceInfo = data.outputDataSource
-        return dataSourceInfoToDataViewSchema(dataSourceInfo)
+        return this.dataSourceInfoToDataViewSchema(dataSourceInfo)
     }
 
-    function dataSourceInfoToDataViewSchema(dataSourceInfo: SplineDataSourceInfo): SdWidgetSchema {
+    dataSourceInfoToDataViewSchema(dataSourceInfo: SplineDataSourceInfo): SdWidgetSchema {
         return SdWidgetCard.toSchema(
             {
-                ...getNodeStyles(SgNodeControl.NodeType.DataSource),
+                ...SgNodeControl.getNodeStyles(SgNodeControl.NodeType.DataSource),
                 title: dataSourceInfo.name,
                 iconTooltip: dataSourceInfo.type
             },
@@ -120,3 +109,5 @@ export namespace PlanInfo {
         )
     }
 }
+
+
