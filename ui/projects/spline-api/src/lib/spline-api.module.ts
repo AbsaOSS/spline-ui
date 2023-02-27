@@ -15,11 +15,11 @@
  */
 
 import { NgModule } from '@angular/core'
-import { AttributeApiService } from './services/attribute-api.service';
-import { ExecutionEventApiService } from './services/execution-event-api.service';
-import { ExecutionPlanApiService } from './services/execution-plan-api.service';
-import { LabelApiService } from './services/label-api.service';
-import { SplineDataSourceApiService } from './services/spline-data-source-api.service';
+import { AttributeApiService } from './services/attribute-api.service'
+import { ExecutionEventApiService } from './services/execution-event-api.service'
+import { ExecutionPlanApiService } from './services/execution-plan-api.service'
+import { LabelApiService } from './services/label-api.service'
+import { SplineDataSourceApiService } from './services/spline-data-source-api.service'
 
 
 @NgModule({

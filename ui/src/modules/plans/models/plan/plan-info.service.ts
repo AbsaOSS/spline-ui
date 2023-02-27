@@ -106,7 +106,7 @@ export class PlanInfoService {
         return this.dataSourceInfoToDataViewSchema(dataSourceInfo)
     }
 
-    dataSourceInfoToDataViewSchema(dataSourceInfo: SplineDataSourceInfo): SdWidgetSchema {
+    dataSourceInfoToDataViewSchema = (dataSourceInfo: SplineDataSourceInfo): SdWidgetSchema => {
         return SdWidgetCard.toSchema(
             {
                 ...SgNodeControl.getNodeStyles(SgNodeControl.NodeType.DataSource),
