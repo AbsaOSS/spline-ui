@@ -25,7 +25,7 @@ import { PlanInfoService } from '../../models/plan/plan-info.service'
 
 export namespace ExecutionPlanInfoStoreNs {
 
-    //TODO: refactor namespace to service class and remove new keyword
+
     const planInfoService: PlanInfoService = new PlanInfoService()
 
     export type State = {
