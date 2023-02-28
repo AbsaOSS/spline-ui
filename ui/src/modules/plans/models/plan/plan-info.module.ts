@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2023 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,23 +15,18 @@
  */
 
 import { NgModule } from '@angular/core'
-import { AttributeApiService } from './services/attribute-api.service'
-import { ExecutionEventApiService } from './services/execution-event-api.service'
-import { ExecutionPlanApiService } from './services/execution-plan-api.service'
-import { LabelApiService } from './services/label-api.service'
-import { SplineDataSourceApiService } from './services/spline-data-source-api.service'
+import { CommonModule } from '@angular/common'
+import { PlanInfoService } from './plan-info.service'
 
 
 @NgModule({
     declarations: [],
-    exports: [],
+    imports: [
+        CommonModule
+    ],
     providers: [
-        ExecutionEventApiService,
-        ExecutionPlanApiService,
-        AttributeApiService,
-        SplineDataSourceApiService,
-        LabelApiService
+        PlanInfoService
     ]
 })
-export class SplineApiModule {
+export class PlanInfoModule {
 }

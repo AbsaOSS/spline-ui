@@ -49,6 +49,7 @@ import * as fromComponents from './components'
 import * as fromDirectives from './directives'
 import * as fromPages from './pages'
 import { SplinePlansRoutingModule } from './spline-plans-routing.module'
+import { PlanInfoModule } from './models/plan/plan-info.module'
 
 
 @NgModule({
@@ -91,7 +92,8 @@ import { SplinePlansRoutingModule } from './spline-plans-routing.module'
         SplineGraphSharedModule,
         MatButtonToggleModule,
         MatSlideToggleModule,
-        MatDialogModule
+        MatDialogModule,
+        PlanInfoModule
     ],
     exports: [
         ...fromPages.pageComponents

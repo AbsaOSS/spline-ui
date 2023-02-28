@@ -19,10 +19,14 @@ import { Observable } from 'rxjs'
 import { ExecutionPlan } from 'spline-api'
 import { SplineDataViewSchema } from 'spline-common/data-view'
 
-import { PlanInfo, attributesSchemaToDataViewSchema } from '../../models'
+import { attributesSchemaToDataViewSchema } from '../../models'
+import { PlanInfoService } from '../../models/plan/plan-info.service'
 
 
 export namespace ExecutionPlanInfoStoreNs {
+
+
+    const planInfoService: PlanInfoService = new PlanInfoService()
 
     export type State = {
         executionPlan: ExecutionPlan
@@ -39,10 +43,10 @@ export namespace ExecutionPlanInfoStoreNs {
         const allDataTypes = executionPlan.extraInfo.dataTypes
         return {
             executionPlan: executionPlan,
-            executionPlanVs: PlanInfo.toDataViewSchema(executionPlan),
-            inputsVs: PlanInfo.getInputsDataViewSchema(executionPlan),
-            outputVs: PlanInfo.getOutputDataViewSchema(executionPlan),
-            outputAndInputsVs: PlanInfo.getOutputAndInputsDvs(executionPlan),
+            executionPlanVs: planInfoService.toDataViewSchema(executionPlan),
+            inputsVs: planInfoService.getInputsDataViewSchema(executionPlan),
+            outputVs: planInfoService.getOutputDataViewSchema(executionPlan),
+            outputAndInputsVs: planInfoService.getOutputAndInputsDvs(executionPlan),
             inputsNumber: executionPlan.inputDataSources.length,
             attributesSchema: attributesSchemaToDataViewSchema(
                 allAttributesSorted,
