@@ -25,9 +25,6 @@ import { RouterState } from './router-state'
 export class PlanOverviewService {
 
 
-    constructor() {
-    }
-
     extractRouterState(activatedRoute: ActivatedRoute): RouterState {
         return {
             [QueryParamAlis.ExecutionPlanId]: activatedRoute.snapshot.params[QueryParamAlis.ExecutionPlanId],
