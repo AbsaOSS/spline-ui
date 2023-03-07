@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 ABSA Group Limited
+ * Copyright 2023 ABSA Group Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,28 +14,21 @@
  * limitations under the License.
  */
 
-
+import { Injectable } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { RouterNavigation } from 'spline-utils'
+import { QueryParamAlis } from './query-param-alis'
+import { RouterState } from './router-state'
 
 
-export namespace PlanOverview {
+@Injectable()
+export class PlanOverviewService {
 
-    export enum QueryParamAlis {
-        ExecutionPlanId = 'planId',
-        ExecutionEventId = 'eventId',
-        SelectedNodeId = 'nodeId',
-        SelectedAttributeId = 'attributeId',
+
+    constructor() {
     }
 
-    export type RouterState = {
-        [QueryParamAlis.ExecutionPlanId]: string
-        [QueryParamAlis.ExecutionEventId]: string | null
-        [QueryParamAlis.SelectedNodeId]: string | null
-        [QueryParamAlis.SelectedAttributeId]: string | null
-    }
-
-    export function extractRouterState(activatedRoute: ActivatedRoute): RouterState {
+    extractRouterState(activatedRoute: ActivatedRoute): RouterState {
         return {
             [QueryParamAlis.ExecutionPlanId]: activatedRoute.snapshot.params[QueryParamAlis.ExecutionPlanId],
             [QueryParamAlis.ExecutionEventId]: RouterNavigation.extractQueryParam(activatedRoute, QueryParamAlis.ExecutionEventId),
@@ -44,11 +37,11 @@ export namespace PlanOverview {
         }
     }
 
-    export function getSelectedNodeId(activatedRoute: ActivatedRoute): string {
+    getSelectedNodeId(activatedRoute: ActivatedRoute): string {
         return RouterNavigation.extractQueryParam(activatedRoute, QueryParamAlis.SelectedNodeId)
     }
 
-    export function getSelectedAttributeId(activatedRoute: ActivatedRoute): string {
+    getSelectedAttributeId(activatedRoute: ActivatedRoute): string {
         return RouterNavigation.extractQueryParam(activatedRoute, QueryParamAlis.SelectedAttributeId)
     }
 }
