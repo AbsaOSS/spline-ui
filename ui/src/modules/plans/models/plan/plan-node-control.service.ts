@@ -24,15 +24,12 @@ import { OperationInfo } from '../operation'
 @Injectable()
 export class PlanNodeControlService {
 
-    constructor() {
-    }
 
     extractNodeName(nodeSource: ExecutionPlanLineageNode): string {
         return nodeSource.name
     }
 
-    toSgNode(nodeSource: ExecutionPlanLineageNode,
-             nodeView: SgNodeControl.NodeView = SgNodeControl.NodeView.Detailed): SgNode {
+    toSgNode(nodeSource: ExecutionPlanLineageNode, nodeView: SgNodeControl.NodeView = SgNodeControl.NodeView.Detailed): SgNode {
         const nodeStyles = OperationInfo.getNodeStyles(nodeSource?.type, nodeSource.name)
 
         const defaultActions = [
