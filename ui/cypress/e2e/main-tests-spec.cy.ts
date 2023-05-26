@@ -17,7 +17,7 @@
 describe('Main Tests', () => {
     it('Visits the initial project page', () => {
         cy.visit('/')
-        cy.title().should('eq', 'Spline - Data Lineage Tacking & Visualization')
+        cy.title().should('eq', 'Spline - Data Lineage Tracking & Visualization')
     })
 
     describe('Issue: datepicker calendar should filter data in the table', () => {
