@@ -25,5 +25,10 @@ LABEL \
 EXPOSE 8080
 EXPOSE 8009
 
-RUN rm -rf /usr/local/tomcat/webapps/*
-COPY target/*.war /usr/local/tomcat/webapps/ROOT.war
+RUN chgrp 1001 /usr/local/tomcat/conf /usr/local/tomcat/webapps
+RUN chmod g+w /usr/local/tomcat/conf /usr/local/tomcat/webapps
+
+COPY --chown=1001 target/*.war /usr/local/tomcat/webapps/ROOT.war
+RUN chmod a-w /usr/local/tomcat/webapps/ROOT.war
+
+USER 1001:1001
