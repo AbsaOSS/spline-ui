@@ -10,6 +10,7 @@
 <!--ts-->
 
 * [Spline UI](#spline-ui)
+    * [Gallery](#gallery)
     * [Download](#download)
     * [Usage](#usage)
         * [Running as a Docker container](#run-as-docker)
@@ -32,6 +33,15 @@ The UI for [Spline project](https://absaoss.github.io/spline/)
 
 Spline UI app is implemented as a _single-page application (SPA)_, available alone as well as packed as a Docker image or a WAR-file. Choose according to your
 deployment preferences.
+
+<a id="gallery"></a>
+## Gallery
+
+See [gallery](./docs/gallery)
+
+![Execution](./docs/gallery/execution.png)
+![Datasource](./docs/gallery/datasource.png)
+![Plan](./docs/gallery/plan_projection.png)
 
 <a id="download"></a>
 ## Download
