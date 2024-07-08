@@ -36,6 +36,52 @@
 
     <build>
         <plugins>
+            <!-- Read the ".nvmrc" and populate the "node.version" property -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <id>generate-node-version-property</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>sh</executable>
+                            <arguments>
+                                <argument>-c</argument>
+                                <argument><![CDATA[
+                                    mkdir -p ${project.build.directory}
+                                    echo "node.version=$(cat ${project.basedir}/.nvmrc)" > ${project.build.directory}/nvm.properties
+                                ]]></argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>${project.build.directory}/nvm.properties</file>
+                            </files>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- others -->
+
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>3.1.0</version>
@@ -74,10 +120,9 @@
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
-                <version>1.10.3</version>
+                <version>1.15.0</version>
                 <configuration>
-                    <nodeVersion>v16.9.1</nodeVersion>
-                    <npmVersion>7.6.0</npmVersion>
+                    <nodeVersion>${node.version}</nodeVersion>
                     <environmentVariables>
                         <SPLINE_UI_BUILD_REVISION>${buildNumber}</SPLINE_UI_BUILD_REVISION>
                         <SPLINE_UI_BUILD_TIMESTAMP>${timestamp}</SPLINE_UI_BUILD_TIMESTAMP>
