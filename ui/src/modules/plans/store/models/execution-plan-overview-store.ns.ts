@@ -24,12 +24,11 @@ import {
 import { SgData } from 'spline-common/graph'
 import { SgNodeControl } from 'spline-shared/graph'
 import { ProcessingStoreNs, SplineEntityStoreNs } from 'spline-utils'
-
-import { PlanNodeControl } from '../../models'
+import { PlanNodeControlService } from '../../models/plan/plan-node-control.service'
 
 
 export namespace ExecutionPlanOverviewStoreNs {
-
+    const planNodeControlService = new PlanNodeControlService()
     export type State = {
         nodes: SplineEntityStoreNs.EntityState<ExecutionPlanLineageNode>
         executionPlanId: string | null
@@ -87,7 +86,7 @@ export namespace ExecutionPlanOverviewStoreNs {
             nodes: nodesList
                 // map node source data to the SgNode schema
                 .map(
-                    nodeSource => PlanNodeControl.toSgNode(nodeSource, state.graphNodeView)
+                    nodeSource => planNodeControlService.toSgNode(nodeSource, state.graphNodeView)
                 )
         }
     }

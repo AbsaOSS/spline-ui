@@ -28,9 +28,10 @@ import { BaseComponent, RouterNavigation } from 'spline-utils'
 
 import { AttributeLineageDialogComponent } from '../../components'
 import { AttributeLineageDialog } from '../../components/attribute-lineage/attribute-lineage-dialog/attribute-lineage-dialog.models'
-import { PlanOverview } from '../../models'
 import { ExecutionPlanOverviewFactoryStore } from '../../store'
-import QueryParamAlis = PlanOverview.QueryParamAlis
+import { PlanOverviewService } from '../../models/plan/plan-overview.service'
+import { QueryParamAlis } from '../../models/plan/query-param-alis'
+// import { PlanOverview } from '../../models'
 
 
 @Component({
@@ -60,7 +61,8 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
     constructor(private readonly activatedRoute: ActivatedRoute,
                 private readonly router: Router,
                 private readonly matDialog: MatDialog,
-                readonly store: ExecutionPlanOverviewFactoryStore
+                readonly store: ExecutionPlanOverviewFactoryStore,
+                private planOverviewService: PlanOverviewService
     ) {
         super()
 
@@ -98,7 +100,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
 
     ngOnInit(): void {
 
-        const routerState = PlanOverview.extractRouterState(this.activatedRoute)
+        const routerState = this.planOverviewService.extractRouterState(this.activatedRoute)
         this.eventId = routerState[QueryParamAlis.ExecutionEventId]
 
         // init store state
@@ -180,13 +182,13 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
                 skip(1),
                 map(selectedNode => selectedNode ? selectedNode.id : null),
                 filter(selectedNodeId => {
-                    const nodeId = PlanOverview.getSelectedNodeId(this.activatedRoute)
+                    const nodeId = this.planOverviewService.getSelectedNodeId(this.activatedRoute)
                     return selectedNodeId !== nodeId
                 }),
                 takeUntil(this.destroyed$)
             )
             .subscribe(selectedNodeId =>
-                this.updateQueryParams(PlanOverview.QueryParamAlis.SelectedNodeId, selectedNodeId)
+                this.updateQueryParams(QueryParamAlis.SelectedNodeId, selectedNodeId)
             )
 
         //
@@ -198,13 +200,13 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
                 skip(1),
                 map(selectedAttribute => selectedAttribute ? selectedAttribute.id : null),
                 filter(selectedAttributeId => {
-                    const attrId = PlanOverview.getSelectedAttributeId(this.activatedRoute)
+                    const attrId = this.planOverviewService.getSelectedAttributeId(this.activatedRoute)
                     return selectedAttributeId !== attrId
                 }),
                 takeUntil(this.destroyed$)
             )
             .subscribe(attrId =>
-                this.updateQueryParams(PlanOverview.QueryParamAlis.SelectedAttributeId, attrId)
+                this.updateQueryParams(QueryParamAlis.SelectedAttributeId, attrId)
             )
     }
 
@@ -217,7 +219,7 @@ export class PlanOverviewPageComponent extends BaseComponent implements OnInit {
             )
             .subscribe(() => {
 
-                const routerState = PlanOverview.extractRouterState(this.activatedRoute)
+                const routerState = this.planOverviewService.extractRouterState(this.activatedRoute)
                 this.eventId = routerState[QueryParamAlis.ExecutionEventId]
 
                 // reinitialize store state in case of new ExecutionPlan ID

@@ -14,23 +14,22 @@
  * limitations under the License.
  */
 
+import { Injectable } from '@angular/core'
+import { SgNodeControl } from 'spline-shared/graph'
 import { ExecutionPlanLineageNode } from 'spline-api'
 import { SgNode, SgNodeCircle, SgNodeDefault } from 'spline-common/graph'
-import { SgNodeControl } from 'spline-shared/graph'
-
 import { OperationInfo } from '../operation'
 
-export namespace PlanNodeControl {
 
-    import NodeView = SgNodeControl.NodeView
+@Injectable()
+export class PlanNodeControlService {
 
 
-    export function extractNodeName(nodeSource: ExecutionPlanLineageNode): string {
+    extractNodeName(nodeSource: ExecutionPlanLineageNode): string {
         return nodeSource.name
     }
 
-    export function toSgNode(nodeSource: ExecutionPlanLineageNode,
-                             nodeView: NodeView = NodeView.Detailed): SgNode {
+    toSgNode(nodeSource: ExecutionPlanLineageNode, nodeView: SgNodeControl.NodeView = SgNodeControl.NodeView.Detailed): SgNode {
         const nodeStyles = OperationInfo.getNodeStyles(nodeSource?.type, nodeSource.name)
 
         const defaultActions = [
@@ -38,25 +37,27 @@ export namespace PlanNodeControl {
         ]
 
         switch (nodeView) {
-            case NodeView.Compact:
+            case SgNodeControl.NodeView.Compact:
                 return SgNodeCircle.toNode(
                     nodeSource.id,
                     {
-                        tooltip: extractNodeName(nodeSource),
+                        tooltip: this.extractNodeName(nodeSource),
                         ...nodeStyles,
                     },
                 )
-            case NodeView.Detailed:
+            case SgNodeControl.NodeView.Detailed:
             default:
                 return SgNodeDefault.toNode(
                     nodeSource.id,
                     {
-                        label: extractNodeName(nodeSource),
+                        label: this.extractNodeName(nodeSource),
                         ...nodeStyles,
                         inlineActions: defaultActions,
                     },
                 )
         }
     }
+
 }
+
 

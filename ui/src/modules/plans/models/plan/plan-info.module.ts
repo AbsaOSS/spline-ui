@@ -17,6 +17,8 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { PlanInfoService } from './plan-info.service'
+import { PlanNodeControlService } from './plan-node-control.service'
+import { PlanOverviewService } from './plan-overview.service'
 
 
 @NgModule({
@@ -25,7 +27,9 @@ import { PlanInfoService } from './plan-info.service'
         CommonModule
     ],
     providers: [
-        PlanInfoService
+        PlanInfoService,
+        PlanNodeControlService,
+        PlanOverviewService
     ]
 })
 export class PlanInfoModule {
