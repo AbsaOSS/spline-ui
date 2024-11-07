@@ -14,39 +14,36 @@
  * limitations under the License.
  */
 
-import { createSelector } from '@ngrx/store'
-import { ExecutionEvent, OperationDetails } from 'spline-api'
-import { ProcessingStoreNs } from 'spline-utils'
+import { createSelector } from '@ngrx/store';
+import { ExecutionEvent, OperationDetails } from 'spline-api';
+import { ProcessingStoreNs } from 'spline-utils';
 
-import { DsOverviewDetailsStoreNs } from '../state-managements'
-import { SplineDataSourceStoreNs } from '../state-managements/spline-data-source-store.ns'
-
+import { DsOverviewDetailsStoreNs } from '../state-managements';
+import { SplineDataSourceStoreNs } from '../state-managements/spline-data-source-store.ns';
 
 export namespace DsOverviewDetailsStoreSelectors {
-
     export const rootState = createSelector(
         SplineDataSourceStoreNs.rootState,
         (_state: SplineDataSourceStoreNs.State) => _state[DsOverviewDetailsStoreNs.STORE_FEATURE_NAME]
-    )
+    );
 
-    export const loading = createSelector<any, DsOverviewDetailsStoreNs.State, ProcessingStoreNs.EventProcessingState>(
+    export const loading = createSelector<any, [DsOverviewDetailsStoreNs.State], ProcessingStoreNs.EventProcessingState>(
         rootState,
         (_state) => _state.loading
-    )
+    );
 
-    export const isLoading = createSelector<any, DsOverviewDetailsStoreNs.State, boolean>(
+    export const isLoading = createSelector<any, [DsOverviewDetailsStoreNs.State], boolean>(
         rootState,
         (_state) => _state.loading.processing
-    )
+    );
 
-    export const executionEvent = createSelector<any, DsOverviewDetailsStoreNs.State, ExecutionEvent>(
+    export const executionEvent = createSelector<any, [DsOverviewDetailsStoreNs.State], ExecutionEvent>(
         rootState,
         (_state) => _state.executionEvent
-    )
+    );
 
-    export const operationDetails = createSelector<any, DsOverviewDetailsStoreNs.State, OperationDetails[]>(
+    export const operationDetails = createSelector<any, [DsOverviewDetailsStoreNs.State], OperationDetails[]>(
         rootState,
         (_state) => _state.operationDetails
-    )
-
+    );
 }
