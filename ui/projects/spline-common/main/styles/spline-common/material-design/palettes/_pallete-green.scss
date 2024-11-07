@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@use '~@angular/material' as mat;
+@use '@angular/material' as mat;
 
-@import '~@angular/material/theming';
+@import '@angular/material/theming';
 
 $spline-color-map-green: (
     50: #e1f1f2,
