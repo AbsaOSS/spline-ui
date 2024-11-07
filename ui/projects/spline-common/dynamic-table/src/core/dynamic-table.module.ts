@@ -52,9 +52,6 @@ import * as fromServices from './services'
     ],
     providers: [
         ...fromServices.services,
-    ],
-    entryComponents: [
-        ...dynamicTableEntryComponents,
     ]
 })
 export class DynamicTableModule {

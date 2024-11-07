@@ -14,88 +14,84 @@
  * limitations under the License.
  */
 
-import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { NavigationEnd, Router } from '@angular/router'
-import { RouterTestingModule } from '@angular/router/testing'
-import { Observable, of } from 'rxjs'
-import { filter, take } from 'rxjs/operators'
-import { LabelApiService } from 'spline-api'
-import { SplineSearchDynamicTableComponent, SplineSearchDynamicTableStoreNs } from 'spline-shared/dynamic-table'
-import { MatPaginatorModule } from '@angular/material/paginator'
-import { MatTableModule } from '@angular/material/table'
-import { MatSortModule } from '@angular/material/sort'
-import { MatIconModule } from '@angular/material/icon'
-import { SplineTranslateTestingModule } from 'spline-utils/translate'
-import { MockModule } from 'ng-mocks'
-import { PageResponse, QuerySorter, SearchDataSourceConfigInput, SearchFactoryStore, SearchQuery } from 'spline-utils'
-import { Component, Input } from '@angular/core'
-import { MatTooltipModule } from '@angular/material/tooltip'
-import { MatDatepickerModule } from '@angular/material/datepicker'
-import { SplineDateRangeFilterModule } from 'spline-common'
-import SortDir = QuerySorter.SortDir
-import SearchParams = SearchQuery.SearchParams
-import DEFAULT_SEARCH_PARAMS = SearchQuery.DEFAULT_SEARCH_PARAMS
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NavigationEnd, Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Observable, of } from 'rxjs';
+import { filter, take } from 'rxjs/operators';
+import { LabelApiService } from 'spline-api';
+import { SplineSearchDynamicTableComponent, SplineSearchDynamicTableStoreNs } from 'spline-shared/dynamic-table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatIconModule } from '@angular/material/icon';
+import { SplineTranslateTestingModule } from 'spline-utils/translate';
+import { MockModule } from 'ng-mocks';
+import { PageResponse, QuerySorter, SearchDataSourceConfigInput, SearchFactoryStore, SearchQuery } from 'spline-utils';
+import { Component, Input } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { SplineDateRangeFilterModule } from 'spline-common';
+import SortDir = QuerySorter.SortDir;
+import SearchParams = SearchQuery.SearchParams;
+import DEFAULT_SEARCH_PARAMS = SearchQuery.DEFAULT_SEARCH_PARAMS;
 
 @Component({
     selector: 'spline-loader',
-    template: '<div></div>'
+    template: '<div></div>',
 })
 class SplineLoaderComponentMock {}
 
 @Component({
     selector: 'dynamic-table',
-    template: '<div></div>'
+    template: '<div></div>',
 })
 class DynamicTableComponentMock {
-    @Input() dataSource
-    @Input() dataMap
-    @Input() sorting
-    @Input() options
+    @Input() dataSource;
+    @Input() dataMap;
+    @Input() sorting;
+    @Input() options;
 }
 
 @Component({
     selector: 'spline-search-box-with-filter',
-    template: '<div></div>'
+    template: '<div></div>',
 })
 class SplineSearchBoxComponentMock {
-    @Input() searchTerm
-    @Input() dataSource
-    @Input() labelApiService
-    @Input() searchDefaultString
+    @Input() searchTerm;
+    @Input() dataSource;
+    @Input() labelApiService;
+    @Input() searchDefaultString;
 }
 
 @Component({
     selector: 'spline-no-result',
-    template: '<div></div>'
+    template: '<div></div>',
 })
-class SplineNoResultComponentMock {
-}
+class SplineNoResultComponentMock {}
 
 @Component({
     selector: 'spline-content-error',
-    template: '<div></div>'
+    template: '<div></div>',
 })
 class SplineContentErrorComponentMock {
-    @Input() statusCode
-    @Input() errorId
-    @Input() floating
+    @Input() statusCode;
+    @Input() errorId;
+    @Input() floating;
 }
 
 @Component({
     selector: 'ngx-daterangepicker-material',
-    template: '<div></div>'
+    template: '<div></div>',
 })
-class DaterangepickerComponentMock {
-}
+class DaterangepickerComponentMock {}
 
 describe('SplineSearchDynamicTableComponent', () => {
-
-    let componentFixture: ComponentFixture<SplineSearchDynamicTableComponent<any>>
-    let componentInstance: SplineSearchDynamicTableComponent<any>
-    let router: Router
+    let componentFixture: ComponentFixture<SplineSearchDynamicTableComponent<any>>;
+    let componentInstance: SplineSearchDynamicTableComponent<any>;
+    let router: Router;
 
     beforeEach(async () =>
         TestBed.configureTestingModule({
@@ -106,7 +102,7 @@ describe('SplineSearchDynamicTableComponent', () => {
                 SplineSearchBoxComponentMock,
                 SplineNoResultComponentMock,
                 SplineContentErrorComponentMock,
-                DaterangepickerComponentMock
+                DaterangepickerComponentMock,
             ],
             imports: [
                 BrowserAnimationsModule,
@@ -119,125 +115,115 @@ describe('SplineSearchDynamicTableComponent', () => {
                 MockModule(MatIconModule),
                 MockModule(MatTooltipModule),
                 MockModule(MatDatepickerModule),
-                MockModule(SplineDateRangeFilterModule)
+                MockModule(SplineDateRangeFilterModule),
                 // MockModule(SplineLoaderModule)
                 // SplineSearchBoxModule,
                 // SplineSortHeaderModule,
                 // DynamicTableModule,
                 // SplineDynamicTableSharedModule,
             ],
-            providers: [LabelApiService]
-        })
-            .compileComponents()
-    )
+            providers: [LabelApiService],
+            teardown: { destroyAfterEach: false },
+        }).compileComponents()
+    );
 
     beforeEach(() => {
-        componentFixture = TestBed.createComponent<SplineSearchDynamicTableComponent>(SplineSearchDynamicTableComponent)
-        componentInstance = componentFixture.componentInstance
-        router = TestBed.inject<Router>(Router)
-    })
+        componentFixture = TestBed.createComponent<SplineSearchDynamicTableComponent>(SplineSearchDynamicTableComponent);
+        componentInstance = componentFixture.componentInstance;
+        router = TestBed.inject<Router>(Router);
+    });
 
     describe('Init Default State', () => {
-
         type FakeItem = {
-            id: number
-        }
+            id: number;
+        };
 
-        const dataMap = [{ id: 'id' }]
+        const dataMap = [{ id: 'id' }];
 
-        const fakeData: FakeItem[] = [{ id: 1 }, { id: 2 }]
+        const fakeData: FakeItem[] = [{ id: 1 }, { id: 2 }];
 
         class FakeFactoryStore extends SearchFactoryStore<FakeItem> {
-
             constructor(config: SearchDataSourceConfigInput<any, any>) {
-                super(config)
+                super(config);
             }
 
             protected getDataObserver(searchParams: SearchQuery.SearchParams): Observable<PageResponse<FakeItem>> {
                 return of({
                     totalCount: fakeData.length,
-                    items: [...fakeData]
-                })
+                    items: [...fakeData],
+                });
             }
         }
 
-        let fakeDataSource: FakeFactoryStore
+        let fakeDataSource: FakeFactoryStore;
 
         const defaultSortBy: QuerySorter.FieldSorter = {
             field: 'id',
-            dir: SortDir.DESC
-        }
+            dir: SortDir.DESC,
+        };
 
         beforeEach(() => {
             fakeDataSource = new FakeFactoryStore({
                 defaultSearchParams: {
-                    sortBy: [{ ...defaultSortBy }]
+                    sortBy: [{ ...defaultSortBy }],
                 },
-                pollingInterval: -1
-            })
-            componentInstance.dataSource = fakeDataSource
-            componentInstance.dataMap = dataMap
-        })
+                pollingInterval: -1,
+            });
+            componentInstance.dataSource = fakeDataSource;
+            componentInstance.dataMap = dataMap;
+        });
 
         test('Init Sorting from DataSource', (done) => {
+            componentFixture.detectChanges();
 
-            componentFixture.detectChanges()
-
-            componentInstance.state$
-                .subscribe((state) => {
-                    expect(state.sorting).toEqual(defaultSortBy)
-                    done()
-                })
-
-        })
+            componentInstance.state$.subscribe((state) => {
+                expect(state.sorting).toEqual(defaultSortBy);
+                done();
+            });
+        });
 
         test('Init SearchParams from Router QueryParams', (done) => {
             // define init router state
             const urlSorting: QuerySorter.FieldSorter = {
                 field: 'id',
-                dir: SortDir.ASC
-            }
+                dir: SortDir.ASC,
+            };
 
             const urlSearchParams: SearchParams = {
                 ...DEFAULT_SEARCH_PARAMS,
-                sortBy: [
-                    urlSorting
-                ]
-            }
+                sortBy: [urlSorting],
+            };
 
             const queryParams = SplineSearchDynamicTableStoreNs.applySearchParams(
                 {},
                 componentInstance.defaultUrlStateQueryParamAlias,
                 urlSearchParams
-            )
+            );
 
             // fake router init state
             router.navigate([], {
                 queryParams,
-                replaceUrl: true
-            })
+                replaceUrl: true,
+            });
 
             router.events
                 .pipe(
-                    filter(event => event instanceof NavigationEnd),
+                    filter((event) => event instanceof NavigationEnd),
                     take(1)
                 )
                 .subscribe(() => {
                     // init component after router state is init
-                    componentFixture.detectChanges()
+                    componentFixture.detectChanges();
 
-                    componentInstance.state$
-                        .subscribe((state) => {
-                            // expect comp state was initialized from router
-                            expect(state.sorting).toEqual(urlSorting)
+                    componentInstance.state$.subscribe((state) => {
+                        // expect comp state was initialized from router
+                        expect(state.sorting).toEqual(urlSorting);
 
-                            // expect DataSource search Params were sync with a Router state
-                            expect(urlSearchParams.sortBy).toEqual([urlSorting])
-                            done()
-                        })
-                })
-
-        })
-
-    })
-})
+                        // expect DataSource search Params were sync with a Router state
+                        expect(urlSearchParams.sortBy).toEqual([urlSorting]);
+                        done();
+                    });
+                });
+        });
+    });
+});
