@@ -184,11 +184,6 @@
                     "builder": "@angular-builders/custom-webpack:dev-server",
                     "options": {
                         "browserTarget": "spline-ui:build",
-                        "sourceMap": {
-                            "scripts": true,
-                            "styles": true,
-                            "vendor": false
-                        }
                     },
                     "configurations": {
                         "production": {
