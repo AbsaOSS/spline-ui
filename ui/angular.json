@@ -183,7 +183,7 @@
                 "serve": {
                     "builder": "@angular-builders/custom-webpack:dev-server",
                     "options": {
-                        "browserTarget": "spline-ui:build",
+                        "browserTarget": "spline-ui:build"
                     },
                     "configurations": {
                         "production": {
@@ -210,11 +210,7 @@
                             "src/styles.css"
                         ],
                         "assets": [
-                            {
-                                "glob": "**/*",
-                                "input": "src/assets",
-                                "output": "/assets"
-                            }
+                        
                         ],
                         "tsConfig": "tsconfig.spec.json"
                     }

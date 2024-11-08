@@ -17,16 +17,13 @@
 /** @type {import('jest').Config} */
 module.exports = {
     'preset': 'jest-preset-angular',
-    'setupFilesAfterEnv': [
-        '<rootDir>/setup-jest.ts'
-    ],
     'rootDir': __dirname,
     'testPathIgnorePatterns': [
         'projects/spline-shared/dynamic-table/main/src/components/search-dynamic-table/__tests__'
     ],
-    'transformIgnorePatterns': [
-        'node_modules/(?!@ngrx)'
-    ],
+    // 'transformIgnorePatterns': [
+    //     'node_modules/(?!@ngrx)'
+    // ],
     // transform: {
     //     "^.+\\.jsx?$": "babel-jest",
     //     "^.+\\.mjs$": "babel-jest",
