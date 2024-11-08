@@ -15,7 +15,7 @@
  */
 
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core'
-import { FormControl, FormGroup } from '@angular/forms'
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms'
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete'
 import _ from 'lodash'
 import { BehaviorSubject, distinctUntilChanged } from 'rxjs'
@@ -97,13 +97,13 @@ export class SplineSearchBoxWithFilterComponent<TRowData = undefined> extends Ba
     isSearchFocused = false
     emitSearchEventDebounceTimeInUs = 400
     autocompleteStateEnum = AUTOCOMPLETE_STATE
-    formGroup: FormGroup
+    formGroup: UntypedFormGroup
     lastFoundFilterTokenFragment: SplineFilterToken | SplineSearchToken = initFilterTokenFragment
 
     constructor() {
         super()
-        this.formGroup = new FormGroup({
-            searchControl: new FormControl(this.searchDefaultString)
+        this.formGroup = new UntypedFormGroup({
+            searchControl: new UntypedFormControl(this.searchDefaultString)
         })
 
         this.formGroup.get('searchControl').valueChanges

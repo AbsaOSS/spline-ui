@@ -425,7 +425,6 @@
             }
         }
     },
-    "defaultProject": "spline-ui",
     "cli": {
         "analytics": "0813ba40-5264-4248-a453-393bba4de37c"
     }
