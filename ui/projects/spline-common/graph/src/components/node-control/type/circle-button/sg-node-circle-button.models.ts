@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { ThemePalette } from '@angular/material/core/common-behaviors/color'
+import { ThemePalette } from '@angular/material/core'
 import { NodeDimension } from '@swimlane/ngx-graph/lib/models/node.model'
 
 import { SgNode, SgNodeNativeOptions } from '../../../../models'
