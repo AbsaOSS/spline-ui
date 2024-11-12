@@ -62,7 +62,7 @@ export const metaReducers: MetaReducer<{}>[] =
         MatTooltipModule,
         MatButtonModule,
         StoreModule.forRoot({}, { metaReducers }),
-        !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : [],
+        !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 , connectInZone: true}) : [],
         EffectsModule.forRoot([]),
         StoreRouterConnectingModule.forRoot({
             stateKey: 'router'
