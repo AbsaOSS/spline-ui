@@ -48,4 +48,4 @@ $spline-color-map-human: (
     ),
 );
 
-$spline-palette-human: mat.define-palette($spline-color-map-human);
+$spline-palette-human: mat.m2-define-palette($spline-color-map-human);

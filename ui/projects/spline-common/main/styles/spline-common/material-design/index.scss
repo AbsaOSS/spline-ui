@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
-@import '../vars';
-@import './spline-theme';
+@import "../vars";
+@import "./spline-theme";
 
-$custom-typography: mat.define-typography-config($font-family: $font-name);
+$custom-typography: mat.m2-define-typography-config(
+    $font-family: $font-name,
+);
 
 // TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
 //  The following line adds:
@@ -33,4 +35,4 @@ $custom-typography: mat.define-typography-config($font-family: $font-name);
 
 @include mat.all-component-themes($spline-theme);
 
-@import './components/index';
+@import "./components/index";

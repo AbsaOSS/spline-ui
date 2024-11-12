@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
 $dark-primary-text: rgba(black, 0.87);
 $light-primary-text: white;
@@ -48,8 +48,7 @@ $spline-color-map-green: (
         A200: $light-primary-text,
         A400: $light-primary-text,
         A700: $light-primary-text,
-    )
+    ),
 );
 
-$spline-palette-green: mat.define-palette($spline-color-map-green);
-
+$spline-palette-green: mat.m2-define-palette($spline-color-map-green);

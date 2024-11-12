@@ -51,4 +51,4 @@ $spline-color-map-orange: (
     ),
 );
 
-$spline-palette-orange: mat.define-palette($spline-color-map-orange);
+$spline-palette-orange: mat.m2-define-palette($spline-color-map-orange);
