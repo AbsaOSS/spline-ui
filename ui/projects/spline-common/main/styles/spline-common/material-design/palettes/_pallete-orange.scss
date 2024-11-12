@@ -13,25 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
-@import '@angular/material/theming';
+$dark-primary-text: rgba(black, 0.87);
+$light-primary-text: white;
 
 $spline-color-map-orange: (
-    50 : #feefe4,
-    100 : #fcd6bc,
-    200 : #fabb90,
-    300 : #f7a064,
-    400 : #f68b42,
-    500 : #f47721,
-    600 : #f36f1d,
-    700 : #f16418,
-    800 : #ef5a14,
-    900 : #ec470b,
-    A100 : #fff,
-    A200 : #ffe9e3,
-    A400 : #ffc2b0,
-    A700 : #ffae96,
+    50: #feefe4,
+    100: #fcd6bc,
+    200: #fabb90,
+    300: #f7a064,
+    400: #f68b42,
+    500: #f47721,
+    600: #f36f1d,
+    700: #f16418,
+    800: #ef5a14,
+    900: #ec470b,
+    A100: #fff,
+    A200: #ffe9e3,
+    A400: #ffc2b0,
+    A700: #ffae96,
     contrast: (
         50: $dark-primary-text,
         100: $dark-primary-text,
@@ -47,8 +48,7 @@ $spline-color-map-orange: (
         A200: $light-primary-text,
         A400: $light-primary-text,
         A700: $light-primary-text,
-    )
+    ),
 );
 
 $spline-palette-orange: mat.define-palette($spline-color-map-orange);
-

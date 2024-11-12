@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-@import 'vars';
-@import 'mixins';
-
+@import "vars";
+@import "mixins";
 
 $color-schema-settings--default: (
     link-color: $color-grey-light,
@@ -39,7 +38,7 @@ $color-schema-settings--expanded: (
 );
 
 @mixin side-nav-links-color-schema($settings: $color-schema-settings--default) {
-    .mat-nav-list .mat-mdc-list-item {
+    .mat-mdc-nav-list .mat-mdc-list-item {
         color: map-get($settings, link-color);
 
         &:hover {
@@ -68,7 +67,7 @@ $color-schema-settings--expanded: (
 
     padding: 0 0.75rem 0 0;
 
-    .mat-nav-list .mat-mdc-list-item {
+    .mat-mdc-nav-list .mat-mdc-list-item {
         border-radius: 0 24px 24px 0;
         font-size: 14px;
         height: 40px;

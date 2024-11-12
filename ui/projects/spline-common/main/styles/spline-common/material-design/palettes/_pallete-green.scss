@@ -15,7 +15,8 @@
  */
 @use '@angular/material' as mat;
 
-@import '@angular/material/theming';
+$dark-primary-text: rgba(black, 0.87);
+$light-primary-text: white;
 
 $spline-color-map-green: (
     50: #e1f1f2,
