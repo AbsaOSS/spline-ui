@@ -19,6 +19,7 @@ import { MatMenuTrigger } from '@angular/material/menu'
 import { BaseLocalStateComponent, SplineDateRangeValue } from 'spline-utils'
 import { SplineDateRangeFilter } from './spline-date-range-filter.models'
 import dayjs from 'dayjs'
+import dayjsPluginUTC from 'dayjs-plugin-utc'
 
 
 @Component({
@@ -38,6 +39,8 @@ export class SplineDateRangeFilterComponent extends BaseLocalStateComponent<Spli
 
     constructor() {
         super()
+
+        dayjs.extend(dayjsPluginUTC)
 
         const currentDate = new Date()
         this._defaultValue = dayjs(currentDate)
