@@ -16,7 +16,7 @@
 
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core'
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms'
-import { MatLegacyAutocompleteTrigger as MatAutocompleteTrigger } from '@angular/material/legacy-autocomplete'
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete'
 import _ from 'lodash'
 import { BehaviorSubject, distinctUntilChanged } from 'rxjs'
 import { debounceTime, filter, takeUntil } from 'rxjs/operators'

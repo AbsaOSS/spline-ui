@@ -24,9 +24,9 @@
             <!-- use a disabled button to provide padding for tree leaf -->
             <button disabled mat-icon-button></button>
 
-            <mat-chip-list>
-                <mat-chip [disableRipple]="true">{{node.name}}</mat-chip>
-            </mat-chip-list>
+            <mat-chip-listbox>
+                <mat-chip-option [disableRipple]="true">{{node.name}}</mat-chip-option>
+            </mat-chip-listbox>
 
         </li>
     </mat-tree-node>
@@ -44,9 +44,9 @@
                     </mat-icon>
                 </button>
 
-                <mat-chip-list>
-                    <mat-chip [disableRipple]="true">{{node.name}}</mat-chip>
-                </mat-chip-list>
+                <mat-chip-listbox>
+                    <mat-chip-option [disableRipple]="true">{{node.name}}</mat-chip-option>
+                </mat-chip-listbox>
 
             </div>
             <ul [class.d-none]="!treeControl.isExpanded(node)">

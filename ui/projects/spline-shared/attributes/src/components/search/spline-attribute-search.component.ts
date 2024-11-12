@@ -15,7 +15,7 @@
  */
 
 import { ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core'
-import { MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent } from '@angular/material/legacy-autocomplete'
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 import { BehaviorSubject, Observable, Subject } from 'rxjs'
 import { map, switchMap, takeUntil } from 'rxjs/operators'
 import { AttributeApiService, AttributeSearchRecord } from 'spline-api'

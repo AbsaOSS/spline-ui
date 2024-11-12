@@ -16,7 +16,7 @@
 
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms'
-import { MatLegacyAutocomplete as MatAutocomplete } from '@angular/material/legacy-autocomplete'
+import { MatAutocomplete } from '@angular/material/autocomplete'
 import { distinctUntilChanged } from 'rxjs'
 import { debounceTime, takeUntil } from 'rxjs/operators'
 import { BaseComponent } from 'spline-utils'

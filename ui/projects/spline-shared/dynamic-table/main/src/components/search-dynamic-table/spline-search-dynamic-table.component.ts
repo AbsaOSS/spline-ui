@@ -21,7 +21,7 @@ import { BaseLocalStateComponent, QuerySorter, RouterNavigation, SearchFactorySt
 import { SplineSearchDynamicTableStoreNs } from './spline-search-dynamic-table-store.ns'
 import { distinctUntilChanged, first, map, Observable, repeatWhen, skip, startWith, Subject, takeUntil } from 'rxjs'
 import { ActivatedRoute, NavigationEnd, Params, Router, RouterEvent } from '@angular/router'
-import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator'
+import { PageEvent } from '@angular/material/paginator'
 import { filter } from 'rxjs/operators'
 import { isEqual } from 'lodash-es'
 

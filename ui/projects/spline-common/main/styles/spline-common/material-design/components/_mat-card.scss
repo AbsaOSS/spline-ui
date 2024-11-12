@@ -16,9 +16,10 @@
 
 @import '../../vars';
 
-.mat-card {
+.mat-mdc-card {
     border-radius: $container-border-radius !important;
-
+    /*TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version.
+ */
     &.mat-card--border-4 {
         border-radius: 4px !important;
     }

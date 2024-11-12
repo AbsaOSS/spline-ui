@@ -18,7 +18,7 @@
 @import '../vars';
 @import './spline-theme';
 
-$custom-typography: mat.define-legacy-typography-config($font-family: $font-name);
+$custom-typography: mat.define-typography-config($font-family: $font-name);
 
 // TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
 //  The following line adds:
@@ -28,9 +28,9 @@ $custom-typography: mat.define-legacy-typography-config($font-family: $font-name
 //  If you don't need the default component typographies but still want the hierarchy styles,
 //  you can delete this line and instead use:
 //    `@include mat.legacy-typography-hierarchy($custom-typography);`
-@include mat.all-legacy-component-typographies($custom-typography);
-@include mat.legacy-core();
+@include mat.all-component-typographies($custom-typography);
+@include mat.core();
 
-@include mat.all-legacy-component-themes($spline-theme);
+@include mat.all-component-themes($spline-theme);
 
 @import './components/index';
