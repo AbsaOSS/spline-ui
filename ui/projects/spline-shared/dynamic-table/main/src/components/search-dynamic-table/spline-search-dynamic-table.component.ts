@@ -218,7 +218,7 @@ export class SplineSearchDynamicTableComponent<TRowData = undefined, TFilter ext
     private subscribeToRouter(router: Router): void {
         // Refresh the table on re-navigating to the same route
         router.events.pipe(
-            filter((event: RouterEvent) => event instanceof NavigationEnd),
+            filter((event) => event instanceof NavigationEnd),
             takeUntil(this.destroyed$)
         ).subscribe(() => {
             if (this.searchParamsFromUrl() === null) {
