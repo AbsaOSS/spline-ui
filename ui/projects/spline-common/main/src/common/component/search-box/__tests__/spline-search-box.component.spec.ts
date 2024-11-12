@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -24,6 +24,7 @@ import { By } from '@angular/platform-browser';
 import { SplineTranslateTestingModule } from 'spline-utils/translate';
 
 import { SplineSearchBoxComponent } from '../spline-search-box.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('SplineSearchComponent', () => {
     let component: SplineSearchBoxComponent;
@@ -31,17 +32,17 @@ describe('SplineSearchComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
+            declarations: [SplineSearchBoxComponent],
+            teardown: { destroyAfterEach: false },
             imports: [
                 FormsModule,
                 ReactiveFormsModule,
                 MatIconModule,
                 MatTooltipModule,
-                HttpClientTestingModule,
                 SplineTranslateTestingModule,
                 MatAutocompleteModule,
             ],
-            declarations: [SplineSearchBoxComponent],
-            teardown: { destroyAfterEach: false },
+            providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
         });
     });
 

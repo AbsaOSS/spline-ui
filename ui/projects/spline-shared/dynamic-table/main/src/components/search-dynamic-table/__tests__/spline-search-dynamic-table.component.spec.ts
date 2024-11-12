@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavigationEnd, Router } from '@angular/router';
@@ -34,6 +34,7 @@ import { Component, Input } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { SplineDateRangeFilterModule } from 'spline-common';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import SortDir = QuerySorter.SortDir;
 import SearchParams = SearchQuery.SearchParams;
 import DEFAULT_SEARCH_PARAMS = SearchQuery.DEFAULT_SEARCH_PARAMS;
@@ -104,10 +105,10 @@ describe('SplineSearchDynamicTableComponent', () => {
                 SplineContentErrorComponentMock,
                 DaterangepickerComponentMock,
             ],
+            teardown: { destroyAfterEach: false },
             imports: [
                 BrowserAnimationsModule,
                 RouterTestingModule,
-                HttpClientTestingModule,
                 SplineTranslateTestingModule,
                 MockModule(MatPaginatorModule),
                 MockModule(MatTableModule),
@@ -116,14 +117,8 @@ describe('SplineSearchDynamicTableComponent', () => {
                 MockModule(MatTooltipModule),
                 MockModule(MatDatepickerModule),
                 MockModule(SplineDateRangeFilterModule),
-                // MockModule(SplineLoaderModule)
-                // SplineSearchBoxModule,
-                // SplineSortHeaderModule,
-                // DynamicTableModule,
-                // SplineDynamicTableSharedModule,
             ],
-            providers: [LabelApiService],
-            teardown: { destroyAfterEach: false },
+            providers: [LabelApiService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
         }).compileComponents()
     );
 
