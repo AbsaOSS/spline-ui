@@ -15,7 +15,7 @@
  */
 
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { MatDialog } from '@angular/material/dialog'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
 import { keyBy } from 'lodash-es'
 import { Observable } from 'rxjs'

@@ -15,7 +15,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core'
-import { MatMenuTrigger } from '@angular/material/menu'
+import { MatLegacyMenuTrigger as MatMenuTrigger } from '@angular/material/legacy-menu'
 import { BaseLocalStateComponent, SplineDateRangeValue } from 'spline-utils'
 import { SplineDateRangeFilter } from './spline-date-range-filter.models'
 import dayjs from 'dayjs'
