@@ -15,7 +15,7 @@
  */
 
 import { Injectable } from '@angular/core'
-import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router'
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { tap } from 'rxjs/operators'
 
@@ -26,7 +26,7 @@ import { hasQueryParamsSplineConfig, SplineConfig } from './spline-config.models
 @Injectable({
     providedIn: 'root'
 })
-export class SplineConfigResolver implements Resolve<SplineConfig> {
+export class SplineConfigResolver {
 
     constructor(private readonly splineConfigService: SplineConfigApiService,
                 private readonly router: Router

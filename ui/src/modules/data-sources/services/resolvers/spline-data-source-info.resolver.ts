@@ -15,7 +15,7 @@
  */
 
 import { Injectable } from '@angular/core'
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router'
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { Observable } from 'rxjs'
 import { filter, take } from 'rxjs/operators'
 import { SplineDataSourceInfo } from 'spline-api'
@@ -24,7 +24,7 @@ import { DsOverviewStore } from '../store'
 
 
 @Injectable()
-export class SplineDataSourceInfoResolver implements Resolve<SplineDataSourceInfo> {
+export class SplineDataSourceInfoResolver {
 
     constructor(private readonly store: DsOverviewStore) {
     }
