@@ -65,11 +65,10 @@ const routes: Routes = [
     // useHash supports github.io demo page, remove in your app
     imports: [
         RouterModule.forRoot(routes, {
-            useHash: false,
-            scrollPositionRestoration: 'top',
-            relativeLinkResolution: 'legacy',
-            onSameUrlNavigation: 'reload'
-        }),
+    useHash: false,
+    scrollPositionRestoration: 'top',
+    onSameUrlNavigation: 'reload'
+}),
     ],
     exports: [RouterModule],
 })
