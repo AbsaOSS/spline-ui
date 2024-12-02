@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+@use "@angular/material" as mat;
 @import "vars";
 @import "mixins";
 
@@ -75,8 +76,13 @@ $color-schema-settings--expanded: (
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        padding-right: 12px;
 
-        .mat-icon {
+        .nav-item-wrapper {
+            display: flex;
+        }
+
+        mat-icon {
             margin-right: 0.5rem;
         }
     }
@@ -94,6 +100,23 @@ $color-schema-settings--expanded: (
         text-transform: uppercase;
         white-space: nowrap;
     }
+
+    @include mat.list-overrides(
+        (
+            active-indicator-color: $color-energy,
+            list-item-label-text-color: white,
+            list-item-focus-label-text-color: white,
+            list-item-hover-label-text-color: white,
+            list-item-focus-state-layer-opacity: 0,
+            list-item-label-text-size: 14px,
+        )
+    );
+}
+
+.sl-sidenav__expand-btn.mdc-button {
+    min-width: 0;
+    width: 40px;
+    padding: 0;
 }
 
 //.sl-sidenav--expanded .spline-sidebar-menu {

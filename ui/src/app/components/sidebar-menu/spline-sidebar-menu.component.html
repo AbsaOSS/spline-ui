@@ -25,12 +25,12 @@
            [matTooltip]="item.label | translate"
            [routerLink]="item.routerLink"
            [splineRouterLinkActivePattern]="item.routerLinkActivePattern">
-
+        <div class="nav-item-wrapper">
             <spline-icon [icon]="item.icon"></spline-icon>
             <span *ngIf="!showOnlyIcons">
                 {{ item.label | translate }}
             </span>
-
+        </div>
         </a>
     </mat-nav-list>
 </div>
