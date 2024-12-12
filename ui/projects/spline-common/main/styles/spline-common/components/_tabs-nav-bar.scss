@@ -17,16 +17,17 @@
 @import '../vars';
 
 
-.mat-tab-nav-bar.spline-tabs-nav-bar {
+.mat-mdc-tab-nav-bar.spline-tabs-nav-bar {
 
     border-bottom-style: none;
 
-    a.mat-tab-link,
+    a.mat-mdc-tab-link,
     a.mat-tab-link:hover {
         text-decoration: none;
     }
-
-    .mat-tab-link.mat-tab-label-active {
+    /*TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version.
+ */
+    .mat-mdc-tab-link.mat-tab-label-active {
         color: $color-pink;
         opacity: 1;
     }

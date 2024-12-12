@@ -15,7 +15,7 @@
  */
 
 import { ChangeDetectorRef, Directive, ElementRef, Input, OnChanges, OnDestroy, Optional, Renderer2 } from '@angular/core'
-import { IsActiveMatchOptions, NavigationEnd, Router, RouterLink, RouterLinkWithHref } from '@angular/router'
+import { IsActiveMatchOptions, NavigationEnd, Router, RouterLink } from '@angular/router'
 import { filter, takeUntil } from 'rxjs/operators'
 
 import { BaseDirective } from '../base'
@@ -38,7 +38,6 @@ export class RouterLinkActivePatternDirective extends BaseDirective implements O
                 private renderer: Renderer2,
                 private readonly changeDetectorRef: ChangeDetectorRef,
                 @Optional() private routerLink?: RouterLink,
-                @Optional() private routerLinkWithHref?: RouterLinkWithHref
     ) {
         super()
 
@@ -82,9 +81,6 @@ export class RouterLinkActivePatternDirective extends BaseDirective implements O
             return RouterLinkActivePattern.isUrlActive(currentUrl, this.splineRouterLinkActivePattern)
         }
         else if (this.routerLink) {
-            return this.router.isActive(this.routerLink.urlTree, activeMatchOptions)
-        }
-        else if (this.routerLinkWithHref) {
             return this.router.isActive(this.routerLink.urlTree, activeMatchOptions)
         }
 

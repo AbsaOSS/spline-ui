@@ -33,6 +33,7 @@ import { SplineSearchBoxModule } from '../search-box'
 
 import { SplineListBoxComponent } from './components'
 import { SplineListBoxRecordsDirective } from './directives'
+import { MatPseudoCheckboxModule } from '@angular/material/core'
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { SplineListBoxRecordsDirective } from './directives'
         MatButtonModule,
         MatListModule,
         MatTooltipModule,
+        MatPseudoCheckboxModule,
 
         SplineTranslateModule,
         SplineUtilsCommonModule,

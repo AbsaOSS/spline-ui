@@ -15,7 +15,7 @@
  */
 
 import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { FormControl, FormGroup } from '@angular/forms'
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms'
 import { MatAutocomplete } from '@angular/material/autocomplete'
 import { distinctUntilChanged } from 'rxjs'
 import { debounceTime, takeUntil } from 'rxjs/operators'
@@ -32,8 +32,8 @@ export class SplineSearchBoxComponent extends BaseComponent {
     @Output() search$ = new EventEmitter<string>()
     isFocused = false
 
-    searchControl = new FormControl()
-    formGroup = new FormGroup({
+    searchControl = new UntypedFormControl()
+    formGroup = new UntypedFormGroup({
         searchControl: this.searchControl
     })
     readonly emitSearchEventDebounceTimeInUs = 300

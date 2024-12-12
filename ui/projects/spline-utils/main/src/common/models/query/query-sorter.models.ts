@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import { MatSortable } from '@angular/material/sort'
-import { Sort } from '@angular/material/sort/sort'
+import { MatSortable, Sort } from '@angular/material/sort'
 
 
 export namespace QuerySorter {

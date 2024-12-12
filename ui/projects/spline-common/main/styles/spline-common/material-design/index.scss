@@ -13,15 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@use '~@angular/material' as mat;
+@use "@angular/material" as mat;
 
-@import '../vars';
-@import './spline-theme';
+@import "../vars";
+@import "./spline-theme";
 
-$custom-typography: mat.define-typography-config($font-family: $font-name);
+$custom-typography: mat.m2-define-typography-config(
+    $font-family: $font-name,
+);
 
-@include mat.core($custom-typography);
+// TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
+//  The following line adds:
+//    1. Default typography styles for all components
+//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
+//  If you specify typography styles for the components you use elsewhere, you should delete this line.
+//  If you don't need the default component typographies but still want the hierarchy styles,
+//  you can delete this line and instead use:
+//    `@include mat.legacy-typography-hierarchy($custom-typography);`
+@include mat.all-component-typographies($custom-typography);
+@include mat.core();
 
 @include mat.all-component-themes($spline-theme);
 
-@import './components/index';
+@import "./components/index";

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { MatAccordionTogglePosition } from '@angular/material/expansion/accordion-base'
+import { MatAccordionTogglePosition } from '@angular/material/expansion'
 
 import { SdWidgetSchema, SplineDataViewSchema } from '../../../models'
 

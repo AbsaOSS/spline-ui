@@ -33,7 +33,7 @@
     }
 
     &--sticky {
-        mat-header-row.mat-header-row {
+        mat-header-row.mat-mdc-header-row {
             background: $color-grey-light-2;
             top: 64px !important;
         }

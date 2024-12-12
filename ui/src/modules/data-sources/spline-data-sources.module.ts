@@ -14,53 +14,49 @@
  * limitations under the License.
  */
 
-import { ScrollingModule } from '@angular/cdk/scrolling'
-import { CommonModule } from '@angular/common'
-import { HttpClientModule } from '@angular/common/http'
-import { NgModule } from '@angular/core'
-import { MatButtonModule } from '@angular/material/button'
-import { MatCardModule } from '@angular/material/card'
-import { MatDividerModule } from '@angular/material/divider'
-import { MatIconModule } from '@angular/material/icon'
-import { MatInputModule } from '@angular/material/input'
-import { MatMenuModule } from '@angular/material/menu'
-import { MatPaginatorModule } from '@angular/material/paginator'
-import { MatSortModule } from '@angular/material/sort'
-import { MatTableModule } from '@angular/material/table'
-import { MatTabsModule } from '@angular/material/tabs'
-import { MatTooltipModule } from '@angular/material/tooltip'
-import { MatTreeModule } from '@angular/material/tree'
-import { RouterModule } from '@angular/router'
-import { EffectsModule } from '@ngrx/effects'
-import { StoreModule } from '@ngrx/store'
-import { SplineApiModule } from 'spline-api'
-import { SplineCommonModule } from 'spline-common'
-import { SplineDataViewModule } from 'spline-common/data-view'
-import { DynamicFilterModule } from 'spline-common/dynamic-filter'
-import { DfControlDateRangeModule, DfControlSelectModule } from 'spline-common/dynamic-filter/filter-controls'
-import { DynamicTableCommonCellsModule, DynamicTableModule } from 'spline-common/dynamic-table'
-import { SplineLayoutModule } from 'spline-common/layout'
-import { SplineApiConfigModule } from 'spline-shared'
-import { SplineDynamicTableSharedModule } from 'spline-shared/dynamic-table'
-import { SplineEventsSharedModule } from 'spline-shared/events'
-import { SplineTranslateModule } from 'spline-utils/translate'
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { CommonModule } from '@angular/common';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTreeModule } from '@angular/material/tree';
+import { RouterModule } from '@angular/router';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { SplineApiModule } from 'spline-api';
+import { SplineCommonModule } from 'spline-common';
+import { SplineDataViewModule } from 'spline-common/data-view';
+import { DynamicFilterModule } from 'spline-common/dynamic-filter';
+import { DfControlDateRangeModule, DfControlSelectModule } from 'spline-common/dynamic-filter/filter-controls';
+import { DynamicTableCommonCellsModule, DynamicTableModule } from 'spline-common/dynamic-table';
+import { SplineLayoutModule } from 'spline-common/layout';
+import { SplineApiConfigModule } from 'spline-shared';
+import { SplineDynamicTableSharedModule } from 'spline-shared/dynamic-table';
+import { SplineEventsSharedModule } from 'spline-shared/events';
+import { SplineTranslateModule } from 'spline-utils/translate';
 
-import { components } from './components'
-import * as fromPages from './pages'
-import { services } from './services'
-import { SplineDataSourcesRoutingModule } from './spline-data-sources-routing.module'
-import { effects } from './store'
-import { SplineDataSourceStoreNs } from './store/state-managements/spline-data-source-store.ns'
-
+import { components } from './components';
+import * as fromPages from './pages';
+import { services } from './services';
+import { SplineDataSourcesRoutingModule } from './spline-data-sources-routing.module';
+import { effects } from './store';
+import { SplineDataSourceStoreNs } from './store/state-managements/spline-data-source-store.ns';
 
 @NgModule({
-    declarations: [
-        ...fromPages.pageComponents,
-        ...components
-    ],
+    declarations: [...fromPages.pageComponents, ...components],
+    exports: [...fromPages.pageComponents],
     imports: [
         CommonModule,
-        HttpClientModule,
         RouterModule,
         MatTableModule,
         MatSortModule,
@@ -90,14 +86,8 @@ import { SplineDataSourceStoreNs } from './store/state-managements/spline-data-s
         ScrollingModule,
         DynamicFilterModule,
         DfControlSelectModule,
-        DfControlDateRangeModule
+        DfControlDateRangeModule,
     ],
-    exports: [
-        ...fromPages.pageComponents
-    ],
-    providers: [
-        ...services
-    ]
+    providers: [...services, provideHttpClient(withInterceptorsFromDi())],
 })
-export class SplineDataSourcesModule {
-}
+export class SplineDataSourcesModule {}

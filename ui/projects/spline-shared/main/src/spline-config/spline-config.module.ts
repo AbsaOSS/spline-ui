@@ -14,20 +14,9 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common'
-import { HttpClientModule } from '@angular/common/http'
-import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 
-
-@NgModule({
-    declarations: [],
-    imports: [
-        CommonModule,
-        HttpClientModule,
-    ],
-    exports: [],
-    providers: [],
-})
-export class SplineConfigModule {
-
-}
+@NgModule({ declarations: [], exports: [], imports: [CommonModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+export class SplineConfigModule {}

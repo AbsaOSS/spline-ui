@@ -31,8 +31,7 @@ import { SplineLongTextComponent } from './spline-long-text.component'
     ],
     exports: [
         SplineLongTextComponent,
-    ],
-    entryComponents: [],
+    ]
 })
 export class SplineLongTextModule {
 }

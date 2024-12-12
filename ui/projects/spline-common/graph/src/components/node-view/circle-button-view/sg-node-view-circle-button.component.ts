@@ -15,7 +15,7 @@
  */
 
 import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { ThemePalette } from '@angular/material/core/common-behaviors/color'
+import { ThemePalette } from '@angular/material/core'
 import { BaseComponent } from 'spline-utils'
 
 

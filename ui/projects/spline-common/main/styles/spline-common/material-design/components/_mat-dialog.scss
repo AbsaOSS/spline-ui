@@ -16,11 +16,13 @@
 
 @import 'vars';
 
-body .mat-dialog-container {
+body .mat-mdc-dialog-container {
     background: $color-grey-light-2;
     border-radius: 32px;
 }
 
+/*TODO(mdc-migration): The following rule targets internal classes of dialog that may no longer apply for the MDC version.
+ */
 .mat-dialog-content--no-padding {
     height: calc(100% + 48px);
     margin: -24px;
@@ -29,6 +31,8 @@ body .mat-dialog-container {
     top: 0;
 }
 
+/*TODO(mdc-migration): The following rule targets internal classes of dialog that may no longer apply for the MDC version.
+ */
 .mat-dialog-close-btn {
     &--top-right {
         position: absolute;

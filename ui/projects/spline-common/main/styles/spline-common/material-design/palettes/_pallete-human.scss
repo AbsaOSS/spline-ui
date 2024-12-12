@@ -13,42 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@use '~@angular/material' as mat;
-
-@import '~@angular/material/theming';
+@use "@angular/material" as mat;
 
 $spline-color-map-human: (
-    50 : #f5e1e6,
-    100 : #e6b4c0,
-    200 : #d58296,
-    300 : #c4506c,
-    400 : #b72b4d,
-    500 : #aa052d,
-    600 : #a30428,
-    700 : #990422,
-    800 : #90031c,
-    900 : #7f0111,
-    A100 : #ffadb2,
-    A200 : #ff7a82,
-    A400 : #ff4752,
-    A700 : #ff2d3a,
+    50: #f5e1e6,
+    100: #e6b4c0,
+    200: #d58296,
+    300: #c4506c,
+    400: #b72b4d,
+    500: #aa052d,
+    600: #a30428,
+    700: #990422,
+    800: #90031c,
+    900: #7f0111,
+    A100: #ffadb2,
+    A200: #ff7a82,
+    A400: #ff4752,
+    A700: #ff2d3a,
     contrast: (
-        50 : #000,
-        100 : #000,
-        200 : #000,
-        300 : #fff,
-        400 : #fff,
-        500 : #fff,
-        600 : #fff,
-        700 : #fff,
-        800 : #fff,
-        900 : #fff,
-        A100 : #000,
-        A200 : #000,
-        A400 : #fff,
-        A700 : #fff,
-    )
+        50: #000,
+        100: #000,
+        200: #000,
+        300: #fff,
+        400: #fff,
+        500: #fff,
+        600: #fff,
+        700: #fff,
+        800: #fff,
+        900: #fff,
+        A100: #000,
+        A200: #000,
+        A400: #fff,
+        A700: #fff,
+    ),
 );
 
-$spline-palette-human: mat.define-palette($spline-color-map-human);
-
+$spline-palette-human: mat.m2-define-palette($spline-color-map-human);

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { HttpClient } from '@angular/common/http'
+import { HttpBackend } from '@angular/common/http'
 import { Inject, InjectionToken, ModuleWithProviders, NgModule, Optional } from '@angular/core'
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
 import { SplineUtilsCommonModule } from 'spline-utils'
@@ -40,7 +40,7 @@ export const SPLINE_TRANSLATE_CHILD_CONFIG = new InjectionToken<SplineTranslateC
             loader: {
                 provide: TranslateLoader,
                 useFactory: TranslateLoaderFactory,
-                deps: [HttpClient, SPLINE_TRANSLATE_ASSETS, SPLINE_TRANSLATE_COMMON_ASSETS],
+                deps: [HttpBackend, SPLINE_TRANSLATE_ASSETS, SPLINE_TRANSLATE_COMMON_ASSETS],
             },
             isolate: true,
         }),

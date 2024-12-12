@@ -17,11 +17,11 @@
 @import '../../mixins';
 @import '../../vars';
 
-.mat-table {
+.mat-mdc-table {
     background: none;
 }
 
-mat-row.mat-row {
+mat-row.mat-mdc-row {
     @include shadow-light();
     background: $color-white-smoked;
     border-left: 5px solid $color-white-smoked;
@@ -36,7 +36,7 @@ mat-row.mat-row {
     }
 }
 
-mat-header-row.mat-header-row {
+mat-header-row.mat-mdc-header-row {
     border-bottom: 1px solid $color-grey;
     border-top: 1px solid $color-grey;
     color: $color-grey-dark;
@@ -46,7 +46,7 @@ mat-header-row.mat-header-row {
     min-height: 3rem;
 }
 
-mat-cell.mat-cell {
+mat-cell.mat-mdc-cell {
     overflow: hidden;
     padding: 0 0.25rem;
 
@@ -55,16 +55,18 @@ mat-cell.mat-cell {
     }
 }
 
-mat-header-cell.mat-header-cell {
+mat-header-cell.mat-mdc-header-cell {
     overflow: hidden;
     padding: 0 0.25rem;
 }
 
 
-mat-paginator.mat-paginator.mat-paginator--no-bg {
+/*TODO(mdc-migration): The following rule targets internal classes of paginator that may no longer apply for the MDC version.
+ */
+mat-paginator.mat-mdc-paginator.mat-paginator--no-bg {
     background-color: transparent;
 
-    .mat-paginator-container {
+    .mat-mdc-paginator-container {
         border-bottom: 1px solid $color-grey;
         border-top: 1px solid $color-grey;
         margin-top: 1.25rem;

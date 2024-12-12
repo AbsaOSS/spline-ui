@@ -127,11 +127,11 @@ $action-icon-color: $color-grey-dark-75;
     }
 
     &__action {
-        &--icon.mat-button {
+        &--icon.mat-mdc-button {
 
         }
 
-        &--text.mat-button {
+        &--text.mat-mdc-button {
             padding: 0 8px;
         }
     }

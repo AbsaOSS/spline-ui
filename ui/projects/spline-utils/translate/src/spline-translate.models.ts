@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import { HttpClient } from '@angular/common/http'
+import { HttpBackend } from '@angular/common/http'
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader'
 import { StringHelpers, TypeHelpers } from 'spline-utils'
 
 
-export function TranslateLoaderFactory(http: HttpClient, assets: string[], rootAssets: string[] = []): MultiTranslateHttpLoader {
+export function TranslateLoaderFactory(http: HttpBackend, assets: string[], rootAssets: string[] = []): MultiTranslateHttpLoader {
     const loaderAssets = [...assets, ...rootAssets]
         .map(
             asset => ({

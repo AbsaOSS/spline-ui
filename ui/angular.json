@@ -119,9 +119,7 @@
                                 "output": "/assets"
                             }
                         ],
-                        "styles": [
-                            "src/styles/styles.scss"
-                        ],
+                        "styles": ["src/styles/styles.scss"],
                         "stylePreprocessorOptions": {
                             "includePaths": [
                                 "src/styles",
@@ -183,12 +181,7 @@
                 "serve": {
                     "builder": "@angular-builders/custom-webpack:dev-server",
                     "options": {
-                        "browserTarget": "spline-ui:build",
-                        "sourceMap": {
-                            "scripts": true,
-                            "styles": true,
-                            "vendor": false
-                        }
+                        "browserTarget": "spline-ui:build"
                     },
                     "configurations": {
                         "production": {
@@ -202,25 +195,16 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "spline-ui:build"
+                        "buildTarget": "spline-ui:build"
                     }
                 },
                 "test": {
                     "builder": "@angular-builders/jest:run",
                     "options": {
-                        "no-cache": true,
                         "bail": true,
                         "scripts": [],
-                        "styles": [
-                            "src/styles.css"
-                        ],
-                        "assets": [
-                            {
-                                "glob": "**/*",
-                                "input": "src/assets",
-                                "output": "/assets"
-                            }
-                        ],
+                        "styles": ["src/styles.css"],
+                        "assets": [],
                         "tsConfig": "tsconfig.spec.json"
                     }
                 },
@@ -228,10 +212,7 @@
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
                         "eslintConfig": ".eslintrc.js",
-                        "lintFilePatterns": [
-                            "src/**/*.spec.ts",
-                            "src/**/*.ts"
-                        ]
+                        "lintFilePatterns": ["src/**/*.spec.ts", "src/**/*.ts"]
                     }
                 },
                 "cypress-run": {
@@ -302,7 +283,6 @@
                 "test": {
                     "builder": "@angular-builders/jest:run",
                     "options": {
-                        "no-cache": true,
                         "bail": true,
                         "scripts": []
                     }
@@ -311,10 +291,7 @@
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
                         "eslintConfig": ".eslintrc.js",
-                        "lintFilePatterns": [
-                            "projects/spline-api/**/*.spec.ts",
-                            "projects/spline-api/**/*.ts"
-                        ]
+                        "lintFilePatterns": ["projects/spline-api/**/*.spec.ts", "projects/spline-api/**/*.ts"]
                     }
                 }
             }
@@ -340,7 +317,6 @@
                 "test": {
                     "builder": "@angular-builders/jest:run",
                     "options": {
-                        "no-cache": true,
                         "bail": true,
                         "scripts": []
                     }
@@ -349,10 +325,7 @@
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
                         "eslintConfig": ".eslintrc.js",
-                        "lintFilePatterns": [
-                            "projects/spline-common/**/*.spec.ts",
-                            "projects/spline-common/**/*.ts"
-                        ]
+                        "lintFilePatterns": ["projects/spline-common/**/*.spec.ts", "projects/spline-common/**/*.ts"]
                     }
                 }
             }
@@ -378,7 +351,6 @@
                 "test": {
                     "builder": "@angular-builders/jest:run",
                     "options": {
-                        "no-cache": true,
                         "bail": true,
                         "scripts": []
                     }
@@ -387,10 +359,7 @@
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
                         "eslintConfig": ".eslintrc.js",
-                        "lintFilePatterns": [
-                            "projects/spline-shared/**/*.spec.ts",
-                            "projects/spline-shared/**/*.ts"
-                        ]
+                        "lintFilePatterns": ["projects/spline-shared/**/*.spec.ts", "projects/spline-shared/**/*.ts"]
                     }
                 }
             }
@@ -416,7 +385,6 @@
                 "test": {
                     "builder": "@angular-builders/jest:run",
                     "options": {
-                        "no-cache": true,
                         "bail": true,
                         "scripts": []
                     }
@@ -425,16 +393,12 @@
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
                         "eslintConfig": ".eslintrc.js",
-                        "lintFilePatterns": [
-                            "projects/spline-utils/**/*.spec.ts",
-                            "projects/spline-utils/**/*.ts"
-                        ]
+                        "lintFilePatterns": ["projects/spline-utils/**/*.spec.ts", "projects/spline-utils/**/*.ts"]
                     }
                 }
             }
         }
     },
-    "defaultProject": "spline-ui",
     "cli": {
         "analytics": "0813ba40-5264-4248-a453-393bba4de37c"
     }

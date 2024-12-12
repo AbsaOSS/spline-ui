@@ -14,78 +14,79 @@
  * limitations under the License.
  */
 
-import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { MatAutocompleteModule } from '@angular/material/autocomplete'
-import { MatIconModule } from '@angular/material/icon'
-import { MatTooltipModule } from '@angular/material/tooltip'
-import { By } from '@angular/platform-browser'
-import { SplineTranslateTestingModule } from 'spline-utils/translate'
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { By } from '@angular/platform-browser';
+import { SplineTranslateTestingModule } from 'spline-utils/translate';
 
-import { SplineSearchBoxComponent } from '../spline-search-box.component'
-
+import { SplineSearchBoxComponent } from '../spline-search-box.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('SplineSearchComponent', () => {
-    let component: SplineSearchBoxComponent
-    let fixture: ComponentFixture<SplineSearchBoxComponent>
+    let component: SplineSearchBoxComponent;
+    let fixture: ComponentFixture<SplineSearchBoxComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
+            declarations: [SplineSearchBoxComponent],
+            teardown: { destroyAfterEach: false },
             imports: [
                 FormsModule,
                 ReactiveFormsModule,
                 MatIconModule,
                 MatTooltipModule,
-                HttpClientTestingModule,
                 SplineTranslateTestingModule,
-                MatAutocompleteModule
+                MatAutocompleteModule,
             ],
-            declarations: [SplineSearchBoxComponent]
-        })
-    })
+            providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
+        });
+    });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(SplineSearchBoxComponent)
-        component = fixture.componentInstance
-    })
+        fixture = TestBed.createComponent(SplineSearchBoxComponent);
+        component = fixture.componentInstance;
+    });
 
     function extractInputNativeElm(componentFixture: ComponentFixture<SplineSearchBoxComponent>): HTMLInputElement {
-        return componentFixture.debugElement.query(By.css('.spline-search-box__input')).nativeElement
+        return componentFixture.debugElement.query(By.css('.spline-search-box__input')).nativeElement;
     }
 
     test('component should be created', () => {
-        expect(component).toBeTruthy()
-    })
+        expect(component).toBeTruthy();
+    });
 
     test('default search term settings', fakeAsync(() => {
-        jest.spyOn(component.search$, 'emit')
-        const defaultValue = 'default search value'
-        component.searchTerm = defaultValue
+        jest.spyOn(component.search$, 'emit');
+        const defaultValue = 'default search value';
+        component.searchTerm = defaultValue;
 
-        fixture.detectChanges()
-        tick(component.emitSearchEventDebounceTimeInUs)
+        fixture.detectChanges();
+        tick(component.emitSearchEventDebounceTimeInUs);
 
-        expect(component.searchControl.value).toEqual(defaultValue)
-        const inputDomElm = extractInputNativeElm(fixture)
-        expect(inputDomElm.value).toEqual(defaultValue)
+        expect(component.searchControl.value).toEqual(defaultValue);
+        const inputDomElm = extractInputNativeElm(fixture);
+        expect(inputDomElm.value).toEqual(defaultValue);
         // do not emit event for default value initialization
-        expect(component.search$['emit']).toHaveBeenCalledTimes(1)
-        expect(component.search$['emit']).toHaveBeenCalledWith(defaultValue)
-    }))
+        expect(component.search$['emit']).toHaveBeenCalledTimes(1);
+        expect(component.search$['emit']).toHaveBeenCalledWith(defaultValue);
+    }));
 
     test('value changed => emit value', fakeAsync(() => {
-        jest.spyOn(component.search$, 'emit')
+        jest.spyOn(component.search$, 'emit');
 
         // set new value
-        const newValue = 'new value'
-        component.searchControl.setValue(newValue)
+        const newValue = 'new value';
+        component.searchControl.setValue(newValue);
 
-        fixture.detectChanges()
-        tick(component.emitSearchEventDebounceTimeInUs + 1)
+        fixture.detectChanges();
+        tick(component.emitSearchEventDebounceTimeInUs + 1);
 
-        expect(component.searchControl.value).toEqual(newValue)
-        expect(component.search$['emit']).toHaveBeenCalledTimes(1)
-        expect(component.search$['emit']).toHaveBeenCalledWith(newValue)
-    }))
-})
+        expect(component.searchControl.value).toEqual(newValue);
+        expect(component.search$['emit']).toHaveBeenCalledTimes(1);
+        expect(component.search$['emit']).toHaveBeenCalledWith(newValue);
+    }));
+});

@@ -14,7 +14,7 @@
   ~ limitations under the License.
   -->
 
-<mat-card class="bg-white-75 mat-card--border-4">
+<mat-card appearance="outlined" class="bg-white-75 mat-card--border-4">
 
     <!-- TITLE -->
     <h2 class="attr-lineage-info__title">
@@ -23,8 +23,8 @@
     <!-- ./TITLE -->
 
     <!-- ATTR NAME -->
-    <mat-chip-list>
-        <mat-chip (removed)="onRemoveIconClicked()">
+    <mat-chip-listbox>
+        <mat-chip-option (removed)="onRemoveIconClicked()">
 
             {{attribute.name}}
 
@@ -33,8 +33,8 @@
                 close
             </mat-icon>
 
-        </mat-chip>
-    </mat-chip-list>
+        </mat-chip-option>
+    </mat-chip-listbox>
     <!-- ./ATTR NAME -->
 
     <spline-card-content *ngIf="loading || legendsList?.length">
