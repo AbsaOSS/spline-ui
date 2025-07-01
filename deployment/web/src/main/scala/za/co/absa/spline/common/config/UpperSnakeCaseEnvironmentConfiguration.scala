@@ -16,15 +16,15 @@
 
 package za.co.absa.spline.common.config
 
-import org.apache.commons.configuration.EnvironmentConfiguration
-import org.apache.commons.lang.StringUtils
+import org.apache.commons.configuration2.EnvironmentConfiguration
+import org.apache.commons.lang3.StringUtils
 import za.co.absa.spline.common.config.UpperSnakeCaseEnvironmentConfiguration.toUpperSnake
 
 class UpperSnakeCaseEnvironmentConfiguration extends EnvironmentConfiguration {
 
-  override def getProperty(key: String): AnyRef = super.getProperty(toUpperSnake(key))
+  override def getPropertyInternal(key: String): AnyRef = super.getPropertyInternal(toUpperSnake(key))
 
-  override def containsKey(key: String): Boolean = super.containsKey(toUpperSnake(key))
+  override def containsKeyInternal(key: String): Boolean = super.containsKeyInternal(toUpperSnake(key))
 }
 
 object UpperSnakeCaseEnvironmentConfiguration {

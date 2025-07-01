@@ -19,7 +19,7 @@ package za.co.absa.spline.common.config
 import java.util
 
 import javax.naming.InitialContext
-import org.apache.commons.configuration._
+import org.apache.commons.configuration2._
 import za.co.absa.spline.common.config.DefaultConfigurationStack.jndiConfigurationIfAvailable
 
 import scala.util.Try
