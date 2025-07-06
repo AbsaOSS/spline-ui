@@ -27,7 +27,7 @@ import {
 } from '@angular/core'
 import { BaseDynamicContentComponent } from 'spline-utils'
 
-import { ISgNodeControl, SgNodeControlEvent, SgNodeSchema } from '../../models'
+import { ISgNodeControl, SgNodeSchema } from '../../models'
 import { SplineGraphNodeManager } from '../../services'
 
 import { SgNodeDefault } from './type'
@@ -46,7 +46,7 @@ export class SgNodeControlComponent<TData extends object, TOptions extends objec
     @Input() isFocused: boolean
     @Input() isTarget: boolean
 
-    @Output() event$ = new EventEmitter<SgNodeControlEvent<TData>>()
+    @Output() event$ = new EventEmitter<any>()
 
     private readonly mirrorInputParams: ReadonlyArray<string> = [
         'isSelected',

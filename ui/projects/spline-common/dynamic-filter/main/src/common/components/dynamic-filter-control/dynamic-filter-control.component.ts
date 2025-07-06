@@ -40,7 +40,7 @@ export class DynamicFilterControlComponent
 
     @Input() model: IDynamicFilterControlModel<any>
 
-    @Output() event$ = new EventEmitter<void>()
+    @Output() event$ = new EventEmitter<any>()
 
     constructor(protected componentFactoryResolver: ComponentFactoryResolver,
                 protected dynamicFilterControlManager: DynamicFilterControlManager) {
