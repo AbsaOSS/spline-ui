@@ -16,16 +16,16 @@
 
 package za.co.absa.spline.web.filter
 
+import org.apache.commons.configuration2.ConfigurationImplicits.ConfigurationRequiredWrapper
+
 import javax.servlet._
 import javax.servlet.http.{HttpServletRequest, HttpServletResponse}
-import org.apache.commons.lang.StringUtils.substringBefore
-import za.co.absa.commons.config.ConfigurationImplicits.ConfigurationRequiredWrapper
+import org.apache.commons.lang3.StringUtils.substringBefore
 import za.co.absa.spline.common.config.DefaultConfigurationStack
 import za.co.absa.spline.common.io.OutputCapturingHttpResponseWrapper
 import za.co.absa.spline.web.filter.SPAFilter._
 
-import scala.collection.JavaConverters._
-
+import scala.jdk.CollectionConverters._
 
 class SPAFilter extends Filter {
 
