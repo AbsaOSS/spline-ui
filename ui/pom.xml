@@ -93,6 +93,9 @@
                         <fileset>
                             <directory>node_modules</directory>
                         </fileset>
+                        <fileset>
+                            <directory>coverage</directory>
+                        </fileset>
                     </filesets>
                 </configuration>
             </plugin>
@@ -127,7 +130,7 @@
                         <SPLINE_UI_BUILD_REVISION>${buildNumber}</SPLINE_UI_BUILD_REVISION>
                         <SPLINE_UI_BUILD_TIMESTAMP>${timestamp}</SPLINE_UI_BUILD_TIMESTAMP>
                     </environmentVariables>
-                    <installDirectory>${project.build.directory}/node</installDirectory>
+                    <installDirectory>${project.build.directory}</installDirectory>
                 </configuration>
                 <executions>
                     <execution>
