@@ -1,6 +1,6 @@
 {
     "name": "spline-ui",
-    "version": "1.0.0-RC1-SNAPSHOT",
+    "version": "1.0.0-RC1",
     "author": "ABSA Group Limited Developers Team",
     "license": "Apache 2.0",
     "scripts": {
