@@ -46,6 +46,9 @@ export class SplineContentErrorComponent implements OnChanges {
         else if (statusCode === 404) {
             return 'COMMON.SERVER_COMMUNICATION_ERROR__MESSAGE__NOT_FOUND'
         }
+        else if (statusCode === 503) {
+            return 'COMMON.SERVER_COMMUNICATION_ERROR__MESSAGE__SERVICE_UNAVAILABLE'
+        }
         else if (statusCode >= 500 && statusCode < 600) {
             return 'COMMON.SERVER_COMMUNICATION_ERROR__MESSAGE'
         }
