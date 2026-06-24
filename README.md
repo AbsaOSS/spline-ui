@@ -1,4 +1,4 @@
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/za.co.absa.spline.ui/project/badge.svg)](https://search.maven.org/search?q=g:za.co.absa.spline.ui)
+[![Maven Central Version](https://img.shields.io/maven-central/v/za.co.absa.spline.ui/project?color=158fcd)](https://central.sonatype.com/namespace/za.co.absa.spline.ui)
 [![TeamCity build (develop)](https://teamcity.jetbrains.com/app/rest/builds/aggregated/strob:%28locator:%28buildType:%28id:OpenSourceProjects_AbsaOSS_SplineUi_AutomaticBuilds%29,branch:develop%29%29/statusIcon.svg)](https://teamcity.jetbrains.com/viewType.html?buildTypeId=OpenSourceProjects_AbsaOSS_SplineUi_AutomaticBuilds&branch=develop&tab=buildTypeStatusDiv)
 [![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=AbsaOSS_spline-ui&metric=alert_status)](https://sonarcloud.io/dashboard?id=AbsaOSS_spline-ui)
 [![SonarCloud Maintainability](https://sonarcloud.io/api/project_badges/measure?project=AbsaOSS_spline-ui&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=AbsaOSS_spline-ui)
